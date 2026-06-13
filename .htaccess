@@ -1,0 +1,12 @@
+# Forward all requests into Laravel's public/ folder.
+# Used when Apache's DocumentRoot points at the project root instead of /public.
+# Read per-request (AllowOverride All), so it works without restarting Apache.
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Don't re-prefix requests that are already inside /public
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

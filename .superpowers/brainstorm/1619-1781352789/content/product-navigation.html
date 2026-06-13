@@ -1,0 +1,174 @@
+<h2>How should 22 products be organized in the navigation?</h2>
+<p class="subtitle">You have 22 software products. Visitors need to find theirs in under 3 seconds. Three approaches to organizing the mega-menu and product pages.</p>
+
+<div class="cards">
+
+  <!-- Option A: By Facility Type -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0F172A;font-family:'Segoe UI',sans-serif;padding:0;overflow:hidden;">
+      <!-- Simulated mega-menu -->
+      <div style="background:#1E293B;border-bottom:1px solid rgba(255,255,255,0.08);padding:8px 14px;display:flex;gap:16px;align-items:center;">
+        <div style="width:18px;height:18px;background:linear-gradient(135deg,#00C896,#1A6FE8);border-radius:4px;"></div>
+        <span style="color:#e2e8f0;font-size:9px;font-weight:600">Products</span>
+        <span style="color:#00C896;font-size:8px;border-bottom:2px solid #00C896;padding-bottom:2px">▼ open</span>
+      </div>
+      <div style="padding:12px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+        <!-- Column 1 -->
+        <div>
+          <div style="color:#00C896;font-size:8px;letter-spacing:2px;font-weight:700;text-transform:uppercase;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid rgba(0,200,150,0.2)">🏥 Hospitals & HIS</div>
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <div style="color:#e2e8f0;font-size:8px;padding:3px 6px;border-radius:4px;background:rgba(0,200,150,0.06)">OPES Hospital HIS</div>
+            <div style="color:#e2e8f0;font-size:8px;padding:3px 6px;border-radius:4px;">Universal Hospital Care</div>
+            <div style="color:#e2e8f0;font-size:8px;padding:3px 6px;border-radius:4px;">OPES Triage</div>
+            <div style="color:#e2e8f0;font-size:8px;padding:3px 6px;border-radius:4px;">Revenue Cycle (RCMIS)</div>
+            <div style="color:#e2e8f0;font-size:8px;padding:3px 6px;border-radius:4px;">Clinical Documents</div>
+          </div>
+        </div>
+        <!-- Column 2 -->
+        <div>
+          <div style="color:#1A6FE8;font-size:8px;letter-spacing:2px;font-weight:700;text-transform:uppercase;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid rgba(26,111,232,0.2)">🩺 Clinics & EMR</div>
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <div style="color:#e2e8f0;font-size:8px;padding:3px 6px;border-radius:4px;background:rgba(26,111,232,0.06)">OPES EMR</div>
+            <div style="color:#e2e8f0;font-size:8px;padding:3px 6px;border-radius:4px;">OPESCare · Health ID</div>
+            <div style="color:#e2e8f0;font-size:8px;padding:3px 6px;border-radius:4px;">OPES Lab (LABIS)</div>
+            <div style="color:#e2e8f0;font-size:8px;padding:3px 6px;border-radius:4px;">OPES Pharmacy</div>
+            <div style="color:#e2e8f0;font-size:8px;padding:3px 6px;border-radius:4px;">OPES Radiology</div>
+          </div>
+        </div>
+        <!-- Column 3 -->
+        <div>
+          <div style="color:#F5A623;font-size:8px;letter-spacing:2px;font-weight:700;text-transform:uppercase;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid rgba(245,166,35,0.2)">⚕️ Specialist Centers</div>
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <div style="color:#e2e8f0;font-size:8px;padding:3px 6px;border-radius:4px;background:rgba(245,166,35,0.06)">Cardiology · Dental</div>
+            <div style="color:#e2e8f0;font-size:8px;padding:3px 6px;border-radius:4px;">Dermatology · Ophthalmology</div>
+            <div style="color:#e2e8f0;font-size:8px;padding:3px 6px;border-radius:4px;">OB/GYN · Paediatrics</div>
+            <div style="color:#e2e8f0;font-size:8px;padding:3px 6px;border-radius:4px;">Mental Health · Nutrition</div>
+            <div style="color:#e2e8f0;font-size:8px;padding:3px 6px;border-radius:4px;">Rehab · Speech Therapy</div>
+          </div>
+        </div>
+      </div>
+      <div style="background:rgba(0,200,150,0.06);border-top:1px solid rgba(0,200,150,0.15);padding:6px 14px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="color:#64748b;font-size:7px">Visitor thinks: "I run a hospital" → clicks Hospitals</span>
+        <span style="color:#00C896;font-size:7px;font-weight:600">View all 22 products →</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Organized by Facility Type</h3>
+      <p>3 columns: Hospitals, Clinics, Specialist Centers. Buyers self-identify ("I'm a hospital") and land in the right section immediately. Clean, fast, buyer-intent driven.</p>
+    </div>
+  </div>
+
+  <!-- Option B: By Specialty (Flat grid) -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0F172A;font-family:'Segoe UI',sans-serif;padding:0;overflow:hidden;">
+      <div style="background:#1E293B;border-bottom:1px solid rgba(255,255,255,0.08);padding:8px 14px;display:flex;gap:16px;align-items:center;">
+        <div style="width:18px;height:18px;background:linear-gradient(135deg,#00C896,#1A6FE8);border-radius:4px;"></div>
+        <span style="color:#e2e8f0;font-size:9px;font-weight:600">Our Software</span>
+        <span style="color:#00C896;font-size:8px;border-bottom:2px solid #00C896;padding-bottom:2px">▼ open</span>
+      </div>
+      <!-- Category filter pills -->
+      <div style="padding:8px 12px;display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid rgba(255,255,255,0.06);">
+        <div style="background:linear-gradient(90deg,rgba(0,200,150,0.2),rgba(26,111,232,0.2));border:1px solid rgba(0,200,150,0.4);color:#00C896;font-size:7px;padding:2px 8px;border-radius:10px;font-weight:600">All</div>
+        <div style="color:#64748b;font-size:7px;padding:2px 8px;border-radius:10px;border:1px solid rgba(255,255,255,0.08)">Core Platform</div>
+        <div style="color:#64748b;font-size:7px;padding:2px 8px;border-radius:10px;border:1px solid rgba(255,255,255,0.08)">Diagnostics</div>
+        <div style="color:#64748b;font-size:7px;padding:2px 8px;border-radius:10px;border:1px solid rgba(255,255,255,0.08)">Specialist</div>
+        <div style="color:#64748b;font-size:7px;padding:2px 8px;border-radius:10px;border:1px solid rgba(255,255,255,0.08)">Admin & Finance</div>
+      </div>
+      <!-- Product grid -->
+      <div style="padding:8px 12px;display:grid;grid-template-columns:repeat(4,1fr);gap:5px;">
+        <div style="background:rgba(0,200,150,0.08);border:1px solid rgba(0,200,150,0.25);border-radius:6px;padding:7px;text-align:center;">
+          <div style="font-size:12px;margin-bottom:2px">🔗</div>
+          <div style="color:#00C896;font-size:7px;font-weight:700">OPESCare</div>
+          <div style="color:#64748b;font-size:6px">Health ID</div>
+        </div>
+        <div style="background:rgba(26,111,232,0.08);border:1px solid rgba(26,111,232,0.25);border-radius:6px;padding:7px;text-align:center;">
+          <div style="font-size:12px;margin-bottom:2px">🏥</div>
+          <div style="color:#1A6FE8;font-size:7px;font-weight:700">OPES EMR</div>
+          <div style="color:#64748b;font-size:6px">Clinics</div>
+        </div>
+        <div style="background:rgba(0,200,150,0.08);border:1px solid rgba(0,200,150,0.25);border-radius:6px;padding:7px;text-align:center;">
+          <div style="font-size:12px;margin-bottom:2px">🧪</div>
+          <div style="color:#00C896;font-size:7px;font-weight:700">OPES Lab</div>
+          <div style="color:#64748b;font-size:6px">LABIS</div>
+        </div>
+        <div style="background:rgba(26,111,232,0.08);border:1px solid rgba(26,111,232,0.25);border-radius:6px;padding:7px;text-align:center;">
+          <div style="font-size:12px;margin-bottom:2px">💊</div>
+          <div style="color:#1A6FE8;font-size:7px;font-weight:700">PHARMIS</div>
+          <div style="color:#64748b;font-size:6px">Pharmacy</div>
+        </div>
+        <div style="background:rgba(0,200,150,0.08);border:1px solid rgba(0,200,150,0.15);border-radius:6px;padding:7px;text-align:center;">
+          <div style="font-size:12px;margin-bottom:2px">🫀</div>
+          <div style="color:#94a3b8;font-size:7px;font-weight:700">CARDIS</div>
+          <div style="color:#64748b;font-size:6px">Cardiology</div>
+        </div>
+        <div style="background:rgba(26,111,232,0.06);border:1px solid rgba(26,111,232,0.15);border-radius:6px;padding:7px;text-align:center;">
+          <div style="font-size:12px;margin-bottom:2px">🦷</div>
+          <div style="color:#94a3b8;font-size:7px;font-weight:700">DENTIS</div>
+          <div style="color:#64748b;font-size:6px">Dental</div>
+        </div>
+        <div style="background:rgba(0,200,150,0.06);border:1px solid rgba(0,200,150,0.15);border-radius:6px;padding:7px;text-align:center;">
+          <div style="font-size:12px;margin-bottom:2px">👶</div>
+          <div style="color:#94a3b8;font-size:7px;font-weight:700">PAEDIS</div>
+          <div style="color:#64748b;font-size:6px">Paediatrics</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border:1px dashed rgba(255,255,255,0.12);border-radius:6px;padding:7px;text-align:center;">
+          <div style="color:#64748b;font-size:7px;font-weight:600">+15 more</div>
+          <div style="color:#64748b;font-size:6px">View all →</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Filterable Icon Grid (Recommended)</h3>
+      <p>All products in a visual grid with filter pills (Core / Diagnostics / Specialist / Admin). Each product has an icon, name, and one-liner. Great for SEO — every product name is indexed. Familiar pattern from app stores.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Solutions-first (by use case) -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0F172A;font-family:'Segoe UI',sans-serif;padding:0;overflow:hidden;">
+      <div style="background:#1E293B;border-bottom:1px solid rgba(255,255,255,0.08);padding:8px 14px;display:flex;gap:16px;align-items:center;">
+        <div style="width:18px;height:18px;background:linear-gradient(135deg,#00C896,#1A6FE8);border-radius:4px;"></div>
+        <span style="color:#e2e8f0;font-size:9px;font-weight:600">Solutions</span>
+        <span style="color:#00C896;font-size:8px;border-bottom:2px solid #00C896;padding-bottom:2px">▼ open</span>
+      </div>
+      <!-- Two-panel: use-case left, products right -->
+      <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:0;min-height:160px;">
+        <!-- Left: use cases -->
+        <div style="background:rgba(255,255,255,0.02);border-right:1px solid rgba(255,255,255,0.07);padding:10px;">
+          <div style="color:#64748b;font-size:7px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px">I am a…</div>
+          <div style="display:flex;flex-direction:column;gap:2px;">
+            <div style="background:rgba(0,200,150,0.1);border-left:2px solid #00C896;color:#e2e8f0;font-size:8px;padding:5px 8px;border-radius:0 4px 4px 0;font-weight:600">🏥 Hospital Administrator</div>
+            <div style="color:#64748b;font-size:8px;padding:5px 8px;">🩺 Clinic Owner / GP</div>
+            <div style="color:#64748b;font-size:8px;padding:5px 8px;">🔬 Lab / Diagnostic Center</div>
+            <div style="color:#64748b;font-size:8px;padding:5px 8px;">⚕️ Specialist (Cardio, Dental…)</div>
+            <div style="color:#64748b;font-size:8px;padding:5px 8px;">🏛️ Ministry / Gov Agency</div>
+            <div style="color:#64748b;font-size:8px;padding:5px 8px;">💼 Investor / Partner</div>
+          </div>
+        </div>
+        <!-- Right: products for selected use case -->
+        <div style="padding:10px;">
+          <div style="color:#64748b;font-size:7px;letter-spacing:1px;margin-bottom:6px">Recommended for Hospital Administrators:</div>
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <div style="display:flex;align-items:center;gap:8px;background:rgba(0,200,150,0.07);border:1px solid rgba(0,200,150,0.2);border-radius:6px;padding:6px 8px;">
+              <div style="font-size:14px">🏥</div>
+              <div><div style="color:#00C896;font-size:8px;font-weight:700">OPES Hospital HIS</div><div style="color:#64748b;font-size:7px">Full hospital information system</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;background:rgba(26,111,232,0.07);border:1px solid rgba(26,111,232,0.2);border-radius:6px;padding:6px 8px;">
+              <div style="font-size:14px">💰</div>
+              <div><div style="color:#1A6FE8;font-size:8px;font-weight:700">Revenue Cycle (RCMIS)</div><div style="color:#64748b;font-size:7px">Billing and collections</div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:6px 8px;">
+              <div style="font-size:14px">🔗</div>
+              <div><div style="color:#94a3b8;font-size:8px;font-weight:700">OPESCare · Health ID Layer</div><div style="color:#64748b;font-size:7px">Interoperability & patient ID</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Solutions by Role / Use Case</h3>
+      <p>"I am a…" left panel, recommended products appear on the right. Very guided, high conversion. Best for demos and sales calls. Slightly more complex to build but personalises the experience.</p>
+    </div>
+  </div>
+
+</div>
