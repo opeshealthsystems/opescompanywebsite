@@ -46,4 +46,22 @@ class CustomerPortalTest extends TestCase
         $this->assertEquals($user->id, $user->customerProfile->user_id);
         $this->assertEquals($profile->id, $user->customerProfile->id);
     }
+
+    public function test_login_route_exists(): void
+    {
+        $response = $this->get('/login');
+        $this->assertNotEquals(404, $response->status());
+    }
+
+    public function test_register_route_exists(): void
+    {
+        $response = $this->get('/register');
+        $this->assertNotEquals(404, $response->status());
+    }
+
+    public function test_customer_dashboard_redirects_unauthenticated_to_login(): void
+    {
+        $response = $this->get('/en/customer/dashboard');
+        $response->assertRedirect('/login');
+    }
 }
