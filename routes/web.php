@@ -63,5 +63,7 @@ Route::prefix('{locale}')
                 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
                 Route::get('/profile',   [ProfileController::class,   'show'])->name('profile');
                 Route::put('/profile',   [ProfileController::class,   'update'])->name('profile.update');
+                Route::get('/documents',      [\App\Http\Controllers\Customer\DocumentController::class, 'index'])->name('documents');
+                Route::get('/documents/{id}', [\App\Http\Controllers\Customer\DocumentController::class, 'show'])->name('documents.show');
             });
     });

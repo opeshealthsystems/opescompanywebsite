@@ -219,4 +219,67 @@ class DocumentTemplatesTest extends TestCase
         $this->assertNotNull($document->signed_at);
         $this->assertNull($document->signature_token);
     }
+
+    public function test_customer_can_see_their_documents(): void
+    {
+        $admin    = User::factory()->create();
+        $admin->assignRole('admin');
+        $customer = User::factory()->create();
+        $customer->assignRole('customer');
+
+        $template = DocumentTemplate::create([
+            'name' => 'T', 'type' => 'receipt',
+            'body' => '<p>Receipt</p>', 'variables' => [], 'is_active' => true,
+        ]);
+
+        Document::create([
+            'document_template_id' => $template->id,
+            'type'                 => 'receipt',
+            'title'                => 'My Receipt',
+            'reference_number'     => 'RCT-2026-00042',
+            'body_rendered'        => '<p>Receipt</p>',
+            'issued_by'            => $admin->id,
+            'addressee_user_id'    => $customer->id,
+            'addressee_name'       => $customer->name,
+            'status'               => 'sent',
+            'requires_signature'   => false,
+        ]);
+
+        $this->actingAs($customer)
+            ->get('/en/customer/documents')
+            ->assertOk()
+            ->assertSee('My Receipt');
+    }
+
+    public function test_customer_cannot_see_another_customers_document(): void
+    {
+        $admin     = User::factory()->create();
+        $admin->assignRole('admin');
+        $customer1 = User::factory()->create();
+        $customer1->assignRole('customer');
+        $customer2 = User::factory()->create();
+        $customer2->assignRole('customer');
+
+        $template = DocumentTemplate::create([
+            'name' => 'T2', 'type' => 'receipt',
+            'body' => '<p>R</p>', 'variables' => [], 'is_active' => true,
+        ]);
+
+        $doc = Document::create([
+            'document_template_id' => $template->id,
+            'type'                 => 'receipt',
+            'title'                => 'Private Receipt',
+            'reference_number'     => 'RCT-2026-00043',
+            'body_rendered'        => '<p>R</p>',
+            'issued_by'            => $admin->id,
+            'addressee_user_id'    => $customer1->id,
+            'addressee_name'       => $customer1->name,
+            'status'               => 'sent',
+            'requires_signature'   => false,
+        ]);
+
+        $this->actingAs($customer2)
+            ->get('/en/customer/documents/' . $doc->id)
+            ->assertForbidden();
+    }
 }

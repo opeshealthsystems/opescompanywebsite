@@ -18,6 +18,10 @@
                class="cp-nav-link {{ request()->routeIs('customer.dashboard') ? 'cp-nav-link-active' : '' }}">
                 <i data-lucide="layout-dashboard" style="width:16px;height:16px"></i> Dashboard
             </a>
+            <a href="{{ route('customer.documents', ['locale' => app()->getLocale()]) }}"
+               class="cp-nav-link {{ request()->routeIs('customer.documents*') ? 'cp-nav-link-active' : '' }}">
+                <i data-lucide="file-text" style="width:16px;height:16px"></i> Documents
+            </a>
             <span class="cp-nav-link cp-nav-link-disabled" title="Coming soon">
                 <i data-lucide="key" style="width:16px;height:16px"></i> Licenses
             </span>
