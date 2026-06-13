@@ -120,4 +120,37 @@ class RbacTest extends TestCase
             ->assertOk()
             ->assertSee('ok');
     }
+
+    public function test_customer_cannot_access_filament_panel(): void
+    {
+        $this->seed(\Database\Seeders\RolePermissionSeeder::class);
+
+        $customer = User::factory()->create();
+        $customer->assignRole('customer');
+
+        $panel = new \Filament\Panel();
+        $this->assertFalse($customer->canAccessPanel($panel));
+    }
+
+    public function test_admin_can_access_filament_panel(): void
+    {
+        $this->seed(\Database\Seeders\RolePermissionSeeder::class);
+
+        $admin = User::factory()->create();
+        $admin->assignRole('admin');
+
+        $panel = new \Filament\Panel();
+        $this->assertTrue($admin->canAccessPanel($panel));
+    }
+
+    public function test_super_admin_can_access_filament_panel(): void
+    {
+        $this->seed(\Database\Seeders\RolePermissionSeeder::class);
+
+        $superAdmin = User::factory()->create();
+        $superAdmin->assignRole('super_admin');
+
+        $panel = new \Filament\Panel();
+        $this->assertTrue($superAdmin->canAccessPanel($panel));
+    }
 }
