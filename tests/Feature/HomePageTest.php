@@ -17,6 +17,9 @@ class HomePageTest extends TestCase
         $this->get('/en')
             ->assertOk()
             ->assertSee('Software that powers African healthcare')
+            ->assertSee('22 bilingual, interoperable systems for hospitals, clinics, and health systems across Cameroon, CEMAC, and Africa.')
+            ->assertSee('Book a Free Demo')
+            ->assertSee(url('/en/contact'), false)
             ->assertSee('Products'); // nav in English
     }
 
@@ -25,6 +28,9 @@ class HomePageTest extends TestCase
         $this->get('/fr')
             ->assertOk()
             ->assertSee('Des logiciels au service de la santé africaine', false)
+            ->assertSee('22 systèmes bilingues et interopérables pour les hôpitaux, cliniques et systèmes de santé au Cameroun, en CEMAC et en Afrique.', false)
+            ->assertSee('Demander une démo gratuite', false)
+            ->assertSee(url('/fr/contact'), false)
             ->assertSee('Produits'); // nav in French
     }
 
