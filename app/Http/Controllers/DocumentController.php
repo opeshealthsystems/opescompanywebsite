@@ -12,7 +12,7 @@ class DocumentController extends Controller
     {
         $user = $request->user();
         $canAccess = $user->hasAnyRole(['super_admin', 'admin', 'support'])
-            || ($document->addressee_user_id && $document->addressee_user_id === $user->id);
+            || ($document->addressee_user_id && (int) $document->addressee_user_id === $user->id);
 
         abort_unless($canAccess, 403);
 
@@ -26,7 +26,7 @@ class DocumentController extends Controller
     {
         $user = $request->user();
         $canAccess = $user->hasAnyRole(['super_admin', 'admin', 'support'])
-            || ($document->addressee_user_id && $document->addressee_user_id === $user->id);
+            || ($document->addressee_user_id && (int) $document->addressee_user_id === $user->id);
 
         abort_unless($canAccess, 403);
 

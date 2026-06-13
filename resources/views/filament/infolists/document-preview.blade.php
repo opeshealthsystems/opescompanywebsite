@@ -8,6 +8,6 @@
         </a>
     </div>
     <div style="padding: 1.5rem; overflow-x: auto; max-height: 600px; overflow-y: auto;">
-        {!! $getRecord()->body_rendered !!}
+        {!! $getRecord()->body_rendered ?? '<em style="color:#94a3b8;">No preview available.</em>' !!}
     </div>
 </div>
