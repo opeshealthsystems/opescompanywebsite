@@ -26,23 +26,26 @@ class TicketResource extends Resource
         return auth()->user()?->hasAnyRole(['super_admin', 'admin', 'support']) ?? false;
     }
 
+    protected static function staffOptions(): array
+    {
+        return User::whereHas('roles', fn ($q) =>
+            $q->whereIn('name', ['super_admin', 'admin', 'support'])
+        )->orderBy('name')->pluck('name', 'id')->toArray();
+    }
+
     public static function form(Form $form): Form
     {
-        $staffOptions = User::whereHas('roles', fn ($q) =>
-            $q->whereIn('name', ['super_admin', 'admin', 'support'])
-        )->orderBy('name')->pluck('name', 'id');
-
         return $form->schema([
             Forms\Components\Section::make('Ticket Details')->schema([
                 Forms\Components\Select::make('user_id')
                     ->label('Customer')
-                    ->options(User::role('customer')->orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => User::role('customer')->orderBy('name')->pluck('name', 'id'))
                     ->searchable()
                     ->nullable(),
 
                 Forms\Components\Select::make('assigned_to')
                     ->label('Assigned To')
-                    ->options($staffOptions)
+                    ->options(fn () => static::staffOptions())
                     ->searchable()
                     ->nullable(),
 
@@ -165,7 +168,13 @@ class TicketResource extends Resource
                 Infolists\Components\TextEntry::make('customer.name')->label('Customer'),
                 Infolists\Components\TextEntry::make('type')
                     ->badge()
-                    ->formatStateUsing(fn ($state) => Ticket::typeLabel($state)),
+                    ->formatStateUsing(fn ($state) => Ticket::typeLabel($state))
+                    ->color(fn ($state) => match ($state) {
+                        'billing'    => 'warning',
+                        'technical'  => 'info',
+                        'bug_report' => 'danger',
+                        default      => 'gray',
+                    }),
                 Infolists\Components\TextEntry::make('priority')
                     ->badge()
                     ->color(fn ($state) => match ($state) {

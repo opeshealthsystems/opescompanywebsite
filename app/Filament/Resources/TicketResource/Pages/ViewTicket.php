@@ -55,11 +55,7 @@ class ViewTicket extends ViewRecord
                         ->required(),
                     Forms\Components\Select::make('assigned_to')
                         ->label('Assigned To')
-                        ->options(
-                            User::whereHas('roles', fn ($q) =>
-                                $q->whereIn('name', ['super_admin', 'admin', 'support'])
-                            )->orderBy('name')->pluck('name', 'id')
-                        )
+                        ->options(fn () => \App\Filament\Resources\TicketResource::staffOptions())
                         ->nullable()
                         ->default(fn () => $this->record->assigned_to),
                     Forms\Components\Textarea::make('resolution')
