@@ -17,7 +17,7 @@
             <a href="{{ url($locale.'/partnerships') }}" class="block text-sm hover:text-white py-1">{{ __('nav.partnerships') }}</a>
         </div>
         <div>
-            <div class="text-white font-semibold text-sm mb-3">Douala, Cameroun</div>
+            <div class="text-white font-semibold text-sm mb-3">{{ __('common.location') }}</div>
             <a href="{{ url($locale.'/contact') }}"
                class="inline-flex bg-gold text-white rounded-lg px-4 py-2 text-sm font-semibold hover:bg-gold-light">
                 {{ __('nav.book_demo') }}
