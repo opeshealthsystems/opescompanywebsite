@@ -11,6 +11,12 @@ class RbacTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+    }
+
     public function test_permission_tables_exist(): void
     {
         $this->assertTrue(Schema::hasTable('roles'));
@@ -51,7 +57,7 @@ class RbacTest extends TestCase
         $this->seed(\Database\Seeders\RolePermissionSeeder::class);
 
         $superAdmin = \Spatie\Permission\Models\Role::findByName('super_admin');
-        $this->assertGreaterThan(0, $superAdmin->permissions->count());
+        $this->assertCount(14, $superAdmin->permissions);
         $this->assertTrue($superAdmin->hasPermissionTo('manage_roles'));
         $this->assertTrue($superAdmin->hasPermissionTo('manage_accounting'));
     }
