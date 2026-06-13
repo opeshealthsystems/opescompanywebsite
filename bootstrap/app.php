@@ -16,6 +16,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'setlocale' => \App\Http\Middleware\SetLocale::class,
             'role'      => \App\Http\Middleware\RequireRole::class,
         ]);
+
+        \Illuminate\Auth\Middleware\Authenticate::redirectUsing(
+            fn ($request) => route('login')
+        );
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
