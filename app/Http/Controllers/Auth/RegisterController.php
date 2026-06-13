@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -28,22 +29,26 @@ class RegisterController extends Controller
             'locale'        => 'nullable|string|in:en,fr',
         ]);
 
-        $user = User::create([
-            'name'      => $validated['name'],
-            'email'     => $validated['email'],
-            'password'  => $validated['password'],
-            'phone'     => $validated['phone'] ?? null,
-            'is_active' => true,
-        ]);
+        $user = DB::transaction(function () use ($validated) {
+            $user = User::create([
+                'name'      => $validated['name'],
+                'email'     => $validated['email'],
+                'password'  => $validated['password'],
+                'phone'     => $validated['phone'] ?? null,
+                'is_active' => true,
+            ]);
 
-        $user->assignRole('customer');
+            $user->assignRole('customer');
 
-        $user->customerProfile()->create([
-            'facility_name' => $validated['facility_name'] ?? null,
-            'facility_type' => $validated['facility_type'] ?? null,
-            'country'       => $validated['country'],
-            'city'          => $validated['city'] ?? null,
-        ]);
+            $user->customerProfile()->create([
+                'facility_name' => $validated['facility_name'] ?? null,
+                'facility_type' => $validated['facility_type'] ?? null,
+                'country'       => $validated['country'],
+                'city'          => $validated['city'] ?? null,
+            ]);
+
+            return $user;
+        });
 
         Auth::login($user);
 
