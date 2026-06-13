@@ -13,6 +13,7 @@ class Ticket extends Model
         'user_id', 'assigned_to',
         'subject', 'description', 'type', 'status', 'priority',
         'resolution', 'resolved_at', 'closed_at',
+        'tester_assignment_id',
     ];
 
     protected $casts = [
@@ -105,5 +106,10 @@ class Ticket extends Model
     public function isOpen(): bool
     {
         return in_array($this->status, ['open', 'in_progress', 'pending_customer']);
+    }
+
+    public function testerAssignment(): BelongsTo
+    {
+        return $this->belongsTo(TesterAssignment::class);
     }
 }
