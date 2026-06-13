@@ -6,10 +6,9 @@
     $current = app()->getLocale();
 @endphp
 
-<div class="flex items-center gap-1 text-sm font-semibold">
-    <a href="{{ url(implode('/', $toEn)) }}"
-       class="px-2 py-1 rounded {{ $current === 'en' ? 'bg-teal text-white' : 'text-muted hover:text-teal' }}">EN</a>
-    <span class="text-muted">/</span>
-    <a href="{{ url(implode('/', $toFr)) }}"
-       class="px-2 py-1 rounded {{ $current === 'fr' ? 'bg-teal text-white' : 'text-muted hover:text-teal' }}">FR</a>
+<div class="lang-switcher">
+    <i data-lucide="globe" style="width:13px;height:13px;color:#64748b"></i>
+    <a href="{{ url(implode('/', $toEn)) }}" class="{{ $current === 'en' ? 'lang-active' : '' }}">EN</a>
+    <span class="lang-sep">·</span>
+    <a href="{{ url(implode('/', $toFr)) }}" class="{{ $current === 'fr' ? 'lang-active' : '' }}">FR</a>
 </div>

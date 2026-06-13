@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'setlocale' => \App\Http\Middleware\SetLocale::class,
+            'role'      => \App\Http\Middleware\RequireRole::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

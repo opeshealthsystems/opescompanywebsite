@@ -1,31 +1,509 @@
 @php $locale = app()->getLocale(); @endphp
+
 <x-layouts.app>
-    <section class="relative overflow-hidden bg-gradient-to-br from-navy via-navy-light to-teal-dark">
-        <div class="absolute -top-24 -right-24 w-[480px] h-[480px] rounded-full bg-teal-light/10 blur-2xl"></div>
 
-        <div class="relative mx-auto max-w-7xl px-6 py-24 md:py-32">
-            <span class="inline-flex items-center gap-2 rounded-full border border-teal-light/40 bg-teal-light/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-teal-light">
+{{-- ── MINISTRY BANNER ─────────────────────────────────────────── --}}
+<div class="ministry-banner">
+    <i data-lucide="landmark" style="width:15px;height:15px;color:#00C896;flex-shrink:0"></i>
+    <p>
+        <strong>Aligned with the Cameroon Ministry of Health Digital Health Strategy 2026–2030</strong>
+        &nbsp;·&nbsp; Conçu pour le Cameroun, la CEMAC et toute l'Afrique
+    </p>
+</div>
+
+{{-- ── HERO ────────────────────────────────────────────────────── --}}
+<div class="hero-wrap">
+    <div class="hero">
+        <div>
+            <div class="hero-eyebrow">
+                <i data-lucide="map-pin" style="width:11px;height:11px"></i>
                 {{ __('home.hero_eyebrow') }}
-            </span>
-
-            <h1 class="mt-5 font-display text-4xl md:text-6xl font-extrabold leading-tight text-white max-w-3xl">
-                {{ __('home.hero_title') }}
+            </div>
+            <h1>
+                {{ __('home.hero_title_1') }}<br>
+                <span class="gradient-text">{{ __('home.hero_title_gradient') }}</span>
             </h1>
-
-            <p class="mt-5 max-w-xl text-lg text-white/70">
-                {{ __('home.hero_tagline') }}
-            </p>
-
-            <div class="mt-9 flex flex-wrap gap-3">
-                <a href="{{ url($locale.'/contact') }}"
-                   class="inline-flex items-center gap-2 rounded-xl bg-gold px-6 py-3 font-display font-bold text-white hover:bg-gold-light">
-                    {{ __('home.cta_demo') }}
-                </a>
-                <a href="{{ url($locale.'/products') }}"
-                   class="inline-flex items-center gap-2 rounded-xl border border-white/30 px-6 py-3 font-display font-semibold text-white hover:bg-white/10">
+            <p class="hero-sub">{{ __('home.hero_tagline') }}</p>
+            <div class="hero-ctas">
+                <a href="{{ url($locale.'/products') }}" class="btn-primary">
+                    <i data-lucide="layout-grid" style="width:15px;height:15px"></i>
                     {{ __('home.cta_explore') }}
                 </a>
+                <a href="{{ url($locale.'/contact') }}" class="btn-secondary">
+                    <i data-lucide="play-circle" style="width:15px;height:15px;color:#00C896"></i>
+                    {{ __('home.cta_watch_demo') }}
+                </a>
+            </div>
+            <div class="hero-trust">
+                <div class="trust-item">
+                    <div class="num">22</div>
+                    <div class="label">{{ __('home.trust_22') }}</div>
+                </div>
+                <div class="trust-item">
+                    <div class="num">EN/FR</div>
+                    <div class="label">{{ __('home.trust_bilingual') }}</div>
+                </div>
+                <div class="trust-item">
+                    <div class="num">CEMAC</div>
+                    <div class="label">{{ __('home.trust_cemac') }}</div>
+                </div>
+                <div class="trust-item">
+                    <div class="num">MoH</div>
+                    <div class="label">{{ __('home.trust_moh') }}</div>
+                </div>
             </div>
         </div>
-    </section>
+
+        <div class="hero-visual">
+            <div class="hero-visual-title">OPES Software Ecosystem</div>
+            <div class="ecosystem-grid">
+                <div class="eco-item hl-teal">
+                    <div class="eco-icon-wrap teal"><i data-lucide="fingerprint" style="width:15px;height:15px;color:#00C896"></i></div>
+                    <div>
+                        <div class="eco-name" style="color:#00C896">OPESCare</div>
+                        <div class="eco-desc">Health ID · Interoperability</div>
+                    </div>
+                </div>
+                <div class="eco-item hl-blue">
+                    <div class="eco-icon-wrap blue"><i data-lucide="stethoscope" style="width:15px;height:15px;color:#1A6FE8"></i></div>
+                    <div>
+                        <div class="eco-name" style="color:#1A6FE8">OPES EMR</div>
+                        <div class="eco-desc">Clinics &amp; Small Hospitals</div>
+                    </div>
+                </div>
+                <div class="eco-item">
+                    <div class="eco-icon-wrap neutral"><i data-lucide="microscope" style="width:15px;height:15px;color:#94a3b8"></i></div>
+                    <div><div class="eco-name">OPES Lab</div><div class="eco-desc">LABIS</div></div>
+                </div>
+                <div class="eco-item">
+                    <div class="eco-icon-wrap neutral"><i data-lucide="pill" style="width:15px;height:15px;color:#94a3b8"></i></div>
+                    <div><div class="eco-name">PHARMIS</div><div class="eco-desc">Pharmacy IS</div></div>
+                </div>
+                <div class="eco-item">
+                    <div class="eco-icon-wrap neutral"><i data-lucide="hospital" style="width:15px;height:15px;color:#94a3b8"></i></div>
+                    <div><div class="eco-name">OPES Hospital</div><div class="eco-desc">Full HIS</div></div>
+                </div>
+                <div class="eco-item hl-teal">
+                    <div class="eco-icon-wrap teal"><i data-lucide="timer" style="width:15px;height:15px;color:#00C896"></i></div>
+                    <div>
+                        <div class="eco-name" style="color:#00C896">Opes Triage</div>
+                        <div class="eco-desc">Standalone · Any Hospital</div>
+                    </div>
+                </div>
+                <div class="eco-more">+16 specialist systems — Cardiology, Dental, OB/GYN, Paediatrics &amp; more →</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- ── CATEGORY TABS ───────────────────────────────────────────── --}}
+<div class="category-strip">
+    <div class="cat-inner">
+        <div class="cat-tab active">All Systems</div>
+        <div class="cat-tab inactive">Core Platform</div>
+        <div class="cat-tab inactive">Diagnostics</div>
+        <div class="cat-tab inactive">Specialist Systems</div>
+        <div class="cat-tab inactive">Administration &amp; Finance</div>
+    </div>
+</div>
+
+{{-- ── PRODUCT GRID (22 systems) ──────────────────────────────── --}}
+<div class="section">
+    <div class="section-label">
+        <i data-lucide="grid-3x3" style="width:12px;height:12px"></i> Our Software
+    </div>
+    <h2 class="section-title">22 Systems. One Ecosystem.</h2>
+    <p class="section-sub">Every system integrates with OPESCare — your patient's Health ID follows them across every facility.</p>
+
+    <div class="product-grid">
+        <a href="{{ url($locale.'/products/opescare') }}" class="product-card core">
+            <div class="p-icon"><i data-lucide="fingerprint" style="width:24px;height:24px;color:#00C896"></i></div>
+            <div class="p-name">OPESCare</div><div class="p-cat">Health ID · Interoperability</div>
+        </a>
+        <a href="{{ url($locale.'/products/opes-emr') }}" class="product-card core">
+            <div class="p-icon"><i data-lucide="stethoscope" style="width:24px;height:24px;color:#00C896"></i></div>
+            <div class="p-name">OPES EMR</div><div class="p-cat">Clinics &amp; Hospitals</div>
+        </a>
+        <a href="{{ url($locale.'/products/opes-hospital-his') }}" class="product-card core">
+            <div class="p-icon"><i data-lucide="hospital" style="width:24px;height:24px;color:#00C896"></i></div>
+            <div class="p-name">OPES Hospital HIS</div><div class="p-cat">Full Hospital IS</div>
+        </a>
+        <a href="{{ url($locale.'/products/uhc-is') }}" class="product-card core">
+            <div class="p-icon"><i data-lucide="users" style="width:24px;height:24px;color:#00C896"></i></div>
+            <div class="p-name">UHC IS</div><div class="p-cat">Universal Hospital Care</div>
+        </a>
+        <a href="{{ url($locale.'/products/opes-triage') }}" class="product-card core">
+            <div class="p-icon"><i data-lucide="timer" style="width:24px;height:24px;color:#00C896"></i></div>
+            <div class="p-name">Opes Triage</div><div class="p-cat">Standalone · Any Facility</div>
+        </a>
+        <a href="{{ url($locale.'/products/opes-lab') }}" class="product-card diag">
+            <div class="p-icon"><i data-lucide="microscope" style="width:24px;height:24px;color:#1A6FE8"></i></div>
+            <div class="p-name">OPES Lab</div><div class="p-cat">Laboratory IS</div>
+        </a>
+        <a href="{{ url($locale.'/products/pharmis') }}" class="product-card diag">
+            <div class="p-icon"><i data-lucide="pill" style="width:24px;height:24px;color:#1A6FE8"></i></div>
+            <div class="p-name">PHARMIS</div><div class="p-cat">Pharmacy IS</div>
+        </a>
+        <a href="{{ url($locale.'/products/radis') }}" class="product-card diag">
+            <div class="p-icon"><i data-lucide="image-up" style="width:24px;height:24px;color:#1A6FE8"></i></div>
+            <div class="p-name">RADIS</div><div class="p-cat">Radiology IS</div>
+        </a>
+        <a href="{{ url($locale.'/products/opes-cdms') }}" class="product-card">
+            <div class="p-icon"><i data-lucide="folder-open" style="width:24px;height:24px;color:#94a3b8"></i></div>
+            <div class="p-name">OPES CDMS</div><div class="p-cat">Clinical Documents</div>
+        </a>
+        <a href="{{ url($locale.'/products/rcmis') }}" class="product-card">
+            <div class="p-icon"><i data-lucide="receipt" style="width:24px;height:24px;color:#94a3b8"></i></div>
+            <div class="p-name">RCMIS</div><div class="p-cat">Revenue Cycle</div>
+        </a>
+        <a href="{{ url($locale.'/products/cardis') }}" class="product-card">
+            <div class="p-icon"><i data-lucide="heart-pulse" style="width:24px;height:24px;color:#94a3b8"></i></div>
+            <div class="p-name">CARDIS</div><div class="p-cat">Cardiology</div>
+        </a>
+        <a href="{{ url($locale.'/products/dentis') }}" class="product-card">
+            <div class="p-icon"><i data-lucide="scan-face" style="width:24px;height:24px;color:#94a3b8"></i></div>
+            <div class="p-name">DENTIS</div><div class="p-cat">Dental</div>
+        </a>
+        <a href="{{ url($locale.'/products/dermis') }}" class="product-card">
+            <div class="p-icon"><i data-lucide="layers" style="width:24px;height:24px;color:#94a3b8"></i></div>
+            <div class="p-name">DERMIS</div><div class="p-cat">Dermatology</div>
+        </a>
+        <a href="{{ url($locale.'/products/endois') }}" class="product-card">
+            <div class="p-icon"><i data-lucide="gauge" style="width:24px;height:24px;color:#94a3b8"></i></div>
+            <div class="p-name">ENDOIS</div><div class="p-cat">Endocrinology &amp; Diabetes</div>
+        </a>
+        <a href="{{ url($locale.'/products/gynobsis') }}" class="product-card">
+            <div class="p-icon"><i data-lucide="baby" style="width:24px;height:24px;color:#94a3b8"></i></div>
+            <div class="p-name">GYNOBSIS</div><div class="p-cat">Obstetrics &amp; Gynaecology</div>
+        </a>
+        <a href="{{ url($locale.'/products/mhis') }}" class="product-card">
+            <div class="p-icon"><i data-lucide="brain" style="width:24px;height:24px;color:#94a3b8"></i></div>
+            <div class="p-name">MHIS</div><div class="p-cat">Mental Health</div>
+        </a>
+        <a href="{{ url($locale.'/products/ndis') }}" class="product-card">
+            <div class="p-icon"><i data-lucide="apple" style="width:24px;height:24px;color:#94a3b8"></i></div>
+            <div class="p-name">NDIS</div><div class="p-cat">Nutrition &amp; Dietetics</div>
+        </a>
+        <a href="{{ url($locale.'/products/ophis') }}" class="product-card">
+            <div class="p-icon"><i data-lucide="eye" style="width:24px;height:24px;color:#94a3b8"></i></div>
+            <div class="p-name">OPHIS</div><div class="p-cat">Ophthalmology</div>
+        </a>
+        <a href="{{ url($locale.'/products/orthois') }}" class="product-card">
+            <div class="p-icon"><i data-lucide="accessibility" style="width:24px;height:24px;color:#94a3b8"></i></div>
+            <div class="p-name">ORTHOIS</div><div class="p-cat">Orthotics &amp; Prosthetics</div>
+        </a>
+        <a href="{{ url($locale.'/products/paedis') }}" class="product-card">
+            <div class="p-icon"><i data-lucide="shield-heart" style="width:24px;height:24px;color:#94a3b8"></i></div>
+            <div class="p-name">PAEDIS</div><div class="p-cat">Paediatrics</div>
+        </a>
+        <a href="{{ url($locale.'/products/rehabis') }}" class="product-card">
+            <div class="p-icon"><i data-lucide="dumbbell" style="width:24px;height:24px;color:#94a3b8"></i></div>
+            <div class="p-name">REHABIS</div><div class="p-cat">Physical Medicine &amp; Rehab</div>
+        </a>
+        <a href="{{ url($locale.'/products/sltis') }}" class="product-card">
+            <div class="p-icon"><i data-lucide="waves" style="width:24px;height:24px;color:#94a3b8"></i></div>
+            <div class="p-name">SLTIS</div><div class="p-cat">Speech &amp; Language Therapy</div>
+        </a>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+{{-- ── WHY OPES ─────────────────────────────────────────────────── --}}
+<div class="why-section">
+    <div class="pillars">
+        <div class="pillar">
+            <div class="pillar-icon-wrap" style="background:rgba(0,200,150,0.1)">
+                <i data-lucide="globe-2" style="width:26px;height:26px;color:#00C896"></i>
+            </div>
+            <h3>Built for Africa</h3>
+            <p>Designed from the ground up for Cameroon, the CEMAC region and all of Africa. Fully bilingual in English and French. Understands local workflows, regulations, and healthcare realities.</p>
+        </div>
+        <div class="pillar">
+            <div class="pillar-icon-wrap" style="background:rgba(26,111,232,0.1)">
+                <i data-lucide="network" style="width:26px;height:26px;color:#1A6FE8"></i>
+            </div>
+            <h3>Fully Interoperable</h3>
+            <p>OPESCare gives every patient a single Health ID that works across all 22 systems. Your lab, pharmacy, EMR, and hospital all speak the same language — automatically.</p>
+        </div>
+        <div class="pillar">
+            <div class="pillar-icon-wrap" style="background:rgba(0,200,150,0.1)">
+                <i data-lucide="layout-grid" style="width:26px;height:26px;color:#00C896"></i>
+            </div>
+            <h3>Every Facility, Every Specialty</h3>
+            <p>From a single-room clinic to a multi-department hospital. From general practice to cardiology, dentistry, mental health, paediatrics and 12 more specialties. One vendor, complete coverage.</p>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+{{-- ── ECOSYSTEM DIAGRAM ───────────────────────────────────────── --}}
+<div class="section" style="text-align:center">
+    <div class="section-label" style="justify-content:center">
+        <i data-lucide="share-2" style="width:12px;height:12px"></i> Architecture
+    </div>
+    <h2 class="section-title">One Health ID. Every System Connected.</h2>
+    <p class="section-sub" style="max-width:580px;margin:0 auto">OPESCare sits at the center of the OPES ecosystem — a universal Health ID and interoperability layer that connects every system you deploy.</p>
+
+    <div class="eco-diagram">
+        <div class="eco-center-box">
+            <i data-lucide="fingerprint" style="width:28px;height:28px;color:#00C896"></i>
+            <div>
+                <div class="eco-center-title">OPESCare · Health ID Layer</div>
+                <div class="eco-center-sub">Interoperability · Patient Identity · Data Exchange</div>
+            </div>
+        </div>
+        <div class="eco-spokes">
+            <div class="eco-spoke"><i data-lucide="stethoscope" style="width:14px;height:14px;color:#64748b;flex-shrink:0"></i><span class="eco-spoke-name">OPES EMR</span></div>
+            <div class="eco-spoke"><i data-lucide="hospital" style="width:14px;height:14px;color:#64748b;flex-shrink:0"></i><span class="eco-spoke-name">Hospital HIS</span></div>
+            <div class="eco-spoke"><i data-lucide="microscope" style="width:14px;height:14px;color:#64748b;flex-shrink:0"></i><span class="eco-spoke-name">OPES Lab</span></div>
+            <div class="eco-spoke"><i data-lucide="pill" style="width:14px;height:14px;color:#64748b;flex-shrink:0"></i><span class="eco-spoke-name">PHARMIS</span></div>
+            <div class="eco-spoke"><i data-lucide="image-up" style="width:14px;height:14px;color:#64748b;flex-shrink:0"></i><span class="eco-spoke-name">RADIS</span></div>
+            <div class="eco-spoke"><i data-lucide="heart-pulse" style="width:14px;height:14px;color:#64748b;flex-shrink:0"></i><span class="eco-spoke-name">CARDIS</span></div>
+            <div class="eco-spoke"><i data-lucide="brain" style="width:14px;height:14px;color:#64748b;flex-shrink:0"></i><span class="eco-spoke-name">MHIS</span></div>
+            <div class="eco-spoke"><i data-lucide="baby" style="width:14px;height:14px;color:#64748b;flex-shrink:0"></i><span class="eco-spoke-name">GYNOBSIS</span></div>
+            <div class="eco-spoke"><i data-lucide="eye" style="width:14px;height:14px;color:#64748b;flex-shrink:0"></i><span class="eco-spoke-name">OPHIS</span></div>
+            <div class="eco-spoke"><i data-lucide="more-horizontal" style="width:14px;height:14px;color:#64748b;flex-shrink:0"></i><span class="eco-spoke-name">+13 more</span></div>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+{{-- ── STATS ────────────────────────────────────────────────────── --}}
+<div class="stats-section">
+    <div class="stats-inner">
+        <div class="stat-item">
+            <div class="stat-icon-wrap"><i data-lucide="layout-grid" style="width:22px;height:22px;color:#00C896"></i></div>
+            <div class="stat-num">22</div>
+            <div class="stat-label">Integrated Software Systems</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-icon-wrap"><i data-lucide="languages" style="width:22px;height:22px;color:#1A6FE8"></i></div>
+            <div class="stat-num">EN/FR</div>
+            <div class="stat-label">Fully Bilingual Platform</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-icon-wrap"><i data-lucide="map" style="width:22px;height:22px;color:#00C896"></i></div>
+            <div class="stat-num">CEMAC</div>
+            <div class="stat-label">6-Country Regional Coverage</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-icon-wrap"><i data-lucide="landmark" style="width:22px;height:22px;color:#1A6FE8"></i></div>
+            <div class="stat-num">MoH</div>
+            <div class="stat-label">Ministry of Health Aligned</div>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+{{-- ── TRIAGE CALLOUT ──────────────────────────────────────────── --}}
+<div class="triage-section">
+    <div class="triage-card">
+        <div>
+            <div class="triage-badge">
+                <i data-lucide="zap" style="width:11px;height:11px"></i>
+                Standalone · Works With Any Software
+            </div>
+            <h3>Reduce Patient Wait Times — Starting Tomorrow</h3>
+            <p>Opes Triage is our standalone triage system that works even if your hospital already has existing software. No replacement required. Deploy it independently and start reducing wait times in days, not months.</p>
+            <a href="{{ url($locale.'/products/opes-triage') }}" class="btn-primary" style="margin-top:24px;display:inline-flex">
+                Learn About Opes Triage
+                <i data-lucide="arrow-right" style="width:15px;height:15px"></i>
+            </a>
+        </div>
+        <div class="triage-stat">
+            <i data-lucide="timer" style="width:32px;height:32px;color:#00C896"></i>
+            <div class="triage-stat-num">↓ Wait Times</div>
+            <div class="triage-stat-label">Any hospital · Any size</div>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+{{-- ── FEATURED PRODUCTS ───────────────────────────────────────── --}}
+<div class="section">
+    <div class="section-label"><i data-lucide="star" style="width:12px;height:12px"></i> Spotlight</div>
+    <h2 class="section-title">Start with the Essentials</h2>
+    <p class="section-sub">Our most adopted systems — deploy one or deploy the full ecosystem.</p>
+    <div class="featured-grid">
+        <a href="{{ url($locale.'/products/opescare') }}" class="featured-card" style="border-color:rgba(0,200,150,0.2)">
+            <div class="featured-icon" style="background:rgba(0,200,150,0.1)">
+                <i data-lucide="fingerprint" style="width:22px;height:22px;color:#00C896"></i>
+            </div>
+            <h3>OPESCare — Health ID</h3>
+            <p>The backbone of the OPES ecosystem. Assigns every patient a universal Health ID and enables seamless data exchange across all your systems and partner facilities.</p>
+            <div class="featured-link">Explore OPESCare <i data-lucide="arrow-right" style="width:13px;height:13px"></i></div>
+        </a>
+        <a href="{{ url($locale.'/products/opes-emr') }}" class="featured-card" style="border-color:rgba(26,111,232,0.2)">
+            <div class="featured-icon" style="background:rgba(26,111,232,0.1)">
+                <i data-lucide="stethoscope" style="width:22px;height:22px;color:#1A6FE8"></i>
+            </div>
+            <h3>OPES EMR</h3>
+            <p>Electronic Medical Records designed for clinics and small hospitals in Cameroon. Bilingual, intuitive, and built to handle the pace of African clinical practice.</p>
+            <div class="featured-link">Explore OPES EMR <i data-lucide="arrow-right" style="width:13px;height:13px"></i></div>
+        </a>
+        <a href="{{ url($locale.'/products/opes-hospital-his') }}" class="featured-card">
+            <div class="featured-icon" style="background:rgba(255,255,255,0.06)">
+                <i data-lucide="hospital" style="width:22px;height:22px;color:#94a3b8"></i>
+            </div>
+            <h3>OPES Hospital HIS</h3>
+            <p>A complete Hospital Information System for larger facilities — admissions, wards, discharge, billing, reporting, and full integration with all OPES specialist modules.</p>
+            <div class="featured-link">Explore OPES Hospital <i data-lucide="arrow-right" style="width:13px;height:13px"></i></div>
+        </a>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+{{-- ── DEMO CTA ─────────────────────────────────────────────────── --}}
+<div class="demo-section">
+    <div class="section-label" style="justify-content:center;color:#1A6FE8;margin-bottom:12px">
+        <i data-lucide="calendar-check" style="width:13px;height:13px"></i>
+        Get Started
+    </div>
+    <h2>{{ __('home.demo_title') }}</h2>
+    <p>{{ __('home.demo_text') }}</p>
+    <form action="{{ url($locale.'/contact') }}" method="POST" class="demo-form">
+        @csrf
+        <input class="demo-input" type="text" name="name" placeholder="{{ __('home.demo_name') }}">
+        <input class="demo-input" type="email" name="email" placeholder="{{ __('home.demo_email') }}">
+        <select class="demo-select" name="facility_type">
+            <option value="">{{ __('home.demo_facility') }}</option>
+            <option>Clinic</option>
+            <option>Hospital</option>
+            <option>Laboratory</option>
+            <option>Pharmacy</option>
+            <option>Government / NGO</option>
+        </select>
+        <button type="submit" class="demo-btn">
+            {{ __('home.demo_btn') }}
+            <i data-lucide="send" style="width:15px;height:15px"></i>
+        </button>
+    </form>
+</div>
+
+<div class="divider"></div>
+
+{{-- ── PARTNERSHIPS ─────────────────────────────────────────────── --}}
+<div class="section">
+    <div class="section-label"><i data-lucide="handshake" style="width:12px;height:12px"></i> Collaborate</div>
+    <h2 class="section-title">Partner With OPES</h2>
+    <p class="section-sub">We're building Africa's digital health infrastructure. Join us.</p>
+    <div class="partner-grid">
+        <div class="partner-card" style="border-color:rgba(0,200,150,0.18)">
+            <div class="partner-icon" style="background:rgba(0,200,150,0.08)">
+                <i data-lucide="hospital" style="width:20px;height:20px;color:#00C896"></i>
+            </div>
+            <h4>Hospitals &amp; Clinics</h4>
+            <p>Pilot our systems, provide clinical validation, and shape the future of African digital health.</p>
+        </div>
+        <div class="partner-card" style="border-color:rgba(26,111,232,0.18)">
+            <div class="partner-icon" style="background:rgba(26,111,232,0.08)">
+                <i data-lucide="trending-up" style="width:20px;height:20px;color:#1A6FE8"></i>
+            </div>
+            <h4>Investors</h4>
+            <p>Join a venture building scalable health infrastructure for 500M+ people across CEMAC and Africa.</p>
+        </div>
+        <div class="partner-card">
+            <div class="partner-icon" style="background:rgba(255,255,255,0.05)">
+                <i data-lucide="landmark" style="width:20px;height:20px;color:#94a3b8"></i>
+            </div>
+            <h4>Government &amp; NGOs</h4>
+            <p>Align with national UHC goals. Integrate OPES with public health reporting and disease surveillance systems.</p>
+        </div>
+        <div class="partner-card">
+            <div class="partner-icon" style="background:rgba(255,255,255,0.05)">
+                <i data-lucide="flask-conical" style="width:20px;height:20px;color:#94a3b8"></i>
+            </div>
+            <h4>Pharma &amp; Insurance</h4>
+            <p>Access anonymised population health analytics and integrate insurance financing into OPES platforms.</p>
+        </div>
+        <div class="partner-card">
+            <div class="partner-icon" style="background:rgba(255,255,255,0.05)">
+                <i data-lucide="graduation-cap" style="width:20px;height:20px;color:#94a3b8"></i>
+            </div>
+            <h4>Academic &amp; Research</h4>
+            <p>Co-publish health technology research and train the next generation of African health informatics professionals.</p>
+        </div>
+        <div class="partner-card">
+            <div class="partner-icon" style="background:rgba(255,255,255,0.05)">
+                <i data-lucide="plug-zap" style="width:20px;height:20px;color:#94a3b8"></i>
+            </div>
+            <h4>Technology Partners</h4>
+            <p>Integrate your solutions with the OPES ecosystem through our interoperability layer and developer APIs.</p>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+{{-- ── BLOG ─────────────────────────────────────────────────────── --}}
+<div class="section">
+    <div class="section-label"><i data-lucide="rss" style="width:12px;height:12px"></i> Insights</div>
+    <h2 class="section-title">Digital Health in Africa</h2>
+    <p class="section-sub">News, product deep-dives, and health technology insights for the CEMAC region.</p>
+    <div class="blog-grid">
+        <a href="{{ url($locale.'/blog') }}" class="blog-card">
+            <div class="blog-thumb" style="background:linear-gradient(135deg,rgba(0,200,150,0.12),rgba(26,111,232,0.12))">
+                <i data-lucide="fingerprint" style="width:36px;height:36px;color:#00C896;opacity:.7"></i>
+            </div>
+            <div class="blog-body">
+                <div class="blog-cat"><i data-lucide="tag" style="width:10px;height:10px"></i> Product</div>
+                <h4>How OPESCare's Health ID is Transforming Patient Records in Cameroon</h4>
+                <div class="blog-meta"><i data-lucide="clock" style="width:10px;height:10px"></i> June 2026 · 5 min read</div>
+            </div>
+        </a>
+        <a href="{{ url($locale.'/blog') }}" class="blog-card">
+            <div class="blog-thumb" style="background:linear-gradient(135deg,rgba(26,111,232,0.12),rgba(0,200,150,0.08))">
+                <i data-lucide="landmark" style="width:36px;height:36px;color:#1A6FE8;opacity:.7"></i>
+            </div>
+            <div class="blog-body">
+                <div class="blog-cat"><i data-lucide="tag" style="width:10px;height:10px"></i> Policy</div>
+                <h4>Cameroon MoH 2026–2030 Digital Health Strategy: What It Means for Hospitals</h4>
+                <div class="blog-meta"><i data-lucide="clock" style="width:10px;height:10px"></i> June 2026 · 8 min read</div>
+            </div>
+        </a>
+        <a href="{{ url($locale.'/blog') }}" class="blog-card">
+            <div class="blog-thumb" style="background:linear-gradient(135deg,rgba(0,200,150,0.08),rgba(26,111,232,0.12))">
+                <i data-lucide="network" style="width:36px;height:36px;color:#94a3b8;opacity:.7"></i>
+            </div>
+            <div class="blog-body">
+                <div class="blog-cat"><i data-lucide="tag" style="width:10px;height:10px"></i> Technology</div>
+                <h4>Why Interoperability is the Most Important Word in African Healthcare Today</h4>
+                <div class="blog-meta"><i data-lucide="clock" style="width:10px;height:10px"></i> May 2026 · 6 min read</div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+{{-- ── TESTIMONIALS ─────────────────────────────────────────────── --}}
+<div class="section">
+    <div class="section-label"><i data-lucide="message-square-quote" style="width:12px;height:12px"></i> Trust</div>
+    <h2 class="section-title">What Healthcare Professionals Say</h2>
+    <div class="testimonial-grid">
+        <div class="testimonial">
+            <i data-lucide="quote" style="width:20px;height:20px;color:#00C896;opacity:.5"></i>
+            <blockquote>"OPES EMR transformed how we manage patient records at our clinic. For the first time, our staff in both Yaoundé and Douala are working from the same system — in French and English."</blockquote>
+            <div class="testimonial-author">
+                <i data-lucide="user-circle" style="width:14px;height:14px;color:#00C896"></i>
+                Dr. A. Mbarga · <span>General Practitioner, Yaoundé</span>
+            </div>
+        </div>
+        <div class="testimonial">
+            <i data-lucide="quote" style="width:20px;height:20px;color:#1A6FE8;opacity:.5"></i>
+            <blockquote>"Opes Triage integrated into our existing workflow in under a week. Patient wait times dropped noticeably. I recommend it to every hospital administrator in the region."</blockquote>
+            <div class="testimonial-author">
+                <i data-lucide="user-circle" style="width:14px;height:14px;color:#1A6FE8"></i>
+                Administrator · <span>Regional Hospital, Douala</span>
+            </div>
+        </div>
+    </div>
+</div>
+
 </x-layouts.app>
