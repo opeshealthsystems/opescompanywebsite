@@ -27,8 +27,8 @@
                         value="{{ old('name', $user->name) }}" required>
                 </div>
                 <div class="auth-field">
-                    <label class="auth-label">Email Address</label>
-                    <input type="email" class="auth-input" value="{{ $user->email }}" disabled
+                    <label for="email" class="auth-label">Email Address</label>
+                    <input id="email" type="email" class="auth-input" value="{{ $user->email }}" disabled
                         style="opacity:0.5;cursor:not-allowed" title="Contact support to change email">
                 </div>
                 <div class="auth-field">
@@ -47,31 +47,31 @@
                 <div class="auth-field">
                     <label for="facility_name" class="auth-label">Facility Name</label>
                     <input id="facility_name" name="facility_name" type="text" class="auth-input"
-                        value="{{ old('facility_name', $profile->facility_name) }}" placeholder="Central Hospital Douala">
+                        value="{{ old('facility_name', $profile?->facility_name) }}" placeholder="Central Hospital Douala">
                 </div>
                 <div class="auth-field">
                     <label for="facility_type" class="auth-label">Facility Type</label>
                     <select id="facility_type" name="facility_type" class="auth-input auth-select">
                         <option value="">— Select —</option>
                         @foreach(['hospital'=>'Hospital','clinic'=>'Clinic','laboratory'=>'Laboratory','pharmacy'=>'Pharmacy','radiology'=>'Radiology Centre','nursing_home'=>'Nursing Home','other'=>'Other'] as $val => $label)
-                            <option value="{{ $val }}" {{ old('facility_type', $profile->facility_type) === $val ? 'selected' : '' }}>{{ $label }}</option>
+                            <option value="{{ $val }}" {{ old('facility_type', $profile?->facility_type) === $val ? 'selected' : '' }}>{{ $label }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="auth-field">
                     <label for="country" class="auth-label">Country *</label>
                     <input id="country" name="country" type="text" class="auth-input @error('country') auth-input-error @enderror"
-                        value="{{ old('country', $profile->country) }}" required>
+                        value="{{ old('country', $profile?->country) }}" required>
                 </div>
                 <div class="auth-field">
                     <label for="city" class="auth-label">City</label>
                     <input id="city" name="city" type="text" class="auth-input"
-                        value="{{ old('city', $profile->city) }}" placeholder="Douala">
+                        value="{{ old('city', $profile?->city) }}" placeholder="Douala">
                 </div>
                 <div class="auth-field" style="grid-column: 1 / -1">
                     <label for="address" class="auth-label">Address</label>
                     <input id="address" name="address" type="text" class="auth-input"
-                        value="{{ old('address', $profile->address) }}" placeholder="Street address">
+                        value="{{ old('address', $profile?->address) }}" placeholder="Street address">
                 </div>
             </div>
         </div>
