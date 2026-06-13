@@ -6,7 +6,7 @@
     @include('partials.seo-meta')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-sans text-ink antialiased bg-white">
+<body>
     <x-navbar />
 
     <main>
