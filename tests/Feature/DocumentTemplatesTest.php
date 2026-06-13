@@ -99,4 +99,33 @@ class DocumentTemplatesTest extends TestCase
         $admin->assignRole('admin');
         $this->assertTrue($admin->hasPermissionTo('manage_documents'));
     }
+
+    public function test_document_reference_number_auto_generates_correctly(): void
+    {
+        $refReceipt = Document::generateReferenceNumber('receipt');
+        $this->assertStringStartsWith('RCT-' . now()->year, $refReceipt);
+
+        $refContract = Document::generateReferenceNumber('contract_employee');
+        $this->assertStringStartsWith('EMP-CNT-' . now()->year, $refContract);
+    }
+
+    public function test_document_template_renders_variables(): void
+    {
+        $template = DocumentTemplate::create([
+            'name'      => 'Test Template',
+            'type'      => 'receipt',
+            'body'      => '<p>Hello {{customer_name}}, amount: {{amount}}</p>',
+            'variables' => ['customer_name', 'amount'],
+            'is_active' => true,
+        ]);
+
+        $rendered = Document::renderTemplate($template, [
+            'customer_name' => 'Dr. Ambe',
+            'amount'        => '150,000',
+        ]);
+
+        $this->assertStringContainsString('Dr. Ambe', $rendered);
+        $this->assertStringContainsString('150,000', $rendered);
+        $this->assertStringNotContainsString('{{customer_name}}', $rendered);
+    }
 }

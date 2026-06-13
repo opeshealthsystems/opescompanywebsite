@@ -24,6 +24,17 @@ Route::middleware('guest')->group(function () {
 });
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+// Document routes (auth required — admin and customer PDF download)
+Route::middleware('auth')->group(function () {
+    Route::get('/documents/{document}/pdf',  [\App\Http\Controllers\DocumentController::class, 'pdf'])->name('documents.pdf');
+    Route::get('/documents/{document}/view', [\App\Http\Controllers\DocumentController::class, 'preview'])->name('documents.preview');
+});
+
+// Temporary stub for documents.sign — full implementation in Task 5
+Route::get('/documents/{token}/sign', fn () => abort(404))->name('documents.sign');
+Route::post('/documents/{token}/sign', fn () => abort(404))->name('documents.sign.submit');
+Route::get('/documents/signed/{reference}', fn () => abort(404))->name('documents.sign.success');
+
 // ── Locale-prefixed routes ──────────────────────────────────────────────────
 Route::prefix('{locale}')
     ->where(['locale' => implode('|', config('locale.supported'))])
