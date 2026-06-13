@@ -65,5 +65,7 @@ Route::prefix('{locale}')
                 Route::put('/profile',   [ProfileController::class,   'update'])->name('profile.update');
                 Route::get('/documents',      [\App\Http\Controllers\Customer\DocumentController::class, 'index'])->name('documents');
                 Route::get('/documents/{id}', [\App\Http\Controllers\Customer\DocumentController::class, 'show'])->name('documents.show');
+                Route::get('/licenses',      [\App\Http\Controllers\Customer\LicenseController::class, 'index'])->name('licenses');
+                Route::get('/licenses/{id}', [\App\Http\Controllers\Customer\LicenseController::class, 'show'])->name('licenses.show');
             });
     });

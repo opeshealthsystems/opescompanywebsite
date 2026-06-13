@@ -22,9 +22,10 @@
                class="cp-nav-link {{ request()->routeIs('customer.documents*') ? 'cp-nav-link-active' : '' }}">
                 <i data-lucide="file-text" style="width:16px;height:16px"></i> Documents
             </a>
-            <span class="cp-nav-link cp-nav-link-disabled" title="Coming soon">
+            <a href="{{ route('customer.licenses', ['locale' => app()->getLocale()]) }}"
+               class="cp-nav-link {{ request()->routeIs('customer.licenses*') ? 'cp-nav-link-active' : '' }}">
                 <i data-lucide="key" style="width:16px;height:16px"></i> Licenses
-            </span>
+            </a>
             <span class="cp-nav-link cp-nav-link-disabled" title="Coming soon">
                 <i data-lucide="ticket" style="width:16px;height:16px"></i> Support
             </span>

@@ -139,4 +139,57 @@ class LicenseManagementTest extends TestCase
         $admin->assignRole('admin');
         $this->assertTrue($admin->hasPermissionTo('manage_licenses'));
     }
+
+    public function test_customer_can_view_their_licenses(): void
+    {
+        $admin    = User::factory()->create();
+        $admin->assignRole('admin');
+        $customer = User::factory()->create();
+        $customer->assignRole('customer');
+
+        \App\Models\License::create([
+            'user_id'      => $customer->id,
+            'issued_by'    => $admin->id,
+            'product_slug' => 'opescare',
+            'product_name' => 'OPESCare',
+            'license_key'  => \App\Models\License::generateKey(),
+            'plan'         => 'professional',
+            'seats'        => 3,
+            'status'       => 'active',
+            'start_date'   => now()->toDateString(),
+            'end_date'     => now()->addYear()->toDateString(),
+        ]);
+
+        $this->actingAs($customer)
+            ->get('/en/customer/licenses')
+            ->assertOk()
+            ->assertSee('OPESCare');
+    }
+
+    public function test_customer_cannot_see_another_customers_license(): void
+    {
+        $admin     = User::factory()->create();
+        $admin->assignRole('admin');
+        $customer1 = User::factory()->create();
+        $customer1->assignRole('customer');
+        $customer2 = User::factory()->create();
+        $customer2->assignRole('customer');
+
+        $license = \App\Models\License::create([
+            'user_id'      => $customer1->id,
+            'issued_by'    => $admin->id,
+            'product_slug' => 'opescare',
+            'product_name' => 'OPESCare',
+            'license_key'  => \App\Models\License::generateKey(),
+            'plan'         => 'standard',
+            'seats'        => 1,
+            'status'       => 'active',
+            'start_date'   => now()->toDateString(),
+            'end_date'     => now()->addYear()->toDateString(),
+        ]);
+
+        $this->actingAs($customer2)
+            ->get('/en/customer/licenses/' . $license->id)
+            ->assertForbidden();
+    }
 }
