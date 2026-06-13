@@ -25,6 +25,21 @@ class TesterAssignmentResource extends Resource
         return auth()->user()?->hasPermissionTo('assign_testers') ?? false;
     }
 
+    public static function canCreate(): bool
+    {
+        return static::canAccess();
+    }
+
+    public static function canEdit(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return static::canAccess();
+    }
+
+    public static function canDelete(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return static::canAccess();
+    }
+
     public static function getProductOptions(): array
     {
         $options = [];

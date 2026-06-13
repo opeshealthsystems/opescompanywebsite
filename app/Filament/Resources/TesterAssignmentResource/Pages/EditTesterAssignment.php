@@ -15,6 +15,12 @@ class EditTesterAssignment extends EditRecord
         return [Actions\DeleteAction::make()];
     }
 
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        unset($data['assigned_by']);
+        return $data;
+    }
+
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');
