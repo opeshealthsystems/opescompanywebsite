@@ -14,7 +14,7 @@ class EditDocumentTemplate extends EditRecord
     {
         return [
             Actions\DeleteAction::make()
-                ->hidden(fn () => $this->record->documents()->exists()),
+                ->hidden(fn () => $this->record->loadCount('documents')->documents_count > 0),
         ];
     }
 

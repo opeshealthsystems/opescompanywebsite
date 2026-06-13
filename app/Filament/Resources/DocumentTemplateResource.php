@@ -113,7 +113,7 @@ class DocumentTemplateResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make()
-                    ->hidden(fn (DocumentTemplate $record) => $record->documents()->exists()),
+                    ->hidden(fn (DocumentTemplate $record) => ($record->documents_count ?? 0) > 0),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
