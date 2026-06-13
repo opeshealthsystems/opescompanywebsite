@@ -173,4 +173,46 @@ class CustomerPortalTest extends TestCase
 
         $this->assertGuest();
     }
+
+    public function test_authenticated_customer_can_access_dashboard(): void
+    {
+        $user = User::factory()->create();
+        $user->assignRole('customer');
+
+        $this->actingAs($user)
+            ->get('/en/customer/dashboard')
+            ->assertOk()
+            ->assertSee($user->name);
+    }
+
+    public function test_staff_user_cannot_access_customer_dashboard(): void
+    {
+        $admin = User::factory()->create();
+        $admin->assignRole('admin');
+
+        $this->actingAs($admin)
+            ->get('/en/customer/dashboard')
+            ->assertForbidden();
+    }
+
+    public function test_customer_can_update_profile(): void
+    {
+        $user = User::factory()->create(['name' => 'Old Name', 'phone' => null]);
+        $user->assignRole('customer');
+        $user->customerProfile()->create(['country' => 'CM']);
+
+        $response = $this->actingAs($user)->put('/en/customer/profile', [
+            'name'          => 'New Name',
+            'phone'         => '+237612345678',
+            'facility_name' => 'Updated Clinic',
+            'facility_type' => 'clinic',
+            'country'       => 'CM',
+            'city'          => 'Yaounde',
+            'address'       => '12 Rue de l\'Hopital',
+        ]);
+
+        $response->assertRedirect('/en/customer/profile');
+        $this->assertDatabaseHas('users', ['id' => $user->id, 'name' => 'New Name', 'phone' => '+237612345678']);
+        $this->assertDatabaseHas('customer_profiles', ['user_id' => $user->id, 'facility_name' => 'Updated Clinic']);
+    }
 }
