@@ -5,50 +5,51 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>{{ $document->title }}</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; }
         body { font-family: 'DejaVu Sans', Arial, sans-serif; font-size: 13px; color: #1e293b; background: #fff; }
-        .doc-page { padding: 2.5rem 2.5rem 2rem; min-height: 100vh; }
-        .doc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
-        .doc-company { font-size: 1.5rem; font-weight: 700; color: #0f172a; letter-spacing: -0.02em; }
-        .doc-company-sub { font-size: 0.75rem; color: #64748b; margin-top: 0.2rem; }
-        .doc-stamp { text-align: right; }
-        .doc-stamp-label { font-size: 1rem; font-weight: 700; color: #00C896; text-transform: uppercase; letter-spacing: 0.1em; }
-        .doc-stamp-ref { font-size: 0.8rem; color: #475569; margin-top: 0.25rem; }
-        .doc-divider { border: none; border-top: 2px solid #00C896; margin: 1rem 0; }
-        .doc-meta-row { display: flex; justify-content: space-between; margin: 1.5rem 0; }
-        .doc-meta-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #94a3b8; letter-spacing: 0.06em; }
-        .doc-meta-value { font-size: 0.875rem; color: #1e293b; margin-top: 0.2rem; }
-        .doc-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
-        .doc-table th { background: #0f172a; color: #f1f5f9; padding: 0.6rem 0.75rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; text-align: left; }
-        .doc-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid #e2e8f0; font-size: 0.875rem; }
-        .doc-table tfoot td { border-top: 2px solid #0f172a; font-weight: 700; padding: 0.75rem; }
+        .doc-page { padding: 40px 40px 32px; }
+        /* Header: table layout for DomPDF compatibility (no flexbox) */
+        .doc-header { display: table; width: 100%; margin-bottom: 16px; }
+        .doc-logo-block { display: table-cell; vertical-align: top; }
+        .doc-stamp { display: table-cell; vertical-align: top; text-align: right; width: 220px; }
+        .doc-company { font-size: 24px; font-weight: 700; color: #0f172a; }
+        .doc-company-sub { font-size: 12px; color: #64748b; margin-top: 3px; }
+        .doc-stamp-label { font-size: 16px; font-weight: 700; color: #00C896; text-transform: uppercase; }
+        .doc-stamp-ref { font-size: 13px; color: #475569; margin-top: 4px; }
+        .doc-divider { border: none; border-top: 2px solid #00C896; margin: 16px 0; }
+        /* Meta row: table layout */
+        .doc-meta-row { display: table; width: 100%; margin: 24px 0; }
+        .doc-meta-row > div { display: table-cell; vertical-align: top; }
+        .doc-meta-row > div:last-child { text-align: right; }
+        .doc-meta-label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #94a3b8; }
+        .doc-meta-value { font-size: 14px; color: #1e293b; margin-top: 3px; }
+        .doc-table { width: 100%; border-collapse: collapse; margin: 24px 0; }
+        .doc-table th { background: #0f172a; color: #f1f5f9; padding: 10px 12px; font-size: 12px; text-transform: uppercase; text-align: left; }
+        .doc-table td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+        .doc-table tfoot td { border-top: 2px solid #0f172a; font-weight: 700; padding: 12px; }
         .text-right { text-align: right; }
         .doc-total-row td { background: #f8fafc; }
-        .doc-footer-note { margin-top: 2rem; font-size: 0.75rem; color: #64748b; line-height: 1.6; }
-        .doc-signature-block { margin-top: 3rem; }
-        .doc-sig-line { border-top: 1px solid #94a3b8; width: 200px; margin-bottom: 0.5rem; }
-        .doc-sig-label { font-size: 0.75rem; color: #64748b; }
-        .doc-section-title { font-size: 1.1rem; font-weight: 700; text-align: center; margin: 1.5rem 0 1rem; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; }
-        .doc-clause-title { font-size: 0.9rem; font-weight: 700; margin: 1.25rem 0 0.4rem; color: #0f172a; }
-        .doc-body-text { font-size: 0.875rem; line-height: 1.7; color: #334155; margin-bottom: 0.75rem; }
-        .doc-date { font-size: 0.875rem; color: #64748b; margin-bottom: 1rem; }
-        .doc-recipient { font-size: 0.9375rem; font-weight: 600; color: #0f172a; }
-        .doc-recipient-addr { font-size: 0.8125rem; color: #64748b; margin-bottom: 0.5rem; }
-        .doc-subject { font-size: 0.875rem; margin: 1.25rem 0 1.5rem; color: #0f172a; }
-        .doc-signatures-row { display: flex; justify-content: space-between; margin-top: 2rem; }
-        .doc-sig-col { width: 45%; }
-        .doc-logo-block { flex: 1; }
+        .doc-footer-note { margin-top: 32px; font-size: 12px; color: #64748b; line-height: 1.6; }
+        .doc-signature-block { margin-top: 48px; }
+        .doc-sig-line { border-top: 1px solid #94a3b8; width: 200px; margin-bottom: 8px; }
+        .doc-sig-label { font-size: 12px; color: #64748b; }
+        .doc-section-title { font-size: 18px; font-weight: 700; text-align: center; margin: 24px 0 16px; color: #0f172a; text-transform: uppercase; }
+        .doc-clause-title { font-size: 14px; font-weight: 700; margin: 20px 0 6px; color: #0f172a; }
+        .doc-body-text { font-size: 14px; line-height: 1.7; color: #334155; margin-bottom: 12px; }
+        .doc-date { font-size: 14px; color: #64748b; margin-bottom: 16px; }
+        .doc-recipient { font-size: 15px; font-weight: 600; color: #0f172a; }
+        .doc-recipient-addr { font-size: 13px; color: #64748b; margin-bottom: 8px; }
+        .doc-subject { font-size: 14px; margin: 20px 0 24px; color: #0f172a; }
+        /* Signatures: table layout for DomPDF compatibility */
+        .doc-signatures-row { display: table; width: 100%; margin-top: 32px; }
+        .doc-sig-col { display: table-cell; vertical-align: top; width: 45%; }
         .doc-signed-banner {
-            background: #f0fdf4; border: 2px solid #00C896; border-radius: 8px;
-            padding: 1rem 1.5rem; margin-bottom: 1.5rem;
+            background: #f0fdf4; border: 2px solid #00C896;
+            padding: 16px 24px; margin-bottom: 24px;
         }
-        .doc-signed-badge { color: #00C896; font-size: 1.5rem; font-weight: 700; }
-        .doc-signed-details { font-size: 0.8125rem; color: #334155; }
-        .doc-signed-signature { font-family: 'Georgia', serif; font-size: 1.25rem; color: #0f172a; margin-top: 0.25rem; }
-        @media print {
-            .doc-page { padding: 0; }
-            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-        }
+        .doc-signed-badge { color: #00C896; font-size: 24px; font-weight: 700; }
+        .doc-signed-details { font-size: 13px; color: #334155; margin-top: 4px; }
+        .doc-signed-signature { font-family: 'Georgia', serif; font-size: 20px; color: #0f172a; margin-top: 4px; }
     </style>
 </head>
 <body>
