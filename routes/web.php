@@ -68,6 +68,8 @@ Route::prefix('{locale}')
                 Route::get('/documents/{id}', [\App\Http\Controllers\Customer\DocumentController::class, 'show'])->name('documents.show');
                 Route::get('/licenses',      [\App\Http\Controllers\Customer\LicenseController::class, 'index'])->name('licenses');
                 Route::get('/licenses/{id}', [\App\Http\Controllers\Customer\LicenseController::class, 'show'])->name('licenses.show');
+                Route::get('/invoices',      [\App\Http\Controllers\Customer\InvoiceController::class, 'index'])->name('invoices');
+                Route::get('/invoices/{id}', [\App\Http\Controllers\Customer\InvoiceController::class, 'show'])->name('invoices.show');
                 Route::get('/tickets',             [\App\Http\Controllers\Customer\TicketController::class, 'index'])->name('tickets');
                 Route::get('/tickets/create',      [\App\Http\Controllers\Customer\TicketController::class, 'create'])->name('tickets.create');
                 Route::post('/tickets',            [\App\Http\Controllers\Customer\TicketController::class, 'store'])->name('tickets.store');

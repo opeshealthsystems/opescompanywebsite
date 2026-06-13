@@ -26,6 +26,10 @@
                class="cp-nav-link {{ request()->routeIs('customer.licenses*') ? 'cp-nav-link-active' : '' }}">
                 <i data-lucide="key" style="width:16px;height:16px"></i> Licenses
             </a>
+            <a href="{{ route('customer.invoices', ['locale' => app()->getLocale()]) }}"
+               class="cp-nav-link {{ request()->routeIs('customer.invoices*') ? 'cp-nav-link-active' : '' }}">
+                <i data-lucide="receipt" style="width:16px;height:16px"></i> Invoices
+            </a>
             <a href="{{ route('customer.tickets', ['locale' => app()->getLocale()]) }}"
                class="cp-nav-link {{ request()->routeIs('customer.tickets*') ? 'cp-nav-link-active' : '' }}">
                 <i data-lucide="ticket" style="width:16px;height:16px"></i> Support
