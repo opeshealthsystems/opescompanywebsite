@@ -78,4 +78,46 @@ class RbacTest extends TestCase
         $this->assertFalse($support->hasPermissionTo('manage_accounting'));
         $this->assertTrue($support->hasPermissionTo('manage_tickets'));
     }
+
+    public function test_unauthenticated_user_is_redirected_from_role_guarded_route(): void
+    {
+        $this->seed(\Database\Seeders\RolePermissionSeeder::class);
+
+        \Illuminate\Support\Facades\Route::get('/test-admin-only', fn () => 'ok')
+            ->middleware(['web', 'role:admin']);
+
+        $response = $this->get('/test-admin-only');
+        $response->assertRedirect('/login');
+    }
+
+    public function test_user_with_wrong_role_gets_403(): void
+    {
+        $this->seed(\Database\Seeders\RolePermissionSeeder::class);
+
+        \Illuminate\Support\Facades\Route::get('/test-admin-only', fn () => 'ok')
+            ->middleware(['web', 'role:admin']);
+
+        $customer = User::factory()->create();
+        $customer->assignRole('customer');
+
+        $this->actingAs($customer)
+            ->get('/test-admin-only')
+            ->assertForbidden();
+    }
+
+    public function test_user_with_correct_role_passes_middleware(): void
+    {
+        $this->seed(\Database\Seeders\RolePermissionSeeder::class);
+
+        \Illuminate\Support\Facades\Route::get('/test-admin-only', fn () => 'ok')
+            ->middleware(['web', 'role:admin']);
+
+        $admin = User::factory()->create();
+        $admin->assignRole('admin');
+
+        $this->actingAs($admin)
+            ->get('/test-admin-only')
+            ->assertOk()
+            ->assertSee('ok');
+    }
 }
