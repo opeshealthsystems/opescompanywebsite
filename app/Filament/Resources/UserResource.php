@@ -51,10 +51,14 @@ class UserResource extends Resource
                 ->schema([
                     Forms\Components\TextInput::make('employee_id')
                         ->label('Employee ID')
-                        ->default(fn () => 'EMP-'.date('Y').'-'.str_pad(
-                            User::whereNotNull('employee_id')->count() + 1,
-                            4, '0', STR_PAD_LEFT
-                        ))
+                        ->default(function () {
+                            $year = date('Y');
+                            $last = User::whereNotNull('employee_id')
+                                ->where('employee_id', 'like', "EMP-{$year}-%")
+                                ->max('employee_id');
+                            $next = $last ? ((int) substr($last, -4)) + 1 : 1;
+                            return 'EMP-' . $year . '-' . str_pad($next, 4, '0', STR_PAD_LEFT);
+                        })
                         ->unique(ignorable: fn (?User $record) => $record)
                         ->nullable()
                         ->helperText('Auto-filled for staff. Leave blank for customer accounts.'),
@@ -74,7 +78,7 @@ class UserResource extends Resource
                     Forms\Components\TextInput::make('password')
                         ->password()
                         ->revealable()
-                        ->dehydrateStateUsing(fn ($state) => filled($state) ? bcrypt($state) : null)
+                        ->dehydrateStateUsing(fn ($state) => filled($state) ? $state : null)
                         ->dehydrated(fn ($state) => filled($state))
                         ->required(fn (string $context) => $context === 'create')
                         ->minLength(8)
@@ -129,7 +133,8 @@ class UserResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->hidden(fn (User $record) => $record->id === auth()->id()),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -145,5 +150,10 @@ class UserResource extends Resource
             'create' => Pages\CreateUser::route('/create'),
             'edit'   => Pages\EditUser::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return parent::getEloquentQuery()->with('roles');
     }
 }
