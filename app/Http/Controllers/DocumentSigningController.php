@@ -20,7 +20,12 @@ class DocumentSigningController extends Controller
 
     public function sign(Request $request, string $token)
     {
-        $document = Document::where('signature_token', $token)->firstOrFail();
+        // If token no longer exists (already signed + cleared), show 410 rather than 404
+        $document = Document::where('signature_token', $token)->first();
+
+        if (!$document) {
+            abort(410, 'This signing link has already been used or does not exist.');
+        }
 
         abort_unless($document->isSigningTokenValid(), 410, 'This signing link has expired or is no longer valid.');
 
