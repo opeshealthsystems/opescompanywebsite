@@ -26,7 +26,7 @@ class TicketResource extends Resource
         return auth()->user()?->hasAnyRole(['super_admin', 'admin', 'support']) ?? false;
     }
 
-    protected static function staffOptions(): array
+    public static function staffOptions(): array
     {
         return User::whereHas('roles', fn ($q) =>
             $q->whereIn('name', ['super_admin', 'admin', 'support'])
