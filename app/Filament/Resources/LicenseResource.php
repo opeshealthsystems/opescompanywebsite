@@ -45,6 +45,8 @@ class LicenseResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $productOptions = static::getProductOptions();
+
         return $form->schema([
             Forms\Components\Section::make('License Details')->schema([
                 Forms\Components\Select::make('user_id')
@@ -57,13 +59,13 @@ class LicenseResource extends Resource
 
                 Forms\Components\Select::make('product_slug')
                     ->label('Product')
-                    ->options(static::getProductOptions())
+                    ->options($productOptions)
                     ->searchable()
                     ->required()
                     ->live()
                     ->afterStateUpdated(function (\Filament\Forms\Set $set, $state) {
                         if (!$state) return;
-                        $options = static::getProductOptions();
+                        $options = $productOptions;
                         if (isset($options[$state])) {
                             $set('product_name', $options[$state]);
                         }
@@ -200,14 +202,14 @@ class LicenseResource extends Resource
                     ->icon('heroicon-o-pause-circle')
                     ->color('warning')
                     ->requiresConfirmation()
-                    ->hidden(fn (License $record) => $record->status !== 'active')
+                    ->visible(fn (License $record) => $record->status === 'active')
                     ->action(fn (License $record) => $record->update(['status' => 'suspended'])),
                 Tables\Actions\Action::make('reactivate')
                     ->label('Reactivate')
                     ->icon('heroicon-o-play-circle')
                     ->color('success')
                     ->requiresConfirmation()
-                    ->hidden(fn (License $record) => $record->status !== 'suspended')
+                    ->visible(fn (License $record) => $record->status === 'suspended')
                     ->action(fn (License $record) => $record->update(['status' => 'active'])),
             ])
             ->bulkActions([
