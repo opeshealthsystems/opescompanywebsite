@@ -15,7 +15,27 @@
 
     <x-footer />
 
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="https://unpkg.com/lucide@0.511.0/dist/umd/lucide.min.js" crossorigin="anonymous"></script>
     <script>lucide.createIcons();</script>
+    <script type="application/ld+json"><?php echo json_encode([
+        '@context'     => 'https://schema.org',
+        '@type'        => 'Organization',
+        'name'         => 'OPES Health Systems',
+        'legalName'    => 'OPES Health Systems SARL',
+        'url'          => config('app.url'),
+        'logo'         => config('app.url').'/favicon.ico',
+        'address'      => [
+            '@type'           => 'PostalAddress',
+            'addressLocality' => 'Bonamousadi, Douala',
+            'addressCountry'  => 'CM',
+        ],
+        'contactPoint' => [
+            '@type'             => 'ContactPoint',
+            'contactType'       => 'sales',
+            'email'             => 'contact@opeshealthsystems.com',
+            'availableLanguage' => ['French', 'English'],
+        ],
+        'sameAs' => [],
+    ], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?></script>
 </body>
 </html>
