@@ -73,4 +73,16 @@ Route::prefix('{locale}')
                 Route::get('/tickets/{id}',        [\App\Http\Controllers\Customer\TicketController::class, 'show'])->name('tickets.show');
                 Route::post('/tickets/{id}/reply', [\App\Http\Controllers\Customer\TicketController::class, 'reply'])->name('tickets.reply');
             });
+
+        // Tester portal (auth + tester role required)
+        Route::middleware(['auth', 'role:tester'])
+            ->prefix('tester')
+            ->name('tester.')
+            ->group(function () {
+                Route::get('/dashboard',                             [\App\Http\Controllers\Tester\DashboardController::class,  'index'])->name('dashboard');
+                Route::get('/assignments',                           [\App\Http\Controllers\Tester\AssignmentController::class, 'index'])->name('assignments');
+                Route::get('/assignments/{id}',                      [\App\Http\Controllers\Tester\AssignmentController::class, 'show'])->name('assignments.show');
+                Route::patch('/assignments/{id}/status',             [\App\Http\Controllers\Tester\AssignmentController::class, 'updateStatus'])->name('assignments.status');
+                Route::post('/assignments/{id}/bug-reports',         [\App\Http\Controllers\Tester\AssignmentController::class, 'storeBugReport'])->name('assignments.bug-reports');
+            });
     });
