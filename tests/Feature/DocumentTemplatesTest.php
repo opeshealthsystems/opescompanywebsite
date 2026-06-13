@@ -128,4 +128,95 @@ class DocumentTemplatesTest extends TestCase
         $this->assertStringContainsString('150,000', $rendered);
         $this->assertStringNotContainsString('{{customer_name}}', $rendered);
     }
+
+    public function test_document_signing_token_is_valid_when_pending(): void
+    {
+        $admin = User::factory()->create();
+        $admin->assignRole('admin');
+
+        $template = DocumentTemplate::create([
+            'name'      => 'Contract',
+            'type'      => 'contract_business',
+            'body'      => '<p>Contract body</p>',
+            'variables' => [],
+            'is_active' => true,
+        ]);
+
+        $document = Document::create([
+            'document_template_id'       => $template->id,
+            'type'                       => 'contract_business',
+            'title'                      => 'Test Contract',
+            'reference_number'           => 'BSN-CNT-2026-00001',
+            'body_rendered'              => '<p>Contract body</p>',
+            'issued_by'                  => $admin->id,
+            'addressee_name'             => 'Dr. Ambe',
+            'status'                     => 'pending_signature',
+            'requires_signature'         => true,
+            'signature_token'            => 'test-token-abc123',
+            'signature_token_expires_at' => now()->addDays(30),
+        ]);
+
+        $this->assertTrue($document->isSigningTokenValid());
+    }
+
+    public function test_signing_page_loads_with_valid_token(): void
+    {
+        $admin    = User::factory()->create();
+        $admin->assignRole('admin');
+        $template = DocumentTemplate::create([
+            'name' => 'T', 'type' => 'contract_business',
+            'body' => '<p>Body</p>', 'variables' => [], 'is_active' => true,
+        ]);
+        $document = Document::create([
+            'document_template_id'       => $template->id,
+            'type'                       => 'contract_business',
+            'title'                      => 'Test Contract',
+            'reference_number'           => 'BSN-CNT-2026-00099',
+            'body_rendered'              => '<p>Body</p>',
+            'issued_by'                  => $admin->id,
+            'addressee_name'             => 'Ambe John',
+            'status'                     => 'pending_signature',
+            'requires_signature'         => true,
+            'signature_token'            => 'validtoken999',
+            'signature_token_expires_at' => now()->addDays(30),
+        ]);
+
+        $response = $this->get('/documents/validtoken999/sign');
+        $response->assertOk();
+        $response->assertSee('Ambe John');
+    }
+
+    public function test_document_can_be_signed_via_token(): void
+    {
+        $admin    = User::factory()->create();
+        $admin->assignRole('admin');
+        $template = DocumentTemplate::create([
+            'name' => 'T2', 'type' => 'contract_business',
+            'body' => '<p>Body</p>', 'variables' => [], 'is_active' => true,
+        ]);
+        $document = Document::create([
+            'document_template_id'       => $template->id,
+            'type'                       => 'contract_business',
+            'title'                      => 'Contract',
+            'reference_number'           => 'BSN-CNT-2026-00098',
+            'body_rendered'              => '<p>Body</p>',
+            'issued_by'                  => $admin->id,
+            'addressee_name'             => 'Dr. Ambe',
+            'status'                     => 'pending_signature',
+            'requires_signature'         => true,
+            'signature_token'            => 'signtoken456',
+            'signature_token_expires_at' => now()->addDays(30),
+        ]);
+
+        $response = $this->post('/documents/signtoken456/sign', [
+            'typed_name' => 'Dr. Ambe John',
+        ]);
+
+        $response->assertRedirect();
+        $document->refresh();
+        $this->assertEquals('signed', $document->status);
+        $this->assertEquals('Dr. Ambe John', $document->signed_by_name);
+        $this->assertNotNull($document->signed_at);
+        $this->assertNull($document->signature_token);
+    }
 }

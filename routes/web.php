@@ -30,10 +30,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/documents/{document}/view', [\App\Http\Controllers\DocumentController::class, 'preview'])->name('documents.preview');
 });
 
-// Temporary stub for documents.sign — full implementation in Task 5
-Route::get('/documents/{token}/sign', fn () => abort(404))->name('documents.sign');
-Route::post('/documents/{token}/sign', fn () => abort(404))->name('documents.sign.submit');
-Route::get('/documents/signed/{reference}', fn () => abort(404))->name('documents.sign.success');
+// Public document signing (no auth — token-based)
+Route::get('/documents/signed/{reference}', function ($reference) {
+    return view('documents.sign-success', ['reference' => $reference]);
+})->name('documents.sign.success');
+Route::get('/documents/{token}/sign',  [\App\Http\Controllers\DocumentSigningController::class, 'show'])->name('documents.sign');
+Route::post('/documents/{token}/sign', [\App\Http\Controllers\DocumentSigningController::class, 'sign'])->name('documents.sign.submit');
 
 // ── Locale-prefixed routes ──────────────────────────────────────────────────
 Route::prefix('{locale}')
