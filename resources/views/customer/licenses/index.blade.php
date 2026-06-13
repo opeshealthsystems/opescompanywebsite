@@ -56,7 +56,7 @@
                             </span>
                         </td>
                         <td style="padding:0.75rem;color:{{ $expiring ? '#eab308' : '#64748b' }};font-size:0.8125rem;">
-                            {{ $license->end_date->format('d M Y') }}
+                            {{ $license->end_date?->format('d M Y') }}
                             @if($expiring)
                                 <span style="font-size:0.7rem;"> &#9888; Expiring soon</span>
                             @endif

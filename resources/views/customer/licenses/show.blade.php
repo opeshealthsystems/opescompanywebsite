@@ -19,10 +19,14 @@
         };
     @endphp
 
-    @if($license->isExpiringSoon())
+    @php
+        $expiring = $license->isExpiringSoon();
+    @endphp
+
+    @if($expiring)
         <div style="background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.25);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;">
             <p style="color:#eab308;font-weight:600;font-size:0.9rem;margin:0;">&#9888; License expiring soon</p>
-            <p style="color:#64748b;font-size:0.8rem;margin:0.25rem 0 0;">Your license expires on {{ $license->end_date->format('d M Y') }}. Contact support to renew.</p>
+            <p style="color:#64748b;font-size:0.8rem;margin:0.25rem 0 0;">Your license expires on {{ $license->end_date?->format('d M Y') }}. Contact support to renew.</p>
         </div>
     @endif
 
@@ -52,11 +56,11 @@
             </div>
             <div>
                 <p style="color:#94a3b8;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.25rem;">Valid From</p>
-                <p style="color:#e2e8f0;font-size:0.875rem;">{{ $license->start_date->format('d M Y') }}</p>
+                <p style="color:#e2e8f0;font-size:0.875rem;">{{ $license->start_date?->format('d M Y') }}</p>
             </div>
             <div>
                 <p style="color:#94a3b8;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.25rem;">Expires</p>
-                <p style="color:{{ $license->isExpiringSoon() ? '#eab308' : '#e2e8f0' }};font-size:0.875rem;">{{ $license->end_date->format('d M Y') }}</p>
+                <p style="color:{{ $expiring ? '#eab308' : '#e2e8f0' }};font-size:0.875rem;">{{ $license->end_date?->format('d M Y') }}</p>
             </div>
             @if($license->price)
             <div>
