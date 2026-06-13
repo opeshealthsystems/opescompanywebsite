@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\DB;
 
 class Ticket extends Model
 {
     protected $fillable = [
-        'reference_number', 'user_id', 'assigned_to',
+        'user_id', 'assigned_to',
         'subject', 'description', 'type', 'status', 'priority',
         'resolution', 'resolved_at', 'closed_at',
     ];
@@ -30,13 +31,18 @@ class Ticket extends Model
 
     public static function generateReferenceNumber(): string
     {
-        $year = now()->year;
-        $last = static::whereYear('created_at', $year)->orderByDesc('id')->value('reference_number');
-        $seq  = 1;
-        if ($last && preg_match('/(\d+)$/', $last, $m)) {
-            $seq = ((int) $m[1]) + 1;
-        }
-        return 'TKT-' . $year . '-' . str_pad($seq, 5, '0', STR_PAD_LEFT);
+        return DB::transaction(function () {
+            $year = now()->year;
+            $last = static::whereYear('created_at', $year)
+                ->lockForUpdate()
+                ->orderByDesc('id')
+                ->value('reference_number');
+            $seq = 1;
+            if ($last && preg_match('/(\d+)$/', $last, $m)) {
+                $seq = (int) $m[1] + 1;
+            }
+            return 'TKT-' . $year . '-' . str_pad($seq, 5, '0', STR_PAD_LEFT);
+        });
     }
 
     public function customer(): BelongsTo
@@ -61,14 +67,7 @@ class Ticket extends Model
 
     public static function typeLabel(string $type): string
     {
-        return match ($type) {
-            'support'    => 'Support',
-            'billing'    => 'Billing',
-            'technical'  => 'Technical',
-            'bug_report' => 'Bug Report',
-            'other'      => 'Other',
-            default      => ucfirst($type),
-        };
+        return static::typeOptions()[$type] ?? ucfirst($type);
     }
 
     public static function typeOptions(): array
