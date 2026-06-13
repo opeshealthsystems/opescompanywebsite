@@ -41,7 +41,7 @@ class License extends Model
         return $this->status === 'active'
             && $this->end_date !== null
             && $this->end_date->isFuture()
-            && $this->end_date->diffInDays(now()) <= $days;
+            && $this->end_date->lte(now()->addDays($days));
     }
 
     public function isExpired(): bool

@@ -102,6 +102,7 @@ class LicenseManagementTest extends TestCase
 
         $this->assertNotEquals($key1, $key2);
         $this->assertStringStartsWith('OPES-', $key1);
+        $this->assertMatchesRegularExpression('/^OPES-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/', $key1);
     }
 
     public function test_license_is_expiring_soon(): void
