@@ -67,7 +67,7 @@ class Document extends Model
         ]);
     }
 
-    public function renderTemplate(DocumentTemplate $template, array $variables): string
+    public static function renderTemplate(DocumentTemplate $template, array $variables): string
     {
         $body = $template->body;
         foreach ($variables as $key => $value) {
