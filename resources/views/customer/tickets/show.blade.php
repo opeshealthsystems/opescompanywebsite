@@ -22,10 +22,6 @@
         $isOpen = $ticket->isOpen();
     @endphp
 
-    @if (session('success'))
-        <div class="cp-flash-success" style="margin-bottom:1rem;">{{ session('success') }}</div>
-    @endif
-
     <div style="display:flex;gap:0.75rem;align-items:center;margin-bottom:1.5rem;">
         <span style="color:{{ $statusColor }};font-weight:700;font-size:0.875rem;text-transform:uppercase;letter-spacing:0.05em;">
             {{ \App\Models\Ticket::statusOptions()[$ticket->status] ?? $ticket->status }}

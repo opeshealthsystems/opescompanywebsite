@@ -8,10 +8,6 @@
            class="cp-btn-primary">+ New Ticket</a>
     </div>
 
-    @if (session('success'))
-        <div class="cp-flash-success" style="margin-bottom:1rem;">{{ session('success') }}</div>
-    @endif
-
     @if($tickets->isEmpty())
         <div class="cp-section-card" style="text-align:center;padding:3rem;">
             <div class="cp-empty-state">
