@@ -9,7 +9,10 @@ export default defineConfig({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,
             fonts: [
-                bunny('Instrument Sans', {
+                bunny('Plus Jakarta Sans', {
+                    weights: [700, 800],
+                }),
+                bunny('Inter', {
                     weights: [400, 500, 600],
                 }),
             ],
