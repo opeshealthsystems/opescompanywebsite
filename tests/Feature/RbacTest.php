@@ -36,4 +36,40 @@ class RbacTest extends TestCase
             'position'    => 'Software Developer',
         ]);
     }
+
+    public function test_five_roles_exist_after_seeding(): void
+    {
+        $this->seed(\Database\Seeders\RolePermissionSeeder::class);
+
+        foreach (['super_admin', 'admin', 'support', 'tester', 'customer'] as $role) {
+            $this->assertDatabaseHas('roles', ['name' => $role]);
+        }
+    }
+
+    public function test_super_admin_has_all_permissions(): void
+    {
+        $this->seed(\Database\Seeders\RolePermissionSeeder::class);
+
+        $superAdmin = \Spatie\Permission\Models\Role::findByName('super_admin');
+        $this->assertGreaterThan(0, $superAdmin->permissions->count());
+        $this->assertTrue($superAdmin->hasPermissionTo('manage_roles'));
+        $this->assertTrue($superAdmin->hasPermissionTo('manage_accounting'));
+    }
+
+    public function test_customer_role_has_no_permissions(): void
+    {
+        $this->seed(\Database\Seeders\RolePermissionSeeder::class);
+
+        $customer = \Spatie\Permission\Models\Role::findByName('customer');
+        $this->assertEquals(0, $customer->permissions->count());
+    }
+
+    public function test_support_role_cannot_manage_accounting(): void
+    {
+        $this->seed(\Database\Seeders\RolePermissionSeeder::class);
+
+        $support = \Spatie\Permission\Models\Role::findByName('support');
+        $this->assertFalse($support->hasPermissionTo('manage_accounting'));
+        $this->assertTrue($support->hasPermissionTo('manage_tickets'));
+    }
 }
