@@ -25,6 +25,7 @@ class RolePermissionSeeder extends Seeder
             'manage_accounting',
             'manage_employees',
             'manage_licenses',
+            'manage_documents',
             'assign_testers',
             'view_tester_dashboard',
             'manage_bug_reports',

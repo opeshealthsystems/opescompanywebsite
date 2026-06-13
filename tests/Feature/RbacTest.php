@@ -57,7 +57,7 @@ class RbacTest extends TestCase
         $this->seed(\Database\Seeders\RolePermissionSeeder::class);
 
         $superAdmin = \Spatie\Permission\Models\Role::findByName('super_admin');
-        $this->assertCount(14, $superAdmin->permissions);
+        $this->assertCount(15, $superAdmin->permissions);
         $this->assertTrue($superAdmin->hasPermissionTo('manage_roles'));
         $this->assertTrue($superAdmin->hasPermissionTo('manage_accounting'));
     }
