@@ -50,7 +50,7 @@ class ReportsDashboard extends Page
         $overdueInvoices     = Invoice::where('status', 'overdue')->count();
 
         $openTickets       = Ticket::whereIn('status', ['open', 'in_progress', 'pending_customer'])->count();
-        $resolvedThisMonth = Ticket::where('status', 'resolved')->where('updated_at', '>=', $monthStart)->count();
+        $resolvedThisMonth = Ticket::where('status', 'resolved')->where('resolved_at', '>=', $monthStart)->count();
         $openBugReports    = Ticket::where('type', 'bug_report')->whereIn('status', ['open', 'in_progress', 'pending_customer'])->count();
 
         $pendingAssignments  = TesterAssignment::where('status', 'pending')->count();

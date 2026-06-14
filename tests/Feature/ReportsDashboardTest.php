@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Invoice;
-use App\Models\License;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -53,6 +51,16 @@ class ReportsDashboardTest extends TestCase
             ->assertForbidden();
     }
 
+    public function test_support_cannot_access_reports_dashboard(): void
+    {
+        $support = User::factory()->create();
+        $support->assignRole('support');
+
+        $this->actingAs($support)
+            ->get('/admin/reports-dashboard')
+            ->assertForbidden();
+    }
+
     public function test_reports_dashboard_shows_customer_count(): void
     {
         $admin = User::factory()->create();
@@ -63,6 +71,7 @@ class ReportsDashboardTest extends TestCase
         $this->actingAs($admin)
             ->get('/admin/reports-dashboard')
             ->assertOk()
+            ->assertSee('1')
             ->assertSee('Customers');
     }
 
@@ -85,6 +94,7 @@ class ReportsDashboardTest extends TestCase
         $this->actingAs($admin)
             ->get('/admin/reports-dashboard')
             ->assertOk()
+            ->assertSee('1')
             ->assertSee('Tickets');
     }
 }
