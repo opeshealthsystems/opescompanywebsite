@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\LicenseResource\Pages;
 use App\Models\License;
 use App\Models\User;
+use App\Support\ProductCatalog;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -25,22 +26,7 @@ class LicenseResource extends Resource
 
     public static function getProductOptions(): array
     {
-        $options = [];
-        foreach (config('products', []) as $product) {
-            $slug = $product['slug'] ?? null;
-            $name = $product['name'] ?? null;
-            if ($slug && $name) {
-                $options[$slug] = $name;
-            }
-        }
-        foreach (config('products_specialist', []) as $product) {
-            $slug = $product['slug'] ?? null;
-            $name = $product['name'] ?? null;
-            if ($slug && $name) {
-                $options[$slug] = $name;
-            }
-        }
-        return $options;
+        return ProductCatalog::options();
     }
 
     public static function form(Form $form): Form
