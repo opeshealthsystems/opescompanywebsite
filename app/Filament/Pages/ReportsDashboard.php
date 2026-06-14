@@ -14,6 +14,7 @@ class ReportsDashboard extends Page
     protected static ?string $navigationIcon  = 'heroicon-o-chart-bar';
     protected static ?string $navigationLabel = 'Reports';
     protected static ?string $title           = 'Reports Dashboard';
+    protected static ?string $slug            = 'reports-dashboard';
     protected static ?string $navigationGroup = 'Reporting';
     protected static ?int    $navigationSort  = 50;
     protected static string  $view            = 'filament.pages.reports-dashboard';
@@ -49,14 +50,14 @@ class ReportsDashboard extends Page
         $overdueInvoices     = Invoice::where('status', 'overdue')->count();
 
         $openTickets       = Ticket::whereIn('status', ['open', 'in_progress', 'pending_customer'])->count();
-        $resolvedThisMonth = Ticket::whereIn('status', ['resolved', 'closed'])->where('updated_at', '>=', $monthStart)->count();
+        $resolvedThisMonth = Ticket::where('status', 'resolved')->where('updated_at', '>=', $monthStart)->count();
         $openBugReports    = Ticket::where('type', 'bug_report')->whereIn('status', ['open', 'in_progress', 'pending_customer'])->count();
 
         $pendingAssignments  = TesterAssignment::where('status', 'pending')->count();
         $activeAssignments   = TesterAssignment::where('status', 'in_progress')->count();
         $completedThisMonth  = TesterAssignment::where('status', 'completed')->where('updated_at', '>=', $monthStart)->count();
 
-        $recentTickets  = Ticket::with('customer')->whereIn('status', ['open', 'in_progress'])->orderByDesc('created_at')->limit(5)->get();
+        $recentTickets  = Ticket::with('customer')->whereIn('status', ['open', 'in_progress', 'pending_customer'])->orderByDesc('created_at')->limit(5)->get();
         $recentInvoices = Invoice::with('customer')->whereIn('status', ['sent', 'overdue'])->orderByDesc('created_at')->limit(5)->get();
 
         return compact(
