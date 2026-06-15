@@ -6,6 +6,8 @@ use App\Filament\Resources\DocumentTemplateResource\Pages;
 use App\Models\DocumentTemplate;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -114,13 +116,59 @@ class DocumentTemplateResource extends Resource
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make()
-                    ->hidden(fn (DocumentTemplate $record) => ($record->documents_count ?? 0) > 0),
+                    ->hidden(fn (DocumentTemplate $record) => $record->loadCount('documents')->documents_count > 0),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            Infolists\Components\Section::make('Details')
+                ->columns(2)
+                ->schema([
+                    Infolists\Components\TextEntry::make('name')->columnSpanFull()->weight(\Filament\Support\Enums\FontWeight::Bold),
+                    Infolists\Components\TextEntry::make('type')
+                        ->badge()
+                        ->formatStateUsing(fn ($state) => DocumentTemplate::typeLabel($state))
+                        ->color(fn ($state) => match ($state) {
+                            'receipt'           => 'success',
+                            'letterhead'        => 'info',
+                            'contract_employee' => 'warning',
+                            'contract_business' => 'danger',
+                            default             => 'gray',
+                        }),
+                    Infolists\Components\IconEntry::make('is_active')->label('Active')->boolean(),
+                    Infolists\Components\TextEntry::make('variables')
+                        ->label('Variables')
+                        ->badge()
+                        ->separator(', ')
+                        ->formatStateUsing(fn ($state) => '{{' . $state . '}}')
+                        ->placeholder('No variables defined'),
+                    Infolists\Components\TextEntry::make('documents_count')
+                        ->label('Times Used')
+                        ->state(fn ($record) => $record->documents()->count()),
+                    Infolists\Components\TextEntry::make('updated_at')->label('Last Updated')->dateTime('d M Y H:i'),
+                ]),
+
+            Infolists\Components\Section::make('Template Body')
+                ->schema([
+                    Infolists\Components\TextEntry::make('body')
+                        ->label('')
+                        ->html()
+                        ->columnSpanFull()
+                        ->extraAttributes(['style' => 'font-family:monospace;font-size:.8125rem;white-space:pre-wrap;background:#f8f9fa;padding:1rem;border-radius:.375rem;display:block']),
+                ]),
+        ]);
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name'];
     }
 
     public static function getPages(): array

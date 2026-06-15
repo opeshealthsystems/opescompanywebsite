@@ -6,6 +6,8 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -130,6 +132,16 @@ class UserResource extends Resource
             ->filters([
                 Tables\Filters\TernaryFilter::make('is_active')
                     ->label('Active'),
+                Tables\Filters\SelectFilter::make('role')
+                    ->label('Role')
+                    ->options([
+                        'super_admin' => 'Super Admin',
+                        'admin'       => 'Admin',
+                        'support'     => 'Support',
+                        'tester'      => 'Tester',
+                        'customer'    => 'Customer',
+                    ])
+                    ->query(fn ($query, $data) => $data['value'] ? $query->role($data['value']) : $query),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -142,6 +154,43 @@ class UserResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            Infolists\Components\Section::make('Personal')
+                ->columns(2)
+                ->schema([
+                    Infolists\Components\TextEntry::make('name'),
+                    Infolists\Components\TextEntry::make('email')->copyable(),
+                    Infolists\Components\TextEntry::make('phone')->placeholder('—'),
+                    Infolists\Components\TextEntry::make('created_at')->label('Member Since')->dateTime('d M Y'),
+                ]),
+
+            Infolists\Components\Section::make('Employment')
+                ->columns(2)
+                ->schema([
+                    Infolists\Components\TextEntry::make('employee_id')
+                        ->label('EMP ID')
+                        ->fontFamily(\Filament\Support\Enums\FontFamily::Mono)
+                        ->placeholder('—'),
+                    Infolists\Components\TextEntry::make('hire_date')->label('Hire Date')->date('d M Y')->placeholder('—'),
+                    Infolists\Components\TextEntry::make('department')->placeholder('—'),
+                    Infolists\Components\TextEntry::make('position')->placeholder('—'),
+                ]),
+
+            Infolists\Components\Section::make('Account')
+                ->columns(2)
+                ->schema([
+                    Infolists\Components\IconEntry::make('is_active')->label('Active')->boolean(),
+                    Infolists\Components\TextEntry::make('roles.name')
+                        ->label('Roles')
+                        ->badge()
+                        ->separator(', ')
+                        ->placeholder('No roles assigned'),
+                ]),
+        ]);
     }
 
     public static function getPages(): array

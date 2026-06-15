@@ -6,6 +6,8 @@ use App\Filament\Resources\LeadResource\Pages;
 use App\Models\Lead;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -17,6 +19,11 @@ class LeadResource extends Resource
     protected static ?string $navigationGroup = 'CRM';
     protected static ?string $navigationLabel = 'Demo Requests';
     protected static ?int $navigationSort = 1;
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
+    }
 
     public static function form(Form $form): Form
     {
@@ -59,6 +66,68 @@ class LeadResource extends Resource
         ]);
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            Infolists\Components\Section::make('Contact Details')
+                ->columns(2)
+                ->schema([
+                    Infolists\Components\TextEntry::make('name'),
+                    Infolists\Components\TextEntry::make('email')->copyable(),
+                    Infolists\Components\TextEntry::make('phone')->placeholder('—'),
+                    Infolists\Components\TextEntry::make('facility_type')
+                        ->label('Facility Type')
+                        ->badge()
+                        ->formatStateUsing(fn ($state) => match ($state) {
+                            'clinic'     => 'Clinic',
+                            'hospital'   => 'Hospital',
+                            'laboratory' => 'Laboratory',
+                            'pharmacy'   => 'Pharmacy',
+                            'government' => 'Government / Ministry',
+                            'ngo'        => 'NGO / International',
+                            default      => ucfirst((string) ($state ?? '')),
+                        }),
+                ]),
+
+            Infolists\Components\Section::make('Inquiry & Status')
+                ->columns(2)
+                ->schema([
+                    Infolists\Components\TextEntry::make('products')
+                        ->label('Products of Interest')
+                        ->placeholder('—'),
+                    Infolists\Components\TextEntry::make('status')
+                        ->badge()
+                        ->color(fn ($state) => match ($state) {
+                            'new'       => 'info',
+                            'contacted' => 'warning',
+                            'qualified' => 'success',
+                            'closed'    => 'gray',
+                            default     => 'gray',
+                        })
+                        ->formatStateUsing(fn ($state) => match ($state) {
+                            'new'       => 'New',
+                            'contacted' => 'Contacted',
+                            'qualified' => 'Qualified',
+                            'closed'    => 'Closed / Won',
+                            default     => ucfirst((string) ($state ?? '')),
+                        }),
+                    Infolists\Components\TextEntry::make('source')
+                        ->placeholder('—')
+                        ->formatStateUsing(fn ($state) => match ($state) {
+                            'contact'      => 'Contact page',
+                            'product-page' => 'Product page',
+                            'demo'         => 'Demo CTA',
+                            default        => $state ?? '—',
+                        }),
+                    Infolists\Components\TextEntry::make('product_slug')->label('Product')->placeholder('—'),
+                    Infolists\Components\TextEntry::make('locale')->label('Language')->badge()->placeholder('—'),
+                    Infolists\Components\TextEntry::make('message')->placeholder('No message provided')->columnSpanFull(),
+                    Infolists\Components\TextEntry::make('created_at')->label('Received')->dateTime('d M Y H:i'),
+                    Infolists\Components\TextEntry::make('updated_at')->label('Last Updated')->dateTime('d M Y H:i'),
+                ]),
+        ]);
+    }
+
     public static function table(Table $table): Table
     {
         return $table
@@ -68,13 +137,15 @@ class LeadResource extends Resource
                 Tables\Columns\TextColumn::make('email')->searchable()->copyable(),
                 Tables\Columns\TextColumn::make('facility_type')->label('Facility')->badge(),
                 Tables\Columns\TextColumn::make('products')->label('Products')->limit(30),
-                Tables\Columns\BadgeColumn::make('status')
-                    ->colors([
-                        'primary' => 'new',
-                        'warning' => 'contacted',
-                        'success' => 'qualified',
-                        'gray'    => 'closed',
-                    ]),
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->color(fn ($state) => match ($state) {
+                        'new'       => 'info',
+                        'contacted' => 'warning',
+                        'qualified' => 'success',
+                        'closed'    => 'gray',
+                        default     => 'gray',
+                    }),
                 Tables\Columns\TextColumn::make('locale')->label('Lang')->badge(),
                 Tables\Columns\TextColumn::make('created_at')->label('Received')
                     ->dateTime('d M Y H:i')->sortable(),

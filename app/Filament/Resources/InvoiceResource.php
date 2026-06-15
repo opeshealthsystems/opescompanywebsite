@@ -143,7 +143,7 @@ class InvoiceResource extends Resource
 
                 Tables\Columns\TextColumn::make('grand_total')
                     ->label('Grand Total')
-                    ->getStateUsing(fn ($record) => $record->formatCurrency($record->grand_total)),
+                    ->getStateUsing(fn ($record) => $record->formatAmount($record->grand_total)),
 
                 Tables\Columns\TextColumn::make('currency')
                     ->sortable(),

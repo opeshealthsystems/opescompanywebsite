@@ -31,12 +31,12 @@ class RecentInvoicesWidget extends BaseWidget
                     ->sortable(),
                 Tables\Columns\TextColumn::make('grand_total')
                     ->label('Amount')
-                    ->getStateUsing(fn ($record) => $record->formatCurrency($record->grand_total)),
+                    ->getStateUsing(fn ($record) => $record->formatAmount($record->grand_total)),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
                     ->color(fn ($state) => match ($state) {
                         'overdue' => 'danger',
-                        'sent'    => 'warning',
+                        'sent'    => 'info',
                         default   => 'gray',
                     }),
                 Tables\Columns\TextColumn::make('due_date')

@@ -40,9 +40,10 @@ class RecentTicketsWidget extends BaseWidget
                 Tables\Columns\TextColumn::make('priority')
                     ->badge()
                     ->color(fn ($state) => match ($state) {
-                        'high'   => 'danger',
-                        'medium' => 'warning',
-                        'low'    => 'success',
+                        'urgent' => 'danger',
+                        'high'   => 'warning',
+                        'medium' => 'info',
+                        'low'    => 'gray',
                         default  => 'gray',
                     }),
                 Tables\Columns\TextColumn::make('created_at')

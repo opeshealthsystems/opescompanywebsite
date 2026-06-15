@@ -7,6 +7,8 @@ use App\Models\BlogPost;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -19,6 +21,11 @@ class BlogPostResource extends Resource
     protected static ?string $navigationGroup = 'Content';
     protected static ?string $navigationLabel = 'Blog Posts';
     protected static ?int $navigationSort = 2;
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
+    }
 
     public static function form(Form $form): Form
     {
@@ -55,6 +62,38 @@ class BlogPostResource extends Resource
         ]);
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            Infolists\Components\Section::make('Post Details')
+                ->columns(2)
+                ->schema([
+                    Infolists\Components\TextEntry::make('title')->columnSpanFull()->weight(\Filament\Support\Enums\FontWeight::Bold),
+                    Infolists\Components\TextEntry::make('slug')->fontFamily(\Filament\Support\Enums\FontFamily::Mono)->copyable(),
+                    Infolists\Components\TextEntry::make('category')->badge(),
+                    Infolists\Components\TextEntry::make('author'),
+                    Infolists\Components\IconEntry::make('published')->boolean(),
+                    Infolists\Components\TextEntry::make('published_at')->label('Published At')->dateTime('d M Y H:i')->placeholder('Not published'),
+                    Infolists\Components\TextEntry::make('created_at')->label('Created')->dateTime('d M Y H:i'),
+                ]),
+
+            Infolists\Components\Section::make('Content')
+                ->schema([
+                    Infolists\Components\TextEntry::make('body')->label('')->html()->columnSpanFull(),
+                ]),
+
+            Infolists\Components\Section::make('French Translation')
+                ->collapsed()
+                ->collapsible()
+                ->columns(2)
+                ->schema([
+                    Infolists\Components\TextEntry::make('title_fr')->label('Title (FR)')->placeholder('No French title'),
+                    Infolists\Components\TextEntry::make('excerpt_fr')->label('Excerpt (FR)')->placeholder('No French excerpt'),
+                    Infolists\Components\TextEntry::make('body_fr')->label('Body (FR)')->html()->placeholder('No French translation')->columnSpanFull(),
+                ]),
+        ]);
+    }
+
     public static function table(Table $table): Table
     {
         return $table
@@ -75,6 +114,11 @@ class BlogPostResource extends Resource
             ->bulkActions([Tables\Actions\BulkActionGroup::make([
                 Tables\Actions\DeleteBulkAction::make(),
             ])]);
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['title', 'category'];
     }
 
     public static function getPages(): array

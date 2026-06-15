@@ -175,6 +175,8 @@ class TicketResource extends Resource
                         'billing'    => 'warning',
                         'technical'  => 'info',
                         'bug_report' => 'danger',
+                        'support'    => 'info',
+                        'other'      => 'gray',
                         default      => 'gray',
                     }),
                 Infolists\Components\TextEntry::make('priority')
@@ -200,7 +202,7 @@ class TicketResource extends Resource
 
     public static function getGloballySearchableAttributes(): array
     {
-        return ['subject', 'description'];
+        return ['reference_number', 'subject'];
     }
 
     public static function getNavigationBadge(): ?string

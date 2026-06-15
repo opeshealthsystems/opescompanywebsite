@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\RoleResource\Pages;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -51,6 +53,7 @@ class RoleResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('id')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->badge()
@@ -78,6 +81,40 @@ class RoleResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
             ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            Infolists\Components\Section::make('Role Details')
+                ->columns(2)
+                ->schema([
+                    Infolists\Components\TextEntry::make('name')
+                        ->badge()
+                        ->color(fn ($state) => match ($state) {
+                            'super_admin' => 'danger',
+                            'admin'       => 'warning',
+                            'support'     => 'info',
+                            'tester'      => 'success',
+                            'customer'    => 'gray',
+                            default       => 'gray',
+                        }),
+                    Infolists\Components\TextEntry::make('guard_name')->label('Guard')->badge()->color('gray'),
+                    Infolists\Components\TextEntry::make('permissions_count')
+                        ->label('Permission Count')
+                        ->state(fn ($record) => $record->permissions()->count()),
+                    Infolists\Components\TextEntry::make('users_count')
+                        ->label('Users Assigned')
+                        ->state(fn ($record) => $record->users()->count()),
+                    Infolists\Components\TextEntry::make('permissions_list')
+                        ->label('Permissions')
+                        ->state(fn ($record) => $record->permissions->pluck('name')->sort()->values()->all())
+                        ->badge()
+                        ->separator(', ')
+                        ->placeholder('No permissions assigned')
+                        ->columnSpanFull(),
+                ]),
+        ]);
     }
 
     public static function getPages(): array

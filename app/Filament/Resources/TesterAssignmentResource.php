@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Support\ProductCatalog;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -154,6 +156,57 @@ class TesterAssignmentResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            Infolists\Components\Section::make('Assignment')
+                ->columns(2)
+                ->schema([
+                    Infolists\Components\TextEntry::make('tester.name')->label('Tester'),
+                    Infolists\Components\TextEntry::make('assigner.name')->label('Assigned By')->placeholder('—'),
+                    Infolists\Components\TextEntry::make('product_name')->label('Product'),
+                    Infolists\Components\TextEntry::make('status')
+                        ->badge()
+                        ->color(fn ($state) => match ($state) {
+                            'pending'     => 'gray',
+                            'in_progress' => 'warning',
+                            'completed'   => 'success',
+                            'cancelled'   => 'danger',
+                            default       => 'gray',
+                        })
+                        ->formatStateUsing(fn ($state) => TesterAssignment::statusOptions()[$state] ?? ucfirst((string) $state)),
+                    Infolists\Components\TextEntry::make('due_date')
+                        ->label('Due Date')
+                        ->date('d M Y')
+                        ->placeholder('No due date')
+                        ->color(fn ($record) => $record->isOverdue() ? 'danger' : null),
+                    Infolists\Components\TextEntry::make('created_at')->label('Assigned On')->dateTime('d M Y H:i'),
+                    Infolists\Components\TextEntry::make('title')->columnSpanFull()->weight(\Filament\Support\Enums\FontWeight::Bold),
+                ]),
+
+            Infolists\Components\Section::make('Details')
+                ->schema([
+                    Infolists\Components\TextEntry::make('description')->columnSpanFull(),
+                    Infolists\Components\TextEntry::make('notes')->placeholder('No notes')->columnSpanFull(),
+                ]),
+        ]);
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['title', 'product_name'];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::getModel()::where('status', 'pending')->count() ?: null;
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'gray';
     }
 
     public static function getPages(): array

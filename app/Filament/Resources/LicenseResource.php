@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Support\ProductCatalog;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -204,6 +206,80 @@ class LicenseResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            Infolists\Components\Section::make('License Details')
+                ->columns(3)
+                ->schema([
+                    Infolists\Components\TextEntry::make('license_key')
+                        ->label('License Key')
+                        ->fontFamily(\Filament\Support\Enums\FontFamily::Mono)
+                        ->copyable()
+                        ->columnSpanFull(),
+                    Infolists\Components\TextEntry::make('customer.name')->label('Customer'),
+                    Infolists\Components\TextEntry::make('product_name')->label('Product'),
+                    Infolists\Components\TextEntry::make('plan')
+                        ->badge()
+                        ->formatStateUsing(fn ($state) => License::planLabel($state))
+                        ->color(fn ($state) => match ($state) {
+                            'starter'      => 'gray',
+                            'standard'     => 'info',
+                            'professional' => 'warning',
+                            'enterprise'   => 'success',
+                            default        => 'gray',
+                        }),
+                    Infolists\Components\TextEntry::make('seats')->label('Seats'),
+                    Infolists\Components\TextEntry::make('status')
+                        ->badge()
+                        ->color(fn ($state) => match ($state) {
+                            'active'    => 'success',
+                            'suspended' => 'warning',
+                            'expired'   => 'danger',
+                            'cancelled' => 'gray',
+                            default     => 'gray',
+                        }),
+                ]),
+
+            Infolists\Components\Section::make('Validity & Pricing')
+                ->columns(2)
+                ->schema([
+                    Infolists\Components\TextEntry::make('start_date')->label('Start Date')->date('d M Y'),
+                    Infolists\Components\TextEntry::make('end_date')
+                        ->label('Expires')
+                        ->date('d M Y')
+                        ->color(fn ($record) => $record->isExpired() ? 'danger' : ($record->isExpiringSoon() ? 'warning' : null)),
+                    Infolists\Components\TextEntry::make('price')
+                        ->label('Price')
+                        ->placeholder('Complementary')
+                        ->formatStateUsing(fn ($state, $record) =>
+                            $state !== null ? number_format((int) $state) . ' ' . ($record->currency ?? 'XAF') : null
+                        ),
+                    Infolists\Components\TextEntry::make('currency')->placeholder('—'),
+                    Infolists\Components\TextEntry::make('notes')->placeholder('No notes')->columnSpanFull(),
+                ]),
+        ]);
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['license_key', 'product_name'];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        $expiring = static::getModel()::where('status', 'active')
+            ->where('end_date', '>=', now())
+            ->where('end_date', '<=', now()->addDays(30))
+            ->count();
+        return $expiring > 0 ? (string) $expiring : null;
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'warning';
     }
 
     public static function getPages(): array
