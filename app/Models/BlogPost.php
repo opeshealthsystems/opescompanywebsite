@@ -8,7 +8,7 @@ class BlogPost extends Model
 {
     protected $fillable = [
         'title', 'title_fr', 'slug', 'excerpt', 'excerpt_fr',
-        'body', 'body_fr', 'cover_image', 'category',
+        'body', 'body_fr', 'cover_image', 'reading_time', 'category',
         'author', 'published', 'published_at',
     ];
 
@@ -30,5 +30,11 @@ class BlogPost extends Model
     public function getLocalizedExcerpt(string $locale): string
     {
         return ($locale === 'fr' && $this->excerpt_fr) ? $this->excerpt_fr : ($this->excerpt ?? '');
+    }
+
+    public static function calculateReadingTime(string $htmlBody): int
+    {
+        $words = str_word_count(strip_tags($htmlBody));
+        return (int) max(1, ceil($words / 220));
     }
 }

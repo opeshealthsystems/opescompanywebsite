@@ -13,7 +13,7 @@
     $baseTitle = $title ?? 'Africa\'s Most Complete Healthcare Ecosystem';
     $pageTitle = $baseTitle . ' — ' . $siteName;
     $pageDesc  = $description ?? '22 integrated healthcare software systems for Cameroon, CEMAC and Africa — bilingual (EN/FR), HL7 FHIR, aligned with MoH 2026–2030 digitalization plan.';
-    $ogImage   = $ogImage ?? config('app.url').'/build/assets/og-image.png';
+    $ogImage   = $ogImage ?? config('app.url').'/og-image.svg';
 @endphp
 
 <title>{{ $pageTitle }}</title>

@@ -63,6 +63,7 @@ class BlogPostSeeder extends Seeder
                 'slug'         => $slug,
                 'excerpt'      => $excerpt,
                 'body'         => $body,
+                'reading_time' => BlogPost::calculateReadingTime($body),
                 'category'     => $category,
                 'author'       => 'OPES Health Systems',
                 'published'    => true,

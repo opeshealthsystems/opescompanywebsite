@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\TicketResource\Pages;
 
 use App\Filament\Resources\TicketResource;
+use App\Mail\TicketReplied;
 use App\Models\Ticket;
 use App\Models\TicketReply;
 use App\Models\User;
@@ -10,6 +11,7 @@ use Filament\Actions;
 use Filament\Forms;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
+use Illuminate\Support\Facades\Mail;
 
 class ViewTicket extends ViewRecord
 {
@@ -32,7 +34,7 @@ class ViewTicket extends ViewRecord
                         ->default(false),
                 ])
                 ->action(function (array $data): void {
-                    TicketReply::create([
+                    $reply = TicketReply::create([
                         'ticket_id'   => $this->record->id,
                         'user_id'     => auth()->id(),
                         'body'        => $data['body'],
@@ -40,6 +42,12 @@ class ViewTicket extends ViewRecord
                     ]);
                     if ($this->record->status === 'open') {
                         $this->record->update(['status' => 'in_progress']);
+                    }
+                    if (!$data['is_internal']) {
+                        $customerEmail = $this->record->user?->email;
+                        if ($customerEmail) {
+                            Mail::to($customerEmail)->queue(new TicketReplied($this->record, $reply));
+                        }
                     }
                     Notification::make()->title('Reply added')->success()->send();
                 }),

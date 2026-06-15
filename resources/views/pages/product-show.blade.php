@@ -305,11 +305,9 @@ foreach($product['integrations'] as $slug) {
         <input class="demo-input" type="email" name="email" placeholder="{{ __('products.demo_email') }}">
         <select class="demo-select" name="facility_type">
             <option value="">{{ __('products.demo_facility') }}</option>
-            <option>{{ __('products.demo_facility_clinic') }}</option>
-            <option>{{ __('products.demo_facility_hospital') }}</option>
-            <option>{{ __('products.demo_facility_lab') }}</option>
-            <option>{{ __('products.demo_facility_pharmacy') }}</option>
-            <option>{{ __('products.demo_facility_gov') }}</option>
+            @foreach(config('facility_types') as $value => $labels)
+            <option value="{{ $value }}">{{ $labels[app()->getLocale()] ?? $labels['en'] }}</option>
+            @endforeach
         </select>
         <button type="submit" class="demo-btn">
             {{ __('products.demo_submit', ['name' => $product['name']]) }}

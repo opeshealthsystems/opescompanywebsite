@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Mail\TicketCreated;
 use App\Models\Ticket;
 use App\Models\TicketReply;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class TicketController extends Controller
 {
@@ -34,11 +36,13 @@ class TicketController extends Controller
             'priority'    => 'required|in:low,medium,high,urgent',
         ]);
 
-        $user = Auth::user();
-        Ticket::create(array_merge($validated, [
+        $user   = Auth::user();
+        $ticket = Ticket::create(array_merge($validated, [
             'user_id' => $user->id,
             'status'  => 'open',
         ]));
+
+        Mail::to($user->email)->queue(new TicketCreated($ticket));
 
         return redirect()
             ->route('customer.tickets', ['locale' => app()->getLocale()])

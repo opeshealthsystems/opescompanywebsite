@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\LeadNotification;
 use App\Models\Lead;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
@@ -24,11 +26,16 @@ class ContactController extends Controller
             'product_slug'  => 'nullable|string|max:60',
         ]);
 
-        Lead::create(array_merge($validated, [
+        $lead = Lead::create(array_merge($validated, [
             'source'     => $request->filled('product_slug') ? 'product-page' : 'contact',
             'locale'     => app()->getLocale(),
             'ip_address' => $request->ip(),
         ]));
+
+        $adminEmail = config('mail.admin_email', env('ADMIN_EMAIL'));
+        if ($adminEmail) {
+            Mail::to($adminEmail)->queue(new LeadNotification($lead));
+        }
 
         return back()->with('success', 'Thank you! Our team will contact you within one business day.');
     }

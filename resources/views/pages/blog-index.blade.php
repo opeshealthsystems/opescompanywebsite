@@ -45,8 +45,9 @@ $heroHeadlines = $featured->skip(1)->values();
                         <img src="{{ Storage::url($heroFeatured->cover_image) }}"
                              alt="{{ $heroFeatured->getLocalizedTitle($locale) }}">
                     @else
-                        <div class="blog-hero-img-icon">
-                            <i data-lucide="file-text" style="width:26px;height:26px;color:#00C896"></i>
+                        @php $heroColor = $catColors[$heroFeatured->category] ?? '#00C896'; @endphp
+                        <div class="blog-hero-img-icon" style="background:linear-gradient(135deg,{{ $heroColor }}18,{{ $heroColor }}06)">
+                            <i data-lucide="file-text" style="width:26px;height:26px;color:{{ $heroColor }};opacity:0.6"></i>
                         </div>
                     @endif
                     <span class="blog-hero-badge">{{ __('blog.badge_featured') }}</span>
@@ -207,9 +208,15 @@ $heroHeadlines = $featured->skip(1)->values();
             @foreach($posts as $post)
             @php $postColor = $catColors[$post->category] ?? '#64748b'; @endphp
             <a href="{{ url($locale.'/blog/'.$post->slug) }}" class="blog-card">
-                <div class="blog-card-img blog-card-img-placeholder">
-                    <i data-lucide="file-text" style="width:28px;height:28px;color:#334155"></i>
+                @if($post->cover_image)
+                <div class="blog-card-img">
+                    <img src="{{ Storage::url($post->cover_image) }}" alt="{{ $post->getLocalizedTitle($locale) }}" style="width:100%;height:100%;object-fit:cover">
                 </div>
+                @else
+                <div class="blog-card-img blog-card-img-gradient" style="background:linear-gradient(135deg,{{ $postColor }}22,{{ $postColor }}08)">
+                    <i data-lucide="file-text" style="width:28px;height:28px;color:{{ $postColor }};opacity:0.5"></i>
+                </div>
+                @endif
                 <div class="blog-card-body">
                     <span class="blog-cat" style="color:{{ $postColor }}">{{ $post->category }}</span>
                     <h3 class="blog-card-title">{{ $post->getLocalizedTitle($locale) }}</h3>
@@ -218,6 +225,10 @@ $heroHeadlines = $featured->skip(1)->values();
                         <span>{{ $post->author }}</span>
                         <span>·</span>
                         <span>{{ $post->published_at?->format('d M Y') }}</span>
+                        @if($post->reading_time)
+                        <span>·</span>
+                        <span><i data-lucide="clock" style="width:10px;height:10px"></i> {{ $post->reading_time }} min read</span>
+                        @endif
                     </div>
                 </div>
             </a>

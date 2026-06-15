@@ -24,9 +24,37 @@
     @endphp
 
     @if($expiring)
-        <div style="background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.25);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;">
-            <p style="color:#eab308;font-weight:600;font-size:0.9rem;margin:0;">&#9888; License expiring soon</p>
-            <p style="color:#64748b;font-size:0.8rem;margin:0.25rem 0 0;">Your license expires on {{ $license->end_date?->format('d M Y') }}. Contact support to renew.</p>
+        <div style="background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.25);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+            <div>
+                <p style="color:#eab308;font-weight:600;font-size:0.9rem;margin:0;">&#9888; License expiring soon</p>
+                <p style="color:#64748b;font-size:0.8rem;margin:0.25rem 0 0;">
+                    Your license expires on <strong style="color:#eab308">{{ $license->end_date?->format('d M Y') }}</strong>
+                    @php
+                        $daysLeft = now()->diffInDays($license->end_date, false);
+                    @endphp
+                    — {{ $daysLeft }} day{{ $daysLeft !== 1 ? 's' : '' }} remaining.
+                </p>
+            </div>
+            <a href="{{ route('customer.tickets.create', ['locale' => app()->getLocale()]) }}?subject=License+Renewal+Request&type=billing"
+               style="display:inline-flex;align-items:center;gap:6px;background:#eab308;color:#0f172a;font-size:0.8125rem;font-weight:700;padding:0.5rem 1rem;border-radius:6px;text-decoration:none;flex-shrink:0;transition:opacity 0.15s"
+               onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+                <i data-lucide="refresh-cw" style="width:13px;height:13px"></i>
+                Request Renewal
+            </a>
+        </div>
+    @endif
+
+    @if($license->status === 'expired')
+        <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+            <div>
+                <p style="color:#ef4444;font-weight:600;font-size:0.9rem;margin:0;">&#9888; License expired</p>
+                <p style="color:#64748b;font-size:0.8rem;margin:0.25rem 0 0;">This license expired on {{ $license->end_date?->format('d M Y') }}. Submit a renewal request to restore access.</p>
+            </div>
+            <a href="{{ route('customer.tickets.create', ['locale' => app()->getLocale()]) }}?subject=License+Renewal+Request&type=billing"
+               style="display:inline-flex;align-items:center;gap:6px;background:#ef4444;color:#fff;font-size:0.8125rem;font-weight:700;padding:0.5rem 1rem;border-radius:6px;text-decoration:none;flex-shrink:0">
+                <i data-lucide="refresh-cw" style="width:13px;height:13px"></i>
+                Request Renewal
+            </a>
         </div>
     @endif
 

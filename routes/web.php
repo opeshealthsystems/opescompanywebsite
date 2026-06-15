@@ -55,6 +55,9 @@ Route::prefix('{locale}')
         Route::get('/blog',           [BlogController::class,    'index'])->name('blog');
         Route::get('/blog/{slug}',    [BlogController::class,    'show'])->name('blog.show');
         Route::get('/partnerships',   fn () => view('pages.partnerships'))->name('partnerships');
+        Route::get('/privacy',        fn () => view('pages.privacy'))->name('privacy');
+        Route::get('/terms',          fn () => view('pages.terms'))->name('terms');
+        Route::get('/compliance',     fn () => view('pages.compliance'))->name('compliance');
 
         // Customer portal (auth + customer role required)
         Route::middleware(['auth', 'role:customer'])

@@ -1,2 +1,15 @@
 User-agent: *
-Disallow:
+Disallow: /admin
+Disallow: /filament
+Disallow: /en/customer/
+Disallow: /fr/customer/
+Disallow: /en/tester/
+Disallow: /fr/tester/
+Disallow: /login
+Disallow: /register
+Disallow: /documents/
+
+Allow: /en/blog/
+Allow: /fr/blog/
+
+Sitemap: https://opeshealthsystems.com/sitemap.xml

@@ -54,13 +54,11 @@
                     <label class="cf-label">{{ __('contact.label_facility') }}</label>
                     <select class="cf-input" name="facility_type">
                         <option value="">{{ __('contact.select_default') }}</option>
-                        <option value="clinic" @selected(old('facility_type')=='clinic')>{{ __('contact.facility_clinic') }}</option>
-                        <option value="hospital" @selected(old('facility_type')=='hospital')>{{ __('contact.facility_hospital') }}</option>
-                        <option value="laboratory" @selected(old('facility_type')=='laboratory')>{{ __('contact.facility_laboratory') }}</option>
-                        <option value="pharmacy" @selected(old('facility_type')=='pharmacy')>{{ __('contact.facility_pharmacy') }}</option>
-                        <option value="government" @selected(old('facility_type')=='government')>{{ __('contact.facility_government') }}</option>
-                        <option value="ngo" @selected(old('facility_type')=='ngo')>{{ __('contact.facility_ngo') }}</option>
-                        <option value="other" @selected(old('facility_type')=='other')>{{ __('contact.facility_other') }}</option>
+                        @foreach(config('facility_types') as $value => $labels)
+                        <option value="{{ $value }}" @selected(old('facility_type') === $value)>
+                            {{ $labels[app()->getLocale()] ?? $labels['en'] }}
+                        </option>
+                        @endforeach
                     </select>
                 </div>
             </div>

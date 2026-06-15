@@ -373,11 +373,9 @@
         <input class="demo-input" type="email" name="email" placeholder="{{ __('home.demo_email') }}">
         <select class="demo-select" name="facility_type">
             <option value="">{{ __('home.demo_facility') }}</option>
-            <option>Clinic</option>
-            <option>Hospital</option>
-            <option>Laboratory</option>
-            <option>Pharmacy</option>
-            <option>Government / NGO</option>
+            @foreach(config('facility_types') as $value => $labels)
+            <option value="{{ $value }}">{{ $labels[app()->getLocale()] ?? $labels['en'] }}</option>
+            @endforeach
         </select>
         <button type="submit" class="demo-btn">
             {{ __('home.demo_btn') }}
