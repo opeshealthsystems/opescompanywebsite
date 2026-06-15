@@ -2,23 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BlogPost;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $posts = \App\Models\BlogPost::published()->paginate(9);
-        return view('pages.blog-index', compact('posts'));
+        $activeCategory = $request->query('category');
+
+        $query = BlogPost::published();
+        if ($activeCategory) {
+            $query->where('category', $activeCategory);
+        }
+
+        $featured       = BlogPost::published()->limit(4)->get();
+        $posts          = $query->paginate(9)->withQueryString();
+        $categories     = BlogPost::published()
+            ->select('category')
+            ->selectRaw('count(*) as count')
+            ->groupBy('category')
+            ->reorder()
+            ->orderByDesc('count')
+            ->get();
+
+        return view('pages.blog-index', compact('posts', 'featured', 'categories', 'activeCategory'));
     }
 
     public function show(string $locale, string $slug)
     {
-        $post = \App\Models\BlogPost::where('slug', $slug)
+        $post = BlogPost::where('slug', $slug)
             ->where('published', true)
             ->firstOrFail();
 
-        $related = \App\Models\BlogPost::published()
+        $related = BlogPost::published()
             ->where('id', '!=', $post->id)
             ->where('category', $post->category)
             ->limit(3)
