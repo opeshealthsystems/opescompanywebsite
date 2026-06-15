@@ -8,7 +8,7 @@ return [
     // ── Index Produits — en-tête de page ───────────────────────────────
     'index_eyebrow'         => 'Tous les produits',
     'index_title'           => '22 Systèmes Logiciels de Santé',
-    'index_sub'             => 'Conçus spécifiquement pour le secteur de la santé au Cameroun et dans la région CEMAC. Déployez un seul système ou l'écosystème complet — tous connectés via OPESCare Health ID.',
+    'index_sub'             => 'Conçus spécifiquement pour le secteur de la santé au Cameroun et dans la région CEMAC. Déployez un seul système ou l\'écosystème complet — tous connectés via OPESCare Health ID.',
 
     // Bandeau de confiance
     'trust_fhir'            => 'Interopérabilité HL7 FHIR',
@@ -18,11 +18,11 @@ return [
 
     // Sections de catégories
     'cat_core'              => 'Plateforme de base',
-    'cat_core_desc'         => 'Les systèmes fondamentaux avec lesquels tout établissement connecté à OPES commence. Couvre l'identité du patient, les dossiers cliniques, la gestion hospitalière et les revenus.',
+    'cat_core_desc'         => 'Les systèmes fondamentaux avec lesquels tout établissement connecté à OPES commence. Couvre l\'identité du patient, les dossiers cliniques, la gestion hospitalière et les revenus.',
     'cat_diagnostics'       => 'Diagnostics et support',
-    'cat_diagnostics_desc'  => 'Laboratoire, pharmacie, radiologie, documents et gestion du cycle de revenus — l'épine dorsale opérationnelle de tout établissement de santé moderne.',
+    'cat_diagnostics_desc'  => 'Laboratoire, pharmacie, radiologie, documents et gestion du cycle de revenus — l\'épine dorsale opérationnelle de tout établissement de santé moderne.',
     'cat_specialist'        => 'Systèmes spécialisés',
-    'cat_specialist_desc'   => 'Modules spécifiques aux disciplines pour les cliniques et départements spécialisés — chacun s'intègre nativement à la plateforme de base via OPESCare Health ID.',
+    'cat_specialist_desc'   => 'Modules spécifiques aux disciplines pour les cliniques et départements spécialisés — chacun s\'intègre nativement à la plateforme de base via OPESCare Health ID.',
     'systems_count'         => ':count système|:count systèmes',
 
     // CTA Démo
@@ -40,9 +40,9 @@ return [
     'cta_brochure'          => 'Télécharger la brochure',
 
     // Fiche Produit — boîte de statistiques
-    'stats_at_a_glance'     => 'En un coup d'œil',
+    'stats_at_a_glance'     => 'En un coup d\'œil',
     'stats_bilingual'       => 'Interface entièrement bilingue',
-    'stats_fhir'            => 'Norme d'interopérabilité',
+    'stats_fhir'            => 'Norme d\'interopérabilité',
 
     // Fiche Produit — onglets de navigation
     'tab_overview'          => 'Aperçu',
@@ -59,7 +59,7 @@ return [
     // Fiche Produit — section Modules
     'section_modules'       => 'Modules',
     'modules_heading'       => 'Tout en un seul système',
-    'modules_sub'           => 'Chaque module s'intègre nativement — commencez avec ce dont vous avez besoin aujourd'hui, développez au fur et à mesure de votre croissance.',
+    'modules_sub'           => 'Chaque module s\'intègre nativement — commencez avec ce dont vous avez besoin aujourd\'hui, développez au fur et à mesure de votre croissance.',
 
     // Fiche Produit — section Processus
     'section_workflow'      => 'Processus patient',
@@ -77,7 +77,7 @@ return [
 
     // Fiche Produit — section Spécifications techniques
     'section_specs'         => 'Spécifications techniques',
-    'specs_heading'         => 'Conçu selon les normes d'entreprise',
+    'specs_heading'         => 'Conçu selon les normes d\'entreprise',
 
     // Fiche Produit — section Produits connexes
     'section_related'       => 'Aussi par OPES',
