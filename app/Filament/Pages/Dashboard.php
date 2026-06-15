@@ -13,6 +13,7 @@ class Dashboard extends BaseDashboard
     {
         return [
             \App\Filament\Widgets\OpesDashboardStats::class,
+            \App\Filament\Widgets\RecentLeadsWidget::class,
             \App\Filament\Widgets\RecentTicketsWidget::class,
             \App\Filament\Widgets\RecentInvoicesWidget::class,
         ];

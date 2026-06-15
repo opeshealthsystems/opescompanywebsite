@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Invoice;
+use App\Models\Lead;
 use App\Models\License;
 use App\Models\TesterAssignment;
 use App\Models\Ticket;
@@ -68,6 +69,11 @@ class OpesDashboardStats extends BaseWidget
                 ->description('super admins + admins + support')
                 ->icon('heroicon-o-shield-check')
                 ->color('info'),
+
+            Stat::make('New Leads', Lead::where('status', 'new')->count())
+                ->description(Lead::where('status', 'qualified')->count() . ' qualified')
+                ->icon('heroicon-o-inbox')
+                ->color(Lead::where('status', 'new')->count() > 0 ? 'warning' : 'success'),
         ];
     }
 }
