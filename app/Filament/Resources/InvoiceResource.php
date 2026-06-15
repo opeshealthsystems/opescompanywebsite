@@ -8,6 +8,8 @@ use App\Models\License;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -172,6 +174,80 @@ class InvoiceResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            Infolists\Components\Section::make('Invoice')->schema([
+                Infolists\Components\TextEntry::make('invoice_number')
+                    ->label('Invoice #')
+                    ->fontFamily('mono')
+                    ->copyable(),
+                Infolists\Components\TextEntry::make('customer.name')->label('Customer'),
+                Infolists\Components\TextEntry::make('status')
+                    ->badge()
+                    ->color(fn ($state) => match ($state) {
+                        'draft'     => 'gray',
+                        'sent'      => 'info',
+                        'paid'      => 'success',
+                        'overdue'   => 'danger',
+                        'cancelled' => 'gray',
+                        default     => 'gray',
+                    }),
+                Infolists\Components\TextEntry::make('currency'),
+                Infolists\Components\TextEntry::make('due_date')
+                    ->label('Due Date')
+                    ->date('d M Y')
+                    ->placeholder('—'),
+                Infolists\Components\TextEntry::make('paid_at')
+                    ->label('Paid On')
+                    ->date('d M Y')
+                    ->placeholder('—'),
+                Infolists\Components\TextEntry::make('issuer.name')
+                    ->label('Issued By')
+                    ->placeholder('—'),
+                Infolists\Components\TextEntry::make('license.license_key')
+                    ->label('Linked License')
+                    ->fontFamily('mono')
+                    ->placeholder('—'),
+            ])->columns(4),
+
+            Infolists\Components\Section::make('Line Items')->schema([
+                Infolists\Components\RepeatableEntry::make('items')->schema([
+                    Infolists\Components\TextEntry::make('description')->columnSpan(3),
+                    Infolists\Components\TextEntry::make('quantity'),
+                    Infolists\Components\TextEntry::make('unit_price')
+                        ->label('Unit Price')
+                        ->getStateUsing(fn ($record) => number_format($record->unit_price)),
+                    Infolists\Components\TextEntry::make('total')
+                        ->getStateUsing(fn ($record) => number_format($record->total))
+                        ->weight('bold'),
+                ])->columns(6)->columnSpanFull(),
+            ]),
+
+            Infolists\Components\Section::make('Totals')->schema([
+                Infolists\Components\TextEntry::make('subtotal')
+                    ->getStateUsing(fn ($record) => $record->formatAmount($record->subtotal)),
+                Infolists\Components\TextEntry::make('tax_rate')
+                    ->label('Tax Rate')
+                    ->formatStateUsing(fn ($state) => $state . '%'),
+                Infolists\Components\TextEntry::make('tax_amount')
+                    ->label('Tax Amount')
+                    ->getStateUsing(fn ($record) => $record->formatAmount($record->tax_amount)),
+                Infolists\Components\TextEntry::make('grand_total')
+                    ->getStateUsing(fn ($record) => $record->formatAmount($record->grand_total))
+                    ->weight('bold')
+                    ->size('lg'),
+            ])->columns(4),
+
+            Infolists\Components\Section::make('Notes')
+                ->schema([
+                    Infolists\Components\TextEntry::make('notes')->placeholder('No notes.')->columnSpanFull(),
+                ])
+                ->collapsed()
+                ->collapsible(),
+        ]);
     }
 
     public static function getGloballySearchableAttributes(): array
