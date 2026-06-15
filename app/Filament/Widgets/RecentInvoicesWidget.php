@@ -2,6 +2,7 @@
 
 namespace App\Filament\Widgets;
 
+use App\Filament\Resources\InvoiceResource;
 use App\Models\Invoice;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -30,8 +31,7 @@ class RecentInvoicesWidget extends BaseWidget
                     ->sortable(),
                 Tables\Columns\TextColumn::make('grand_total')
                     ->label('Amount')
-                    ->getStateUsing(fn ($record) => $record->grand_total)
-                    ->money('USD'),
+                    ->getStateUsing(fn ($record) => $record->formatCurrency($record->grand_total)),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
                     ->color(fn ($state) => match ($state) {
@@ -46,7 +46,7 @@ class RecentInvoicesWidget extends BaseWidget
             ])
             ->actions([
                 Tables\Actions\Action::make('view')
-                    ->url(fn (Invoice $record): string => "/admin/invoices/{$record->id}/edit")
+                    ->url(fn (Invoice $record): string => InvoiceResource::getUrl('view', ['record' => $record]))
                     ->icon('heroicon-o-arrow-top-right-on-square')
                     ->size('sm'),
             ])

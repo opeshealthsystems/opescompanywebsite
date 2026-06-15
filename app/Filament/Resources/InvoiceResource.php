@@ -143,8 +143,7 @@ class InvoiceResource extends Resource
 
                 Tables\Columns\TextColumn::make('grand_total')
                     ->label('Grand Total')
-                    ->money('USD')
-                    ->getStateUsing(fn ($record) => $record->grand_total),
+                    ->getStateUsing(fn ($record) => $record->formatCurrency($record->grand_total)),
 
                 Tables\Columns\TextColumn::make('currency')
                     ->sortable(),
@@ -178,6 +177,17 @@ class InvoiceResource extends Resource
     public static function getGloballySearchableAttributes(): array
     {
         return ['invoice_number'];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        $overdue = static::getModel()::where('status', 'overdue')->count();
+        return $overdue > 0 ? (string) $overdue : null;
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'danger';
     }
 
     public static function getPages(): array

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Widgets;
 
+use App\Filament\Resources\TicketResource;
 use App\Models\Ticket;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -51,7 +52,7 @@ class RecentTicketsWidget extends BaseWidget
             ])
             ->actions([
                 Tables\Actions\Action::make('view')
-                    ->url(fn (Ticket $record): string => "/admin/tickets/{$record->id}/edit")
+                    ->url(fn (Ticket $record): string => TicketResource::getUrl('view', ['record' => $record]))
                     ->icon('heroicon-o-arrow-top-right-on-square')
                     ->size('sm'),
             ])
