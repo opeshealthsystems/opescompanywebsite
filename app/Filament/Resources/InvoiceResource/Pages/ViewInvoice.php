@@ -3,9 +3,11 @@
 namespace App\Filament\Resources\InvoiceResource\Pages;
 
 use App\Filament\Resources\InvoiceResource;
+use App\Mail\InvoiceIssued;
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
+use Illuminate\Support\Facades\Mail;
 
 class ViewInvoice extends ViewRecord
 {
@@ -24,7 +26,11 @@ class ViewInvoice extends ViewRecord
                 ->authorize(fn () => InvoiceResource::canAccess())
                 ->action(function () {
                     $this->record->update(['status' => 'sent']);
-                    Notification::make()->title('Invoice marked as sent.')->success()->send();
+                    $customerEmail = $this->record->customer?->email;
+                    if ($customerEmail) {
+                        Mail::to($customerEmail)->queue(new InvoiceIssued($this->record->load('items')));
+                    }
+                    Notification::make()->title('Invoice sent to customer.')->success()->send();
                     $this->refreshFormData(['status']);
                 }),
 

@@ -118,6 +118,7 @@
 
         <a href="{{ url($locale.'/about') }}">{{ __('nav.about') }}</a>
         <a href="{{ url($locale.'/partnerships') }}">{{ __('nav.partnerships') }}</a>
+        <a href="{{ url($locale.'/pricing') }}">{{ __('nav.pricing') }}</a>
         <a href="{{ url($locale.'/blog') }}">{{ __('nav.blog') }}</a>
         <a href="{{ url($locale.'/contact') }}">{{ __('nav.contact') }}</a>
     </div>

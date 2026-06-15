@@ -4,6 +4,7 @@ namespace App\Filament\Resources\TicketResource\Pages;
 
 use App\Filament\Resources\TicketResource;
 use App\Mail\TicketReplied;
+use App\Mail\TicketStatusChanged;
 use App\Models\Ticket;
 use App\Models\TicketReply;
 use App\Models\User;
@@ -84,7 +85,15 @@ class ViewTicket extends ViewRecord
                     if ($data['status'] === 'closed' && !$this->record->closed_at) {
                         $updates['closed_at'] = now();
                     }
+                    $oldStatus = $this->record->status;
                     $this->record->update($updates);
+                    $notifyStatuses = ['resolved', 'closed', 'pending_customer'];
+                    if ($data['status'] !== $oldStatus && in_array($data['status'], $notifyStatuses)) {
+                        $customerEmail = $this->record->user?->email;
+                        if ($customerEmail) {
+                            Mail::to($customerEmail)->queue(new TicketStatusChanged($this->record, $data['status']));
+                        }
+                    }
                     Notification::make()->title('Ticket updated')->success()->send();
                     $this->refreshFormData(['status', 'assigned_to', 'resolution']);
                 }),

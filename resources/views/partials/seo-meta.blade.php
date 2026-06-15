@@ -16,6 +16,8 @@
     $ogImage   = $ogImage ?? config('app.url').'/og-image.svg';
 @endphp
 
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
 <title>{{ $pageTitle }}</title>
 <meta name="description" content="{{ $pageDesc }}">
 <meta name="robots" content="index, follow">

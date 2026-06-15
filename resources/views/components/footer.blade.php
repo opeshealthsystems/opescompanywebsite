@@ -44,6 +44,9 @@ $current = $locale;
             <a href="{{ url($locale.'/partnerships') }}">
                 <i data-lucide="handshake" style="width:12px;height:12px"></i>Partnership
             </a>
+            <a href="{{ url($locale.'/pricing') }}">
+                <i data-lucide="tag" style="width:12px;height:12px"></i>Pricing
+            </a>
             <a href="{{ url($locale.'/blog') }}">
                 <i data-lucide="rss" style="width:12px;height:12px"></i>Blog
             </a>

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\WelcomeEmail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
 {
@@ -51,6 +53,8 @@ class RegisterController extends Controller
         });
 
         Auth::login($user);
+
+        Mail::to($user->email)->queue(new WelcomeEmail($user));
 
         $locale = $validated['locale'] ?? 'en';
         return redirect()->route('customer.dashboard', ['locale' => $locale]);
