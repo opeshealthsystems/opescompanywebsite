@@ -1,10 +1,27 @@
 @php
-$locale = app()->getLocale();
-$title  = $post->getLocalizedTitle($locale);
-$body   = ($locale === 'fr' && $post->body_fr) ? $post->body_fr : $post->body;
+$locale  = app()->getLocale();
+$title   = $post->getLocalizedTitle($locale);
+$excerpt = $post->getLocalizedExcerpt($locale);
+$body    = ($locale === 'fr' && $post->body_fr) ? $post->body_fr : $post->body;
 @endphp
 
-<x-layouts.app>
+<x-layouts.app :title="$title" :description="$excerpt" ogType="article">
+
+@push('schema')
+<script type="application/ld+json"><?php echo json_encode([
+    '@context'         => 'https://schema.org',
+    '@type'            => 'Article',
+    'headline'         => $title,
+    'description'      => $excerpt,
+    'author'           => ['@type' => 'Organization', 'name' => $post->author],
+    'publisher'        => ['@type' => 'Organization', 'name' => 'OPES Health Systems', 'url' => config('app.url')],
+    'datePublished'    => $post->published_at?->toIso8601String(),
+    'dateModified'     => ($post->updated_at ?? $post->published_at)?->toIso8601String(),
+    'mainEntityOfPage' => ['@type' => 'WebPage', '@id' => request()->url()],
+    'articleSection'   => $post->category,
+    'inLanguage'       => app()->getLocale() === 'fr' ? 'fr-CM' : 'en-CM',
+], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?></script>
+@endpush
 
 <div class="pd-breadcrumb">
     <a href="{{ url($locale) }}">Home</a>

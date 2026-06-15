@@ -24,13 +24,13 @@ $heroHeadlines = $featured->skip(1)->values();
         <div class="blog-hero-label">
             <div class="blog-hero-eyebrow">
                 <i data-lucide="trending-up" style="width:12px;height:12px"></i>
-                Health Technology Headlines
+                {{ __('blog.eyebrow') }}
                 <span class="blog-hero-eyebrow-sep">·</span>
-                <span class="blog-hero-date">Cameroon &amp; CEMAC Region</span>
+                <span class="blog-hero-date">{{ __('blog.eyebrow_region') }}</span>
             </div>
             <a href="{{ url($locale.'/blog') }}" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:#64748b;text-decoration:none;transition:color 0.15s"
                onmouseover="this.style.color='#94a3b8'" onmouseout="this.style.color='#64748b'">
-                All {{ $posts->total() }} articles
+                {{ __('blog.all_articles_count', ['count' => $posts->total()]) }}
                 <i data-lucide="arrow-right" style="width:12px;height:12px"></i>
             </a>
         </div>
@@ -49,7 +49,7 @@ $heroHeadlines = $featured->skip(1)->values();
                             <i data-lucide="file-text" style="width:26px;height:26px;color:#00C896"></i>
                         </div>
                     @endif
-                    <span class="blog-hero-badge">Featured</span>
+                    <span class="blog-hero-badge">{{ __('blog.badge_featured') }}</span>
                 </div>
                 <div class="blog-hero-content">
                     @php $heroColor = $catColors[$heroFeatured->category] ?? '#00C896'; @endphp
@@ -68,7 +68,7 @@ $heroHeadlines = $featured->skip(1)->values();
                         <span>{{ $heroFeatured->published_at?->format('d M Y') }}</span>
                     </div>
                     <span class="blog-hero-cta">
-                        Read article
+                        {{ __('blog.read_article') }}
                         <i data-lucide="arrow-right" style="width:12px;height:12px"></i>
                     </span>
                 </div>
@@ -78,7 +78,7 @@ $heroHeadlines = $featured->skip(1)->values();
             <div class="blog-hero-headlines">
                 <div class="blog-headlines-header">
                     <span class="blog-headlines-live-dot"></span>
-                    Latest in Health Technology
+                    {{ __('blog.latest_heading') }}
                 </div>
                 @foreach($heroHeadlines as $i => $headline)
                 <a href="{{ url($locale.'/blog/'.$headline->slug) }}" class="blog-headline-item">
@@ -116,13 +116,13 @@ $heroHeadlines = $featured->skip(1)->values();
         <div class="blog-sb-widget">
             <div class="blog-sb-widget-title">
                 <i data-lucide="layout-grid" style="width:11px;height:11px"></i>
-                Browse by Topic
+                {{ __('blog.browse_by_topic') }}
             </div>
             {{-- All articles link --}}
             <a href="{{ url($locale.'/blog') }}"
                class="blog-sb-cat {{ empty($activeCategory) ? 'sb-active' : '' }}">
                 <span class="blog-sb-cat-dot" style="background:#00C896"></span>
-                All Articles
+                {{ __('blog.all_articles') }}
                 <span class="blog-sb-cat-count">{{ $categories->sum('count') }}</span>
             </a>
             @foreach($categories as $cat)
@@ -137,7 +137,7 @@ $heroHeadlines = $featured->skip(1)->values();
             @if($activeCategory)
             <a href="{{ url($locale.'/blog') }}" class="blog-sb-clear">
                 <i data-lucide="x" style="width:11px;height:11px"></i>
-                Clear filter
+                {{ __('blog.clear_filter') }}
             </a>
             @endif
         </div>
@@ -147,10 +147,10 @@ $heroHeadlines = $featured->skip(1)->values();
             <div class="blog-sb-cta-icon">
                 <i data-lucide="building-2" style="width:22px;height:22px;color:#00C896"></i>
             </div>
-            <h4>Digitise Your Facility</h4>
-            <p>OPES HMS is built for hospitals and clinics in Cameroon and the CEMAC region.</p>
+            <h4>{{ __('blog.cta_heading') }}</h4>
+            <p>{{ __('blog.cta_body') }}</p>
             <a href="{{ url($locale.'/contact') }}" class="blog-sb-cta-btn">
-                Request a demo
+                {{ __('blog.cta_btn') }}
                 <i data-lucide="arrow-right" style="width:12px;height:12px"></i>
             </a>
         </div>
@@ -159,23 +159,23 @@ $heroHeadlines = $featured->skip(1)->values();
         <div class="blog-sb-widget">
             <div class="blog-sb-widget-title">
                 <i data-lucide="link-2" style="width:11px;height:11px"></i>
-                Explore OPES
+                {{ __('blog.explore_opes') }}
             </div>
             <a href="{{ url($locale.'/products') }}" class="blog-sb-link">
                 <i data-lucide="package" style="width:12px;height:12px;flex-shrink:0"></i>
-                Our Products
+                {{ __('blog.link_products') }}
             </a>
             <a href="{{ url($locale.'/solutions') }}" class="blog-sb-link">
                 <i data-lucide="lightbulb" style="width:12px;height:12px;flex-shrink:0"></i>
-                Solutions
+                {{ __('blog.link_solutions') }}
             </a>
             <a href="{{ url($locale.'/about') }}" class="blog-sb-link">
                 <i data-lucide="users" style="width:12px;height:12px;flex-shrink:0"></i>
-                About OPES
+                {{ __('blog.link_about') }}
             </a>
             <a href="{{ url($locale.'/contact') }}" class="blog-sb-link">
                 <i data-lucide="mail" style="width:12px;height:12px;flex-shrink:0"></i>
-                Contact Us
+                {{ __('blog.link_contact') }}
             </a>
         </div>
 
@@ -194,10 +194,10 @@ $heroHeadlines = $featured->skip(1)->values();
                             {{ $activeCategory }}
                         </span>
                     @else
-                        All Articles
+                        {{ __('blog.section_all_articles') }}
                     @endif
                 </h2>
-                <p class="blog-main-count">{{ $posts->total() }} {{ Str::plural('article', $posts->total()) }}</p>
+                <p class="blog-main-count">{{ trans_choice('blog.article_count', $posts->total(), ['count' => $posts->total()]) }}</p>
             </div>
         </div>
 
@@ -231,11 +231,11 @@ $heroHeadlines = $featured->skip(1)->values();
             <div class="cs-icon" style="margin:0 auto 24px">
                 <i data-lucide="search" style="width:28px;height:28px;color:#00C896"></i>
             </div>
-            <h2 style="font-size:22px;font-weight:700;color:#e2e8f0;margin-bottom:10px">No articles in this topic</h2>
-            <p style="color:#64748b;font-size:14px;margin-bottom:24px">Try browsing a different category from the sidebar.</p>
+            <h2 style="font-size:22px;font-weight:700;color:#e2e8f0;margin-bottom:10px">{{ __('blog.empty_heading') }}</h2>
+            <p style="color:#64748b;font-size:14px;margin-bottom:24px">{{ __('blog.empty_body') }}</p>
             <a href="{{ url($locale.'/blog') }}" class="btn-secondary" style="display:inline-flex;gap:6px;align-items:center">
                 <i data-lucide="arrow-left" style="width:14px;height:14px"></i>
-                View all articles
+                {{ __('blog.view_all') }}
             </a>
         </div>
         @endif

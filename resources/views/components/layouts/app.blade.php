@@ -1,3 +1,4 @@
+@props(['title' => null, 'description' => null, 'ogType' => 'website', 'ogImage' => null])
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
@@ -17,6 +18,7 @@
 
     <script src="https://unpkg.com/lucide@0.511.0/dist/umd/lucide.min.js" crossorigin="anonymous"></script>
     <script>lucide.createIcons();</script>
+    @stack('schema')
     <script type="application/ld+json"><?php echo json_encode([
         '@context'     => 'https://schema.org',
         '@type'        => 'Organization',

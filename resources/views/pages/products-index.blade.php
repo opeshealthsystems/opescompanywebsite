@@ -1,21 +1,23 @@
 @php $locale = app()->getLocale(); @endphp
 
-<x-layouts.app>
+<x-layouts.app
+    title="{{ __('products.meta_title') }}"
+    description="{{ __('products.meta_desc') }}">
 
 {{-- ── PAGE HEADER ───────────────────────────────────────────────── --}}
 <div class="pi-header">
     <div class="section-label" style="justify-content:center;margin-bottom:16px">
         <i data-lucide="layout-grid" style="width:12px;height:12px"></i>
-        All Products
+        {{ __('products.index_eyebrow') }}
     </div>
-    <h1 class="pi-title">22 Healthcare Software Systems</h1>
-    <p class="pi-sub">Purpose-built for the Cameroon and CEMAC health sector. Deploy one system or the full ecosystem — all connected through OPESCare Health ID.</p>
+    <h1 class="pi-title">{{ __('products.index_title') }}</h1>
+    <p class="pi-sub">{{ __('products.index_sub') }}</p>
 
     <div class="pi-trust-bar">
-        <span><i data-lucide="link" style="width:12px;height:12px;color:#00C896"></i> HL7 FHIR Interoperability</span>
-        <span><i data-lucide="globe" style="width:12px;height:12px;color:#1A6FE8"></i> EN / FR bilingual</span>
-        <span><i data-lucide="shield-check" style="width:12px;height:12px;color:#00C896"></i> MoH 2026–2030 aligned</span>
-        <span><i data-lucide="cloud" style="width:12px;height:12px;color:#1A6FE8"></i> Cloud & on-premise</span>
+        <span><i data-lucide="link" style="width:12px;height:12px;color:#00C896"></i> {{ __('products.trust_fhir') }}</span>
+        <span><i data-lucide="globe" style="width:12px;height:12px;color:#1A6FE8"></i> {{ __('products.trust_bilingual') }}</span>
+        <span><i data-lucide="shield-check" style="width:12px;height:12px;color:#00C896"></i> {{ __('products.trust_moh') }}</span>
+        <span><i data-lucide="cloud" style="width:12px;height:12px;color:#1A6FE8"></i> {{ __('products.trust_deploy') }}</span>
     </div>
 </div>
 
@@ -23,10 +25,10 @@
 <div class="section pi-section">
     <div class="pi-cat-header">
         <div class="pi-cat-dot" style="background:#00C896"></div>
-        <h2 class="pi-cat-title">Core Platform</h2>
-        <span class="pi-cat-count">{{ count($grouped['Core Platform']) }} systems</span>
+        <h2 class="pi-cat-title">{{ __('products.cat_core') }}</h2>
+        <span class="pi-cat-count">{{ trans_choice('products.systems_count', count($grouped['Core Platform']), ['count' => count($grouped['Core Platform'])]) }}</span>
     </div>
-    <p class="pi-cat-desc">Foundation systems that every OPES-connected facility starts with. Covers patient identity, clinical records, hospital management, and revenue.</p>
+    <p class="pi-cat-desc">{{ __('products.cat_core_desc') }}</p>
     <div class="pi-grid">
         @foreach($grouped['Core Platform'] as $p)
         <a href="{{ url($locale.'/products/'.$p['slug']) }}" class="pi-card">
@@ -52,10 +54,10 @@
 <div class="section pi-section">
     <div class="pi-cat-header">
         <div class="pi-cat-dot" style="background:#1A6FE8"></div>
-        <h2 class="pi-cat-title">Diagnostics & Support</h2>
-        <span class="pi-cat-count">{{ count($grouped['Diagnostics']) }} systems</span>
+        <h2 class="pi-cat-title">{{ __('products.cat_diagnostics') }}</h2>
+        <span class="pi-cat-count">{{ trans_choice('products.systems_count', count($grouped['Diagnostics']), ['count' => count($grouped['Diagnostics'])]) }}</span>
     </div>
-    <p class="pi-cat-desc">Laboratory, pharmacy, radiology, documents, and revenue cycle management — the operational backbone of any modern health facility.</p>
+    <p class="pi-cat-desc">{{ __('products.cat_diagnostics_desc') }}</p>
     <div class="pi-grid">
         @foreach($grouped['Diagnostics'] as $p)
         <a href="{{ url($locale.'/products/'.$p['slug']) }}" class="pi-card">
@@ -81,10 +83,10 @@
 <div class="section pi-section">
     <div class="pi-cat-header">
         <div class="pi-cat-dot" style="background:#94a3b8"></div>
-        <h2 class="pi-cat-title">Specialist Systems</h2>
-        <span class="pi-cat-count">{{ count($grouped['Specialist']) }} systems</span>
+        <h2 class="pi-cat-title">{{ __('products.cat_specialist') }}</h2>
+        <span class="pi-cat-count">{{ trans_choice('products.systems_count', count($grouped['Specialist']), ['count' => count($grouped['Specialist'])]) }}</span>
     </div>
-    <p class="pi-cat-desc">Discipline-specific modules for specialist clinics and departments — each integrates natively with the Core Platform via OPESCare Health ID.</p>
+    <p class="pi-cat-desc">{{ __('products.cat_specialist_desc') }}</p>
     <div class="pi-grid">
         @foreach($grouped['Specialist'] as $p)
         <a href="{{ url($locale.'/products/'.$p['slug']) }}" class="pi-card">
@@ -108,12 +110,12 @@
 <div class="demo-section">
     <div class="section-label" style="justify-content:center;color:#00C896;margin-bottom:12px">
         <i data-lucide="calendar-check" style="width:13px;height:13px"></i>
-        Book a Demo
+        {{ __('products.demo_eyebrow') }}
     </div>
-    <h2>See the full OPES ecosystem</h2>
-    <p>Not sure where to start? Book a free 45-minute overview with our team. We'll recommend the right systems for your facility type and budget.</p>
+    <h2>{{ __('products.demo_heading') }}</h2>
+    <p>{{ __('products.demo_body') }}</p>
     <a href="{{ url($locale.'/contact') }}" class="btn-primary" style="display:inline-flex;margin-top:8px">
-        Book a Free Demo
+        {{ __('products.demo_btn') }}
         <i data-lucide="arrow-right" style="width:15px;height:15px"></i>
     </a>
 </div>
