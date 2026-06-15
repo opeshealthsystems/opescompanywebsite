@@ -111,6 +111,7 @@ class DocumentTemplateResource extends Resource
                     ]),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make()
                     ->hidden(fn (DocumentTemplate $record) => ($record->documents_count ?? 0) > 0),
@@ -127,6 +128,7 @@ class DocumentTemplateResource extends Resource
         return [
             'index'  => Pages\ListDocumentTemplates::route('/'),
             'create' => Pages\CreateDocumentTemplate::route('/create'),
+            'view'   => Pages\ViewDocumentTemplate::route('/{record}'),
             'edit'   => Pages\EditDocumentTemplate::route('/{record}/edit'),
         ];
     }

@@ -14,6 +14,7 @@ class LeadResource extends Resource
 {
     protected static ?string $model = Lead::class;
     protected static ?string $navigationIcon = 'heroicon-o-inbox';
+    protected static ?string $navigationGroup = 'CRM';
     protected static ?string $navigationLabel = 'Demo Requests';
     protected static ?int $navigationSort = 1;
 
@@ -94,10 +95,25 @@ class LeadResource extends Resource
                     'ngo'        => 'NGO',
                 ]),
             ])
-            ->actions([Tables\Actions\EditAction::make()])
+            ->actions([Tables\Actions\ViewAction::make(), Tables\Actions\EditAction::make()])
             ->bulkActions([Tables\Actions\BulkActionGroup::make([
                 Tables\Actions\DeleteBulkAction::make(),
             ])]);
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'email'];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::getModel()::where('status', 'new')->count() ?: null;
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'info';
     }
 
     public static function getPages(): array
@@ -105,6 +121,7 @@ class LeadResource extends Resource
         return [
             'index'  => Pages\ListLeads::route('/'),
             'create' => Pages\CreateLead::route('/create'),
+            'view'   => Pages\ViewLead::route('/{record}'),
             'edit'   => Pages\EditLead::route('/{record}/edit'),
         ];
     }

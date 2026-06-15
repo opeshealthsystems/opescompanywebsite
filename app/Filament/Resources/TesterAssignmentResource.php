@@ -145,6 +145,7 @@ class TesterAssignmentResource extends Resource
                     ->options(fn () => User::role('tester')->orderBy('name')->pluck('name', 'id')),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
@@ -160,6 +161,7 @@ class TesterAssignmentResource extends Resource
         return [
             'index'  => Pages\ListTesterAssignments::route('/'),
             'create' => Pages\CreateTesterAssignment::route('/create'),
+            'view'   => Pages\ViewTesterAssignment::route('/{record}'),
             'edit'   => Pages\EditTesterAssignment::route('/{record}/edit'),
         ];
     }

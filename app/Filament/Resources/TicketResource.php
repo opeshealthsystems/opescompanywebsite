@@ -108,6 +108,7 @@ class TicketResource extends Resource
                         'billing'    => 'warning',
                         'technical'  => 'info',
                         'bug_report' => 'danger',
+                        'support'    => 'info',
                         default      => 'gray',
                     }),
 
@@ -152,6 +153,7 @@ class TicketResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -196,12 +198,28 @@ class TicketResource extends Resource
         ]);
     }
 
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['subject', 'description'];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::getModel()::whereIn('status', ['open', 'in_progress'])->count() ?: null;
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'warning';
+    }
+
     public static function getPages(): array
     {
         return [
             'index'  => Pages\ListTickets::route('/'),
             'create' => Pages\CreateTicket::route('/create'),
             'view'   => Pages\ViewTicket::route('/{record}'),
+            'edit'   => Pages\EditTicket::route('/{record}/edit'),
         ];
     }
 }

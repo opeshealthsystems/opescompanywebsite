@@ -39,6 +39,14 @@ class InvoiceResource extends Resource
                     ->searchable()
                     ->required(),
 
+                Forms\Components\Select::make('issued_by')
+                    ->label('Issued By')
+                    ->options(fn () => User::whereHas('roles', fn ($q) =>
+                        $q->whereIn('name', ['super_admin', 'admin'])
+                    )->orderBy('name')->pluck('name', 'id'))
+                    ->searchable()
+                    ->nullable(),
+
                 Forms\Components\Select::make('status')
                     ->options(Invoice::statusOptions())
                     ->default('draft')
@@ -133,6 +141,11 @@ class InvoiceResource extends Resource
                         default     => 'gray',
                     }),
 
+                Tables\Columns\TextColumn::make('grand_total')
+                    ->label('Grand Total')
+                    ->money('USD')
+                    ->getStateUsing(fn ($record) => $record->grand_total),
+
                 Tables\Columns\TextColumn::make('currency')
                     ->sortable(),
 
@@ -160,6 +173,11 @@ class InvoiceResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['invoice_number'];
     }
 
     public static function getPages(): array

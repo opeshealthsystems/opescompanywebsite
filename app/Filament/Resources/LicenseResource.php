@@ -182,6 +182,7 @@ class LicenseResource extends Resource
                     ->options(License::planOptions()),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('suspend')
                     ->label('Suspend')
@@ -210,6 +211,7 @@ class LicenseResource extends Resource
         return [
             'index'  => Pages\ListLicenses::route('/'),
             'create' => Pages\CreateLicense::route('/create'),
+            'view'   => Pages\ViewLicense::route('/{record}'),
             'edit'   => Pages\EditLicense::route('/{record}/edit'),
         ];
     }

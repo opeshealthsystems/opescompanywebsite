@@ -16,6 +16,7 @@ class BlogPostResource extends Resource
 {
     protected static ?string $model = BlogPost::class;
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationGroup = 'Content';
     protected static ?string $navigationLabel = 'Blog Posts';
     protected static ?int $navigationSort = 2;
 
@@ -70,7 +71,7 @@ class BlogPostResource extends Resource
             ->filters([
                 Tables\Filters\TernaryFilter::make('published'),
             ])
-            ->actions([Tables\Actions\EditAction::make()])
+            ->actions([Tables\Actions\ViewAction::make(), Tables\Actions\EditAction::make()])
             ->bulkActions([Tables\Actions\BulkActionGroup::make([
                 Tables\Actions\DeleteBulkAction::make(),
             ])]);
@@ -81,6 +82,7 @@ class BlogPostResource extends Resource
         return [
             'index'  => Pages\ListBlogPosts::route('/'),
             'create' => Pages\CreateBlogPost::route('/create'),
+            'view'   => Pages\ViewBlogPost::route('/{record}'),
             'edit'   => Pages\EditBlogPost::route('/{record}/edit'),
         ];
     }
