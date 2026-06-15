@@ -125,6 +125,47 @@
 
     <div class="nav-right">
         <x-language-switcher />
+
+        @auth
+        {{-- Logged-in account menu --}}
+        <div class="nav-account">
+            <button class="nav-account-avatar" aria-label="Account menu" type="button">
+                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+            </button>
+            <div class="nav-account-drop">
+                <div class="nav-account-drop-header">
+                    <div class="nav-account-drop-name">{{ auth()->user()->name }}</div>
+                    <div class="nav-account-drop-email">{{ auth()->user()->email }}</div>
+                </div>
+                <div class="nav-account-drop-divider"></div>
+                <a href="{{ route('customer.dashboard', ['locale' => $locale]) }}" class="nav-account-drop-item">
+                    <i data-lucide="layout-dashboard" style="width:14px;height:14px"></i> Dashboard
+                </a>
+                <a href="{{ route('customer.profile', ['locale' => $locale]) }}" class="nav-account-drop-item">
+                    <i data-lucide="user" style="width:14px;height:14px"></i> Profile
+                </a>
+                <a href="{{ route('customer.licenses', ['locale' => $locale]) }}" class="nav-account-drop-item">
+                    <i data-lucide="key" style="width:14px;height:14px"></i> Licenses
+                </a>
+                <a href="{{ route('customer.tickets', ['locale' => $locale]) }}" class="nav-account-drop-item">
+                    <i data-lucide="ticket" style="width:14px;height:14px"></i> Support
+                </a>
+                <div class="nav-account-drop-divider"></div>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="nav-account-drop-item nav-account-drop-logout">
+                        <i data-lucide="log-out" style="width:14px;height:14px"></i> Sign out
+                    </button>
+                </form>
+            </div>
+        </div>
+        @else
+        {{-- Guest login link --}}
+        <a href="{{ route('login') }}" class="nav-account-login" title="Sign in">
+            <i data-lucide="user-circle" style="width:20px;height:20px"></i>
+        </a>
+        @endauth
+
         <a href="{{ url($locale.'/contact') }}" class="btn-cta">
             {{ __('nav.book_demo') }}
         </a>
