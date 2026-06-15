@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class ProfileController extends Controller
 {
@@ -54,5 +56,27 @@ class ProfileController extends Controller
         return redirect()
             ->route('customer.profile', ['locale' => $locale])
             ->with('success', 'Profile updated successfully.');
+    }
+
+    public function changePassword(Request $request)
+    {
+        $user = Auth::user();
+
+        $request->validate([
+            'current_password' => ['required', function ($attribute, $value, $fail) use ($user) {
+                if (!Hash::check($value, $user->password)) {
+                    $fail('The current password is incorrect.');
+                }
+            }],
+            'password' => ['required', 'confirmed', Password::min(8)->letters()->numbers()],
+        ]);
+
+        $user->update(['password' => Hash::make($request->password)]);
+
+        $locale = $request->route('locale') ?? 'en';
+
+        return redirect()
+            ->route('customer.profile', ['locale' => $locale])
+            ->with('success', 'Password changed successfully.');
     }
 }

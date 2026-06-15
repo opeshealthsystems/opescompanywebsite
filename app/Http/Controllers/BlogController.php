@@ -10,15 +10,24 @@ class BlogController extends Controller
     public function index(Request $request)
     {
         $activeCategory = $request->query('category');
+        $search         = trim($request->query('search', ''));
 
         $query = BlogPost::published();
         if ($activeCategory) {
             $query->where('category', $activeCategory);
         }
+        if ($search !== '') {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                  ->orWhere('title_fr', 'like', '%' . $search . '%')
+                  ->orWhere('excerpt', 'like', '%' . $search . '%')
+                  ->orWhere('excerpt_fr', 'like', '%' . $search . '%');
+            });
+        }
 
-        $featured       = BlogPost::published()->limit(4)->get();
-        $posts          = $query->paginate(9)->withQueryString();
-        $categories     = BlogPost::published()
+        $featured   = BlogPost::published()->limit(4)->get();
+        $posts      = $query->paginate(9)->withQueryString();
+        $categories = BlogPost::published()
             ->select('category')
             ->selectRaw('count(*) as count')
             ->groupBy('category')
@@ -26,7 +35,7 @@ class BlogController extends Controller
             ->orderByDesc('count')
             ->get();
 
-        return view('pages.blog-index', compact('posts', 'featured', 'categories', 'activeCategory'));
+        return view('pages.blog-index', compact('posts', 'featured', 'categories', 'activeCategory', 'search'));
     }
 
     public function show(string $locale, string $slug)

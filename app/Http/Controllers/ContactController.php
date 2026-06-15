@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Mail\LeadNotification;
 use App\Models\Lead;
+use App\Models\User;
+use Filament\Notifications\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -35,6 +37,16 @@ class ContactController extends Controller
         $adminEmail = config('mail.admin_email', env('ADMIN_EMAIL'));
         if ($adminEmail) {
             Mail::to($adminEmail)->queue(new LeadNotification($lead));
+        }
+
+        $admins = User::role('admin')->get();
+        if ($admins->isNotEmpty()) {
+            Notification::make()
+                ->title('New lead: ' . $lead->name)
+                ->body($lead->email . ($lead->facility_type ? ' · ' . $lead->facility_type : ''))
+                ->icon('heroicon-o-user-plus')
+                ->iconColor('success')
+                ->sendToDatabase($admins);
         }
 
         return back()->with('success', 'Thank you! Our team will contact you within one business day.');

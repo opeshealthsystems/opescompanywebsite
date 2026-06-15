@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Mail\TicketCreated;
 use App\Models\Ticket;
 use App\Models\TicketReply;
+use App\Models\User;
+use Filament\Notifications\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -43,6 +45,16 @@ class TicketController extends Controller
         ]));
 
         Mail::to($user->email)->queue(new TicketCreated($ticket));
+
+        $admins = User::role('admin')->get();
+        if ($admins->isNotEmpty()) {
+            Notification::make()
+                ->title('New ticket: ' . $ticket->subject)
+                ->body($user->name . ' · ' . ucfirst($ticket->priority) . ' priority · ' . ucfirst($ticket->type))
+                ->icon('heroicon-o-ticket')
+                ->iconColor($ticket->priority === 'urgent' ? 'danger' : 'warning')
+                ->sendToDatabase($admins);
+        }
 
         return redirect()
             ->route('customer.tickets', ['locale' => app()->getLocale()])
@@ -82,6 +94,16 @@ class TicketController extends Controller
 
         if ($ticket->status === 'pending_customer') {
             $ticket->update(['status' => 'in_progress']);
+        }
+
+        $admins = User::role('admin')->get();
+        if ($admins->isNotEmpty()) {
+            Notification::make()
+                ->title('Customer reply on #' . $ticket->id)
+                ->body($user->name . ': ' . \Illuminate\Support\Str::limit($validated['body'], 80))
+                ->icon('heroicon-o-chat-bubble-left-right')
+                ->iconColor('info')
+                ->sendToDatabase($admins);
         }
 
         return redirect()

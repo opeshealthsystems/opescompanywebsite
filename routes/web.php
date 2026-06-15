@@ -55,6 +55,7 @@ Route::prefix('{locale}')
         Route::get('/blog',           [BlogController::class,    'index'])->name('blog');
         Route::get('/blog/{slug}',    [BlogController::class,    'show'])->name('blog.show');
         Route::get('/partnerships',   fn () => view('pages.partnerships'))->name('partnerships');
+        Route::get('/pricing',        fn () => view('pages.pricing'))->name('pricing');
         Route::get('/privacy',        fn () => view('pages.privacy'))->name('privacy');
         Route::get('/terms',          fn () => view('pages.terms'))->name('terms');
         Route::get('/compliance',     fn () => view('pages.compliance'))->name('compliance');
@@ -65,8 +66,9 @@ Route::prefix('{locale}')
             ->name('customer.')
             ->group(function () {
                 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-                Route::get('/profile',   [ProfileController::class,   'show'])->name('profile');
-                Route::put('/profile',   [ProfileController::class,   'update'])->name('profile.update');
+                Route::get('/profile',        [ProfileController::class, 'show'])->name('profile');
+                Route::put('/profile',        [ProfileController::class, 'update'])->name('profile.update');
+                Route::put('/profile/password', [ProfileController::class, 'changePassword'])->name('profile.password');
                 Route::get('/documents',      [\App\Http\Controllers\Customer\DocumentController::class, 'index'])->name('documents');
                 Route::get('/documents/{id}', [\App\Http\Controllers\Customer\DocumentController::class, 'show'])->name('documents.show');
                 Route::get('/licenses',      [\App\Http\Controllers\Customer\LicenseController::class, 'index'])->name('licenses');

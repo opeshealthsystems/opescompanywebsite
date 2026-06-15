@@ -15,6 +15,9 @@ return [
     // CTA lecture sur la carte vedette
     'read_article'          => "Lire l'article",
 
+    // Barre latérale — Recherche
+    'search_placeholder'    => 'Rechercher des articles…',
+
     // Barre latérale — widget Parcourir par thème
     'browse_by_topic'       => 'Parcourir par thème',
     'all_articles'          => 'Tous les articles',

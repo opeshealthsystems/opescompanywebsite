@@ -6,11 +6,18 @@
         </div>
     </div>
 
+    @if(session('success'))
+    <div class="auth-success-box" style="margin-bottom:1.5rem">
+        <p>{{ session('success') }}</p>
+    </div>
+    @endif
+
+    {{-- ── Profile Form ─────────────────────────────────────────── --}}
     <form method="POST" action="{{ route('customer.profile.update', ['locale' => app()->getLocale()]) }}" class="cp-form">
         @csrf
         @method('PUT')
 
-        @if ($errors->any())
+        @if ($errors->has('name') || $errors->has('phone') || $errors->has('facility_name') || $errors->has('facility_type') || $errors->has('country') || $errors->has('city') || $errors->has('address'))
             <div class="auth-error-box">
                 @foreach ($errors->all() as $error)<p>{{ $error }}</p>@endforeach
             </div>
@@ -53,8 +60,10 @@
                     <label for="facility_type" class="auth-label">Facility Type</label>
                     <select id="facility_type" name="facility_type" class="auth-input auth-select">
                         <option value="">— Select —</option>
-                        @foreach(['hospital'=>'Hospital','clinic'=>'Clinic','laboratory'=>'Laboratory','pharmacy'=>'Pharmacy','radiology'=>'Radiology Centre','nursing_home'=>'Nursing Home','other'=>'Other'] as $val => $label)
-                            <option value="{{ $val }}" {{ old('facility_type', $profile?->facility_type) === $val ? 'selected' : '' }}>{{ $label }}</option>
+                        @foreach(config('facility_types') as $val => $labels)
+                        <option value="{{ $val }}" {{ old('facility_type', $profile?->facility_type) === $val ? 'selected' : '' }}>
+                            {{ $labels['en'] }}
+                        </option>
                         @endforeach
                     </select>
                 </div>
@@ -78,9 +87,53 @@
 
         <div style="margin-top:1.5rem; display:flex; gap:1rem; align-items:center">
             <button type="submit" class="auth-btn" style="width:auto; padding:0.75rem 2rem">Save Changes</button>
-            <a href="{{ route('customer.dashboard', ['locale' => app()->getLocale()]) }}" class="cp-btn-outline">
-                Cancel
-            </a>
+            <a href="{{ route('customer.dashboard', ['locale' => app()->getLocale()]) }}" class="cp-btn-outline">Cancel</a>
+        </div>
+    </form>
+
+    {{-- ── Change Password ──────────────────────────────────────── --}}
+    <form method="POST" action="{{ route('customer.profile.password', ['locale' => app()->getLocale()]) }}"
+          class="cp-form" style="margin-top:2rem">
+        @csrf
+        @method('PUT')
+
+        @if ($errors->hasAny(['current_password', 'password']))
+        <div class="auth-error-box" style="margin-bottom:1rem">
+            @foreach($errors->get('current_password') as $e)<p>{{ $e }}</p>@endforeach
+            @foreach($errors->get('password') as $e)<p>{{ $e }}</p>@endforeach
+        </div>
+        @endif
+
+        <div class="cp-section-card">
+            <h2 class="cp-section-title" style="margin-bottom:1.5rem">
+                <i data-lucide="lock" style="width:18px;height:18px;color:#1A6FE8"></i> Change Password
+            </h2>
+            <div class="auth-grid-2">
+                <div class="auth-field" style="grid-column:1/-1">
+                    <label for="current_password" class="auth-label">Current Password *</label>
+                    <input id="current_password" name="current_password" type="password"
+                           class="auth-input @error('current_password') auth-input-error @enderror"
+                           autocomplete="current-password" required>
+                </div>
+                <div class="auth-field">
+                    <label for="password" class="auth-label">New Password *</label>
+                    <input id="password" name="password" type="password"
+                           class="auth-input @error('password') auth-input-error @enderror"
+                           autocomplete="new-password" required
+                           placeholder="Minimum 8 characters">
+                </div>
+                <div class="auth-field">
+                    <label for="password_confirmation" class="auth-label">Confirm New Password *</label>
+                    <input id="password_confirmation" name="password_confirmation" type="password"
+                           class="auth-input" autocomplete="new-password" required>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top:1.25rem">
+            <button type="submit" class="auth-btn" style="width:auto; padding:0.75rem 2rem; background:#1A6FE8">
+                Update Password
+            </button>
         </div>
     </form>
 </x-layouts.customer>

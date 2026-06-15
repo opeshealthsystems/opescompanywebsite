@@ -15,6 +15,9 @@ return [
     // Read CTA on featured card
     'read_article'          => 'Read article',
 
+    // Sidebar — Search
+    'search_placeholder'    => 'Search articles…',
+
     // Sidebar — Browse by Topic widget
     'browse_by_topic'       => 'Browse by Topic',
     'all_articles'          => 'All Articles',

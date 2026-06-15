@@ -113,6 +113,21 @@ $heroHeadlines = $featured->skip(1)->values();
     {{-- ── Left Sidebar ──────────────────────────────────── --}}
     <aside class="blog-sidebar">
 
+        {{-- Search --}}
+        <form action="{{ url($locale.'/blog') }}" method="GET" class="blog-sb-search">
+            <div class="blog-sb-search-wrap">
+                <i data-lucide="search" style="width:13px;height:13px;color:#475569;flex-shrink:0"></i>
+                <input type="text" name="search" value="{{ $search ?? '' }}"
+                       placeholder="{{ __('blog.search_placeholder') }}"
+                       class="blog-sb-search-input">
+                @if(!empty($search))
+                <a href="{{ url($locale.'/blog') }}" class="blog-sb-search-clear" title="Clear search">
+                    <i data-lucide="x" style="width:11px;height:11px"></i>
+                </a>
+                @endif
+            </div>
+        </form>
+
         {{-- Browse by Topic --}}
         <div class="blog-sb-widget">
             <div class="blog-sb-widget-title">
@@ -189,7 +204,12 @@ $heroHeadlines = $featured->skip(1)->values();
         <div class="blog-main-header">
             <div>
                 <h2 class="blog-main-title">
-                    @if($activeCategory)
+                    @if(!empty($search))
+                        <span style="display:inline-flex;align-items:center;gap:8px">
+                            <i data-lucide="search" style="width:14px;height:14px;color:#00C896"></i>
+                            "{{ $search }}"
+                        </span>
+                    @elseif($activeCategory)
                         <span style="display:inline-flex;align-items:center;gap:8px">
                             <span style="width:10px;height:10px;border-radius:50%;background:{{ $catColors[$activeCategory] ?? '#00C896' }};display:inline-block;flex-shrink:0"></span>
                             {{ $activeCategory }}
@@ -200,6 +220,12 @@ $heroHeadlines = $featured->skip(1)->values();
                 </h2>
                 <p class="blog-main-count">{{ trans_choice('blog.article_count', $posts->total(), ['count' => $posts->total()]) }}</p>
             </div>
+            @if(!empty($search))
+            <a href="{{ url($locale.'/blog') }}" style="font-size:12px;color:#64748b;text-decoration:none;display:inline-flex;align-items:center;gap:4px">
+                <i data-lucide="x" style="width:11px;height:11px"></i>
+                Clear search
+            </a>
+            @endif
         </div>
 
         {{-- Grid --}}
