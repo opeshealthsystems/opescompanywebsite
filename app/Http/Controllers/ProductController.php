@@ -2,20 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+
 class ProductController extends Controller
 {
     public function index(string $locale)
     {
-        $core       = config('products');
-        $specialist = config('products_specialist');
+        $all = Product::where('is_active', true)->orderBy('sort_order')->get()->toArray();
 
-        $grouped = [
-            'Core Platform' => array_filter($core,       fn ($p) => $p['category'] === 'Core Platform'),
-            'Diagnostics'   => array_filter($core,       fn ($p) => $p['category'] !== 'Core Platform'),
-            'Specialist'    => $specialist,
+        $categoryMap = [
+            'core'        => 'Core Platform',
+            'diagnostics' => 'Diagnostics',
+            'specialist'  => 'Specialist',
         ];
 
-        $all = array_merge($core, $specialist);
+        $grouped = [];
+        foreach ($all as $p) {
+            $label           = $categoryMap[$p['category']] ?? 'Other';
+            $grouped[$label][] = $p;
+        }
 
         return view('pages.products-index', compact('all', 'grouped'));
     }

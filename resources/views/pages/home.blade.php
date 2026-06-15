@@ -112,98 +112,16 @@
     <div class="section-label">
         <i data-lucide="grid-3x3" style="width:12px;height:12px"></i> Our Software
     </div>
-    <h2 class="section-title">22 Systems. One Ecosystem.</h2>
+    <h2 class="section-title">{{ $products->count() }} Systems. One Ecosystem.</h2>
     <p class="section-sub">Every system integrates with OPESCare — your patient's Health ID follows them across every facility.</p>
 
     <div class="product-grid">
-        <a href="{{ url($locale.'/products/opescare') }}" class="product-card core">
-            <div class="p-icon"><i data-lucide="fingerprint" style="width:24px;height:24px;color:#00C896"></i></div>
-            <div class="p-name">OPESCare</div><div class="p-cat">Health ID · Interoperability</div>
+        @foreach($products as $p)
+        <a href="{{ url($locale.'/products/'.$p->slug) }}" class="product-card {{ $p->category === 'core' ? 'core' : ($p->category === 'diagnostics' ? 'diag' : '') }}">
+            <div class="p-icon"><i data-lucide="{{ $p->icon }}" style="width:24px;height:24px;color:{{ $p->color }}"></i></div>
+            <div class="p-name">{{ $p->name }}</div><div class="p-cat">{{ $p->subtitle }}</div>
         </a>
-        <a href="{{ url($locale.'/products/opes-emr') }}" class="product-card core">
-            <div class="p-icon"><i data-lucide="stethoscope" style="width:24px;height:24px;color:#00C896"></i></div>
-            <div class="p-name">OPES EMR</div><div class="p-cat">Clinics &amp; Hospitals</div>
-        </a>
-        <a href="{{ url($locale.'/products/opes-hospital-his') }}" class="product-card core">
-            <div class="p-icon"><i data-lucide="hospital" style="width:24px;height:24px;color:#00C896"></i></div>
-            <div class="p-name">OPES Hospital HIS</div><div class="p-cat">Full Hospital IS</div>
-        </a>
-        <a href="{{ url($locale.'/products/uhc-is') }}" class="product-card core">
-            <div class="p-icon"><i data-lucide="users" style="width:24px;height:24px;color:#00C896"></i></div>
-            <div class="p-name">UHC IS</div><div class="p-cat">Universal Hospital Care</div>
-        </a>
-        <a href="{{ url($locale.'/products/opes-triage') }}" class="product-card core">
-            <div class="p-icon"><i data-lucide="timer" style="width:24px;height:24px;color:#00C896"></i></div>
-            <div class="p-name">Opes Triage</div><div class="p-cat">Standalone · Any Facility</div>
-        </a>
-        <a href="{{ url($locale.'/products/opes-lab') }}" class="product-card diag">
-            <div class="p-icon"><i data-lucide="microscope" style="width:24px;height:24px;color:#1A6FE8"></i></div>
-            <div class="p-name">OPES Lab</div><div class="p-cat">Laboratory IS</div>
-        </a>
-        <a href="{{ url($locale.'/products/pharmis') }}" class="product-card diag">
-            <div class="p-icon"><i data-lucide="pill" style="width:24px;height:24px;color:#1A6FE8"></i></div>
-            <div class="p-name">PHARMIS</div><div class="p-cat">Pharmacy IS</div>
-        </a>
-        <a href="{{ url($locale.'/products/radis') }}" class="product-card diag">
-            <div class="p-icon"><i data-lucide="image-up" style="width:24px;height:24px;color:#1A6FE8"></i></div>
-            <div class="p-name">RADIS</div><div class="p-cat">Radiology IS</div>
-        </a>
-        <a href="{{ url($locale.'/products/opes-cdms') }}" class="product-card">
-            <div class="p-icon"><i data-lucide="folder-open" style="width:24px;height:24px;color:#94a3b8"></i></div>
-            <div class="p-name">OPES CDMS</div><div class="p-cat">Clinical Documents</div>
-        </a>
-        <a href="{{ url($locale.'/products/rcmis') }}" class="product-card">
-            <div class="p-icon"><i data-lucide="receipt" style="width:24px;height:24px;color:#94a3b8"></i></div>
-            <div class="p-name">RCMIS</div><div class="p-cat">Revenue Cycle</div>
-        </a>
-        <a href="{{ url($locale.'/products/cardis') }}" class="product-card">
-            <div class="p-icon"><i data-lucide="heart-pulse" style="width:24px;height:24px;color:#94a3b8"></i></div>
-            <div class="p-name">CARDIS</div><div class="p-cat">Cardiology</div>
-        </a>
-        <a href="{{ url($locale.'/products/dentis') }}" class="product-card">
-            <div class="p-icon"><i data-lucide="scan-face" style="width:24px;height:24px;color:#94a3b8"></i></div>
-            <div class="p-name">DENTIS</div><div class="p-cat">Dental</div>
-        </a>
-        <a href="{{ url($locale.'/products/dermis') }}" class="product-card">
-            <div class="p-icon"><i data-lucide="layers" style="width:24px;height:24px;color:#94a3b8"></i></div>
-            <div class="p-name">DERMIS</div><div class="p-cat">Dermatology</div>
-        </a>
-        <a href="{{ url($locale.'/products/endois') }}" class="product-card">
-            <div class="p-icon"><i data-lucide="gauge" style="width:24px;height:24px;color:#94a3b8"></i></div>
-            <div class="p-name">ENDOIS</div><div class="p-cat">Endocrinology &amp; Diabetes</div>
-        </a>
-        <a href="{{ url($locale.'/products/gynobsis') }}" class="product-card">
-            <div class="p-icon"><i data-lucide="baby" style="width:24px;height:24px;color:#94a3b8"></i></div>
-            <div class="p-name">GYNOBSIS</div><div class="p-cat">Obstetrics &amp; Gynaecology</div>
-        </a>
-        <a href="{{ url($locale.'/products/mhis') }}" class="product-card">
-            <div class="p-icon"><i data-lucide="brain" style="width:24px;height:24px;color:#94a3b8"></i></div>
-            <div class="p-name">MHIS</div><div class="p-cat">Mental Health</div>
-        </a>
-        <a href="{{ url($locale.'/products/ndis') }}" class="product-card">
-            <div class="p-icon"><i data-lucide="apple" style="width:24px;height:24px;color:#94a3b8"></i></div>
-            <div class="p-name">NDIS</div><div class="p-cat">Nutrition &amp; Dietetics</div>
-        </a>
-        <a href="{{ url($locale.'/products/ophis') }}" class="product-card">
-            <div class="p-icon"><i data-lucide="eye" style="width:24px;height:24px;color:#94a3b8"></i></div>
-            <div class="p-name">OPHIS</div><div class="p-cat">Ophthalmology</div>
-        </a>
-        <a href="{{ url($locale.'/products/orthois') }}" class="product-card">
-            <div class="p-icon"><i data-lucide="accessibility" style="width:24px;height:24px;color:#94a3b8"></i></div>
-            <div class="p-name">ORTHOIS</div><div class="p-cat">Orthotics &amp; Prosthetics</div>
-        </a>
-        <a href="{{ url($locale.'/products/paedis') }}" class="product-card">
-            <div class="p-icon"><i data-lucide="shield-heart" style="width:24px;height:24px;color:#94a3b8"></i></div>
-            <div class="p-name">PAEDIS</div><div class="p-cat">Paediatrics</div>
-        </a>
-        <a href="{{ url($locale.'/products/rehabis') }}" class="product-card">
-            <div class="p-icon"><i data-lucide="dumbbell" style="width:24px;height:24px;color:#94a3b8"></i></div>
-            <div class="p-name">REHABIS</div><div class="p-cat">Physical Medicine &amp; Rehab</div>
-        </a>
-        <a href="{{ url($locale.'/products/sltis') }}" class="product-card">
-            <div class="p-icon"><i data-lucide="waves" style="width:24px;height:24px;color:#94a3b8"></i></div>
-            <div class="p-name">SLTIS</div><div class="p-cat">Speech &amp; Language Therapy</div>
-        </a>
+        @endforeach
     </div>
 </div>
 
@@ -485,22 +403,16 @@
     <div class="section-label"><i data-lucide="message-square-quote" style="width:12px;height:12px"></i> Trust</div>
     <h2 class="section-title">What Healthcare Professionals Say</h2>
     <div class="testimonial-grid">
+        @foreach($testimonials as $t)
         <div class="testimonial">
             <i data-lucide="quote" style="width:20px;height:20px;color:#00C896;opacity:.5"></i>
-            <blockquote>"OPES EMR transformed how we manage patient records at our clinic. For the first time, our staff in both Yaoundé and Douala are working from the same system — in French and English."</blockquote>
+            <blockquote>"{{ $t->body }}"</blockquote>
             <div class="testimonial-author">
                 <i data-lucide="user-circle" style="width:14px;height:14px;color:#00C896"></i>
-                Dr. A. Mbarga · <span>General Practitioner, Yaoundé</span>
+                {{ $t->author_name }}@if($t->author_title || $t->author_facility) · <span>{{ implode(', ', array_filter([$t->author_title, $t->author_facility])) }}</span>@endif
             </div>
         </div>
-        <div class="testimonial">
-            <i data-lucide="quote" style="width:20px;height:20px;color:#1A6FE8;opacity:.5"></i>
-            <blockquote>"Opes Triage integrated into our existing workflow in under a week. Patient wait times dropped noticeably. I recommend it to every hospital administrator in the region."</blockquote>
-            <div class="testimonial-author">
-                <i data-lucide="user-circle" style="width:14px;height:14px;color:#1A6FE8"></i>
-                Administrator · <span>Regional Hospital, Douala</span>
-            </div>
-        </div>
+        @endforeach
     </div>
 </div>
 

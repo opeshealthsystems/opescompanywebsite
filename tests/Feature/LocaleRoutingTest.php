@@ -2,14 +2,21 @@
 
 namespace Tests\Feature;
 
+use Database\Seeders\ProductSeeder;
+use Database\Seeders\TestimonialSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class LocaleRoutingTest extends TestCase
 {
+    use RefreshDatabase;
+
     protected function setUp(): void
     {
         parent::setUp();
         $this->withoutVite();
+        $this->seed(ProductSeeder::class);
+        $this->seed(TestimonialSeeder::class);
     }
 
     public function test_root_redirects_to_default_locale(): void
