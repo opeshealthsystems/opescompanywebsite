@@ -21,6 +21,16 @@ class Login extends BaseLogin
 
         session()->regenerate();
 
-        $this->redirect(Filament::getUrl());
+        $user = Filament::auth()->user();
+
+        if ($user->hasAnyRole(['super_admin', 'admin', 'support'])) {
+            $this->redirect(Filament::getUrl());
+        } elseif ($user->hasRole('customer')) {
+            $this->redirect(route('customer.dashboard', ['locale' => 'en']));
+        } elseif ($user->hasRole('tester')) {
+            $this->redirect(route('tester.dashboard', ['locale' => 'en']));
+        } else {
+            $this->redirect('/en');
+        }
     }
 }
