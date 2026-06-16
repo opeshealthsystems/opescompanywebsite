@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             BlogPostSeeder::class,
             ProductSeeder::class,
             TestimonialSeeder::class,
+            DemoContentSeeder::class,
         ]);
     }
 }
