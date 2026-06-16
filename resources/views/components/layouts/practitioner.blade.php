@@ -42,6 +42,12 @@
                 <i data-lucide="lightbulb" style="width:16px;height:16px"></i> Suggestions
             </a>
             @endif
+            @if(Route::has('practitioner.bug-reports'))
+            <a href="{{ route('practitioner.bug-reports', ['locale' => app()->getLocale()]) }}"
+               class="flex items-center gap-1.5 px-3 py-1.5 rounded text-sm no-underline transition-colors {{ request()->routeIs('practitioner.bug-reports*') ? 'bg-slate-700 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800' }}">
+                <i data-lucide="bug" style="width:16px;height:16px"></i> Bug Reports
+            </a>
+            @endif
             @if(Route::has('practitioner.courses'))
             <a href="{{ route('practitioner.courses', ['locale' => app()->getLocale()]) }}"
                class="flex items-center gap-1.5 px-3 py-1.5 rounded text-sm no-underline transition-colors {{ request()->routeIs('practitioner.courses*') || request()->routeIs('practitioner.lessons*') ? 'bg-slate-700 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800' }}">

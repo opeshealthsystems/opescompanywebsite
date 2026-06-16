@@ -161,6 +161,11 @@ Route::prefix('{locale}')
                 Route::get('/suggestions', [\App\Http\Controllers\Practitioner\SuggestionController::class, 'index'])->name('suggestions');
                 Route::get('/suggestions/create', [\App\Http\Controllers\Practitioner\SuggestionController::class, 'create'])->name('suggestions.create');
                 Route::post('/suggestions', [\App\Http\Controllers\Practitioner\SuggestionController::class, 'store'])->name('suggestions.store');
+                // Bug Reports
+                Route::get('/bug-reports', [\App\Http\Controllers\Practitioner\BugReportController::class, 'index'])->name('bug-reports');
+                Route::get('/bug-reports/create', [\App\Http\Controllers\Practitioner\BugReportController::class, 'create'])->name('bug-reports.create');
+                Route::post('/bug-reports', [\App\Http\Controllers\Practitioner\BugReportController::class, 'store'])->name('bug-reports.store');
+                Route::get('/bug-reports/{bugReport}', [\App\Http\Controllers\Practitioner\BugReportController::class, 'show'])->name('bug-reports.show');
                 // Courses
                 Route::get('/courses', [\App\Http\Controllers\Practitioner\CourseController::class, 'index'])->name('courses');
                 Route::get('/courses/{course:slug}', [\App\Http\Controllers\Practitioner\CourseController::class, 'show'])->name('courses.show');
