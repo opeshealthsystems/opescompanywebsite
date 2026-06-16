@@ -124,5 +124,15 @@ Route::prefix('{locale}')
                 Route::get('/profile',   [\App\Http\Controllers\Practitioner\ProfileController::class,   'show'])->name('profile');
                 Route::put('/profile',   [\App\Http\Controllers\Practitioner\ProfileController::class,   'update'])->name('profile.update');
                 Route::put('/profile/password', [\App\Http\Controllers\Practitioner\ProfileController::class, 'changePassword'])->name('profile.password');
+                // Programs
+                Route::get('/programs', [\App\Http\Controllers\Practitioner\ProgramController::class, 'index'])->name('programs');
+                Route::get('/programs/{program}', [\App\Http\Controllers\Practitioner\ProgramController::class, 'show'])->name('programs.show');
+                Route::post('/programs/{program}/apply', [\App\Http\Controllers\Practitioner\ProgramController::class, 'apply'])->name('programs.apply');
+                // Applications
+                Route::get('/applications', [\App\Http\Controllers\Practitioner\ApplicationController::class, 'index'])->name('applications');
+                Route::get('/applications/{application}', [\App\Http\Controllers\Practitioner\ApplicationController::class, 'show'])->name('applications.show');
+                // Findings
+                Route::get('/applications/{application}/findings/create', [\App\Http\Controllers\Practitioner\FindingController::class, 'create'])->name('findings.create');
+                Route::post('/applications/{application}/findings', [\App\Http\Controllers\Practitioner\FindingController::class, 'store'])->name('findings.store');
             });
     });
