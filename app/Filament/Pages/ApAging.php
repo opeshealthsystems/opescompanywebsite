@@ -4,6 +4,7 @@ namespace App\Filament\Pages;
 
 use App\Models\SupplierBill;
 use Carbon\Carbon;
+use Filament\Actions\Action;
 use Filament\Pages\Page;
 
 class ApAging extends Page
@@ -72,5 +73,39 @@ class ApAging extends Page
     public function getTotalOutstanding(): float
     {
         return SupplierBill::whereNotIn('status', ['paid', 'draft'])->sum('total');
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Action::make('export_csv')
+                ->label('Export CSV')
+                ->icon('heroicon-o-arrow-down-tray')
+                ->color('gray')
+                ->action(function (): \Symfony\Component\HttpFoundation\StreamedResponse {
+                    $buckets = $this->getAgingData();
+                    $rows = ["Bucket,Reference,Vendor,Bill No,Status,Due Date,Days Overdue,Amount,Currency\n"];
+                    foreach ($buckets as $bucket) {
+                        foreach ($bucket['bills'] as $bill) {
+                            $rows[] = implode(',', [
+                                '"' . $bucket['label'] . '"',
+                                $bill['reference'],
+                                '"' . $bill['vendor'] . '"',
+                                $bill['bill_number'],
+                                $bill['status'],
+                                $bill['due_date'],
+                                $bill['days_overdue'] ?? 0,
+                                number_format($bill['amount'], 2),
+                                $bill['currency'],
+                            ]) . "\n";
+                        }
+                    }
+                    return response()->streamDownload(
+                        fn () => print(implode('', $rows)),
+                        'ap-aging-' . now()->format('Y-m-d') . '.csv',
+                        ['Content-Type' => 'text/csv']
+                    );
+                }),
+        ];
     }
 }

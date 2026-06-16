@@ -6,6 +6,7 @@ use App\Models\Department;
 use App\Models\JobOpening;
 use App\Models\LeaveRequest;
 use App\Models\User;
+use Filament\Actions\Action;
 use Filament\Pages\Page;
 
 class HrSummary extends Page
@@ -67,5 +68,37 @@ class HrSummary extends Page
     public function getTotalHeadcount(): int
     {
         return User::whereHas('roles', fn($q) => $q->where('name', '!=', 'customer'))->count();
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Action::make('export_headcount_csv')
+                ->label('Export Headcount CSV')
+                ->icon('heroicon-o-arrow-down-tray')
+                ->color('gray')
+                ->action(function (): \Symfony\Component\HttpFoundation\StreamedResponse {
+                    $departments = $this->getHeadcountByDepartment();
+                    $leave = $this->getLeaveStats();
+                    $rows = ["Department,Headcount\n"];
+                    foreach ($departments as $dept) {
+                        $rows[] = '"' . $dept['name'] . '",' . $dept['count'] . "\n";
+                    }
+                    $rows[] = "\n";
+                    $rows[] = "Leave Summary (This Month)\n";
+                    $rows[] = "Total Requests,Approved,Pending,Rejected\n";
+                    $rows[] = implode(',', [
+                        $leave['total_requests'],
+                        $leave['approved'],
+                        $leave['pending'],
+                        $leave['rejected'],
+                    ]) . "\n";
+                    return response()->streamDownload(
+                        fn () => print(implode('', $rows)),
+                        'hr-summary-' . now()->format('Y-m') . '.csv',
+                        ['Content-Type' => 'text/csv']
+                    );
+                }),
+        ];
     }
 }

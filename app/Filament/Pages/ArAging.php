@@ -4,6 +4,7 @@ namespace App\Filament\Pages;
 
 use App\Models\Invoice;
 use Carbon\Carbon;
+use Filament\Actions\Action;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\DB;
 
@@ -75,5 +76,37 @@ class ArAging extends Page
             ->join('invoices', 'invoice_items.invoice_id', '=', 'invoices.id')
             ->whereNotIn('invoices.status', ['paid', 'cancelled', 'draft'])
             ->sum('invoice_items.total');
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Action::make('export_csv')
+                ->label('Export CSV')
+                ->icon('heroicon-o-arrow-down-tray')
+                ->color('gray')
+                ->action(function (): \Symfony\Component\HttpFoundation\StreamedResponse {
+                    $buckets = $this->getAgingData();
+                    $rows = ["Bucket,Reference,Status,Due Date,Days Overdue,Amount,Currency\n"];
+                    foreach ($buckets as $bucket) {
+                        foreach ($bucket['invoices'] as $inv) {
+                            $rows[] = implode(',', [
+                                '"' . $bucket['label'] . '"',
+                                $inv['reference'],
+                                $inv['status'],
+                                $inv['due_date'],
+                                $inv['days_overdue'] ?? 0,
+                                number_format($inv['amount'], 2),
+                                $inv['currency'],
+                            ]) . "\n";
+                        }
+                    }
+                    return response()->streamDownload(
+                        fn () => print(implode('', $rows)),
+                        'ar-aging-' . now()->format('Y-m-d') . '.csv',
+                        ['Content-Type' => 'text/csv']
+                    );
+                }),
+        ];
     }
 }
