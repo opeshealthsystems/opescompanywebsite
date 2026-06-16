@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Customer\DashboardController;
@@ -21,6 +23,11 @@ Route::middleware('guest')->group(function () {
     Route::post('/login',    [LoginController::class,    'authenticate'])->name('login.post');
     Route::get('/register',  [RegisterController::class, 'show'])->name('register');
     Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
+
+    Route::get('/forgot-password',   [ForgotPasswordController::class,  'show'])->name('password.request');
+    Route::post('/forgot-password',  [ForgotPasswordController::class,  'submit'])->name('password.email');
+    Route::get('/reset-password/{token}', [ResetPasswordController::class, 'show'])->name('password.reset.form');
+    Route::post('/reset-password',   [ResetPasswordController::class,   'reset'])->name('password.reset');
 });
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 

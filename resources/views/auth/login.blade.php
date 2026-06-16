@@ -36,10 +36,11 @@
                 >
             </div>
 
-            <div class="auth-remember">
+            <div class="auth-remember" style="display:flex;align-items:center;justify-content:space-between;">
                 <label class="auth-check-label">
                     <input type="checkbox" name="remember" class="auth-check"> Remember me
                 </label>
+                <a href="{{ route('password.request') }}" class="auth-link" style="font-size:0.8rem;">Forgot password?</a>
             </div>
 
             <button type="submit" class="auth-btn">Sign In</button>
