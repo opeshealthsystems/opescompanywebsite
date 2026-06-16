@@ -3,14 +3,17 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
+use App\Mail\WelcomeEmail;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Infolists;
 use Filament\Infolists\Infolist;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Mail;
 
 class UserResource extends Resource
 {
@@ -146,6 +149,16 @@ class UserResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('send_welcome')
+                    ->label('Send Welcome')
+                    ->icon('heroicon-o-envelope')
+                    ->color('info')
+                    ->requiresConfirmation()
+                    ->modalDescription(fn (User $record) => "Send a welcome email to {$record->email}?")
+                    ->action(function (User $record) {
+                        Mail::to($record->email)->queue(new WelcomeEmail($record));
+                        Notification::make()->title('Welcome email queued')->success()->send();
+                    }),
                 Tables\Actions\DeleteAction::make()
                     ->hidden(fn (User $record) => $record->id === auth()->id()),
             ])
