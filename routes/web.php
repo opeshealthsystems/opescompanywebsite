@@ -29,6 +29,9 @@ Route::middleware('guest')->group(function () {
     Route::post('/forgot-password',  [ForgotPasswordController::class,  'submit'])->name('password.email');
     Route::get('/reset-password/{token}', [ResetPasswordController::class, 'show'])->name('password.reset.form');
     Route::post('/reset-password',   [ResetPasswordController::class,   'reset'])->name('password.reset');
+
+    Route::get('/practitioners/register',  [\App\Http\Controllers\Auth\PractitionerRegisterController::class, 'show'])->name('practitioner.register');
+    Route::post('/practitioners/register', [\App\Http\Controllers\Auth\PractitionerRegisterController::class, 'register'])->name('practitioner.register.post');
 });
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
@@ -108,5 +111,16 @@ Route::prefix('{locale}')
                 Route::get('/assignments/{id}',                      [\App\Http\Controllers\Tester\AssignmentController::class, 'show'])->name('assignments.show');
                 Route::patch('/assignments/{id}/status',             [\App\Http\Controllers\Tester\AssignmentController::class, 'updateStatus'])->name('assignments.status');
                 Route::post('/assignments/{id}/bug-reports',         [\App\Http\Controllers\Tester\AssignmentController::class, 'storeBugReport'])->name('assignments.bug-reports');
+            });
+
+        // Practitioner portal
+        Route::middleware(['auth', 'role:practitioner'])
+            ->prefix('practitioner')
+            ->name('practitioner.')
+            ->group(function () {
+                Route::get('/dashboard', [\App\Http\Controllers\Practitioner\DashboardController::class, 'index'])->name('dashboard');
+                Route::get('/profile',   [\App\Http\Controllers\Practitioner\ProfileController::class,   'show'])->name('profile');
+                Route::put('/profile',   [\App\Http\Controllers\Practitioner\ProfileController::class,   'update'])->name('profile.update');
+                Route::put('/profile/password', [\App\Http\Controllers\Practitioner\ProfileController::class, 'changePassword'])->name('profile.password');
             });
     });
