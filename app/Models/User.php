@@ -14,6 +14,7 @@ use Spatie\Permission\Traits\HasRoles;
 use App\Models\Department;
 use App\Models\PerformanceReview;
 use App\Models\Timesheet;
+use App\Models\TrainingRecord;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -32,6 +33,9 @@ class User extends Authenticatable implements FilamentUser
         'is_active',
         'avatar',
         'department_id',
+        'salary_grade_id',
+        'base_salary',
+        'salary_currency',
     ];
 
     protected $hidden = [
@@ -84,6 +88,11 @@ class User extends Authenticatable implements FilamentUser
         return $this->belongsTo(Department::class);
     }
 
+    public function salaryGrade(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\Models\SalaryGrade::class);
+    }
+
     public function performanceReviews(): HasMany
     {
         return $this->hasMany(PerformanceReview::class, 'user_id');
@@ -92,5 +101,10 @@ class User extends Authenticatable implements FilamentUser
     public function timesheets(): HasMany
     {
         return $this->hasMany(Timesheet::class, 'user_id');
+    }
+
+    public function trainingRecords(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(TrainingRecord::class, 'user_id');
     }
 }

@@ -65,8 +65,22 @@ class EmployeeResource extends Resource
                     ->multiple(),
                 Forms\Components\TextInput::make('department')->maxLength(80)->nullable(),
                 Forms\Components\TextInput::make('position')->maxLength(80)->nullable(),
+                Forms\Components\Select::make('department_id')
+                    ->label('Department')
+                    ->options(fn () => \App\Models\Department::where('is_active', true)->orderBy('name')->pluck('name', 'id'))
+                    ->searchable()
+                    ->nullable()
+                    ->placeholder('No department'),
                 Forms\Components\DatePicker::make('hire_date')->nullable(),
                 Forms\Components\Toggle::make('is_active')->label('Active')->default(true),
+                Forms\Components\Select::make('salary_grade_id')
+                    ->label('Salary Grade')
+                    ->options(fn () => \App\Models\SalaryGrade::activeOptions())
+                    ->searchable()->nullable()->columnSpanFull(),
+                Forms\Components\TextInput::make('base_salary')
+                    ->label('Base Salary')->numeric()->nullable()->minValue(0),
+                Forms\Components\Select::make('salary_currency')
+                    ->options(['XAF' => 'XAF', 'USD' => 'USD', 'EUR' => 'EUR'])->default('XAF'),
             ]),
 
             Forms\Components\Section::make('HR Details')->columns(2)
@@ -225,6 +239,7 @@ class EmployeeResource extends Resource
             \App\Filament\Resources\EmployeeResource\RelationManagers\LeaveBalancesRelationManager::class,
             \App\Filament\Resources\EmployeeResource\RelationManagers\PerformanceReviewsRelationManager::class,
             \App\Filament\Resources\EmployeeResource\RelationManagers\TimesheetsRelationManager::class,
+            \App\Filament\Resources\EmployeeResource\RelationManagers\TrainingRecordsRelationManager::class,
         ];
     }
 
