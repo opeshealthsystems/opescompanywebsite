@@ -9,7 +9,7 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class CrmPipelineWidget extends BaseWidget
 {
-    protected static ?int $sort = 5;
+    protected static ?int $sort = 7;
     protected int | string | array $columnSpan = 'full';
     protected static bool $isLazy = true;
 

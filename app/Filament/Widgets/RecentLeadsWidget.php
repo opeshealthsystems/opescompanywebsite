@@ -12,7 +12,7 @@ class RecentLeadsWidget extends BaseWidget
 {
     protected static ?string $heading = 'New Demo Requests';
     protected int | string | array $columnSpan = 'full';
-    protected static ?int $sort = 4;
+    protected static ?int $sort = 6;
 
     public function table(Table $table): Table
     {

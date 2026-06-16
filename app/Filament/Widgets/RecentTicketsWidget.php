@@ -12,7 +12,7 @@ class RecentTicketsWidget extends BaseWidget
 {
     protected static ?string $heading = 'Recent Open Tickets';
     protected int | string | array $columnSpan = 'full';
-    protected static ?int $sort = 2;
+    protected static ?int $sort = 4;
 
     public function table(Table $table): Table
     {
