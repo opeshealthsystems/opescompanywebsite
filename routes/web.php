@@ -71,6 +71,8 @@ Route::prefix('{locale}')
         Route::get('/about',          fn () => view('pages.about'))->name('about');
         Route::get('/blog',           [BlogController::class,    'index'])->name('blog');
         Route::get('/blog/{slug}',    [BlogController::class,    'show'])->name('blog.show');
+        Route::get('/courses',           [\App\Http\Controllers\PublicCourseController::class, 'index'])->name('courses.index');
+        Route::get('/courses/{course:slug}', [\App\Http\Controllers\PublicCourseController::class, 'show'])->name('courses.show');
         Route::get('/partnerships',   [\App\Http\Controllers\PartnershipsController::class, 'index'])->name('partnerships');
         Route::get('/pricing',        fn () => view('pages.pricing'))->name('pricing');
         Route::get('/privacy',        fn () => view('pages.privacy'))->name('privacy');

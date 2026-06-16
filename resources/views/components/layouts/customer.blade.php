@@ -44,6 +44,12 @@
                 <i data-lucide="bar-chart-2" style="width:16px;height:16px"></i> Surveys
             </a>
             @endif
+            @if(Route::has('customer.service-requests'))
+            <a href="{{ route('customer.service-requests', ['locale' => app()->getLocale()]) }}"
+               class="{{ request()->routeIs('customer.service-requests*') ? 'cp-nav-link-active' : '' }} cp-nav-link">
+                <i data-lucide="wrench" style="width:16px;height:16px"></i> Service Requests
+            </a>
+            @endif
         </div>
         <div class="cp-nav-user">
             <span class="cp-nav-username">{{ auth()->user()->name }}</span>
