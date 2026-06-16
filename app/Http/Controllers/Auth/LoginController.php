@@ -38,6 +38,14 @@ class LoginController extends Controller
             return redirect('/admin');
         }
 
+        if ($user->hasRole('practitioner')) {
+            return redirect()->route('practitioner.dashboard', ['locale' => $locale]);
+        }
+
+        if ($user->hasRole('tester')) {
+            return redirect()->route('tester.dashboard', ['locale' => $locale]);
+        }
+
         return redirect()->route('customer.dashboard', ['locale' => $locale]);
     }
 
