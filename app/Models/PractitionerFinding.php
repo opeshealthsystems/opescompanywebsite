@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class PractitionerFinding extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'application_id','practitioner_id','wait_time_rating',
         'data_integrity_rating','usability_rating','overall_rating',

@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ServiceRequest extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'customer_id','type','product_slug','description','preferred_date','preferred_time',
         'location','status','assigned_technician_id','confirmed_date','confirmed_time',

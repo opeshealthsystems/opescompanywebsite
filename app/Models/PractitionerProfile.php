@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PractitionerProfile extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'user_id','profession','specialty','workplace_name','workplace_city',
         'workplace_country','registration_number','years_of_experience',

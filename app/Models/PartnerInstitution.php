@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
 class PartnerInstitution extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'name','name_fr','type','country','city','website','logo',
         'description','description_fr','partnership_since',

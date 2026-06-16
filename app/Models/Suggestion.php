@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Suggestion extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['user_id', 'title', 'category', 'body', 'status', 'admin_response', 'responded_by', 'responded_at'];
     protected $casts = ['responded_at' => 'datetime'];
 

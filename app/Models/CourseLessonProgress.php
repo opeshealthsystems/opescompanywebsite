@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CourseLessonProgress extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['enrollment_id','lesson_id','completed_at'];
 
     protected $casts = ['completed_at' => 'datetime'];

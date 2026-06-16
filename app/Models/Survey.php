@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Survey extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'title', 'title_fr', 'description', 'description_fr',
         'audience', 'status', 'starts_at', 'ends_at',

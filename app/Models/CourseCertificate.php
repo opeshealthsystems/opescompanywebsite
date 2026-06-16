@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CourseCertificate extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['enrollment_id','user_id','course_id','certificate_number','issued_at','pdf_path'];
 
     protected $casts = ['issued_at' => 'datetime'];
