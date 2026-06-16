@@ -71,7 +71,7 @@ Route::prefix('{locale}')
         Route::get('/about',          fn () => view('pages.about'))->name('about');
         Route::get('/blog',           [BlogController::class,    'index'])->name('blog');
         Route::get('/blog/{slug}',    [BlogController::class,    'show'])->name('blog.show');
-        Route::get('/partnerships',   fn () => view('pages.partnerships'))->name('partnerships');
+        Route::get('/partnerships',   [\App\Http\Controllers\PartnershipsController::class, 'index'])->name('partnerships');
         Route::get('/pricing',        fn () => view('pages.pricing'))->name('pricing');
         Route::get('/privacy',        fn () => view('pages.privacy'))->name('privacy');
         Route::get('/terms',          fn () => view('pages.terms'))->name('terms');
@@ -101,6 +101,15 @@ Route::prefix('{locale}')
                 Route::get('/knowledge-base', [\App\Http\Controllers\Customer\KnowledgeBaseController::class, 'index'])->name('knowledge-base.index');
                 Route::get('/knowledge-base/category/{slug}', [\App\Http\Controllers\Customer\KnowledgeBaseController::class, 'category'])->name('knowledge-base.category');
                 Route::get('/knowledge-base/{slug}', [\App\Http\Controllers\Customer\KnowledgeBaseController::class, 'show'])->name('knowledge-base.show');
+                // Surveys
+                Route::get('/surveys', [\App\Http\Controllers\Customer\SurveyController::class, 'index'])->name('surveys');
+                Route::get('/surveys/{survey}', [\App\Http\Controllers\Customer\SurveyController::class, 'show'])->name('surveys.show');
+                Route::post('/surveys/{survey}', [\App\Http\Controllers\Customer\SurveyController::class, 'submit'])->name('surveys.submit');
+                // Service Requests
+                Route::get('/service-requests', [\App\Http\Controllers\Customer\ServiceRequestController::class, 'index'])->name('service-requests');
+                Route::get('/service-requests/create', [\App\Http\Controllers\Customer\ServiceRequestController::class, 'create'])->name('service-requests.create');
+                Route::post('/service-requests', [\App\Http\Controllers\Customer\ServiceRequestController::class, 'store'])->name('service-requests.store');
+                Route::get('/service-requests/{serviceRequest}', [\App\Http\Controllers\Customer\ServiceRequestController::class, 'show'])->name('service-requests.show');
             });
 
         // Tester portal (auth + tester role required)
@@ -134,5 +143,13 @@ Route::prefix('{locale}')
                 // Findings
                 Route::get('/applications/{application}/findings/create', [\App\Http\Controllers\Practitioner\FindingController::class, 'create'])->name('findings.create');
                 Route::post('/applications/{application}/findings', [\App\Http\Controllers\Practitioner\FindingController::class, 'store'])->name('findings.store');
+                // Surveys
+                Route::get('/surveys', [\App\Http\Controllers\Practitioner\SurveyController::class, 'index'])->name('surveys');
+                Route::get('/surveys/{survey}', [\App\Http\Controllers\Practitioner\SurveyController::class, 'show'])->name('surveys.show');
+                Route::post('/surveys/{survey}', [\App\Http\Controllers\Practitioner\SurveyController::class, 'submit'])->name('surveys.submit');
+                // Suggestions
+                Route::get('/suggestions', [\App\Http\Controllers\Practitioner\SuggestionController::class, 'index'])->name('suggestions');
+                Route::get('/suggestions/create', [\App\Http\Controllers\Practitioner\SuggestionController::class, 'create'])->name('suggestions.create');
+                Route::post('/suggestions', [\App\Http\Controllers\Practitioner\SuggestionController::class, 'store'])->name('suggestions.store');
             });
     });

@@ -54,4 +54,32 @@
     </a>
 </div>
 
+@if(isset($partners) && $partners->isNotEmpty())
+<section class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-slate-900 text-center mb-3">Our Partner Institutions</h2>
+        <p class="text-slate-500 text-center mb-10">Academic, research, and healthcare organisations working with OPES.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach($partners as $partner)
+                <div class="border border-slate-200 rounded-xl p-6 flex flex-col items-start">
+                    @if($partner->logo)
+                        <img src="{{ Storage::url($partner->logo) }}" alt="{{ $partner->name }}"
+                             class="h-12 object-contain mb-4">
+                    @endif
+                    <h3 class="font-semibold text-slate-800 mb-1">{{ $partner->getLocalizedName(app()->getLocale()) }}</h3>
+                    <span class="text-xs text-slate-400 mb-3">{{ \App\Models\PartnerInstitution::typeOptions()[$partner->type] ?? $partner->type }} &bull; {{ $partner->country }}</span>
+                    @if($partner->description)
+                        <p class="text-sm text-slate-600 mb-3">{{ \Illuminate\Support\Str::limit($partner->description, 100) }}</p>
+                    @endif
+                    @if($partner->website)
+                        <a href="{{ $partner->website }}" target="_blank" rel="noopener"
+                           class="text-sm text-emerald-600 hover:underline mt-auto">Visit Website &rarr;</a>
+                    @endif
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
+
 </x-layouts.app>
