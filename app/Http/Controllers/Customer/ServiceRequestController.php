@@ -37,7 +37,7 @@ class ServiceRequestController extends Controller
             ->with('success', 'Your service request has been submitted. We will contact you to confirm.');
     }
 
-    public function show(ServiceRequest $serviceRequest)
+    public function show($locale, ServiceRequest $serviceRequest)
     {
         abort_unless($serviceRequest->customer_id === auth()->id(), 403);
         return view('customer.service-requests.show', compact('serviceRequest'));
