@@ -7,6 +7,7 @@ use App\Models\Lead;
 use App\Models\License;
 use App\Models\Ticket;
 use Filament\Pages\Page;
+use Illuminate\Support\Facades\DB;
 
 class Reports extends Page
 {
@@ -23,10 +24,14 @@ class Reports extends Page
 
     public function getViewData(): array
     {
-        $invoicedTotal  = Invoice::whereIn('status', ['sent', 'paid', 'overdue'])->sum('grand_total');
-        $paidTotal      = Invoice::where('status', 'paid')->sum('grand_total');
+        // Invoice totals are computed from invoice_items — no stored total/grand_total column
+        $invoicedTotal  = DB::table('invoice_items')->join('invoices','invoice_items.invoice_id','=','invoices.id')
+            ->whereIn('invoices.status', ['sent','paid','overdue'])->sum('invoice_items.total');
+        $paidTotal      = DB::table('invoice_items')->join('invoices','invoice_items.invoice_id','=','invoices.id')
+            ->where('invoices.status','paid')->sum('invoice_items.total');
         $overdueCount   = Invoice::where('status', 'overdue')->count();
-        $overdueTotal   = Invoice::where('status', 'overdue')->sum('grand_total');
+        $overdueTotal   = DB::table('invoice_items')->join('invoices','invoice_items.invoice_id','=','invoices.id')
+            ->where('invoices.status','overdue')->sum('invoice_items.total');
 
         $activeLicenses  = License::where('status', 'active')->count();
         $expiringLicenses = License::where('status', 'active')

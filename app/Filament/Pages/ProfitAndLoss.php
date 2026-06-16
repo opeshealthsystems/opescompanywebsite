@@ -6,6 +6,7 @@ use App\Models\Expense;
 use App\Models\Invoice;
 use App\Models\PayrollRun;
 use Filament\Pages\Page;
+use Illuminate\Support\Facades\DB;
 
 class ProfitAndLoss extends Page
 {
@@ -35,10 +36,12 @@ class ProfitAndLoss extends Page
         $totalPayroll = 0;
 
         for ($m = 1; $m <= 12; $m++) {
-            $revenue = (float) Invoice::where('status', 'paid')
-                ->whereYear('created_at', $this->selectedYear)
-                ->whereMonth('created_at', $m)
-                ->sum('grand_total');
+            $revenue = (float) DB::table('invoice_items')
+                ->join('invoices', 'invoice_items.invoice_id', '=', 'invoices.id')
+                ->where('invoices.status', 'paid')
+                ->whereYear('invoices.created_at', $this->selectedYear)
+                ->whereMonth('invoices.created_at', $m)
+                ->sum('invoice_items.total');
 
             $expenses = (float) Expense::whereIn('status', ['approved', 'paid'])
                 ->whereYear('expense_date', $this->selectedYear)

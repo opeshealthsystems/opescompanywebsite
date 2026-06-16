@@ -5,6 +5,7 @@ namespace App\Filament\Pages;
 use App\Models\Invoice;
 use Carbon\Carbon;
 use Filament\Pages\Page;
+use Illuminate\Support\Facades\DB;
 
 class ArAging extends Page
 {
@@ -22,6 +23,7 @@ class ArAging extends Page
     public function getAgingData(): array
     {
         $invoices = Invoice::whereNotIn('status', ['paid', 'cancelled', 'draft'])
+            ->with('items')
             ->get();
 
         $buckets = [
@@ -39,8 +41,8 @@ class ArAging extends Page
             $daysOverdue = $due ? $today->diffInDays($due, false) * -1 : null;
 
             $item = [
-                'reference'    => $invoice->reference,
-                'amount'       => (float) $invoice->total,
+                'reference'    => $invoice->invoice_number,
+                'amount'       => (float) $invoice->grand_total,
                 'currency'     => $invoice->currency ?? 'XAF',
                 'status'       => $invoice->status,
                 'due_date'     => $due?->format('d M Y') ?? '—',
@@ -68,6 +70,9 @@ class ArAging extends Page
 
     public function getTotalOutstanding(): float
     {
-        return Invoice::whereNotIn('status', ['paid', 'cancelled', 'draft'])->sum('total');
+        return (float) DB::table('invoice_items')
+            ->join('invoices', 'invoice_items.invoice_id', '=', 'invoices.id')
+            ->whereNotIn('invoices.status', ['paid', 'cancelled', 'draft'])
+            ->sum('invoice_items.total');
     }
 }

@@ -6,6 +6,7 @@ use App\Models\Expense;
 use App\Models\Invoice;
 use App\Models\PayrollRun;
 use Filament\Pages\Page;
+use Illuminate\Support\Facades\DB;
 
 class CashFlow extends Page
 {
@@ -33,10 +34,12 @@ class CashFlow extends Page
         $cumulativeCash = 0;
 
         for ($m = 1; $m <= 12; $m++) {
-            $cashIn = (float) Invoice::where('status', 'paid')
-                ->whereYear('created_at', $this->selectedYear)
-                ->whereMonth('created_at', $m)
-                ->sum('grand_total');
+            $cashIn = (float) DB::table('invoice_items')
+                ->join('invoices', 'invoice_items.invoice_id', '=', 'invoices.id')
+                ->where('invoices.status', 'paid')
+                ->whereYear('invoices.created_at', $this->selectedYear)
+                ->whereMonth('invoices.created_at', $m)
+                ->sum('invoice_items.total');
 
             $cashOutExpenses = (float) Expense::where('status', 'paid')
                 ->whereYear('expense_date', $this->selectedYear)

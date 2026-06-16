@@ -6,6 +6,7 @@ use App\Models\Invoice;
 use App\Models\SupplierBill;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use Illuminate\Support\Facades\DB;
 
 class FinancialOverviewWidget extends BaseWidget
 {
@@ -23,11 +24,17 @@ class FinancialOverviewWidget extends BaseWidget
     {
         $thisMonth = now()->startOfMonth();
 
-        $monthRevenue = Invoice::where('status', 'paid')
-            ->where('updated_at', '>=', $thisMonth)
-            ->sum('total');
+        // Invoice totals are computed from invoice_items (no stored `total` on invoices)
+        $monthRevenue = DB::table('invoice_items')
+            ->join('invoices', 'invoice_items.invoice_id', '=', 'invoices.id')
+            ->where('invoices.status', 'paid')
+            ->where('invoices.updated_at', '>=', $thisMonth)
+            ->sum('invoice_items.total');
 
-        $outstanding = Invoice::whereNotIn('status', ['paid', 'cancelled', 'draft'])->sum('total');
+        $outstanding = DB::table('invoice_items')
+            ->join('invoices', 'invoice_items.invoice_id', '=', 'invoices.id')
+            ->whereNotIn('invoices.status', ['paid', 'cancelled', 'draft'])
+            ->sum('invoice_items.total');
 
         $pendingExpenses = Expense::where('status', 'pending')->count();
 
