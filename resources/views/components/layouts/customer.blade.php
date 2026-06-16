@@ -38,6 +38,12 @@
                class="cp-nav-link {{ request()->routeIs('customer.knowledge-base*') ? 'cp-nav-link-active' : '' }}">
                 <i data-lucide="book-open" style="width:16px;height:16px"></i> Help Center
             </a>
+            @if(Route::has('customer.surveys'))
+            <a href="{{ route('customer.surveys', ['locale' => app()->getLocale()]) }}"
+               class="cp-nav-link {{ request()->routeIs('customer.surveys*') ? 'cp-nav-link-active' : '' }}">
+                <i data-lucide="bar-chart-2" style="width:16px;height:16px"></i> Surveys
+            </a>
+            @endif
         </div>
         <div class="cp-nav-user">
             <span class="cp-nav-username">{{ auth()->user()->name }}</span>
