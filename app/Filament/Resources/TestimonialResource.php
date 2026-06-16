@@ -146,6 +146,11 @@ class TestimonialResource extends Resource
         ]);
     }
 
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['author_name', 'quote_en'];
+    }
+
     public static function getPages(): array
     {
         return [

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\SlaRule;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,11 +15,14 @@ class Ticket extends Model
         'subject', 'description', 'type', 'status', 'priority',
         'resolution', 'resolved_at', 'closed_at',
         'tester_assignment_id',
+        'sla_rule_id', 'sla_response_due_at', 'sla_resolution_due_at',
     ];
 
     protected $casts = [
-        'resolved_at' => 'datetime',
-        'closed_at'   => 'datetime',
+        'resolved_at'           => 'datetime',
+        'closed_at'             => 'datetime',
+        'sla_response_due_at'   => 'datetime',
+        'sla_resolution_due_at' => 'datetime',
     ];
 
     protected static function booted(): void
@@ -26,6 +30,28 @@ class Ticket extends Model
         static::creating(function (Ticket $ticket) {
             if (empty($ticket->reference_number)) {
                 $ticket->reference_number = static::generateReferenceNumber();
+            }
+        });
+
+        static::updating(function (Ticket $ticket) {
+            if ($ticket->isDirty('status')) {
+                if ($ticket->status === 'resolved' && !$ticket->resolved_at) {
+                    $ticket->resolved_at = now();
+                }
+                if ($ticket->status === 'closed' && !$ticket->closed_at) {
+                    $ticket->closed_at = now();
+                }
+            }
+        });
+
+        static::created(function (Ticket $ticket) {
+            $rule = SlaRule::forTicket($ticket->type ?? '', $ticket->priority ?? 'low');
+            if ($rule) {
+                $ticket->update([
+                    'sla_rule_id'           => $rule->id,
+                    'sla_response_due_at'   => $ticket->created_at->addHours($rule->response_time_hours),
+                    'sla_resolution_due_at' => $ticket->created_at->addHours($rule->resolution_time_hours),
+                ]);
             }
         });
     }
@@ -111,5 +137,20 @@ class Ticket extends Model
     public function testerAssignment(): BelongsTo
     {
         return $this->belongsTo(TesterAssignment::class);
+    }
+
+    public function slaRule(): BelongsTo
+    {
+        return $this->belongsTo(SlaRule::class);
+    }
+
+    public function isSlaResponseBreached(): bool
+    {
+        return $this->sla_response_due_at && now()->isAfter($this->sla_response_due_at) && !in_array($this->status, ['resolved','closed']);
+    }
+
+    public function isSlaResolutionBreached(): bool
+    {
+        return $this->sla_resolution_due_at && now()->isAfter($this->sla_resolution_due_at) && !in_array($this->status, ['resolved','closed']);
     }
 }

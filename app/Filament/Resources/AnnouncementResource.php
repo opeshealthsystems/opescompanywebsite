@@ -141,6 +141,11 @@ class AnnouncementResource extends Resource
         return $active > 0 ? (string) $active : null;
     }
 
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['title'];
+    }
+
     public static function getPages(): array
     {
         return [

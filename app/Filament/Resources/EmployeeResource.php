@@ -19,7 +19,7 @@ class EmployeeResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-identification';
     protected static ?string $navigationLabel = 'Employees';
     protected static ?string $navigationGroup = 'People';
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
     protected static ?string $slug = 'employees';
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -217,6 +217,13 @@ class EmployeeResource extends Resource
     public static function getGloballySearchableAttributes(): array
     {
         return ['name', 'email', 'employee_id', 'department'];
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            \App\Filament\Resources\EmployeeResource\RelationManagers\LeaveBalancesRelationManager::class,
+        ];
     }
 
     public static function getPages(): array

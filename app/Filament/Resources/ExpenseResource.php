@@ -210,6 +210,11 @@ class ExpenseResource extends Resource
         return 'warning';
     }
 
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['reference', 'title', 'vendor'];
+    }
+
     public static function getPages(): array
     {
         return [

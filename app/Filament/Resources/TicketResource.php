@@ -196,7 +196,28 @@ class TicketResource extends Resource
                 Infolists\Components\TextEntry::make('subject')->columnSpanFull(),
                 Infolists\Components\TextEntry::make('description')->columnSpanFull(),
                 Infolists\Components\TextEntry::make('resolution')->placeholder('No resolution noted')->columnSpanFull(),
+                Infolists\Components\TextEntry::make('resolved_at')->label('Resolved At')->dateTime('d M Y H:i')->placeholder('—'),
+                Infolists\Components\TextEntry::make('closed_at')->label('Closed At')->dateTime('d M Y H:i')->placeholder('—'),
             ])->columns(3),
+
+            Infolists\Components\Section::make('Conversation Thread')
+                ->collapsible()
+                ->schema([
+                    Infolists\Components\RepeatableEntry::make('replies')
+                        ->schema([
+                            Infolists\Components\TextEntry::make('author.name')
+                                ->label('Author')->weight('semibold'),
+                            Infolists\Components\TextEntry::make('created_at')
+                                ->label('Posted')->since(),
+                            Infolists\Components\IconEntry::make('is_internal')
+                                ->label('Visibility')
+                                ->boolean()
+                                ->trueIcon('heroicon-o-lock-closed')->trueColor('warning')
+                                ->falseIcon('heroicon-o-globe-alt')->falseColor('info'),
+                            Infolists\Components\TextEntry::make('body')
+                                ->columnSpanFull()->prose(),
+                        ])->columns(3)->columnSpanFull(),
+                ]),
         ]);
     }
 
