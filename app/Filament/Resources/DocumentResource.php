@@ -178,6 +178,8 @@ class DocumentResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->hidden(fn (Document $record) => in_array($record->status, ['signed', 'voided'])),
                 Tables\Actions\Action::make('download_pdf')
                     ->label('PDF')
                     ->icon('heroicon-o-arrow-down-tray')
@@ -199,6 +201,7 @@ class DocumentResource extends Resource
             'index'  => Pages\ListDocuments::route('/'),
             'create' => Pages\CreateDocument::route('/create'),
             'view'   => Pages\ViewDocument::route('/{record}'),
+            'edit'   => Pages\EditDocument::route('/{record}/edit'),
         ];
     }
 }

@@ -63,6 +63,8 @@ class ViewDocument extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
+            Actions\EditAction::make()
+                ->hidden(fn () => in_array($this->record->status, ['signed', 'voided'])),
             Actions\Action::make('download_pdf')
                 ->label('Download PDF')
                 ->icon('heroicon-o-arrow-down-tray')
