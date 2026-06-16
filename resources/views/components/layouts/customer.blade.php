@@ -34,6 +34,10 @@
                class="cp-nav-link {{ request()->routeIs('customer.tickets*') ? 'cp-nav-link-active' : '' }}">
                 <i data-lucide="ticket" style="width:16px;height:16px"></i> Support
             </a>
+            <a href="{{ route('customer.knowledge-base.index', ['locale' => app()->getLocale()]) }}"
+               class="cp-nav-link {{ request()->routeIs('customer.knowledge-base*') ? 'cp-nav-link-active' : '' }}">
+                <i data-lucide="book-open" style="width:16px;height:16px"></i> Help Center
+            </a>
         </div>
         <div class="cp-nav-user">
             <span class="cp-nav-username">{{ auth()->user()->name }}</span>

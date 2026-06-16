@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Models\License;
+use App\Models\Ticket;
+use App\Models\Invoice;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -12,6 +15,18 @@ class DashboardController extends Controller
         $user    = Auth::user();
         $profile = $user->customerProfile;
 
-        return view('customer.dashboard', compact('user', 'profile'));
+        $activeLicenses  = License::where('customer_id', $user->id)->where('status', 'active')->count();
+        $openTickets     = Ticket::where('user_id', $user->id)->whereNotIn('status', ['closed', 'resolved'])->count();
+        $pendingInvoices = Invoice::where('customer_id', $user->id)->whereIn('status', ['sent', 'overdue'])->count();
+
+        $recentTickets = Ticket::where('user_id', $user->id)
+            ->orderByDesc('updated_at')
+            ->limit(3)
+            ->get();
+
+        return view('customer.dashboard', compact(
+            'user', 'profile',
+            'activeLicenses', 'openTickets', 'pendingInvoices', 'recentTickets'
+        ));
     }
 }

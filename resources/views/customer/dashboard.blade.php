@@ -14,33 +14,33 @@
     </div>
 
     <div class="cp-stats-row">
-        <div class="cp-stat-card">
+        <a href="{{ route('customer.licenses', ['locale' => app()->getLocale()]) }}" class="cp-stat-card" style="text-decoration:none">
             <div class="cp-stat-icon" style="background:rgba(0,200,150,0.1)">
                 <i data-lucide="key" style="width:20px;height:20px;color:#00C896"></i>
             </div>
             <div>
-                <p class="cp-stat-value">0</p>
+                <p class="cp-stat-value">{{ $activeLicenses }}</p>
                 <p class="cp-stat-label">Active Licenses</p>
             </div>
-        </div>
-        <div class="cp-stat-card">
+        </a>
+        <a href="{{ route('customer.tickets', ['locale' => app()->getLocale()]) }}" class="cp-stat-card" style="text-decoration:none">
             <div class="cp-stat-icon" style="background:rgba(26,111,232,0.1)">
                 <i data-lucide="ticket" style="width:20px;height:20px;color:#1A6FE8"></i>
             </div>
             <div>
-                <p class="cp-stat-value">0</p>
+                <p class="cp-stat-value">{{ $openTickets }}</p>
                 <p class="cp-stat-label">Open Tickets</p>
             </div>
-        </div>
-        <div class="cp-stat-card">
+        </a>
+        <a href="{{ route('customer.invoices', ['locale' => app()->getLocale()]) }}" class="cp-stat-card" style="text-decoration:none">
             <div class="cp-stat-icon" style="background:rgba(234,179,8,0.1)">
-                <i data-lucide="bug" style="width:20px;height:20px;color:#eab308"></i>
+                <i data-lucide="receipt" style="width:20px;height:20px;color:#eab308"></i>
             </div>
             <div>
-                <p class="cp-stat-value">0</p>
-                <p class="cp-stat-label">Bug Reports</p>
+                <p class="cp-stat-value">{{ $pendingInvoices }}</p>
+                <p class="cp-stat-label">Pending Invoices</p>
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="cp-section-grid">
@@ -65,13 +65,34 @@
                 <h2 class="cp-section-title">
                     <i data-lucide="ticket" style="width:18px;height:18px;color:#1A6FE8"></i> Support Tickets
                 </h2>
-                <span class="cp-badge-coming-soon">Coming soon</span>
+                <a href="{{ route('customer.tickets.create', ['locale' => app()->getLocale()]) }}" class="cp-btn-primary">
+                    New Ticket
+                </a>
             </div>
+            @if($recentTickets->isEmpty())
             <div class="cp-empty-state">
                 <i data-lucide="message-circle" style="width:40px;height:40px;color:#334155"></i>
-                <p>No open tickets.</p>
-                <p style="font-size:0.8125rem">Ticket system launching soon — contact us directly for urgent issues.</p>
+                <p>No tickets yet.</p>
+                <p style="font-size:0.8125rem">Open a ticket any time for technical support or questions.</p>
             </div>
+            @else
+            <ul style="list-style:none;padding:0;margin:0">
+                @foreach($recentTickets as $ticket)
+                <li style="padding:10px 0;border-bottom:1px solid #1e293b;display:flex;justify-content:space-between;align-items:center">
+                    <a href="{{ route('customer.tickets.show', ['locale' => app()->getLocale(), 'ticket' => $ticket->id]) }}"
+                       style="color:#e2e8f0;text-decoration:none;font-size:0.875rem">{{ $ticket->subject }}</a>
+                    <span style="font-size:0.75rem;color:{{ $ticket->status === 'open' ? '#00C896' : '#94a3b8' }}">
+                        {{ ucfirst($ticket->status) }}
+                    </span>
+                </li>
+                @endforeach
+            </ul>
+            <div style="margin-top:12px">
+                <a href="{{ route('customer.tickets', ['locale' => app()->getLocale()]) }}" class="cp-btn-outline" style="font-size:0.8125rem">
+                    View all tickets →
+                </a>
+            </div>
+            @endif
         </div>
     </div>
 
