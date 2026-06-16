@@ -16,7 +16,7 @@ class PublicCourseController extends Controller
         return view('pages.courses.index', compact('courses'));
     }
 
-    public function show(Course $course)
+    public function show($locale, Course $course)
     {
         abort_unless($course->is_active, 404);
         $course->load('lessons');

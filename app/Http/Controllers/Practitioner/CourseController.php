@@ -15,7 +15,7 @@ class CourseController extends Controller
         return view('practitioner.courses.index', compact('courses', 'myEnrollments'));
     }
 
-    public function show(Course $course)
+    public function show($locale, Course $course)
     {
         abort_unless($course->is_active, 404);
         $course->load('lessons');
@@ -30,7 +30,7 @@ class CourseController extends Controller
         return view('practitioner.courses.show', compact('course', 'enrollment', 'completedLessonIds'));
     }
 
-    public function enroll(Course $course)
+    public function enroll($locale, Course $course)
     {
         abort_unless($course->is_active, 404);
 

@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 
 class FindingController extends Controller
 {
-    public function create(PractitionerApplication $application)
+    public function create($locale, PractitionerApplication $application)
     {
         abort_unless($application->practitioner_id === auth()->id(), 403);
         abort_unless($application->status === 'approved', 403, 'Only approved applications can submit findings.');
         return view('practitioner.findings.create', compact('application'));
     }
 
-    public function store(Request $request, PractitionerApplication $application)
+    public function store(Request $request, $locale, PractitionerApplication $application)
     {
         abort_unless($application->practitioner_id === auth()->id(), 403);
         abort_unless($application->status === 'approved', 403);

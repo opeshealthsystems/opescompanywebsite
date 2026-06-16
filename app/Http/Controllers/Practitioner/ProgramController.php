@@ -34,7 +34,7 @@ class ProgramController extends Controller
         return view('practitioner.programs.show', compact('program', 'myApplication'));
     }
 
-    public function apply(Request $request, PractitionerProgram $program)
+    public function apply(Request $request, $locale, PractitionerProgram $program)
     {
         abort_unless($program->isOpen(), 403, 'This programme is not accepting applications.');
         abort_if($program->isFull(), 403, 'This programme has reached its maximum participants.');

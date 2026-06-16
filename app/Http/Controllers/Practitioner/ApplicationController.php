@@ -17,7 +17,7 @@ class ApplicationController extends Controller
         return view('practitioner.applications.index', compact('applications'));
     }
 
-    public function show(PractitionerApplication $application)
+    public function show($locale, PractitionerApplication $application)
     {
         abort_unless($application->practitioner_id === auth()->id(), 403);
         $application->load('program', 'findings');

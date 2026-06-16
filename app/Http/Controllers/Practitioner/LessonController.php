@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class LessonController extends Controller
 {
-    public function show(Course $course, CourseLesson $lesson)
+    public function show($locale, Course $course, CourseLesson $lesson)
     {
         abort_unless($lesson->course_id === $course->id, 404);
 
@@ -29,7 +29,7 @@ class LessonController extends Controller
         ));
     }
 
-    public function markDone(Course $course, CourseLesson $lesson)
+    public function markDone($locale, Course $course, CourseLesson $lesson)
     {
         abort_unless($lesson->course_id === $course->id, 404);
 
