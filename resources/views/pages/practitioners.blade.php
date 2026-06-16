@@ -127,6 +127,77 @@
     </div>
 </div>
 
+@if(isset($testimonials) && $testimonials->isNotEmpty())
+<div class="divider"></div>
+
+{{-- WHAT PRACTITIONERS SAY --}}
+<div class="section" style="text-align:center">
+    <div class="section-label" style="justify-content:center;margin-bottom:12px">
+        <i data-lucide="quote" style="width:12px;height:12px"></i>
+        Testimonials
+    </div>
+    <h2 class="section-title">What Practitioners Say About OPES</h2>
+    <p class="section-sub" style="max-width:600px;margin:0 auto 48px">Real feedback from verified healthcare professionals who have tested and worked with OPES Health Systems.</p>
+
+    <div class="pi-grid" style="max-width:960px;margin:0 auto;text-align:left">
+        @foreach($testimonials as $t)
+        @php
+            $profession = \App\Models\PractitionerProfile::professionOptions()[$t->profession] ?? $t->profession;
+        @endphp
+        <div class="pi-card" style="flex-direction:column;align-items:flex-start">
+            <i data-lucide="quote" style="width:20px;height:20px;color:#00C896;margin-bottom:12px"></i>
+            <p style="font-size:14px;color:#cbd5e1;line-height:1.7;margin-bottom:16px;font-style:italic">"{{ $t->opes_testimonial }}"</p>
+            <div style="margin-top:auto">
+                <div style="font-weight:700;color:#e2e8f0;font-size:14px">{{ $t->user->name }}</div>
+                <div style="font-size:12px;color:#64748b;margin-top:2px">
+                    {{ $profession }}@if($t->workplace_name) &middot; {{ $t->workplace_name }}@endif
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</div>
+@endif
+
+@if(isset($publishedFindings) && $publishedFindings->isNotEmpty())
+<div class="divider"></div>
+
+{{-- PUBLISHED FINDINGS --}}
+<div class="section" style="text-align:center">
+    <div class="section-label" style="justify-content:center;margin-bottom:12px">
+        <i data-lucide="file-check" style="width:12px;height:12px"></i>
+        Findings
+    </div>
+    <h2 class="section-title">Published Practitioner Findings</h2>
+    <p class="section-sub" style="max-width:600px;margin:0 auto 48px">Honest, hands-on reviews of OPES systems from practitioners in our testing programmes.</p>
+
+    <div class="pi-grid" style="max-width:960px;margin:0 auto;text-align:left">
+        @foreach($publishedFindings as $f)
+        <div class="pi-card" style="flex-direction:column;align-items:flex-start">
+            <div style="display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:12px">
+                <div style="font-weight:700;color:#e2e8f0;font-size:14px">{{ $f->practitioner->name ?? 'Practitioner' }}</div>
+                @if($f->overall_rating)
+                <div style="font-size:13px;color:#00C896;font-weight:700;white-space:nowrap">
+                    @for($s = 1; $s <= 5; $s++)<i data-lucide="star" style="width:13px;height:13px;{{ $s <= $f->overall_rating ? 'color:#00C896;fill:#00C896' : 'color:#475569' }}"></i>@endfor
+                    <span style="margin-left:6px;color:#64748b">{{ $f->overall_rating }}/5</span>
+                </div>
+                @endif
+            </div>
+            @if($f->findings_text)
+            <p style="font-size:13px;color:#cbd5e1;line-height:1.7;margin-bottom:12px">{{ \Illuminate\Support\Str::limit($f->findings_text, 220) }}</p>
+            @endif
+            @if($f->video_url)
+            <a href="{{ $f->video_url }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#1A6FE8;font-weight:600;margin-top:auto">
+                <i data-lucide="play-circle" style="width:15px;height:15px"></i>
+                Watch video review
+            </a>
+            @endif
+        </div>
+        @endforeach
+    </div>
+</div>
+@endif
+
 {{-- CTA FOOTER --}}
 <div class="demo-section">
     <h2>Ready to make a difference?</h2>
