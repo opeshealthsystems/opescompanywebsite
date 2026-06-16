@@ -149,6 +149,13 @@ class EntriesRelationManager extends RelationManager
                         Notification::make()->title('Marked as paid')->success()->send();
                     }),
 
+                Tables\Actions\Action::make('download_payslip')
+                    ->label('Payslip')
+                    ->icon('heroicon-o-document-arrow-down')
+                    ->color('gray')
+                    ->url(fn (PayrollEntry $record) => route('payroll.payslip', $record))
+                    ->openUrlInNewTab(),
+
                 Tables\Actions\DeleteAction::make()
                     ->after(function () {
                         $this->getOwnerRecord()->recalculateTotals();
