@@ -10,6 +10,7 @@ use Filament\Navigation\NavigationGroup;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\View\PanelsRenderHook;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -64,6 +65,35 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->renderHook(
+                PanelsRenderHook::HEAD_END,
+                fn () => <<<'HTML'
+<style>
+/* ── Grid column utilities missing from Filament's bundled CSS ── */
+.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.grid-cols-5{grid-template-columns:repeat(5,minmax(0,1fr))}
+.grid-cols-6{grid-template-columns:repeat(6,minmax(0,1fr))}
+@media(min-width:640px){
+  .sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sm\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media(min-width:768px){
+  .md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .md\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media(min-width:1024px){
+  .lg\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .lg\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .lg\:grid-cols-6{grid-template-columns:repeat(6,minmax(0,1fr))}
+}
+/* ── Other missing utilities ── */
+.min-h-20{min-height:5rem}
+.tracking-widest{letter-spacing:.1em}
+</style>
+HTML
+            );
     }
 }

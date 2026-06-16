@@ -16,14 +16,14 @@ class ReportsDashboard extends Page
     protected static ?string $title           = 'Reports Dashboard';
     protected static ?string $slug            = 'reports-dashboard';
     protected static ?string $navigationGroup = 'Reporting';
-    protected static ?int    $navigationSort  = 50;
+    protected static ?int    $navigationSort  = 51;
     protected static string  $view            = 'filament.pages.reports-dashboard';
 
     public array $metrics = [];
 
     public static function canAccess(): bool
     {
-        return auth()->user()?->hasPermissionTo('view_reports') ?? false;
+        return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
     }
 
     public function mount(): void

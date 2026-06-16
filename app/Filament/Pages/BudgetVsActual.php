@@ -15,6 +15,7 @@ class BudgetVsActual extends Page implements HasTable
     use InteractsWithTable;
 
     protected static ?string $navigationIcon = 'heroicon-o-presentation-chart-line';
+    protected static ?string $title           = 'Budget vs Actual';
     protected static ?string $navigationLabel = 'Budget vs Actual';
     protected static ?string $navigationGroup = 'Reporting';
     protected static ?int $navigationSort = 5;

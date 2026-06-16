@@ -48,7 +48,7 @@ class OpesDashboardStats extends BaseWidget
             Stat::make('Open Tickets', $openTickets)
                 ->description($resolvedThisMonth . ' resolved this month')
                 ->icon('heroicon-o-ticket')
-                ->color($openTickets > 10 ? 'danger' : 'warning'),
+                ->color($openTickets > 10 ? 'danger' : ($openTickets > 0 ? 'warning' : 'success')),
 
             Stat::make('Active Licenses', $activeLicenses)
                 ->description($expiringSoon . ' expiring in 30 days')
@@ -58,7 +58,7 @@ class OpesDashboardStats extends BaseWidget
             Stat::make('Outstanding Invoices', $outstandingInvoices)
                 ->description($overdueInvoices . ' overdue')
                 ->icon('heroicon-o-banknotes')
-                ->color($overdueInvoices > 0 ? 'danger' : 'warning'),
+                ->color($overdueInvoices > 0 ? 'danger' : ($outstandingInvoices > 0 ? 'warning' : 'success')),
 
             Stat::make('Tester Assignments', $activeAssignments . ' active')
                 ->description($pendingAssignments . ' pending')

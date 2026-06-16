@@ -8,7 +8,8 @@ use Filament\Pages\Page;
 
 class ApAging extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-inbox-stack';
+    protected static ?string $title           = 'A/P Aging';
+    protected static ?string $navigationIcon  = 'heroicon-o-inbox-stack';
     protected static ?string $navigationLabel = 'A/P Aging';
     protected static ?string $navigationGroup = 'Reporting';
     protected static ?int $navigationSort = 97;

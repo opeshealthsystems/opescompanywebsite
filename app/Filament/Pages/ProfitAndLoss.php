@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\DB;
 
 class ProfitAndLoss extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-presentation-chart-bar';
+    protected static ?string $title           = 'P&L Statement';
+    protected static ?string $navigationIcon  = 'heroicon-o-presentation-chart-bar';
     protected static ?string $navigationLabel = 'P&L Statement';
     protected static ?string $navigationGroup = 'Reporting';
     protected static ?int $navigationSort = 6;

@@ -10,7 +10,8 @@ use Filament\Pages\Page;
 
 class HrSummary extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static ?string $title           = 'HR Summary';
+    protected static ?string $navigationIcon  = 'heroicon-o-users';
     protected static ?string $navigationLabel = 'HR Summary';
     protected static ?string $navigationGroup = 'Reporting';
     protected static ?int $navigationSort = 95;

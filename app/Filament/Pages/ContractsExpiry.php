@@ -11,7 +11,7 @@ class ContractsExpiry extends Page
     protected static ?string $navigationIcon = 'heroicon-o-document-check';
     protected static ?string $navigationLabel = 'Contracts Expiry';
     protected static ?string $navigationGroup = 'Reporting';
-    protected static ?int $navigationSort = 97;
+    protected static ?int $navigationSort = 98;
     protected static string $view = 'filament.pages.contracts-expiry';
 
     public static function canAccess(): bool

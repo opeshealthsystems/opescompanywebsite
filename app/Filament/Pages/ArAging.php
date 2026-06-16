@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\DB;
 
 class ArAging extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-clock';
+    protected static ?string $title           = 'A/R Aging';
+    protected static ?string $navigationIcon  = 'heroicon-o-clock';
     protected static ?string $navigationLabel = 'A/R Aging';
     protected static ?string $navigationGroup = 'Reporting';
     protected static ?int $navigationSort = 96;
