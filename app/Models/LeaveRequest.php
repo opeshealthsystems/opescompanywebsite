@@ -55,4 +55,34 @@ class LeaveRequest extends Model
             'cancelled' => 'Cancelled',
         ];
     }
+
+    public function getDurationInDays(): int
+    {
+        if (!$this->start_date || !$this->end_date) return 0;
+        $start = \Carbon\Carbon::parse($this->start_date);
+        $end   = \Carbon\Carbon::parse($this->end_date);
+        return max(1, (int) $start->diffInDays($end) + 1);
+    }
+
+    public function deductFromBalance(): void
+    {
+        // Prefer the stored total_days; fall back to date calculation
+        $days = (int) ($this->total_days > 0 ? $this->total_days : $this->getDurationInDays());
+        if ($days <= 0) return;
+
+        $userId = $this->user_id ?? null;
+        if (!$userId) return;
+
+        $year = \Carbon\Carbon::parse($this->start_date)->year;
+
+        // LeaveBalance.type matches LeaveRequest.type (string key e.g. 'annual', 'sick')
+        $balance = \App\Models\LeaveBalance::where('user_id', $userId)
+            ->where('year', $year)
+            ->where('type', $this->type)
+            ->first();
+
+        if ($balance) {
+            $balance->increment('used_days', $days);
+        }
+    }
 }

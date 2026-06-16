@@ -172,11 +172,18 @@ class LeaveRequestResource extends Resource
                     ->requiresConfirmation()
                     ->hidden(fn (LeaveRequest $record) => $record->status !== 'pending')
                     ->visible(fn () => auth()->user()?->hasAnyRole(['super_admin', 'admin']))
-                    ->action(fn (LeaveRequest $record) => $record->update([
-                        'status'      => 'approved',
-                        'approved_by' => auth()->id(),
-                        'approved_at' => now(),
-                    ])),
+                    ->action(function (LeaveRequest $record) {
+                        $record->update([
+                            'status'      => 'approved',
+                            'approved_by' => auth()->id(),
+                            'approved_at' => now(),
+                        ]);
+                        $record->deductFromBalance();
+                        \Filament\Notifications\Notification::make()
+                            ->title('Leave request approved')
+                            ->success()
+                            ->send();
+                    }),
                 Tables\Actions\Action::make('reject')
                     ->label('Reject')
                     ->icon('heroicon-o-x-circle')
@@ -184,11 +191,17 @@ class LeaveRequestResource extends Resource
                     ->requiresConfirmation()
                     ->hidden(fn (LeaveRequest $record) => $record->status !== 'pending')
                     ->visible(fn () => auth()->user()?->hasAnyRole(['super_admin', 'admin']))
-                    ->action(fn (LeaveRequest $record) => $record->update([
-                        'status'      => 'rejected',
-                        'approved_by' => auth()->id(),
-                        'approved_at' => now(),
-                    ])),
+                    ->action(function (LeaveRequest $record) {
+                        $record->update([
+                            'status'      => 'rejected',
+                            'approved_by' => auth()->id(),
+                            'approved_at' => now(),
+                        ]);
+                        \Filament\Notifications\Notification::make()
+                            ->title('Leave request rejected')
+                            ->danger()
+                            ->send();
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
