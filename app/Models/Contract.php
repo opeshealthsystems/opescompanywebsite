@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\LogsAuditActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Contract extends Model
 {
+    use LogsAuditActivity;
     protected $fillable = [
         'reference', 'title', 'lead_id', 'type', 'status',
         'value', 'currency', 'start_date', 'end_date',

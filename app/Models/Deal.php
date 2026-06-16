@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\LogsAuditActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Deal extends Model
 {
+    use LogsAuditActivity;
     protected $fillable = [
         'reference', 'title', 'lead_id', 'stage', 'value', 'currency',
         'probability', 'expected_close_date', 'actual_close_date',

@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\LogsAuditActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Expense extends Model
 {
+    use LogsAuditActivity;
     protected $fillable = [
         'reference', 'title', 'description', 'category', 'amount', 'currency',
         'vendor', 'expense_date', 'receipt_path', 'status',

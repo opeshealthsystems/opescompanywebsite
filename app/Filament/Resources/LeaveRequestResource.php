@@ -50,6 +50,13 @@ class LeaveRequestResource extends Resource
                     ->searchable()
                     ->required(),
 
+                Forms\Components\Select::make('leave_type_id')
+                    ->label('Leave Type')
+                    ->options(fn () => \App\Models\LeaveType::activeOptions())
+                    ->searchable()
+                    ->nullable()
+                    ->placeholder('Select configured type'),
+
                 Forms\Components\Select::make('type')
                     ->options(LeaveRequest::typeOptions())
                     ->required(),
@@ -115,6 +122,11 @@ class LeaveRequestResource extends Resource
                     ->badge()
                     ->color('info')
                     ->formatStateUsing(fn ($state) => LeaveRequest::typeOptions()[$state] ?? $state),
+
+                Tables\Columns\TextColumn::make('leaveType.name')
+                    ->label('Type Config')
+                    ->placeholder('—')
+                    ->toggleable(),
 
                 Tables\Columns\TextColumn::make('start_date')
                     ->date('d M Y')

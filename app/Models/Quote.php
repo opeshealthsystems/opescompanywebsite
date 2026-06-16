@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\LogsAuditActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Quote extends Model
 {
+    use LogsAuditActivity;
     protected $fillable = [
         'reference', 'lead_id', 'title', 'status', 'valid_until',
         'subtotal', 'tax_rate', 'tax_amount', 'total', 'currency', 'notes', 'created_by',

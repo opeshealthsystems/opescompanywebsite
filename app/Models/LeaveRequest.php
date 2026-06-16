@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class LeaveRequest extends Model
 {
     protected $fillable = [
-        'user_id', 'type', 'start_date', 'end_date', 'total_days',
+        'user_id', 'leave_type_id', 'type', 'start_date', 'end_date', 'total_days',
         'reason', 'status', 'approved_by', 'approved_at', 'notes',
     ];
 
@@ -27,6 +27,11 @@ class LeaveRequest extends Model
     public function approver(): BelongsTo
     {
         return $this->belongsTo(User::class, 'approved_by');
+    }
+
+    public function leaveType(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(LeaveType::class);
     }
 
     public static function typeOptions(): array

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\LogsAuditActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -9,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class Invoice extends Model
 {
+    use LogsAuditActivity;
     protected $fillable = [
         'customer_id', 'issued_by', 'license_id',
         'status', 'currency', 'tax_rate', 'notes', 'due_date', 'paid_at',
