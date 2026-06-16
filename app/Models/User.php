@@ -107,4 +107,39 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasMany(TrainingRecord::class, 'user_id');
     }
+
+    public function practitionerProfile(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(PractitionerProfile::class);
+    }
+
+    public function practitionerApplications(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\PractitionerApplication::class, 'practitioner_id');
+    }
+
+    public function surveyResponses(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\SurveyResponse::class);
+    }
+
+    public function suggestions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\Suggestion::class);
+    }
+
+    public function serviceRequests(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\ServiceRequest::class, 'customer_id');
+    }
+
+    public function courseEnrollments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\CourseEnrollment::class);
+    }
+
+    public function courseCertificates(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\CourseCertificate::class);
+    }
 }
