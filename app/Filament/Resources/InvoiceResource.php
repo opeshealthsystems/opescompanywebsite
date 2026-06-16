@@ -204,6 +204,46 @@ class InvoiceResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\BulkAction::make('export_csv')
+                        ->label('Export CSV')
+                        ->icon('heroicon-o-arrow-down-tray')
+                        ->color('gray')
+                        ->deselectRecordsAfterCompletion()
+                        ->action(function ($records) {
+                            $rows = ["Reference,Customer,Status,Issue Date,Due Date,Total,Currency\n"];
+                            foreach ($records as $r) {
+                                $rows[] = implode(',', [
+                                    $r->reference,
+                                    '"' . ($r->customer?->name ?? '') . '"',
+                                    $r->status,
+                                    $r->issue_date?->toDateString() ?? '',
+                                    $r->due_date?->toDateString() ?? '',
+                                    number_format((float) $r->grand_total, 2),
+                                    $r->currency,
+                                ]) . "\n";
+                            }
+                            return response()->streamDownload(
+                                fn () => print(implode('', $rows)),
+                                'invoices-' . now()->format('Y-m-d') . '.csv',
+                                ['Content-Type' => 'text/csv']
+                            );
+                        }),
+
+                    Tables\Actions\BulkAction::make('mark_sent')
+                        ->label('Mark as Sent')
+                        ->icon('heroicon-o-paper-airplane')
+                        ->color('info')
+                        ->requiresConfirmation()
+                        ->deselectRecordsAfterCompletion()
+                        ->action(function ($records) {
+                            $records->each(function ($record) {
+                                if ($record->status === 'draft') {
+                                    $record->update(['status' => 'sent']);
+                                }
+                            });
+                            Notification::make()->title('Invoices marked as sent')->success()->send();
+                        }),
+
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);

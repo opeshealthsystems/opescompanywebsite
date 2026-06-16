@@ -3,11 +3,13 @@
 namespace App\Filament\Resources\PayrollRunResource\Pages;
 
 use App\Filament\Resources\PayrollRunResource;
+use App\Mail\PayrollProcessed;
 use App\Models\PayrollEntry;
 use App\Models\User;
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
+use Illuminate\Support\Facades\Mail;
 
 class ViewPayrollRun extends ViewRecord
 {
@@ -17,6 +19,35 @@ class ViewPayrollRun extends ViewRecord
     {
         return [
             Actions\EditAction::make(),
+
+            Actions\Action::make('mark_complete')
+                ->label('Mark Complete & Notify')
+                ->icon('heroicon-o-check-badge')
+                ->color('success')
+                ->visible(fn () => $this->record->status === 'processing')
+                ->requiresConfirmation()
+                ->modalHeading('Complete Payroll Run')
+                ->modalDescription('This will mark the run as processed and email each employee their payslip summary. This cannot be undone.')
+                ->modalSubmitActionLabel('Complete & Notify')
+                ->action(function (): void {
+                    $run = $this->record;
+                    $run->update(['status' => 'processed']);
+
+                    $notified = 0;
+                    foreach ($run->entries()->with('employee')->get() as $entry) {
+                        $email = $entry->employee?->email;
+                        if ($email) {
+                            Mail::to($email)->queue(new PayrollProcessed($run, $entry));
+                            $notified++;
+                        }
+                    }
+
+                    $this->refreshFormData(['status']);
+                    Notification::make()
+                        ->title("Payroll marked complete — {$notified} notification(s) queued")
+                        ->success()
+                        ->send();
+                }),
 
             Actions\Action::make('generate_entries')
                 ->label('Generate Entries')

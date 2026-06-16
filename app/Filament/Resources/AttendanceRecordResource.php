@@ -87,7 +87,36 @@ class AttendanceRecordResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\BulkAction::make('export_csv')
+                        ->label('Export CSV')
+                        ->icon('heroicon-o-arrow-down-tray')
+                        ->color('gray')
+                        ->deselectRecordsAfterCompletion()
+                        ->action(function ($records) {
+                            $rows = ["Date,Employee,Status,Check In,Check Out,Hours,Notes\n"];
+                            foreach ($records as $r) {
+                                $rows[] = implode(',', [
+                                    $r->date?->toDateString() ?? '',
+                                    '"' . ($r->employee?->name ?? '') . '"',
+                                    $r->status,
+                                    $r->check_in ?? '',
+                                    $r->check_out ?? '',
+                                    $r->formatted_hours ?? '',
+                                    '"' . str_replace('"', '""', $r->notes ?? '') . '"',
+                                ]) . "\n";
+                            }
+                            return response()->streamDownload(
+                                fn () => print(implode('', $rows)),
+                                'attendance-' . now()->format('Y-m-d') . '.csv',
+                                ['Content-Type' => 'text/csv']
+                            );
+                        }),
+
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
     }
 
     public static function infolist(Infolist $infolist): Infolist

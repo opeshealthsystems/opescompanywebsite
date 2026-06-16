@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/contracts/{contract}/pdf', [\App\Http\Controllers\ContractController::class, 'pdf'])->name('contracts.pdf');
     Route::get('/quotes/{quote}/pdf', [\App\Http\Controllers\QuoteController::class, 'pdf'])->name('quotes.pdf');
     Route::get('/purchase-orders/{purchaseOrder}/pdf', [\App\Http\Controllers\PurchaseOrderController::class, 'pdf'])->name('purchase-orders.pdf');
+    Route::get('/supplier-bills/{supplierBill}/pdf', [\App\Http\Controllers\SupplierBillController::class, 'pdf'])->name('supplier-bills.pdf');
 });
 
 // Public document signing (no auth — token-based)

@@ -205,6 +205,50 @@ class LeaveRequestResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\BulkAction::make('bulk_approve')
+                        ->label('Approve Selected')
+                        ->icon('heroicon-o-check-circle')
+                        ->color('success')
+                        ->requiresConfirmation()
+                        ->deselectRecordsAfterCompletion()
+                        ->action(function ($records) {
+                            $records->each(function ($record) {
+                                if ($record->status === 'pending') {
+                                    $record->update([
+                                        'status'      => 'approved',
+                                        'approved_by' => auth()->id(),
+                                        'approved_at' => now(),
+                                    ]);
+                                }
+                            });
+                            \Filament\Notifications\Notification::make()
+                                ->title('Selected leave requests approved')
+                                ->success()
+                                ->send();
+                        }),
+
+                    Tables\Actions\BulkAction::make('bulk_reject')
+                        ->label('Reject Selected')
+                        ->icon('heroicon-o-x-circle')
+                        ->color('danger')
+                        ->requiresConfirmation()
+                        ->deselectRecordsAfterCompletion()
+                        ->action(function ($records) {
+                            $records->each(function ($record) {
+                                if ($record->status === 'pending') {
+                                    $record->update([
+                                        'status'      => 'rejected',
+                                        'approved_by' => auth()->id(),
+                                        'approved_at' => now(),
+                                    ]);
+                                }
+                            });
+                            \Filament\Notifications\Notification::make()
+                                ->title('Selected leave requests rejected')
+                                ->danger()
+                                ->send();
+                        }),
+
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
