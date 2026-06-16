@@ -223,6 +223,8 @@ class EmployeeResource extends Resource
     {
         return [
             \App\Filament\Resources\EmployeeResource\RelationManagers\LeaveBalancesRelationManager::class,
+            \App\Filament\Resources\EmployeeResource\RelationManagers\PerformanceReviewsRelationManager::class,
+            \App\Filament\Resources\EmployeeResource\RelationManagers\TimesheetsRelationManager::class,
         ];
     }
 

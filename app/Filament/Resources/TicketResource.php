@@ -141,6 +141,38 @@ class TicketResource extends Resource
                     ->label('Opened')
                     ->since()
                     ->sortable(),
+
+                Tables\Columns\TextColumn::make('sla_status')
+                    ->label('SLA')
+                    ->badge()
+                    ->getStateUsing(function ($record) {
+                        if (!$record->sla_resolution_due_at && !$record->sla_response_due_at) {
+                            return 'no_sla';
+                        }
+                        if (in_array($record->status, ['resolved','closed'])) {
+                            return 'ok';
+                        }
+                        if ($record->sla_resolution_due_at && now()->isAfter($record->sla_resolution_due_at)) {
+                            return 'resolution_breach';
+                        }
+                        if ($record->sla_response_due_at && now()->isAfter($record->sla_response_due_at)) {
+                            return 'response_breach';
+                        }
+                        return 'ok';
+                    })
+                    ->color(fn ($state) => match($state) {
+                        'ok'                => 'success',
+                        'response_breach'   => 'warning',
+                        'resolution_breach' => 'danger',
+                        default             => 'gray',
+                    })
+                    ->formatStateUsing(fn ($state) => match($state) {
+                        'ok'                => 'On Track',
+                        'response_breach'   => 'Response Due',
+                        'resolution_breach' => 'SLA Breached',
+                        default             => '—',
+                    })
+                    ->toggleable(),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([

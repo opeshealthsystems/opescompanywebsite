@@ -138,7 +138,10 @@ class ProjectResource extends Resource
 
     public static function getRelations(): array
     {
-        return [MilestonesRelationManager::class];
+        return [
+            MilestonesRelationManager::class,
+            \App\Filament\Resources\ProjectResource\RelationManagers\TimesheetsRelationManager::class,
+        ];
     }
 
     public static function getGloballySearchableAttributes(): array

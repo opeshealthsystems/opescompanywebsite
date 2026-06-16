@@ -168,6 +168,12 @@ class InvoiceResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('credit_note')
+                    ->label('Credit Note')
+                    ->icon('heroicon-o-receipt-refund')
+                    ->color('warning')
+                    ->url(fn ($record) => \App\Filament\Resources\CreditNoteResource::getUrl('create', ['invoice_id' => $record->id]))
+                    ->openUrlInNewTab(false),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

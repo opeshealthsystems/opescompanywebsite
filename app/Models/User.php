@@ -11,6 +11,9 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Department;
+use App\Models\PerformanceReview;
+use App\Models\Timesheet;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -28,6 +31,7 @@ class User extends Authenticatable implements FilamentUser
         'hire_date',
         'is_active',
         'avatar',
+        'department_id',
     ];
 
     protected $hidden = [
@@ -73,5 +77,20 @@ class User extends Authenticatable implements FilamentUser
     public function payrollEntries(): HasMany
     {
         return $this->hasMany(PayrollEntry::class);
+    }
+
+    public function department(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Department::class);
+    }
+
+    public function performanceReviews(): HasMany
+    {
+        return $this->hasMany(PerformanceReview::class, 'user_id');
+    }
+
+    public function timesheets(): HasMany
+    {
+        return $this->hasMany(Timesheet::class, 'user_id');
     }
 }

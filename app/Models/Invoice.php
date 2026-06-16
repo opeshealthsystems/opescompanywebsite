@@ -65,6 +65,11 @@ class Invoice extends Model
         return $this->hasMany(InvoiceItem::class)->orderBy('id');
     }
 
+    public function creditNotes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\CreditNote::class);
+    }
+
     public function getSubtotalAttribute(): int
     {
         return $this->items->sum('total');

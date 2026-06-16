@@ -3,6 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\LeadResource\Pages;
+use App\Filament\Resources\LeadResource\RelationManagers\DealsRelationManager;
+use App\Filament\Resources\LeadResource\RelationManagers\QuotesRelationManager;
 use App\Models\Lead;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -185,6 +187,14 @@ class LeadResource extends Resource
     public static function getNavigationBadgeColor(): ?string
     {
         return 'info';
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            QuotesRelationManager::class,
+            DealsRelationManager::class,
+        ];
     }
 
     public static function getPages(): array
