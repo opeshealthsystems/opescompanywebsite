@@ -80,6 +80,9 @@ Route::prefix('{locale}')
                 Route::post('/tickets',            [\App\Http\Controllers\Customer\TicketController::class, 'store'])->name('tickets.store');
                 Route::get('/tickets/{id}',        [\App\Http\Controllers\Customer\TicketController::class, 'show'])->name('tickets.show');
                 Route::post('/tickets/{id}/reply', [\App\Http\Controllers\Customer\TicketController::class, 'reply'])->name('tickets.reply');
+                Route::get('/knowledge-base', [\App\Http\Controllers\Customer\KnowledgeBaseController::class, 'index'])->name('knowledge-base.index');
+                Route::get('/knowledge-base/category/{slug}', [\App\Http\Controllers\Customer\KnowledgeBaseController::class, 'category'])->name('knowledge-base.category');
+                Route::get('/knowledge-base/{slug}', [\App\Http\Controllers\Customer\KnowledgeBaseController::class, 'show'])->name('knowledge-base.show');
             });
 
         // Tester portal (auth + tester role required)

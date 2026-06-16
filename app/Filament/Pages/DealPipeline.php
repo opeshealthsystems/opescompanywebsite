@@ -37,6 +37,7 @@ class DealPipeline extends Page
     public function getStageStats(): array
     {
         return Deal::selectRaw('stage, COUNT(*) as count, SUM(value) as total_value, AVG(probability) as avg_probability')
+            ->whereNotIn('stage', ['closed_won', 'closed_lost'])
             ->groupBy('stage')
             ->get()
             ->keyBy('stage')
