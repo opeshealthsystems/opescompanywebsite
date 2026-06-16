@@ -131,6 +131,13 @@ class VendorResource extends Resource
         ]);
     }
 
+    public static function getRelationManagers(): array
+    {
+        return [
+            \App\Filament\Resources\VendorResource\RelationManagers\PurchaseOrdersRelationManager::class,
+        ];
+    }
+
     public static function getGloballySearchableAttributes(): array
     {
         return ['name', 'email', 'contact_name'];

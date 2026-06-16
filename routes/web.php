@@ -38,6 +38,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/documents/{document}/view', [\App\Http\Controllers\DocumentController::class, 'preview'])->name('documents.preview');
     Route::get('/invoices/{invoice}/pdf', [\App\Http\Controllers\InvoiceController::class, 'pdf'])->name('invoices.pdf');
     Route::get('/payroll/entries/{entry}/payslip', [PayrollController::class, 'payslip'])->name('payroll.payslip');
+    Route::get('/contracts/{contract}/pdf', [\App\Http\Controllers\ContractController::class, 'pdf'])->name('contracts.pdf');
+    Route::get('/quotes/{quote}/pdf', [\App\Http\Controllers\QuoteController::class, 'pdf'])->name('quotes.pdf');
+    Route::get('/purchase-orders/{purchaseOrder}/pdf', [\App\Http\Controllers\PurchaseOrderController::class, 'pdf'])->name('purchase-orders.pdf');
 });
 
 // Public document signing (no auth — token-based)

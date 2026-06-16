@@ -13,6 +13,13 @@ class ViewPurchaseOrder extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
+            Actions\Action::make('download_pdf')
+                ->label('Download PDF')
+                ->icon('heroicon-o-document-arrow-down')
+                ->color('gray')
+                ->url(fn () => route('purchase-orders.pdf', $this->record))
+                ->openUrlInNewTab(),
+
             Actions\EditAction::make(),
 
             Actions\Action::make('approve')

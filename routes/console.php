@@ -13,3 +13,9 @@ Schedule::command('licenses:send-expiry-warnings')->dailyAt('08:00');
 
 // Generate invoices from active recurring templates that are due
 Schedule::command('invoices:generate-recurring')->dailyAt('06:00');
+
+// Send contract expiry warnings (30-day and 7-day notices)
+Schedule::command('contracts:send-expiry-warnings')->dailyAt('08:30');
+
+// Send training certification expiry warnings
+Schedule::command('training:send-expiry-warnings')->dailyAt('09:00');

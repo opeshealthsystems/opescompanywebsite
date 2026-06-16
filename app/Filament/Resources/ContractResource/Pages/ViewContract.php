@@ -13,6 +13,12 @@ class ViewContract extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
+            Actions\Action::make('download_pdf')
+                ->label('Download PDF')
+                ->icon('heroicon-o-document-arrow-down')
+                ->color('gray')
+                ->url(fn () => route('contracts.pdf', $this->record))
+                ->openUrlInNewTab(),
             Actions\EditAction::make(),
             Actions\DeleteAction::make(),
         ];

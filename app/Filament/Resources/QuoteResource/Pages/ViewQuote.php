@@ -12,6 +12,15 @@ class ViewQuote extends ViewRecord
 
     protected function getHeaderActions(): array
     {
-        return [Actions\EditAction::make(), Actions\DeleteAction::make()];
+        return [
+            Actions\Action::make('download_pdf')
+                ->label('Download PDF')
+                ->icon('heroicon-o-document-arrow-down')
+                ->color('gray')
+                ->url(fn () => route('quotes.pdf', $this->record))
+                ->openUrlInNewTab(),
+            Actions\EditAction::make(),
+            Actions\DeleteAction::make(),
+        ];
     }
 }
