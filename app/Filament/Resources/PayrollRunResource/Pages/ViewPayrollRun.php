@@ -45,6 +45,8 @@ class ViewPayrollRun extends ViewRecord
                         ->whereNotIn('id', $existingUserIds)
                         ->get();
 
+                    $defaultDeductionTypes = \App\Models\PayrollDeductionType::defaultDeductions();
+
                     $created = 0;
                     foreach ($employees as $employee) {
                         $profile = $employee->employeeProfile;
@@ -53,12 +55,21 @@ class ViewPayrollRun extends ViewRecord
                         $gross    = (float) ($profile?->salary ?? $employee->base_salary ?? 0);
                         $currency = $profile?->currency ?? $run->currency;
 
+                        // Auto-populate default deductions from configured deduction types
+                        $deductions = $defaultDeductionTypes->map(fn ($type) => [
+                            'label'  => $type->name,
+                            'amount' => $type->calculateAmount($gross),
+                        ])->toArray();
+
+                        $totalDeductions = collect($deductions)->sum('amount');
+                        $net = max(0, $gross - $totalDeductions);
+
                         $run->entries()->create([
                             'user_id'          => $employee->id,
                             'gross_salary'     => $gross,
-                            'deductions'       => [],
-                            'total_deductions' => 0,
-                            'net_salary'       => $gross,
+                            'deductions'       => $deductions,
+                            'total_deductions' => $totalDeductions,
+                            'net_salary'       => $net,
                             'currency'         => $currency,
                             'status'           => 'pending',
                         ]);
