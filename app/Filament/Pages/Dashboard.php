@@ -14,7 +14,10 @@ class Dashboard extends BaseDashboard
         return [
             \App\Filament\Widgets\AnnouncementsWidget::class,
             \App\Filament\Widgets\OpesDashboardStats::class,
+            \App\Filament\Widgets\FinancialOverviewWidget::class,
+            \App\Filament\Widgets\PeopleOverviewWidget::class,
             \App\Filament\Widgets\RecentLeadsWidget::class,
+            \App\Filament\Widgets\CrmPipelineWidget::class,
             \App\Filament\Widgets\RecentTicketsWidget::class,
             \App\Filament\Widgets\RecentInvoicesWidget::class,
         ];
