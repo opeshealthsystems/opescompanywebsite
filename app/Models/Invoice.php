@@ -72,6 +72,31 @@ class Invoice extends Model
         return $this->hasMany(\App\Models\CreditNote::class);
     }
 
+    public function payments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\InvoicePayment::class);
+    }
+
+    public function getAmountPaidAttribute(): float
+    {
+        return (float) $this->payments()->sum('amount');
+    }
+
+    public function getAmountOutstandingAttribute(): float
+    {
+        return max(0, (float) $this->grand_total - $this->amount_paid);
+    }
+
+    public function reconcilePaymentStatus(): void
+    {
+        $paid  = $this->amount_paid;
+        $total = (float) $this->grand_total;
+
+        if ($total > 0 && $paid >= $total) {
+            $this->update(['status' => 'paid', 'paid_at' => $this->paid_at ?? now()]);
+        }
+    }
+
     public function getSubtotalAttribute(): int
     {
         return $this->items->sum('total');

@@ -168,6 +168,33 @@ class InvoiceResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('record_payment')
+                    ->label('Record Payment')
+                    ->icon('heroicon-o-banknotes')
+                    ->color('success')
+                    ->hidden(fn (Invoice $record) => $record->status === 'paid' || $record->status === 'cancelled')
+                    ->form([
+                        Forms\Components\TextInput::make('amount')
+                            ->numeric()->required()->minValue(0.01),
+                        Forms\Components\Select::make('payment_method')
+                            ->options(\App\Models\InvoicePayment::methodOptions())
+                            ->default('bank_transfer')->required(),
+                        Forms\Components\DatePicker::make('payment_date')
+                            ->required()->default(today())->native(false),
+                        Forms\Components\TextInput::make('reference_number')
+                            ->label('Reference / Transaction ID')->nullable(),
+                    ])
+                    ->action(function (Invoice $record, array $data) {
+                        $record->payments()->create([
+                            'amount'           => $data['amount'],
+                            'payment_method'   => $data['payment_method'],
+                            'payment_date'     => $data['payment_date'],
+                            'reference_number' => $data['reference_number'] ?? null,
+                            'recorded_by'      => auth()->id(),
+                        ]);
+                        $record->reconcilePaymentStatus();
+                        Notification::make()->title('Payment recorded')->success()->send();
+                    }),
                 Tables\Actions\Action::make('credit_note')
                     ->label('Credit Note')
                     ->icon('heroicon-o-receipt-refund')
@@ -247,6 +274,20 @@ class InvoiceResource extends Resource
                     ->size('lg'),
             ])->columns(4),
 
+            Infolists\Components\Section::make('Payments')
+                ->schema([
+                    Infolists\Components\TextEntry::make('amount_paid')
+                        ->label('Amount Paid')
+                        ->getStateUsing(fn (Invoice $record) => $record->formatAmount((int) $record->amount_paid))
+                        ->color('success'),
+                    Infolists\Components\TextEntry::make('amount_outstanding')
+                        ->label('Outstanding')
+                        ->getStateUsing(fn (Invoice $record) => $record->formatAmount((int) $record->amount_outstanding))
+                        ->color(fn (Invoice $record) => $record->amount_outstanding > 0 ? 'danger' : 'success'),
+                ])
+                ->columns(2)
+                ->collapsible(),
+
             Infolists\Components\Section::make('Notes')
                 ->schema([
                     Infolists\Components\TextEntry::make('notes')->placeholder('No notes.')->columnSpanFull(),
@@ -254,6 +295,13 @@ class InvoiceResource extends Resource
                 ->collapsed()
                 ->collapsible(),
         ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            \App\Filament\Resources\InvoiceResource\RelationManagers\PaymentsRelationManager::class,
+        ];
     }
 
     public static function getGloballySearchableAttributes(): array
