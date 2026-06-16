@@ -24,7 +24,7 @@ class SurveyController extends Controller
         return view('customer.surveys.index', compact('surveys', 'myResponseIds'));
     }
 
-    public function show(Survey $survey)
+    public function show($locale, Survey $survey)
     {
         abort_unless(in_array($survey->audience, ['customers', 'all']), 403);
         $survey->load('questions');
@@ -38,7 +38,7 @@ class SurveyController extends Controller
         return view('customer.surveys.show', compact('survey', 'response', 'existingAnswers'));
     }
 
-    public function submit(Request $request, Survey $survey)
+    public function submit(Request $request, $locale, Survey $survey)
     {
         abort_unless(in_array($survey->audience, ['customers', 'all']), 403);
         $survey->load('questions');

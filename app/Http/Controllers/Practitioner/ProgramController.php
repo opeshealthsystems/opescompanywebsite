@@ -24,7 +24,7 @@ class ProgramController extends Controller
         return view('practitioner.programs.index', compact('programs', 'myApplicationProgramIds'));
     }
 
-    public function show(PractitionerProgram $program)
+    public function show($locale, PractitionerProgram $program)
     {
         $program->loadCount('applications');
         $myApplication = PractitionerApplication::where('practitioner_id', auth()->id())
