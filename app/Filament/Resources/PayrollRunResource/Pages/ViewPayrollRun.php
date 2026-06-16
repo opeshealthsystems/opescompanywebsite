@@ -19,49 +19,68 @@ class ViewPayrollRun extends ViewRecord
             Actions\EditAction::make(),
 
             Actions\Action::make('generate_entries')
-                ->label('Generate Entries from Staff')
-                ->icon('heroicon-o-user-group')
-                ->color('info')
+                ->label('Generate Entries')
+                ->icon('heroicon-o-bolt')
+                ->color('warning')
                 ->visible(fn () => $this->record->status === 'draft')
                 ->requiresConfirmation()
+                ->modalHeading('Generate Payroll Entries')
+                ->modalDescription(
+                    'This will create one entry per active staff member who does not already have an entry in this run. '
+                    . 'Gross salary is taken from the employee\'s profile salary, falling back to their base salary. '
+                    . 'Employees already included in this run will be skipped.'
+                )
+                ->modalSubmitActionLabel('Generate')
                 ->action(function () {
                     $run = $this->record;
 
-                    $users = User::whereHas('employeeProfile', fn ($q) => $q->where('salary', '>', 0))
+                    // Collect user IDs that already have an entry in this run
+                    $existingUserIds = $run->entries()->pluck('user_id')->toArray();
+
+                    // Active staff = users with any non-customer role, with their EmployeeProfile eager-loaded
+                    $employees = User::whereHas('roles', fn ($q) =>
+                            $q->whereIn('name', ['super_admin', 'admin', 'support', 'tester'])
+                        )
                         ->with('employeeProfile')
+                        ->whereNotIn('id', $existingUserIds)
                         ->get();
 
-                    $count = 0;
-                    foreach ($users as $user) {
-                        $profile = $user->employeeProfile;
+                    $created = 0;
+                    foreach ($employees as $employee) {
+                        $profile = $employee->employeeProfile;
 
-                        // Remove any existing entry for this user in this run
-                        PayrollEntry::where('payroll_run_id', $run->id)
-                            ->where('user_id', $user->id)
-                            ->delete();
+                        // Prefer EmployeeProfile salary; fall back to users.base_salary; default 0
+                        $gross    = (float) ($profile?->salary ?? $employee->base_salary ?? 0);
+                        $currency = $profile?->currency ?? $run->currency;
 
-                        PayrollEntry::create([
-                            'payroll_run_id'   => $run->id,
-                            'user_id'          => $user->id,
-                            'gross_salary'     => $profile->salary,
+                        $run->entries()->create([
+                            'user_id'          => $employee->id,
+                            'gross_salary'     => $gross,
                             'deductions'       => [],
                             'total_deductions' => 0,
-                            'net_salary'       => $profile->salary,
-                            'currency'         => $profile->currency ?? $run->currency,
+                            'net_salary'       => $gross,
+                            'currency'         => $currency,
                             'status'           => 'pending',
                         ]);
 
-                        $count++;
+                        $created++;
                     }
 
-                    $run->update(['status' => 'processing']);
-                    $run->recalculateTotals();
+                    if ($created > 0) {
+                        // Advance status to processing only if still in draft
+                        if ($run->status === 'draft') {
+                            $run->update(['status' => 'processing']);
+                        }
+                        $run->recalculateTotals();
+                    }
 
                     $this->refreshFormData(['status', 'total_gross', 'total_net']);
 
                     Notification::make()
-                        ->title("Generated {$count} entries")
-                        ->success()
+                        ->title($created > 0
+                            ? "Generated {$created} payroll " . str('entry')->plural($created)
+                            : 'No new entries — all active staff are already included')
+                        ->status($created > 0 ? 'success' : 'warning')
                         ->send();
                 }),
         ];

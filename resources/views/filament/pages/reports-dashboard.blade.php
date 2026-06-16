@@ -49,7 +49,7 @@
 
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;">
 
         <div style="background:#1e293b;border-radius:12px;padding:1.25rem;">
             <h3 style="color:#e2e8f0;font-size:0.875rem;font-weight:600;margin-bottom:1rem;text-transform:uppercase;letter-spacing:0.05em;">Recent Open Tickets</h3>
@@ -95,6 +95,79 @@
             @endforelse
             <div style="margin-top:0.75rem;">
                 <a href="{{ \App\Filament\Resources\InvoiceResource::getUrl('index') }}" style="color:#00C896;font-size:0.75rem;text-decoration:none;">View all invoices &rarr;</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="space-y-8">
+
+        {{-- Financial Reports --}}
+        <div>
+            <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-4">Financial Reports</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                @foreach ([
+                    ['Budget vs Actual',    'heroicon-o-scale',            'Compare budget allocations against actual spend',        'budget-vs-actual'],
+                    ['Profit & Loss',       'heroicon-o-chart-bar',        'Revenue, expenses, and net profit over time',            'profit-and-loss'],
+                    ['Cash Flow',           'heroicon-o-arrows-right-left', 'Incoming and outgoing cash movements',                  'cash-flow'],
+                    ['A/R Aging',           'heroicon-o-clock',            'Outstanding invoices grouped by age bucket',             'ar-aging'],
+                    ['A/P Aging',           'heroicon-o-inbox-stack',      'Outstanding supplier bills grouped by age bucket',       'ap-aging'],
+                ] as [$title, $icon, $desc, $slug])
+                    <a href="{{ \Illuminate\Support\Facades\URL::route('filament.admin.pages.'.$slug) }}"
+                       class="group flex items-start gap-4 rounded-xl bg-white dark:bg-gray-900 shadow ring-1 ring-gray-200 dark:ring-gray-800 p-5 hover:ring-primary-500 hover:shadow-md transition-all">
+                        <div class="shrink-0 rounded-lg bg-primary-50 dark:bg-primary-900/20 p-3 text-primary-600">
+                            <x-filament::icon :icon="$icon" class="h-6 w-6" />
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 transition-colors">{{ $title }}</p>
+                            <p class="mt-1 text-sm text-gray-500">{{ $desc }}</p>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+
+        {{-- People & Operations Reports --}}
+        <div>
+            <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-4">People & Operations Reports</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                @foreach ([
+                    ['Payroll Headcount',  'heroicon-o-banknotes',       'Monthly payroll cost and headcount trends',             'payroll-headcount'],
+                    ['HR Summary',         'heroicon-o-users',            'Headcount by department, leave stats, open positions',  'hr-summary'],
+                    ['Contracts Expiry',   'heroicon-o-document-check',   'Active contracts grouped by days to expiry',            'contracts-expiry'],
+                ] as [$title, $icon, $desc, $slug])
+                    <a href="{{ \Illuminate\Support\Facades\URL::route('filament.admin.pages.'.$slug) }}"
+                       class="group flex items-start gap-4 rounded-xl bg-white dark:bg-gray-900 shadow ring-1 ring-gray-200 dark:ring-gray-800 p-5 hover:ring-primary-500 hover:shadow-md transition-all">
+                        <div class="shrink-0 rounded-lg bg-primary-50 dark:bg-primary-900/20 p-3 text-primary-600">
+                            <x-filament::icon :icon="$icon" class="h-6 w-6" />
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 transition-colors">{{ $title }}</p>
+                            <p class="mt-1 text-sm text-gray-500">{{ $desc }}</p>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+
+        {{-- General Reports --}}
+        <div>
+            <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-4">General Reports</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                @foreach ([
+                    ['Reports',  'heroicon-o-document-text',  'Custom report builder and exports',  'reports'],
+                ] as [$title, $icon, $desc, $slug])
+                    <a href="{{ \Illuminate\Support\Facades\URL::route('filament.admin.pages.'.$slug) }}"
+                       class="group flex items-start gap-4 rounded-xl bg-white dark:bg-gray-900 shadow ring-1 ring-gray-200 dark:ring-gray-800 p-5 hover:ring-primary-500 hover:shadow-md transition-all">
+                        <div class="shrink-0 rounded-lg bg-primary-50 dark:bg-primary-900/20 p-3 text-primary-600">
+                            <x-filament::icon :icon="$icon" class="h-6 w-6" />
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 transition-colors">{{ $title }}</p>
+                            <p class="mt-1 text-sm text-gray-500">{{ $desc }}</p>
+                        </div>
+                    </a>
+                @endforeach
             </div>
         </div>
 
