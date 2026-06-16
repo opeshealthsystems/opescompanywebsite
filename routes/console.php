@@ -10,3 +10,6 @@ Artisan::command('inspire', function () {
 
 // Send license expiry warnings at 08:00 every day
 Schedule::command('licenses:send-expiry-warnings')->dailyAt('08:00');
+
+// Generate invoices from active recurring templates that are due
+Schedule::command('invoices:generate-recurring')->dailyAt('06:00');
