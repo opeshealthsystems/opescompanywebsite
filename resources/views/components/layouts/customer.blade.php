@@ -50,6 +50,18 @@
                 <i data-lucide="wrench" style="width:16px;height:16px"></i> Service Requests
             </a>
             @endif
+            @if(Route::has('customer.courses'))
+            <a href="{{ route('customer.courses', ['locale' => app()->getLocale()]) }}"
+               class="cp-nav-link {{ request()->routeIs('customer.courses*') || request()->routeIs('customer.lessons*') ? 'cp-nav-link-active' : '' }}">
+                <i data-lucide="graduation-cap" style="width:16px;height:16px"></i> Courses
+            </a>
+            @endif
+            @if(Route::has('customer.certificates'))
+            <a href="{{ route('customer.certificates', ['locale' => app()->getLocale()]) }}"
+               class="cp-nav-link {{ request()->routeIs('customer.certificates*') ? 'cp-nav-link-active' : '' }}">
+                <i data-lucide="award" style="width:16px;height:16px"></i> Certificates
+            </a>
+            @endif
         </div>
         <div class="cp-nav-user">
             <span class="cp-nav-username">{{ auth()->user()->name }}</span>

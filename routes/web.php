@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/quotes/{quote}/pdf', [\App\Http\Controllers\QuoteController::class, 'pdf'])->name('quotes.pdf');
     Route::get('/purchase-orders/{purchaseOrder}/pdf', [\App\Http\Controllers\PurchaseOrderController::class, 'pdf'])->name('purchase-orders.pdf');
     Route::get('/supplier-bills/{supplierBill}/pdf', [\App\Http\Controllers\SupplierBillController::class, 'pdf'])->name('supplier-bills.pdf');
+    Route::get('/certificates/{certificate}/download', [\App\Http\Controllers\CertificatePdfController::class, 'download'])->name('certificates.pdf');
 });
 
 // Public document signing (no auth — token-based)
@@ -112,6 +113,13 @@ Route::prefix('{locale}')
                 Route::get('/service-requests/create', [\App\Http\Controllers\Customer\ServiceRequestController::class, 'create'])->name('service-requests.create');
                 Route::post('/service-requests', [\App\Http\Controllers\Customer\ServiceRequestController::class, 'store'])->name('service-requests.store');
                 Route::get('/service-requests/{serviceRequest}', [\App\Http\Controllers\Customer\ServiceRequestController::class, 'show'])->name('service-requests.show');
+                // Courses
+                Route::get('/courses', [\App\Http\Controllers\Customer\CourseController::class, 'index'])->name('courses');
+                Route::get('/courses/{course:slug}', [\App\Http\Controllers\Customer\CourseController::class, 'show'])->name('courses.show');
+                Route::post('/courses/{course:slug}/enroll', [\App\Http\Controllers\Customer\CourseController::class, 'enroll'])->name('courses.enroll');
+                Route::get('/courses/{course:slug}/lessons/{lesson}', [\App\Http\Controllers\Customer\LessonController::class, 'show'])->name('lessons.show');
+                Route::post('/courses/{course:slug}/lessons/{lesson}/done', [\App\Http\Controllers\Customer\LessonController::class, 'markDone'])->name('lessons.done');
+                Route::get('/certificates', [\App\Http\Controllers\Customer\CertificateController::class, 'index'])->name('certificates');
             });
 
         // Tester portal (auth + tester role required)
@@ -153,5 +161,12 @@ Route::prefix('{locale}')
                 Route::get('/suggestions', [\App\Http\Controllers\Practitioner\SuggestionController::class, 'index'])->name('suggestions');
                 Route::get('/suggestions/create', [\App\Http\Controllers\Practitioner\SuggestionController::class, 'create'])->name('suggestions.create');
                 Route::post('/suggestions', [\App\Http\Controllers\Practitioner\SuggestionController::class, 'store'])->name('suggestions.store');
+                // Courses
+                Route::get('/courses', [\App\Http\Controllers\Practitioner\CourseController::class, 'index'])->name('courses');
+                Route::get('/courses/{course:slug}', [\App\Http\Controllers\Practitioner\CourseController::class, 'show'])->name('courses.show');
+                Route::post('/courses/{course:slug}/enroll', [\App\Http\Controllers\Practitioner\CourseController::class, 'enroll'])->name('courses.enroll');
+                Route::get('/courses/{course:slug}/lessons/{lesson}', [\App\Http\Controllers\Practitioner\LessonController::class, 'show'])->name('lessons.show');
+                Route::post('/courses/{course:slug}/lessons/{lesson}/done', [\App\Http\Controllers\Practitioner\LessonController::class, 'markDone'])->name('lessons.done');
+                Route::get('/certificates', [\App\Http\Controllers\Practitioner\CertificateController::class, 'index'])->name('certificates');
             });
     });

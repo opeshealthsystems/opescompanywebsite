@@ -44,8 +44,8 @@
             @endif
             @if(Route::has('practitioner.courses'))
             <a href="{{ route('practitioner.courses', ['locale' => app()->getLocale()]) }}"
-               class="flex items-center gap-1.5 px-3 py-1.5 rounded text-sm no-underline transition-colors {{ request()->routeIs('practitioner.courses*') ? 'bg-slate-700 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800' }}">
-                <i data-lucide="book-open" style="width:16px;height:16px"></i> Courses
+               class="flex items-center gap-1.5 px-3 py-1.5 rounded text-sm no-underline transition-colors {{ request()->routeIs('practitioner.courses*') || request()->routeIs('practitioner.lessons*') ? 'bg-slate-700 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800' }}">
+                <i data-lucide="graduation-cap" style="width:16px;height:16px"></i> Courses
             </a>
             @endif
             @if(Route::has('practitioner.certificates'))
