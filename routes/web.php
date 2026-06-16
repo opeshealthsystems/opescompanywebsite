@@ -10,6 +10,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Customer\DashboardController;
 use App\Http\Controllers\Customer\ProfileController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PractitionerLandingController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
@@ -75,6 +76,7 @@ Route::prefix('{locale}')
         Route::get('/privacy',        fn () => view('pages.privacy'))->name('privacy');
         Route::get('/terms',          fn () => view('pages.terms'))->name('terms');
         Route::get('/compliance',     fn () => view('pages.compliance'))->name('compliance');
+        Route::get('/practitioners', [PractitionerLandingController::class, 'index'])->name('practitioners.index');
 
         // Customer portal (auth + customer role required)
         Route::middleware(['auth', 'role:customer'])
