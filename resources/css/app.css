@@ -1797,3 +1797,11 @@ h1, h2, h3, h4, h5 { font-family: 'Plus Jakarta Sans', sans-serif; }
     /* Stacked links go full-width */
     .portal-menu > a { width: 100%; }
 }
+
+/* ── Portal data tables scroll horizontally instead of breaking layout ── */
+@media (max-width: 768px) {
+    .cp-section-card { overflow-x: auto; }
+    .cp-page-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .cp-container { padding: 0 1rem; }
+    .cp-main { padding: 1.25rem 0; }
+}
