@@ -1699,6 +1699,9 @@ h1, h2, h3, h4, h5 { font-family: 'Plus Jakarta Sans', sans-serif; }
 
     .product-grid { grid-template-columns: repeat(2, 1fr); }
     .pillars { grid-template-columns: 1fr; padding: 0 20px; gap: 20px; }
+    .partner-grid { grid-template-columns: 1fr; }
+    .testimonial-grid { grid-template-columns: 1fr; }
+    .ecosystem-grid { grid-template-columns: 1fr; }
 
     .section { padding: 44px 20px; }
     .section-title { font-size: 24px; }
