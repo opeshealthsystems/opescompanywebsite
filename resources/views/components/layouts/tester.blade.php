@@ -44,7 +44,7 @@
         </div>
     </main>
 
-    <script src="https://unpkg.com/lucide@0.511.0/dist/umd/lucide.min.js" crossorigin="anonymous"></script>
+    <script src="{{ asset('vendor/lucide.min.js') }}"></script>
     <script>lucide.createIcons();</script>
 </body>
 </html>
