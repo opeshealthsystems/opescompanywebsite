@@ -398,22 +398,46 @@
 
 <div class="divider"></div>
 
-{{-- ── TESTIMONIALS ─────────────────────────────────────────────── --}}
+{{-- ── TESTIMONIALS — only shown when real practitioner reviews exist ── --}}
+@if($testimonials->isNotEmpty())
+<div class="divider"></div>
 <div class="section">
-    <div class="section-label"><i data-lucide="message-square-quote" style="width:12px;height:12px"></i> Trust</div>
+    <div class="section-label"><i data-lucide="message-square-quote" style="width:12px;height:12px"></i> Verified Reviews</div>
     <h2 class="section-title">What Healthcare Professionals Say</h2>
+    <p class="section-sub">Real reviews from doctors, nurses, and health practitioners who tested our systems.</p>
     <div class="testimonial-grid">
         @foreach($testimonials as $t)
+        @php
+            $profile   = $t->practitioner?->practitionerProfile;
+            $name      = $t->practitioner?->name ?? 'Healthcare Professional';
+            $profession = $profile ? \App\Models\PractitionerProfile::professionOptions()[$profile->profession] ?? $profile->profession : null;
+            $specialty  = $profile?->specialty;
+            $workplace  = $profile?->workplace_name;
+            $program    = $t->application?->program?->product_name ?? $t->application?->program?->title;
+            $avg        = round($t->averageRating());
+        @endphp
         <div class="testimonial">
+            <div style="display:flex;gap:3px;margin-bottom:10px">
+                @for($s = 1; $s <= 5; $s++)
+                <i data-lucide="star" style="width:13px;height:13px;{{ $s <= $avg ? 'color:#f59e0b;fill:#f59e0b' : 'color:#334155' }}"></i>
+                @endfor
+            </div>
             <i data-lucide="quote" style="width:20px;height:20px;color:#00C896;opacity:.5"></i>
-            <blockquote>"{{ $t->body }}"</blockquote>
+            <blockquote>"{{ $t->findings_text }}"</blockquote>
             <div class="testimonial-author">
                 <i data-lucide="user-circle" style="width:14px;height:14px;color:#00C896"></i>
-                {{ $t->author_name }}@if($t->author_title || $t->author_facility) · <span>{{ implode(', ', array_filter([$t->author_title, $t->author_facility])) }}</span>@endif
+                {{ $name }}
+                @if($profession || $specialty || $workplace)
+                · <span>{{ implode(', ', array_filter([$profession, $specialty, $workplace])) }}</span>
+                @endif
+                @if($program)
+                <span style="margin-left:6px;font-size:11px;color:#475569;background:#0f172a;padding:2px 7px;border-radius:8px;border:1px solid #1e293b">{{ $program }}</span>
+                @endif
             </div>
         </div>
         @endforeach
     </div>
 </div>
+@endif
 
 </x-layouts.app>

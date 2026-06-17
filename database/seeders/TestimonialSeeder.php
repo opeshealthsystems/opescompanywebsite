@@ -34,11 +34,8 @@ class TestimonialSeeder extends Seeder
             ],
         ];
 
-        foreach ($testimonials as $data) {
-            Testimonial::updateOrCreate(
-                ['author_name' => $data['author_name'], 'author_title' => $data['author_title']],
-                $data
-            );
-        }
+        // Deactivate any previously seeded fake testimonials.
+        // The landing page now shows only real PractitionerFinding reviews (is_published=true).
+        Testimonial::query()->update(['is_active' => false]);
     }
 }
