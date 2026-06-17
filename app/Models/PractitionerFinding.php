@@ -12,7 +12,7 @@ class PractitionerFinding extends Model
     protected $fillable = [
         'application_id','practitioner_id','wait_time_rating',
         'data_integrity_rating','usability_rating','overall_rating',
-        'findings_text','video_url','is_published',
+        'findings_text','video_url','screenshot_path','is_published',
     ];
 
     protected $casts = [

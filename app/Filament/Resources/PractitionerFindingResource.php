@@ -63,6 +63,11 @@ class PractitionerFindingResource extends Resource
                     ->label('Overall')
                     ->badge()
                     ->placeholder('—'),
+                Tables\Columns\ImageColumn::make('screenshot_path')
+                    ->label('Screenshot')
+                    ->disk('public')
+                    ->square()
+                    ->toggleable(),
                 Tables\Columns\IconColumn::make('is_published')
                     ->label('Published')
                     ->boolean(),
@@ -109,6 +114,7 @@ class PractitionerFindingResource extends Resource
             Infolists\Components\Section::make('Findings')->schema([
                 Infolists\Components\TextEntry::make('findings_text')->placeholder('—'),
                 Infolists\Components\TextEntry::make('video_url')->label('Video URL')->placeholder('—')->url(),
+                Infolists\Components\ImageEntry::make('screenshot_path')->label('Screenshot')->disk('public')->placeholder('—'),
             ]),
         ]);
     }

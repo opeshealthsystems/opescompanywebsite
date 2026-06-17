@@ -70,6 +70,11 @@ class PractitionerBugReportResource extends Resource
                         default       => 'gray',
                     })
                     ->formatStateUsing(fn ($state) => PractitionerBugReport::statusOptions()[$state] ?? $state),
+                Tables\Columns\ImageColumn::make('screenshot_path')
+                    ->label('Screenshot')
+                    ->disk('public')
+                    ->square()
+                    ->toggleable(),
                 TextColumn::make('created_at')->label('Reported')->date()->sortable(),
             ])
             ->filters([

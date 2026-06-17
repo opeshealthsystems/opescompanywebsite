@@ -59,6 +59,15 @@
             </div>
         @endif
 
+        @if($bugReport->screenshot_path)
+            <div>
+                <p class="text-xs font-medium text-slate-500 uppercase tracking-wide mb-1">Screenshot Upload</p>
+                <img src="{{ \Illuminate\Support\Facades\Storage::url($bugReport->screenshot_path) }}"
+                     alt="Bug screenshot"
+                     class="max-w-md w-full rounded-lg border border-slate-200">
+            </div>
+        @endif
+
         @if($bugReport->admin_response)
             <div class="pt-4 border-t border-slate-100">
                 <p class="text-xs font-medium text-slate-500 uppercase tracking-wide mb-1">OPES Response</p>

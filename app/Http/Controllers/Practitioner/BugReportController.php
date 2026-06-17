@@ -27,8 +27,15 @@ class BugReportController extends Controller
             'description'        => 'required|string|min:10',
             'steps_to_reproduce' => 'nullable|string',
             'screenshot_url'     => 'nullable|url',
+            'screenshot'         => 'nullable|image|max:4096',
             'product_slug'       => 'nullable|string|max:100',
         ]);
+
+        unset($data['screenshot']);
+
+        if ($request->hasFile('screenshot')) {
+            $data['screenshot_path'] = $request->file('screenshot')->store('bug-report-screenshots', 'public');
+        }
 
         auth()->user()->practitionerBugReports()->create($data);
 

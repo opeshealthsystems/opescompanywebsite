@@ -153,6 +153,14 @@
                     <i data-lucide="video" style="width:14px;height:14px"></i> Watch Video
                 </a>
                 @endif
+
+                @if($finding->screenshot_path)
+                <div class="mt-3">
+                    <img src="{{ \Illuminate\Support\Facades\Storage::url($finding->screenshot_path) }}"
+                         alt="Finding screenshot"
+                         class="max-w-md w-full rounded-lg border border-slate-800">
+                </div>
+                @endif
             </div>
             @endforeach
         </div>

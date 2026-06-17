@@ -20,7 +20,7 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('practitioner.findings.store', ['locale' => app()->getLocale(), 'application' => $application->id]) }}">
+        <form method="POST" action="{{ route('practitioner.findings.store', ['locale' => app()->getLocale(), 'application' => $application->id]) }}" enctype="multipart/form-data">
             @csrf
 
             <div class="mb-6">
@@ -86,6 +86,13 @@
                     class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                     maxlength="500">
                 <p class="text-xs text-slate-500 mt-1">Link to a supporting video recording.</p>
+            </div>
+
+            <div class="mb-6">
+                <label for="screenshot" class="block text-sm font-medium text-slate-300 mb-1.5">Screenshot <span class="text-slate-500">(optional)</span></label>
+                <input type="file" id="screenshot" name="screenshot" accept="image/png,image/jpeg,image/webp"
+                    class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-white file:mr-4 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:bg-emerald-600 file:text-white file:text-sm file:font-semibold hover:file:bg-emerald-500 file:cursor-pointer focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500">
+                <p class="text-xs text-slate-500 mt-1">PNG, JPEG or WebP. Max 4 MB.</p>
             </div>
 
             <div class="flex items-center gap-4">

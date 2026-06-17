@@ -7,7 +7,7 @@
     </div>
 
     <div class="bg-white rounded-xl border border-slate-200 p-6">
-        <form method="POST" action="{{ route('practitioner.bug-reports.store', ['locale' => app()->getLocale()]) }}" class="space-y-5">
+        <form method="POST" action="{{ route('practitioner.bug-reports.store', ['locale' => app()->getLocale()]) }}" enctype="multipart/form-data" class="space-y-5">
             @csrf
 
             <div>
@@ -58,6 +58,14 @@
                     class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
                     placeholder="https://...">
                 @error('screenshot_url')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-slate-700 mb-1">Screenshot Upload <span class="text-slate-400">(optional)</span></label>
+                <input type="file" name="screenshot" accept="image/png,image/jpeg,image/webp"
+                    class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:bg-emerald-600 file:text-white file:text-sm file:font-semibold hover:file:bg-emerald-700 file:cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <p class="text-xs text-slate-400 mt-1">PNG, JPEG or WebP. Max 4 MB.</p>
+                @error('screenshot')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
             </div>
 
             <button type="submit"

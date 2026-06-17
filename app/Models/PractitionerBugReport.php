@@ -18,6 +18,7 @@ class PractitionerBugReport extends Model
         'description',
         'steps_to_reproduce',
         'screenshot_url',
+        'screenshot_path',
         'status',
         'admin_response',
         'responded_by',

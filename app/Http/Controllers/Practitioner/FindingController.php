@@ -33,7 +33,13 @@ class FindingController extends Controller
             'usability_rating'      => 'nullable|integer|min:1|max:5',
             'findings_text'         => 'nullable|string|max:5000',
             'video_url'             => 'nullable|url|max:500',
+            'screenshot'            => 'nullable|image|max:4096',
         ]);
+
+        $screenshotPath = null;
+        if ($request->hasFile('screenshot')) {
+            $screenshotPath = $request->file('screenshot')->store('finding-screenshots', 'public');
+        }
 
         PractitionerFinding::create([
             'application_id'        => $application->id,
@@ -44,6 +50,7 @@ class FindingController extends Controller
             'usability_rating'      => $validated['usability_rating'] ?? null,
             'findings_text'         => $validated['findings_text'] ?? null,
             'video_url'             => $validated['video_url'] ?? null,
+            'screenshot_path'       => $screenshotPath,
             'is_published'          => false,
         ]);
 
