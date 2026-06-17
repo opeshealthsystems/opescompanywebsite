@@ -17,7 +17,7 @@
         @csrf
         @method('PUT')
 
-        @if ($errors->hasAny(['name', 'phone', 'profession', 'specialty', 'workplace_name', 'workplace_city', 'workplace_country', 'registration_number', 'years_of_experience', 'bio', 'opes_testimonial']))
+        @if ($errors->hasAny(['name', 'phone', 'profession', 'specialty', 'workplace_name', 'workplace_city', 'workplace_country', 'registration_number', 'years_of_experience', 'bio', 'opes_testimonial', 'payout_number']))
             <div class="bg-red-900/40 border border-red-700 rounded-lg px-5 py-3 mb-6 text-red-300 text-sm">
                 @foreach ($errors->all() as $error)<p>{{ $error }}</p>@endforeach
             </div>
@@ -112,6 +112,19 @@
                         class="bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
                         value="{{ old('workplace_country', $profile?->workplace_country ?? 'CM') }}" placeholder="CM">
                 </div>
+            </div>
+        </div>
+
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 mb-6">
+            <h2 class="flex items-center gap-2 text-base font-semibold text-white mb-5">
+                <i data-lucide="banknote" style="width:18px;height:18px;color:#00C896"></i> Payout Details
+            </h2>
+            <div class="flex flex-col gap-1">
+                <label for="payout_number" class="text-xs font-medium text-slate-400 uppercase tracking-wide">Mobile-Money Number</label>
+                <input id="payout_number" name="payout_number" type="tel"
+                    class="bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 @error('payout_number') border-red-500 @enderror"
+                    value="{{ old('payout_number', $profile?->payout_number) }}" placeholder="+237 6XX XXX XXX">
+                <p class="text-xs text-slate-500 mt-1">Used to pay you for paid testing programmes (MTN MoMo or Orange Money). We auto-detect your network.</p>
             </div>
         </div>
 

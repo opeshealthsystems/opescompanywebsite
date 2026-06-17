@@ -13,7 +13,7 @@ class PractitionerProfile extends Model
     protected $fillable = [
         'user_id','profession','specialty','workplace_name','workplace_city',
         'workplace_country','registration_number','years_of_experience',
-        'bio','opes_testimonial','is_verified',
+        'bio','opes_testimonial','is_verified','payout_number',
     ];
 
     protected $casts = [

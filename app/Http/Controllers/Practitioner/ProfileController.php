@@ -33,6 +33,7 @@ class ProfileController extends Controller
             'years_of_experience' => 'nullable|integer|min:0|max:60',
             'bio'               => 'nullable|string|max:2000',
             'opes_testimonial'  => 'nullable|string|max:1000',
+            'payout_number'     => ['nullable', 'string', 'regex:/^[0-9 +]{6,20}$/'],
         ]);
 
         $user->update([
@@ -50,6 +51,9 @@ class ProfileController extends Controller
             'years_of_experience' => $validated['years_of_experience'] ?? null,
             'bio'                 => $validated['bio'] ?? null,
             'opes_testimonial'    => $validated['opes_testimonial'] ?? null,
+            'payout_number'       => isset($validated['payout_number'])
+                ? \App\Services\Payouts\MobileMoneyNetwork::normalise($validated['payout_number'])
+                : null,
         ], fn ($v) => $v !== null);
 
         $user->practitionerProfile()->updateOrCreate(
