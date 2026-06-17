@@ -1789,7 +1789,9 @@ h1, h2, h3, h4, h5 { font-family: 'Plus Jakarta Sans', sans-serif; }
 }
 .portal-burger-close { display: none; }
 
-@media (max-width: 900px) {
+/* Hamburger activates at ≤1100px — portals have 10+ links that can't
+   fit in a 1024px horizontal bar without overflowing. */
+@media (max-width: 1100px) {
     .portal-nav { flex-wrap: wrap; row-gap: 10px; }
     .portal-burger { display: inline-flex; margin-left: auto; }
     .portal-nav.portal-open .portal-burger-open { display: none; }
