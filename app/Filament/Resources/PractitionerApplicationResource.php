@@ -149,14 +149,11 @@ class PractitionerApplicationResource extends Resource
                         }
                         Notification::make()->title('Application rejected')->danger()->send();
                     }),
-                Tables\Actions\Action::make('record_payout')
-                    ->label('Record Payout')
+                Tables\Actions\Action::make('pay_now')
+                    ->label('Pay now')
                     ->icon('heroicon-o-banknotes')
                     ->color('success')
-                    ->visible(fn (PractitionerApplication $record) =>
-                        $record->isPaidProgram()
-                        && $record->status === 'approved'
-                        && $record->payout_status !== 'paid')
+                    ->visible(fn (PractitionerApplication $record) => $record->isPayable())
                     ->form([
                         Forms\Components\TextInput::make('payout_amount')
                             ->label('Amount')
@@ -164,23 +161,29 @@ class PractitionerApplicationResource extends Resource
                             ->required(),
                         Forms\Components\TextInput::make('payout_currency')
                             ->label('Currency')
-                            ->default('XAF')
+                            ->default(config('payouts.currency', 'XAF'))
                             ->maxLength(3)
                             ->required(),
-                        Forms\Components\TextInput::make('payout_reference')
-                            ->label('Reference')
-                            ->helperText('e.g. mobile-money transaction id')
-                            ->maxLength(60),
+                        Forms\Components\Select::make('network_override')
+                            ->label('Network')
+                            ->options(['mtn' => 'MTN MoMo', 'orange' => 'Orange Money', 'manual' => 'Manual / offline'])
+                            ->helperText('Leave blank to auto-detect from the practitioner\'s number.'),
                     ])
                     ->action(function (PractitionerApplication $record, array $data) {
-                        $gateway = app(\App\Services\Payouts\PayoutGateway::class);
+                        if (! $record->isPayable()) {
+                            Notification::make()->title('Not payable')->danger()->send();
+
+                            return;
+                        }
+
+                        $manager = app(\App\Services\Payouts\PayoutGatewayManager::class);
+                        $network = $manager->resolveNetwork($record, $data['network_override'] ?? null);
 
                         try {
-                            $result = $gateway->disburse(
+                            $result = $manager->driverFor($network)->disburse(
                                 $record,
                                 (float) $data['payout_amount'],
                                 $data['payout_currency'] ?? config('payouts.currency', 'XAF'),
-                                ['reference' => $data['payout_reference'] ?? null],
                             );
                         } catch (\Throwable $e) {
                             Notification::make()
@@ -193,9 +196,9 @@ class PractitionerApplicationResource extends Resource
                         }
 
                         Notification::make()
-                            ->title($result->status === 'paid' ? 'Payout recorded' : 'Payout initiated')
+                            ->title($result->status === 'paid' ? 'Payout settled' : ($result->success ? 'Payout initiated' : 'Payout failed'))
                             ->body($result->message)
-                            ->success()
+                            ->{$result->success ? 'success' : 'danger'}()
                             ->send();
                     }),
             ])
