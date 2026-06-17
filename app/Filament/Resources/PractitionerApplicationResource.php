@@ -96,7 +96,10 @@ class PractitionerApplicationResource extends Resource
                     ->placeholder('—'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime('d M Y')
-                    ->sortable(),
+                    // Qualify the column: byTierPriority() joins practitioner_profiles,
+                    // which also has a created_at, so an unqualified sort is ambiguous.
+                    ->sortable(query: fn (\Illuminate\Database\Eloquent\Builder $query, string $direction) =>
+                        $query->orderBy('practitioner_applications.created_at', $direction)),
             ])
             ->modifyQueryUsing(fn ($query) => $query->byTierPriority())
             ->filters([

@@ -456,7 +456,10 @@ class PractitionerPortalTest extends TestCase
         $distinguished->practitionerProfile->update(['is_verified' => true]);
         PractitionerFinding::factory()->published()->count(3)->create(['practitioner_id' => $distinguished->id]);
 
-        foreach ([$verified, $fellow, $distinguished] as $u) {
+        // Associate: unverified — must sort last (exercises the leftJoin null path)
+        $associate = $this->practitioner();
+
+        foreach ([$verified, $associate, $fellow, $distinguished] as $u) {
             PractitionerApplication::factory()->create([
                 'practitioner_id' => $u->id,
                 'program_id'      => $program->id,
@@ -468,7 +471,7 @@ class PractitionerPortalTest extends TestCase
             ->pluck('practitioner_id')
             ->all();
 
-        $this->assertSame([$fellow->id, $distinguished->id, $verified->id], $ordered);
+        $this->assertSame([$fellow->id, $distinguished->id, $verified->id, $associate->id], $ordered);
     }
 
     // ── Admin Filament tier display ───────────────────────────────────────

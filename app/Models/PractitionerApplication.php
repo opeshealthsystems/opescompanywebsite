@@ -43,9 +43,9 @@ class PractitionerApplication extends Model
 
     /**
      * Order applicants by practitioner tier priority (Fellow → Distinguished
-     * → Verified → Associate), then by application recency. Tier ordering is
-     * monotonic in (is_verified, published-findings count), so we sort by
-     * verification first, then published-findings count.
+     * → Verified → Associate), then oldest application first (FIFO). Tier
+     * ordering is monotonic in (is_verified, published-findings count), so we
+     * sort by verification first, then published-findings count.
      */
     public function scopeByTierPriority($query)
     {
