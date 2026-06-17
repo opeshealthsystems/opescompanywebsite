@@ -385,4 +385,41 @@ class PractitionerPortalTest extends TestCase
             'program_id'      => $program->id,
         ]);
     }
+
+    // ── Paid-program view gate ────────────────────────────────────────────
+
+    public function test_paid_program_show_blocks_apply_form_for_associate(): void
+    {
+        $practitioner = $this->practitioner(); // unverified
+        $program      = PractitionerProgram::factory()->paid()->create();
+
+        $this->actingAs($practitioner)
+            ->get('/en/practitioner/programs/' . $program->id)
+            ->assertOk()
+            ->assertSee('Verification Required')
+            ->assertDontSee('Submit Application');
+    }
+
+    public function test_paid_program_show_allows_apply_form_for_verified(): void
+    {
+        $practitioner = $this->practitioner();
+        $practitioner->practitionerProfile->update(['is_verified' => true]);
+        $program = PractitionerProgram::factory()->paid()->create();
+
+        $this->actingAs($practitioner)
+            ->get('/en/practitioner/programs/' . $program->id)
+            ->assertOk()
+            ->assertSee('Submit Application');
+    }
+
+    public function test_paid_program_index_shows_verified_only_for_associate(): void
+    {
+        $practitioner = $this->practitioner(); // unverified
+        PractitionerProgram::factory()->paid()->create(['title' => 'Paid Pilot']);
+
+        $this->actingAs($practitioner)
+            ->get('/en/practitioner/programs')
+            ->assertOk()
+            ->assertSee('Verified only');
+    }
 }

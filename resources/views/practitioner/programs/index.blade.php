@@ -53,6 +53,10 @@
                             <span class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-700 text-slate-400">
                                 Already Applied
                             </span>
+                        @elseif($program->type === 'paid' && !auth()->user()->practitionerTier()->canApplyToPaid())
+                            <span class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-800 text-amber-400/80 flex items-center gap-1" title="Verification required to apply">
+                                <i data-lucide="lock" style="width:12px;height:12px"></i> Verified only
+                            </span>
                         @else
                             <form method="POST" action="{{ route('practitioner.programs.apply', ['locale' => app()->getLocale(), 'program' => $program->id]) }}">
                                 @csrf

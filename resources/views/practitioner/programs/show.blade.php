@@ -82,7 +82,7 @@
                 </a>
             </div>
         </div>
-    @elseif($program->isOpen() && !$program->isFull() && $program->type === 'paid' && !auth()->user()->isVerifiedPractitioner())
+    @elseif($program->isOpen() && !$program->isFull() && $program->type === 'paid' && !auth()->user()->practitionerTier()->canApplyToPaid())
         <div class="bg-slate-900 border border-amber-800 rounded-xl p-6">
             <div class="flex items-center gap-3 mb-2">
                 <i data-lucide="shield-alert" style="width:20px;height:20px;color:#fbbf24"></i>
