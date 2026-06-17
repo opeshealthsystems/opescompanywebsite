@@ -173,14 +173,30 @@ class PractitionerApplicationResource extends Resource
                             ->maxLength(60),
                     ])
                     ->action(function (PractitionerApplication $record, array $data) {
-                        $record->update([
-                            'payout_status'    => 'paid',
-                            'payout_amount'    => $data['payout_amount'],
-                            'payout_currency'  => $data['payout_currency'] ?? 'XAF',
-                            'payout_reference' => $data['payout_reference'] ?? null,
-                            'paid_at'          => now(),
-                        ]);
-                        Notification::make()->title('Payout recorded')->success()->send();
+                        $gateway = app(\App\Services\Payouts\PayoutGateway::class);
+
+                        try {
+                            $result = $gateway->disburse(
+                                $record,
+                                (float) $data['payout_amount'],
+                                $data['payout_currency'] ?? config('payouts.currency', 'XAF'),
+                                ['reference' => $data['payout_reference'] ?? null],
+                            );
+                        } catch (\Throwable $e) {
+                            Notification::make()
+                                ->title('Payout failed')
+                                ->body($e->getMessage())
+                                ->danger()
+                                ->send();
+
+                            return;
+                        }
+
+                        Notification::make()
+                            ->title($result->status === 'paid' ? 'Payout recorded' : 'Payout initiated')
+                            ->body($result->message)
+                            ->success()
+                            ->send();
                     }),
             ])
             ->bulkActions([

@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Services\Payouts\ManualPayoutGateway;
+use App\Services\Payouts\MtnMomoPayoutGateway;
+use App\Services\Payouts\OrangeMoneyPayoutGateway;
+use App\Services\Payouts\PayoutGateway;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 
@@ -9,6 +13,16 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        // Resolve the configured payout rail. Defaults to manual (offline) settlement;
+        // provider drivers (MoMo, Orange) are drop-in once credentials are supplied.
+        $this->app->bind(PayoutGateway::class, function () {
+            return match (config('payouts.driver')) {
+                'mtn_momo'     => new MtnMomoPayoutGateway(),
+                'orange_money' => new OrangeMoneyPayoutGateway(),
+                default        => new ManualPayoutGateway(),
+            };
+        });
+
         // On Windows, PHP's rename() can briefly fail with "Access is denied (code: 5)"
         // when the OS (file indexer, AV real-time scan) holds a handle on the just-created
         // .tmp file. This override retries up to 5 times with an exponential back-off
