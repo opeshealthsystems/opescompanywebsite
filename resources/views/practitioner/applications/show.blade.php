@@ -48,6 +48,52 @@
         @endif
     </div>
 
+    @if(optional($application->program)->type === 'paid')
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 mb-6">
+        <div class="flex items-center gap-3 mb-4">
+            <i data-lucide="banknote" style="width:20px;height:20px;color:#00C896"></i>
+            <h2 class="text-white font-semibold text-base">Compensation</h2>
+            @php
+                $payoutColors = [
+                    'paid'           => 'bg-emerald-900 text-emerald-300',
+                    'pending'        => 'bg-amber-900 text-amber-300',
+                    'not_applicable' => 'bg-slate-700 text-slate-400',
+                ];
+            @endphp
+            <span class="text-xs font-semibold px-2.5 py-1 rounded-full ml-auto {{ $payoutColors[$application->payout_status] ?? 'bg-slate-700 text-slate-400' }}">
+                {{ \App\Models\PractitionerApplication::payoutStatusOptions()[$application->payout_status] ?? $application->payout_status }}
+            </span>
+        </div>
+
+        @if($application->program->compensation)
+        <p class="text-slate-300 text-sm mb-3">{{ $application->program->compensation }}</p>
+        @endif
+
+        @if($application->payout_status === 'paid')
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-3 border-t border-slate-800">
+            <div>
+                <p class="text-xs text-slate-500 mb-0.5">Amount Paid</p>
+                <p class="text-white font-semibold text-sm">{{ number_format((float) $application->payout_amount, 2) }} {{ $application->payout_currency }}</p>
+            </div>
+            @if($application->paid_at)
+            <div>
+                <p class="text-xs text-slate-500 mb-0.5">Paid On</p>
+                <p class="text-white font-semibold text-sm">{{ $application->paid_at->format('M j, Y') }}</p>
+            </div>
+            @endif
+            @if($application->payout_reference)
+            <div>
+                <p class="text-xs text-slate-500 mb-0.5">Reference</p>
+                <p class="text-white font-semibold text-sm">{{ $application->payout_reference }}</p>
+            </div>
+            @endif
+        </div>
+        @elseif($application->payout_status === 'pending')
+        <p class="text-xs text-slate-500 pt-3 border-t border-slate-800">Your payout is pending. OPES will process it after your participation is complete.</p>
+        @endif
+    </div>
+    @endif
+
     @if($application->findings->isNotEmpty())
     <div class="bg-slate-900 border border-slate-800 rounded-xl p-6">
         <div class="flex items-center gap-3 mb-4">

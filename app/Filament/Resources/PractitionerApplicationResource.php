@@ -71,6 +71,20 @@ class PractitionerApplicationResource extends Resource
                         'withdrawn' => 'gray',
                         default     => 'gray',
                     }),
+                Tables\Columns\TextColumn::make('payout_status')
+                    ->label('Payout')
+                    ->badge()
+                    ->formatStateUsing(fn ($state) => PractitionerApplication::payoutStatusOptions()[$state] ?? $state)
+                    ->color(fn ($state) => match($state) {
+                        'paid'    => 'success',
+                        'pending' => 'warning',
+                        default   => 'gray',
+                    }),
+                Tables\Columns\TextColumn::make('payout_amount')
+                    ->label('Amount')
+                    ->formatStateUsing(fn ($state, PractitionerApplication $record) =>
+                        $state === null ? '—' : number_format((float) $state, 2) . ' ' . $record->payout_currency)
+                    ->placeholder('—'),
                 Tables\Columns\TextColumn::make('reviewed_at')
                     ->label('Reviewed')
                     ->dateTime('d M Y')
@@ -95,11 +109,8 @@ class PractitionerApplicationResource extends Resource
                     ->hidden(fn (PractitionerApplication $record) => $record->status !== 'pending')
                     ->requiresConfirmation()
                     ->action(function (PractitionerApplication $record) {
-                        $record->update([
-                            'status'      => 'approved',
-                            'reviewed_by' => auth()->id(),
-                            'reviewed_at' => now(),
-                        ]);
+                        $record->loadMissing('program');
+                        $record->markApproved(auth()->id());
                         // Mail queued if mailable exists
                         if (class_exists(\App\Mail\PractitionerApplicationApproved::class)) {
                             Mail::to($record->practitioner->email)
@@ -129,6 +140,39 @@ class PractitionerApplicationResource extends Resource
                                 ->queue(new \App\Mail\PractitionerApplicationRejected($record));
                         }
                         Notification::make()->title('Application rejected')->danger()->send();
+                    }),
+                Tables\Actions\Action::make('record_payout')
+                    ->label('Record Payout')
+                    ->icon('heroicon-o-banknotes')
+                    ->color('success')
+                    ->visible(fn (PractitionerApplication $record) =>
+                        $record->isPaidProgram()
+                        && $record->status === 'approved'
+                        && $record->payout_status !== 'paid')
+                    ->form([
+                        Forms\Components\TextInput::make('payout_amount')
+                            ->label('Amount')
+                            ->numeric()
+                            ->required(),
+                        Forms\Components\TextInput::make('payout_currency')
+                            ->label('Currency')
+                            ->default('XAF')
+                            ->maxLength(3)
+                            ->required(),
+                        Forms\Components\TextInput::make('payout_reference')
+                            ->label('Reference')
+                            ->helperText('e.g. mobile-money transaction id')
+                            ->maxLength(60),
+                    ])
+                    ->action(function (PractitionerApplication $record, array $data) {
+                        $record->update([
+                            'payout_status'    => 'paid',
+                            'payout_amount'    => $data['payout_amount'],
+                            'payout_currency'  => $data['payout_currency'] ?? 'XAF',
+                            'payout_reference' => $data['payout_reference'] ?? null,
+                            'paid_at'          => now(),
+                        ]);
+                        Notification::make()->title('Payout recorded')->success()->send();
                     }),
             ])
             ->bulkActions([

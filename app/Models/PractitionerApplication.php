@@ -12,10 +12,13 @@ class PractitionerApplication extends Model
     protected $fillable = [
         'practitioner_id','program_id','motivation','status',
         'reviewed_by','reviewed_at','admin_notes',
+        'payout_status','payout_amount','payout_currency','payout_reference','paid_at',
     ];
 
     protected $casts = [
-        'reviewed_at' => 'datetime',
+        'reviewed_at'   => 'datetime',
+        'paid_at'       => 'datetime',
+        'payout_amount' => 'decimal:2',
     ];
 
     public function practitioner()
@@ -46,5 +49,33 @@ class PractitionerApplication extends Model
             'rejected'  => 'Rejected',
             'withdrawn' => 'Withdrawn',
         ];
+    }
+
+    public static function payoutStatusOptions(): array
+    {
+        return [
+            'not_applicable' => 'N/A',
+            'pending'        => 'Pending',
+            'paid'           => 'Paid',
+        ];
+    }
+
+    public function isPaidProgram(): bool
+    {
+        return $this->program?->type === 'paid';
+    }
+
+    /**
+     * Approve this application. Paid programs become payout-pending;
+     * volunteer programs stay not_applicable.
+     */
+    public function markApproved(?int $reviewerId): void
+    {
+        $this->update([
+            'status'        => 'approved',
+            'reviewed_by'   => $reviewerId,
+            'reviewed_at'   => now(),
+            'payout_status' => $this->isPaidProgram() ? 'pending' : 'not_applicable',
+        ]);
     }
 }
