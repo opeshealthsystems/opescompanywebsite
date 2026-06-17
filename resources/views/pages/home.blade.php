@@ -11,88 +11,228 @@
     </p>
 </div>
 
-{{-- ── HERO ────────────────────────────────────────────────────── --}}
-<div class="hero-wrap">
-    <div class="hero">
-        <div>
-            <div class="hero-eyebrow">
-                <i data-lucide="map-pin" style="width:11px;height:11px"></i>
-                {{ __('home.hero_eyebrow') }}
-            </div>
-            <h1>
-                {{ __('home.hero_title_1') }}<br>
-                <span class="gradient-text">{{ __('home.hero_title_gradient') }}</span>
-            </h1>
-            <p class="hero-sub">{{ __('home.hero_tagline') }}</p>
-            <div class="hero-ctas">
-                <a href="{{ url($locale.'/products') }}" class="btn-primary">
-                    <i data-lucide="layout-grid" style="width:15px;height:15px"></i>
-                    {{ __('home.cta_explore') }}
-                </a>
-                <a href="{{ url($locale.'/contact') }}" class="btn-secondary">
-                    <i data-lucide="play-circle" style="width:15px;height:15px;color:#00C896"></i>
-                    {{ __('home.cta_watch_demo') }}
-                </a>
-            </div>
-            <div class="hero-trust">
-                <div class="trust-item">
-                    <div class="num">22</div>
-                    <div class="label">{{ __('home.trust_22') }}</div>
+{{-- ── HERO SLIDER ──────────────────────────────────────────────── --}}
+<div class="hero-wrap" id="heroWrap">
+    <div id="heroSlider">
+
+        {{-- SLIDE 1: Platform Overview --}}
+        <div class="hero-slide active">
+            <div class="hero">
+                <div>
+                    <div class="hero-eyebrow">
+                        <i data-lucide="map-pin" style="width:11px;height:11px"></i>
+                        {{ __('home.hero_eyebrow') }}
+                    </div>
+                    <h1>
+                        {{ __('home.hero_title_1') }}<br>
+                        <span class="gradient-text">{{ __('home.hero_title_gradient') }}</span>
+                    </h1>
+                    <p class="hero-sub">{{ __('home.hero_tagline') }}</p>
+                    <div class="hero-ctas">
+                        <a href="{{ url($locale.'/products') }}" class="btn-primary">
+                            <i data-lucide="layout-grid" style="width:15px;height:15px"></i>
+                            {{ __('home.cta_explore') }}
+                        </a>
+                        <a href="{{ url($locale.'/contact') }}" class="btn-secondary">
+                            <i data-lucide="play-circle" style="width:15px;height:15px;color:#00C896"></i>
+                            {{ __('home.cta_watch_demo') }}
+                        </a>
+                    </div>
+                    <div class="hero-trust">
+                        <div class="trust-item"><div class="num">22</div><div class="label">{{ __('home.trust_22') }}</div></div>
+                        <div class="trust-item"><div class="num">EN/FR</div><div class="label">{{ __('home.trust_bilingual') }}</div></div>
+                        <div class="trust-item"><div class="num">CEMAC</div><div class="label">{{ __('home.trust_cemac') }}</div></div>
+                        <div class="trust-item"><div class="num">MoH</div><div class="label">{{ __('home.trust_moh') }}</div></div>
+                    </div>
                 </div>
-                <div class="trust-item">
-                    <div class="num">EN/FR</div>
-                    <div class="label">{{ __('home.trust_bilingual') }}</div>
-                </div>
-                <div class="trust-item">
-                    <div class="num">CEMAC</div>
-                    <div class="label">{{ __('home.trust_cemac') }}</div>
-                </div>
-                <div class="trust-item">
-                    <div class="num">MoH</div>
-                    <div class="label">{{ __('home.trust_moh') }}</div>
+                <div class="hero-visual">
+                    <div class="hero-visual-title">OPES Software Ecosystem</div>
+                    <div class="ecosystem-grid">
+                        <div class="eco-item hl-teal">
+                            <div class="eco-icon-wrap teal"><i data-lucide="fingerprint" style="width:15px;height:15px;color:#00C896"></i></div>
+                            <div><div class="eco-name" style="color:#00C896">OPESCare</div><div class="eco-desc">Health ID · Interoperability</div></div>
+                        </div>
+                        <div class="eco-item hl-blue">
+                            <div class="eco-icon-wrap blue"><i data-lucide="stethoscope" style="width:15px;height:15px;color:#1A6FE8"></i></div>
+                            <div><div class="eco-name" style="color:#1A6FE8">OPES EMR</div><div class="eco-desc">Clinics &amp; Small Hospitals</div></div>
+                        </div>
+                        <div class="eco-item">
+                            <div class="eco-icon-wrap neutral"><i data-lucide="microscope" style="width:15px;height:15px;color:#94a3b8"></i></div>
+                            <div><div class="eco-name">OPES Lab</div><div class="eco-desc">LABIS</div></div>
+                        </div>
+                        <div class="eco-item">
+                            <div class="eco-icon-wrap neutral"><i data-lucide="pill" style="width:15px;height:15px;color:#94a3b8"></i></div>
+                            <div><div class="eco-name">PHARMIS</div><div class="eco-desc">Pharmacy IS</div></div>
+                        </div>
+                        <div class="eco-item">
+                            <div class="eco-icon-wrap neutral"><i data-lucide="hospital" style="width:15px;height:15px;color:#94a3b8"></i></div>
+                            <div><div class="eco-name">OPES Hospital</div><div class="eco-desc">Full HIS</div></div>
+                        </div>
+                        <div class="eco-item hl-teal">
+                            <div class="eco-icon-wrap teal"><i data-lucide="timer" style="width:15px;height:15px;color:#00C896"></i></div>
+                            <div><div class="eco-name" style="color:#00C896">Opes Triage</div><div class="eco-desc">Standalone · Any Hospital</div></div>
+                        </div>
+                        <div class="eco-more">+16 specialist systems — Cardiology, Dental, OB/GYN, Paediatrics &amp; more →</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="hero-visual">
-            <div class="hero-visual-title">OPES Software Ecosystem</div>
-            <div class="ecosystem-grid">
-                <div class="eco-item hl-teal">
-                    <div class="eco-icon-wrap teal"><i data-lucide="fingerprint" style="width:15px;height:15px;color:#00C896"></i></div>
-                    <div>
-                        <div class="eco-name" style="color:#00C896">OPESCare</div>
-                        <div class="eco-desc">Health ID · Interoperability</div>
+        {{-- SLIDE 2: Company Overview --}}
+        <div class="hero-slide">
+            <div class="hero">
+                <div>
+                    <div class="hero-eyebrow">
+                        <i data-lucide="heart-pulse" style="width:11px;height:11px"></i>
+                        {{ __('home.s2_eyebrow') }}
                     </div>
-                </div>
-                <div class="eco-item hl-blue">
-                    <div class="eco-icon-wrap blue"><i data-lucide="stethoscope" style="width:15px;height:15px;color:#1A6FE8"></i></div>
-                    <div>
-                        <div class="eco-name" style="color:#1A6FE8">OPES EMR</div>
-                        <div class="eco-desc">Clinics &amp; Small Hospitals</div>
+                    <h1>{{ __('home.s2_title') }}<br><span class="gradient-text">{{ __('home.s2_title_grad') }}</span></h1>
+                    <p class="hero-sub">{{ __('home.s2_sub') }}</p>
+                    <div class="hero-ctas">
+                        <a href="{{ url($locale.'/products') }}" class="btn-primary">
+                            <i data-lucide="layout-grid" style="width:15px;height:15px"></i>
+                            {{ __('home.s2_cta1') }}
+                        </a>
+                        <a href="{{ url($locale.'/contact') }}" class="btn-secondary">
+                            <i data-lucide="play-circle" style="width:15px;height:15px;color:#00C896"></i>
+                            {{ __('home.s2_cta2') }}
+                        </a>
                     </div>
+                    <p class="hero-slide-support">{{ __('home.s2_support') }}</p>
                 </div>
-                <div class="eco-item">
-                    <div class="eco-icon-wrap neutral"><i data-lucide="microscope" style="width:15px;height:15px;color:#94a3b8"></i></div>
-                    <div><div class="eco-name">OPES Lab</div><div class="eco-desc">LABIS</div></div>
-                </div>
-                <div class="eco-item">
-                    <div class="eco-icon-wrap neutral"><i data-lucide="pill" style="width:15px;height:15px;color:#94a3b8"></i></div>
-                    <div><div class="eco-name">PHARMIS</div><div class="eco-desc">Pharmacy IS</div></div>
-                </div>
-                <div class="eco-item">
-                    <div class="eco-icon-wrap neutral"><i data-lucide="hospital" style="width:15px;height:15px;color:#94a3b8"></i></div>
-                    <div><div class="eco-name">OPES Hospital</div><div class="eco-desc">Full HIS</div></div>
-                </div>
-                <div class="eco-item hl-teal">
-                    <div class="eco-icon-wrap teal"><i data-lucide="timer" style="width:15px;height:15px;color:#00C896"></i></div>
-                    <div>
-                        <div class="eco-name" style="color:#00C896">Opes Triage</div>
-                        <div class="eco-desc">Standalone · Any Hospital</div>
+                <div class="hero-visual">
+                    <div class="hero-visual-title">Platform Families</div>
+                    <div class="slide-pillars-grid">
+                        <div class="slide-pillar">
+                            <i data-lucide="heart-pulse" style="width:18px;height:18px;color:#00C896"></i>
+                            <div class="slide-pillar-name">Clinical</div>
+                            <div class="slide-pillar-desc">EMR, HIS, Specialty Care</div>
+                        </div>
+                        <div class="slide-pillar">
+                            <i data-lucide="microscope" style="width:18px;height:18px;color:#1A6FE8"></i>
+                            <div class="slide-pillar-name">Diagnostics</div>
+                            <div class="slide-pillar-desc">Lab, Radiology, Imaging</div>
+                        </div>
+                        <div class="slide-pillar">
+                            <i data-lucide="share-2" style="width:18px;height:18px;color:#00C896"></i>
+                            <div class="slide-pillar-name">Interoperability</div>
+                            <div class="slide-pillar-desc">Health ID, HIE, MPI</div>
+                        </div>
+                        <div class="slide-pillar">
+                            <i data-lucide="brain-circuit" style="width:18px;height:18px;color:#1A6FE8"></i>
+                            <div class="slide-pillar-name">Intelligence</div>
+                            <div class="slide-pillar-desc">CDSS, Analytics, Surveillance</div>
+                        </div>
                     </div>
+                    <div class="eco-more" style="margin-top:10px">+ Administration &amp; Finance — Billing, HR, Payroll, Inventory →</div>
                 </div>
-                <div class="eco-more">+16 specialist systems — Cardiology, Dental, OB/GYN, Paediatrics &amp; more →</div>
             </div>
         </div>
+
+        {{-- SLIDE 3: OPES Hospital Platform --}}
+        <div class="hero-slide">
+            <div class="hero">
+                <div>
+                    <div class="hero-eyebrow">
+                        <i data-lucide="building-2" style="width:11px;height:11px"></i>
+                        {{ __('home.s3_eyebrow') }}
+                    </div>
+                    <h1>{{ __('home.s3_title') }}<br><span class="gradient-text">{{ __('home.s3_title_grad') }}</span></h1>
+                    <p class="hero-sub">{{ __('home.s3_sub') }}</p>
+                    <div class="hero-ctas">
+                        <a href="{{ url($locale.'/products/opes-hospital-his') }}" class="btn-primary">
+                            <i data-lucide="building-2" style="width:15px;height:15px"></i>
+                            {{ __('home.s3_cta') }}
+                        </a>
+                    </div>
+                    <p class="hero-slide-support">{{ __('home.s3_support') }}</p>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-visual-title">OPES Hospital · Key Modules</div>
+                    <div class="slide-feature-list">
+                        @foreach(['Electronic Medical Records','Hospital Information System','Laboratory Information System','Pharmacy Information System','Radiology Information System','Billing & Revenue Cycle Management','Inventory & Procurement','Specialty Care Modules'] as $f)
+                        <div class="slide-feature-item">
+                            <i data-lucide="check-circle" style="width:13px;height:13px;color:#00C896;flex-shrink:0"></i>
+                            <span>{{ $f }}</span>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- SLIDE 4: OPES Care --}}
+        <div class="hero-slide">
+            <div class="hero">
+                <div>
+                    <div class="hero-eyebrow">
+                        <i data-lucide="network" style="width:11px;height:11px"></i>
+                        {{ __('home.s4_eyebrow') }}
+                    </div>
+                    <h1>{{ __('home.s4_title') }}<br><span class="gradient-text">{{ __('home.s4_title_grad') }}</span></h1>
+                    <p class="hero-sub">{{ __('home.s4_sub') }}</p>
+                    <div class="hero-ctas">
+                        <a href="{{ url($locale.'/products/opescare') }}" class="btn-primary">
+                            <i data-lucide="share-2" style="width:15px;height:15px"></i>
+                            {{ __('home.s4_cta') }}
+                        </a>
+                    </div>
+                    <p class="hero-slide-support">{{ __('home.s4_support') }}</p>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-visual-title">OPES Care · Services</div>
+                    <div class="slide-feature-list">
+                        @foreach(['OPES Health ID','Master Patient Index (MPI)','Health Information Exchange (HIE)','Referral Exchange','Patient Portal','Cross-Facility Record Access','Interoperability Services'] as $f)
+                        <div class="slide-feature-item">
+                            <i data-lucide="check-circle" style="width:13px;height:13px;color:#1A6FE8;flex-shrink:0"></i>
+                            <span>{{ $f }}</span>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- SLIDE 5: OPES Intelligence --}}
+        <div class="hero-slide">
+            <div class="hero">
+                <div>
+                    <div class="hero-eyebrow">
+                        <i data-lucide="brain-circuit" style="width:11px;height:11px"></i>
+                        {{ __('home.s5_eyebrow') }}
+                    </div>
+                    <h1>{{ __('home.s5_title') }}<br><span class="gradient-text">{{ __('home.s5_title_grad') }}</span></h1>
+                    <p class="hero-sub">{{ __('home.s5_sub') }}</p>
+                    <div class="hero-ctas">
+                        <a href="{{ url($locale.'/products') }}" class="btn-primary">
+                            <i data-lucide="brain-circuit" style="width:15px;height:15px"></i>
+                            {{ __('home.s5_cta') }}
+                        </a>
+                    </div>
+                    <p class="hero-slide-support">{{ __('home.s5_support') }}</p>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-visual-title">OPES Intelligence · Capabilities</div>
+                    <div class="slide-feature-list">
+                        @foreach(['Clinical Decision Support (CDSS)','Digital Triage','Population Health Analytics','Disease Surveillance','Executive Dashboards','Quality Monitoring','Predictive Healthcare Insights'] as $f)
+                        <div class="slide-feature-item">
+                            <i data-lucide="check-circle" style="width:13px;height:13px;color:#00C896;flex-shrink:0"></i>
+                            <span>{{ $f }}</span>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>{{-- #heroSlider --}}
+
+    <div class="hero-slider-nav">
+        <button class="hero-dot active" data-target="0" aria-label="Slide 1"></button>
+        <button class="hero-dot" data-target="1" aria-label="Slide 2"></button>
+        <button class="hero-dot" data-target="2" aria-label="Slide 3"></button>
+        <button class="hero-dot" data-target="3" aria-label="Slide 4"></button>
+        <button class="hero-dot" data-target="4" aria-label="Slide 5"></button>
     </div>
 </div>
 
@@ -439,5 +579,33 @@
     </div>
 </div>
 @endif
+
+<script>
+(function(){
+    var slider = document.getElementById('heroSlider');
+    if (!slider) return;
+    var slides = slider.querySelectorAll('.hero-slide');
+    var dots = document.querySelectorAll('.hero-dot');
+    var current = 0, timer;
+    function goTo(n) {
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = ((n % slides.length) + slides.length) % slides.length;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+        resetTimer();
+    }
+    function resetTimer() {
+        clearInterval(timer);
+        timer = setInterval(function(){ goTo(current + 1); }, 6500);
+    }
+    dots.forEach(function(dot, i) {
+        dot.addEventListener('click', function(){ goTo(i); });
+    });
+    slider.addEventListener('mouseenter', function(){ clearInterval(timer); });
+    slider.addEventListener('mouseleave', resetTimer);
+    resetTimer();
+})();
+</script>
 
 </x-layouts.app>
