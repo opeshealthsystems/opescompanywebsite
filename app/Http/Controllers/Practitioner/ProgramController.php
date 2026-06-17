@@ -39,6 +39,10 @@ class ProgramController extends Controller
         abort_unless($program->isOpen(), 403, 'This programme is not accepting applications.');
         abort_if($program->isFull(), 403, 'This programme has reached its maximum participants.');
 
+        if ($program->type === 'paid' && ! auth()->user()->isVerifiedPractitioner()) {
+            abort(403, 'Your practitioner profile must be verified before applying to paid programmes.');
+        }
+
         $exists = PractitionerApplication::where('practitioner_id', auth()->id())
             ->where('program_id', $program->id)
             ->exists();

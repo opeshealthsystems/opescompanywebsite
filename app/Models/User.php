@@ -118,6 +118,11 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(\App\Models\PractitionerApplication::class, 'practitioner_id');
     }
 
+    public function isVerifiedPractitioner(): bool
+    {
+        return $this->hasRole('practitioner') && (bool) ($this->practitionerProfile?->is_verified);
+    }
+
     public function surveyResponses(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(\App\Models\SurveyResponse::class);

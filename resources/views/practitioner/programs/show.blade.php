@@ -82,6 +82,14 @@
                 </a>
             </div>
         </div>
+    @elseif($program->isOpen() && !$program->isFull() && $program->type === 'paid' && !auth()->user()->isVerifiedPractitioner())
+        <div class="bg-slate-900 border border-amber-800 rounded-xl p-6">
+            <div class="flex items-center gap-3 mb-2">
+                <i data-lucide="shield-alert" style="width:20px;height:20px;color:#fbbf24"></i>
+                <h2 class="text-white font-semibold text-base">Verification Required</h2>
+            </div>
+            <p class="text-amber-200 text-sm">Your profile is pending verification. You'll be able to apply to paid programmes once an OPES admin verifies you.</p>
+        </div>
     @elseif($program->isOpen() && !$program->isFull())
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-6">
             <h2 class="text-white font-semibold text-base mb-1">Apply to This Programme</h2>

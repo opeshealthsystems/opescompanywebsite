@@ -30,6 +30,8 @@ class RolePermissionSeeder extends Seeder
             'view_tester_dashboard',
             'manage_bug_reports',
             'view_practitioner_dashboard',
+            'apply_paid_program',
+            'submit_findings',
         ];
 
         foreach ($permissions as $name) {
@@ -42,7 +44,7 @@ class RolePermissionSeeder extends Seeder
             'support'      => ['view_admin_panel', 'manage_tickets', 'assign_tickets', 'manage_bug_reports'],
             'tester'       => ['view_tester_dashboard'],
             'customer'     => [],
-            'practitioner' => ['view_practitioner_dashboard'],
+            'practitioner' => ['view_practitioner_dashboard', 'apply_paid_program', 'submit_findings'],
         ];
 
         foreach ($roleMap as $roleName => $rolePerms) {

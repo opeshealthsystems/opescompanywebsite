@@ -31,6 +31,15 @@ class PractitionerPortalTest extends TestCase
         return $user;
     }
 
+    /** A practitioner whose profile has been verified by an admin. */
+    private function verifiedPractitioner(): User
+    {
+        $user = $this->practitioner();
+        $user->practitionerProfile->update(['is_verified' => true]);
+        $user->refresh();
+        return $user;
+    }
+
     // ── Registration ──────────────────────────────────────────────────────
 
     public function test_practitioner_can_register(): void
@@ -184,7 +193,7 @@ class PractitionerPortalTest extends TestCase
 
     public function test_approved_application_can_load_findings_create_page(): void
     {
-        $practitioner = $this->practitioner();
+        $practitioner = $this->verifiedPractitioner();
 
         $application = PractitionerApplication::factory()->approved()->create([
             'practitioner_id' => $practitioner->id,
@@ -197,7 +206,7 @@ class PractitionerPortalTest extends TestCase
 
     public function test_pending_application_is_blocked_from_findings_create_page(): void
     {
-        $practitioner = $this->practitioner();
+        $practitioner = $this->verifiedPractitioner();
 
         $application = PractitionerApplication::factory()->create([
             'practitioner_id' => $practitioner->id,
@@ -211,7 +220,7 @@ class PractitionerPortalTest extends TestCase
 
     public function test_practitioner_can_store_findings_with_valid_ratings(): void
     {
-        $practitioner = $this->practitioner();
+        $practitioner = $this->verifiedPractitioner();
 
         $application = PractitionerApplication::factory()->approved()->create([
             'practitioner_id' => $practitioner->id,
@@ -237,7 +246,7 @@ class PractitionerPortalTest extends TestCase
 
     public function test_findings_store_validates_rating_range(): void
     {
-        $practitioner = $this->practitioner();
+        $practitioner = $this->verifiedPractitioner();
 
         $application = PractitionerApplication::factory()->approved()->create([
             'practitioner_id' => $practitioner->id,
