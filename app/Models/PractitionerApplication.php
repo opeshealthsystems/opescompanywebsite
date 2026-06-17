@@ -13,12 +13,14 @@ class PractitionerApplication extends Model
         'practitioner_id','program_id','motivation','status',
         'reviewed_by','reviewed_at','admin_notes',
         'payout_status','payout_amount','payout_currency','payout_reference','paid_at',
+        'payout_provider','payout_initiated_at','payout_failure_reason',
     ];
 
     protected $casts = [
-        'reviewed_at'   => 'datetime',
-        'paid_at'       => 'datetime',
-        'payout_amount' => 'decimal:2',
+        'reviewed_at'         => 'datetime',
+        'paid_at'             => 'datetime',
+        'payout_amount'       => 'decimal:2',
+        'payout_initiated_at' => 'datetime',
     ];
 
     public function practitioner()
@@ -77,12 +79,21 @@ class PractitionerApplication extends Model
             'not_applicable' => 'N/A',
             'pending'        => 'Pending',
             'paid'           => 'Paid',
+            'failed'         => 'Failed',
         ];
     }
 
     public function isPaidProgram(): bool
     {
         return $this->program?->type === 'paid';
+    }
+
+    /** Whether this application can currently be paid out (paid program, approved, not already paid). */
+    public function isPayable(): bool
+    {
+        return $this->isPaidProgram()
+            && $this->status === 'approved'
+            && $this->payout_status !== 'paid';
     }
 
     /**
