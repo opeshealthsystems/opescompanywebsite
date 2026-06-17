@@ -147,7 +147,13 @@
                 <p class="text-slate-300 text-sm leading-relaxed whitespace-pre-line">{{ $finding->findings_text }}</p>
                 @endif
 
-                @if($finding->video_url)
+                @if($finding->embedUrl())
+                <div class="mt-3 relative w-full max-w-xl rounded-lg overflow-hidden border border-slate-800" style="padding-top:56.25%">
+                    <iframe src="{{ $finding->embedUrl() }}" allowfullscreen
+                            allow="accelerated-destination; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            class="absolute inset-0 w-full h-full" style="border:0"></iframe>
+                </div>
+                @elseif($finding->video_url)
                 <a href="{{ $finding->video_url }}" target="_blank" rel="noopener"
                    class="inline-flex items-center gap-1.5 text-sm text-emerald-400 hover:text-emerald-300 no-underline mt-2">
                     <i data-lucide="video" style="width:14px;height:14px"></i> Watch Video

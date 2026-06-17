@@ -113,7 +113,9 @@ class PractitionerFindingResource extends Resource
                 ]),
             Infolists\Components\Section::make('Findings')->schema([
                 Infolists\Components\TextEntry::make('findings_text')->placeholder('—'),
-                Infolists\Components\TextEntry::make('video_url')->label('Video URL')->placeholder('—')->url(),
+                Infolists\Components\ViewEntry::make('video_url')
+                    ->label('Video Review')
+                    ->view('filament.infolists.finding-video-embed'),
                 Infolists\Components\ImageEntry::make('screenshot_path')->label('Screenshot')->disk('public')->placeholder('—'),
             ]),
         ]);

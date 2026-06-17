@@ -186,7 +186,13 @@
             @if($f->findings_text)
             <p style="font-size:13px;color:#cbd5e1;line-height:1.7;margin-bottom:12px">{{ \Illuminate\Support\Str::limit($f->findings_text, 220) }}</p>
             @endif
-            @if($f->video_url)
+            @if($f->embedUrl())
+            <div style="position:relative;width:100%;padding-top:56.25%;margin-top:auto;border-radius:8px;overflow:hidden;border:1px solid #1e293b">
+                <iframe src="{{ $f->embedUrl() }}" allowfullscreen
+                        allow="accelerated-destination; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+            </div>
+            @elseif($f->video_url)
             <a href="{{ $f->video_url }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#1A6FE8;font-weight:600;margin-top:auto">
                 <i data-lucide="play-circle" style="width:15px;height:15px"></i>
                 Watch video review

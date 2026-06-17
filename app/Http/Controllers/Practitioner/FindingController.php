@@ -32,8 +32,15 @@ class FindingController extends Controller
             'data_integrity_rating' => 'nullable|integer|min:1|max:5',
             'usability_rating'      => 'nullable|integer|min:1|max:5',
             'findings_text'         => 'nullable|string|max:5000',
-            'video_url'             => 'nullable|url|max:500',
+            'video_url'             => [
+                'nullable',
+                'url',
+                'max:500',
+                'regex:~^https?://(?:www\.|player\.)?(?:youtube\.com/|youtu\.be/|vimeo\.com/)~i',
+            ],
             'screenshot'            => 'nullable|image|max:4096',
+        ], [
+            'video_url.regex' => 'The video URL must be a YouTube or Vimeo link.',
         ]);
 
         $screenshotPath = null;

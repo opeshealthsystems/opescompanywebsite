@@ -29,6 +29,30 @@ class PractitionerFinding extends Model
         return $this->belongsTo(User::class, 'practitioner_id');
     }
 
+    /**
+     * Convert a YouTube or Vimeo watch URL into its embeddable form.
+     * Returns null if the URL is empty or not a recognised provider.
+     */
+    public function embedUrl(): ?string
+    {
+        $url = trim((string) $this->video_url);
+        if ($url === '') {
+            return null;
+        }
+
+        // YouTube: youtu.be/<id> or *youtube.com/watch?v=<id>
+        if (preg_match('~(?:youtube\.com/(?:watch\?(?:.*&)?v=|embed/)|youtu\.be/)([A-Za-z0-9_-]{6,})~i', $url, $m)) {
+            return 'https://www.youtube.com/embed/' . $m[1];
+        }
+
+        // Vimeo: vimeo.com/<id> or player.vimeo.com/video/<id>
+        if (preg_match('~vimeo\.com/(?:video/)?(\d+)~i', $url, $m)) {
+            return 'https://player.vimeo.com/video/' . $m[1];
+        }
+
+        return null;
+    }
+
     public function averageRating(): float
     {
         $ratings = array_filter([

@@ -80,4 +80,70 @@ class PractitionerMediaTest extends TestCase
         Storage::disk('public')->assertExists($report->screenshot_path);
         $this->assertStringStartsWith('bug-report-screenshots/', $report->screenshot_path);
     }
+
+    // ── Feature 2: Video embed ────────────────────────────────────────────
+
+    public function test_embed_url_converts_youtube_watch_url(): void
+    {
+        $finding = new PractitionerFinding(['video_url' => 'https://www.youtube.com/watch?v=ABC123']);
+        $this->assertSame('https://www.youtube.com/embed/ABC123', $finding->embedUrl());
+    }
+
+    public function test_embed_url_converts_youtube_short_url(): void
+    {
+        $finding = new PractitionerFinding(['video_url' => 'https://youtu.be/ABC123']);
+        $this->assertSame('https://www.youtube.com/embed/ABC123', $finding->embedUrl());
+    }
+
+    public function test_embed_url_converts_vimeo_url(): void
+    {
+        $finding = new PractitionerFinding(['video_url' => 'https://vimeo.com/123456']);
+        $this->assertSame('https://player.vimeo.com/video/123456', $finding->embedUrl());
+    }
+
+    public function test_embed_url_returns_null_for_non_video_url(): void
+    {
+        $finding = new PractitionerFinding(['video_url' => 'https://example.com/some-page']);
+        $this->assertNull($finding->embedUrl());
+
+        $empty = new PractitionerFinding(['video_url' => null]);
+        $this->assertNull($empty->embedUrl());
+    }
+
+    public function test_store_rejects_non_youtube_vimeo_video_url(): void
+    {
+        $practitioner = $this->verifiedPractitioner();
+        $application  = PractitionerApplication::factory()->approved()->create([
+            'practitioner_id' => $practitioner->id,
+        ]);
+
+        $this->actingAs($practitioner)
+            ->post('/en/practitioner/applications/' . $application->id . '/findings', [
+                'overall_rating' => 4,
+                'video_url'      => 'https://example.com/not-a-video',
+            ])
+            ->assertSessionHasErrors('video_url');
+
+        $this->assertDatabaseCount('practitioner_findings', 0);
+    }
+
+    public function test_store_accepts_youtube_video_url(): void
+    {
+        $practitioner = $this->verifiedPractitioner();
+        $application  = PractitionerApplication::factory()->approved()->create([
+            'practitioner_id' => $practitioner->id,
+        ]);
+
+        $this->actingAs($practitioner)
+            ->post('/en/practitioner/applications/' . $application->id . '/findings', [
+                'overall_rating' => 4,
+                'video_url'      => 'https://www.youtube.com/watch?v=ABC123',
+            ])
+            ->assertRedirect();
+
+        $this->assertDatabaseHas('practitioner_findings', [
+            'application_id' => $application->id,
+            'video_url'      => 'https://www.youtube.com/watch?v=ABC123',
+        ]);
+    }
 }
