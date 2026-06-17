@@ -24,9 +24,12 @@ class DashboardController extends Controller
             ->limit(3)
             ->get();
 
+        $allProducts = array_merge(config('products', []), config('products_specialist', []));
+
         return view('customer.dashboard', compact(
             'user', 'profile',
-            'activeLicenses', 'openTickets', 'pendingInvoices', 'recentTickets'
+            'activeLicenses', 'openTickets', 'pendingInvoices', 'recentTickets',
+            'allProducts'
         ));
     }
 }

@@ -96,6 +96,32 @@
         </div>
     </div>
 
+    {{-- ── PRODUCT BROCHURES ──────────────────────────────────────── --}}
+    <div class="cp-section-card" style="margin-top:24px">
+        <div class="cp-section-header">
+            <h2 class="cp-section-title">
+                <i data-lucide="file-text" style="width:18px;height:18px;color:#00C896"></i> Product Brochures
+            </h2>
+            <span style="font-size:0.8125rem;color:#64748b">{{ count($allProducts) }} products</span>
+        </div>
+        <p style="font-size:0.875rem;color:#94a3b8;margin:0 0 16px">Download a full product brochure (PDF) for any OPES Health Systems product.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px">
+            @foreach($allProducts as $slug => $prod)
+            <a href="{{ route('product.brochure', ['locale' => app()->getLocale(), 'slug' => $slug]) }}"
+               target="_blank"
+               style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#0f172a;border:1px solid #1e293b;border-left:3px solid {{ $prod['color'] }};border-radius:6px;text-decoration:none;transition:border-color .2s"
+               onmouseover="this.style.borderColor='{{ $prod['color'] }}'" onmouseout="this.style.borderLeftColor='{{ $prod['color'] }}';this.style.borderColor='#1e293b';this.style.borderLeftColor='{{ $prod['color'] }}'">
+                <i data-lucide="file-down" style="width:16px;height:16px;color:{{ $prod['color'] }};flex-shrink:0"></i>
+                <div style="min-width:0">
+                    <div style="font-size:0.8125rem;font-weight:600;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ $prod['name'] }}</div>
+                    <div style="font-size:0.75rem;color:#64748b">{{ $prod['category'] }}</div>
+                </div>
+                <i data-lucide="download" style="width:14px;height:14px;color:#475569;margin-left:auto;flex-shrink:0"></i>
+            </a>
+            @endforeach
+        </div>
+    </div>
+
     <div class="cp-help-card">
         <i data-lucide="life-buoy" style="width:24px;height:24px;color:#00C896"></i>
         <div>

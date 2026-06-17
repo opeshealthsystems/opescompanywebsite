@@ -37,7 +37,7 @@ $accentBg = $isCore ? 'rgba(0,200,150,0.1)' : ($isDiag ? 'rgba(26,111,232,0.1)' 
                     <i data-lucide="calendar-check" style="width:15px;height:15px"></i>
                     {{ __('products.cta_book_demo') }}
                 </a>
-                <a href="{{ url($locale.'/contact') }}" class="btn-secondary">
+                <a href="{{ route('product.brochure', ['locale' => $locale, 'slug' => $product['slug']]) }}" class="btn-secondary">
                     <i data-lucide="download" style="width:15px;height:15px;color:#94a3b8"></i>
                     {{ __('products.cta_brochure') }}
                 </a>

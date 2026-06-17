@@ -66,6 +66,7 @@ Route::prefix('{locale}')
         Route::get('/',               [HomeController::class,    'index'])->name('home');
         Route::get('/products',       [ProductController::class, 'index'])->name('products.index');
         Route::get('/products/{slug}',[ProductController::class, 'show'])->name('product.show');
+        Route::get('/products/{slug}/brochure', [\App\Http\Controllers\BrochureController::class, 'download'])->name('product.brochure');
         Route::get('/contact',        [ContactController::class, 'show'])->name('contact');
         Route::post('/contact',       [ContactController::class, 'submit'])->name('contact.submit');
         Route::get('/solutions',      fn () => view('pages.solutions'))->name('solutions');
