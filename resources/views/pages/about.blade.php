@@ -48,6 +48,57 @@
         <p>{{ __('about.story_p1') }}</p>
         <p>{{ __('about.story_p2') }}</p>
         <p>{{ __('about.story_p3') }}</p>
+        <p>{{ __('about.story_p4') }}</p>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+{{-- PLATFORM --}}
+<div class="section" style="max-width:960px;margin:0 auto;text-align:center">
+    <div class="section-label" style="justify-content:center;margin-bottom:16px">
+        <i data-lucide="layers" style="width:12px;height:12px"></i>
+        {{ __('about.platform_eyebrow') }}
+    </div>
+    <h2 class="section-title">{{ __('about.platform_title') }}</h2>
+    <p style="color:#64748b;max-width:680px;margin:12px auto 0;font-size:15px;line-height:1.75">{{ __('about.platform_desc') }}</p>
+    <div class="platform-cat-grid">
+        @foreach([
+            ['icon'=>'file-text',    'color'=>'#00C896', 'label'=>__('about.platform_cat_0')],
+            ['icon'=>'building-2',   'color'=>'#1A6FE8', 'label'=>__('about.platform_cat_1')],
+            ['icon'=>'flask-conical','color'=>'#00C896', 'label'=>__('about.platform_cat_2')],
+            ['icon'=>'pill',         'color'=>'#1A6FE8', 'label'=>__('about.platform_cat_3')],
+            ['icon'=>'stethoscope',  'color'=>'#00C896', 'label'=>__('about.platform_cat_4')],
+            ['icon'=>'share-2',      'color'=>'#1A6FE8', 'label'=>__('about.platform_cat_5')],
+            ['icon'=>'brain',        'color'=>'#00C896', 'label'=>__('about.platform_cat_6')],
+            ['icon'=>'zap',          'color'=>'#1A6FE8', 'label'=>__('about.platform_cat_7')],
+            ['icon'=>'badge',        'color'=>'#00C896', 'label'=>__('about.platform_cat_8')],
+            ['icon'=>'bar-chart-2',  'color'=>'#1A6FE8', 'label'=>__('about.platform_cat_9')],
+        ] as $cat)
+        <div class="platform-cat-item">
+            <div class="platform-cat-icon" style="background:{{ $cat['color'] }}1a">
+                <i data-lucide="{{ $cat['icon'] }}" style="width:20px;height:20px;color:{{ $cat['color'] }}"></i>
+            </div>
+            <span>{{ $cat['label'] }}</span>
+        </div>
+        @endforeach
+    </div>
+</div>
+
+<div class="divider"></div>
+
+{{-- OPESCARE SPOTLIGHT --}}
+<div class="section">
+    <div class="opescare-spotlight">
+        <div class="section-label" style="margin-bottom:14px">
+            <i data-lucide="share-2" style="width:12px;height:12px"></i>
+            {{ __('about.opescare_eyebrow') }}
+        </div>
+        <h2 style="font-size:clamp(20px,3vw,26px);font-weight:700;color:#e2e8f0;margin-bottom:14px;line-height:1.3">{{ __('about.opescare_title') }}</h2>
+        <p style="color:#94a3b8;max-width:640px;line-height:1.75;margin-bottom:28px;font-size:15px">{{ __('about.opescare_body') }}</p>
+        <a href="{{ url($locale.'/products/opescare') }}" class="btn-primary" style="display:inline-flex">
+            {{ __('about.opescare_cta') }} <i data-lucide="arrow-right" style="width:15px;height:15px"></i>
+        </a>
     </div>
 </div>
 
@@ -95,6 +146,12 @@
         </div>
         @endforeach
     </div>
+</div>
+
+{{-- MANIFESTO --}}
+<div class="about-manifesto">
+    <p>{{ __('about.manifesto_line1') }}</p>
+    <p class="manifesto-accent">{{ __('about.manifesto_line2') }}</p>
 </div>
 
 {{-- CTA --}}
