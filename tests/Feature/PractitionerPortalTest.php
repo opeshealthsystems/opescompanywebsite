@@ -330,4 +330,59 @@ class PractitionerPortalTest extends TestCase
 
         $this->assertSame(PractitionerTier::Verified, $practitioner->fresh()->practitionerTier());
     }
+
+    // ── Paid-program gate ─────────────────────────────────────────────────
+
+    public function test_associate_cannot_apply_to_paid_program(): void
+    {
+        $practitioner = $this->practitioner(); // unverified → Associate
+        $program      = PractitionerProgram::factory()->paid()->create();
+
+        $this->actingAs($practitioner)
+            ->post('/en/practitioner/programs/' . $program->id . '/apply', [
+                'motivation' => 'I would like to join.',
+            ])
+            ->assertForbidden();
+
+        $this->assertDatabaseCount('practitioner_applications', 0);
+    }
+
+    public function test_verified_practitioner_can_apply_to_paid_program(): void
+    {
+        \Illuminate\Support\Facades\Mail::fake();
+
+        $practitioner = $this->practitioner();
+        $practitioner->practitionerProfile->update(['is_verified' => true]);
+        $program = PractitionerProgram::factory()->paid()->create();
+
+        $this->actingAs($practitioner)
+            ->post('/en/practitioner/programs/' . $program->id . '/apply', [
+                'motivation' => 'Verified and ready.',
+            ])
+            ->assertRedirect();
+
+        $this->assertDatabaseHas('practitioner_applications', [
+            'practitioner_id' => $practitioner->id,
+            'program_id'      => $program->id,
+        ]);
+    }
+
+    public function test_associate_can_still_apply_to_volunteer_program(): void
+    {
+        \Illuminate\Support\Facades\Mail::fake();
+
+        $practitioner = $this->practitioner(); // unverified
+        $program      = PractitionerProgram::factory()->create(); // volunteer by default
+
+        $this->actingAs($practitioner)
+            ->post('/en/practitioner/programs/' . $program->id . '/apply', [
+                'motivation' => 'Happy to volunteer.',
+            ])
+            ->assertRedirect();
+
+        $this->assertDatabaseHas('practitioner_applications', [
+            'practitioner_id' => $practitioner->id,
+            'program_id'      => $program->id,
+        ]);
+    }
 }
