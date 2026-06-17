@@ -63,6 +63,11 @@ class PractitionerApplicationResource extends Resource
                 Tables\Columns\TextColumn::make('program.title')
                     ->label('Programme')
                     ->limit(40),
+                Tables\Columns\TextColumn::make('tier')
+                    ->label('Tier')
+                    ->badge()
+                    ->state(fn (PractitionerApplication $record): string => $record->practitioner->practitionerTier()->label())
+                    ->color(fn (PractitionerApplication $record): string => $record->practitioner->practitionerTier()->filamentColor()),
                 Tables\Columns\TextColumn::make('status')->badge()
                     ->color(fn ($state) => match($state) {
                         'approved'  => 'success',
@@ -91,9 +96,12 @@ class PractitionerApplicationResource extends Resource
                     ->placeholder('—'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime('d M Y')
-                    ->sortable(),
+                    // Qualify the column: byTierPriority() joins practitioner_profiles,
+                    // which also has a created_at, so an unqualified sort is ambiguous.
+                    ->sortable(query: fn (\Illuminate\Database\Eloquent\Builder $query, string $direction) =>
+                        $query->orderBy('practitioner_applications.created_at', $direction)),
             ])
-            ->defaultSort('created_at', 'desc')
+            ->modifyQueryUsing(fn ($query) => $query->byTierPriority())
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
                     ->options(PractitionerApplication::statusOptions()),

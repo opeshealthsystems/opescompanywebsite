@@ -108,6 +108,11 @@ class PractitionerProfileResource extends Resource
                 Tables\Columns\IconColumn::make('is_verified')
                     ->label('Verified')
                     ->boolean(),
+                Tables\Columns\TextColumn::make('tier')
+                    ->label('Tier')
+                    ->badge()
+                    ->state(fn (PractitionerProfile $record): string => $record->user->practitionerTier()->label())
+                    ->color(fn (PractitionerProfile $record): string => $record->user->practitionerTier()->filamentColor()),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime('d M Y')
                     ->sortable(),

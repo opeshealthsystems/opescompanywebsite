@@ -11,6 +11,13 @@
                     Your OPES Practitioner account
                 @endif
             </p>
+            @php($tier = $user->practitionerTier())
+            <div class="mt-3 flex items-center gap-2">
+                <span class="text-xs font-semibold px-2.5 py-1 rounded-full {{ $tier->tailwindBadge() }}">{{ $tier->label() }}</span>
+                @if($tier->next())
+                    <span class="text-xs text-slate-500">{{ $tier->description() }}</span>
+                @endif
+            </div>
         </div>
         <a href="{{ route('practitioner.profile', ['locale' => app()->getLocale()]) }}"
            class="flex items-center gap-2 px-4 py-2 rounded border border-slate-600 text-slate-300 text-sm hover:border-slate-400 hover:text-white transition-colors no-underline">

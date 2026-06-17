@@ -41,6 +41,26 @@ class PractitionerApplication extends Model
         return $this->hasMany(PractitionerFinding::class, 'application_id');
     }
 
+    /**
+     * Order applicants by practitioner tier priority (Fellow → Distinguished
+     * → Verified → Associate), then oldest application first (FIFO). Tier
+     * ordering is monotonic in (is_verified, published-findings count), so we
+     * sort by verification first, then published-findings count.
+     */
+    public function scopeByTierPriority($query)
+    {
+        return $query
+            ->select('practitioner_applications.*')
+            ->leftJoin('practitioner_profiles', 'practitioner_profiles.user_id', '=', 'practitioner_applications.practitioner_id')
+            ->orderByDesc('practitioner_profiles.is_verified')
+            ->orderByDesc(
+                PractitionerFinding::selectRaw('count(*)')
+                    ->whereColumn('practitioner_findings.practitioner_id', 'practitioner_applications.practitioner_id')
+                    ->where('practitioner_findings.is_published', true)
+            )
+            ->orderBy('practitioner_applications.created_at');
+    }
+
     public static function statusOptions(): array
     {
         return [
