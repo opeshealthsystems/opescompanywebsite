@@ -2,9 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Enums\PractitionerTier;
 use App\Mail\PractitionerApplicationReceived;
 use App\Mail\PractitionerWelcome;
 use App\Models\PractitionerApplication;
+use App\Models\PractitionerFinding;
 use App\Models\PractitionerProgram;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -283,5 +285,49 @@ class PractitionerPortalTest extends TestCase
         $this->actingAs($other)
             ->get('/en/practitioner/applications/' . $application->id)
             ->assertForbidden();
+    }
+
+    // ── Tier ladder ───────────────────────────────────────────────────────
+
+    public function test_unverified_practitioner_is_associate_even_with_published_findings(): void
+    {
+        $practitioner = $this->practitioner(); // profile is_verified defaults to false
+
+        PractitionerFinding::factory()->published()->count(10)->create([
+            'practitioner_id' => $practitioner->id,
+        ]);
+
+        $this->assertSame(PractitionerTier::Associate, $practitioner->fresh()->practitionerTier());
+    }
+
+    public function test_verified_practitioner_tier_climbs_with_published_findings(): void
+    {
+        $practitioner = $this->practitioner();
+        $practitioner->practitionerProfile->update(['is_verified' => true]);
+
+        $this->assertSame(PractitionerTier::Verified, $practitioner->fresh()->practitionerTier());
+
+        PractitionerFinding::factory()->published()->count(3)->create([
+            'practitioner_id' => $practitioner->id,
+        ]);
+        $this->assertSame(PractitionerTier::Distinguished, $practitioner->fresh()->practitionerTier());
+
+        PractitionerFinding::factory()->published()->count(5)->create([
+            'practitioner_id' => $practitioner->id,
+        ]);
+        $this->assertSame(PractitionerTier::Fellow, $practitioner->fresh()->practitionerTier());
+    }
+
+    public function test_unpublished_findings_do_not_count_toward_tier(): void
+    {
+        $practitioner = $this->practitioner();
+        $practitioner->practitionerProfile->update(['is_verified' => true]);
+
+        PractitionerFinding::factory()->count(8)->create([
+            'practitioner_id' => $practitioner->id,
+            'is_published'    => false,
+        ]);
+
+        $this->assertSame(PractitionerTier::Verified, $practitioner->fresh()->practitionerTier());
     }
 }

@@ -11,6 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Permission\Traits\HasRoles;
+use App\Enums\PractitionerTier;
 use App\Models\Department;
 use App\Models\PerformanceReview;
 use App\Models\Timesheet;
@@ -111,6 +112,19 @@ class User extends Authenticatable implements FilamentUser
     public function practitionerProfile(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(PractitionerProfile::class);
+    }
+
+    public function practitionerFindings(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\PractitionerFinding::class, 'practitioner_id');
+    }
+
+    public function practitionerTier(): PractitionerTier
+    {
+        $isVerified = (bool) $this->practitionerProfile?->is_verified;
+        $publishedFindings = $this->practitionerFindings()->where('is_published', true)->count();
+
+        return PractitionerTier::forProfile($isVerified, $publishedFindings);
     }
 
     public function practitionerApplications(): \Illuminate\Database\Eloquent\Relations\HasMany
