@@ -1,8 +1,10 @@
 <?php
 namespace App\Http\Controllers\Customer;
 
+use App\Filament\Resources\ServiceRequestResource;
 use App\Http\Controllers\Controller;
 use App\Models\ServiceRequest;
+use App\Support\AdminNotifier;
 use Illuminate\Http\Request;
 
 class ServiceRequestController extends Controller
@@ -30,7 +32,14 @@ class ServiceRequestController extends Controller
             'location'       => 'nullable|string|max:200',
         ]);
 
-        auth()->user()->serviceRequests()->create($data);
+        $serviceRequest = auth()->user()->serviceRequests()->create($data);
+
+        AdminNotifier::notify(
+            'New service request',
+            $serviceRequest->reference_number . ' · ' . $serviceRequest->type,
+            ServiceRequestResource::getUrl('view', ['record' => $serviceRequest]),
+            ['super_admin', 'admin', 'support'],
+        );
 
         return redirect()
             ->route('customer.service-requests', ['locale' => app()->getLocale()])

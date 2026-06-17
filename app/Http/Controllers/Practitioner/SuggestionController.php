@@ -1,8 +1,10 @@
 <?php
 namespace App\Http\Controllers\Practitioner;
 
+use App\Filament\Resources\SuggestionResource;
 use App\Http\Controllers\Controller;
 use App\Models\Suggestion;
+use App\Support\AdminNotifier;
 use Illuminate\Http\Request;
 
 class SuggestionController extends Controller
@@ -27,7 +29,13 @@ class SuggestionController extends Controller
             'body'     => 'required|string|min:20',
         ]);
 
-        auth()->user()->suggestions()->create($data);
+        $suggestion = auth()->user()->suggestions()->create($data);
+
+        AdminNotifier::notify(
+            'New suggestion submitted',
+            auth()->user()->name . ' submitted: ' . $suggestion->title,
+            SuggestionResource::getUrl('view', ['record' => $suggestion]),
+        );
 
         return redirect()
             ->route('practitioner.suggestions', ['locale' => app()->getLocale()])

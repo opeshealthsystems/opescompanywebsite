@@ -1,8 +1,10 @@
 <?php
 namespace App\Http\Controllers\Practitioner;
 
+use App\Filament\Resources\PractitionerBugReportResource;
 use App\Http\Controllers\Controller;
 use App\Models\PractitionerBugReport;
+use App\Support\AdminNotifier;
 use Illuminate\Http\Request;
 
 class BugReportController extends Controller
@@ -37,7 +39,14 @@ class BugReportController extends Controller
             $data['screenshot_path'] = $request->file('screenshot')->store('bug-report-screenshots', 'public');
         }
 
-        auth()->user()->practitionerBugReports()->create($data);
+        $bugReport = auth()->user()->practitionerBugReports()->create($data);
+
+        AdminNotifier::notify(
+            'New bug report',
+            '[' . $bugReport->severity . '] ' . $bugReport->title,
+            PractitionerBugReportResource::getUrl('view', ['record' => $bugReport]),
+            ['super_admin', 'admin', 'support'],
+        );
 
         return redirect()
             ->route('practitioner.bug-reports', ['locale' => app()->getLocale()])

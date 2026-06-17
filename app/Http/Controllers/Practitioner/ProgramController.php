@@ -1,10 +1,12 @@
 <?php
 namespace App\Http\Controllers\Practitioner;
 
+use App\Filament\Resources\PractitionerApplicationResource;
 use App\Http\Controllers\Controller;
 use App\Mail\PractitionerApplicationReceived;
 use App\Models\PractitionerApplication;
 use App\Models\PractitionerProgram;
+use App\Support\AdminNotifier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -64,6 +66,12 @@ class ProgramController extends Controller
         ]);
 
         Mail::to(auth()->user()->email)->queue(new PractitionerApplicationReceived($application));
+
+        AdminNotifier::notify(
+            'New programme application',
+            auth()->user()->name . ' applied to: ' . $program->title,
+            PractitionerApplicationResource::getUrl('view', ['record' => $application]),
+        );
 
         return redirect()
             ->route('practitioner.applications', ['locale' => app()->getLocale()])

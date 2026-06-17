@@ -1,9 +1,11 @@
 <?php
 namespace App\Http\Controllers\Practitioner;
 
+use App\Filament\Resources\PractitionerFindingResource;
 use App\Http\Controllers\Controller;
 use App\Models\PractitionerApplication;
 use App\Models\PractitionerFinding;
+use App\Support\AdminNotifier;
 use Illuminate\Http\Request;
 
 class FindingController extends Controller
@@ -48,7 +50,7 @@ class FindingController extends Controller
             $screenshotPath = $request->file('screenshot')->store('finding-screenshots', 'public');
         }
 
-        PractitionerFinding::create([
+        $finding = PractitionerFinding::create([
             'application_id'        => $application->id,
             'practitioner_id'       => auth()->id(),
             'overall_rating'        => $validated['overall_rating'] ?? null,
@@ -60,6 +62,12 @@ class FindingController extends Controller
             'screenshot_path'       => $screenshotPath,
             'is_published'          => false,
         ]);
+
+        AdminNotifier::notify(
+            'New practitioner findings',
+            auth()->user()->name . ' submitted findings for: ' . $application->program->title,
+            PractitionerFindingResource::getUrl('view', ['record' => $finding]),
+        );
 
         return redirect()
             ->route('practitioner.applications.show', ['locale' => app()->getLocale(), 'application' => $application->id])
