@@ -24,8 +24,11 @@ are the human-owned steps that finish the loop.
 
 1. **Create a MoMo developer account** at https://momodeveloper.mtn.com and
    subscribe to the **Disbursements** product to get a **Subscription Key**.
-2. **Provision an API User + API Key** in the sandbox (MoMo's provisioning flow
-   uses your subscription key to create an `apiUser` UUID and an `apiKey`).
+2. **Provision an API User + API Key** in the sandbox. Set
+   `MTN_MOMO_SUBSCRIPTION_KEY` + `MTN_MOMO_BASE_URL` in `.env`, then run
+   `php artisan momo:provision` — it creates the sandbox API user + key and
+   prints `MTN_MOMO_API_USER=` / `MTN_MOMO_API_KEY=` lines for you to paste into
+   `.env`. (It never writes `.env` itself.)
 3. Put the values in `.env` (NOT committed):
    ```
    PAYOUT_DRIVER=mtn_momo
