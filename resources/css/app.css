@@ -1744,3 +1744,28 @@ h1, h2, h3, h4, h5 { font-family: 'Plus Jakarta Sans', sans-serif; }
     .demo-section { padding-left: 20px; padding-right: 20px; }
     .demo-section h2 { font-size: 26px; }
 }
+
+/* ── Solutions / About / Contact / Blog / practitioners landing: mobile ── */
+@media (max-width: 768px) {
+    /* shared centered heros */
+    .sol-hero, .about-hero, .contact-hero { padding: 48px 20px 32px; }
+    .sol-title, .about-title { font-size: 26px; }
+
+    /* solutions + practitioners cards (also reused on partnerships) */
+    .sol-grid { grid-template-columns: 1fr; }
+
+    /* about */
+    .about-layout { grid-template-columns: 1fr; }
+
+    /* contact */
+    .contact-layout { grid-template-columns: 1fr; gap: 28px; }
+    .cf-row { grid-template-columns: 1fr; }
+
+    /* blog */
+    .blog-hero-grid { grid-template-columns: 1fr; }
+    .blog-layout { grid-template-columns: 1fr; padding: 32px 20px 56px; }
+    .blog-grid { grid-template-columns: 1fr; }
+
+    /* pricing comparison table scrolls instead of breaking the layout */
+    .pricing-compare { overflow-x: auto; }
+}
