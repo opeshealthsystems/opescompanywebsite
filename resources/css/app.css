@@ -1705,6 +1705,15 @@ h1, h2, h3, h4, h5 { font-family: 'Plus Jakarta Sans', sans-serif; }
     .triage-section { padding: 44px 20px; }
     .cat-inner { padding: 10px 20px; }
     .ministry-banner { padding-left: 16px; padding-right: 16px; flex-wrap: wrap; }
+
+    .featured-grid { grid-template-columns: 1fr; }
+    .stats-section { padding: 44px 20px; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 28px 16px; }
+    .eco-diagram { padding: 24px 16px; }
+    .eco-center-box { padding: 16px 18px; gap: 10px; max-width: 100%; }
+    .eco-spokes { grid-template-columns: repeat(2, 1fr); }
+    .triage-card { grid-template-columns: 1fr; gap: 28px; padding: 28px 20px; }
+    .triage-card h3 { font-size: 22px; }
 }
 
 @media (max-width: 400px) {
