@@ -422,4 +422,17 @@ class PractitionerPortalTest extends TestCase
             ->assertOk()
             ->assertSee('Verified only');
     }
+
+    // ── Dashboard tier badge ──────────────────────────────────────────────
+
+    public function test_dashboard_displays_current_tier_badge(): void
+    {
+        $practitioner = $this->practitioner();
+        $practitioner->practitionerProfile->update(['is_verified' => true]);
+
+        $this->actingAs($practitioner)
+            ->get('/en/practitioner/dashboard')
+            ->assertOk()
+            ->assertSee('Verified');
+    }
 }
