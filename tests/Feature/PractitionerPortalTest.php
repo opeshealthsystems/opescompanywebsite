@@ -435,4 +435,39 @@ class PractitionerPortalTest extends TestCase
             ->assertOk()
             ->assertSee('Verified');
     }
+
+    // ── Tier priority ordering ────────────────────────────────────────────
+
+    public function test_applications_sort_by_tier_priority(): void
+    {
+        $program = PractitionerProgram::factory()->paid()->create();
+
+        // Fellow: verified + 8 published findings
+        $fellow = $this->practitioner();
+        $fellow->practitionerProfile->update(['is_verified' => true]);
+        PractitionerFinding::factory()->published()->count(8)->create(['practitioner_id' => $fellow->id]);
+
+        // Verified: verified + 0 findings
+        $verified = $this->practitioner();
+        $verified->practitionerProfile->update(['is_verified' => true]);
+
+        // Distinguished: verified + 3 published findings
+        $distinguished = $this->practitioner();
+        $distinguished->practitionerProfile->update(['is_verified' => true]);
+        PractitionerFinding::factory()->published()->count(3)->create(['practitioner_id' => $distinguished->id]);
+
+        foreach ([$verified, $fellow, $distinguished] as $u) {
+            PractitionerApplication::factory()->create([
+                'practitioner_id' => $u->id,
+                'program_id'      => $program->id,
+            ]);
+        }
+
+        $ordered = PractitionerApplication::where('program_id', $program->id)
+            ->byTierPriority()
+            ->pluck('practitioner_id')
+            ->all();
+
+        $this->assertSame([$fellow->id, $distinguished->id, $verified->id], $ordered);
+    }
 }
