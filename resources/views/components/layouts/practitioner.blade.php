@@ -8,12 +8,16 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-slate-950 text-slate-200 min-h-screen font-sans">
-    <nav class="bg-slate-900 border-b border-slate-800 px-6 py-3 flex items-center gap-6">
+    <nav class="bg-slate-900 border-b border-slate-800 px-6 py-3 flex items-center gap-6 portal-nav">
         <a href="{{ route('practitioner.dashboard', ['locale' => app()->getLocale()]) }}" class="flex items-center gap-1 text-white font-bold text-lg no-underline mr-4">
             <span class="text-emerald-400">OPES</span>
             <span class="text-slate-200"> Practitioner</span>
         </a>
-        <div class="flex items-center gap-1 flex-1">
+        <button type="button" class="portal-burger" data-portal-burger aria-label="Toggle menu">
+            <i data-lucide="menu" class="portal-burger-open" style="width:22px;height:22px"></i>
+            <i data-lucide="x" class="portal-burger-close" style="width:22px;height:22px"></i>
+        </button>
+        <div class="flex items-center gap-1 flex-1 portal-menu">
             <a href="{{ route('practitioner.dashboard', ['locale' => app()->getLocale()]) }}"
                class="flex items-center gap-1.5 px-3 py-1.5 rounded text-sm no-underline transition-colors {{ request()->routeIs('practitioner.dashboard') ? 'bg-slate-700 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800' }}">
                 <i data-lucide="layout-dashboard" style="width:16px;height:16px"></i> Dashboard
@@ -61,7 +65,7 @@
             </a>
             @endif
         </div>
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-3 portal-actions">
             <span class="text-sm text-slate-400">{{ auth()->user()->name }}</span>
             <a href="{{ route('practitioner.profile', ['locale' => app()->getLocale()]) }}"
                class="flex items-center justify-center w-8 h-8 rounded transition-colors {{ request()->routeIs('practitioner.profile') ? 'bg-slate-700 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800' }}">
