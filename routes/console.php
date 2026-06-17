@@ -19,3 +19,6 @@ Schedule::command('contracts:send-expiry-warnings')->dailyAt('08:30');
 
 // Send training certification expiry warnings
 Schedule::command('training:send-expiry-warnings')->dailyAt('09:00');
+
+// Confirm pending mobile-money payouts
+Schedule::command('payouts:poll')->everyFiveMinutes()->withoutOverlapping();

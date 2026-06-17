@@ -15,7 +15,14 @@ class AdminNotifier
      */
     public static function notify(string $title, string $body, ?string $url = null, array $roles = ['super_admin', 'admin']): void
     {
-        $recipients = User::role($roles)->get();
+        // Best-effort: a missing role / notification failure must never break the
+        // caller's core flow (e.g. a payout settlement).
+        try {
+            $recipients = User::role($roles)->get();
+        } catch (\Throwable $e) {
+            return;
+        }
+
         if ($recipients->isEmpty()) {
             return;
         }
