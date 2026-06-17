@@ -133,4 +133,25 @@ class ResponsiveTest extends DuskTestCase
             $this->assertUrlsResponsive($browser, $urls);
         });
     }
+
+    public function test_admin_panel_has_no_overflow(): void
+    {
+        $user = User::where('email', 'admin@opeshealthsystems.com')->first();
+        if (! $user) {
+            $this->markTestSkipped('admin user not seeded');
+        }
+
+        $urls = [
+            '/admin', '/admin/users', '/admin/roles',
+            '/admin/licenses', '/admin/tickets',
+            '/admin/invoices', '/admin/products',
+            '/admin/practitioner-profiles', '/admin/practitioner-programs',
+            '/admin/surveys', '/admin/courses',
+        ];
+
+        $this->browse(function (Browser $browser) use ($user, $urls) {
+            $browser->loginAs($user);
+            $this->assertUrlsResponsive($browser, $urls);
+        });
+    }
 }
