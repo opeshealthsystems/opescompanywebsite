@@ -63,6 +63,7 @@ class PayoutGatewayTest extends TestCase
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('not yet implemented');
 
-        (new MtnMomoPayoutGateway())->disburse($application, 50000, 'XAF');
+        // MoMo is now implemented; Orange remains the unimplemented driver until its API spec is supplied.
+        (new \App\Services\Payouts\OrangeMoneyPayoutGateway())->disburse($application, 50000, 'XAF');
     }
 }
