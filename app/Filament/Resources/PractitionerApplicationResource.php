@@ -63,6 +63,11 @@ class PractitionerApplicationResource extends Resource
                 Tables\Columns\TextColumn::make('program.title')
                     ->label('Programme')
                     ->limit(40),
+                Tables\Columns\TextColumn::make('tier')
+                    ->label('Tier')
+                    ->badge()
+                    ->state(fn (PractitionerApplication $record): string => $record->practitioner->practitionerTier()->label())
+                    ->color(fn (PractitionerApplication $record): string => $record->practitioner->practitionerTier()->filamentColor()),
                 Tables\Columns\TextColumn::make('status')->badge()
                     ->color(fn ($state) => match($state) {
                         'approved'  => 'success',
@@ -93,7 +98,7 @@ class PractitionerApplicationResource extends Resource
                     ->dateTime('d M Y')
                     ->sortable(),
             ])
-            ->defaultSort('created_at', 'desc')
+            ->modifyQueryUsing(fn ($query) => $query->byTierPriority())
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
                     ->options(PractitionerApplication::statusOptions()),

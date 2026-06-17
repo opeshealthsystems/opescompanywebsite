@@ -470,4 +470,37 @@ class PractitionerPortalTest extends TestCase
 
         $this->assertSame([$fellow->id, $distinguished->id, $verified->id], $ordered);
     }
+
+    // ── Admin Filament tier display ───────────────────────────────────────
+
+    private function admin(): User
+    {
+        $user = User::factory()->create();
+        $user->assignRole('super_admin');
+        return $user;
+    }
+
+    public function test_admin_can_load_practitioner_profiles_list_with_tier_column(): void
+    {
+        $admin = $this->admin();
+        $practitioner = $this->practitioner();
+        $practitioner->practitionerProfile->update(['is_verified' => true]);
+
+        $this->actingAs($admin)
+            ->get('/admin/practitioner-profiles')
+            ->assertOk()
+            ->assertSee('Tier');
+    }
+
+    public function test_admin_can_load_practitioner_applications_list_with_tier_column(): void
+    {
+        $admin = $this->admin();
+        $practitioner = $this->practitioner();
+        PractitionerApplication::factory()->create(['practitioner_id' => $practitioner->id]);
+
+        $this->actingAs($admin)
+            ->get('/admin/practitioner-applications')
+            ->assertOk()
+            ->assertSee('Tier');
+    }
 }
