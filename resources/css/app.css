@@ -1720,3 +1720,27 @@ h1, h2, h3, h4, h5 { font-family: 'Plus Jakarta Sans', sans-serif; }
     .hero h1 { font-size: 29px; }
     .hero-trust { gap: 18px; }
 }
+
+/* ── Products index + product detail: mobile ─────────────────────── */
+@media (max-width: 768px) {
+    /* products index */
+    .pi-header { padding: 48px 20px 32px; }
+    .pi-title { font-size: 26px; }
+    .pi-grid { grid-template-columns: 1fr; }
+
+    /* product detail */
+    .pd-breadcrumb { padding: 10px 20px; }
+    .pd-hero { padding: 40px 20px; }
+    .pd-hero-inner { grid-template-columns: 1fr; gap: 32px; }
+    .pd-hero-name { font-size: 28px; }
+    .pd-tab-nav { padding: 0 20px; }
+    .pd-overview-grid { grid-template-columns: 1fr; gap: 32px; }
+    .pd-modules-grid { grid-template-columns: 1fr; }
+    .pd-benefits-grid { grid-template-columns: repeat(2, 1fr); }
+    .pd-specs-grid { grid-template-columns: 1fr; }
+    .pd-related-grid { grid-template-columns: 1fr; }
+
+    /* shared demo CTA band */
+    .demo-section { padding-left: 20px; padding-right: 20px; }
+    .demo-section h2 { font-size: 26px; }
+}
