@@ -1,11 +1,17 @@
 @php $locale = app()->getLocale(); @endphp
 
-<nav class="site-nav">
+<nav class="site-nav" id="siteNav">
     <a href="{{ url($locale) }}" class="nav-logo">
         <div class="nav-logo-mark">O</div>
         <div class="nav-logo-text">Opes <span>Health</span> Systems</div>
     </a>
 
+    <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+        <i data-lucide="menu" class="nav-toggle-open" style="width:22px;height:22px"></i>
+        <i data-lucide="x" class="nav-toggle-close" style="width:22px;height:22px"></i>
+    </button>
+
+    <div class="nav-collapse">
     <div class="nav-links">
 
         {{-- Products dropdown --}}
@@ -170,4 +176,25 @@
             {{ __('nav.book_demo') }}
         </a>
     </div>
+    </div>
 </nav>
+
+<script>
+(function () {
+    var nav = document.getElementById('siteNav');
+    if (!nav) return;
+    var toggle = nav.querySelector('.nav-toggle');
+    if (!toggle) return;
+    toggle.addEventListener('click', function () {
+        var open = nav.classList.toggle('nav-open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    // Close the drawer after tapping a link.
+    nav.querySelectorAll('.nav-collapse a').forEach(function (link) {
+        link.addEventListener('click', function () {
+            nav.classList.remove('nav-open');
+            toggle.setAttribute('aria-expanded', 'false');
+        });
+    });
+})();
+</script>

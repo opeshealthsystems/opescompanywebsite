@@ -1621,3 +1621,69 @@ h1, h2, h3, h4, h5 { font-family: 'Plus Jakarta Sans', sans-serif; }
     text-decoration: none;
 }
 .nav-account-login:hover { color: #e2e8f0; background: rgba(255,255,255,0.07); }
+
+/* ── Mobile navigation (hamburger + drawer) ──────────────────────── */
+/* display:contents keeps the desktop layout identical (logo | links | right). */
+.nav-collapse { display: contents; }
+.nav-toggle {
+    display: none;
+    background: none; border: 0; cursor: pointer;
+    color: #e2e8f0; padding: 6px; line-height: 0;
+    align-items: center; justify-content: center;
+}
+.nav-toggle-close { display: none; }
+
+@media (max-width: 1024px) {
+    .site-nav { padding: 0 18px; }
+    .nav-toggle { display: inline-flex; }
+
+    .nav-collapse {
+        display: none;
+        position: absolute;
+        top: 62px; left: 0; right: 0;
+        background: rgba(15, 23, 42, 0.98);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 8px 18px 20px;
+        max-height: calc(100vh - 62px);
+        overflow-y: auto;
+    }
+    .site-nav.nav-open .nav-collapse { display: flex; }
+    .site-nav.nav-open .nav-toggle-open { display: none; }
+    .site-nav.nav-open .nav-toggle-close { display: inline; }
+
+    .nav-links {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        width: 100%;
+    }
+    .nav-links > a,
+    .nav-dropdown-trigger {
+        padding: 13px 4px;
+        font-size: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* Hover mega-menus don't work on touch; the triggers are real links. */
+    .nav-dropdown-wrap { width: 100%; }
+    .nav-dropdown { display: none !important; }
+    .nav-dropdown-trigger i { display: none; }
+
+    .nav-right {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        width: 100%;
+        margin-top: 16px;
+    }
+    .nav-right .btn-cta {
+        text-align: center;
+        justify-content: center;
+        width: 100%;
+    }
+    .nav-account, .nav-account-login { align-self: flex-start; }
+}
