@@ -25,3 +25,6 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Dusk local env (copied secrets)
+.env.dusk.local
