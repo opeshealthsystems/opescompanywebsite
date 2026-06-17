@@ -6,6 +6,7 @@ use App\Services\Payouts\ManualPayoutGateway;
 use App\Services\Payouts\MtnMomoPayoutGateway;
 use App\Services\Payouts\OrangeMoneyPayoutGateway;
 use App\Services\Payouts\PayoutGateway;
+use App\Services\Payouts\PayoutGatewayManager;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,6 +23,9 @@ class AppServiceProvider extends ServiceProvider
                 default        => new ManualPayoutGateway(),
             };
         });
+
+        // Per-payout driver selection based on the practitioner's resolved network.
+        $this->app->singleton(PayoutGatewayManager::class, fn ($app) => new PayoutGatewayManager($app));
 
         // On Windows, PHP's rename() can briefly fail with "Access is denied (code: 5)"
         // when the OS (file indexer, AV real-time scan) holds a handle on the just-created
