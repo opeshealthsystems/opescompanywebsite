@@ -1703,6 +1703,12 @@ h1, h2, h3, h4, h5 { font-family: 'Plus Jakarta Sans', sans-serif; }
     .testimonial-grid { grid-template-columns: 1fr; }
     .ecosystem-grid { grid-template-columns: 1fr; }
 
+    /* Footer (shared across all public pages) */
+    .site-footer { padding: 40px 20px 28px; }
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 28px 20px; }
+    .footer-brand { grid-column: 1 / -1; }
+    .footer-bottom { flex-direction: column; gap: 14px; align-items: flex-start; }
+
     .section { padding: 44px 20px; }
     .section-title { font-size: 24px; }
     .triage-section { padding: 44px 20px; }
@@ -1722,6 +1728,7 @@ h1, h2, h3, h4, h5 { font-family: 'Plus Jakarta Sans', sans-serif; }
 @media (max-width: 400px) {
     .hero h1 { font-size: 29px; }
     .hero-trust { gap: 18px; }
+    .footer-inner { grid-template-columns: 1fr; }
 }
 
 /* ── Products index + product detail: mobile ─────────────────────── */
