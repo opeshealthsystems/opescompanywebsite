@@ -275,5 +275,7 @@ Route::prefix('{locale}')
             Route::post('/tickets/{ticket}/reply',   [\App\Http\Controllers\Support\TicketController::class, 'reply'])->name('tickets.reply');
             Route::patch('/tickets/{ticket}/status', [\App\Http\Controllers\Support\TicketController::class, 'updateStatus'])->name('tickets.status');
             Route::patch('/tickets/{ticket}/assign', [\App\Http\Controllers\Support\TicketController::class, 'assignToMe'])->name('tickets.assign');
+            Route::get('/profile',   [\App\Http\Controllers\Support\ProfileController::class, 'show'])->name('profile');
+            Route::patch('/profile', [\App\Http\Controllers\Support\ProfileController::class, 'update'])->name('profile.update');
         });
     });

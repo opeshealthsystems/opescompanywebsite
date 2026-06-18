@@ -26,6 +26,10 @@
                class="cp-nav-link {{ request()->routeIs('support.tickets*') ? 'cp-nav-link-active' : '' }}">
                 <i data-lucide="ticket" style="width:16px;height:16px"></i> Ticket Queue
             </a>
+            <a href="{{ route('support.profile', ['locale' => app()->getLocale()]) }}"
+               class="cp-nav-link {{ request()->routeIs('support.profile') ? 'cp-nav-link-active' : '' }}">
+                <i data-lucide="user" style="width:15px;height:15px"></i> My Profile
+            </a>
         </div>
         <div class="cp-nav-user">
             <span class="cp-nav-username">{{ auth()->user()->name }}</span>
