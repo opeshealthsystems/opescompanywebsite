@@ -56,7 +56,7 @@ h1, h2, h3, h4, h5 { font-family: 'Plus Jakarta Sans', sans-serif; }
     color: #0F172A; flex-shrink: 0;
 }
 
-.nav-logo-text { display: flex; flex-direction: column; gap: 2px; }
+.nav-logo-text { display: flex; flex-direction: column; gap: 5px; }
 .nav-logo-name { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 15px; color: #fff; line-height: 1; }
 .nav-logo-name span { color: #00C896; }
 .nav-logo-tagline { font-size: 9px; color: #475569; text-transform: uppercase; letter-spacing: 0.09em; line-height: 1; }
