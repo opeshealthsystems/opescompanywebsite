@@ -49,12 +49,11 @@ h1, h2, h3, h4, h5 { font-family: 'Plus Jakarta Sans', sans-serif; }
 .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
 
 .nav-logo-mark {
-    width: 34px; height: 34px;
-    background: linear-gradient(135deg, #00C896, #1A6FE8);
+    width: 36px; height: 36px;
+    background: #00C896;
     border-radius: 9px;
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 900; color: #fff; font-size: 17px; flex-shrink: 0;
+    color: #0F172A; flex-shrink: 0;
 }
 
 .nav-logo-text { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 15px; color: #fff; }
