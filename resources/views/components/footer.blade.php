@@ -21,6 +21,9 @@ $current = $locale;
 
         <div class="footer-col">
             <h5>Products</h5>
+            <a href="{{ url($locale.'/health-os') }}" class="footer-highlight">
+                <i data-lucide="layers" style="width:12px;height:12px"></i>OPES Health OS →
+            </a>
             <a href="{{ url($locale.'/products/opescare') }}">
                 <i data-lucide="fingerprint" style="width:12px;height:12px"></i>OPESCare · Health ID
             </a>

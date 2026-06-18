@@ -25,6 +25,16 @@
             </a>
             <div class="nav-dropdown">
                 <div class="nav-dd-section">
+                    <div class="nav-dd-section-label">{{ $locale === 'fr' ? 'Vue d\'ensemble' : 'Platform Overview' }}</div>
+                    <a href="{{ url($locale.'/health-os') }}" class="nav-dd-item">
+                        <i data-lucide="layers" style="width:14px;height:14px;color:#00C896"></i>
+                        <div>
+                            <div class="nav-dd-name">OPES Health OS</div>
+                            <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Catalogue produits & matrice' : 'Product catalog & capability matrix' }}</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="nav-dd-section">
                     <div class="nav-dd-section-label">Core Platform</div>
                     <a href="{{ url($locale.'/products/opescare') }}" class="nav-dd-item">
                         <i data-lucide="fingerprint" style="width:14px;height:14px;color:#00C896"></i>
