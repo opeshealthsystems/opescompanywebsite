@@ -19,6 +19,7 @@ class Ticket extends Model
     ];
 
     protected $casts = [
+        'user_id'               => 'integer',
         'resolved_at'           => 'datetime',
         'closed_at'             => 'datetime',
         'sla_response_due_at'   => 'datetime',

@@ -93,4 +93,33 @@ class TicketPolicyTest extends TestCase
         $response = $this->actingAs($owner)->get("/en/customer/tickets/{$ticket->id}");
         $response->assertStatus(200);
     }
+
+    public function test_owner_can_reply_to_open_ticket(): void
+    {
+        $owner = $this->makeUser('customer');
+        $ticket = $this->makeTicket($owner->id, 'open');
+        $this->assertTrue($owner->can('reply', $ticket));
+    }
+
+    public function test_nobody_can_reply_to_closed_ticket(): void
+    {
+        $owner = $this->makeUser('customer');
+        $ticket = $this->makeTicket($owner->id, 'closed');
+        $this->assertFalse($owner->can('reply', $ticket));
+    }
+
+    public function test_support_cannot_assign_from_customer_role(): void
+    {
+        $customer = $this->makeUser('customer');
+        $ticket = $this->makeTicket($customer->id, 'open');
+        $this->assertFalse($customer->can('assign', $ticket));
+    }
+
+    public function test_admin_can_update_status(): void
+    {
+        $admin = $this->makeUser('admin');
+        $owner = $this->makeUser('customer');
+        $ticket = $this->makeTicket($owner->id, 'open');
+        $this->assertTrue($admin->can('updateStatus', $ticket));
+    }
 }

@@ -9,7 +9,7 @@ class TicketPolicy
 {
     public function view(User $user, Ticket $ticket): bool
     {
-        return $user->id === (int) $ticket->user_id
+        return $user->id === $ticket->user_id
             || $user->hasAnyRole(['support', 'admin', 'super_admin']);
     }
 
@@ -20,6 +20,9 @@ class TicketPolicy
 
     public function reply(User $user, Ticket $ticket): bool
     {
+        if (! $ticket->isOpen()) {
+            return false;
+        }
         return $this->view($user, $ticket);
     }
 
