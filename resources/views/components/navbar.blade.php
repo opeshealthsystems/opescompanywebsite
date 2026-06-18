@@ -17,6 +17,8 @@
     <div class="nav-collapse">
     <div class="nav-links">
 
+        <a href="{{ url($locale) }}">{{ $locale === 'fr' ? 'Accueil' : 'Home' }}</a>
+
         {{-- Products dropdown --}}
         <div class="nav-dropdown-wrap">
             <a href="{{ url($locale.'/products') }}" class="nav-dropdown-trigger">

@@ -6,6 +6,31 @@
         ? 'Tarification officielle OPES Health Systems : licences SaaS, perpétuelles et hybrides pour cliniques, hôpitaux, spécialités, interopérabilité et programmes nationaux.'
         : 'Official OPES Health Systems pricing: SaaS, perpetual, and hybrid licenses for clinics, hospitals, specialty systems, interoperability, and national programmes.' }}">
 
+<style>
+/* ── Pricing page — mobile responsive ─────────────────────────── */
+@media (max-width: 768px) {
+    .pricing-hero { padding: 48px 20px 32px !important; }
+    .pricing-faq  { padding: 0 20px !important; }
+    .pricing-cta-strip { padding: 48px 20px !important; }
+    .pricing-cta-strip h2 { font-size: 1.4rem !important; }
+    .section { padding: 44px 20px !important; }
+    /* grid overrides */
+    .pc-gi  { grid-template-columns: 1fr !important; }
+    .pc-gi > div:first-child { border-right: none !important; border-bottom: 1px solid #1e293b; }
+    .pc-g2  { grid-template-columns: 1fr !important; }
+    .pc-g3  { grid-template-columns: 1fr !important; }
+    .pc-g4  { grid-template-columns: 1fr 1fr !important; }
+    .pc-g5  { grid-template-columns: 1fr 1fr !important; }
+    .pc-host { grid-template-columns: 1fr !important; }
+    .pc-host > div:last-child { min-width: 0 !important; }
+    .prod-card { margin-left: 0 !important; margin-right: 0 !important; }
+}
+@media (max-width: 480px) {
+    .pc-g4 { grid-template-columns: 1fr !important; }
+    .pc-g5 { grid-template-columns: 1fr !important; }
+}
+</style>
+
 {{-- ── HERO ─────────────────────────────────────────────────────── --}}
 <div class="pricing-hero">
     <div class="section-label" style="justify-content:center;margin-bottom:16px">
@@ -32,7 +57,7 @@
     <h2 class="section-title" style="font-size:clamp(18px,2.5vw,24px)">
         {{ $isFr ? 'Choisissez votre modèle d\'infrastructure' : 'Choose your infrastructure model' }}
     </h2>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-top:28px">
+    <div class="pc-g3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-top:28px">
         @php
         $deployments = $isFr ? [
             [
@@ -158,7 +183,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
 @endphp
 
 {{-- ── OPES CLINIC ─────────────────────────────────────────────── --}}
-<div style="{{ $prodCard }}">
+<div class="prod-card" style="{{ $prodCard }}">
     <div style="padding:18px 24px;border-bottom:1px solid #1e293b;display:flex;align-items:center;gap:14px;background:#00C89606">
         <div style="width:38px;height:38px;border-radius:9px;background:#00C89615;border:1px solid #00C89630;display:flex;align-items:center;justify-content:center;flex-shrink:0">
             <i data-lucide="stethoscope" style="width:18px;height:18px;color:#00C896"></i>
@@ -168,7 +193,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
             <div style="font-size:17px;font-weight:800;color:#e2e8f0">OPES Clinic</div>
         </div>
     </div>
-    <div style="display:grid;grid-template-columns:240px 1fr">
+    <div class="pc-gi" style="display:grid;grid-template-columns:240px 1fr">
         <div style="{{ $inclCol }}">
             <div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Inclus' : 'Includes' }}</div>
             @foreach($isFr
@@ -181,7 +206,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
             @endforeach
         </div>
         <div style="{{ $priceCol }}">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+            <div class="pc-g2" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
                 <div style="{{ $priceTile }}">
                     <div style="font-size:10px;font-weight:700;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">SaaS</div>
                     <div style="font-size:11px;color:#475569;margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
@@ -207,7 +232,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
 </div>
 
 {{-- ── OPES HOSPITAL ────────────────────────────────────────────── --}}
-<div style="{{ $prodCard }}">
+<div class="prod-card" style="{{ $prodCard }}">
     <div style="padding:18px 24px;border-bottom:1px solid #1e293b;display:flex;align-items:center;gap:14px;background:#1A6FE806">
         <div style="width:38px;height:38px;border-radius:9px;background:#1A6FE815;border:1px solid #1A6FE830;display:flex;align-items:center;justify-content:center;flex-shrink:0">
             <i data-lucide="hospital" style="width:18px;height:18px;color:#1A6FE8"></i>
@@ -217,7 +242,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
             <div style="font-size:17px;font-weight:800;color:#e2e8f0">OPES Hospital</div>
         </div>
     </div>
-    <div style="display:grid;grid-template-columns:240px 1fr">
+    <div class="pc-gi" style="display:grid;grid-template-columns:240px 1fr">
         <div style="{{ $inclCol }}">
             <div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Inclus' : 'Includes' }}</div>
             @foreach($isFr
@@ -231,7 +256,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
         </div>
         <div style="{{ $priceCol }}">
             <div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px">{{ $isFr ? 'Licence perpétuelle — par taille d\'hôpital' : 'Perpetual licence — by hospital size' }}</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+            <div class="pc-g2" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
                 <div style="{{ $priceTile }}">
                     <div style="font-size:10px;font-weight:700;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">{{ $isFr ? 'Petit hôpital' : 'Small hospital' }}</div>
                     <div style="font-size:11px;color:#475569;margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
@@ -268,7 +293,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
             <div style="font-size:17px;font-weight:800;color:#e2e8f0">{{ $isFr ? 'Suite spécialisée OPES' : 'OPES Specialty Suite' }}</div>
         </div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+    <div class="pc-g4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
         @php
         $specialties = $isFr ? [
             ['microscope','#00C896','OPES Lab IS','3 000 000'],
@@ -307,7 +332,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
 <div class="divider"></div>
 
 {{-- ── OPES CARE ────────────────────────────────────────────────── --}}
-<div style="{{ $prodCard }}">
+<div class="prod-card" style="{{ $prodCard }}">
     <div style="padding:18px 24px;border-bottom:1px solid #1e293b;display:flex;align-items:center;gap:14px;background:#1A6FE806">
         <div style="width:38px;height:38px;border-radius:9px;background:#1A6FE815;border:1px solid #1A6FE830;display:flex;align-items:center;justify-content:center;flex-shrink:0">
             <i data-lucide="share-2" style="width:18px;height:18px;color:#1A6FE8"></i>
@@ -317,7 +342,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
             <div style="font-size:17px;font-weight:800;color:#e2e8f0">OPES Care</div>
         </div>
     </div>
-    <div style="display:grid;grid-template-columns:240px 1fr">
+    <div class="pc-gi" style="display:grid;grid-template-columns:240px 1fr">
         <div style="{{ $inclCol }}">
             <div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Inclus' : 'Includes' }}</div>
             @foreach($isFr
@@ -330,7 +355,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
             @endforeach
         </div>
         <div style="{{ $priceCol }}">
-            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+            <div class="pc-g3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
                 <div style="{{ $priceTile }}">
                     <div style="font-size:10px;font-weight:700;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">{{ $isFr ? 'Hôpital unique' : 'Single hospital' }}</div>
                     <div style="font-size:11px;color:#475569;margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
@@ -357,7 +382,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
 </div>
 
 {{-- ── OPES HEALTH ID ───────────────────────────────────────────── --}}
-<div style="{{ $prodCard }}">
+<div class="prod-card" style="{{ $prodCard }}">
     <div style="padding:18px 24px;border-bottom:1px solid #1e293b;display:flex;align-items:center;gap:14px;background:#00C89606">
         <div style="width:38px;height:38px;border-radius:9px;background:#00C89615;border:1px solid #00C89630;display:flex;align-items:center;justify-content:center;flex-shrink:0">
             <i data-lucide="fingerprint" style="width:18px;height:18px;color:#00C896"></i>
@@ -367,7 +392,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
             <div style="font-size:17px;font-weight:800;color:#e2e8f0">OPES Health ID</div>
         </div>
     </div>
-    <div style="display:grid;grid-template-columns:240px 1fr">
+    <div class="pc-gi" style="display:grid;grid-template-columns:240px 1fr">
         <div style="{{ $inclCol }}">
             <div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Inclus' : 'Includes' }}</div>
             @foreach($isFr
@@ -380,7 +405,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
             @endforeach
         </div>
         <div style="{{ $priceCol }}">
-            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+            <div class="pc-g3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
                 <div style="{{ $priceTile }}">
                     <div style="font-size:10px;font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">{{ $isFr ? 'Déploiement établissement' : 'Facility deployment' }}</div>
                     <div style="font-size:11px;color:#475569;margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
@@ -413,7 +438,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
         <i data-lucide="cpu" style="width:12px;height:12px"></i>
         {{ $isFr ? 'Systèmes cliniques' : 'Clinical systems' }}
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px">
+    <div class="pc-g3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px">
 
         {{-- CDMS --}}
         <div style="background:#080E1A;border:1px solid #1e293b;border-radius:14px;overflow:hidden">
@@ -509,7 +534,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
             ? 'Ces solutions sont tarifées sur mesure selon la population, le nombre d\'établissements, l\'étendue du déploiement et les exigences de renforcement des capacités. Chaque projet fait l\'objet d\'une proposition commerciale dédiée.'
             : 'These solutions are priced individually based on population size, number of facilities, scope of deployment, and capacity-building requirements. Each project receives a dedicated commercial proposal.' }}
     </p>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px">
+    <div class="pc-g3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px">
         @php
         $govProducts = $isFr ? [
             ['shield-check','#8B5CF6','OPES Assurance',['Gestion des membres','Traitement des sinistres','Gestion des prestataires','Gestion des tarifs','Remboursements','Surveillance des fraudes']],
@@ -555,7 +580,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
         <i data-lucide="tool" style="width:12px;height:12px"></i>
         {{ $isFr ? 'Services professionnels' : 'Professional services' }}
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px">
+    <div class="pc-g4" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px">
         @foreach($isFr
             ? [['map','#00C896','Implémentation','À partir de 1 500 000 FCFA','De l\'installation à la mise en production'],['database','#1A6FE8','Migration de données','À partir de 1 000 000 FCFA','Depuis les formats CSV, HL7, FHIR'],['graduation-cap','#00C896','Formation','À partir de 500 000 FCFA','Tous rôles, en ligne ou sur site'],['code','#1A6FE8','Intégrations sur mesure','Sur demande de devis','Connexion aux systèmes existants']]
             : [['map','#00C896','Implementation','Starting from 1 500 000 FCFA','From installation to go-live'],['database','#1A6FE8','Data migration','Starting from 1 000 000 FCFA','From CSV, HL7, FHIR formats'],['graduation-cap','#00C896','Training','Starting from 500 000 FCFA','All roles, online or on-site'],['code','#1A6FE8','Custom integrations','Request quotation','Connect to existing systems']]
@@ -586,7 +611,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
             ? 'Inclus : mises à jour logicielles, mises à jour de sécurité, support technique, correctifs, accès à la base de connaissances, assistance à distance.'
             : 'Includes: software updates, security updates, technical support, bug fixes, knowledge base access, remote assistance.' }}
     </p>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px">
+    <div class="pc-g3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px">
         @foreach($isFr
             ? [['#475569','Standard','15 % de la valeur de la licence','Mises à jour + support Bronze','Établissements de santé standards'],['#00C896','Premium','20 % de la valeur de la licence','Mises à jour + support Gold','Hôpitaux & groupes de santé'],['#F59E0B','Enterprise','Sur devis','Contrat de service personnalisé','Ministères & programmes nationaux']]
             : [['#475569','Standard','15% of licence value','Updates + Bronze support','Standard health facilities'],['#00C896','Premium','20% of licence value','Updates + Gold support','Hospitals & health groups'],['#F59E0B','Enterprise','Custom','Custom service contract','Ministries & national programmes']]
@@ -605,7 +630,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
 
 {{-- ── HOSTING ──────────────────────────────────────────────────── --}}
 <div class="section" style="max-width:960px;margin:0 auto">
-    <div style="background:#080E1A;border:1px solid #1e293b;border-radius:14px;padding:28px;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center">
+    <div class="pc-host" style="background:#080E1A;border:1px solid #1e293b;border-radius:14px;padding:28px;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center">
         <div>
             <div class="section-label" style="margin-bottom:12px">
                 <i data-lucide="cloud" style="width:12px;height:12px"></i>
@@ -644,7 +669,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
         {{ $isFr ? 'Modes de règlement' : 'Payment methods' }}
     </div>
     <h2 class="section-title" style="font-size:clamp(18px,2.5vw,22px)">{{ $isFr ? 'Payez comme vous le souhaitez' : 'Pay the way that works for you' }}</h2>
-    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;max-width:800px;margin:24px auto 0">
+    <div class="pc-g5" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;max-width:800px;margin:24px auto 0">
         @foreach($isFr
             ? [['smartphone','#FFCC00','MTN Mobile Money','Paiements MoMo XAF'],['smartphone','#FF6600','Orange Money','Paiements Orange XAF'],['landmark','#1A6FE8','Virement bancaire','XAF · EUR · USD'],['credit-card','#00C896','Carte bancaire','Visa · Mastercard'],['file-text','#475569','Bon de commande','Marchés publics & PME']]
             : [['smartphone','#FFCC00','MTN Mobile Money','MoMo XAF payments'],['smartphone','#FF6600','Orange Money','Orange XAF payments'],['landmark','#1A6FE8','Bank transfer','XAF · EUR · USD'],['credit-card','#00C896','Card payment','Visa · Mastercard'],['file-text','#475569','Purchase order','Public procurement & SMEs']]

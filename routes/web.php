@@ -71,8 +71,11 @@ Route::prefix('{locale}')
         Route::post('/contact',       [ContactController::class, 'submit'])->name('contact.submit');
         Route::get('/solutions',      fn () => view('pages.solutions'))->name('solutions');
         Route::get('/about',          fn () => view('pages.about'))->name('about');
-        Route::get('/blog',           [BlogController::class,    'index'])->name('blog');
-        Route::get('/blog/{slug}',    [BlogController::class,    'show'])->name('blog.show');
+        Route::get('/blog',              [BlogController::class, 'index'])->name('blog');
+        Route::get('/blog/{slug}',       [BlogController::class, 'show'])->name('blog.show');
+        Route::post('/blog/{slug}/like',    [BlogController::class, 'like'])->name('blog.like');
+        Route::post('/blog/{slug}/share',   [BlogController::class, 'share'])->name('blog.share');
+        Route::post('/blog/{slug}/comment', [BlogController::class, 'comment'])->name('blog.comment');
         Route::get('/courses',           [\App\Http\Controllers\PublicCourseController::class, 'index'])->name('courses.index');
         Route::get('/courses/{course:slug}', [\App\Http\Controllers\PublicCourseController::class, 'show'])->name('courses.show');
         Route::get('/partnerships',   [\App\Http\Controllers\PartnershipsController::class, 'index'])->name('partnerships');

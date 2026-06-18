@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BlogComment;
 use App\Models\BlogPost;
 use Illuminate\Http\Request;
 
@@ -44,12 +45,47 @@ class BlogController extends Controller
             ->where('published', true)
             ->firstOrFail();
 
+        $post->increment('views');
+
         $related = BlogPost::published()
             ->where('id', '!=', $post->id)
             ->where('category', $post->category)
             ->limit(3)
             ->get();
 
-        return view('pages.blog-show', compact('post', 'related'));
+        $comments = $post->comments()->where('approved', true)->latest()->get();
+
+        return view('pages.blog-show', compact('post', 'related', 'comments'));
+    }
+
+    public function like(string $locale, string $slug)
+    {
+        $post = BlogPost::where('slug', $slug)->where('published', true)->firstOrFail();
+        $post->increment('likes');
+
+        return response()->json(['likes' => $post->likes]);
+    }
+
+    public function share(string $locale, string $slug)
+    {
+        $post = BlogPost::where('slug', $slug)->where('published', true)->firstOrFail();
+        $post->increment('shares');
+
+        return response()->json(['shares' => $post->shares]);
+    }
+
+    public function comment(Request $request, string $locale, string $slug)
+    {
+        $post = BlogPost::where('slug', $slug)->where('published', true)->firstOrFail();
+
+        $validated = $request->validate([
+            'name'    => 'required|string|max:100',
+            'email'   => 'required|email|max:150',
+            'content' => 'required|string|max:2000',
+        ]);
+
+        $post->comments()->create($validated);
+
+        return back()->with('comment_submitted', true);
     }
 }

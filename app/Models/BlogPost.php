@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class BlogPost extends Model
 {
@@ -36,5 +37,10 @@ class BlogPost extends Model
     {
         $words = str_word_count(strip_tags($htmlBody));
         return (int) max(1, ceil($words / 220));
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(BlogComment::class);
     }
 }
