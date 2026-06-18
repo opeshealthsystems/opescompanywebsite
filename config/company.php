@@ -6,7 +6,7 @@ return [
     'website'   => 'www.opeshealthsystems.com',
     'website_full' => 'https://www.opeshealthsystems.com',
     'email'     => 'contact@opeshealthsystems.com',
-    'phone'     => '+237 699 10 00 10',
+    'phone'     => '+237 670 41 62 38',
     'address'   => 'Bonamousadi, Douala, Cameroon',
     'city'      => 'Douala',
     'country'   => 'Cameroon',
