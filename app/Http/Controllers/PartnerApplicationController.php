@@ -41,7 +41,7 @@ class PartnerApplicationController extends Controller
             Notification::make()
                 ->title('New partner application: ' . $app->organization_name)
                 ->body($app->contact_name . ' · ' . $app->partner_type . ' · ' . $app->country)
-                ->icon('heroicon-o-handshake')
+                ->icon('heroicon-o-users')
                 ->iconColor('success')
                 ->sendToDatabase($admins);
         }

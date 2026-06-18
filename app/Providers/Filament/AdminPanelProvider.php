@@ -50,7 +50,6 @@ class AdminPanelProvider extends PanelProvider
                 NavigationGroup::make('Communications'),
                 NavigationGroup::make('Reporting'),
                 NavigationGroup::make('Confidential')
-                    ->icon('heroicon-o-lock-closed')
                     ->collapsible(),
             ])
             ->navigationItems([

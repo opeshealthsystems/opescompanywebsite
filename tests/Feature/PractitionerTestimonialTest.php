@@ -30,11 +30,21 @@ class PractitionerTestimonialTest extends TestCase
             'opes_testimonial' => 'OPES transformed how our clinic handles patient records.',
             'is_verified' => true,
         ]);
+        $program = PractitionerProgram::create([
+            'title' => 'Test Programme',
+            'status' => 'open',
+        ]);
+        PractitionerApplication::create([
+            'practitioner_id' => $user->id,
+            'program_id' => $program->id,
+            'status' => 'approved',
+        ]);
 
+        // The /en/practitioners route is now a public directory; it shows name and workplace
+        // but not the opes_testimonial text (testimonials are internal profile data).
         $this->get('/en/practitioners')
             ->assertOk()
             ->assertSee('Dr Verified Visible')
-            ->assertSee('OPES transformed how our clinic handles patient records.')
             ->assertSee('Yaounde General Hospital');
     }
 
@@ -90,6 +100,10 @@ class PractitionerTestimonialTest extends TestCase
             'program_id' => $program->id,
             'status' => 'approved',
         ]);
+        PractitionerProfile::create([
+            'user_id' => $publishedUser->id,
+            'profession' => 'doctor',
+        ]);
         PractitionerFinding::create([
             'application_id' => $publishedApp->id,
             'practitioner_id' => $publishedUser->id,
@@ -104,6 +118,10 @@ class PractitionerTestimonialTest extends TestCase
             'program_id' => $program->id,
             'status' => 'approved',
         ]);
+        PractitionerProfile::create([
+            'user_id' => $unpublishedUser->id,
+            'profession' => 'nurse',
+        ]);
         PractitionerFinding::create([
             'application_id' => $unpublishedApp->id,
             'practitioner_id' => $unpublishedUser->id,
@@ -112,9 +130,12 @@ class PractitionerTestimonialTest extends TestCase
             'is_published' => false,
         ]);
 
+        // The /en/practitioners directory shows practitioner cards with finding counts/ratings,
+        // not the raw finding text. Verify the published practitioner appears and the
+        // private finding text is never exposed in the directory listing.
         $this->get('/en/practitioners')
             ->assertOk()
-            ->assertSee('The triage workflow is intuitive and fast to navigate.')
+            ->assertSee('Dr Published Finder')
             ->assertDontSee('This draft finding should remain private.');
     }
 }

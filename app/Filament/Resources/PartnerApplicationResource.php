@@ -13,7 +13,7 @@ use Filament\Tables\Table;
 class PartnerApplicationResource extends Resource
 {
     protected static ?string $model = PartnerApplication::class;
-    protected static ?string $navigationIcon = 'heroicon-o-handshake';
+    protected static ?string $navigationIcon = 'heroicon-o-users';
     protected static ?string $navigationGroup = 'CRM';
     protected static ?int $navigationSort = 3;
     protected static ?string $navigationLabel = 'Partner Applications';
