@@ -227,6 +227,8 @@ Route::prefix('{locale}')
                 Route::get('/performance',  [\App\Http\Controllers\Manager\PerformanceController::class, 'index'])->name('performance.index');
                 Route::post('/performance', [\App\Http\Controllers\Manager\PerformanceController::class, 'store'])->name('performance.store');
                 Route::get('/reports',   [\App\Http\Controllers\Manager\ReportController::class,   'index'])->name('reports');
+                Route::get('/profile',   [\App\Http\Controllers\Manager\ProfileController::class, 'show'])->name('profile');
+                Route::patch('/profile', [\App\Http\Controllers\Manager\ProfileController::class, 'update'])->name('profile.update');
             });
 
         // HR portal
