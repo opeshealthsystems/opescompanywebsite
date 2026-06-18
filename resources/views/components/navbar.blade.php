@@ -116,6 +116,13 @@
                         <div class="nav-dd-sub">UHC IS + population health</div>
                     </div>
                 </a>
+                <a href="{{ url($locale.'/national-platform') }}" class="nav-dd-item">
+                    <i data-lucide="building-2" style="width:14px;height:14px;color:#00C896"></i>
+                    <div>
+                        <div class="nav-dd-name">National Platform</div>
+                        <div class="nav-dd-sub">Government blueprint & HIE</div>
+                    </div>
+                </a>
                 <div class="nav-dd-footer">
                     <a href="{{ url($locale.'/solutions') }}">
                         View all solutions
@@ -186,6 +193,13 @@
                     <div>
                         <div class="nav-dd-name">Quality (QMS)</div>
                         <div class="nav-dd-sub">Quality management framework</div>
+                    </div>
+                </a>
+                <a href="{{ url($locale.'/risk') }}" class="nav-dd-item">
+                    <i data-lucide="shield-alert" style="width:14px;height:14px;color:#A855F7"></i>
+                    <div>
+                        <div class="nav-dd-name">Risk Management</div>
+                        <div class="nav-dd-sub">ERM framework & controls</div>
                     </div>
                 </a>
             </div>

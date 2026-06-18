@@ -61,6 +61,12 @@ $current = $locale;
             <a href="{{ url($locale.'/quality') }}">
                 <i data-lucide="badge-check" style="width:12px;height:12px"></i>Quality (QMS)
             </a>
+            <a href="{{ url($locale.'/risk') }}">
+                <i data-lucide="shield-alert" style="width:12px;height:12px"></i>Risk Management
+            </a>
+            <a href="{{ url($locale.'/national-platform') }}">
+                <i data-lucide="building-2" style="width:12px;height:12px"></i>National Platform
+            </a>
         </div>
 
         <div class="footer-col">
@@ -70,6 +76,12 @@ $current = $locale;
             </a>
             <a href="{{ url($locale.'/strategy') }}">
                 <i data-lucide="map" style="width:12px;height:12px"></i>Strategy 2026–2031
+            </a>
+            <a href="{{ url($locale.'/partner-program') }}">
+                <i data-lucide="handshake" style="width:12px;height:12px"></i>Partner Programme
+            </a>
+            <a href="{{ url($locale.'/financial-model') }}">
+                <i data-lucide="dollar-sign" style="width:12px;height:12px"></i>Revenue Model
             </a>
             <a href="{{ url($locale.'/partnerships') }}">
                 <i data-lucide="handshake" style="width:12px;height:12px"></i>Partnership
