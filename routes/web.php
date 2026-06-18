@@ -103,8 +103,8 @@ Route::prefix('{locale}')
         Route::post('/join-testers',        [\App\Http\Controllers\TesterApplicationController::class, 'submit'])->name('join-testers.submit');
         Route::get('/mobile-clinic',        fn () => view('pages.mobile-clinic'))->name('mobile-clinic');
 
-        // Confidential — admin / super_admin / support only (not customer)
-        Route::middleware(['auth', 'role:admin|super_admin|support'])
+        // Confidential — admin / super_admin only (not customer or support)
+        Route::middleware(['auth', 'role:admin|super_admin'])
             ->group(function () {
                 Route::get('/strategy',        fn () => view('pages.strategy'))->name('strategy');
                 Route::get('/risk',            fn () => view('pages.risk'))->name('risk');

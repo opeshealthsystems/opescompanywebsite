@@ -18,6 +18,11 @@ class DemoRequestResource extends Resource
     protected static ?int $navigationSort = 2;
     protected static ?string $navigationLabel = 'Demo Requests';
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
+    }
+
     public static function form(Form $form): Form
     {
         return $form->schema([

@@ -18,6 +18,11 @@ class TesterApplicationResource extends Resource
     protected static ?int $navigationSort = 10;
     protected static ?string $navigationLabel = 'Tester Applications';
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
+    }
+
     public static function form(Form $form): Form
     {
         return $form->schema([
