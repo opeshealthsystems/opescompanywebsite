@@ -32,6 +32,12 @@ class RolePermissionSeeder extends Seeder
             'view_practitioner_dashboard',
             'apply_paid_program',
             'submit_findings',
+            'view_manager_dashboard',
+            'view_hr_dashboard',
+            'view_accountant_dashboard',
+            'manage_leave_requests',
+            'view_payroll',
+            'view_employees',
         ];
 
         foreach ($permissions as $name) {
@@ -45,6 +51,9 @@ class RolePermissionSeeder extends Seeder
             'tester'       => ['view_tester_dashboard'],
             'customer'     => [],
             'practitioner' => ['view_practitioner_dashboard', 'apply_paid_program', 'submit_findings'],
+            'manager'      => ['view_manager_dashboard', 'manage_leave_requests', 'view_employees'],
+            'hr'           => ['view_hr_dashboard', 'manage_leave_requests', 'view_employees', 'view_payroll', 'manage_employees'],
+            'accountant'   => ['view_accountant_dashboard', 'view_payroll', 'manage_accounting'],
         ];
 
         foreach ($roleMap as $roleName => $rolePerms) {

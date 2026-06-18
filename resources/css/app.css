@@ -1043,6 +1043,106 @@ h1, h2, h3, h4, h5 { font-family: 'Plus Jakarta Sans', sans-serif; }
 .cp-btn-outline:hover { border-color: #475569; color: #e2e8f0; }
 .cp-form { max-width: 800px; }
 
+/* ── Portal Shared Extras (Manager · HR · Accountant) ─────── */
+.cp-burger {
+    display: none; background: none; border: 0; cursor: pointer;
+    color: #94a3b8; padding: 0.25rem; border-radius: 6px;
+    align-items: center; justify-content: center;
+    transition: color .15s, background .15s;
+}
+.cp-burger:hover { color: #e2e8f0; background: rgba(255,255,255,.05); }
+.cp-burger-close { display: none; }
+.cp-nav-body { display: flex; align-items: center; flex: 1; gap: 0.25rem; }
+/* Accent active-link variants */
+.cp-nav-link-active-blue   { color: #1A6FE8 !important; background: rgba(26,111,232,0.1) !important; }
+.cp-nav-link-active-purple { color: #8B5CF6 !important; background: rgba(139,92,246,0.1) !important; }
+.cp-nav-link-active-amber  { color: #F59E0B !important; background: rgba(245,158,11,0.1) !important; }
+/* Accent stat icons */
+.cp-stat-icon-blue   { background: rgba(26,111,232,0.12); color: #1A6FE8; }
+.cp-stat-icon-purple { background: rgba(139,92,246,0.12); color: #8B5CF6; }
+.cp-stat-icon-amber  { background: rgba(245,158,11,0.12); color: #F59E0B; }
+.cp-stat-icon-green  { background: rgba(0,200,150,0.12);  color: #00C896; }
+.cp-stat-icon-red    { background: rgba(239,68,68,0.12);  color: #ef4444; }
+/* 4-column stat row */
+.cp-stats-row-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-bottom: 2rem; }
+@media (max-width: 900px) { .cp-stats-row-4 { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 500px) { .cp-stats-row-4 { grid-template-columns: 1fr; } }
+/* Flash error */
+.cp-flash-error {
+    background: rgba(239,68,68,0.1); border-bottom: 1px solid rgba(239,68,68,0.3);
+    color: #ef4444; text-align: center; padding: 0.75rem; font-size: 0.875rem;
+}
+/* Portal data table */
+.portal-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.portal-table th {
+    text-align: left; color: #64748b; font-size: 0.75rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .05em;
+    padding: 0.625rem 1rem; border-bottom: 1px solid #1e293b;
+    white-space: nowrap;
+}
+.portal-table td {
+    padding: 0.75rem 1rem; border-bottom: 1px solid #1e293b;
+    color: #cbd5e1; vertical-align: middle;
+}
+.portal-table tr:last-child td { border-bottom: 0; }
+.portal-table tr:hover td { background: rgba(255,255,255,.02); }
+/* Status badges */
+.portal-badge {
+    display: inline-flex; align-items: center; gap: .25rem;
+    font-size: .6875rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: .05em; padding: .25rem .6rem; border-radius: 20px;
+    white-space: nowrap;
+}
+.portal-badge-green  { background: rgba(0,200,150,.12);  color: #00C896; }
+.portal-badge-amber  { background: rgba(245,158,11,.12); color: #F59E0B; }
+.portal-badge-red    { background: rgba(239,68,68,.12);  color: #ef4444; }
+.portal-badge-blue   { background: rgba(26,111,232,.12); color: #1A6FE8; }
+.portal-badge-purple { background: rgba(139,92,246,.12); color: #8B5CF6; }
+.portal-badge-gray   { background: rgba(100,116,139,.15);color: #64748b; }
+/* Progress bar */
+.portal-progress-wrap { background: #1e293b; border-radius: 99px; height: 6px; overflow: hidden; }
+.portal-progress-fill { height: 100%; border-radius: 99px; transition: width .3s; }
+/* Quick action buttons */
+.portal-btn-approve {
+    background: rgba(0,200,150,.1); color: #00C896; border: 1px solid rgba(0,200,150,.3);
+    padding: .3rem .75rem; border-radius: 6px; font-size: .8125rem; font-weight: 500;
+    cursor: pointer; transition: background .15s; white-space: nowrap;
+}
+.portal-btn-approve:hover { background: rgba(0,200,150,.2); }
+.portal-btn-reject {
+    background: rgba(239,68,68,.1); color: #ef4444; border: 1px solid rgba(239,68,68,.3);
+    padding: .3rem .75rem; border-radius: 6px; font-size: .8125rem; font-weight: 500;
+    cursor: pointer; transition: background .15s; white-space: nowrap;
+}
+.portal-btn-reject:hover { background: rgba(239,68,68,.2); }
+/* Filter bar */
+.portal-filter-bar { display: flex; gap: .75rem; flex-wrap: wrap; align-items: center; margin-bottom: 1.25rem; }
+.portal-filter-bar select, .portal-filter-bar input {
+    background: #1E293B; border: 1px solid #334155; color: #e2e8f0;
+    border-radius: 6px; padding: .375rem .75rem; font-size: .875rem; outline: none;
+}
+.portal-filter-bar select:focus, .portal-filter-bar input:focus { border-color: #475569; }
+/* Trend arrows */
+.portal-trend-up   { color: #00C896; font-size: .8125rem; }
+.portal-trend-down { color: #ef4444; font-size: .8125rem; }
+/* Mobile nav */
+@media (max-width: 768px) {
+    .cp-burger { display: flex; }
+    .cp-nav-body {
+        display: none;
+        position: absolute; top: 60px; left: 0; right: 0;
+        flex-direction: column; align-items: stretch;
+        background: #1E293B; border-bottom: 1px solid #334155;
+        padding: .75rem 1rem; gap: .25rem; z-index: 99;
+    }
+    .cp-nav.nav-open .cp-nav-body { display: flex; }
+    .cp-nav.nav-open .cp-burger-close { display: block; }
+    .cp-nav.nav-open .cp-burger-open { display: none; }
+    .cp-nav-links { flex-direction: column; }
+    .cp-nav-user { margin-left: 0; padding-top: .75rem; border-top: 1px solid #334155; }
+    .cp-nav { flex-wrap: wrap; }
+}
+
 /* ── Blog Hero ───────────────────────────────────────────────────── */
 .blog-hero {
     background: linear-gradient(160deg, #0d1e35 0%, #0F172A 55%, #08111e 100%);

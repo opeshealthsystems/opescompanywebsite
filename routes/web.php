@@ -208,4 +208,55 @@ Route::prefix('{locale}')
                 Route::post('/courses/{course:slug}/lessons/{lesson}/done', [\App\Http\Controllers\Practitioner\LessonController::class, 'markDone'])->name('lessons.done');
                 Route::get('/certificates', [\App\Http\Controllers\Practitioner\CertificateController::class, 'index'])->name('certificates');
             });
+
+        // Manager portal
+        Route::middleware(['auth', 'role:manager'])
+            ->prefix('manager')
+            ->name('manager.')
+            ->group(function () {
+                Route::get('/dashboard', [\App\Http\Controllers\Manager\DashboardController::class, 'index'])->name('dashboard');
+                Route::get('/team',      [\App\Http\Controllers\Manager\TeamController::class,      'index'])->name('team');
+                Route::get('/leave',     [\App\Http\Controllers\Manager\LeaveController::class,     'index'])->name('leave.index');
+                Route::post('/leave/{id}/approve', [\App\Http\Controllers\Manager\LeaveController::class, 'approve'])->name('leave.approve');
+                Route::post('/leave/{id}/reject',  [\App\Http\Controllers\Manager\LeaveController::class, 'reject'])->name('leave.reject');
+                Route::get('/performance',  [\App\Http\Controllers\Manager\PerformanceController::class, 'index'])->name('performance.index');
+                Route::post('/performance', [\App\Http\Controllers\Manager\PerformanceController::class, 'store'])->name('performance.store');
+                Route::get('/reports',   [\App\Http\Controllers\Manager\ReportController::class,   'index'])->name('reports');
+            });
+
+        // HR portal
+        Route::middleware(['auth', 'role:hr'])
+            ->prefix('hr')
+            ->name('hr.')
+            ->group(function () {
+                Route::get('/dashboard',                 [\App\Http\Controllers\HR\DashboardController::class,   'index'])->name('dashboard');
+                Route::get('/employees',                 [\App\Http\Controllers\HR\EmployeeController::class,    'index'])->name('employees.index');
+                Route::get('/employees/{user}',          [\App\Http\Controllers\HR\EmployeeController::class,    'show'])->name('employees.show');
+                Route::get('/leave',                     [\App\Http\Controllers\HR\LeaveController::class,       'index'])->name('leave.index');
+                Route::post('/leave/{id}/approve',       [\App\Http\Controllers\HR\LeaveController::class,       'approve'])->name('leave.approve');
+                Route::post('/leave/{id}/reject',        [\App\Http\Controllers\HR\LeaveController::class,       'reject'])->name('leave.reject');
+                Route::get('/payroll',                   [\App\Http\Controllers\HR\PayrollController::class,     'index'])->name('payroll.index');
+                Route::get('/payroll/{run}',             [\App\Http\Controllers\HR\PayrollController::class,     'show'])->name('payroll.show');
+                Route::get('/performance',               [\App\Http\Controllers\HR\PerformanceController::class, 'index'])->name('performance.index');
+                Route::post('/performance',              [\App\Http\Controllers\HR\PerformanceController::class, 'store'])->name('performance.store');
+                Route::get('/departments',               [\App\Http\Controllers\HR\DepartmentController::class,  'index'])->name('departments.index');
+                Route::post('/departments/{dept}/head',  [\App\Http\Controllers\HR\DepartmentController::class,  'updateHead'])->name('departments.head');
+            });
+
+        // Accountant portal
+        Route::middleware(['auth', 'role:accountant'])
+            ->prefix('accountant')
+            ->name('accountant.')
+            ->group(function () {
+                Route::get('/dashboard',                        [\App\Http\Controllers\Accountant\DashboardController::class, 'index'])->name('dashboard');
+                Route::get('/invoices',                         [\App\Http\Controllers\Accountant\InvoiceController::class,   'index'])->name('invoices.index');
+                Route::get('/invoices/{invoice}',               [\App\Http\Controllers\Accountant\InvoiceController::class,   'show'])->name('invoices.show');
+                Route::post('/invoices/{invoice}/mark-paid',    [\App\Http\Controllers\Accountant\InvoiceController::class,   'markPaid'])->name('invoices.mark-paid');
+                Route::get('/payroll',                          [\App\Http\Controllers\Accountant\PayrollController::class,   'index'])->name('payroll.index');
+                Route::get('/payroll/{run}',                    [\App\Http\Controllers\Accountant\PayrollController::class,   'show'])->name('payroll.show');
+                Route::get('/expenses',                         [\App\Http\Controllers\Accountant\ExpenseController::class,   'index'])->name('expenses.index');
+                Route::post('/expenses/{id}/approve',           [\App\Http\Controllers\Accountant\ExpenseController::class,   'approve'])->name('expenses.approve');
+                Route::post('/expenses/{id}/reject',            [\App\Http\Controllers\Accountant\ExpenseController::class,   'reject'])->name('expenses.reject');
+                Route::get('/reports',                          [\App\Http\Controllers\Accountant\ReportController::class,    'index'])->name('reports');
+            });
     });
