@@ -115,7 +115,7 @@ Route::prefix('{locale}')
             });
         // Public practitioner directory
         Route::get('/practitioners',      [\App\Http\Controllers\Public\PractitionerDirectoryController::class, 'index'])->name('practitioners.index');
-        Route::get('/practitioners/{id}', [\App\Http\Controllers\Public\PractitionerDirectoryController::class, 'show'])->name('practitioners.show');
+        Route::get('/practitioners/{id}', [\App\Http\Controllers\Public\PractitionerDirectoryController::class, 'show'])->name('practitioners.show')->where('id', '[0-9]+');
 
         // Customer portal (auth + customer role required)
         Route::middleware(['auth', 'role:customer'])

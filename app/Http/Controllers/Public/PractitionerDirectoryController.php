@@ -17,7 +17,7 @@ class PractitionerDirectoryController extends Controller
             ->values();
 
         $query = PractitionerProfile::whereIn('user_id', $approvedIds)
-            ->with('user')
+            ->with(['user', 'user.practitionerProfile'])
             ->orderByDesc('is_verified')
             ->orderByDesc('years_of_experience');
 
@@ -30,16 +30,32 @@ class PractitionerDirectoryController extends Controller
 
         $practitioners = $query->paginate(12)->withQueryString();
 
+        $ids = $practitioners->pluck('user_id');
+
+        $findingStats = \App\Models\PractitionerFinding::whereIn('practitioner_id', $ids)
+            ->where('is_published', true)
+            ->selectRaw('practitioner_id, COUNT(*) as findings_count, AVG(overall_rating) as avg_rating')
+            ->groupBy('practitioner_id')
+            ->get()
+            ->keyBy('practitioner_id');
+
+        $programStats = \App\Models\PractitionerApplication::whereIn('practitioner_id', $ids)
+            ->where('status', 'approved')
+            ->selectRaw('practitioner_id, COUNT(*) as programs_count')
+            ->groupBy('practitioner_id')
+            ->get()
+            ->keyBy('practitioner_id');
+
         $stats = [];
-        foreach ($practitioners as $profile) {
-            $stats[$profile->user_id] = [
-                'programs'  => PractitionerApplication::where('practitioner_id', $profile->user_id)->where('status', 'approved')->count(),
-                'findings'  => PractitionerFinding::where('practitioner_id', $profile->user_id)->where('is_published', true)->count(),
-                'avgRating' => PractitionerFinding::where('practitioner_id', $profile->user_id)->whereNotNull('overall_rating')->avg('overall_rating'),
+        foreach ($ids as $uid) {
+            $fs = $findingStats->get($uid);
+            $ps = $programStats->get($uid);
+            $avgRating = $fs?->avg_rating ? round((float) $fs->avg_rating, 1) : null;
+            $stats[$uid] = [
+                'programs'  => $ps?->programs_count ?? 0,
+                'findings'  => $fs?->findings_count ?? 0,
+                'avgRating' => $avgRating,
             ];
-            if ($stats[$profile->user_id]['avgRating']) {
-                $stats[$profile->user_id]['avgRating'] = round($stats[$profile->user_id]['avgRating'], 1);
-            }
         }
 
         $professions = PractitionerProfile::professionOptions();

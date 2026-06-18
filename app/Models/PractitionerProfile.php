@@ -16,6 +16,8 @@ class PractitionerProfile extends Model
         'bio','opes_testimonial','is_verified','payout_number',
     ];
 
+    protected $hidden = ['payout_number', 'registration_number'];
+
     protected $casts = [
         'is_verified' => 'boolean',
         'years_of_experience' => 'integer',

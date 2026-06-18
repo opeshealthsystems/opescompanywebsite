@@ -51,7 +51,7 @@
                 <div class="flex items-start justify-between">
                     <div class="w-14 h-14 rounded-full flex items-center justify-center text-xl font-bold text-white flex-shrink-0"
                          style="background:linear-gradient(135deg,#00C896,#1A6FE8)">
-                        {{ strtoupper(substr($profile->user->name, 0, 1)) }}
+                        {{ strtoupper(substr($profile->user?->name ?? '?', 0, 1)) }}
                     </div>
                     <div class="flex flex-col items-end gap-1">
                         @if($profile->is_verified)
@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div>
-                    <p class="font-semibold text-white group-hover:text-emerald-300 transition-colors">{{ $profile->user->name }}</p>
+                    <p class="font-semibold text-white group-hover:text-emerald-300 transition-colors">{{ $profile->user?->name ?? '—' }}</p>
                     <p class="text-sm text-slate-400">
                         {{ \App\Models\PractitionerProfile::professionOptions()[$profile->profession] ?? $profile->profession }}
                         @if($profile->specialty) · {{ $profile->specialty }} @endif
