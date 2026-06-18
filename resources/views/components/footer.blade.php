@@ -52,8 +52,8 @@ $current = $locale;
             <a href="{{ url($locale.'/academy') }}">
                 <i data-lucide="graduation-cap" style="width:12px;height:12px"></i>OPES Academy
             </a>
-            <a href="{{ url($locale.'/academy') }}">
-                <i data-lucide="book-open" style="width:12px;height:12px"></i>Courses
+            <a href="{{ url($locale.'/clinical-governance') }}">
+                <i data-lucide="heart-pulse" style="width:12px;height:12px"></i>Clinical Governance
             </a>
         </div>
 

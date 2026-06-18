@@ -167,6 +167,13 @@
                         <div class="nav-dd-sub">Security, OHADA, data sovereignty</div>
                     </div>
                 </a>
+                <a href="{{ url($locale.'/clinical-governance') }}" class="nav-dd-item">
+                    <i data-lucide="heart-pulse" style="width:14px;height:14px;color:#1A6FE8"></i>
+                    <div>
+                        <div class="nav-dd-name">Clinical Governance</div>
+                        <div class="nav-dd-sub">Patient safety & CDSS oversight</div>
+                    </div>
+                </a>
             </div>
         </div>
 
