@@ -113,7 +113,9 @@ Route::prefix('{locale}')
                 Route::get('/government-proposal', fn () => view('pages.government-proposal'))->name('government-proposal');
                 Route::get('/investor-pitch',      fn () => view('pages.investor-pitch'))->name('investor-pitch');
             });
-        Route::get('/practitioners', [PractitionerLandingController::class, 'index'])->name('practitioners.index');
+        // Public practitioner directory
+        Route::get('/practitioners',      [\App\Http\Controllers\Public\PractitionerDirectoryController::class, 'index'])->name('practitioners.index');
+        Route::get('/practitioners/{id}', [\App\Http\Controllers\Public\PractitionerDirectoryController::class, 'show'])->name('practitioners.show');
 
         // Customer portal (auth + customer role required)
         Route::middleware(['auth', 'role:customer'])
