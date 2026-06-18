@@ -51,6 +51,21 @@ class SurveyController extends Controller
             return back()->with('error', 'You have already submitted this survey.');
         }
 
+        $rules = [];
+        foreach ($survey->questions as $question) {
+            $key = "q_{$question->id}";
+            $rules[$key] = match ($question->type) {
+                'rating'          => 'nullable|integer|min:1|max:5',
+                'multiple_choice' => 'nullable|string|in:' . implode(',', (array) ($question->options ?? [])),
+                'yes_no'          => 'nullable|string|in:yes,no',
+                default           => 'nullable|string|max:2000',
+            };
+            if ($question->is_required) {
+                $rules[$key] = str_replace('nullable', 'required', $rules[$key]);
+            }
+        }
+        $request->validate($rules);
+
         foreach ($survey->questions as $question) {
             $key = "q_{$question->id}";
             $value = $request->input($key);
