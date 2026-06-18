@@ -3,7 +3,10 @@
 <nav class="site-nav" id="siteNav">
     <a href="{{ url($locale) }}" class="nav-logo">
         <div class="nav-logo-mark"><i data-lucide="circle-dashed" style="width:20px;height:20px"></i></div>
-        <div class="nav-logo-text">Opes <span>Health</span> Systems</div>
+        <div class="nav-logo-text">
+            <div class="nav-logo-name">Opes <span>Health</span> Systems</div>
+            <div class="nav-logo-tagline">Digital Health Infrastructure for Africa</div>
+        </div>
     </a>
 
     <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">

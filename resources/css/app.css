@@ -56,8 +56,10 @@ h1, h2, h3, h4, h5 { font-family: 'Plus Jakarta Sans', sans-serif; }
     color: #0F172A; flex-shrink: 0;
 }
 
-.nav-logo-text { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 15px; color: #fff; }
-.nav-logo-text span { color: #00C896; }
+.nav-logo-text { display: flex; flex-direction: column; gap: 2px; }
+.nav-logo-name { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 15px; color: #fff; line-height: 1; }
+.nav-logo-name span { color: #00C896; }
+.nav-logo-tagline { font-size: 9px; color: #475569; text-transform: uppercase; letter-spacing: 0.09em; line-height: 1; }
 
 .nav-links { display: flex; gap: 30px; align-items: center; }
 
@@ -1683,6 +1685,7 @@ h1, h2, h3, h4, h5 { font-family: 'Plus Jakarta Sans', sans-serif; }
 @media (max-width: 1024px) {
     .site-nav { padding: 0 18px; }
     .nav-toggle { display: inline-flex; }
+    .nav-logo-tagline { display: none; }
 
     .nav-collapse {
         display: none;
