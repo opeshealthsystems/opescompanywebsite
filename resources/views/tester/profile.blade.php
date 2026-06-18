@@ -62,4 +62,42 @@
         </form>
     </div>
 </div>
+
+{{-- TesterProfile fields --}}
+<div class="mt-6 bg-slate-900 border border-slate-800 rounded-xl p-6">
+    <h2 class="text-sm font-semibold text-white mb-5">Tester Profile</h2>
+    <form method="POST" action="{{ route('tester.profile.update', ['locale' => app()->getLocale()]) }}">
+        @csrf @method('PATCH')
+        <input type="hidden" name="name" value="{{ $user->name }}">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-xs font-medium text-slate-400 mb-1.5">Testing Specialty</label>
+                <select name="testing_specialty" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                    <option value="">— Select —</option>
+                    @foreach(\App\Models\TesterProfile::specialtyOptions() as $val => $label)
+                        <option value="{{ $val }}" @selected(old('testing_specialty', $user->testerProfile?->testing_specialty) === $val)>{{ $label }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-slate-400 mb-1.5">Portfolio URL</label>
+                <input type="url" name="portfolio_url" value="{{ old('portfolio_url', $user->testerProfile?->portfolio_url) }}"
+                       class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
+                       maxlength="255" placeholder="https://...">
+                @error('portfolio_url') <p class="text-red-400 text-xs mt-1">{{ $message }}</p> @enderror
+            </div>
+            <div class="sm:col-span-2">
+                <label class="block text-xs font-medium text-slate-400 mb-1.5">Bio</label>
+                <textarea name="bio" rows="3" maxlength="2000"
+                          class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">{{ old('bio', $user->testerProfile?->bio) }}</textarea>
+            </div>
+        </div>
+        <div class="mt-6 flex justify-end">
+            <button type="submit" class="px-5 py-2.5 rounded-lg text-sm font-semibold text-white"
+                    style="background:linear-gradient(135deg,#1A6FE8,#1258c4)">
+                Save Tester Profile
+            </button>
+        </div>
+    </form>
+</div>
 </x-layouts.tester>

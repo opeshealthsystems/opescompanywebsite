@@ -114,6 +114,11 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasOne(PractitionerProfile::class);
     }
 
+    public function testerProfile(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(\App\Models\TesterProfile::class);
+    }
+
     public function practitionerFindings(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(\App\Models\PractitionerFinding::class, 'practitioner_id');
