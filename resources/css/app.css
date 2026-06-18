@@ -372,6 +372,7 @@ h1, h2, h3, h4, h5 { font-family: 'Plus Jakarta Sans', sans-serif; }
     padding: 54px 48px;
 }
 .stats-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; text-align: center; }
+.stats-bar { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; text-align: center; }
 .stat-item { display: flex; flex-direction: column; align-items: center; gap: 10px; }
 .stat-icon-wrap {
     width: 48px; height: 48px; background: rgba(255,255,255,0.04);
@@ -1853,6 +1854,7 @@ h1, h2, h3, h4, h5 { font-family: 'Plus Jakarta Sans', sans-serif; }
     .blog-grid { grid-template-columns: 1fr !important; }
 
     /* about page — platform grid & new sections */
+    .stats-bar { grid-template-columns: repeat(2,1fr); gap: 16px; }
     .platform-cat-grid { grid-template-columns: repeat(2,1fr); gap: 10px; }
     .opescare-spotlight { padding: 28px 20px; }
     .about-manifesto p { font-size: 15px; }

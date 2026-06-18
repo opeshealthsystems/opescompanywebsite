@@ -110,7 +110,7 @@
         <i data-lucide="bar-chart-2" style="width:12px;height:12px"></i>
         {{ __('about.stats_eyebrow') }}
     </div>
-    <div class="stats-bar" style="max-width:700px;margin:0 auto">
+    <div class="stats-bar" style="max-width:900px;margin:0 auto">
         @foreach([
             ['value'=>'22','label'=>__('about.stat_0_label')],
             ['value'=>'EN/FR','label'=>__('about.stat_1_label')],
