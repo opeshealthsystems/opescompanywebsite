@@ -14,7 +14,8 @@ class TesterAssignment extends Model
     ];
 
     protected $casts = [
-        'due_date' => 'date',
+        'due_date'    => 'date',
+        'assigned_to' => 'integer',
     ];
 
     public function tester(): BelongsTo

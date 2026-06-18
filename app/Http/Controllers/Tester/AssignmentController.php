@@ -22,22 +22,20 @@ class AssignmentController extends Controller
 
     public function show(Request $request)
     {
-        $user       = Auth::user();
         $id         = (int) $request->route('id');
         $assignment = TesterAssignment::with('bugReports')->findOrFail($id);
 
-        abort_if((int) $assignment->assigned_to !== $user->id, 403);
+        $this->authorize('view', $assignment);
 
         return view('tester.assignments.show', compact('assignment'));
     }
 
     public function updateStatus(Request $request)
     {
-        $user       = Auth::user();
         $id         = (int) $request->route('id');
         $assignment = TesterAssignment::findOrFail($id);
 
-        abort_if((int) $assignment->assigned_to !== $user->id, 403);
+        $this->authorize('update', $assignment);
 
         $validated = $request->validate([
             'status' => 'required|in:pending,in_progress,completed,cancelled',
@@ -56,7 +54,7 @@ class AssignmentController extends Controller
         $id         = (int) $request->route('id');
         $assignment = TesterAssignment::findOrFail($id);
 
-        abort_if((int) $assignment->assigned_to !== $user->id, 403);
+        $this->authorize('update', $assignment);
         abort_unless($assignment->isActive(), 403, 'Cannot file a bug report on a completed or cancelled assignment.');
 
         $validated = $request->validate([
