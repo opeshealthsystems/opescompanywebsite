@@ -272,6 +272,361 @@ $prices = [
     </div>
 </div>
 
+{{-- ── LICENSING MODELS ──────────────────────────────────────────── --}}
+<div class="section" style="max-width:960px;margin:0 auto">
+    <div class="section-label" style="margin-bottom:16px">
+        <i data-lucide="file-text" style="width:12px;height:12px"></i>
+        {{ $isFr ? 'Modèles de licence' : 'Licensing models' }}
+    </div>
+    <h2 class="section-title" style="font-size:clamp(18px,2.5vw,24px)">
+        {{ $isFr ? 'Choisissez votre modèle d\'acquisition' : 'Choose your acquisition model' }}
+    </h2>
+    <p style="color:#64748b;max-width:700px;font-size:14px;line-height:1.75;margin:12px 0 32px">
+        {{ $isFr
+            ? 'OPES propose trois modèles de licence adaptés à la situation financière de chaque établissement — de l\'abonnement mensuel flexible au modèle perpétuel pour les établissements publics.'
+            : 'OPES offers three licensing models suited to every facility\'s financial situation — from flexible monthly subscription to perpetual licence for public institutions.' }}
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px">
+        @php
+        $licenseModels = $isFr ? [
+            [
+                'icon'    => 'repeat',
+                'color'   => '#00C896',
+                'title'   => 'Abonnement mensuel',
+                'badge'   => 'Flexible',
+                'desc'    => 'Payez mois par mois, sans engagement annuel. Idéal pour les cliniques qui démarrent ou souhaitent tester la plateforme avant un engagement plus long.',
+                'points'  => ['Aucun engagement annuel','Activation et désactivation à tout moment','Facturation en début de mois (XAF, EUR, USD)','Mobile Money accepté'],
+            ],
+            [
+                'icon'    => 'calendar',
+                'color'   => '#1A6FE8',
+                'title'   => 'Abonnement annuel',
+                'badge'   => 'Économique · −20 %',
+                'desc'    => 'Engagement de 12 mois en échange d\'une réduction de 20 % sur le tarif mensuel. Le modèle le plus choisi par les hôpitaux de district et les structures privées.',
+                'points'  => ['20 % de réduction sur le tarif mensuel','Facture annuelle unique ou trimestrielle','Renouvellement automatique avec préavis 30 j','Formation de mise à niveau incluse'],
+            ],
+            [
+                'icon'    => 'key',
+                'color'   => '#00C896',
+                'title'   => 'Licence perpétuelle',
+                'badge'   => 'Établissements publics',
+                'desc'    => 'Acquisition unique du droit d\'utilisation, assortie d\'une maintenance annuelle de 18 % du prix de licence. Recommandé pour les hôpitaux généraux, ministères et HMO.',
+                'points'  => ['Paiement unique du droit de licence','Maintenance annuelle 18 % (mises à jour + support)','Hébergement on-premise ou cloud inclus au choix','Adapté aux marchés publics et budgets dotés'],
+            ],
+        ] : [
+            [
+                'icon'    => 'repeat',
+                'color'   => '#00C896',
+                'title'   => 'Monthly subscription',
+                'badge'   => 'Flexible',
+                'desc'    => 'Pay month by month with no annual commitment. Ideal for clinics starting out or testing the platform before a longer engagement.',
+                'points'  => ['No annual commitment','Activate or deactivate at any time','Invoiced at start of month (XAF, EUR, USD)','Mobile Money accepted'],
+            ],
+            [
+                'icon'    => 'calendar',
+                'color'   => '#1A6FE8',
+                'title'   => 'Annual subscription',
+                'badge'   => 'Best value · −20%',
+                'desc'    => '12-month commitment in exchange for a 20% discount on the monthly rate. The most-chosen model by district hospitals and private facilities.',
+                'points'  => ['20% off the monthly rate','Single annual invoice or quarterly','Auto-renewal with 30-day notice','Upgrade training included'],
+            ],
+            [
+                'icon'    => 'key',
+                'color'   => '#00C896',
+                'title'   => 'Perpetual licence',
+                'badge'   => 'Public institutions',
+                'desc'    => 'One-time acquisition of usage rights, paired with an 18% annual maintenance fee. Recommended for general hospitals, ministries, and HMOs.',
+                'points'  => ['One-time licence fee','Annual maintenance 18% (updates + support)','On-premise or cloud hosting — your choice','Suited to public procurement and budgeted capex'],
+            ],
+        ];
+        @endphp
+        @foreach($licenseModels as $lm)
+        <div class="pi-card" style="flex-direction:column;align-items:flex-start">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+                <div style="width:40px;height:40px;border-radius:10px;background:{{ $lm['color'] }}15;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                    <i data-lucide="{{ $lm['icon'] }}" style="width:18px;height:18px;color:{{ $lm['color'] }}"></i>
+                </div>
+                <div>
+                    <div style="font-weight:800;color:#e2e8f0;font-size:14px">{{ $lm['title'] }}</div>
+                    <div style="font-size:10px;color:{{ $lm['color'] }};font-weight:700;text-transform:uppercase;letter-spacing:0.07em">{{ $lm['badge'] }}</div>
+                </div>
+            </div>
+            <p style="font-size:12px;color:#64748b;line-height:1.6;margin-bottom:14px">{{ $lm['desc'] }}</p>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:7px">
+                @foreach($lm['points'] as $pt)
+                <li style="display:flex;align-items:flex-start;gap:7px;font-size:12px;color:#94a3b8">
+                    <i data-lucide="check" style="width:12px;height:12px;color:#00C896;flex-shrink:0;margin-top:1px"></i>{{ $pt }}
+                </li>
+                @endforeach
+            </ul>
+        </div>
+        @endforeach
+    </div>
+</div>
+
+<div class="divider"></div>
+
+{{-- ── IMPLEMENTATION SERVICES ──────────────────────────────────── --}}
+<div class="section" style="max-width:960px;margin:0 auto">
+    <div class="section-label" style="margin-bottom:16px">
+        <i data-lucide="map" style="width:12px;height:12px"></i>
+        {{ $isFr ? 'Services d\'implémentation' : 'Implementation services' }}
+    </div>
+    <h2 class="section-title" style="font-size:clamp(18px,2.5vw,24px)">
+        {{ $isFr ? 'Forfaits de déploiement' : 'Deployment packages' }}
+    </h2>
+    <p style="color:#64748b;max-width:700px;font-size:14px;line-height:1.75;margin:12px 0 32px">
+        {{ $isFr
+            ? 'L\'implémentation est facturée en une seule fois, séparément de l\'abonnement. Les forfaits ci-dessous couvrent l\'ensemble du cycle — de la découverte au go-live. Les abonnements Facility et System bénéficient de tarifs réduits.'
+            : 'Implementation is billed once, separately from the subscription. The packages below cover the full cycle — from discovery to go-live. Facility and System subscriptions receive discounted rates.' }}
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px">
+        @php
+        $implPackages = $isFr ? [
+            [
+                'name'      => 'Essentials',
+                'target'    => 'Cliniques & cabinets',
+                'price'     => '250 000 – 500 000 FCFA',
+                'duration'  => '2–3 semaines',
+                'color'     => '#475569',
+                'includes'  => ['Configuration du système','Migration de données (jusqu\'à 5 000 dossiers)','Formation en ligne (4 h, rôles clés)','Assistance au lancement à distance'],
+            ],
+            [
+                'name'      => 'Professional',
+                'target'    => 'Hôpitaux de district',
+                'price'     => '1 500 000 – 3 000 000 FCFA',
+                'duration'  => '4–6 semaines',
+                'color'     => '#1A6FE8',
+                'includes'  => ['Découverte & cartographie des processus','Configuration & paramétrage complet','Migration de données illimitée','Formation sur site (tous rôles, 3 jours)','Accompagnement au go-live (2 jours sur site)','30 jours de support post-lancement prioritaire'],
+                'featured'  => true,
+            ],
+            [
+                'name'      => 'Enterprise',
+                'target'    => 'Hôpitaux généraux & réseaux',
+                'price'     => 'Sur devis',
+                'duration'  => '8–16 semaines',
+                'color'     => '#00C896',
+                'includes'  => ['Tout Professional','Architecture & infrastructure sur mesure','Intégrations HL7 FHIR avec systèmes existants','Migration & nettoyage de données complexe','Formation multi-sites (formateurs certifiés)','Ingénieur attitré pendant tout le déploiement','SLA go-live contractualisé'],
+            ],
+        ] : [
+            [
+                'name'      => 'Essentials',
+                'target'    => 'Clinics & practices',
+                'price'     => '250,000 – 500,000 FCFA',
+                'duration'  => '2–3 weeks',
+                'color'     => '#475569',
+                'includes'  => ['System configuration','Data migration (up to 5,000 records)','Online training (4 h, key roles)','Remote launch support'],
+            ],
+            [
+                'name'      => 'Professional',
+                'target'    => 'District hospitals',
+                'price'     => '1,500,000 – 3,000,000 FCFA',
+                'duration'  => '4–6 weeks',
+                'color'     => '#1A6FE8',
+                'includes'  => ['Discovery & process mapping','Full configuration & parameterisation','Unlimited data migration','On-site training (all roles, 3 days)','Go-live support (2 days on-site)','30-day priority post-launch support'],
+                'featured'  => true,
+            ],
+            [
+                'name'      => 'Enterprise',
+                'target'    => 'General hospitals & networks',
+                'price'     => 'Custom quote',
+                'duration'  => '8–16 weeks',
+                'color'     => '#00C896',
+                'includes'  => ['Everything in Professional','Custom architecture & infrastructure','HL7 FHIR integrations with existing systems','Complex data migration & cleansing','Multi-site training (certified trainers)','Dedicated engineer for full deployment','Contractual go-live SLA'],
+            ],
+        ];
+        @endphp
+        @foreach($implPackages as $pkg)
+        <div class="pricing-card {{ isset($pkg['featured']) ? 'pricing-card-featured' : '' }}" style="{{ isset($pkg['featured']) ? '' : 'border-color:'.$pkg['color'].'30' }}">
+            @if(isset($pkg['featured']))
+            <div class="pricing-recommended">{{ $isFr ? 'LE PLUS CHOISI' : 'MOST CHOSEN' }}</div>
+            @endif
+            <div class="pricing-tier" style="color:{{ $pkg['color'] }}">{{ $pkg['name'] }}</div>
+            <div class="pricing-name" style="font-size:16px">{{ $pkg['target'] }}</div>
+            <div class="pricing-price" style="margin:16px 0">
+                <div class="pricing-amount-custom" style="font-size:clamp(15px,2vw,18px);line-height:1.3">{{ $pkg['price'] }}</div>
+                <div class="pricing-period">
+                    <i data-lucide="clock" style="width:11px;height:11px;margin-right:3px"></i>{{ $pkg['duration'] }}
+                </div>
+            </div>
+            <a href="{{ route('contact', ['locale' => $locale]) }}" class="{{ isset($pkg['featured']) ? 'pricing-cta pricing-cta-primary' : 'pricing-cta pricing-cta-secondary' }}">
+                <i data-lucide="send" style="width:13px;height:13px"></i>
+                {{ $isFr ? 'Demander un devis' : 'Get a quote' }}
+            </a>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-features">
+                @foreach($pkg['includes'] as $inc)
+                <li><i data-lucide="check" class="fi pricing-check"></i> {{ $inc }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endforeach
+    </div>
+    <p style="color:#475569;font-size:12px;margin-top:16px;text-align:center">
+        {{ $isFr
+            ? '* Les abonnements annuels et System bénéficient d\'une réduction de 15 % sur le forfait d\'implémentation.'
+            : '* Annual and System subscriptions receive a 15% discount on the implementation package.' }}
+    </p>
+</div>
+
+<div class="divider"></div>
+
+{{-- ── TRAINING PACKAGES ─────────────────────────────────────────── --}}
+<div class="section" style="max-width:960px;margin:0 auto">
+    <div class="section-label" style="margin-bottom:16px">
+        <i data-lucide="graduation-cap" style="width:12px;height:12px"></i>
+        {{ $isFr ? 'Formations complémentaires' : 'Additional training' }}
+    </div>
+    <h2 class="section-title" style="font-size:clamp(18px,2.5vw,24px)">
+        {{ $isFr ? 'Programmes de formation à la carte' : 'À la carte training programmes' }}
+    </h2>
+    <p style="color:#64748b;max-width:700px;font-size:14px;line-height:1.75;margin:12px 0 32px">
+        {{ $isFr
+            ? 'En dehors de la formation incluse dans l\'implémentation, OPES Academy propose des sessions complémentaires pour l\'intégration de nouveaux employés, les mises à niveau fonctionnelles, et la certification avancée.'
+            : 'Beyond the training included in implementation, OPES Academy offers additional sessions for new-staff onboarding, feature upgrades, and advanced certification.' }}
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+        @php
+        $trainingPkgs = $isFr ? [
+            ['icon'=>'monitor',        'color'=>'#1A6FE8','title'=>'E-learning OPES Academy',   'price'=>'Inclus dans l\'abonnement','desc'=>'Accès illimité aux parcours de certification en ligne pour tous les utilisateurs de votre établissement.'],
+            ['icon'=>'users',          'color'=>'#00C896','title'=>'Formation sur site',         'price'=>'85 000 FCFA / jour formateur','desc'=>'Formateur certifié OPES déployé dans votre établissement. Jusqu\'à 15 participants par session.'],
+            ['icon'=>'video',          'color'=>'#1A6FE8','title'=>'Formation à distance',       'price'=>'35 000 FCFA / session (2 h)','desc'=>'Sessions en visioconférence pour les équipes dispersées ou pour les rappels de fonctionnalités.'],
+            ['icon'=>'refresh-cw',     'color'=>'#00C896','title'=>'Mise à niveau fonctionnelle','price'=>'20 000 FCFA / session','desc'=>'Formation ciblée sur les nouvelles fonctionnalités après une mise à jour majeure de la plateforme.'],
+            ['icon'=>'award',          'color'=>'#1A6FE8','title'=>'Certification avancée',      'price'=>'45 000 FCFA / candidat','desc'=>'Passage de l\'examen de certification OPES avec attestation numérique et accès CPD.'],
+            ['icon'=>'book-open',      'color'=>'#00C896','title'=>'Kit de démarrage administrateur','price'=>'Gratuit','desc'=>'Documentation complète, guides de configuration et vidéos de prise en main pour les administrateurs système.'],
+        ] : [
+            ['icon'=>'monitor',        'color'=>'#1A6FE8','title'=>'OPES Academy e-learning',   'price'=>'Included in subscription','desc'=>'Unlimited access to online certification tracks for all users at your facility.'],
+            ['icon'=>'users',          'color'=>'#00C896','title'=>'On-site training',           'price'=>'85,000 FCFA / trainer-day','desc'=>'Certified OPES trainer deployed at your facility. Up to 15 participants per session.'],
+            ['icon'=>'video',          'color'=>'#1A6FE8','title'=>'Remote training',            'price'=>'35,000 FCFA / session (2 h)','desc'=>'Video conference sessions for distributed teams or feature refreshers.'],
+            ['icon'=>'refresh-cw',     'color'=>'#00C896','title'=>'Feature upgrade session',    'price'=>'20,000 FCFA / session','desc'=>'Targeted training on new features after a major platform update.'],
+            ['icon'=>'award',          'color'=>'#1A6FE8','title'=>'Advanced certification',     'price'=>'45,000 FCFA / candidate','desc'=>'OPES certification exam with digital certificate and CPD credits.'],
+            ['icon'=>'book-open',      'color'=>'#00C896','title'=>'Admin starter kit',          'price'=>'Free','desc'=>'Complete documentation, configuration guides, and getting-started videos for system administrators.'],
+        ];
+        @endphp
+        @foreach($trainingPkgs as $tp)
+        <div style="background:#0F172A;border:1px solid #1e293b;border-radius:12px;padding:18px 16px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                <div style="width:36px;height:36px;border-radius:9px;background:{{ $tp['color'] }}15;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                    <i data-lucide="{{ $tp['icon'] }}" style="width:16px;height:16px;color:{{ $tp['color'] }}"></i>
+                </div>
+                <div style="font-weight:700;color:#e2e8f0;font-size:13px;line-height:1.3">{{ $tp['title'] }}</div>
+            </div>
+            <div style="font-size:12px;font-weight:700;color:{{ $tp['color'] }};margin-bottom:6px">{{ $tp['price'] }}</div>
+            <div style="font-size:12px;color:#64748b;line-height:1.55">{{ $tp['desc'] }}</div>
+        </div>
+        @endforeach
+    </div>
+</div>
+
+<div class="divider"></div>
+
+{{-- ── MAINTENANCE & RENEWALS ───────────────────────────────────── --}}
+<div class="section" style="max-width:960px;margin:0 auto">
+    <div class="section-label" style="margin-bottom:16px">
+        <i data-lucide="wrench" style="width:12px;height:12px"></i>
+        {{ $isFr ? 'Maintenance annuelle' : 'Annual maintenance' }}
+    </div>
+    <h2 class="section-title" style="font-size:clamp(18px,2.5vw,24px)">
+        {{ $isFr ? 'Maintenance & renouvellements' : 'Maintenance & renewals' }}
+    </h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:28px;align-items:start">
+        <div>
+            <p style="color:#64748b;font-size:14px;line-height:1.75;margin-bottom:24px">
+                {{ $isFr
+                    ? 'Pour les clients sous licence perpétuelle, la maintenance annuelle couvre les mises à jour de sécurité, les nouvelles versions majeures, et le niveau de support Bronze. Elle peut être étendue à un niveau de support supérieur.'
+                    : 'For perpetual licence customers, annual maintenance covers security updates, major new releases, and Bronze support tier. It can be extended to a higher support tier.' }}
+            </p>
+            <div style="background:#0F172A;border:1px solid #1e293b;border-radius:12px;padding:20px 18px">
+                <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:16px">
+                    {{ $isFr ? 'Grille de maintenance (licence perpétuelle)' : 'Maintenance schedule (perpetual licence)' }}
+                </div>
+                @foreach($isFr
+                    ? [['Maintenance standard','18 % du prix de licence / an','Mises à jour + support Bronze'],['Maintenance étendue','22 % du prix de licence / an','Mises à jour + support Silver'],['Maintenance premium','28 % du prix de licence / an','Mises à jour + support Gold']]
+                    : [['Standard maintenance','18% of licence price / year','Updates + Bronze support'],['Extended maintenance','22% of licence price / year','Updates + Silver support'],['Premium maintenance','28% of licence price / year','Updates + Gold support']]
+                as $mrow)
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0;border-bottom:1px solid #1e293b;gap:8px">
+                    <div>
+                        <div style="font-weight:600;color:#e2e8f0;font-size:12px">{{ $mrow[0] }}</div>
+                        <div style="font-size:11px;color:#475569">{{ $mrow[2] }}</div>
+                    </div>
+                    <div style="color:#00C896;font-weight:700;font-size:12px;white-space:nowrap">{{ $mrow[1] }}</div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+        <div>
+            <div style="background:#0f1a2e;border:1px solid rgba(0,200,150,0.2);border-radius:12px;padding:20px 18px;margin-bottom:16px">
+                <div style="font-weight:700;color:#00C896;font-size:13px;margin-bottom:10px">
+                    {{ $isFr ? 'Réductions multi-sites' : 'Multi-site discounts' }}
+                </div>
+                <p style="font-size:12px;color:#64748b;line-height:1.65;margin-bottom:14px">
+                    {{ $isFr
+                        ? 'Les réseaux de santé déployant OPES sur plusieurs sites bénéficient de déductions progressives sur la licence et la maintenance.'
+                        : 'Health networks deploying OPES across multiple sites receive progressive discounts on licence and maintenance fees.' }}
+                </p>
+                @foreach($isFr
+                    ? [['2–4 sites','−10 %'],['5–9 sites','−18 %'],['10–19 sites','−25 %'],['20+ sites','Sur devis']]
+                    : [['2–4 sites','−10%'],['5–9 sites','−18%'],['10–19 sites','−25%'],['20+ sites','Custom']]
+                as $disc)
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #1e293b">
+                    <span style="font-size:12px;color:#94a3b8">{{ $disc[0] }}</span>
+                    <span style="font-size:12px;font-weight:700;color:#00C896">{{ $disc[1] }}</span>
+                </div>
+                @endforeach
+            </div>
+            <div style="background:#0f1a2e;border:1px solid rgba(26,111,232,0.2);border-radius:12px;padding:20px 18px">
+                <div style="font-weight:700;color:#1A6FE8;font-size:13px;margin-bottom:10px">
+                    {{ $isFr ? 'Réductions secteur public' : 'Public sector discounts' }}
+                </div>
+                <p style="font-size:12px;color:#64748b;line-height:1.65;margin-bottom:14px">
+                    {{ $isFr
+                        ? 'Hôpitaux publics, centres de santé gouvernementaux, ministères et ONG bénéficient de tarifs préférentiels.'
+                        : 'Public hospitals, government health centres, ministries, and NGOs qualify for preferential rates.' }}
+                </p>
+                @foreach($isFr
+                    ? [['Hôpitaux publics','−30 % sur l\'abonnement'],['Ministères & DSP','Tarif institutionnel'],['ONG / bailleurs','Sur devis dédié']]
+                    : [['Public hospitals','−30% on subscription'],['Ministries & PHD','Institutional rate'],['NGOs / donors','Dedicated quote']]
+                as $pub)
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #1e293b">
+                    <span style="font-size:12px;color:#94a3b8">{{ $pub[0] }}</span>
+                    <span style="font-size:12px;font-weight:700;color:#1A6FE8">{{ $pub[1] }}</span>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+{{-- ── PAYMENT METHODS ──────────────────────────────────────────── --}}
+<div class="section" style="max-width:960px;margin:0 auto;text-align:center">
+    <div class="section-label" style="justify-content:center;margin-bottom:16px">
+        <i data-lucide="credit-card" style="width:12px;height:12px"></i>
+        {{ $isFr ? 'Modes de règlement' : 'Payment methods' }}
+    </div>
+    <h2 class="section-title" style="font-size:clamp(18px,2.5vw,22px)">
+        {{ $isFr ? 'Payez comme vous le souhaitez' : 'Pay the way that works for you' }}
+    </h2>
+    <p style="color:#64748b;max-width:640px;margin:12px auto 32px;font-size:14px;line-height:1.75">
+        {{ $isFr
+            ? 'OPES accepte tous les modes de règlement courants en Afrique centrale — y compris Mobile Money — pour que les établissements de toute taille puissent accéder à la plateforme sans friction bancaire.'
+            : 'OPES accepts all common payment methods in Central Africa — including Mobile Money — so facilities of every size can access the platform without banking friction.' }}
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;max-width:800px;margin:0 auto">
+        @foreach($isFr
+            ? [['smartphone','#FFCC00','MTN Mobile Money','Paiements MoMo XAF'],['smartphone','#FF6600','Orange Money','Paiements Orange XAF'],['landmark','#1A6FE8','Virement bancaire','XAF · EUR · USD'],['credit-card','#00C896','Carte bancaire','Visa · Mastercard (annuel)'],['file-text','#475569','Bon de commande','Marchés publics & PME']]
+            : [['smartphone','#FFCC00','MTN Mobile Money','MoMo XAF payments'],['smartphone','#FF6600','Orange Money','Orange XAF payments'],['landmark','#1A6FE8','Bank transfer','XAF · EUR · USD'],['credit-card','#00C896','Card payment','Visa · Mastercard (annual)'],['file-text','#475569','Purchase order','Public procurement & SMEs']]
+        as $pm)
+        <div style="background:#0F172A;border:1px solid #1e293b;border-radius:10px;padding:14px;text-align:center">
+            <i data-lucide="{{ $pm[0] }}" style="width:22px;height:22px;color:{{ $pm[1] }};margin-bottom:8px"></i>
+            <div style="font-weight:700;color:#e2e8f0;font-size:12px;margin-bottom:3px">{{ $pm[2] }}</div>
+            <div style="font-size:11px;color:#64748b">{{ $pm[3] }}</div>
+        </div>
+        @endforeach
+    </div>
+</div>
+
 {{-- ── CTA STRIP ────────────────────────────────────────────────── --}}
 <div class="pricing-cta-strip">
     <h2>{{ $isFr ? 'Besoin d\'un devis personnalisé ?' : 'Need a custom quote?' }}</h2>
