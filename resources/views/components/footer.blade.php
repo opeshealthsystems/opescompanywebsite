@@ -52,7 +52,7 @@ $current = $locale;
             <a href="{{ url($locale.'/academy') }}">
                 <i data-lucide="graduation-cap" style="width:12px;height:12px"></i>OPES Academy
             </a>
-            <a href="{{ url($locale.'/courses') }}">
+            <a href="{{ url($locale.'/academy') }}">
                 <i data-lucide="book-open" style="width:12px;height:12px"></i>Courses
             </a>
         </div>
@@ -87,8 +87,8 @@ $current = $locale;
             <a href="{{ url($locale.'/compliance') }}">
                 <i data-lucide="scale" style="width:12px;height:12px"></i>Compliance & Trust
             </a>
-            <a href="mailto:info@opeshealthsystems.com">
-                <i data-lucide="mail" style="width:12px;height:12px"></i>info@opeshealthsystems.com
+            <a href="mailto:{{ config('company.email') }}">
+                <i data-lucide="mail" style="width:12px;height:12px"></i>{{ config('company.email') }}
             </a>
         </div>
     </div>

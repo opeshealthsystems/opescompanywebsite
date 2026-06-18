@@ -228,6 +228,8 @@ $prices = [
     </table>
 </div>
 
+<div class="divider"></div>
+
 {{-- ── LICENSING MODELS ──────────────────────────────────────────── --}}
 <div class="section" style="max-width:960px;margin:0 auto">
     <div class="section-label" style="margin-bottom:16px">
@@ -612,10 +614,10 @@ $prices = [
     $faqs = $isFr ? [
         ['q' => 'Puis-je ajouter des modules individuellement ?',
          'a' => 'Oui. Chaque module OPES est disponible à la carte. Commencez avec le niveau Clinic et ajoutez Laboratoire, Pharmacie ou Radiologie selon vos besoins. Votre responsable de compte vous accompagnera dans la configuration.'],
-        ['q' => 'Y a-t-il des frais de mise en place ?',
-         'a' => 'Les niveaux Clinic et Facility n\'ont pas de frais d\'installation. Le niveau System Enterprise inclut un déploiement sur site et une formation dont le coût est défini au cas par cas selon la taille de l\'établissement.'],
+        ['q' => 'Comment fonctionne la tarification de l\'implémentation ?',
+         'a' => 'L\'implémentation est facturée en une seule fois, séparément de l\'abonnement. Les forfaits commencent à 250 000 FCFA pour Essentials (cliniques, à distance) et jusqu\'à 3 000 000 FCFA pour Professional (hôpitaux de district, sur site). Enterprise est tarifé au cas par cas. Les abonnés annuels et System bénéficient d\'une réduction de 15 % sur le forfait d\'implémentation.'],
         ['q' => 'Quels modes de paiement acceptez-vous ?',
-         'a' => 'Nous acceptons les virements bancaires (XAF, EUR, USD), Mobile Money (MTN/Orange Cameroun) et les paiements par carte pour les abonnements annuels. Les abonnements mensuels sont facturés en début de période.'],
+         'a' => 'MTN Mobile Money, Orange Money, virement bancaire (XAF/EUR/USD), Visa/Mastercard (abonnements annuels) et bons de commande pour les marchés publics. Consultez la section Modes de règlement ci-dessus pour le détail complet.'],
         ['q' => 'Mes données sont-elles hébergées au Cameroun ?',
          'a' => 'Oui. Par défaut, toutes les données de santé sont hébergées dans nos datacenters au Cameroun, en conformité avec la législation camerounaise sur la protection des données et la stratégie numérique du Ministère de la Santé 2026-2030.'],
         ['q' => 'Puis-je migrer depuis mon logiciel existant ?',
@@ -625,10 +627,10 @@ $prices = [
     ] : [
         ['q' => 'Can I add individual modules?',
          'a' => 'Yes. Every OPES module is available à la carte. Start with the Clinic tier and add Laboratory, Pharmacy, or Radiology as you grow. Your account manager will help you configure the right set.'],
-        ['q' => 'Are there any setup fees?',
-         'a' => 'The Clinic and Facility tiers have no setup fees. The Enterprise System tier includes on-site deployment and training; those costs are scoped individually based on facility size and complexity.'],
+        ['q' => 'How does implementation pricing work?',
+         'a' => 'Implementation is billed once, separately from your subscription. Packages start at 250,000 FCFA for the Essentials (clinics, remote) up to 3,000,000 FCFA for Professional (district hospitals, on-site). Enterprise is scoped individually. Annual and System subscribers receive a 15% discount on the implementation fee.'],
         ['q' => 'What payment methods do you accept?',
-         'a' => 'We accept bank transfers (XAF, EUR, USD), Mobile Money (MTN/Orange Cameroon), and card payments for annual subscriptions. Monthly subscriptions are invoiced at the start of each billing period.'],
+         'a' => 'MTN Mobile Money, Orange Money, bank transfer (XAF/EUR/USD), Visa/Mastercard (annual plans), and purchase orders for public procurement. See the Payment Methods section above for the full breakdown.'],
         ['q' => 'Where is my data hosted?',
          'a' => 'By default all health data is hosted in our data centres in Cameroon, in compliance with Cameroonian data protection laws and the Ministry of Health Digital Health Strategy 2026–2030.'],
         ['q' => 'Can I migrate from my existing software?',
