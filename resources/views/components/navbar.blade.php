@@ -205,7 +205,11 @@
             </div>
         </div>
 
-        <a href="{{ url($locale.'/strategy') }}">{{ $locale === 'fr' ? 'Stratégie' : 'Strategy' }}</a>
+        @auth
+            @if(auth()->user()->hasAnyRole(['customer','admin','super_admin','support']))
+            <a href="{{ url($locale.'/strategy') }}">{{ $locale === 'fr' ? 'Stratégie' : 'Strategy' }}</a>
+            @endif
+        @endauth
         <a href="{{ url($locale.'/about') }}">{{ __('nav.about') }}</a>
         <a href="{{ url($locale.'/partnerships') }}">{{ __('nav.partnerships') }}</a>
         <a href="{{ url($locale.'/pricing') }}">{{ __('nav.pricing') }}</a>

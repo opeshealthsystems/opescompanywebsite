@@ -87,11 +87,16 @@ Route::prefix('{locale}')
         Route::get('/clinical-governance',  fn () => view('pages.clinical-governance'))->name('clinical-governance');
         Route::get('/interoperability',     fn () => view('pages.interoperability'))->name('interoperability');
         Route::get('/quality',              fn () => view('pages.quality'))->name('quality');
-        Route::get('/strategy',             fn () => view('pages.strategy'))->name('strategy');
         Route::get('/national-platform',    fn () => view('pages.national-platform'))->name('national-platform');
         Route::get('/partner-program',      fn () => view('pages.partner-program'))->name('partner-program');
-        Route::get('/risk',                 fn () => view('pages.risk'))->name('risk');
-        Route::get('/financial-model',      fn () => view('pages.financial-model'))->name('financial-model');
+
+        // Confidential — requires login (customer, admin, or super_admin)
+        Route::middleware(['auth', 'role:customer|admin|super_admin|support'])
+            ->group(function () {
+                Route::get('/strategy',        fn () => view('pages.strategy'))->name('strategy');
+                Route::get('/risk',            fn () => view('pages.risk'))->name('risk');
+                Route::get('/financial-model', fn () => view('pages.financial-model'))->name('financial-model');
+            });
         Route::get('/practitioners', [PractitionerLandingController::class, 'index'])->name('practitioners.index');
 
         // Customer portal (auth + customer role required)
