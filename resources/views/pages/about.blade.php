@@ -1,4 +1,4 @@
-@php $locale = app()->getLocale(); @endphp
+@php $locale = app()->getLocale(); $isFr = $locale === 'fr'; @endphp
 
 <x-layouts.app
     title="{{ __('about.meta_title') }}"
@@ -120,6 +120,78 @@
         <div class="stat-item">
             <div class="stat-value">{{ $s['value'] }}</div>
             <div class="stat-label">{{ $s['label'] }}</div>
+        </div>
+        @endforeach
+    </div>
+</div>
+
+<div class="divider"></div>
+
+{{-- OPES HEALTH OS UMBRELLA --}}
+<div class="section" style="max-width:1000px;margin:0 auto;text-align:center">
+    <div class="section-label" style="justify-content:center;margin-bottom:16px">
+        <i data-lucide="layers" style="width:12px;height:12px"></i>
+        OPES Health OS
+    </div>
+    <h2 class="section-title">{{ $isFr ? 'Une plateforme, six familles de produits' : 'One platform, six product families' }}</h2>
+    <p style="color:#64748b;max-width:700px;margin:12px auto 36px;font-size:15px;line-height:1.75">
+        {{ $isFr
+            ? 'OPES Health OS est notre système d\'exploitation de santé unifié. Il regroupe six familles de produits — du dossier patient à l\'intelligence clinique — toutes interopérables, bilingues, et conçues pour fonctionner ensemble ou indépendamment.'
+            : 'OPES Health OS is our unified health operating system. It groups six product families — from patient records to clinical intelligence — all interoperable, bilingual, and designed to work together or independently.' }}
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+        @foreach(config('product_families.families') as $family)
+        <div class="pi-card" style="flex-direction:column;align-items:flex-start">
+            <div style="width:44px;height:44px;border-radius:12px;background:{{ $family['color'] }}15;display:flex;align-items:center;justify-content:center;margin-bottom:14px">
+                <i data-lucide="{{ $family['icon'] }}" style="width:20px;height:20px;color:{{ $family['color'] }}"></i>
+            </div>
+            <div style="font-weight:800;color:#e2e8f0;font-size:15px;margin-bottom:3px">{{ $family['name'] }}</div>
+            <div style="font-size:11px;color:{{ $family['color'] }};text-transform:uppercase;letter-spacing:0.07em;font-weight:700;margin-bottom:8px">{{ $family['tagline'] }}</div>
+            <div style="font-size:12px;color:#64748b;line-height:1.6">{{ $family['desc'] }}</div>
+        </div>
+        @endforeach
+    </div>
+</div>
+
+<div class="divider"></div>
+
+{{-- GOVERNANCE --}}
+<div class="section" style="max-width:960px;margin:0 auto">
+    <div class="section-label" style="margin-bottom:16px">
+        <i data-lucide="shield-check" style="width:12px;height:12px"></i>
+        {{ $isFr ? 'Gouvernance' : 'Governance' }}
+    </div>
+    <h2 class="section-title">{{ $isFr ? 'Gouvernance d\'entreprise et modèle opérationnel' : 'Corporate governance and operating model' }}</h2>
+    <p style="color:#64748b;max-width:720px;font-size:15px;line-height:1.75;margin-bottom:36px">
+        {{ $isFr
+            ? 'OPES Health Systems opère selon un modèle de gouvernance rigoureux qui aligne nos décisions produit sur les besoins cliniques réels, la conformité réglementaire, et la durabilité de nos clients. Notre architecture de gouvernance comprend des comités techniques, cliniques et éthiques qui supervisent chaque évolution de la plateforme.'
+            : 'OPES Health Systems operates under a rigorous governance model that aligns our product decisions with real clinical needs, regulatory compliance, and the sustainability of our clients. Our governance architecture includes technical, clinical, and ethics committees that oversee every evolution of the platform.' }}
+    </p>
+    <div class="pi-grid" style="max-width:960px">
+        @php
+        $govItems = $isFr ? [
+            ['icon'=>'building-2',   'color'=>'#00C896','title'=>'Conseil de direction',        'desc'=>'Supervision stratégique de l\'entreprise, définition des orientations à long terme et des priorités d\'investissement.'],
+            ['icon'=>'users',        'color'=>'#1A6FE8','title'=>'Comité technique & produit',   'desc'=>'Gouvernance de la roadmap technologique, validation des architectures, gestion des dépendances et des risques techniques.'],
+            ['icon'=>'heart',        'color'=>'#00C896','title'=>'Comité de gouvernance clinique','desc'=>'Révision des modules cliniques par des praticiens de santé africains pour garantir la pertinence médicale de chaque fonctionnalité.'],
+            ['icon'=>'scale',        'color'=>'#1A6FE8','title'=>'Comité conformité & éthique',  'desc'=>'Supervision de la conformité OHADA, droit camerounais des données de santé, GDPR-alignement, et éthique de l\'IA clinique.'],
+            ['icon'=>'bar-chart-2',  'color'=>'#00C896','title'=>'Gestion des risques',           'desc'=>'Identification, évaluation et atténuation des risques opérationnels, financiers, et de continuité de service pour nos clients.'],
+            ['icon'=>'refresh-cw',   'color'=>'#1A6FE8','title'=>'Cycle de révision produit',    'desc'=>'Révisions trimestrielles des performances produit intégrant les retours clients, les incidents et les évolutions réglementaires.'],
+        ] : [
+            ['icon'=>'building-2',   'color'=>'#00C896','title'=>'Board of Directors',           'desc'=>'Strategic oversight of the company, setting long-term direction and investment priorities.'],
+            ['icon'=>'users',        'color'=>'#1A6FE8','title'=>'Technical & Product Committee', 'desc'=>'Governance of the technology roadmap, architecture validation, dependency management, and technical risk.'],
+            ['icon'=>'heart',        'color'=>'#00C896','title'=>'Clinical Governance Committee', 'desc'=>'Review of clinical modules by African health practitioners to ensure the medical relevance of every feature.'],
+            ['icon'=>'scale',        'color'=>'#1A6FE8','title'=>'Compliance & Ethics Committee', 'desc'=>'Supervision of OHADA compliance, Cameroonian health data law, GDPR-alignment, and clinical AI ethics.'],
+            ['icon'=>'bar-chart-2',  'color'=>'#00C896','title'=>'Risk Management',               'desc'=>'Identification, assessment, and mitigation of operational, financial, and service continuity risks for our clients.'],
+            ['icon'=>'refresh-cw',   'color'=>'#1A6FE8','title'=>'Product Review Cycle',         'desc'=>'Quarterly product performance reviews integrating customer feedback, incidents, and regulatory developments.'],
+        ];
+        @endphp
+        @foreach($govItems as $g)
+        <div class="pi-card" style="flex-direction:column;align-items:flex-start">
+            <div style="width:40px;height:40px;border-radius:10px;background:{{ $g['color'] }}15;display:flex;align-items:center;justify-content:center;margin-bottom:12px">
+                <i data-lucide="{{ $g['icon'] }}" style="width:18px;height:18px;color:{{ $g['color'] }}"></i>
+            </div>
+            <div style="font-weight:700;color:#e2e8f0;font-size:14px;margin-bottom:6px">{{ $g['title'] }}</div>
+            <div style="font-size:13px;color:#64748b;line-height:1.6">{{ $g['desc'] }}</div>
         </div>
         @endforeach
     </div>

@@ -10,10 +10,12 @@ $current = $locale;
 <footer class="site-footer">
     <div class="footer-inner">
         <div class="footer-brand">
-            <div class="nav-logo" style="text-decoration:none">
-                <div class="nav-logo-mark">O</div>
-                <div class="nav-logo-text">Opes <span>Health</span> Systems</div>
-            </div>
+            <a href="{{ url($locale) }}" class="nav-logo" style="text-decoration:none;margin-bottom:10px">
+                <div class="nav-logo-mark"><i data-lucide="circle-dashed" style="width:20px;height:20px"></i></div>
+                <div class="nav-logo-text">
+                    <div class="nav-logo-name">Opes <span>Health</span> Systems</div>
+                </div>
+            </a>
             <p>Africa's most complete digital health ecosystem. Built in Cameroon for the CEMAC region and all of Africa. Bilingual · Interoperable · Ministry-Aligned.</p>
         </div>
 
@@ -33,6 +35,25 @@ $current = $locale;
             </a>
             <a href="{{ url($locale.'/products') }}" class="footer-highlight">
                 <i data-lucide="layout-grid" style="width:12px;height:12px"></i>View All 22 →
+            </a>
+        </div>
+
+        <div class="footer-col">
+            <h5>Platform</h5>
+            <a href="{{ url($locale.'/architecture') }}">
+                <i data-lucide="cpu" style="width:12px;height:12px"></i>Architecture
+            </a>
+            <a href="{{ url($locale.'/implementation') }}">
+                <i data-lucide="map" style="width:12px;height:12px"></i>Implementation
+            </a>
+            <a href="{{ url($locale.'/support') }}">
+                <i data-lucide="headphones" style="width:12px;height:12px"></i>Support & SLA
+            </a>
+            <a href="{{ url($locale.'/academy') }}">
+                <i data-lucide="graduation-cap" style="width:12px;height:12px"></i>OPES Academy
+            </a>
+            <a href="{{ url($locale.'/courses') }}">
+                <i data-lucide="book-open" style="width:12px;height:12px"></i>Courses
             </a>
         </div>
 
@@ -64,7 +85,7 @@ $current = $locale;
                 <i data-lucide="file-text" style="width:12px;height:12px"></i>Terms of Use
             </a>
             <a href="{{ url($locale.'/compliance') }}">
-                <i data-lucide="scale" style="width:12px;height:12px"></i>OHADA Compliance
+                <i data-lucide="scale" style="width:12px;height:12px"></i>Compliance & Trust
             </a>
             <a href="mailto:info@opeshealthsystems.com">
                 <i data-lucide="mail" style="width:12px;height:12px"></i>info@opeshealthsystems.com

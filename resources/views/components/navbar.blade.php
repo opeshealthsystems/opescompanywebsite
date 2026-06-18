@@ -125,6 +125,51 @@
             </div>
         </div>
 
+        {{-- Platform dropdown --}}
+        <div class="nav-dropdown-wrap">
+            <a href="{{ url($locale.'/architecture') }}" class="nav-dropdown-trigger">
+                Platform
+                <i data-lucide="chevron-down" style="width:13px;height:13px;opacity:.5;transition:transform 0.2s"></i>
+            </a>
+            <div class="nav-dropdown nav-dropdown--narrow">
+                <a href="{{ url($locale.'/architecture') }}" class="nav-dd-item">
+                    <i data-lucide="cpu" style="width:14px;height:14px;color:#00C896"></i>
+                    <div>
+                        <div class="nav-dd-name">Architecture</div>
+                        <div class="nav-dd-sub">HL7 FHIR, Health ID, security</div>
+                    </div>
+                </a>
+                <a href="{{ url($locale.'/implementation') }}" class="nav-dd-item">
+                    <i data-lucide="map" style="width:14px;height:14px;color:#1A6FE8"></i>
+                    <div>
+                        <div class="nav-dd-name">Implementation</div>
+                        <div class="nav-dd-sub">90-day deployment framework</div>
+                    </div>
+                </a>
+                <a href="{{ url($locale.'/support') }}" class="nav-dd-item">
+                    <i data-lucide="headphones" style="width:14px;height:14px;color:#00C896"></i>
+                    <div>
+                        <div class="nav-dd-name">Support & SLA</div>
+                        <div class="nav-dd-sub">Bronze to Platinum tiers</div>
+                    </div>
+                </a>
+                <a href="{{ url($locale.'/academy') }}" class="nav-dd-item">
+                    <i data-lucide="graduation-cap" style="width:14px;height:14px;color:#1A6FE8"></i>
+                    <div>
+                        <div class="nav-dd-name">OPES Academy</div>
+                        <div class="nav-dd-sub">Certification & training</div>
+                    </div>
+                </a>
+                <a href="{{ url($locale.'/compliance') }}" class="nav-dd-item">
+                    <i data-lucide="shield-check" style="width:14px;height:14px;color:#00C896"></i>
+                    <div>
+                        <div class="nav-dd-name">Compliance & Trust</div>
+                        <div class="nav-dd-sub">Security, OHADA, data sovereignty</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
         <a href="{{ url($locale.'/about') }}">{{ __('nav.about') }}</a>
         <a href="{{ url($locale.'/partnerships') }}">{{ __('nav.partnerships') }}</a>
         <a href="{{ url($locale.'/pricing') }}">{{ __('nav.pricing') }}</a>

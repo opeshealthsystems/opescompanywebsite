@@ -228,6 +228,50 @@ $prices = [
     </table>
 </div>
 
+{{-- ── SUPPORT TIERS SUMMARY ────────────────────────────────────── --}}
+<div class="pricing-compare">
+    <h2>{{ $isFr ? 'Niveaux de support inclus' : 'Support tiers included' }}</h2>
+    <p style="color:#64748b;font-size:14px;max-width:640px;margin:0 0 24px">
+        {{ $isFr
+            ? 'Chaque abonnement OPES inclut un niveau de support. Montez en gamme pour des réponses plus rapides, un responsable dédié et un SLA de disponibilité garanti.'
+            : 'Every OPES subscription includes a support tier. Upgrade for faster responses, a named account manager, and a guaranteed uptime SLA.' }}
+    </p>
+    <table class="compare-table">
+        <thead>
+            <tr>
+                <th style="width:35%">{{ $isFr ? 'Engagement' : 'Commitment' }}</th>
+                <th>{{ $isFr ? 'Clinic (Bronze)' : 'Clinic (Bronze)' }}</th>
+                <th class="col-featured">{{ $isFr ? 'Facility (Silver)' : 'Facility (Silver)' }}</th>
+                <th>{{ $isFr ? 'System (Gold+)' : 'System (Gold+)' }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($isFr
+                ? [['Temps de réponse','72 h','24 h','4 h ou moins'],['Disponibilité SLA','99,0 %','99,5 %','99,9 %+'],['Support téléphonique','✕','✓','✓'],['Visites sur site/an','0','2','4+'],['Responsable dédié','✕','✕','✓']]
+                : [['Response time','72 h','24 h','4 h or less'],['Uptime SLA','99.0%','99.5%','99.9%+'],['Phone support','✕','✓','✓'],['On-site visits/year','0','2','4+'],['Named account manager','✕','✕','✓']]
+            as $row)
+            <tr>
+                <td>{{ $row[0] }}</td>
+                @foreach(array_slice($row,1) as $idx => $val)
+                <td @if($idx===1) class="col-featured" @endif>
+                    @if($val === '✓') <span class="compare-check">✓</span>
+                    @elseif($val === '✕') <span class="compare-x">✕</span>
+                    @else {{ $val }}
+                    @endif
+                </td>
+                @endforeach
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    <div style="margin-top:16px;text-align:right">
+        <a href="{{ url($locale.'/support') }}" style="color:#00C896;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:5px">
+            {{ $isFr ? 'Voir la comparaison complète des SLA' : 'See full SLA comparison' }}
+            <i data-lucide="arrow-right" style="width:12px;height:12px"></i>
+        </a>
+    </div>
+</div>
+
 {{-- ── CTA STRIP ────────────────────────────────────────────────── --}}
 <div class="pricing-cta-strip">
     <h2>{{ $isFr ? 'Besoin d\'un devis personnalisé ?' : 'Need a custom quote?' }}</h2>
