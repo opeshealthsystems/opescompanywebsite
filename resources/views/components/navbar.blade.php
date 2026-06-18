@@ -156,6 +156,13 @@
                         <div class="nav-dd-sub">HL7 FHIR, Health ID, security</div>
                     </div>
                 </a>
+                <a href="{{ url($locale.'/architecture-diagrams') }}" class="nav-dd-item">
+                    <i data-lucide="git-branch" style="width:14px;height:14px;color:#1A6FE8"></i>
+                    <div>
+                        <div class="nav-dd-name">{{ $locale === 'fr' ? 'Diagrammes architecture' : 'Architecture diagrams' }}</div>
+                        <div class="nav-dd-sub">{{ $locale === 'fr' ? '12 diagrammes visuels' : '12 visual system diagrams' }}</div>
+                    </div>
+                </a>
                 <a href="{{ url($locale.'/implementation') }}" class="nav-dd-item">
                     <i data-lucide="map" style="width:14px;height:14px;color:#1A6FE8"></i>
                     <div>

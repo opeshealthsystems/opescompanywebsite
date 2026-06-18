@@ -46,6 +46,9 @@ $current = $locale;
             <a href="{{ url($locale.'/architecture') }}">
                 <i data-lucide="cpu" style="width:12px;height:12px"></i>Architecture
             </a>
+            <a href="{{ url($locale.'/architecture-diagrams') }}">
+                <i data-lucide="git-branch" style="width:12px;height:12px"></i>Architecture diagrams
+            </a>
             <a href="{{ url($locale.'/implementation') }}">
                 <i data-lucide="map" style="width:12px;height:12px"></i>Implementation
             </a>

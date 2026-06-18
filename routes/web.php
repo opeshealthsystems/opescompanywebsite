@@ -90,6 +90,7 @@ Route::prefix('{locale}')
         Route::get('/national-platform',    fn () => view('pages.national-platform'))->name('national-platform');
         Route::get('/partner-program',      fn () => view('pages.partner-program'))->name('partner-program');
         Route::get('/health-os',            fn () => view('pages.health-os'))->name('health-os');
+        Route::get('/architecture-diagrams', fn () => view('pages.architecture-diagrams'))->name('architecture-diagrams');
 
         // Confidential — requires login (customer, admin, or super_admin)
         Route::middleware(['auth', 'role:customer|admin|super_admin|support'])
