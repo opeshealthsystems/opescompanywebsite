@@ -92,8 +92,8 @@ Route::prefix('{locale}')
         Route::get('/health-os',            fn () => view('pages.health-os'))->name('health-os');
         Route::get('/architecture-diagrams', fn () => view('pages.architecture-diagrams'))->name('architecture-diagrams');
 
-        // Confidential — requires login (customer, admin, or super_admin)
-        Route::middleware(['auth', 'role:customer|admin|super_admin|support'])
+        // Confidential — admin / super_admin / support only (not customer)
+        Route::middleware(['auth', 'role:admin|super_admin|support'])
             ->group(function () {
                 Route::get('/strategy',        fn () => view('pages.strategy'))->name('strategy');
                 Route::get('/risk',            fn () => view('pages.risk'))->name('risk');

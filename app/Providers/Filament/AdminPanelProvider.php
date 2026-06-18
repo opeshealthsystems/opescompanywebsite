@@ -7,6 +7,7 @@ use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\NavigationGroup;
+use Filament\Navigation\NavigationItem;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -48,6 +49,47 @@ class AdminPanelProvider extends PanelProvider
                 NavigationGroup::make('Content'),
                 NavigationGroup::make('Communications'),
                 NavigationGroup::make('Reporting'),
+                NavigationGroup::make('Confidential')
+                    ->icon('heroicon-o-lock-closed')
+                    ->collapsible(),
+            ])
+            ->navigationItems([
+                NavigationItem::make('Strategy 2026–2031')
+                    ->url(fn () => route('strategy', ['locale' => 'en']))
+                    ->icon('heroicon-o-map')
+                    ->group('Confidential')
+                    ->sort(1)
+                    ->openUrlInNewTab(),
+                NavigationItem::make('Risk Management')
+                    ->url(fn () => route('risk', ['locale' => 'en']))
+                    ->icon('heroicon-o-shield-exclamation')
+                    ->group('Confidential')
+                    ->sort(2)
+                    ->openUrlInNewTab(),
+                NavigationItem::make('Revenue & Financial Model')
+                    ->url(fn () => route('financial-model', ['locale' => 'en']))
+                    ->icon('heroicon-o-currency-dollar')
+                    ->group('Confidential')
+                    ->sort(3)
+                    ->openUrlInNewTab(),
+                NavigationItem::make('Enterprise Sales Playbook')
+                    ->url(fn () => route('sales-playbook', ['locale' => 'en']))
+                    ->icon('heroicon-o-presentation-chart-line')
+                    ->group('Confidential')
+                    ->sort(4)
+                    ->openUrlInNewTab(),
+                NavigationItem::make('Government Proposal Template')
+                    ->url(fn () => route('government-proposal', ['locale' => 'en']))
+                    ->icon('heroicon-o-document-text')
+                    ->group('Confidential')
+                    ->sort(5)
+                    ->openUrlInNewTab(),
+                NavigationItem::make('Investor Pitch Deck')
+                    ->url(fn () => route('investor-pitch', ['locale' => 'en']))
+                    ->icon('heroicon-o-presentation-chart-bar')
+                    ->group('Confidential')
+                    ->sort(6)
+                    ->openUrlInNewTab(),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')

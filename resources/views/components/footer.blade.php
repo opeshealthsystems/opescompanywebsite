@@ -81,7 +81,7 @@ $current = $locale;
                 <i data-lucide="info" style="width:12px;height:12px"></i>About OPES
             </a>
             @auth
-                @if(auth()->user()->hasAnyRole(['customer','admin','super_admin','support']))
+                @if(auth()->user()->hasAnyRole(['admin','super_admin','support']))
                 <a href="{{ url($locale.'/strategy') }}">
                     <i data-lucide="map" style="width:12px;height:12px"></i>Strategy 2026–2031
                 </a>
@@ -98,10 +98,6 @@ $current = $locale;
                     <i data-lucide="trending-up" style="width:12px;height:12px"></i>Investor Pitch
                 </a>
                 @endif
-            @else
-                <a href="{{ route('login') }}" title="Sign in to view">
-                    <i data-lucide="lock" style="width:12px;height:12px"></i>Strategy 2026–2031
-                </a>
             @endauth
             <a href="{{ url($locale.'/partner-program') }}">
                 <i data-lucide="handshake" style="width:12px;height:12px"></i>Partner Programme
