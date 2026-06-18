@@ -25,9 +25,15 @@ class AuditLogResource extends Resource
 
     public static function canCreate(): bool { return false; }
 
-    public static function canEdit(\Illuminate\Database\Eloquent\Model $record): bool { return false; }
+    public static function canEdit(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return false;
+    }
 
-    public static function canDelete(\Illuminate\Database\Eloquent\Model $record): bool { return false; }
+    public static function canDelete(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return false;
+    }
 
     public static function getNavigationBadge(): ?string
     {

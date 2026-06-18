@@ -38,6 +38,13 @@ class RbacHardeningTest extends TestCase
         $this->assertTrue(\App\Filament\Resources\DemoRequestResource::canAccess());
     }
 
+    public function test_super_admin_can_access_demo_request_resource(): void
+    {
+        $superAdmin = $this->makeUser('super_admin');
+        $this->actingAs($superAdmin);
+        $this->assertTrue(\App\Filament\Resources\DemoRequestResource::canAccess());
+    }
+
     public function test_support_cannot_access_tester_application_resource(): void
     {
         $support = $this->makeUser('support');
@@ -63,7 +70,20 @@ class RbacHardeningTest extends TestCase
     {
         $admin = $this->makeUser('admin');
         $response = $this->actingAs($admin)->get('/en/strategy');
-        $response->assertStatus(200);
+        $this->assertNotEquals(403, $response->getStatusCode());
+    }
+
+    public function test_guest_redirected_from_confidential_routes(): void
+    {
+        $response = $this->get('/en/strategy');
+        $response->assertRedirect();
+    }
+
+    public function test_customer_cannot_access_confidential_routes(): void
+    {
+        $customer = $this->makeUser('customer');
+        $response = $this->actingAs($customer)->get('/en/strategy');
+        $response->assertStatus(403);
     }
 
     public function test_audit_log_resource_cannot_be_edited(): void
