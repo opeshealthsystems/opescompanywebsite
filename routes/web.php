@@ -262,4 +262,14 @@ Route::prefix('{locale}')
                 Route::post('/expenses/{id}/reject',            [\App\Http\Controllers\Accountant\ExpenseController::class,   'reject'])->name('expenses.reject');
                 Route::get('/reports',                          [\App\Http\Controllers\Accountant\ReportController::class,    'index'])->name('reports');
             });
+
+        // Support portal
+        Route::middleware(['auth', 'role:support'])->prefix('support')->name('support.')->group(function () {
+            Route::get('/dashboard', [\App\Http\Controllers\Support\DashboardController::class, 'index'])->name('dashboard');
+            Route::get('/tickets',   [\App\Http\Controllers\Support\TicketController::class,    'index'])->name('tickets');
+            Route::get('/tickets/{ticket}', [\App\Http\Controllers\Support\TicketController::class, 'show'])->name('tickets.show');
+            Route::post('/tickets/{ticket}/reply',   [\App\Http\Controllers\Support\TicketController::class, 'reply'])->name('tickets.reply');
+            Route::patch('/tickets/{ticket}/status', [\App\Http\Controllers\Support\TicketController::class, 'updateStatus'])->name('tickets.status');
+            Route::patch('/tickets/{ticket}/assign', [\App\Http\Controllers\Support\TicketController::class, 'assignToMe'])->name('tickets.assign');
+        });
     });
