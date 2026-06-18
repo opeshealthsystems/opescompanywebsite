@@ -1,5 +1,6 @@
 @php
 $locale = app()->getLocale();
+$isFr = $locale === 'fr';
 $segments = request()->segments();
 if (empty($segments)) { $segments = [$locale]; }
 $toEn = $segments; $toEn[0] = 'en';
@@ -16,11 +17,11 @@ $current = $locale;
                     <div class="nav-logo-name">Opes <span>Health</span> Systems</div>
                 </div>
             </a>
-            <p>Africa's most complete digital health ecosystem. Built in Cameroon for the CEMAC region and all of Africa. Bilingual · Interoperable · Ministry-Aligned.</p>
+            <p>{{ $isFr ? 'L\'écosystème de santé numérique le plus complet d\'Afrique. Conçu au Cameroun pour la région CEMAC et toute l\'Afrique. Bilingue · Interopérable · Aligné Ministère de la Santé.' : 'Africa\'s most complete digital health ecosystem. Built in Cameroon for the CEMAC region and all of Africa. Bilingual · Interoperable · Ministry-Aligned.' }}</p>
         </div>
 
         <div class="footer-col">
-            <h5>Products</h5>
+            <h5>{{ $isFr ? 'Produits' : 'Products' }}</h5>
             <a href="{{ url($locale.'/health-os') }}" class="footer-highlight">
                 <i data-lucide="layers" style="width:12px;height:12px"></i>OPES Health OS →
             </a>
@@ -37,20 +38,20 @@ $current = $locale;
                 <i data-lucide="timer" style="width:12px;height:12px"></i>Opes Triage
             </a>
             <a href="{{ url($locale.'/products') }}" class="footer-highlight">
-                <i data-lucide="layout-grid" style="width:12px;height:12px"></i>View All 22 →
+                <i data-lucide="layout-grid" style="width:12px;height:12px"></i>{{ $isFr ? 'Voir les 22 →' : 'View All 22 →' }}
             </a>
         </div>
 
         <div class="footer-col">
-            <h5>Platform</h5>
+            <h5>{{ $isFr ? 'Plateforme' : 'Platform' }}</h5>
             <a href="{{ url($locale.'/architecture') }}">
-                <i data-lucide="cpu" style="width:12px;height:12px"></i>Architecture
+                <i data-lucide="cpu" style="width:12px;height:12px"></i>{{ $isFr ? 'Architecture' : 'Architecture' }}
             </a>
             <a href="{{ url($locale.'/architecture-diagrams') }}">
-                <i data-lucide="git-branch" style="width:12px;height:12px"></i>Architecture diagrams
+                <i data-lucide="git-branch" style="width:12px;height:12px"></i>{{ $isFr ? 'Diagrammes architecture' : 'Architecture diagrams' }}
             </a>
             <a href="{{ url($locale.'/implementation') }}">
-                <i data-lucide="map" style="width:12px;height:12px"></i>Implementation
+                <i data-lucide="map" style="width:12px;height:12px"></i>{{ $isFr ? 'Implémentation' : 'Implementation' }}
             </a>
             <a href="{{ url($locale.'/support') }}">
                 <i data-lucide="headphones" style="width:12px;height:12px"></i>Support & SLA
@@ -59,54 +60,54 @@ $current = $locale;
                 <i data-lucide="graduation-cap" style="width:12px;height:12px"></i>OPES Academy
             </a>
             <a href="{{ url($locale.'/clinical-governance') }}">
-                <i data-lucide="heart-pulse" style="width:12px;height:12px"></i>Clinical Governance
+                <i data-lucide="heart-pulse" style="width:12px;height:12px"></i>{{ $isFr ? 'Gouvernance clinique' : 'Clinical Governance' }}
             </a>
             <a href="{{ url($locale.'/interoperability') }}">
-                <i data-lucide="share-2" style="width:12px;height:12px"></i>Interoperability
+                <i data-lucide="share-2" style="width:12px;height:12px"></i>{{ $isFr ? 'Interopérabilité' : 'Interoperability' }}
             </a>
             <a href="{{ url($locale.'/quality') }}">
-                <i data-lucide="badge-check" style="width:12px;height:12px"></i>Quality (QMS)
+                <i data-lucide="badge-check" style="width:12px;height:12px"></i>{{ $isFr ? 'Qualité (SGQ)' : 'Quality (QMS)' }}
             </a>
             <a href="{{ url($locale.'/risk') }}">
-                <i data-lucide="shield-alert" style="width:12px;height:12px"></i>Risk Management
+                <i data-lucide="shield-alert" style="width:12px;height:12px"></i>{{ $isFr ? 'Gestion des risques' : 'Risk Management' }}
             </a>
             <a href="{{ url($locale.'/national-platform') }}">
-                <i data-lucide="building-2" style="width:12px;height:12px"></i>National Platform
+                <i data-lucide="building-2" style="width:12px;height:12px"></i>{{ $isFr ? 'Plateforme nationale' : 'National Platform' }}
             </a>
         </div>
 
         <div class="footer-col">
-            <h5>Company</h5>
+            <h5>{{ $isFr ? 'Entreprise' : 'Company' }}</h5>
             <a href="{{ url($locale.'/about') }}">
-                <i data-lucide="info" style="width:12px;height:12px"></i>About OPES
+                <i data-lucide="info" style="width:12px;height:12px"></i>{{ $isFr ? 'À propos d\'OPES' : 'About OPES' }}
             </a>
             @auth
                 @if(auth()->user()->hasAnyRole(['admin','super_admin','support']))
                 <a href="{{ url($locale.'/strategy') }}">
-                    <i data-lucide="map" style="width:12px;height:12px"></i>Strategy 2026–2031
+                    <i data-lucide="map" style="width:12px;height:12px"></i>{{ $isFr ? 'Stratégie 2026–2031' : 'Strategy 2026–2031' }}
                 </a>
                 <a href="{{ url($locale.'/financial-model') }}">
-                    <i data-lucide="dollar-sign" style="width:12px;height:12px"></i>Revenue Model
+                    <i data-lucide="dollar-sign" style="width:12px;height:12px"></i>{{ $isFr ? 'Modèle de revenus' : 'Revenue Model' }}
                 </a>
                 <a href="{{ url($locale.'/sales-playbook') }}">
-                    <i data-lucide="target" style="width:12px;height:12px"></i>Sales Playbook
+                    <i data-lucide="target" style="width:12px;height:12px"></i>{{ $isFr ? 'Stratégie commerciale' : 'Sales Playbook' }}
                 </a>
                 <a href="{{ url($locale.'/government-proposal') }}">
-                    <i data-lucide="file-text" style="width:12px;height:12px"></i>Gov. Proposal Template
+                    <i data-lucide="file-text" style="width:12px;height:12px"></i>{{ $isFr ? 'Modèle proposition gouvernementale' : 'Gov. Proposal Template' }}
                 </a>
                 <a href="{{ url($locale.'/investor-pitch') }}">
-                    <i data-lucide="trending-up" style="width:12px;height:12px"></i>Investor Pitch
+                    <i data-lucide="trending-up" style="width:12px;height:12px"></i>{{ $isFr ? 'Présentation investisseurs' : 'Investor Pitch' }}
                 </a>
                 @endif
             @endauth
             <a href="{{ url($locale.'/partner-program') }}">
-                <i data-lucide="handshake" style="width:12px;height:12px"></i>Partner Programme
+                <i data-lucide="handshake" style="width:12px;height:12px"></i>{{ $isFr ? 'Programme partenaires' : 'Partner Programme' }}
             </a>
             <a href="{{ url($locale.'/partnerships') }}">
-                <i data-lucide="handshake" style="width:12px;height:12px"></i>Partnership
+                <i data-lucide="handshake" style="width:12px;height:12px"></i>{{ $isFr ? 'Partenariat' : 'Partnership' }}
             </a>
             <a href="{{ url($locale.'/pricing') }}">
-                <i data-lucide="tag" style="width:12px;height:12px"></i>Pricing
+                <i data-lucide="tag" style="width:12px;height:12px"></i>{{ $isFr ? 'Tarification' : 'Pricing' }}
             </a>
             <a href="{{ url($locale.'/blog') }}">
                 <i data-lucide="rss" style="width:12px;height:12px"></i>Blog
@@ -117,15 +118,15 @@ $current = $locale;
         </div>
 
         <div class="footer-col">
-            <h5>Legal</h5>
+            <h5>{{ $isFr ? 'Juridique' : 'Legal' }}</h5>
             <a href="{{ url($locale.'/privacy') }}">
-                <i data-lucide="shield" style="width:12px;height:12px"></i>Privacy Policy
+                <i data-lucide="shield" style="width:12px;height:12px"></i>{{ $isFr ? 'Politique de confidentialité' : 'Privacy Policy' }}
             </a>
             <a href="{{ url($locale.'/terms') }}">
-                <i data-lucide="file-text" style="width:12px;height:12px"></i>Terms of Use
+                <i data-lucide="file-text" style="width:12px;height:12px"></i>{{ $isFr ? 'Conditions d\'utilisation' : 'Terms of Use' }}
             </a>
             <a href="{{ url($locale.'/compliance') }}">
-                <i data-lucide="scale" style="width:12px;height:12px"></i>Compliance & Trust
+                <i data-lucide="scale" style="width:12px;height:12px"></i>{{ $isFr ? 'Conformité & confiance' : 'Compliance & Trust' }}
             </a>
             <a href="mailto:{{ config('company.email') }}">
                 <i data-lucide="mail" style="width:12px;height:12px"></i>{{ config('company.email') }}

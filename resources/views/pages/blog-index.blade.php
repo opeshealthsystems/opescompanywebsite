@@ -223,7 +223,7 @@ $heroHeadlines = $featured->skip(1)->values();
             @if(!empty($search))
             <a href="{{ url($locale.'/blog') }}" style="font-size:12px;color:#64748b;text-decoration:none;display:inline-flex;align-items:center;gap:4px">
                 <i data-lucide="x" style="width:11px;height:11px"></i>
-                Clear search
+                {{ $locale === 'fr' ? 'Effacer la recherche' : 'Clear search' }}
             </a>
             @endif
         </div>
@@ -253,7 +253,7 @@ $heroHeadlines = $featured->skip(1)->values();
                         <span>{{ $post->published_at?->format('d M Y') }}</span>
                         @if($post->reading_time)
                         <span>·</span>
-                        <span><i data-lucide="clock" style="width:10px;height:10px"></i> {{ $post->reading_time }} min read</span>
+                        <span><i data-lucide="clock" style="width:10px;height:10px"></i> {{ $post->reading_time }} {{ $locale === 'fr' ? 'min de lecture' : 'min read' }}</span>
                         @endif
                     </div>
                 </div>

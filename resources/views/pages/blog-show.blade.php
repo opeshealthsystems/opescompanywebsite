@@ -45,7 +45,7 @@ $shareTitle = urlencode($title);
 @endpush
 
 <div class="pd-breadcrumb">
-    <a href="{{ url($locale) }}">Home</a>
+    <a href="{{ url($locale) }}">{{ $locale === 'fr' ? 'Accueil' : 'Home' }}</a>
     <span>›</span>
     <a href="{{ url($locale.'/blog') }}">Blog</a>
     <span>›</span>
@@ -81,7 +81,7 @@ $shareTitle = urlencode($title);
 
         {{-- ── Social Share ──────────────────────────────────── --}}
         <div class="blog-share">
-            <span class="blog-share-label">Share this article</span>
+            <span class="blog-share-label">{{ $locale === 'fr' ? 'Partager cet article' : 'Share this article' }}</span>
             <div class="blog-share-links">
                 <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ $shareUrl }}"
                    target="_blank" rel="noopener noreferrer" class="blog-share-btn blog-share-linkedin">
@@ -103,7 +103,7 @@ $shareTitle = urlencode($title);
 
         @if($related->count())
         <div class="divider" style="margin:48px 0"></div>
-        <h2 class="section-title" style="margin-bottom:24px">Related articles</h2>
+        <h2 class="section-title" style="margin-bottom:24px">{{ $locale === 'fr' ? 'Articles connexes' : 'Related articles' }}</h2>
         <div class="blog-grid" style="grid-template-columns:repeat(3,1fr)">
             @foreach($related as $rp)
             @php
@@ -143,7 +143,7 @@ $shareTitle = urlencode($title);
     <aside class="blog-toc">
         <div class="blog-toc-title">
             <i data-lucide="list" style="width:12px;height:12px"></i>
-            In this article
+            {{ $locale === 'fr' ? 'Dans cet article' : 'In this article' }}
         </div>
         <ul class="blog-toc-list">
             @foreach($toc as $item)
