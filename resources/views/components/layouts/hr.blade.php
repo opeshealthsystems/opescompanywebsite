@@ -44,6 +44,10 @@
                    class="cp-nav-link {{ request()->routeIs('hr.departments*') ? 'cp-nav-link-active-purple' : '' }}">
                     <i data-lucide="building-2" style="width:15px;height:15px"></i> Departments
                 </a>
+                <a href="{{ route('hr.profile', ['locale' => $locale]) }}"
+                   class="cp-nav-link {{ request()->routeIs('hr.profile') ? 'cp-nav-link-active-purple' : '' }}">
+                    <i data-lucide="user" style="width:15px;height:15px"></i> My Profile
+                </a>
             </div>
             <div class="cp-nav-user">
                 <span class="cp-nav-username">{{ auth()->user()->name }}</span>

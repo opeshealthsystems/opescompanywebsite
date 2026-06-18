@@ -248,6 +248,8 @@ Route::prefix('{locale}')
                 Route::post('/performance',              [\App\Http\Controllers\HR\PerformanceController::class, 'store'])->name('performance.store');
                 Route::get('/departments',               [\App\Http\Controllers\HR\DepartmentController::class,  'index'])->name('departments.index');
                 Route::post('/departments/{dept}/head',  [\App\Http\Controllers\HR\DepartmentController::class,  'updateHead'])->name('departments.head');
+                Route::get('/profile',   [\App\Http\Controllers\Hr\ProfileController::class, 'show'])->name('profile');
+                Route::patch('/profile', [\App\Http\Controllers\Hr\ProfileController::class, 'update'])->name('profile.update');
             });
 
         // Accountant portal
