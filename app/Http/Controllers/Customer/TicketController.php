@@ -67,7 +67,7 @@ class TicketController extends Controller
         $id     = (int) $request->route('id');
         $ticket = Ticket::with('publicReplies.author')->findOrFail($id);
 
-        abort_if((int) $ticket->user_id !== $user->id, 403);
+        $this->authorize('view', $ticket);
 
         return view('customer.tickets.show', compact('ticket'));
     }
@@ -78,7 +78,7 @@ class TicketController extends Controller
         $id     = (int) $request->route('id');
         $ticket = Ticket::findOrFail($id);
 
-        abort_if((int) $ticket->user_id !== $user->id, 403);
+        $this->authorize('reply', $ticket);
         abort_unless($ticket->isOpen(), 403, 'This ticket is closed.');
 
         $validated = $request->validate([
