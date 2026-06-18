@@ -17,6 +17,7 @@ class PractitionerApplication extends Model
     ];
 
     protected $casts = [
+        'practitioner_id'     => 'integer',
         'reviewed_at'         => 'datetime',
         'paid_at'             => 'datetime',
         'payout_amount'       => 'decimal:2',

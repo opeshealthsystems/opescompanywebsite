@@ -16,7 +16,8 @@ class PractitionerFinding extends Model
     ];
 
     protected $casts = [
-        'is_published' => 'boolean',
+        'practitioner_id' => 'integer',
+        'is_published'    => 'boolean',
     ];
 
     public function application()

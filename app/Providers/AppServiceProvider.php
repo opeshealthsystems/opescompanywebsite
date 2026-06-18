@@ -69,5 +69,7 @@ class AppServiceProvider extends ServiceProvider
     {
         \Illuminate\Support\Facades\Gate::policy(\App\Models\Ticket::class, \App\Policies\TicketPolicy::class);
         \Illuminate\Support\Facades\Gate::policy(\App\Models\TesterAssignment::class, \App\Policies\TesterAssignmentPolicy::class);
+        \Illuminate\Support\Facades\Gate::policy(\App\Models\PractitionerApplication::class, \App\Policies\PractitionerApplicationPolicy::class);
+        \Illuminate\Support\Facades\Gate::policy(\App\Models\PractitionerFinding::class, \App\Policies\PractitionerFindingPolicy::class);
     }
 }

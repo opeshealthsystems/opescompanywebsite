@@ -12,7 +12,7 @@ class FindingController extends Controller
 {
     public function create($locale, PractitionerApplication $application)
     {
-        abort_unless($application->practitioner_id === auth()->id(), 403);
+        $this->authorize('view', $application);
         if (! auth()->user()->isVerifiedPractitioner()) {
             abort(403, 'Your practitioner profile must be verified before submitting findings.');
         }
@@ -22,7 +22,7 @@ class FindingController extends Controller
 
     public function store(Request $request, $locale, PractitionerApplication $application)
     {
-        abort_unless($application->practitioner_id === auth()->id(), 403);
+        $this->authorize('view', $application);
         if (! auth()->user()->isVerifiedPractitioner()) {
             abort(403, 'Your practitioner profile must be verified before submitting findings.');
         }
