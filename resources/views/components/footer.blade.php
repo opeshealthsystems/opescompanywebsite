@@ -68,6 +68,9 @@ $current = $locale;
             <a href="{{ url($locale.'/about') }}">
                 <i data-lucide="info" style="width:12px;height:12px"></i>About OPES
             </a>
+            <a href="{{ url($locale.'/strategy') }}">
+                <i data-lucide="map" style="width:12px;height:12px"></i>Strategy 2026–2031
+            </a>
             <a href="{{ url($locale.'/partnerships') }}">
                 <i data-lucide="handshake" style="width:12px;height:12px"></i>Partnership
             </a>

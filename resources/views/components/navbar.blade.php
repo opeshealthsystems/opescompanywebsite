@@ -191,6 +191,7 @@
             </div>
         </div>
 
+        <a href="{{ url($locale.'/strategy') }}">{{ $locale === 'fr' ? 'Stratégie' : 'Strategy' }}</a>
         <a href="{{ url($locale.'/about') }}">{{ __('nav.about') }}</a>
         <a href="{{ url($locale.'/partnerships') }}">{{ __('nav.partnerships') }}</a>
         <a href="{{ url($locale.'/pricing') }}">{{ __('nav.pricing') }}</a>

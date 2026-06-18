@@ -87,6 +87,7 @@ Route::prefix('{locale}')
         Route::get('/clinical-governance',  fn () => view('pages.clinical-governance'))->name('clinical-governance');
         Route::get('/interoperability',     fn () => view('pages.interoperability'))->name('interoperability');
         Route::get('/quality',              fn () => view('pages.quality'))->name('quality');
+        Route::get('/strategy',             fn () => view('pages.strategy'))->name('strategy');
         Route::get('/practitioners', [PractitionerLandingController::class, 'index'])->name('practitioners.index');
 
         // Customer portal (auth + customer role required)
