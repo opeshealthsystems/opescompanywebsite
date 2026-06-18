@@ -265,6 +265,8 @@ Route::prefix('{locale}')
                 Route::post('/expenses/{id}/approve',           [\App\Http\Controllers\Accountant\ExpenseController::class,   'approve'])->name('expenses.approve');
                 Route::post('/expenses/{id}/reject',            [\App\Http\Controllers\Accountant\ExpenseController::class,   'reject'])->name('expenses.reject');
                 Route::get('/reports',                          [\App\Http\Controllers\Accountant\ReportController::class,    'index'])->name('reports');
+                Route::get('/profile',   [\App\Http\Controllers\Accountant\ProfileController::class, 'show'])->name('profile');
+                Route::patch('/profile', [\App\Http\Controllers\Accountant\ProfileController::class, 'update'])->name('profile.update');
             });
 
         // Support portal

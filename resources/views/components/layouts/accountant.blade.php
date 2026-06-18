@@ -40,6 +40,10 @@
                    class="cp-nav-link {{ request()->routeIs('accountant.reports') ? 'cp-nav-link-active-amber' : '' }}">
                     <i data-lucide="bar-chart-2" style="width:15px;height:15px"></i> Reports
                 </a>
+                <a href="{{ route('accountant.profile', ['locale' => $locale]) }}"
+                   class="cp-nav-link {{ request()->routeIs('accountant.profile') ? 'cp-nav-link-active-amber' : '' }}">
+                    <i data-lucide="user" style="width:15px;height:15px"></i> My Profile
+                </a>
             </div>
             <div class="cp-nav-user">
                 <span class="cp-nav-username">{{ auth()->user()->name }}</span>
