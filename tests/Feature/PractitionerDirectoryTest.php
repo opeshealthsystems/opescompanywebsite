@@ -90,4 +90,33 @@ class PractitionerDirectoryTest extends TestCase
         $this->get(route('practitioners.index', ['locale' => 'en']))
             ->assertDontSee('MOMO-12345');
     }
+
+    public function test_practitioner_profile_page_loads(): void
+    {
+        $user    = $this->makePractitioner(['bio' => 'Expert in cardiology.', 'opes_testimonial' => 'Great platform.']);
+        $program = PractitionerProgram::create([
+            'product_slug' => 'opes-clinic', 'product_name' => 'OPES Clinic',
+            'title' => 'Pilot Review', 'type' => 'volunteer', 'status' => 'open',
+        ]);
+        PractitionerApplication::create([
+            'practitioner_id' => $user->id,
+            'program_id'      => $program->id,
+            'status'          => 'approved',
+        ]);
+
+        $this->get(route('practitioners.show', ['locale' => 'en', 'id' => $user->id]))
+            ->assertOk()
+            ->assertSee($user->name)
+            ->assertSee('Expert in cardiology.')
+            ->assertSee('Great platform.');
+    }
+
+    public function test_practitioner_profile_page_404_for_unapproved(): void
+    {
+        $user = $this->makePractitioner();
+        // No approved application — show() does firstOrFail() which 404s
+
+        $this->get(route('practitioners.show', ['locale' => 'en', 'id' => $user->id]))
+            ->assertNotFound();
+    }
 }
