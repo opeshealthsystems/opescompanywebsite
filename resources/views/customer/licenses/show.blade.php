@@ -110,7 +110,7 @@
         <p style="color:#64748b;font-size:0.8125rem;line-height:1.7;">
             Need to renew, upgrade, or have questions about this license? Contact
             <a href="mailto:support@opeshealthsystems.com" style="color:#00C896;">support@opeshealthsystems.com</a>
-            or call +237 600 000 000.
+            or call {{ config('company.phone') }}.
         </p>
     </div>
 </x-layouts.customer>

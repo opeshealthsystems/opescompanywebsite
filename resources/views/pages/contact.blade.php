@@ -103,7 +103,7 @@
             <div class="ci-row">
                 <i data-lucide="phone" style="width:15px;height:15px;color:#00C896;flex-shrink:0"></i>
                 <div>
-                    <div style="color:#e2e8f0">+237 6XX XXX XXX</div>
+                    <div style="color:#e2e8f0">{{ config('company.phone') }}</div>
                     <div style="color:#64748b;font-size:13px">{{ __('contact.office_phone_hours') }}</div>
                 </div>
             </div>

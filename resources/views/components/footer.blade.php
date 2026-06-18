@@ -73,7 +73,7 @@ $current = $locale;
     </div>
 
     <div class="footer-bottom">
-        <p>© {{ date('Y') }} OPES Health Systems SARL · Bonamousadi, Douala, Cameroon · OHADA Law</p>
+        <p>© {{ date('Y') }} OPES Health Systems SARL · {{ config('company.address') }} · OHADA Law</p>
         <div class="footer-lang">
             <a href="{{ url(implode('/', $toEn)) }}" class="{{ $current === 'en' ? 'active' : '' }}">EN</a>
             <a href="{{ url(implode('/', $toFr)) }}" class="{{ $current === 'fr' ? 'active' : '' }}">FR</a>
