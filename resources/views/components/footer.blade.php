@@ -58,6 +58,9 @@ $current = $locale;
             <a href="{{ url($locale.'/interoperability') }}">
                 <i data-lucide="share-2" style="width:12px;height:12px"></i>Interoperability
             </a>
+            <a href="{{ url($locale.'/quality') }}">
+                <i data-lucide="badge-check" style="width:12px;height:12px"></i>Quality (QMS)
+            </a>
         </div>
 
         <div class="footer-col">

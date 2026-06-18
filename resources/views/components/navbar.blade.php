@@ -181,6 +181,13 @@
                         <div class="nav-dd-sub">HIE, FHIR, Health ID exchange</div>
                     </div>
                 </a>
+                <a href="{{ url($locale.'/quality') }}" class="nav-dd-item">
+                    <i data-lucide="badge-check" style="width:14px;height:14px;color:#1A6FE8"></i>
+                    <div>
+                        <div class="nav-dd-name">Quality (QMS)</div>
+                        <div class="nav-dd-sub">Quality management framework</div>
+                    </div>
+                </a>
             </div>
         </div>
 
