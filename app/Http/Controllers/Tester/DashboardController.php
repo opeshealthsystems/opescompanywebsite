@@ -1,8 +1,8 @@
 <?php
-
 namespace App\Http\Controllers\Tester;
 
 use App\Http\Controllers\Controller;
+use App\Models\Ticket;
 use App\Models\TesterAssignment;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,17 +12,24 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        $active = TesterAssignment::where('assigned_to', $user->id)
-            ->whereIn('status', ['pending', 'in_progress'])
-            ->orderBy('due_date')
-            ->get();
+        $allAssignments = TesterAssignment::where('assigned_to', $user->id)->get();
 
-        $completed = TesterAssignment::where('assigned_to', $user->id)
-            ->whereIn('status', ['completed', 'cancelled'])
-            ->orderByDesc('updated_at')
-            ->limit(5)
-            ->get();
+        $active    = $allAssignments->whereIn('status', ['pending', 'in_progress'])->sortBy('due_date');
+        $completed = $allAssignments->whereIn('status', ['completed', 'cancelled'])
+                                    ->sortByDesc('updated_at')->take(5);
+        $overdue   = $allAssignments->filter(fn ($a) => $a->isOverdue());
 
-        return view('tester.dashboard', compact('active', 'completed'));
+        $totalAssigned   = $allAssignments->count();
+        $activeCount     = $active->count();
+        $completedCount  = $allAssignments->where('status', 'completed')->count();
+        $overdueCount    = $overdue->count();
+        $bugReportsCount = Ticket::where('user_id', $user->id)
+                                 ->where('type', 'bug_report')
+                                 ->count();
+
+        return view('tester.dashboard', compact(
+            'user', 'active', 'completed',
+            'totalAssigned', 'activeCount', 'completedCount', 'overdueCount', 'bugReportsCount'
+        ));
     }
 }
