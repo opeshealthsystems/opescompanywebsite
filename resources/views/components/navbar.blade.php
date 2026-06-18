@@ -174,6 +174,13 @@
                         <div class="nav-dd-sub">Patient safety & CDSS oversight</div>
                     </div>
                 </a>
+                <a href="{{ url($locale.'/interoperability') }}" class="nav-dd-item">
+                    <i data-lucide="share-2" style="width:14px;height:14px;color:#00C896"></i>
+                    <div>
+                        <div class="nav-dd-name">Interoperability</div>
+                        <div class="nav-dd-sub">HIE, FHIR, Health ID exchange</div>
+                    </div>
+                </a>
             </div>
         </div>
 

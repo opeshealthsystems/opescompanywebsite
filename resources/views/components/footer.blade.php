@@ -55,6 +55,9 @@ $current = $locale;
             <a href="{{ url($locale.'/clinical-governance') }}">
                 <i data-lucide="heart-pulse" style="width:12px;height:12px"></i>Clinical Governance
             </a>
+            <a href="{{ url($locale.'/interoperability') }}">
+                <i data-lucide="share-2" style="width:12px;height:12px"></i>Interoperability
+            </a>
         </div>
 
         <div class="footer-col">
