@@ -96,4 +96,32 @@ class TesterPortalEnhancedTest extends TestCase
             ->assertOk()
             ->assertViewHas('overdueCount', 1);
     }
+
+    public function test_tester_can_view_profile(): void
+    {
+        $user = $this->testerUser();
+
+        $this->actingAs($user)
+            ->get(route('tester.profile', ['locale' => 'en']))
+            ->assertOk()
+            ->assertViewHas('user', fn ($u) => $u->id === $user->id);
+    }
+
+    public function test_tester_can_update_profile(): void
+    {
+        $user = $this->testerUser();
+
+        $this->actingAs($user)
+            ->patch(route('tester.profile.update', ['locale' => 'en']), [
+                'name'  => 'Updated Name',
+                'phone' => '+237600000001',
+            ])
+            ->assertRedirect(route('tester.profile', ['locale' => 'en']));
+
+        $this->assertDatabaseHas('users', [
+            'id'    => $user->id,
+            'name'  => 'Updated Name',
+            'phone' => '+237600000001',
+        ]);
+    }
 }
