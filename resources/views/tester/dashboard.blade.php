@@ -9,12 +9,13 @@
 </div>
 
 {{-- KPI row --}}
-<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+<div class="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-8">
     @php
     $kpis = [
         ['label'=>'Total Assigned',   'value'=>$totalAssigned,   'icon'=>'clipboard-list',  'color'=>'#1A6FE8'],
         ['label'=>'Active',           'value'=>$activeCount,     'icon'=>'activity',        'color'=>'#F59E0B'],
         ['label'=>'Completed',        'value'=>$completedCount,  'icon'=>'check-circle',    'color'=>'#00C896'],
+        ['label'=>'Overdue',          'value'=>$overdueCount,    'icon'=>'alert-triangle',  'color'=>'#f97316'],
         ['label'=>'Bug Reports Filed','value'=>$bugReportsCount, 'icon'=>'bug',             'color'=>'#ef4444'],
     ];
     @endphp
@@ -76,7 +77,9 @@
                 <p class="text-sm text-slate-300">{{ $a->title }}</p>
                 <p class="text-xs text-slate-500">{{ $a->product_name }}</p>
             </div>
-            <span class="text-xs text-emerald-400 font-semibold">Completed</span>
+            <span class="text-xs {{ $a->status === 'completed' ? 'text-emerald-400' : 'text-amber-400' }} font-semibold">
+                {{ ucfirst($a->status) }}
+            </span>
         </div>
         @empty
         <p class="text-slate-500 text-sm text-center py-4">No completed assignments yet.</p>

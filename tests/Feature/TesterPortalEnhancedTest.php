@@ -75,4 +75,25 @@ class TesterPortalEnhancedTest extends TestCase
             ->get(route('tester.dashboard', ['locale' => 'en']))
             ->assertForbidden();
     }
+
+    public function test_dashboard_shows_overdue_count(): void
+    {
+        $user = $this->testerUser();
+
+        TesterAssignment::create([
+            'assigned_to'  => $user->id,
+            'assigned_by'  => null,
+            'product_slug' => 'opes-clinic',
+            'product_name' => 'OPES Clinic',
+            'title'        => 'Past due task',
+            'description'  => 'This is overdue',
+            'status'       => 'in_progress',
+            'due_date'     => now()->subDays(3)->toDateString(),
+        ]);
+
+        $this->actingAs($user)
+            ->get(route('tester.dashboard', ['locale' => 'en']))
+            ->assertOk()
+            ->assertViewHas('overdueCount', 1);
+    }
 }
