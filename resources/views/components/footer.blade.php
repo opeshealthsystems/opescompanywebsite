@@ -88,6 +88,12 @@ $current = $locale;
                 <a href="{{ url($locale.'/sales-playbook') }}">
                     <i data-lucide="target" style="width:12px;height:12px"></i>Sales Playbook
                 </a>
+                <a href="{{ url($locale.'/government-proposal') }}">
+                    <i data-lucide="file-text" style="width:12px;height:12px"></i>Gov. Proposal Template
+                </a>
+                <a href="{{ url($locale.'/investor-pitch') }}">
+                    <i data-lucide="trending-up" style="width:12px;height:12px"></i>Investor Pitch
+                </a>
                 @endif
             @else
                 <a href="{{ route('login') }}" title="Sign in to view">

@@ -97,7 +97,9 @@ Route::prefix('{locale}')
                 Route::get('/strategy',        fn () => view('pages.strategy'))->name('strategy');
                 Route::get('/risk',            fn () => view('pages.risk'))->name('risk');
                 Route::get('/financial-model', fn () => view('pages.financial-model'))->name('financial-model');
-                Route::get('/sales-playbook',  fn () => view('pages.sales-playbook'))->name('sales-playbook');
+                Route::get('/sales-playbook',       fn () => view('pages.sales-playbook'))->name('sales-playbook');
+                Route::get('/government-proposal', fn () => view('pages.government-proposal'))->name('government-proposal');
+                Route::get('/investor-pitch',      fn () => view('pages.investor-pitch'))->name('investor-pitch');
             });
         Route::get('/practitioners', [PractitionerLandingController::class, 'index'])->name('practitioners.index');
 
