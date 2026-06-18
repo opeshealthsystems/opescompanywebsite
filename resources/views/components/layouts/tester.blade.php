@@ -26,6 +26,14 @@
                class="cp-nav-link {{ request()->routeIs('tester.assignments*') ? 'cp-nav-link-active' : '' }}">
                 <i data-lucide="clipboard-list" style="width:16px;height:16px"></i> Assignments
             </a>
+            <a href="{{ route('tester.bug-reports', ['locale' => app()->getLocale()]) }}"
+               class="cp-nav-link {{ request()->routeIs('tester.bug-reports*') ? 'cp-nav-link-active' : '' }}">
+                <i data-lucide="bug" style="width:16px;height:16px"></i> Bug Reports
+            </a>
+            <a href="{{ route('tester.profile', ['locale' => app()->getLocale()]) }}"
+               class="cp-nav-link {{ request()->routeIs('tester.profile*') ? 'cp-nav-link-active' : '' }}">
+                <i data-lucide="user" style="width:16px;height:16px"></i> Profile
+            </a>
         </div>
         <div class="cp-nav-user portal-actions">
             <span class="cp-nav-username">{{ auth()->user()->name }}</span>

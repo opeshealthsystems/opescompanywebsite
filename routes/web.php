@@ -168,6 +168,7 @@ Route::prefix('{locale}')
                 Route::post('/assignments/{id}/bug-reports',         [\App\Http\Controllers\Tester\AssignmentController::class, 'storeBugReport'])->name('assignments.bug-reports');
                 Route::get('/profile',  [\App\Http\Controllers\Tester\ProfileController::class, 'show'])->name('profile');
                 Route::patch('/profile', [\App\Http\Controllers\Tester\ProfileController::class, 'update'])->name('profile.update');
+                Route::get('/bug-reports', [\App\Http\Controllers\Tester\BugReportController::class, 'index'])->name('bug-reports');
             });
 
         // Practitioner portal

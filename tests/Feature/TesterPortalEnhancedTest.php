@@ -124,4 +124,23 @@ class TesterPortalEnhancedTest extends TestCase
             'phone' => '+237600000001',
         ]);
     }
+
+    public function test_tester_bug_reports_page_loads(): void
+    {
+        $user = $this->testerUser();
+
+        Ticket::create([
+            'user_id'     => $user->id,
+            'subject'     => 'Button not clickable',
+            'description' => 'The submit button fails on mobile',
+            'type'        => 'bug_report',
+            'status'      => 'open',
+            'priority'    => 'high',
+        ]);
+
+        $this->actingAs($user)
+            ->get(route('tester.bug-reports', ['locale' => 'en']))
+            ->assertOk()
+            ->assertSee('Button not clickable');
+    }
 }
