@@ -91,6 +91,7 @@ Route::prefix('{locale}')
         Route::get('/partner-program',      fn () => view('pages.partner-program'))->name('partner-program');
         Route::get('/health-os',            fn () => view('pages.health-os'))->name('health-os');
         Route::get('/architecture-diagrams', fn () => view('pages.architecture-diagrams'))->name('architecture-diagrams');
+        Route::get('/faq',                  fn () => view('pages.faq'))->name('faq');
 
         // Confidential — admin / super_admin / support only (not customer)
         Route::middleware(['auth', 'role:admin|super_admin|support'])

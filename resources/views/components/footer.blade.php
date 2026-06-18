@@ -112,6 +112,9 @@ $current = $locale;
             <a href="{{ url($locale.'/blog') }}">
                 <i data-lucide="rss" style="width:12px;height:12px"></i>Blog
             </a>
+            <a href="{{ url($locale.'/faq') }}">
+                <i data-lucide="help-circle" style="width:12px;height:12px"></i>{{ $isFr ? 'FAQ' : 'FAQ' }}
+            </a>
             <a href="{{ url($locale.'/contact') }}">
                 <i data-lucide="mail" style="width:12px;height:12px"></i>Contact
             </a>
