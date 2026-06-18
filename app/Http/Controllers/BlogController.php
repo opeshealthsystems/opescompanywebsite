@@ -10,8 +10,27 @@ class BlogController extends Controller
 {
     public function index(Request $request)
     {
-        $activeCategory = $request->query('category');
-        $search         = trim($request->query('search', ''));
+        $availableCategories = BlogPost::published()
+            ->distinct()
+            ->orderBy('category')
+            ->pluck('category')
+            ->filter()
+            ->values()
+            ->toArray();
+
+        $categoryInput = $request->query('category');
+        $searchInput   = $request->query('search', '');
+
+        if ($categoryInput !== null && $categoryInput !== '' && ! in_array($categoryInput, $availableCategories, true)) {
+            abort(422, 'The selected category is invalid.');
+        }
+
+        if (mb_strlen((string) $searchInput) > 255) {
+            abort(422, 'The search query must not be greater than 255 characters.');
+        }
+
+        $activeCategory = ($categoryInput !== null && $categoryInput !== '') ? $categoryInput : null;
+        $search         = trim((string) $searchInput);
 
         $query = BlogPost::published();
         if ($activeCategory) {

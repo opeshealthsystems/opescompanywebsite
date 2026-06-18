@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class BlogPost extends Model
 {
+    use HasFactory;
     protected $fillable = [
         'title', 'title_fr', 'slug', 'excerpt', 'excerpt_fr',
         'body', 'body_fr', 'cover_image', 'reading_time', 'category',
