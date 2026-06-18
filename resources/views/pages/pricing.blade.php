@@ -228,50 +228,6 @@ $prices = [
     </table>
 </div>
 
-{{-- ── SUPPORT TIERS SUMMARY ────────────────────────────────────── --}}
-<div class="pricing-compare">
-    <h2>{{ $isFr ? 'Niveaux de support inclus' : 'Support tiers included' }}</h2>
-    <p style="color:#64748b;font-size:14px;max-width:640px;margin:0 0 24px">
-        {{ $isFr
-            ? 'Chaque abonnement OPES inclut un niveau de support. Montez en gamme pour des réponses plus rapides, un responsable dédié et un SLA de disponibilité garanti.'
-            : 'Every OPES subscription includes a support tier. Upgrade for faster responses, a named account manager, and a guaranteed uptime SLA.' }}
-    </p>
-    <table class="compare-table">
-        <thead>
-            <tr>
-                <th style="width:35%">{{ $isFr ? 'Engagement' : 'Commitment' }}</th>
-                <th>{{ $isFr ? 'Clinic (Bronze)' : 'Clinic (Bronze)' }}</th>
-                <th class="col-featured">{{ $isFr ? 'Facility (Silver)' : 'Facility (Silver)' }}</th>
-                <th>{{ $isFr ? 'System (Gold+)' : 'System (Gold+)' }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($isFr
-                ? [['Temps de réponse','72 h','24 h','4 h ou moins'],['Disponibilité SLA','99,0 %','99,5 %','99,9 %+'],['Support téléphonique','✕','✓','✓'],['Visites sur site/an','0','2','4+'],['Responsable dédié','✕','✕','✓']]
-                : [['Response time','72 h','24 h','4 h or less'],['Uptime SLA','99.0%','99.5%','99.9%+'],['Phone support','✕','✓','✓'],['On-site visits/year','0','2','4+'],['Named account manager','✕','✕','✓']]
-            as $row)
-            <tr>
-                <td>{{ $row[0] }}</td>
-                @foreach(array_slice($row,1) as $idx => $val)
-                <td @if($idx===1) class="col-featured" @endif>
-                    @if($val === '✓') <span class="compare-check">✓</span>
-                    @elseif($val === '✕') <span class="compare-x">✕</span>
-                    @else {{ $val }}
-                    @endif
-                </td>
-                @endforeach
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-    <div style="margin-top:16px;text-align:right">
-        <a href="{{ url($locale.'/support') }}" style="color:#00C896;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:5px">
-            {{ $isFr ? 'Voir la comparaison complète des SLA' : 'See full SLA comparison' }}
-            <i data-lucide="arrow-right" style="width:12px;height:12px"></i>
-        </a>
-    </div>
-</div>
-
 {{-- ── LICENSING MODELS ──────────────────────────────────────────── --}}
 <div class="section" style="max-width:960px;margin:0 auto">
     <div class="section-label" style="margin-bottom:16px">
@@ -437,28 +393,31 @@ $prices = [
         ];
         @endphp
         @foreach($implPackages as $pkg)
-        <div class="pricing-card {{ isset($pkg['featured']) ? 'pricing-card-featured' : '' }}" style="{{ isset($pkg['featured']) ? '' : 'border-color:'.$pkg['color'].'30' }}">
+        <div style="background:#0F172A;border:1px solid {{ $pkg['color'] }}30;border-radius:14px;padding:24px 20px;display:flex;flex-direction:column;position:relative">
             @if(isset($pkg['featured']))
-            <div class="pricing-recommended">{{ $isFr ? 'LE PLUS CHOISI' : 'MOST CHOSEN' }}</div>
+            <div style="position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:#1A6FE8;color:#fff;font-size:9px;font-weight:800;letter-spacing:0.1em;padding:3px 12px;border-radius:0 0 8px 8px;text-transform:uppercase;white-space:nowrap">{{ $isFr ? 'LE PLUS CHOISI' : 'MOST CHOSEN' }}</div>
             @endif
-            <div class="pricing-tier" style="color:{{ $pkg['color'] }}">{{ $pkg['name'] }}</div>
-            <div class="pricing-name" style="font-size:16px">{{ $pkg['target'] }}</div>
-            <div class="pricing-price" style="margin:16px 0">
-                <div class="pricing-amount-custom" style="font-size:clamp(15px,2vw,18px);line-height:1.3">{{ $pkg['price'] }}</div>
-                <div class="pricing-period">
-                    <i data-lucide="clock" style="width:11px;height:11px;margin-right:3px"></i>{{ $pkg['duration'] }}
+            <div style="font-size:11px;font-weight:800;color:{{ $pkg['color'] }};text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;margin-top:{{ isset($pkg['featured']) ? '10px' : '0' }}">{{ $pkg['name'] }}</div>
+            <div style="font-weight:700;color:#e2e8f0;font-size:15px;margin-bottom:12px">{{ $pkg['target'] }}</div>
+            <div style="margin-bottom:14px">
+                <div style="font-size:clamp(14px,2vw,17px);font-weight:800;color:{{ $pkg['color'] }};line-height:1.3">{{ $pkg['price'] }}</div>
+                <div style="font-size:11px;color:#475569;display:flex;align-items:center;gap:4px;margin-top:3px">
+                    <i data-lucide="clock" style="width:10px;height:10px"></i>{{ $pkg['duration'] }}
                 </div>
             </div>
-            <a href="{{ route('contact', ['locale' => $locale]) }}" class="{{ isset($pkg['featured']) ? 'pricing-cta pricing-cta-primary' : 'pricing-cta pricing-cta-secondary' }}">
-                <i data-lucide="send" style="width:13px;height:13px"></i>
+            <a href="{{ route('contact', ['locale' => $locale]) }}" style="display:inline-flex;align-items:center;justify-content:center;gap:6px;background:{{ isset($pkg['featured']) ? '#1A6FE8' : 'transparent' }};color:{{ isset($pkg['featured']) ? '#fff' : $pkg['color'] }};border:1px solid {{ isset($pkg['featured']) ? '#1A6FE8' : $pkg['color'].'60' }};border-radius:8px;padding:9px 16px;font-size:12px;font-weight:700;text-decoration:none;margin-bottom:16px">
+                <i data-lucide="send" style="width:12px;height:12px"></i>
                 {{ $isFr ? 'Demander un devis' : 'Get a quote' }}
             </a>
-            <div class="pricing-divider"></div>
-            <ul class="pricing-features">
-                @foreach($pkg['includes'] as $inc)
-                <li><i data-lucide="check" class="fi pricing-check"></i> {{ $inc }}</li>
-                @endforeach
-            </ul>
+            <div style="border-top:1px solid #1e293b;padding-top:14px">
+                <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:7px">
+                    @foreach($pkg['includes'] as $inc)
+                    <li style="display:flex;align-items:flex-start;gap:7px;font-size:12px;color:#94a3b8">
+                        <i data-lucide="check" style="width:12px;height:12px;color:{{ $pkg['color'] }};flex-shrink:0;margin-top:1px"></i>{{ $inc }}
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
         </div>
         @endforeach
     </div>
