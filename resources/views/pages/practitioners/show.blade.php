@@ -1,6 +1,7 @@
 <x-layouts.app>
 @php
     $locale    = app()->getLocale();
+    $isFr      = $locale === 'fr';
     $tier      = $profile->user?->practitionerTier();
     $avgRating = $ratingBreakdown['overall'];
     $profLabel = \App\Models\PractitionerProfile::professionOptions()[$profile->profession] ?? $profile->profession;
@@ -13,7 +14,7 @@
     <a href="{{ route('practitioners.index', ['locale' => $locale]) }}"
        class="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white mb-8 no-underline transition-colors">
         <i data-lucide="arrow-left" style="width:16px;height:16px"></i>
-        Back to Directory
+        {{ $isFr ? 'Retour à l\'annuaire' : 'Back to Directory' }}
     </a>
 
     {{-- Hero card --}}
@@ -48,7 +49,7 @@
                 @if($profile->years_of_experience)
                 <p class="text-sm text-slate-500 mt-0.5 flex items-center gap-1">
                     <i data-lucide="briefcase" style="width:13px;height:13px"></i>
-                    {{ $profile->years_of_experience }} years of experience
+                    {{ $profile->years_of_experience }} {{ $isFr ? 'ans d\'expérience' : 'years of experience' }}
                 </p>
                 @endif
             </div>
@@ -56,16 +57,16 @@
             <div class="flex gap-6 sm:flex-col sm:items-end text-center sm:text-right">
                 <div>
                     <p class="text-2xl font-bold text-white">{{ $approvedApplications->count() }}</p>
-                    <p class="text-xs text-slate-500">Programs</p>
+                    <p class="text-xs text-slate-500">{{ $isFr ? 'Programmes' : 'Programs' }}</p>
                 </div>
                 <div>
                     <p class="text-2xl font-bold text-white">{{ $publishedFindings->count() }}</p>
-                    <p class="text-xs text-slate-500">Findings</p>
+                    <p class="text-xs text-slate-500">{{ $isFr ? 'Constats' : 'Findings' }}</p>
                 </div>
                 @if($avgRating)
                 <div>
                     <p class="text-2xl font-bold text-emerald-400">{{ number_format($avgRating, 1) }}</p>
-                    <p class="text-xs text-slate-500">Avg Rating</p>
+                    <p class="text-xs text-slate-500">{{ $isFr ? 'Note moy.' : 'Avg Rating' }}</p>
                 </div>
                 @endif
             </div>
@@ -80,7 +81,7 @@
             {{-- Bio --}}
             @if($profile->bio)
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-6">
-                <h2 class="text-sm font-semibold text-slate-400 uppercase tracking-widest mb-3">About</h2>
+                <h2 class="text-sm font-semibold text-slate-400 uppercase tracking-widest mb-3">{{ $isFr ? 'À propos' : 'About' }}</h2>
                 <p class="text-slate-300 leading-relaxed">{{ $profile->bio }}</p>
             </div>
             @endif
@@ -90,7 +91,7 @@
             <div class="bg-emerald-950/40 border border-emerald-900/50 rounded-xl p-6">
                 <h2 class="text-sm font-semibold text-emerald-400 uppercase tracking-widest mb-3 flex items-center gap-2">
                     <i data-lucide="quote" style="width:14px;height:14px"></i>
-                    OPES Testimonial
+                    {{ $isFr ? 'Témoignage OPES' : 'OPES Testimonial' }}
                 </h2>
                 <p class="text-slate-200 leading-relaxed italic">"{{ $profile->opes_testimonial }}"</p>
             </div>
@@ -99,7 +100,7 @@
             {{-- Programs participated --}}
             @if($approvedApplications->isNotEmpty())
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-6">
-                <h2 class="text-sm font-semibold text-slate-400 uppercase tracking-widest mb-4">Programs Participated</h2>
+                <h2 class="text-sm font-semibold text-slate-400 uppercase tracking-widest mb-4">{{ $isFr ? 'Programmes participés' : 'Programs Participated' }}</h2>
                 <div class="flex flex-col gap-3">
                     @foreach($approvedApplications as $application)
                     @php $prog = $application->program; @endphp
@@ -110,9 +111,9 @@
                         </div>
                         <div class="flex items-center gap-2">
                             @if($prog?->type === 'paid')
-                            <span class="text-xs font-semibold text-emerald-400 bg-emerald-900/30 px-2 py-0.5 rounded-full border border-emerald-800">Paid</span>
+                            <span class="text-xs font-semibold text-emerald-400 bg-emerald-900/30 px-2 py-0.5 rounded-full border border-emerald-800">{{ $isFr ? 'Payé' : 'Paid' }}</span>
                             @else
-                            <span class="text-xs font-semibold text-slate-400 bg-slate-800 px-2 py-0.5 rounded-full">Volunteer</span>
+                            <span class="text-xs font-semibold text-slate-400 bg-slate-800 px-2 py-0.5 rounded-full">{{ $isFr ? 'Bénévole' : 'Volunteer' }}</span>
                             @endif
                             @if($application->reviewed_at)
                             <span class="text-xs text-slate-500">{{ $application->reviewed_at->format('M Y') }}</span>
@@ -127,7 +128,7 @@
             {{-- Recent findings --}}
             @if($publishedFindings->isNotEmpty())
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-6">
-                <h2 class="text-sm font-semibold text-slate-400 uppercase tracking-widest mb-4">Recent Findings</h2>
+                <h2 class="text-sm font-semibold text-slate-400 uppercase tracking-widest mb-4">{{ $isFr ? 'Constats récents' : 'Recent Findings' }}</h2>
                 <div class="flex flex-col gap-4">
                     @foreach($publishedFindings as $finding)
                     <div class="pb-4 border-b border-slate-800 last:border-0">
@@ -159,7 +160,7 @@
             {{-- Rating breakdown --}}
             @if($ratingBreakdown['overall'])
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-6">
-                <h2 class="text-sm font-semibold text-slate-400 uppercase tracking-widest mb-4">Rating Breakdown</h2>
+                <h2 class="text-sm font-semibold text-slate-400 uppercase tracking-widest mb-4">{{ $isFr ? 'Évaluation détaillée' : 'Rating Breakdown' }}</h2>
                 @php
                     $ratingItems = [
                         'Overall'        => $ratingBreakdown['overall'],
@@ -188,28 +189,28 @@
 
             {{-- Quick details --}}
             <div class="bg-slate-900 border border-slate-800 rounded-xl p-6">
-                <h2 class="text-sm font-semibold text-slate-400 uppercase tracking-widest mb-4">Details</h2>
+                <h2 class="text-sm font-semibold text-slate-400 uppercase tracking-widest mb-4">{{ $isFr ? 'Détails' : 'Details' }}</h2>
                 <dl class="flex flex-col gap-3 text-sm">
                     <div>
-                        <dt class="text-xs text-slate-500 mb-0.5">Profession</dt>
+                        <dt class="text-xs text-slate-500 mb-0.5">{{ $isFr ? 'Profession' : 'Profession' }}</dt>
                         <dd class="text-slate-200">{{ $profLabel }}</dd>
                     </div>
                     @if($profile->specialty)
                     <div>
-                        <dt class="text-xs text-slate-500 mb-0.5">Specialty</dt>
+                        <dt class="text-xs text-slate-500 mb-0.5">{{ $isFr ? 'Spécialité' : 'Specialty' }}</dt>
                         <dd class="text-slate-200">{{ $profile->specialty }}</dd>
                     </div>
                     @endif
                     @if($profile->workplace_country)
                     <div>
-                        <dt class="text-xs text-slate-500 mb-0.5">Country</dt>
+                        <dt class="text-xs text-slate-500 mb-0.5">{{ $isFr ? 'Pays' : 'Country' }}</dt>
                         <dd class="text-slate-200">{{ $profile->workplace_country }}</dd>
                     </div>
                     @endif
                     @if($profile->years_of_experience)
                     <div>
-                        <dt class="text-xs text-slate-500 mb-0.5">Experience</dt>
-                        <dd class="text-slate-200">{{ $profile->years_of_experience }} years</dd>
+                        <dt class="text-xs text-slate-500 mb-0.5">{{ $isFr ? 'Expérience' : 'Experience' }}</dt>
+                        <dd class="text-slate-200">{{ $profile->years_of_experience }} {{ $isFr ? 'ans d\'expérience' : 'years' }}</dd>
                     </div>
                     @endif
                 </dl>

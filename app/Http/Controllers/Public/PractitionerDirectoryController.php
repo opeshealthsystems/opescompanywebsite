@@ -88,11 +88,16 @@ class PractitionerDirectoryController extends Controller
             ->take(10)
             ->get();
 
+        $ratingRow = PractitionerFinding::where('practitioner_id', $id)
+            ->where('is_published', true)
+            ->selectRaw('AVG(overall_rating) as overall, AVG(usability_rating) as usability, AVG(wait_time_rating) as wait_time, AVG(data_integrity_rating) as data_integrity')
+            ->first();
+
         $ratingBreakdown = [
-            'overall'        => $publishedFindings->avg('overall_rating'),
-            'usability'      => $publishedFindings->avg('usability_rating'),
-            'wait_time'      => $publishedFindings->avg('wait_time_rating'),
-            'data_integrity' => $publishedFindings->avg('data_integrity_rating'),
+            'overall'        => $ratingRow?->overall ? round((float) $ratingRow->overall, 1) : null,
+            'usability'      => $ratingRow?->usability ? round((float) $ratingRow->usability, 1) : null,
+            'wait_time'      => $ratingRow?->wait_time ? round((float) $ratingRow->wait_time, 1) : null,
+            'data_integrity' => $ratingRow?->data_integrity ? round((float) $ratingRow->data_integrity, 1) : null,
         ];
 
         return view('pages.practitioners.show', compact(
