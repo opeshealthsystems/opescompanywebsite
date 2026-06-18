@@ -279,7 +279,7 @@
         </a>
         @endauth
 
-        <a href="{{ url($locale.'/contact') }}" class="btn-cta">
+        <a href="{{ url($locale.'/book-demo') }}" class="btn-cta">
             {{ __('nav.book_demo') }}
         </a>
     </div>

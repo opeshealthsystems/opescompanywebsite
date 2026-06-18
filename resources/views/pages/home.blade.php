@@ -227,6 +227,7 @@
 
     </div>{{-- #heroSlider --}}
 
+    <div class="hero-progress-wrap"><div id="heroProgressBar" class="hero-progress-bar"></div></div>
     <div class="hero-slider-nav">
         <button class="hero-dot active" data-target="0" aria-label="Slide 1"></button>
         <button class="hero-dot" data-target="1" aria-label="Slide 2"></button>
@@ -581,31 +582,66 @@
 @endif
 
 <script>
-(function(){
+document.addEventListener('DOMContentLoaded', function () {
     var slider = document.getElementById('heroSlider');
     if (!slider) return;
-    var slides = slider.querySelectorAll('.hero-slide');
-    var dots = document.querySelectorAll('.hero-dot');
-    var current = 0, timer;
+    var slides = Array.from(slider.querySelectorAll('.hero-slide'));
+    var dots   = Array.from(document.querySelectorAll('.hero-dot'));
+    var bar    = document.getElementById('heroProgressBar');
+    if (!slides.length) return;
+    var current = 0, timer, barAnim;
+    var INTERVAL = 5000;
+
     function goTo(n) {
         slides[current].classList.remove('active');
-        dots[current].classList.remove('active');
+        if (dots[current]) dots[current].classList.remove('active');
         current = ((n % slides.length) + slides.length) % slides.length;
         slides[current].classList.add('active');
-        dots[current].classList.add('active');
+        if (dots[current]) dots[current].classList.add('active');
+        startBar();
         resetTimer();
     }
+
+    function startBar() {
+        if (!bar) return;
+        bar.style.transition = 'none';
+        bar.style.width = '0%';
+        requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+                bar.style.transition = 'width ' + INTERVAL + 'ms linear';
+                bar.style.width = '100%';
+            });
+        });
+    }
+
     function resetTimer() {
         clearInterval(timer);
-        timer = setInterval(function(){ goTo(current + 1); }, 6500);
+        timer = setInterval(function () { goTo(current + 1); }, INTERVAL);
     }
-    dots.forEach(function(dot, i) {
-        dot.addEventListener('click', function(){ goTo(i); });
+
+    dots.forEach(function (dot, i) {
+        dot.addEventListener('click', function () { goTo(i); });
     });
-    slider.addEventListener('mouseenter', function(){ clearInterval(timer); });
-    slider.addEventListener('mouseleave', resetTimer);
+
+    var wrap = document.getElementById('heroWrap');
+    if (wrap) {
+        wrap.addEventListener('mouseenter', function () { clearInterval(timer); if (bar) { bar.style.transition = 'none'; } });
+        wrap.addEventListener('mouseleave', function () { startBar(); resetTimer(); });
+    }
+
+    // Swipe support
+    var touchX = null;
+    slider.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+    slider.addEventListener('touchend', function (e) {
+        if (touchX === null) return;
+        var diff = touchX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+        touchX = null;
+    });
+
+    startBar();
     resetTimer();
-})();
+});
 </script>
 
 </x-layouts.app>

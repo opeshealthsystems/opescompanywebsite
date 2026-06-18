@@ -95,6 +95,13 @@ Route::prefix('{locale}')
         Route::get('/health-os',            fn () => view('pages.health-os'))->name('health-os');
         Route::get('/architecture-diagrams', fn () => view('pages.architecture-diagrams'))->name('architecture-diagrams');
         Route::get('/faq',                  fn () => view('pages.faq'))->name('faq');
+        Route::get('/book-demo',            [\App\Http\Controllers\DemoRequestController::class, 'show'])->name('book-demo');
+        Route::post('/book-demo',           [\App\Http\Controllers\DemoRequestController::class, 'submit'])->name('book-demo.submit');
+        Route::get('/become-a-partner',     [\App\Http\Controllers\PartnerApplicationController::class, 'show'])->name('become-a-partner');
+        Route::post('/become-a-partner',    [\App\Http\Controllers\PartnerApplicationController::class, 'submit'])->name('become-a-partner.submit');
+        Route::get('/join-testers',         [\App\Http\Controllers\TesterApplicationController::class, 'show'])->name('join-testers');
+        Route::post('/join-testers',        [\App\Http\Controllers\TesterApplicationController::class, 'submit'])->name('join-testers.submit');
+        Route::get('/mobile-clinic',        fn () => view('pages.mobile-clinic'))->name('mobile-clinic');
 
         // Confidential — admin / super_admin / support only (not customer)
         Route::middleware(['auth', 'role:admin|super_admin|support'])

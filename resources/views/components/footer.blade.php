@@ -106,6 +106,18 @@ $current = $locale;
             <a href="{{ url($locale.'/partnerships') }}">
                 <i data-lucide="handshake" style="width:12px;height:12px"></i>{{ $isFr ? 'Partenariat' : 'Partnership' }}
             </a>
+            <a href="{{ url($locale.'/become-a-partner') }}">
+                <i data-lucide="user-plus" style="width:12px;height:12px"></i>{{ $isFr ? 'Devenir partenaire' : 'Become a Partner' }}
+            </a>
+            <a href="{{ url($locale.'/join-testers') }}">
+                <i data-lucide="flask-conical" style="width:12px;height:12px"></i>{{ $isFr ? 'Rejoindre les testeurs' : 'Join Beta Testers' }}
+            </a>
+            <a href="{{ url($locale.'/mobile-clinic') }}">
+                <i data-lucide="heart" style="width:12px;height:12px"></i>{{ $isFr ? 'Cliniques mobiles' : 'Mobile Clinics' }}
+            </a>
+            <a href="{{ url($locale.'/book-demo') }}" style="color:#00C896;font-weight:600">
+                <i data-lucide="calendar" style="width:12px;height:12px"></i>{{ $isFr ? 'Réserver une démo' : 'Book a Demo' }}
+            </a>
             <a href="{{ url($locale.'/pricing') }}">
                 <i data-lucide="tag" style="width:12px;height:12px"></i>{{ $isFr ? 'Tarification' : 'Pricing' }}
             </a>
