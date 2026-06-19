@@ -109,4 +109,50 @@ class IssueReport extends Model
             'closed' => 'Closed',
         ];
     }
+
+    public function recordClinicalReview(int $reviewerId, string $decision, ?string $notes = null): void
+    {
+        $this->clinicalReview()->create([
+            'reviewer_id' => $reviewerId,
+            'decision'    => $decision,
+            'notes'       => $notes,
+            'reviewed_at' => now(),
+        ]);
+
+        $this->status = match ($decision) {
+            'approved_for_product_review' => 'clinical_review',
+            'rejected'                    => 'rejected',
+            'needs_more_information'      => 'needs_more_information',
+            default                       => $this->status,
+        };
+        $this->save();
+    }
+
+    public function sendToProductReview(): void
+    {
+        $this->update(['status' => 'product_review']);
+    }
+
+    public function recordProductReview(int $reviewerId, string $decision, ?string $notes = null): void
+    {
+        $this->productReview()->create([
+            'reviewer_id' => $reviewerId,
+            'decision'    => $decision,
+            'notes'       => $notes,
+            'reviewed_at' => now(),
+        ]);
+
+        // decision values: accepted | rejected | duplicate | sent_to_development — all are valid statuses
+        $this->update(['status' => $decision]);
+    }
+
+    public function closeIssue(): void
+    {
+        $this->update(['status' => 'closed']);
+    }
+
+    public function clinicalApproved(): bool
+    {
+        return $this->clinicalReview && $this->clinicalReview->decision === 'approved_for_product_review';
+    }
 }
