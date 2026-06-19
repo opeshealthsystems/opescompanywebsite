@@ -62,6 +62,9 @@
                             <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-slate-700/40 text-slate-300 border border-slate-600">
                                 {{ $statusLabels[$issue->status] ?? $issue->status }}
                             </span>
+                            @if($issue->status === 'ready_for_retest')
+                            <span class="ml-2 px-2 py-0.5 rounded text-xs font-medium bg-amber-900 text-amber-300">Action needed: Retest</span>
+                            @endif
                         </td>
                         <td class="px-5 py-3 whitespace-nowrap">{{ $issue->created_at?->format('M j, Y') ?? '—' }}</td>
                     </tr>

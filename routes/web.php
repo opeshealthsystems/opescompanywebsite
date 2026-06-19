@@ -215,6 +215,7 @@ Route::prefix('{locale}')
                     Route::get('/issues/create',   [\App\Http\Controllers\Practitioner\Validation\IssueReportController::class, 'create'])->name('issues.create');
                     Route::post('/issues',         [\App\Http\Controllers\Practitioner\Validation\IssueReportController::class, 'store'])->name('issues.store');
                     Route::get('/issues/{issue}',  [\App\Http\Controllers\Practitioner\Validation\IssueReportController::class, 'show'])->name('issues.show');
+                    Route::post('/issues/{issue}/retests', [\App\Http\Controllers\Practitioner\Validation\RetestController::class, 'store'])->name('issues.retests.store');
                 });
                 // Courses
                 Route::get('/courses', [\App\Http\Controllers\Practitioner\CourseController::class, 'index'])->name('courses');

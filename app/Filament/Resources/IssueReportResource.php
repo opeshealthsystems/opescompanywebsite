@@ -125,7 +125,7 @@ class IssueReportResource extends Resource
                     ->label('Close')
                     ->icon('heroicon-o-lock-closed')
                     ->color('gray')
-                    ->visible(fn (IssueReport $r) => in_array($r->status, ['accepted', 'rejected', 'duplicate']))
+                    ->visible(fn (IssueReport $r) => in_array($r->status, ['accepted', 'rejected', 'duplicate', 'retest_passed']))
                     ->requiresConfirmation()
                     ->action(function (IssueReport $r) {
                         $r->closeIssue();

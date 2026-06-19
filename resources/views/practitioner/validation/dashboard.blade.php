@@ -79,6 +79,10 @@
                 <p class="text-xs text-slate-400">Closed</p>
             </div>
         </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+            <div class="text-2xl font-bold text-amber-400">{{ $cohortMember->issueReports()->where('status', 'ready_for_retest')->count() }}</div>
+            <div class="text-xs text-slate-400 mt-1">Awaiting your retest</div>
+        </div>
     </div>
 
     {{-- Actions --}}

@@ -9,7 +9,7 @@
         'low'      => 'bg-sky-500/10 text-sky-400 border-sky-500/30',
     ];
     $timeline = ['submitted' => 'Submitted', 'clinical_review' => 'Clinical Review', 'product_review' => 'Product Review', 'resolved' => 'Resolved / Closed'];
-    $resolvedStatuses = ['accepted', 'rejected', 'duplicate', 'sent_to_development', 'fixed', 'closed'];
+    $resolvedStatuses = ['accepted', 'rejected', 'duplicate', 'sent_to_development', 'fixed', 'ready_for_retest', 'retest_passed', 'retest_failed', 'closed'];
     $timelineKey = in_array($issue->status, $resolvedStatuses) ? 'resolved' : $issue->status;
     $timelineOrder = array_keys($timeline);
     $currentIndex = array_search($timelineKey, $timelineOrder);
@@ -121,5 +121,57 @@
             @endforeach
         </ul>
     </div>
+@endif
+
+{{-- Retest panel: only the original reporter, only when awaiting retest --}}
+@if($issue->status === 'ready_for_retest' && $issue->cohortMember?->user_id === auth()->id())
+<div class="bg-slate-900 border border-slate-800 rounded-xl p-6 mt-6">
+    <h2 class="text-lg font-semibold text-white mb-1">Retest this fix</h2>
+    <p class="text-slate-400 text-sm mb-4">The development team marked this issue fixed. Please retest and report the result.</p>
+    <form method="POST" action="{{ route('practitioner.validation.issues.retests.store', ['locale' => app()->getLocale(), 'issue' => $issue->id]) }}" enctype="multipart/form-data" class="space-y-4">
+        @csrf
+        <div>
+            <label class="block text-sm font-medium text-slate-300 mb-1">Result <span class="text-red-400">*</span></label>
+            <select name="result" required class="w-full bg-slate-800 border border-slate-700 text-white rounded-lg px-3 py-2 text-sm">
+                <option value="passed">Passed — the fix works</option>
+                <option value="failed">Failed — still broken</option>
+            </select>
+            @error('result')<p class="text-red-400 text-xs mt-1">{{ $message }}</p>@enderror
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-slate-300 mb-1">Notes <span class="text-red-400">*</span></label>
+            <textarea name="notes" rows="3" required maxlength="3000" class="w-full bg-slate-800 border border-slate-700 text-white rounded-lg px-3 py-2 text-sm">{{ old('notes') }}</textarea>
+            @error('notes')<p class="text-red-400 text-xs mt-1">{{ $message }}</p>@enderror
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-slate-300 mb-1">Attachments</label>
+            <input type="file" name="attachments[]" multiple accept=".jpg,.jpeg,.png,.pdf" class="block w-full text-sm text-slate-400">
+        </div>
+        <button type="submit" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-lg">Submit Retest</button>
+    </form>
+</div>
+@endif
+
+{{-- Retest history (read-only) --}}
+@if($issue->retests->isNotEmpty())
+<div class="bg-slate-900 border border-slate-800 rounded-xl p-6 mt-6">
+    <h2 class="text-lg font-semibold text-white mb-4">Retest history</h2>
+    @php $chronoRetests = $issue->retests->sortBy('retested_at')->values(); @endphp
+    <ul class="space-y-3">
+        @foreach($chronoRetests->sortByDesc('retested_at') as $retest)
+        @php $attemptNo = $chronoRetests->search(fn ($r) => $r->id === $retest->id) + 1; @endphp
+        <li class="flex items-start gap-3">
+            <span class="text-xs text-slate-500 font-mono mt-0.5 shrink-0">#{{ $attemptNo }}</span>
+            <span class="px-2 py-0.5 rounded text-xs font-medium {{ $retest->result === 'passed' ? 'bg-emerald-900 text-emerald-300' : 'bg-red-900 text-red-300' }}">
+                {{ \App\Models\Retest::resultOptions()[$retest->result] ?? $retest->result }}
+            </span>
+            <div class="text-sm text-slate-300">
+                <div>{{ $retest->notes }}</div>
+                <div class="text-xs text-slate-500 mt-0.5">{{ optional($retest->retested_at)->format('M j, Y g:ia') }}</div>
+            </div>
+        </li>
+        @endforeach
+    </ul>
+</div>
 @endif
 </x-layouts.practitioner>
