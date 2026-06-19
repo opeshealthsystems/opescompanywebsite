@@ -19,6 +19,7 @@ class ListIssueReports extends ListRecords
             'product_review'      => Tab::make('Product Review')->modifyQueryUsing(fn ($q) => $q->where('status', 'product_review')),
             'accepted'            => Tab::make('Accepted')->modifyQueryUsing(fn ($q) => $q->where('status', 'accepted')),
             'sent_to_development' => Tab::make('Sent to Development')->modifyQueryUsing(fn ($q) => $q->where('status', 'sent_to_development')),
+            'ready_for_retest'    => Tab::make('Ready for Retest')->modifyQueryUsing(fn ($q) => $q->where('status', 'ready_for_retest')),
             'closed'              => Tab::make('Closed')->modifyQueryUsing(fn ($q) => $q->where('status', 'closed')),
         ];
     }
