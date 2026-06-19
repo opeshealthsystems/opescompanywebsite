@@ -157,6 +157,13 @@ class IssueReport extends Model
 
         // decision values: accepted | rejected | duplicate | sent_to_development — all are valid statuses
         $this->update(['status' => $decision]);
+
+        if ($decision === 'sent_to_development') {
+            $this->developerTask()->firstOrCreate(
+                ['issue_report_id' => $this->id],
+                ['title' => $this->title, 'priority' => $this->severity, 'status' => 'open']
+            );
+        }
     }
 
     public function closeIssue(): void
@@ -167,5 +174,26 @@ class IssueReport extends Model
     public function clinicalApproved(): bool
     {
         return $this->clinicalReview && $this->clinicalReview->decision === 'approved_for_product_review';
+    }
+
+    public function recordRetest(int $cohortMemberId, string $result, ?string $notes, ?array $attachments = null): Retest
+    {
+        $retest = $this->retests()->create([
+            'developer_task_id' => $this->developerTask?->id,
+            'cohort_member_id'  => $cohortMemberId,
+            'result'            => $result,
+            'notes'             => $notes,
+            'attachments'       => $attachments,
+            'retested_at'       => now(),
+        ]);
+
+        if ($result === 'passed') {
+            $this->update(['status' => 'retest_passed']);
+        } else {
+            $this->update(['status' => 'retest_failed']);
+            $this->developerTask?->reopen();
+        }
+
+        return $retest;
     }
 }

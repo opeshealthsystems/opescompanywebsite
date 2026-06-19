@@ -49,4 +49,36 @@ class DeveloperTask extends Model
     {
         return IssueReport::severityOptions();
     }
+
+    public function markInProgress(): void
+    {
+        $this->update([
+            'status'     => 'in_progress',
+            'started_at' => $this->started_at ?? now(),
+        ]);
+    }
+
+    public function markFixed(?string $notes = null): void
+    {
+        $this->update([
+            'status'           => 'fixed',
+            'fixed_at'         => now(),
+            'resolution_notes' => $notes ?? $this->resolution_notes,
+        ]);
+        $this->issueReport->update(['status' => 'ready_for_retest']);
+    }
+
+    public function reopen(): void
+    {
+        $this->update(['status' => 'reopened']);
+    }
+
+    public function markWontFix(?string $notes = null): void
+    {
+        $this->update([
+            'status'           => 'wont_fix',
+            'resolution_notes' => $notes ?? $this->resolution_notes,
+        ]);
+        $this->issueReport->update(['status' => 'rejected']);
+    }
 }
