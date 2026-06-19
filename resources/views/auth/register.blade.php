@@ -117,8 +117,8 @@
 
         <p class="auth-switch" style="margin-top:1rem">
             Want to test our software or partner with us?
-            <a href="{{ route('join-testers') }}" class="auth-link">Apply as a Tester</a> ·
-            <a href="{{ route('become-a-partner') }}" class="auth-link">Become a Partner</a>
+            <a href="{{ route('join-testers', ['locale' => app()->getLocale()]) }}" class="auth-link">Apply as a Tester</a> ·
+            <a href="{{ route('become-a-partner', ['locale' => app()->getLocale()]) }}" class="auth-link">Become a Partner</a>
         </p>
         <p class="auth-switch">
             Already have an account? <a href="{{ route('login') }}" class="auth-link">Sign in</a>

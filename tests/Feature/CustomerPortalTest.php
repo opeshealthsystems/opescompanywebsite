@@ -55,8 +55,7 @@ class CustomerPortalTest extends TestCase
 
     public function test_register_route_exists(): void
     {
-        $response = $this->get('/register');
-        $this->assertNotEquals(404, $response->status());
+        $this->get('/register')->assertOk();
     }
 
     public function test_customer_dashboard_redirects_unauthenticated_to_login(): void

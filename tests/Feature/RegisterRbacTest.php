@@ -73,4 +73,14 @@ class RegisterRbacTest extends TestCase
         $this->assertTrue($user->hasRole('customer'));
         $this->assertFalse($user->hasAnyRole(['admin', 'super_admin']));
     }
+
+    public function test_register_page_renders_with_selector_and_apply_links(): void
+    {
+        // Regression: the Tester/Partner links use locale-prefixed routes and must
+        // render without a UrlGenerationException.
+        $this->get('/register')
+            ->assertOk()
+            ->assertSee('Account Type')
+            ->assertSee('Apply as a Tester');
+    }
 }
