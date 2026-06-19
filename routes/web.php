@@ -31,8 +31,8 @@ Route::middleware('guest')->group(function () {
     Route::get('/reset-password/{token}', [ResetPasswordController::class, 'show'])->name('password.reset.form');
     Route::post('/reset-password',   [ResetPasswordController::class,   'reset'])->name('password.reset');
 
-    Route::get('/practitioners/register',  [\App\Http\Controllers\Auth\PractitionerRegisterController::class, 'show'])->name('practitioner.register');
-    Route::post('/practitioners/register', [\App\Http\Controllers\Auth\PractitionerRegisterController::class, 'register'])->name('practitioner.register.post');
+    // Practitioner sign-up is now a type on the unified register page; keep the old link working.
+    Route::get('/practitioners/register', fn () => redirect()->route('register'))->name('practitioner.register');
 });
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 

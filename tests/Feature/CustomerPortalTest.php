@@ -68,6 +68,7 @@ class CustomerPortalTest extends TestCase
     public function test_customer_can_register(): void
     {
         $response = $this->post('/register', [
+            'account_type'          => 'facility',
             'name'                  => 'Dr. Ambe John',
             'email'                 => 'ambe@centralhospital.cm',
             'password'              => 'Secret1234!',
