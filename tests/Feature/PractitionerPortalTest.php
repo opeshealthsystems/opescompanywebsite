@@ -48,7 +48,8 @@ class PractitionerPortalTest extends TestCase
     {
         Mail::fake();
 
-        $response = $this->post('/practitioners/register', [
+        $response = $this->post('/register', [
+            'account_type'          => 'practitioner',
             'name'                  => 'Dr. Ngu Patrick',
             'email'                 => 'ngu@clinic.cm',
             'password'              => 'Secret1234!',
@@ -79,7 +80,8 @@ class PractitionerPortalTest extends TestCase
 
     public function test_registration_validation_rejects_missing_required_fields(): void
     {
-        $response = $this->post('/practitioners/register', [
+        $response = $this->post('/register', [
+            'account_type' => 'practitioner',
             'name'       => '',
             'email'      => '',
             'password'   => '',
