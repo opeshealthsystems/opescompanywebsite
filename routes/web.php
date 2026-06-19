@@ -224,6 +224,7 @@ Route::prefix('{locale}')
                 Route::get('/courses/{course:slug}/lessons/{lesson}', [\App\Http\Controllers\Practitioner\LessonController::class, 'show'])->name('lessons.show');
                 Route::post('/courses/{course:slug}/lessons/{lesson}/done', [\App\Http\Controllers\Practitioner\LessonController::class, 'markDone'])->name('lessons.done');
                 Route::get('/certificates', [\App\Http\Controllers\Practitioner\CertificateController::class, 'index'])->name('certificates');
+                Route::get('/certificates/validation/{certificate}/download', [\App\Http\Controllers\Practitioner\CertificateController::class, 'downloadValidation'])->name('certificates.validation-download');
             });
 
         // Manager portal
