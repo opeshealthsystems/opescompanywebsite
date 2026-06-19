@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('final_evaluations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cohort_member_id')->constrained('cohort_members')->cascadeOnDelete()->unique();
+            $table->foreignId('cohort_member_id')->constrained('cohort_members')->cascadeOnDelete();
             $table->json('metrics');
             $table->text('assessment');
             $table->string('rating', 20); // outstanding|strong|satisfactory|needs_improvement
@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('evaluator_id')->constrained('users');
             $table->timestamp('evaluated_at');
             $table->timestamps();
+            $table->unique('cohort_member_id');
         });
     }
 

@@ -38,4 +38,13 @@ class FinalEvaluation extends Model
             'needs_improvement' => 'Needs Improvement',
         ];
     }
+
+    public static function snapshotData(CohortMember $member, int $evaluatorId): array
+    {
+        return [
+            'metrics'      => app(\App\Support\ValidationMetrics::class)->memberContributionSnapshot($member),
+            'evaluator_id' => $evaluatorId,
+            'evaluated_at' => now(),
+        ];
+    }
 }
