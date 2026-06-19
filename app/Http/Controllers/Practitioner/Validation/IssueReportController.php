@@ -116,7 +116,7 @@ class IssueReportController extends Controller
 
     public function show($locale, IssueReport $issue)
     {
-        $issue->load('clinicalReview', 'productReview', 'cohortMember', 'product', 'module', 'workflow', 'testCase');
+        $issue->load('clinicalReview', 'productReview', 'cohortMember', 'product', 'module', 'workflow', 'testCase', 'retests', 'developerTask');
         abort_unless($issue->cohortMember->user_id === auth()->id(), 403);
 
         $latestNote = $issue->productReview?->notes ?? $issue->clinicalReview?->notes;
