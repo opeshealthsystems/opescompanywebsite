@@ -201,6 +201,7 @@ class PractitionerApplicationResource extends Resource
                             ->{$result->success ? 'success' : 'danger'}()
                             ->send();
                     }),
+                \App\Filament\Resources\PractitionerApplicationResource\Actions\PlaceInCohortAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
