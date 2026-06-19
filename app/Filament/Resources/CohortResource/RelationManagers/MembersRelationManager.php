@@ -39,6 +39,29 @@ class MembersRelationManager extends RelationManager
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                \Filament\Tables\Actions\Action::make('evaluate')
+                    ->label('Evaluate')
+                    ->icon('heroicon-o-clipboard-document-check')
+                    ->color('success')
+                    ->visible(fn (\App\Models\CohortMember $record) => $record->finalEvaluation()->doesntExist())
+                    ->form([
+                        \Filament\Forms\Components\Textarea::make('assessment')->rows(4)->required(),
+                        \Filament\Forms\Components\Select::make('rating')
+                            ->options(\App\Models\FinalEvaluation::ratingOptions())->required(),
+                        \Filament\Forms\Components\Textarea::make('recommendation')->rows(3),
+                    ])
+                    ->action(function (\App\Models\CohortMember $record, array $data) {
+                        \App\Models\FinalEvaluation::create(array_merge(
+                            [
+                                'cohort_member_id' => $record->id,
+                                'assessment'       => $data['assessment'],
+                                'rating'           => $data['rating'],
+                                'recommendation'   => $data['recommendation'] ?? null,
+                            ],
+                            \App\Models\FinalEvaluation::snapshotData($record, auth()->id())
+                        ));
+                        \Filament\Notifications\Notification::make()->title('Final evaluation recorded.')->success()->send();
+                    }),
             ]);
     }
 }

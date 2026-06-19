@@ -14,10 +14,25 @@ class RetestFactory extends Factory
 
     public function definition(): array
     {
+        $cohortMember = CohortMember::factory();
+
         return [
-            'issue_report_id'   => IssueReport::factory(),
+            'cohort_member_id'  => $cohortMember,
+            'issue_report_id'   => function (array $attributes) {
+                $memberId = $attributes['cohort_member_id'] ?? null;
+
+                if ($memberId) {
+                    $existing = IssueReport::where('cohort_member_id', $memberId)->first();
+                    if ($existing) {
+                        return $existing->id;
+                    }
+
+                    return IssueReport::factory()->create(['cohort_member_id' => $memberId])->id;
+                }
+
+                return IssueReport::factory();
+            },
             'developer_task_id' => null,
-            'cohort_member_id'  => CohortMember::factory(),
             'result'            => 'passed',
             'notes'             => fake()->sentence(),
             'attachments'       => null,
