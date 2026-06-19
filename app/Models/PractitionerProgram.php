@@ -11,7 +11,7 @@ class PractitionerProgram extends Model
 
     protected $fillable = [
         'product_slug','product_name','title','title_fr','description',
-        'description_fr','type','compensation','max_participants','status',
+        'description_fr','type','program_type','compensation','max_participants','status',
         'starts_at','ends_at',
     ];
 
@@ -25,9 +25,24 @@ class PractitionerProgram extends Model
         return $this->hasMany(PractitionerApplication::class, 'program_id');
     }
 
+    public function cohorts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Cohort::class);
+    }
+
+    public function scopeValidation(\Illuminate\Database\Eloquent\Builder $query): \Illuminate\Database\Eloquent\Builder
+    {
+        return $query->where('program_type', 'validation');
+    }
+
     public static function typeOptions(): array
     {
         return ['volunteer' => 'Volunteer', 'paid' => 'Paid'];
+    }
+
+    public static function programTypeOptions(): array
+    {
+        return ['general' => 'General', 'validation' => 'Validation'];
     }
 
     public static function statusOptions(): array
