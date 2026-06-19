@@ -59,4 +59,20 @@ class ValidationCertificate extends Model
     {
         return ['distinction' => 'success', 'pass' => 'info'];
     }
+
+    public static function issueFor(FinalEvaluation $evaluation, int $issuedById): self
+    {
+        $result = app(\App\Support\CertificationScore::class)->for($evaluation);
+
+        abort_if($result['tier'] === 'not_certified', 422, 'Member is not eligible for certification.');
+
+        return static::create([
+            'cohort_member_id'    => $evaluation->cohort_member_id,
+            'final_evaluation_id' => $evaluation->id,
+            'score'               => $result['score'],
+            'tier'                => $result['tier'],
+            'issued_by'           => $issuedById,
+            'issued_at'           => now(),
+        ]);
+    }
 }
