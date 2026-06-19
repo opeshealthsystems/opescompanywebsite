@@ -81,7 +81,8 @@ class DeveloperTaskResource extends Resource
                     }),
                 Tables\Actions\Action::make('reopen')
                     ->label('Reopen')->icon('heroicon-o-arrow-path')->color('warning')
-                    ->visible(fn (DeveloperTask $r) => $r->status === 'fixed')
+                    ->visible(fn (DeveloperTask $r) => $r->status === 'fixed'
+                        && ! in_array($r->issueReport->status, ['closed', 'retest_passed'], true))
                     ->requiresConfirmation()
                     ->action(function (DeveloperTask $r) {
                         $r->reopen();

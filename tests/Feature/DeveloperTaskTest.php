@@ -100,4 +100,49 @@ class DeveloperTaskTest extends TestCase
         $this->assertEquals('retest_passed', $issue->fresh()->status);
         $this->assertDatabaseCount('retests', 2);
     }
+
+    public function test_closed_issue_is_not_resurrected_by_reopen_and_fix(): void
+    {
+        $issue = IssueReport::factory()->create(['status' => 'closed']);
+        $task  = \App\Models\DeveloperTask::factory()->create(['issue_report_id' => $issue->id, 'status' => 'fixed']);
+
+        // Admin drags the still-"fixed" task back through the loop.
+        $task->reopen();
+        $task->markInProgress();
+        $task->markFixed('Tried again');
+
+        // The terminal issue must NOT be pulled back into retest.
+        $this->assertEquals('closed', $issue->fresh()->status);
+    }
+
+    public function test_retest_passed_issue_is_not_resurrected_by_reopen_and_fix(): void
+    {
+        $issue = IssueReport::factory()->create(['status' => 'retest_passed']);
+        $task  = \App\Models\DeveloperTask::factory()->create(['issue_report_id' => $issue->id, 'status' => 'fixed']);
+
+        $task->reopen();
+        $task->markInProgress();
+        $task->markFixed();
+
+        $this->assertEquals('retest_passed', $issue->fresh()->status);
+    }
+
+    public function test_record_product_review_ignored_after_issue_advances(): void
+    {
+        $issue = IssueReport::factory()->create(['status' => 'product_review']);
+        $issue->recordProductReview($this->reviewer()->id, 'sent_to_development', 'Routing to dev');
+
+        // Advance the task and the issue past the dev hand-off.
+        $issue->developerTask->markInProgress();
+        $issue->developerTask->markFixed();
+        $this->assertEquals('ready_for_retest', $issue->fresh()->status);
+
+        // A stray re-decision must NOT clobber the advanced state or dupe the review.
+        $issue->refresh();
+        $issue->recordProductReview($this->reviewer()->id, 'sent_to_development');
+
+        $this->assertEquals('ready_for_retest', $issue->fresh()->status);
+        $this->assertDatabaseCount('developer_tasks', 1);
+        $this->assertDatabaseCount('product_reviews', 1);
+    }
 }

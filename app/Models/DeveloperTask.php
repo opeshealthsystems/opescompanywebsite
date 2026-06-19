@@ -65,7 +65,14 @@ class DeveloperTask extends Model
             'fixed_at'         => now(),
             'resolution_notes' => $notes ?? $this->resolution_notes,
         ]);
-        $this->issueReport->update(['status' => 'ready_for_retest']);
+
+        // Advance the issue into retest only from a live development state.
+        // Never resurrect a terminal issue (closed / retest_passed) back into
+        // the loop — closure is a one-way decision.
+        $issue = $this->issueReport()->first();
+        if ($issue && in_array($issue->status, ['sent_to_development', 'retest_failed'], true)) {
+            $issue->update(['status' => 'ready_for_retest']);
+        }
     }
 
     public function reopen(): void

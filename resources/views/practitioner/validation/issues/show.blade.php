@@ -9,7 +9,7 @@
         'low'      => 'bg-sky-500/10 text-sky-400 border-sky-500/30',
     ];
     $timeline = ['submitted' => 'Submitted', 'clinical_review' => 'Clinical Review', 'product_review' => 'Product Review', 'resolved' => 'Resolved / Closed'];
-    $resolvedStatuses = ['accepted', 'rejected', 'duplicate', 'sent_to_development', 'fixed', 'closed'];
+    $resolvedStatuses = ['accepted', 'rejected', 'duplicate', 'sent_to_development', 'fixed', 'ready_for_retest', 'retest_passed', 'retest_failed', 'closed'];
     $timelineKey = in_array($issue->status, $resolvedStatuses) ? 'resolved' : $issue->status;
     $timelineOrder = array_keys($timeline);
     $currentIndex = array_search($timelineKey, $timelineOrder);
@@ -124,7 +124,7 @@
 @endif
 
 {{-- Retest panel: only the original reporter, only when awaiting retest --}}
-@if($issue->status === 'ready_for_retest' && $issue->cohortMember->user_id === auth()->id())
+@if($issue->status === 'ready_for_retest' && $issue->cohortMember?->user_id === auth()->id())
 <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 mt-6">
     <h2 class="text-lg font-semibold text-white mb-1">Retest this fix</h2>
     <p class="text-slate-400 text-sm mb-4">The development team marked this issue fixed. Please retest and report the result.</p>
@@ -156,9 +156,12 @@
 @if($issue->retests->isNotEmpty())
 <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 mt-6">
     <h2 class="text-lg font-semibold text-white mb-4">Retest history</h2>
+    @php $chronoRetests = $issue->retests->sortBy('retested_at')->values(); @endphp
     <ul class="space-y-3">
-        @foreach($issue->retests->sortByDesc('retested_at') as $i => $retest)
+        @foreach($chronoRetests->sortByDesc('retested_at') as $retest)
+        @php $attemptNo = $chronoRetests->search(fn ($r) => $r->id === $retest->id) + 1; @endphp
         <li class="flex items-start gap-3">
+            <span class="text-xs text-slate-500 font-mono mt-0.5 shrink-0">#{{ $attemptNo }}</span>
             <span class="px-2 py-0.5 rounded text-xs font-medium {{ $retest->result === 'passed' ? 'bg-emerald-900 text-emerald-300' : 'bg-red-900 text-red-300' }}">
                 {{ \App\Models\Retest::resultOptions()[$retest->result] ?? $retest->result }}
             </span>

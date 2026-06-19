@@ -148,6 +148,13 @@ class IssueReport extends Model
 
     public function recordProductReview(int $reviewerId, string $decision, ?string $notes = null): void
     {
+        // A product decision only applies while the issue is awaiting one. Ignore
+        // re-invocations after the issue has moved on, so a stray call cannot clobber
+        // later state or insert a duplicate review row.
+        if ($this->status !== 'product_review') {
+            return;
+        }
+
         $this->productReview()->create([
             'reviewer_id' => $reviewerId,
             'decision'    => $decision,

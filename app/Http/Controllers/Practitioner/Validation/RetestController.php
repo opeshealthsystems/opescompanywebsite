@@ -10,7 +10,7 @@ class RetestController extends Controller
 {
     public function store(Request $request, $locale, IssueReport $issue)
     {
-        abort_unless($issue->cohortMember->user_id === auth()->id(), 403);
+        abort_unless($issue->cohortMember?->user_id === auth()->id(), 403);
         abort_unless($issue->status === 'ready_for_retest', 422, 'Issue is not awaiting retest.');
 
         $validated = $request->validate([
