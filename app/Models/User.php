@@ -191,4 +191,21 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasMany(\App\Models\CourseCertificate::class);
     }
+
+    public function validationCertificates(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
+    {
+        return $this->hasManyThrough(
+            \App\Models\ValidationCertificate::class,
+            \App\Models\CohortMember::class,
+            'user_id',          // CohortMember.user_id
+            'cohort_member_id', // ValidationCertificate.cohort_member_id
+            'id',
+            'id'
+        );
+    }
+
+    public function advisoryCouncilMembership(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(\App\Models\AdvisoryCouncilMember::class);
+    }
 }
