@@ -73,6 +73,16 @@ class IssueReport extends Model
         return $this->hasOne(ProductReview::class);
     }
 
+    public function developerTask(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(DeveloperTask::class);
+    }
+
+    public function retests(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Retest::class);
+    }
+
     public static function issueTypeOptions(): array
     {
         return [
@@ -106,6 +116,9 @@ class IssueReport extends Model
             'needs_more_information' => 'Needs More Information',
             'sent_to_development' => 'Sent to Development',
             'fixed' => 'Fixed',
+            'ready_for_retest' => 'Ready for Retest',
+            'retest_passed' => 'Retest Passed',
+            'retest_failed' => 'Retest Failed',
             'closed' => 'Closed',
         ];
     }

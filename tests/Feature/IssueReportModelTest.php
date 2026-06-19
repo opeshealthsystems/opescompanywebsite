@@ -38,7 +38,7 @@ class IssueReportModelTest extends TestCase
     {
         $this->assertCount(10, IssueReport::issueTypeOptions());
         $this->assertCount(4, IssueReport::severityOptions());
-        $this->assertCount(10, IssueReport::statusOptions());
+        $this->assertCount(13, IssueReport::statusOptions());
         $this->assertCount(3, ClinicalReview::decisionOptions());
         $this->assertCount(4, ProductReview::decisionOptions());
     }
