@@ -8,6 +8,8 @@ use App\Models\WeeklyReview;
 use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -55,6 +57,31 @@ class WeeklyReviewResource extends Resource
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            Infolists\Components\Section::make('Review')->columns(2)->schema([
+                Infolists\Components\TextEntry::make('cohort.name')->label('Cohort'),
+                Infolists\Components\TextEntry::make('author.name')->label('Author')->placeholder('—'),
+                Infolists\Components\TextEntry::make('week_start')->date(),
+                Infolists\Components\TextEntry::make('week_end')->date(),
+                Infolists\Components\TextEntry::make('summary')->columnSpanFull()->placeholder('—'),
+                Infolists\Components\TextEntry::make('action_items')->columnSpanFull()->placeholder('—'),
+            ]),
+            Infolists\Components\Section::make('Frozen Metrics')
+                ->description('Snapshot taken when this review was generated.')
+                ->columns(3)
+                ->schema([
+                    Infolists\Components\TextEntry::make('metrics.sessions')->label('Sessions'),
+                    Infolists\Components\TextEntry::make('metrics.issues_submitted')->label('Issues Submitted'),
+                    Infolists\Components\TextEntry::make('metrics.retests.passed')->label('Retests Passed'),
+                    Infolists\Components\TextEntry::make('metrics.retests.failed')->label('Retests Failed'),
+                    Infolists\Components\TextEntry::make('metrics.dev_tasks_opened')->label('Dev Tasks Opened'),
+                    Infolists\Components\TextEntry::make('metrics.dev_tasks_fixed')->label('Dev Tasks Fixed'),
+                ]),
+        ]);
     }
 
     public static function getPages(): array

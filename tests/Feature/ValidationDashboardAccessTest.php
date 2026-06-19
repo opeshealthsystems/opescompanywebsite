@@ -45,4 +45,23 @@ class ValidationDashboardAccessTest extends TestCase
             $this->assertFalse($p::canAccess(), $p.' practitioner');
         }
     }
+
+    public function test_support_role_cannot_access_validation_reporting(): void
+    {
+        // 'support' can reach the /admin panel but must NOT see validation reporting.
+        $support = User::factory()->create();
+        $support->assignRole('support');
+        $this->actingAs($support);
+
+        foreach ([
+            ValidationCohortDashboard::class,
+            ValidationIssueDashboard::class,
+            ValidationDeveloperDashboard::class,
+            ValidationPractitionerDashboard::class,
+            \App\Filament\Resources\WeeklyReviewResource::class,
+            \App\Filament\Resources\FinalEvaluationResource::class,
+        ] as $class) {
+            $this->assertFalse($class::canAccess(), $class.' support');
+        }
+    }
 }

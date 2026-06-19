@@ -3,7 +3,7 @@
         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
             <thead class="bg-gray-50 dark:bg-gray-800">
                 <tr>
-                    @foreach (['Cohort', 'Status', 'Active Members', 'Sessions', 'Coverage', 'Issues'] as $h)
+                    @foreach (['Cohort', 'Status', 'Active Members', 'Sessions', 'Workflow Coverage', 'Issues'] as $h)
                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">{{ $h }}</th>
                     @endforeach
                 </tr>
@@ -26,4 +26,5 @@
             </tbody>
         </table>
     </div>
+    <p class="text-xs text-gray-400 mt-2">Workflow Coverage counts assigned test cases whose workflow has been exercised in at least one session — not per-test-case execution.</p>
 </x-filament-panels::page>

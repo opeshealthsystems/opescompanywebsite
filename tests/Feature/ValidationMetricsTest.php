@@ -122,4 +122,36 @@ class ValidationMetricsTest extends TestCase
         $this->assertArrayHasKey('cohort_name', $snap);
         $this->assertArrayHasKey('sessions', $snap);
     }
+
+    public function test_avg_days_to_fix_and_close_from_known_timestamps(): void
+    {
+        DeveloperTask::factory()->create([
+            'status' => 'fixed', 'created_at' => now()->subDays(3), 'fixed_at' => now(),
+        ]);
+        $this->assertEquals(3.0, $this->metrics()->developerThroughput()['avg_days_to_fix']);
+
+        IssueReport::factory()->create([
+            'status' => 'closed', 'created_at' => now()->subDays(2), 'updated_at' => now(),
+        ]);
+        $this->assertEquals(2.0, $this->metrics()->issueAnalytics()['avg_days_to_close']);
+    }
+
+    public function test_negative_timestamp_does_not_produce_negative_average(): void
+    {
+        // A malformed/backdated row (fixed before created) must not drag the mean negative.
+        DeveloperTask::factory()->create([
+            'status' => 'fixed', 'created_at' => now(), 'fixed_at' => now()->subDays(4),
+        ]);
+        $this->assertEquals(4.0, $this->metrics()->developerThroughput()['avg_days_to_fix']);
+    }
+
+    public function test_weekly_snapshot_nests_retest_results(): void
+    {
+        ['cohort' => $cohort, 'member' => $member] = $this->seedCohort();
+        Retest::factory()->create(['cohort_member_id' => $member->id, 'result' => 'passed', 'retested_at' => now()]);
+
+        $snap = $this->metrics()->weeklySnapshot($cohort, now()->startOfWeek());
+        $this->assertEquals(1, $snap['retests']['passed']);
+        $this->assertEquals(0, $snap['retests']['failed']);
+    }
 }

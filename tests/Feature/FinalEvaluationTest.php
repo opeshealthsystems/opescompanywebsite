@@ -58,4 +58,14 @@ class FinalEvaluationTest extends TestCase
         $this->actingAs($prac);
         $this->assertFalse(FinalEvaluationResource::canAccess());
     }
+
+    public function test_rating_options_are_the_allowed_set(): void
+    {
+        // Rating membership is enforced at the UI (Filament Select); this pins the
+        // canonical allowed set both the resource form and the Evaluate action use.
+        $this->assertSame(
+            ['outstanding', 'strong', 'satisfactory', 'needs_improvement'],
+            array_keys(FinalEvaluation::ratingOptions())
+        );
+    }
 }

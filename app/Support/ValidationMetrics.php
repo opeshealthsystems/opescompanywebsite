@@ -75,9 +75,11 @@ class ValidationMetrics
             ? (int) round($retests->where('result', 'passed')->count() / $retests->count() * 100)
             : 0;
 
+        // Carbon 3 diffInDays() returns a signed float; abs() guards against a
+        // backdated/edited row (updated_at < created_at) dragging the mean negative.
         $closed = $issues->where('status', 'closed');
         $avgDaysToClose = $closed->count() > 0
-            ? round($closed->avg(fn (IssueReport $i) => $i->created_at->diffInDays($i->updated_at)), 1)
+            ? round($closed->avg(fn (IssueReport $i) => abs($i->created_at->diffInDays($i->updated_at))), 1)
             : 0;
 
         return [
@@ -109,7 +111,7 @@ class ValidationMetrics
 
         $fixed = $tasks->whereNotNull('fixed_at');
         $avgDaysToFix = $fixed->count() > 0
-            ? round($fixed->avg(fn (DeveloperTask $t) => $t->created_at->diffInDays($t->fixed_at)), 1)
+            ? round($fixed->avg(fn (DeveloperTask $t) => abs($t->created_at->diffInDays($t->fixed_at))), 1)
             : 0;
 
         return [
@@ -176,8 +178,10 @@ class ValidationMetrics
             'sessions'           => $sessions,
             'issues_submitted'   => $issues->count(),
             'issues_by_severity' => $issuesBySeverity,
-            'retests_passed'     => $retests->where('result', 'passed')->count(),
-            'retests_failed'     => $retests->where('result', 'failed')->count(),
+            'retests'            => [
+                'passed' => $retests->where('result', 'passed')->count(),
+                'failed' => $retests->where('result', 'failed')->count(),
+            ],
             'dev_tasks_opened'   => $devOpened,
             'dev_tasks_fixed'    => $devFixed,
         ];

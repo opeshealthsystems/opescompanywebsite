@@ -7,6 +7,8 @@ use App\Models\CohortMember;
 use App\Models\FinalEvaluation;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -54,6 +56,31 @@ class FinalEvaluationResource extends Resource
             ])
             ->defaultSort('evaluated_at', 'desc')
             ->actions([Tables\Actions\ViewAction::make(), Tables\Actions\EditAction::make()]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist->schema([
+            Infolists\Components\Section::make('Evaluation')->columns(2)->schema([
+                Infolists\Components\TextEntry::make('cohortMember.user.name')->label('Member'),
+                Infolists\Components\TextEntry::make('cohortMember.cohort.name')->label('Cohort'),
+                Infolists\Components\TextEntry::make('rating')->badge()
+                    ->formatStateUsing(fn ($state) => FinalEvaluation::ratingOptions()[$state] ?? $state),
+                Infolists\Components\TextEntry::make('evaluator.name')->label('Evaluator')->placeholder('—'),
+                Infolists\Components\TextEntry::make('assessment')->columnSpanFull(),
+                Infolists\Components\TextEntry::make('recommendation')->columnSpanFull()->placeholder('—'),
+            ]),
+            Infolists\Components\Section::make('Frozen Contribution')
+                ->description('Snapshot taken when this evaluation was recorded.')
+                ->columns(4)
+                ->schema([
+                    Infolists\Components\TextEntry::make('metrics.sessions')->label('Sessions'),
+                    Infolists\Components\TextEntry::make('metrics.issues_found')->label('Issues Found'),
+                    Infolists\Components\TextEntry::make('metrics.issues_accepted')->label('Issues Accepted'),
+                    Infolists\Components\TextEntry::make('metrics.retests')->label('Retests'),
+                    Infolists\Components\TextEntry::make('metrics.as_of')->label('As of'),
+                ]),
+        ]);
     }
 
     public static function getPages(): array
