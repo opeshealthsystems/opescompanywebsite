@@ -112,4 +112,44 @@ class IssueReportTest extends TestCase
             ->get('/en/practitioner/validation/issues/'.$issue->id)
             ->assertForbidden();
     }
+
+    public function test_product_and_module_are_derived_from_workflow(): void
+    {
+        $scope = $this->placedScope();
+        $payload = $this->validPayload($scope);
+        // Attempt to submit a mismatched (but individually valid) product/module.
+        $foreignProduct = ValidationProduct::factory()->create();
+        $foreignModule  = ValidationModule::factory()->create(['validation_product_id' => $foreignProduct->id]);
+        $payload['validation_product_id'] = $foreignProduct->id;
+        $payload['validation_module_id']  = $foreignModule->id;
+
+        $this->actingAs($scope['user'])
+            ->post('/en/practitioner/validation/issues', $payload)
+            ->assertRedirect();
+
+        // The persisted product/module must match the in-scope workflow's ancestry, not the spoofed values.
+        $this->assertDatabaseHas('issue_reports', [
+            'validation_workflow_id' => $scope['workflow']->id,
+            'validation_module_id'   => $scope['module']->id,
+            'validation_product_id'  => $scope['product']->id,
+        ]);
+    }
+
+    public function test_cannot_link_another_members_session(): void
+    {
+        $scope = $this->placedScope();
+
+        // A session belonging to a different cohort member.
+        $otherMember  = CohortMember::factory()->create(['status' => 'active']);
+        $otherSession = \App\Models\DailyTestSession::factory()->create(['cohort_member_id' => $otherMember->id]);
+
+        $payload = $this->validPayload($scope);
+        $payload['daily_test_session_id'] = $otherSession->id;
+
+        $this->actingAs($scope['user'])
+            ->post('/en/practitioner/validation/issues', $payload)
+            ->assertStatus(422);
+
+        $this->assertDatabaseCount('issue_reports', 0);
+    }
 }

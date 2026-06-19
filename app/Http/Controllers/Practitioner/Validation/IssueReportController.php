@@ -71,6 +71,32 @@ class IssueReportController extends Controller
             'Workflow not in cohort scope.'
         );
 
+        // Derive product/module authoritatively from the in-scope workflow.
+        $workflow = \App\Models\ValidationWorkflow::with('module')->findOrFail($validated['validation_workflow_id']);
+        $validated['validation_workflow_id'] = $workflow->id;
+        $validated['validation_module_id']   = $workflow->validation_module_id;
+        $validated['validation_product_id']  = $workflow->module->validation_product_id;
+
+        // An optional test case must belong to a workflow in the cohort scope.
+        if (! empty($validated['validation_test_case_id'])) {
+            abort_unless(
+                ValidationTestCase::whereKey($validated['validation_test_case_id'])
+                    ->whereIn('validation_workflow_id', $allowedWorkflowIds)
+                    ->exists(),
+                422,
+                'Test case not in cohort scope.'
+            );
+        }
+
+        // An optional linked session must belong to this practitioner's own cohort membership.
+        if (! empty($validated['daily_test_session_id'])) {
+            abort_unless(
+                $member->dailyTestSessions()->whereKey($validated['daily_test_session_id'])->exists(),
+                422,
+                'Session does not belong to you.'
+            );
+        }
+
         $paths = [];
         if ($request->hasFile('attachments')) {
             foreach ($request->file('attachments') as $file) {

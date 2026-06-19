@@ -66,7 +66,7 @@ class DailyTestSessionResource extends Resource
             Infolists\Components\Section::make('Notes')
                 ->schema([
                     Infolists\Components\TextEntry::make('comments')->columnSpanFull()->placeholder('—'),
-                    Infolists\Components\ImageEntry::make('screenshots')->placeholder('—')->columnSpanFull(),
+                    Infolists\Components\ImageEntry::make('screenshots')->disk('public')->placeholder('—')->columnSpanFull(),
                 ]),
         ]);
     }

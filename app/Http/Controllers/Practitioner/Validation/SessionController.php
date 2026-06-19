@@ -64,6 +64,10 @@ class SessionController extends Controller
             'Workflow not in cohort scope.'
         );
 
+        // Derive product/module authoritatively from the in-scope workflow so a
+        // mismatched (but individually valid) product/module cannot be persisted.
+        $workflow = \App\Models\ValidationWorkflow::with('module')->findOrFail($validated['validation_workflow_id']);
+
         $paths = [];
         if ($request->hasFile('screenshots')) {
             foreach ($request->file('screenshots') as $file) {
@@ -73,9 +77,9 @@ class SessionController extends Controller
 
         DailyTestSession::create([
             'cohort_member_id'       => $member->id,
-            'validation_product_id'  => $validated['validation_product_id'],
-            'validation_module_id'   => $validated['validation_module_id'],
-            'validation_workflow_id' => $validated['validation_workflow_id'],
+            'validation_product_id'  => $workflow->module->validation_product_id,
+            'validation_module_id'   => $workflow->validation_module_id,
+            'validation_workflow_id' => $workflow->id,
             'facility_context'       => $validated['facility_context'] ?? null,
             'date'                   => $validated['date'],
             'start_time'             => $validated['start_time'] ?? null,
