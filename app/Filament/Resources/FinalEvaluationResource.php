@@ -55,7 +55,20 @@ class FinalEvaluationResource extends Resource
                 Tables\Columns\TextColumn::make('evaluated_at')->dateTime(),
             ])
             ->defaultSort('evaluated_at', 'desc')
-            ->actions([Tables\Actions\ViewAction::make(), Tables\Actions\EditAction::make()]);
+            ->actions([
+                Tables\Actions\Action::make('issue_certificate')
+                    ->label('Issue Certificate')->icon('heroicon-o-academic-cap')->color('success')
+                    ->visible(fn (\App\Models\FinalEvaluation $r) =>
+                        app(\App\Support\CertificationScore::class)->for($r)['tier'] !== 'not_certified'
+                        && ! \App\Models\ValidationCertificate::where('cohort_member_id', $r->cohort_member_id)->exists())
+                    ->requiresConfirmation()
+                    ->action(function (\App\Models\FinalEvaluation $r) {
+                        \App\Models\ValidationCertificate::issueFor($r, auth()->id());
+                        \Filament\Notifications\Notification::make()->title('Certificate issued.')->success()->send();
+                    }),
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make(),
+            ]);
     }
 
     public static function infolist(Infolist $infolist): Infolist
@@ -79,6 +92,17 @@ class FinalEvaluationResource extends Resource
                     Infolists\Components\TextEntry::make('metrics.issues_accepted')->label('Issues Accepted'),
                     Infolists\Components\TextEntry::make('metrics.retests')->label('Retests'),
                     Infolists\Components\TextEntry::make('metrics.as_of')->label('As of'),
+                ]),
+            Infolists\Components\Section::make('Certification')
+                ->description('Live computed score (frozen when a certificate is issued).')
+                ->columns(2)
+                ->schema([
+                    Infolists\Components\TextEntry::make('certification_score')
+                        ->label('Score')
+                        ->state(fn (\App\Models\FinalEvaluation $record) => app(\App\Support\CertificationScore::class)->for($record)['score']),
+                    Infolists\Components\TextEntry::make('certification_tier')
+                        ->label('Tier')->badge()
+                        ->state(fn (\App\Models\FinalEvaluation $record) => \App\Support\CertificationScore::tierOptions()[app(\App\Support\CertificationScore::class)->for($record)['tier']]),
                 ]),
         ]);
     }
