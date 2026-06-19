@@ -30,4 +30,14 @@ class WeeklyReview extends Model
     {
         return $this->belongsTo(User::class, 'author_id');
     }
+
+    public static function snapshotData(Cohort $cohort, \Carbon\CarbonInterface $weekStart, int $authorId): array
+    {
+        return [
+            'metrics'      => app(\App\Support\ValidationMetrics::class)->weeklySnapshot($cohort, $weekStart),
+            'week_end'     => $weekStart->copy()->addDays(6)->toDateString(),
+            'author_id'    => $authorId,
+            'generated_at' => now(),
+        ];
+    }
 }
