@@ -48,6 +48,11 @@ class Cohort extends Model
             ->withTimestamps();
     }
 
+    public function weeklyReviews(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(WeeklyReview::class);
+    }
+
     public static function statusOptions(): array
     {
         return ['draft' => 'Draft', 'active' => 'Active', 'completed' => 'Completed'];

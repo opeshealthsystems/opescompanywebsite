@@ -40,6 +40,11 @@ class CohortMember extends Model
         return $this->hasMany(\App\Models\IssueReport::class);
     }
 
+    public function finalEvaluation(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(\App\Models\FinalEvaluation::class);
+    }
+
     public static function statusOptions(): array
     {
         return ['active' => 'Active', 'suspended' => 'Suspended', 'completed' => 'Completed', 'removed' => 'Removed'];
