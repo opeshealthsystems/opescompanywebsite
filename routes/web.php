@@ -205,6 +205,17 @@ Route::prefix('{locale}')
                 Route::get('/bug-reports/create', [\App\Http\Controllers\Practitioner\BugReportController::class, 'create'])->name('bug-reports.create');
                 Route::post('/bug-reports', [\App\Http\Controllers\Practitioner\BugReportController::class, 'store'])->name('bug-reports.store');
                 Route::get('/bug-reports/{bugReport}', [\App\Http\Controllers\Practitioner\BugReportController::class, 'show'])->name('bug-reports.show');
+                // Validation Hub
+                Route::prefix('validation')->name('validation.')->group(function () {
+                    Route::get('/',                [\App\Http\Controllers\Practitioner\Validation\DashboardController::class, 'show'])->name('dashboard');
+                    Route::get('/sessions',        [\App\Http\Controllers\Practitioner\Validation\SessionController::class, 'index'])->name('sessions.index');
+                    Route::get('/sessions/create', [\App\Http\Controllers\Practitioner\Validation\SessionController::class, 'create'])->name('sessions.create');
+                    Route::post('/sessions',       [\App\Http\Controllers\Practitioner\Validation\SessionController::class, 'store'])->name('sessions.store');
+                    Route::get('/issues',          [\App\Http\Controllers\Practitioner\Validation\IssueReportController::class, 'index'])->name('issues.index');
+                    Route::get('/issues/create',   [\App\Http\Controllers\Practitioner\Validation\IssueReportController::class, 'create'])->name('issues.create');
+                    Route::post('/issues',         [\App\Http\Controllers\Practitioner\Validation\IssueReportController::class, 'store'])->name('issues.store');
+                    Route::get('/issues/{issue}',  [\App\Http\Controllers\Practitioner\Validation\IssueReportController::class, 'show'])->name('issues.show');
+                });
                 // Courses
                 Route::get('/courses', [\App\Http\Controllers\Practitioner\CourseController::class, 'index'])->name('courses');
                 Route::get('/courses/{course:slug}', [\App\Http\Controllers\Practitioner\CourseController::class, 'show'])->name('courses.show');

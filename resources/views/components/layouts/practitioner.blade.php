@@ -52,6 +52,12 @@
                 <i data-lucide="bug" style="width:16px;height:16px"></i> Bug Reports
             </a>
             @endif
+            @if(auth()->user()?->cohortMembers()->where('status', 'active')->exists())
+            <a href="{{ route('practitioner.validation.dashboard', ['locale' => app()->getLocale()]) }}"
+               class="flex items-center gap-1.5 px-3 py-1.5 rounded text-sm no-underline transition-colors {{ request()->routeIs('practitioner.validation.*') ? 'bg-slate-700 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800' }}">
+                <i data-lucide="clipboard-check" style="width:16px;height:16px"></i> Validation Hub
+            </a>
+            @endif
             @if(Route::has('practitioner.courses'))
             <a href="{{ route('practitioner.courses', ['locale' => app()->getLocale()]) }}"
                class="flex items-center gap-1.5 px-3 py-1.5 rounded text-sm no-underline transition-colors {{ request()->routeIs('practitioner.courses*') || request()->routeIs('practitioner.lessons*') ? 'bg-slate-700 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800' }}">

@@ -172,6 +172,11 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(\App\Models\PractitionerBugReport::class, 'practitioner_id');
     }
 
+    public function cohortMembers(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\CohortMember::class, 'user_id');
+    }
+
     public function serviceRequests(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(\App\Models\ServiceRequest::class, 'customer_id');
