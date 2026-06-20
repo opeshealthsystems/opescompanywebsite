@@ -139,6 +139,8 @@ class IssueReport extends Model
             default                       => $this->status,
         };
         $this->save();
+
+        $this->cohortMember?->user?->notify(new \App\Notifications\IssueClinicalDecision($this, $decision, $notes));
     }
 
     public function sendToProductReview(): void
@@ -171,6 +173,8 @@ class IssueReport extends Model
                 ['title' => $this->title, 'priority' => $this->severity, 'status' => 'open']
             );
         }
+
+        $this->cohortMember?->user?->notify(new \App\Notifications\IssueProductDecision($this, $decision, $notes));
     }
 
     public function closeIssue(): void
