@@ -51,7 +51,7 @@ Every new article follows an answer-engine + generative-engine + search-engine s
 - **Sprint 3 (P2):** 81–85. ✅ **Complete** (EN, AEO/GEO/SEO-optimised).
 - **Retrofit:** Quick-answer + FAQ blocks added to 71–75. ✅ **Complete** — all of 71–85 now uniform.
 - **French companions:** 71–85 all have full `.fr.md` companions. ✅ **Complete** — **all 15 new articles are bilingual.**
-- **Remaining:** bilingual backfill of the 7 original cornerstones (01, 04, 16, 19, 23, 24, 25). ⏳
+- **Cornerstone backfill:** French companions for the 7 original cornerstones (01, 04, 16, 19, 23, 24, 25). ✅ **Complete** — **22 articles now bilingual.**
 - Publish 2–3/week; interlink each new piece to ≥2 existing articles and the relevant product page.
 
 ## Research sources (validation, June 2026)
