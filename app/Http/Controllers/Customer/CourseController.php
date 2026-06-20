@@ -49,6 +49,13 @@ class CourseController extends Controller
             \Illuminate\Support\Facades\Mail::to(auth()->user()->email)
                 ->queue(new \App\Mail\CourseEnrollmentConfirmed($enrollment));
         }
+        auth()->user()->notify(new \App\Notifications\FeedEntry(
+            'learning.enrolled',
+            'Enrolled in course',
+            'You enrolled in ' . $course->title . '.',
+            'academic-cap',
+            route('customer.courses.show', ['locale' => 'en', 'course' => $course->slug]),
+        ));
 
         return redirect()
             ->route('customer.courses.show', ['locale' => app()->getLocale(), 'course' => $course->slug])

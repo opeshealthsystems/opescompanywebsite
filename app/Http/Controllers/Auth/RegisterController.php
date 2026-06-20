@@ -104,10 +104,24 @@ class RegisterController extends Controller
 
         if ($role === 'practitioner') {
             Mail::to($user->email)->queue(new PractitionerWelcome($user));
+            $user->notify(new \App\Notifications\FeedEntry(
+                'account.welcome',
+                'Welcome to OPES',
+                'Welcome to the OPES practitioner platform.',
+                'sparkles',
+                route('practitioner.dashboard', ['locale' => $locale]),
+            ));
             return redirect()->route('practitioner.dashboard', ['locale' => $locale]);
         }
 
         Mail::to($user->email)->queue(new WelcomeEmail($user));
+        $user->notify(new \App\Notifications\FeedEntry(
+            'account.welcome',
+            'Welcome to OPES',
+            'Welcome to OPES Health Systems.',
+            'sparkles',
+            route('customer.dashboard', ['locale' => $locale]),
+        ));
         return redirect()->route('customer.dashboard', ['locale' => $locale]);
     }
 }

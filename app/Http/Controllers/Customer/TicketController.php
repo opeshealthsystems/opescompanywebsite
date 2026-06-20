@@ -45,6 +45,13 @@ class TicketController extends Controller
         ]));
 
         Mail::to($user->email)->queue(new TicketCreated($ticket));
+        $user->notify(new \App\Notifications\FeedEntry(
+            'support.ticket_created',
+            'Support ticket created',
+            'Your ticket "' . $ticket->subject . '" was created.',
+            'lifebuoy',
+            route('customer.tickets.show', ['locale' => 'en', 'id' => $ticket->id]),
+        ));
 
         $admins = User::role('admin')->get();
         if ($admins->isNotEmpty()) {

@@ -23,6 +23,13 @@ class CreateLicense extends CreateRecord
         $email   = $license->customer?->email;
         if ($email) {
             Mail::to($email)->queue(new LicenseIssued($license));
+            $license->customer?->notify(new \App\Notifications\FeedEntry(
+                'licensing.issued',
+                'License issued',
+                'A license for ' . $license->product_name . ' was issued to your account.',
+                'key',
+                route('customer.licenses.show', ['locale' => 'en', 'id' => $license->id]),
+            ));
         }
     }
 
