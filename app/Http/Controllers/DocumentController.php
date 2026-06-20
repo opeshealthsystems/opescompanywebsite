@@ -11,7 +11,7 @@ class DocumentController extends Controller
     public function pdf(Request $request, Document $document)
     {
         $user = $request->user();
-        $canAccess = $user->hasAnyRole(['super_admin', 'admin', 'support'])
+        $canAccess = $user->hasAnyRole(['super_admin', 'admin'])
             || ($document->addressee_user_id && (int) $document->addressee_user_id === $user->id);
 
         abort_unless($canAccess, 403);
@@ -25,7 +25,7 @@ class DocumentController extends Controller
     public function preview(Request $request, Document $document)
     {
         $user = $request->user();
-        $canAccess = $user->hasAnyRole(['super_admin', 'admin', 'support'])
+        $canAccess = $user->hasAnyRole(['super_admin', 'admin'])
             || ($document->addressee_user_id && (int) $document->addressee_user_id === $user->id);
 
         abort_unless($canAccess, 403);
