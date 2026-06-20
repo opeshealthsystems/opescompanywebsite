@@ -14,8 +14,8 @@ class EmployeeController extends Controller
     {
         $query = User::with(['employeeProfile', 'department'])
             ->whereNotNull('employee_id')
-            ->when($request->search, fn ($q) => $q->where('name', 'like', '%'.$request->search.'%')
-                ->orWhere('email', 'like', '%'.$request->search.'%'))
+            ->when($request->search, fn ($q) => $q->where(fn ($w) => $w->where('name', 'like', '%'.$request->search.'%')
+                ->orWhere('email', 'like', '%'.$request->search.'%')))
             ->when($request->department_id, fn ($q) => $q->where('department_id', $request->department_id))
             ->when($request->employment_type, fn ($q) => $q->whereHas('employeeProfile', fn ($q2) => $q2->where('employment_type', $request->employment_type)));
 
