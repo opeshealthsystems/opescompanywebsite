@@ -6,6 +6,8 @@
 
 ---
 
+**Réponse rapide :** Les médicaments falsifiés et de qualité inférieure sont un fléau mortel et croissant au Cameroun — les autorités ont saisi pour environ 369 millions de FCFA de faux médicaments au seul premier semestre 2025, et ils s'infiltrent parfois dans les circuits formels. Les hôpitaux ne peuvent pas corriger les frontières ou l'application des lois, mais ils peuvent contrôler leur propre pharmacie : approvisionnement vérifié, traçabilité des lots de bout en bout et gestion rigoureuse des stocks, adossés à un système de pharmacie connecté, tiennent les faux à l'écart des patients.
+
 Un médicament qui ne fait rien est dangereux. Un médicament qui contient le mauvais principe actif peut être mortel. Au Cameroun et dans toute l'Afrique, les deux circulent en quantités alarmantes — et ils ne changent pas de mains qu'au coin des rues. **Les médicaments falsifiés et de qualité inférieure s'infiltrent parfois dans les circuits formels d'approvisionnement**, ce qui signifie qu'une pharmacie hospitalière n'est pas automatiquement sûre du simple fait qu'elle est une pharmacie hospitalière. Pour les administrateurs et les pharmaciens-chefs, la lutte contre la contrefaçon est désormais une responsabilité centrale de sécurité des patients, et la technologie est l'une des armes les plus efficaces disponibles.
 
 ## L'ampleur du problème
@@ -47,6 +49,20 @@ OPES Health Systems est conçu pour que l'approvisionnement, le stock, le suivi 
 - **Rapprochez régulièrement les stocks** et enquêtez sur chaque écart, aussi minime soit-il.
 - **Formez le personnel de pharmacie** à repérer les signaux d'alerte sur les emballages et à vérifier la provenance.
 - **Conservez une piste auditable** pour pouvoir, en cas de rappel, remonter des lots concernés jusqu'aux patients en quelques minutes.
+
+## Questions Fréquentes
+
+### Quelle est l'ampleur des faux médicaments au Cameroun ?
+Elle est vaste et croissante. Au premier semestre 2025, les autorités camerounaises ont annoncé la saisie de médicaments contrefaits d'une valeur d'environ 369 millions de FCFA — et les saisies ne représentent qu'une fraction de ce qui circule. L'Afrique porte le plus lourd fardeau mondial de médicaments falsifiés.
+
+### Des faux médicaments peuvent-ils entrer dans une pharmacie hospitalière ?
+Oui. Des produits falsifiés ou de qualité inférieure peuvent atteindre une pharmacie légitime via des fournisseurs non vérifiés, des achats de panique lors de ruptures, ou des lacunes dans les registres. Un hôpital n'est pas automatiquement sûr du seul fait d'être un hôpital.
+
+### Comment un logiciel de pharmacie lutte-t-il contre la contrefaçon ?
+Il resserre le contrôle de ce qui entre et sort : approvisionnement vérifié auprès de fournisseurs agréés, suivi des lots et péremptions de la réception à la délivrance, prévention des ruptures, et rapprochements qui révèlent les anomalies — les faux passent plus difficilement, et tout lot concerné se retrouve vite jusqu'aux patients.
+
+### Qu'est-ce que la traçabilité des lots et pourquoi est-elle importante ?
+La traçabilité des lots consiste à enregistrer le numéro de lot de chaque médicament reçu et à savoir quel lot a été délivré à quel patient. Si un lot est ensuite identifié comme falsifié ou rappelé, l'hôpital peut immédiatement retrouver les patients concernés et retirer le stock restant — presque impossible avec des registres papier.
 
 ## Conclusion
 

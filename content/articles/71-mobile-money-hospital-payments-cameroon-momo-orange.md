@@ -6,6 +6,8 @@
 
 ---
 
+**Quick answer:** In Cameroon, mobile money — MTN MoMo and Orange Money — is the default way patients pay, including for healthcare. The problem is that most hospitals record those payments manually, breaking the link to the invoice. Integrating mobile money into a hospital management system captures every payment against the right bill automatically, protecting revenue and speeding up the cashier window.
+
 In Cameroon, the most important payment terminal in any hospital is not a card machine on the cashier's desk — it is the phone in the patient's hand. With a large share of the population still outside the formal banking system, **mobile money has become the default way Cameroonians pay for almost everything, including healthcare.** Yet most hospitals still record those payments the way they record cash: manually, on paper, after the fact. That gap between how patients pay and how hospitals account for it is where confusion, disputes, and revenue leakage live.
 
 This guide explains why mobile money belongs at the centre of your billing strategy, and what it takes to integrate MTN Mobile Money (MoMo) and Orange Money into your hospital management system.
@@ -53,6 +55,20 @@ Mobile money is powerful, but it is not free or frictionless. Plan for these rea
 ## The revenue case
 
 Hospitals that formalise mobile money typically recover money they were quietly losing. When every payment is tied to an invoice, "forgotten" charges get billed, double-claims are caught, and the temptation to divert cash disappears because there is no untracked cash to divert. The same integration also shortens cashier queues and gives management a live view of daily collections by service and by site — the kind of visibility that turns billing from a leak into a strength.
+
+## Frequently Asked Questions
+
+### Can hospitals in Cameroon accept MTN MoMo and Orange Money?
+Yes. MTN exposes bill-payment rails that healthcare providers can use, and both MTN MoMo and Orange Money are widely accepted. The key is to capture each payment against the correct invoice in your hospital system rather than recording it manually.
+
+### How does mobile money reduce revenue leakage in hospitals?
+When every mobile money payment is tied to a specific invoice and reconciled automatically, "forgotten" charges get billed, double-claims are caught, and there is no untracked cash to divert — so money that was quietly lost is recovered.
+
+### Should hospital mobile money go to a personal or a merchant account?
+A registered hospital merchant account. Collecting revenue into a staff member's personal wallet is a governance risk; a merchant account keeps every payment traceable and auditable.
+
+### What happens to mobile money payments when the network is down?
+A capable hospital management system lets the cashier record a confirmed mobile money reference during a brief outage and reconcile it once connectivity returns, so the queue keeps moving and no payment is lost.
 
 ## Conclusion
 

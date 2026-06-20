@@ -6,6 +6,8 @@
 
 ---
 
+**Quick answer:** Falsified and substandard medicines are a deadly, growing problem in Cameroon — authorities seized counterfeit drugs worth about FCFA 369 million in the first half of 2025 alone, and they sometimes infiltrate formal supply chains. Hospitals cannot fix borders or enforcement, but they can control their own pharmacy: verified procurement, end-to-end batch traceability, and disciplined stock management, all backed by a connected pharmacy system, keep fakes away from patients.
+
 A medicine that does nothing is dangerous. A medicine that contains the wrong ingredient can be fatal. In Cameroon and across Africa, both circulate in alarming quantities — and they do not only change hands on street corners. **Falsified and substandard medicines occasionally infiltrate formal supply chains**, which means a hospital pharmacy is not automatically safe simply because it is a hospital pharmacy. For administrators and chief pharmacists, fighting counterfeits is now a core patient-safety responsibility, and technology is one of the most effective weapons available.
 
 ## The scale of the problem
@@ -47,6 +49,20 @@ OPES Health Systems is built so that procurement, stock, batch tracking, and dis
 - **Reconcile stock regularly** and investigate every discrepancy, however small.
 - **Train pharmacy staff** to recognise packaging red flags and to verify provenance.
 - **Keep an auditable trail** so that, if a recall happens, you can trace affected batches to patients within minutes.
+
+## Frequently Asked Questions
+
+### How big is the counterfeit medicine problem in Cameroon?
+It is large and growing. In the first half of 2025, Cameroonian authorities reported seizing counterfeit medicines worth roughly FCFA 369 million — and seizures represent only a fraction of what circulates. Africa carries the heaviest burden of falsified and substandard medicines in the world.
+
+### Can counterfeit drugs enter a hospital pharmacy?
+Yes. Falsified or substandard products can reach a legitimate pharmacy through unverified suppliers, panic-buying during stockouts, or gaps in record-keeping. A hospital is not automatically safe simply because it is a hospital.
+
+### How does pharmacy software help fight counterfeit medicines?
+It tightens control over what enters and leaves the pharmacy: verified procurement against approved suppliers, batch and expiry tracking from receipt to dispensing, stockout prevention, and reconciliation that surfaces anomalies — so falsified products are far harder to slip in, and any affected batch can be traced to patients fast.
+
+### What is batch traceability and why does it matter?
+Batch traceability means recording the batch number of every medicine received and knowing which batch was dispensed to which patient. If a batch is later identified as falsified or recalled, the hospital can immediately find affected patients and pull remaining stock — something nearly impossible with paper records.
 
 ## Conclusion
 

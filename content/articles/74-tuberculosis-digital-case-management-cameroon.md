@@ -6,6 +6,8 @@
 
 ---
 
+**Quick answer:** Tuberculosis is one of Cameroon's heaviest disease burdens, and the cure rate for sputum-positive pulmonary TB sits around 65% — well below the global target — mainly because patients stop treatment early. TB is largely an adherence and follow-up problem, which is exactly what digital case management solves: longitudinal records, missed-visit alerts, SMS reminders, coordinated TB/HIV care, and real-time reporting.
+
 Tuberculosis remains one of Cameroon's heaviest disease burdens, and the hardest part of beating it is not diagnosis — it is keeping patients on treatment for the full six months. The national programme delivers care through DOTS (Directly Observed Treatment, Short-course), yet the cure rate for sputum-positive pulmonary TB has hovered around **65%, roughly 20 percentage points below the global target.** The single biggest reason is treatment interruption: patients feel better after a few weeks, stop taking their drugs, and either relapse or develop drug resistance. TB is, in large part, an adherence and follow-up problem — exactly the kind of problem digital case management is built to solve.
 
 ## Why TB control is so hard to sustain
@@ -45,6 +47,20 @@ OPES Health Systems supports this model by keeping the TB patient's record, appo
 ## The payoff
 
 Every TB patient kept on treatment to completion is a cure achieved, a transmission chain broken, and a case of drug resistance prevented. Pushing the cure rate from the mid-60s toward the global target is not primarily a clinical breakthrough — it is an operational one, built on never losing track of a patient over six months. Digital case management is how a hospital makes that operational discipline routine.
+
+## Frequently Asked Questions
+
+### Why is Cameroon's TB cure rate below target?
+The main reason is treatment interruption. The cure rate for sputum-positive pulmonary TB has hovered around 65%, roughly 20 points below target, largely because patients feel better after a few weeks and stop taking their drugs — leading to relapse or drug resistance.
+
+### How does digital case management improve TB outcomes?
+It attacks the dropout problem directly: a complete longitudinal record per patient, automatic missed-visit (defaulter) alerts, SMS reminders before appointments, coordinated TB/HIV care, and real-time case-based reporting — so patients are far less likely to be lost over the six-month course.
+
+### Do SMS reminders help with TB treatment?
+Yes. Research conducted in Cameroon has specifically tested SMS reminders to improve TB cure rates. With near-universal mobile phone access, reminders before each visit are a simple, effective way to support adherence.
+
+### Why does TB/HIV co-infection matter for hospital systems?
+A large share of TB patients in Cameroon are also living with HIV, so two long-term programmes must be coordinated for the same person. When TB and HIV records share one system, clinicians see the whole patient — avoiding clashing appointments and missed interactions.
 
 ## Conclusion
 

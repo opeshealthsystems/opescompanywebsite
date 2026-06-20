@@ -6,6 +6,8 @@
 
 ---
 
+**Quick answer:** Cameroon's Couverture Santé Universelle (CSU) is a state-led Universal Health Coverage reform launched in April 2023 that, by 2025, had enrolled around 5 million people. For hospitals it changes how you get paid: more patients arrive with an entitlement to subsidised care, so revenue now depends on verifying eligibility, applying the right tariff, documenting care, and submitting clean claims — work a hospital management system makes reliable.
+
 Cameroon's **Couverture Santé Universelle (CSU)** — Universal Health Coverage — is the most significant change to how hospitals get paid in a generation. Launched in April 2023, the reform aims to give every Cameroonian access to quality, affordable care regardless of their ability to pay out of pocket. For patients, it is a lifeline. For hospital administrators, it is also an operational shift: a growing share of your patients now arrive with an entitlement to subsidised care, and a growing share of your revenue now depends on submitting clean claims to a national scheme rather than collecting cash at the window.
 
 This guide explains what CSU means in practice and what your hospital needs to handle it well.
@@ -56,6 +58,20 @@ This is the role OPES Health Systems is designed to play: keeping the patient re
 ## The bigger picture
 
 CSU is part of a wider movement — aligned with WHO frameworks and Cameroon's national digital-health strategy — toward financing health through pooled, accountable systems rather than out-of-pocket payment at the door. Hospitals that digitise now are far better positioned: accurate records, rules-based billing, and reliable claims are exactly what a coverage scheme rewards. Those still on paper will find the administrative load of universal coverage difficult to carry.
+
+## Frequently Asked Questions
+
+### When did Cameroon launch Universal Health Coverage (CSU)?
+Cameroon launched the Couverture Santé Universelle in April 2023. By 2025 it had enrolled on the order of five million people, with early phases prioritising maternal and child health.
+
+### What does the CSU cover?
+Early phases focus on high-impact services, notably maternal and child health — maternity care and delivery, including caesarean section, are available for a small symbolic fee. Coverage is expanding in phases, and a key feature is portability: members can use covered services across the country, not just at one facility.
+
+### How does the CSU affect hospital billing?
+Instead of collecting the full fee in cash, the hospital must verify the patient's enrolment, apply the correct CSU tariff and co-payment, document the encounter to support a valid claim, and then submit and track that claim to payment. Done on paper this is slow and error-prone.
+
+### Why do hospitals need software for the CSU?
+A hospital management system stores each patient's CSU status, splits invoices automatically between patient and scheme, captures the documentation a claim needs at the point of care, and tracks claims from submission to payment — protecting cash flow while ensuring patients receive what they are entitled to.
 
 ## Conclusion
 

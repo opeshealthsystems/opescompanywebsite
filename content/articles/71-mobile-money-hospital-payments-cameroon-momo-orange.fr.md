@@ -6,6 +6,8 @@
 
 ---
 
+**Réponse rapide :** Au Cameroun, le mobile money — MTN MoMo et Orange Money — est le moyen de paiement par défaut des patients, y compris pour les soins. Le problème : la plupart des hôpitaux enregistrent ces paiements manuellement, rompant le lien avec la facture. Intégrer le mobile money à un système de gestion hospitalière rattache automatiquement chaque paiement à la bonne facture, protégeant les revenus et accélérant la caisse.
+
 Au Cameroun, le terminal de paiement le plus important d'un hôpital n'est pas le lecteur de carte posé sur le comptoir de la caisse : c'est le téléphone que le patient tient dans sa main. Une grande partie de la population restant en dehors du système bancaire formel, **le mobile money est devenu le moyen par défaut par lequel les Camerounais paient presque tout, y compris les soins de santé.** Pourtant, la plupart des hôpitaux enregistrent encore ces paiements comme ils enregistrent les espèces : manuellement, sur papier, après coup. C'est dans cet écart entre la façon dont les patients paient et la façon dont l'hôpital en rend compte que naissent la confusion, les litiges et les fuites de revenus.
 
 Ce guide explique pourquoi le mobile money doit être au cœur de votre stratégie de facturation, et ce qu'il faut pour intégrer MTN Mobile Money (MoMo) et Orange Money à votre système de gestion hospitalière.
@@ -53,6 +55,20 @@ Le mobile money est puissant, mais il n'est ni gratuit ni sans friction. Anticip
 ## L'argument financier
 
 Les hôpitaux qui formalisent le mobile money récupèrent généralement de l'argent qu'ils perdaient discrètement. Lorsque chaque paiement est rattaché à une facture, les frais « oubliés » sont facturés, les doubles réclamations sont détectées, et la tentation de détourner des espèces disparaît — puisqu'il n'y a plus d'argent liquide non suivi à détourner. La même intégration raccourcit aussi les files d'attente à la caisse et offre à la direction une vision en temps réel des encaissements quotidiens par service et par site.
+
+## Questions Fréquentes
+
+### Les hôpitaux camerounais peuvent-ils accepter MTN MoMo et Orange Money ?
+Oui. MTN propose des canaux de paiement de factures utilisables par les prestataires de santé, et MTN MoMo comme Orange Money sont largement acceptés. L'essentiel est de rattacher chaque paiement à la bonne facture dans votre système, plutôt que de l'enregistrer manuellement.
+
+### Comment le mobile money réduit-il les fuites de revenus ?
+Lorsque chaque paiement mobile money est lié à une facture précise et rapproché automatiquement, les frais « oubliés » sont facturés, les doubles réclamations sont détectées, et il n'y a plus d'espèces non suivies à détourner — l'argent perdu discrètement est récupéré.
+
+### Faut-il utiliser un compte marchand ou un compte personnel ?
+Un compte marchand enregistré au nom de l'hôpital. Encaisser les recettes sur le portefeuille personnel d'un employé est un risque de gouvernance ; un compte marchand rend chaque paiement traçable et auditable.
+
+### Que se passe-t-il en cas de coupure réseau ?
+Un bon système de gestion hospitalière permet au caissier d'enregistrer une référence mobile money confirmée pendant une brève interruption, puis de la réconcilier au retour de la connexion — la file avance et aucun paiement n'est perdu.
 
 ## Conclusion
 

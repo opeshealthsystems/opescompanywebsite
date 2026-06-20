@@ -6,6 +6,8 @@
 
 ---
 
+**Réponse rapide :** La Couverture Santé Universelle (CSU) du Cameroun est une réforme d'État lancée en avril 2023 qui, en 2025, avait enrôlé environ 5 millions de personnes. Pour les hôpitaux, elle change la façon d'être payé : davantage de patients arrivent avec un droit à des soins subventionnés, et les recettes dépendent désormais de la vérification de l'éligibilité, de l'application du bon tarif, de la documentation des soins et de la soumission de demandes correctes — un travail qu'un système de gestion hospitalière fiabilise.
+
 La **Couverture Santé Universelle (CSU)** du Cameroun constitue le changement le plus important depuis une génération dans la manière dont les hôpitaux sont payés. Lancée en avril 2023, cette réforme vise à donner à chaque Camerounais l'accès à des soins de qualité et abordables, indépendamment de sa capacité à payer de sa poche. Pour les patients, c'est une bouée de sauvetage. Pour les administrateurs d'hôpitaux, c'est aussi un changement opérationnel : une part croissante de vos patients arrivent désormais avec un droit à des soins subventionnés, et une part croissante de vos recettes dépend désormais de la soumission de dossiers de remboursement corrects à un régime national, plutôt que de l'encaissement d'espèces au guichet.
 
 Ce guide explique ce que la CSU signifie en pratique et ce dont votre hôpital a besoin pour bien la gérer.
@@ -56,6 +58,20 @@ C'est le rôle pour lequel OPES Health Systems est conçu : garder le dossier pa
 ## La vision d'ensemble
 
 La CSU s'inscrit dans un mouvement plus large — aligné sur les cadres de l'OMS et la stratégie nationale de santé numérique du Cameroun — vers un financement de la santé par des systèmes mutualisés et responsables, plutôt que par le paiement direct au guichet. Les hôpitaux qui se numérisent dès maintenant sont bien mieux positionnés : des dossiers exacts, une facturation pilotée par des règles et des demandes fiables sont précisément ce qu'un régime de couverture récompense. Ceux qui restent sur papier auront du mal à supporter la charge administrative de la couverture universelle.
+
+## Questions Fréquentes
+
+### Quand le Cameroun a-t-il lancé la Couverture Santé Universelle (CSU) ?
+Le Cameroun a lancé la CSU en avril 2023. En 2025, elle avait enrôlé de l'ordre de cinq millions de personnes, les premières phases donnant la priorité à la santé de la mère et de l'enfant.
+
+### Que couvre la CSU ?
+Les premières phases ciblent des services à fort impact, notamment la santé de la mère et de l'enfant — les soins de maternité et l'accouchement, y compris la césarienne, sont accessibles moyennant une participation symbolique. La couverture s'étend par phases, avec une portabilité permettant d'utiliser les services couverts partout dans le pays.
+
+### Comment la CSU affecte-t-elle la facturation hospitalière ?
+Au lieu d'encaisser le plein tarif en espèces, l'hôpital doit vérifier l'enrôlement du patient, appliquer le bon tarif CSU et le ticket modérateur, documenter la consultation pour étayer une demande valide, puis soumettre et suivre cette demande jusqu'au paiement. Sur papier, c'est lent et source d'erreurs.
+
+### Pourquoi un logiciel est-il nécessaire pour la CSU ?
+Un système de gestion hospitalière enregistre le statut CSU de chaque patient, répartit automatiquement les factures entre patient et régime, capture au point de soins la documentation requise, et suit les demandes de la soumission au paiement — protégeant la trésorerie tout en garantissant aux patients leurs droits.
 
 ## Conclusion
 

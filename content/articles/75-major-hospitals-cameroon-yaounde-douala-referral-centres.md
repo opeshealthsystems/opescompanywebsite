@@ -6,6 +6,8 @@
 
 ---
 
+**Quick answer:** Cameroon's public hospitals are organised as a pyramid — national/central hospitals and university teaching hospitals at the top, then regional hospitals, district hospitals, and primary health centres. The main referral centres include Yaoundé Central Hospital, Yaoundé General Hospital and HGOPY in the capital, and Douala General Hospital and Laquintinie Hospital in the economic capital, alongside regional and faith-based (mission) hospitals. Across every tier, facilities are moving toward digital, connected systems.
+
 Cameroon's hospital landscape is larger and more structured than many people realise. Understanding how it is organised — and which facilities sit at the top of the referral chain — is useful whether you are a patient seeking specialist care, a partner planning a health programme, or an administrator benchmarking your own facility. This guide outlines how Cameroon's health system is tiered and introduces the major referral hospitals in Yaoundé, Douala and the regions.
 
 > Note: this is an orientation guide, not a clinical ranking. Service availability, specialities and capacity change over time — always confirm directly with a facility before relying on it for a specific need.
@@ -52,6 +54,20 @@ The facilities making the most progress are those adopting a **hospital manageme
 - **Mission and rural facilities** need affordable, offline-tolerant tools that bring order to records and revenue without requiring a large IT team.
 
 The destination is the same at every level: one connected record per patient, accurate billing, controlled pharmacy stock, and data that flows into national systems — the foundations of quality, accountable care.
+
+## Frequently Asked Questions
+
+### What are the major referral hospitals in Yaoundé?
+Yaoundé's flagship public facilities include Yaoundé Central Hospital (a primary national referral centre), Yaoundé General Hospital, the Yaoundé Gynaeco-Obstetric and Paediatric Hospital (HGOPY), and the University Teaching Hospital of Yaoundé.
+
+### What are the main hospitals in Douala?
+Douala's main public referral hospitals are Douala General Hospital — the largest in the Littoral Region — and Laquintinie Hospital, a high-volume facility long central to healthcare in the city.
+
+### How is Cameroon's health system structured?
+As a pyramid: central and national hospitals (including general, central and university teaching hospitals) at the top, then regional hospitals for each region, district hospitals for secondary care, and integrated health centres (*centres de santé intégrés*) at the primary level. A large faith-based and private sector operates alongside it.
+
+### Are mission hospitals important in Cameroon?
+Yes. Faith-based and mission hospitals — including long-established networks — deliver a significant share of care, especially in rural and underserved areas, and are critical providers within the overall system.
 
 ## Conclusion
 
