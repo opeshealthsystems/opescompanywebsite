@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 
+#[ObservedBy(\App\Observers\TesterApplicationObserver::class)]
 class TesterApplication extends Model
 {
     protected $fillable = [
