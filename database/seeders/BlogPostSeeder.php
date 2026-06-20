@@ -5,13 +5,16 @@ namespace Database\Seeders;
 use App\Models\BlogPost;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
 class BlogPostSeeder extends Seeder
 {
     public function run(): void
     {
-        BlogPost::truncate();
+        // MySQL refuses to TRUNCATE a table referenced by a foreign key
+        // (blog_comments → blog_posts, error 1701); disable FK checks for the reset.
+        Schema::withoutForeignKeyConstraints(fn () => BlogPost::truncate());
 
         $articlesPath = base_path('content/articles');
         $files = collect(glob($articlesPath . '/*.md'))->sort()->values();
