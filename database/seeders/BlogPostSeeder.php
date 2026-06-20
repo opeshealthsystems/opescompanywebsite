@@ -62,6 +62,11 @@ class BlogPostSeeder extends Seeder
                 $num === 78 => 'HMS Solutions',              // Disease surveillance (IDSR)
                 $num === 79 => "Buyer's Guide",              // Data-protection law
                 $num === 80 => "Buyer's Guide",              // Funding hospital digitisation
+                $num === 81 => "Buyer's Guide",              // Open-source vs commercial HMS
+                $num === 82 => 'HMS Solutions',              // Faith-based / mission hospitals
+                $num === 83 => 'HMS Solutions',              // District hospitals & health centres
+                $num === 84 => 'Digital Health in Cameroon', // Patient guide: booking & records
+                $num === 85 => "Buyer's Guide",              // ICD-10 / ICD-11 coding standards
                 default    => 'Insights & Case Studies',
             };
 

@@ -26,11 +26,11 @@ Every one of the 70 articles is **English-only**, yet Cameroon is bilingual and 
 | 78 | P1 | Disease Surveillance & Outbreak Response (IDSR): How Hospital Data Feeds Early Warning | — | disease surveillance Cameroon IDSR / surveillance épidémiologique Cameroun | Public-health | MOFU | HMS Solutions | ✅ EN |
 | 79 | P1 | Cameroon's Health Data-Protection Law: What the 2010 Cyber-Law & ANTIC Mean for Patient Records | — | health data protection law Cameroon / protection données santé Cameroun | Compliance | MOFU | Buyer's Guide | ✅ EN |
 | 80 | P1 | Funding Hospital Digitisation in Africa: Global Fund, Gavi, World Bank & Donor Pathways | — | health digitization funding Africa / financement digitalisation santé | Commercial | BOFU | Buyer's Guide | ✅ EN |
-| 81 | P2 | Open-Source vs Commercial HMS in Africa (OpenMRS, Bahmni, GNU Health vs Integrated Platforms) | — | OpenMRS alternative Africa / logiciel hospitalier open source | Commercial/comparison | BOFU | Buyer's Guide | ⏳ |
-| 82 | P2 | HMS for Faith-Based & Mission Hospitals in Cameroon (CBC, Catholic & Protestant networks) | — | mission hospital software Cameroon | Segment | MOFU | HMS Solutions | ⏳ |
-| 83 | P2 | Digitising District Hospitals & Integrated Health Centres (CSI) in Cameroon | — | district hospital software Cameroon / logiciel centre de santé | Segment | MOFU | HMS Solutions | ⏳ |
-| 84 | P2 | Patient Guide: Booking Appointments & Accessing Your Records Online in Cameroon | Guide Patient: Prendre Rendez-vous en Ligne au Cameroun | book hospital appointment online Cameroon / rendez-vous hôpital en ligne | Consumer | TOFU | Digital Health in Cameroon | ⏳ |
-| 85 | P2 | ICD-10 Coding & Medical Records Standards for African Hospitals | — | ICD-10 coding Africa | Technical | MOFU | Buyer's Guide | ⏳ |
+| 81 | P2 | Open-Source vs Commercial HMS in Africa (OpenMRS, Bahmni, GNU Health vs Integrated Platforms) | — | OpenMRS alternative Africa / logiciel hospitalier open source | Commercial/comparison | BOFU | Buyer's Guide | ✅ EN |
+| 82 | P2 | HMS for Faith-Based & Mission Hospitals in Cameroon (CBC, Catholic & Protestant networks) | — | mission hospital software Cameroon | Segment | MOFU | HMS Solutions | ✅ EN |
+| 83 | P2 | Digitising District Hospitals & Integrated Health Centres (CSI) in Cameroon | — | district hospital software Cameroon / logiciel centre de santé | Segment | MOFU | HMS Solutions | ✅ EN |
+| 84 | P2 | Patient Guide: Booking Appointments & Accessing Your Records Online in Cameroon | Guide Patient: Prendre Rendez-vous en Ligne au Cameroun | book hospital appointment online Cameroon / rendez-vous hôpital en ligne | Consumer | TOFU | Digital Health in Cameroon | ✅ EN |
+| 85 | P2 | ICD-10 Coding & Medical Records Standards for African Hospitals | — | ICD-10 coding Africa | Technical | MOFU | Buyer's Guide | ✅ EN |
 
 **Bilingual backfill (🔁):** translate the existing cornerstones #01 (Best HMS Cameroon), #04 (EMR Cameroon), #24 (What is an HMS), #25 (HMS cost), #23 (Telemedicine), #16 (wait times), #19 (automated billing) → FR companions. These carry the most existing equity and the highest French commercial intent.
 
@@ -48,7 +48,7 @@ Every new article follows an answer-engine + generative-engine + search-engine s
 ## Recommended cadence
 - **Sprint 1 (P0):** 71–75 + FR of 71–73. ✅ **Complete.**
 - **Sprint 2 (P1):** 76–80. ✅ **Complete** (EN, AEO/GEO/SEO-optimised). FR companions for 76–80 + cornerstones 01/04/24/25 queued.
-- **Sprint 3 (P2):** 81–85, plus FR companions for 16/19/23. ⏳
+- **Sprint 3 (P2):** 81–85. ✅ **Complete** (EN, AEO/GEO/SEO-optimised). FR companions for 16/19/23 + 84 queued.
 - **Retrofit:** add Quick-answer + FAQ blocks to 71–75 so they match the optimisation standard. ⏳
 - Publish 2–3/week; interlink each new piece to ≥2 existing articles and the relevant product page.
 
