@@ -15,6 +15,7 @@
 ## Not backfilled (documented)
 
 - **`LeadNotification`** → sent to admins, who use the **Filament panel** (its own database notifications via `sendToDatabase`/`AdminNotifier`), not the 6 web-portal bell. No web feed exists for it. Left email-only.
+- **`ContractExpiryWarning`** → recipient is `$contract->lead` (a CRM **`Lead`**, not a `User`/Notifiable, no portal login). Left email-only.
 
 ## Recipient + URL map (all locale-prefixed → `['locale' => 'en', ...]`)
 

@@ -38,6 +38,13 @@ class ViewPayrollRun extends ViewRecord
                         $email = $entry->employee?->email;
                         if ($email) {
                             Mail::to($email)->queue(new PayrollProcessed($run, $entry));
+                            \App\Models\User::where('email', $email)->first()?->notify(new \App\Notifications\FeedEntry(
+                                'hr.payroll_processed',
+                                'Payslip available',
+                                'Your latest payroll has been processed.',
+                                'banknotes',
+                                null,
+                            ));
                             $notified++;
                         }
                     }
