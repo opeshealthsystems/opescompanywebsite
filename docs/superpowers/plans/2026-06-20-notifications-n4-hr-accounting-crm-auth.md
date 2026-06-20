@@ -304,7 +304,9 @@ class LeaveRequestObserver
             return;
         }
 
-        $reviewers = User::role(['manager', 'hr'])->get();
+        // whereHas (not the role() scope) so this never throws when the roles
+        // are not registered — e.g. in model-only tests that skip the seeder.
+        $reviewers = User::whereHas('roles', fn ($q) => $q->whereIn('name', ['manager', 'hr']))->get();
         if ($reviewers->isNotEmpty()) {
             Notification::send($reviewers, new LeaveRequestSubmitted($leave));
         }
