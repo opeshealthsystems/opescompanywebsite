@@ -37,6 +37,9 @@ class DemoRequestController extends Controller
             'ip_address' => $request->ip(),
         ]));
 
+        \Illuminate\Support\Facades\Notification::route('mail', $demo->email)
+            ->notify(new \App\Notifications\DemoRequestConfirmation($demo->name));
+
         $admins = User::role(['admin', 'super_admin'])->get();
         if ($admins->isNotEmpty()) {
             Notification::make()
