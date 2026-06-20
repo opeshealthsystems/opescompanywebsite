@@ -1,14 +1,18 @@
 # OPES Blog — Cameroon & CEMAC Content-Gap Calendar
 
-> Gap analysis of the existing 70 articles (`content/articles/`) against high-intent, evergreen Cameroon/CEMAC health-tech search. Validated June 2026 with live web research (sources per row). Topics are prioritised by search demand × commercial intent × competitive gap.
+> Gap analysis of the original 70 articles (`content/articles/`) against high-intent, evergreen Cameroon/CEMAC health-tech search. Validated June 2026 with live web research (sources per row). Topics prioritised by search demand × commercial intent × competitive gap.
 >
-> **Status legend:** ✅ drafted (this batch) · ⏳ queued (ready to draft) · 🔁 backfill (translate existing).
+> **⚑ Status (June 2026): fully executed.** The blog has grown from 70 → **109 articles, all bilingual EN/FR**. The language gap is closed, every backlog topic below is drafted, and a product-led **"Problems & Solutions"** series (87–109) has been added. This file is now a record of the completed programme rather than an open backlog.
+>
+> **Status legend:** ✅ done · ⏳ queued · 🔁 backfill (translate existing).
 
 ## What's already covered (so we don't repeat)
 Deep Cameroon coverage; **all 6 CEMAC countries** (Chad, Congo-Brazzaville, Gabon, CAR, Eq. Guinea); 12 clinical modules (lab, maternity, ER, blood bank, PACS, paeds, malaria, HIV, chronic disease, EPI, mental health, e-prescribing); full buyer-guide funnel; tech/standards (DHIS2, HL7/FHIR, CNPS, mutuelles, cybersecurity, multi-site, SMS).
 
-## The #1 structural gap — language
-Every one of the 70 articles is **English-only**, yet Cameroon is bilingual and the rest of CEMAC is overwhelmingly **Francophone**. Live SERPs for *"logiciel de gestion hospitalière Cameroun"*, *"dossier patient informatisé"*, *"système d'information hospitalier"* are actively contested by competitors (GESMEDIC, ProsoftAfrica, Evolucare, Capterra FR) — OPES is absent. The `blog_posts` table already has `title_fr` / `excerpt_fr` / `body_fr` columns; they're just unused. **French is the highest-ROI lever available.** Recommended: translate the top ~15 cornerstone articles (🔁) in addition to net-new French content.
+## The #1 structural gap — language ✅ CLOSED (June 2026)
+This was the original #1 gap: all 70 launch articles were **English-only**, while Cameroon is bilingual and the rest of CEMAC is overwhelmingly **Francophone** — leaving high-intent SERPs for *"logiciel de gestion hospitalière Cameroun"*, *"dossier patient informatisé"*, *"système d'information hospitalier"* (contested by GESMEDIC, ProsoftAfrica, Evolucare, Capterra FR) wide open.
+
+**Now resolved.** Every one of the **109 articles is bilingual** — each English article has an `NN-slug.fr.md` companion loaded into `title_fr` / `excerpt_fr` / `body_fr` and served when `locale=fr`. The full-translation pass (June 2026) added French to the final 63 originals, so OPES now competes across the Francophone CEMAC SERPs it was previously absent from. **French is no longer a gap — it is the baseline.**
 
 ---
 
@@ -51,7 +55,9 @@ Every new article follows an answer-engine + generative-engine + search-engine s
 - **Sprint 3 (P2):** 81–85. ✅ **Complete** (EN, AEO/GEO/SEO-optimised).
 - **Retrofit:** Quick-answer + FAQ blocks added to 71–75. ✅ **Complete** — all of 71–85 now uniform.
 - **French companions:** 71–85 all have full `.fr.md` companions. ✅ **Complete** — **all 15 new articles are bilingual.**
-- **Cornerstone backfill:** French companions for the 7 original cornerstones (01, 04, 16, 19, 23, 24, 25). ✅ **Complete** — **22 articles now bilingual.**
+- **Cornerstone backfill:** French companions for the 7 original cornerstones (01, 04, 16, 19, 23, 24, 25). ✅ **Complete.**
+- **Full bilingual pass:** French companions for the remaining 63 originals (02, 03, 05–15, 17–22, 26–70). ✅ **Complete** — **all 109 articles now bilingual.**
+- **Govt + product programme (86–109):** article 86 (Cameroon national digitalisation plan + OPES contribution); the 22-article **"Problems & Solutions"** series (87–108 — one *problem → harm → OPES product* per system, mapped across the full 22-product catalogue); and pillar hub 109 ("The Real Cost of Paper-Based Healthcare"). ✅ **Complete & bilingual.** Filed under the new `Problems & Solutions` category.
 - Publish 2–3/week; interlink each new piece to ≥2 existing articles and the relevant product page.
 
 ## Research sources (validation, June 2026)
