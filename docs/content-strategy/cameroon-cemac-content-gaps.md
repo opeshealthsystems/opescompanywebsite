@@ -21,11 +21,11 @@ Every one of the 70 articles is **English-only**, yet Cameroon is bilingual and 
 | 73 | P0 | Counterfeit Medicines in Cameroon: How Pharmacy Software & Traceability Fight Back | Les Faux Médicaments au Cameroun | counterfeit medicines Cameroon / faux médicaments Cameroun | Problem-aware | TOFU/MOFU | Healthcare Challenges | ✅ EN + FR |
 | 74 | P0 | Tuberculosis Digital Case Management in Cameroon (DOTS, Adherence, Reporting) | — | tuberculosis management software Cameroon / gestion tuberculose Cameroun | Clinical + donor | MOFU | HMS Solutions | ✅ EN |
 | 75 | P0 | Major Hospitals in Cameroon: Yaoundé & Douala Referral Centres (2026) | — | best hospitals Cameroon / meilleurs hôpitaux Cameroun | Informational/listicle | TOFU | Insights & Case Studies | ✅ EN |
-| 76 | P1 | CENAME & the Drug Supply Chain: Connecting Hospital Pharmacy Systems to National Procurement | — | CENAME Cameroon / chaîne approvisionnement médicaments Cameroun | Operational | MOFU | Buyer's Guide | ⏳ |
-| 77 | P1 | Health Insurance in Cameroon: CNPS, Mutuelles, Private Insurers & the CSU (Buyer's Explainer) | — | health insurance Cameroon / assurance maladie Cameroun | Informational | TOFU | Buyer's Guide | ⏳ |
-| 78 | P1 | Disease Surveillance & Outbreak Response (IDSR): How Hospital Data Feeds Early Warning | — | disease surveillance Cameroon IDSR / surveillance épidémiologique Cameroun | Public-health | MOFU | HMS Solutions | ⏳ |
-| 79 | P1 | Cameroon's Health Data-Protection Law: What the 2010 Cyber-Law & ANTIC Mean for Patient Records | — | health data protection law Cameroon / protection données santé Cameroun | Compliance | MOFU | Buyer's Guide | ⏳ |
-| 80 | P1 | Funding Hospital Digitisation in Africa: Global Fund, Gavi, World Bank & Donor Pathways | — | health digitization funding Africa / financement digitalisation santé | Commercial | BOFU | Buyer's Guide | ⏳ |
+| 76 | P1 | CENAME & the Drug Supply Chain: Connecting Hospital Pharmacy Systems to National Procurement | — | CENAME Cameroon / chaîne approvisionnement médicaments Cameroun | Operational | MOFU | Buyer's Guide | ✅ EN |
+| 77 | P1 | Health Insurance in Cameroon: CNPS, Mutuelles, Private Insurers & the CSU (Buyer's Explainer) | — | health insurance Cameroon / assurance maladie Cameroun | Informational | TOFU | Buyer's Guide | ✅ EN |
+| 78 | P1 | Disease Surveillance & Outbreak Response (IDSR): How Hospital Data Feeds Early Warning | — | disease surveillance Cameroon IDSR / surveillance épidémiologique Cameroun | Public-health | MOFU | HMS Solutions | ✅ EN |
+| 79 | P1 | Cameroon's Health Data-Protection Law: What the 2010 Cyber-Law & ANTIC Mean for Patient Records | — | health data protection law Cameroon / protection données santé Cameroun | Compliance | MOFU | Buyer's Guide | ✅ EN |
+| 80 | P1 | Funding Hospital Digitisation in Africa: Global Fund, Gavi, World Bank & Donor Pathways | — | health digitization funding Africa / financement digitalisation santé | Commercial | BOFU | Buyer's Guide | ✅ EN |
 | 81 | P2 | Open-Source vs Commercial HMS in Africa (OpenMRS, Bahmni, GNU Health vs Integrated Platforms) | — | OpenMRS alternative Africa / logiciel hospitalier open source | Commercial/comparison | BOFU | Buyer's Guide | ⏳ |
 | 82 | P2 | HMS for Faith-Based & Mission Hospitals in Cameroon (CBC, Catholic & Protestant networks) | — | mission hospital software Cameroon | Segment | MOFU | HMS Solutions | ⏳ |
 | 83 | P2 | Digitising District Hospitals & Integrated Health Centres (CSI) in Cameroon | — | district hospital software Cameroon / logiciel centre de santé | Segment | MOFU | HMS Solutions | ⏳ |
@@ -36,10 +36,20 @@ Every one of the 70 articles is **English-only**, yet Cameroon is bilingual and 
 
 ---
 
+## AEO / GEO / SEO optimisation standard (applied from #76 onward)
+Every new article follows an answer-engine + generative-engine + search-engine structure:
+- **Answer-first.** A bold **Quick answer** (40–55 words) directly under the H1 — the extractable snippet for AI Overviews, voice, and LLM citation.
+- **Key facts block.** Bulleted, specific, cited stats with named entities (CENAME, CSU, ANTIC…) — GEO citability.
+- **Question-based H2s** matching real queries, each with a concise extractable answer.
+- **FAQ section** (`## Frequently Asked Questions` → `### question` H3s) → auto-emitted as **FAQPage JSON-LD** by `blog-show.blade.php`.
+- **Internal links** to ≥2 related articles; descriptive slug; keyword in H1/meta/first 100 words.
+- **Technical layer (all articles):** Article + Organization + FAQPage + BreadcrumbList JSON-LD, canonical, hreflang en/fr/x-default, OG + Twitter cards, auto ToC.
+
 ## Recommended cadence
-- **Sprint 1 (P0):** 71–75 + FR of 71–73. ✅ **Complete** (71–75 drafted; French companions for 71, 72, 73 done).
-- **Sprint 2 (P1):** 76–80, plus FR companions for 01/04/24/25.
-- **Sprint 3 (P2):** 81–85, plus FR companions for 16/19/23.
+- **Sprint 1 (P0):** 71–75 + FR of 71–73. ✅ **Complete.**
+- **Sprint 2 (P1):** 76–80. ✅ **Complete** (EN, AEO/GEO/SEO-optimised). FR companions for 76–80 + cornerstones 01/04/24/25 queued.
+- **Sprint 3 (P2):** 81–85, plus FR companions for 16/19/23. ⏳
+- **Retrofit:** add Quick-answer + FAQ blocks to 71–75 so they match the optimisation standard. ⏳
 - Publish 2–3/week; interlink each new piece to ≥2 existing articles and the relevant product page.
 
 ## Research sources (validation, June 2026)

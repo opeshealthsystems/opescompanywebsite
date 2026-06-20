@@ -57,6 +57,11 @@ class BlogPostSeeder extends Seeder
                 $num === 73 => 'Healthcare Challenges',      // Counterfeit medicines
                 $num === 74 => 'HMS Solutions',              // TB digital case management
                 $num === 75 => 'Insights & Case Studies',   // Major hospitals list
+                $num === 76 => "Buyer's Guide",              // CENAME / drug supply chain
+                $num === 77 => "Buyer's Guide",              // Health insurance explainer
+                $num === 78 => 'HMS Solutions',              // Disease surveillance (IDSR)
+                $num === 79 => "Buyer's Guide",              // Data-protection law
+                $num === 80 => "Buyer's Guide",              // Funding hospital digitisation
                 default    => 'Insights & Case Studies',
             };
 

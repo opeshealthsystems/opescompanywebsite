@@ -67,4 +67,27 @@ class BlogValidationTest extends TestCase
         $this->get('/en/blog?category=health')->assertStatus(200);
         $this->get('/en/blog')->assertStatus(200);
     }
+
+    public function test_blog_show_page_renders(): void
+    {
+        $post = BlogPost::factory()->create(['published' => true]);
+
+        $this->get('/en/blog/' . $post->slug)->assertStatus(200);
+    }
+
+    public function test_blog_show_emits_faq_schema_when_article_has_faqs(): void
+    {
+        $post = BlogPost::factory()->create([
+            'published' => true,
+            'body'      => '<p>Intro.</p><h2>Frequently Asked Questions</h2>'
+                . '<h3>Does OPES support mobile money?</h3><p>Yes, it integrates MTN MoMo and Orange Money.</p>'
+                . '<h3>Is it bilingual?</h3><p>Yes, English and French.</p>',
+        ]);
+
+        $res = $this->get('/en/blog/' . $post->slug)->assertStatus(200);
+        // AEO/GEO: FAQ pairs surface as FAQPage structured data for answer/generative engines.
+        $res->assertSee('FAQPage', false);
+        $res->assertSee('Does OPES support mobile money?', false);
+        $res->assertSee('BreadcrumbList', false);
+    }
 }

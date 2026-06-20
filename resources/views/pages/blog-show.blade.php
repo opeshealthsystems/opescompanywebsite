@@ -22,6 +22,23 @@ foreach ($headings as $h) {
     );
 }
 
+// AEO/GEO: extract FAQ pairs (question H3 + answer) under an FAQ H2, for FAQPage schema
+$faqs = [];
+if (preg_match('/<h2[^>]*>[^<]*(?:Frequently Asked Questions|FAQ|Questions?\s+Fr[ée]quentes|Foire\s+aux\s+Questions)[^<]*<\/h2>(.*)$/is', $body, $faqBlock)) {
+    $faqHtml = $faqBlock[1];
+    if (preg_match('/^(.*?)<h2[^>]*>/is', $faqHtml, $cut)) {
+        $faqHtml = $cut[1]; // stop at the next H2
+    }
+    preg_match_all('/<h3[^>]*>(.*?)<\/h3>(.*?)(?=<h3[^>]*>|$)/is', $faqHtml, $pairs, PREG_SET_ORDER);
+    foreach ($pairs as $p) {
+        $q = trim(html_entity_decode(strip_tags($p[1]), ENT_QUOTES));
+        $a = trim(html_entity_decode(strip_tags($p[2]), ENT_QUOTES));
+        if ($q !== '' && $a !== '') {
+            $faqs[] = ['question' => $q, 'answer' => $a];
+        }
+    }
+}
+
 $shareUrl   = urlencode(request()->url());
 $shareTitle = urlencode($title);
 $isFr       = $locale === 'fr';
@@ -43,6 +60,30 @@ $isFr       = $locale === 'fr';
     'articleSection'   => $post->category,
     'inLanguage'       => app()->getLocale() === 'fr' ? 'fr-CM' : 'en-CM',
 ], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?></script>
+
+{{-- AEO/GEO: FAQ rich data for answer engines & generative search --}}
+@if(!empty($faqs))
+<script type="application/ld+json"><?php echo json_encode([
+    '@context'   => 'https://schema.org',
+    '@type'      => 'FAQPage',
+    'mainEntity' => array_map(fn ($f) => [
+        '@type'          => 'Question',
+        'name'           => $f['question'],
+        'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f['answer']],
+    ], $faqs),
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT); ?></script>
+@endif
+
+{{-- Breadcrumb trail for SERP + AI navigation --}}
+<script type="application/ld+json"><?php echo json_encode([
+    '@context'        => 'https://schema.org',
+    '@type'           => 'BreadcrumbList',
+    'itemListElement' => [
+        ['@type' => 'ListItem', 'position' => 1, 'name' => ($isFr ? 'Accueil' : 'Home'), 'item' => url($locale)],
+        ['@type' => 'ListItem', 'position' => 2, 'name' => 'Blog', 'item' => url($locale . '/blog')],
+        ['@type' => 'ListItem', 'position' => 3, 'name' => $title, 'item' => request()->url()],
+    ],
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT); ?></script>
 @endpush
 
 <style>
