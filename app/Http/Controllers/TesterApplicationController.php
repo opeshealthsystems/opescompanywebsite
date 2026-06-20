@@ -39,6 +39,9 @@ class TesterApplicationController extends Controller
             'ip_address' => $request->ip(),
         ]));
 
+        \Illuminate\Support\Facades\Notification::route('mail', $app->email)
+            ->notify(new \App\Notifications\TesterApplicationReceived($app->name));
+
         $admins = User::role(['admin', 'super_admin'])->get();
         if ($admins->isNotEmpty()) {
             Notification::make()
