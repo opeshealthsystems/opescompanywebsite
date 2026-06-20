@@ -18,6 +18,7 @@ use App\Models\Department;
 use App\Models\PerformanceReview;
 use App\Models\Timesheet;
 use App\Models\TrainingRecord;
+use App\Notifications\ResetPasswordNotification;
 
 #[ObservedBy(UserObserver::class)]
 class User extends Authenticatable implements FilamentUser
@@ -60,6 +61,15 @@ class User extends Authenticatable implements FilamentUser
             'hire_date'         => 'date',
             'is_active'         => 'boolean',
         ];
+    }
+
+    /**
+     * Send the branded OPES password reset notification (overrides Laravel's default
+     * so the reset email uses the OPES mail theme; the broker's token flow is unchanged).
+     */
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new ResetPasswordNotification($token));
     }
 
     public function customerProfile(): HasOne
