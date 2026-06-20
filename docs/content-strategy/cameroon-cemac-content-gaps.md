@@ -46,10 +46,12 @@ Every new article follows an answer-engine + generative-engine + search-engine s
 - **Technical layer (all articles):** Article + Organization + FAQPage + BreadcrumbList JSON-LD, canonical, hreflang en/fr/x-default, OG + Twitter cards, auto ToC.
 
 ## Recommended cadence
-- **Sprint 1 (P0):** 71–75 + FR of 71–73. ✅ **Complete.**
-- **Sprint 2 (P1):** 76–80. ✅ **Complete** (EN, AEO/GEO/SEO-optimised). FR companions for 76–80 + cornerstones 01/04/24/25 queued.
-- **Sprint 3 (P2):** 81–85. ✅ **Complete** (EN, AEO/GEO/SEO-optimised). FR companions for 16/19/23 + 84 queued.
-- **Retrofit:** add Quick-answer + FAQ blocks to 71–75 so they match the optimisation standard. ⏳
+- **Sprint 1 (P0):** 71–75. ✅ **Complete.**
+- **Sprint 2 (P1):** 76–80. ✅ **Complete** (EN, AEO/GEO/SEO-optimised).
+- **Sprint 3 (P2):** 81–85. ✅ **Complete** (EN, AEO/GEO/SEO-optimised).
+- **Retrofit:** Quick-answer + FAQ blocks added to 71–75. ✅ **Complete** — all of 71–85 now uniform.
+- **French companions:** 71–85 all have full `.fr.md` companions. ✅ **Complete** — **all 15 new articles are bilingual.**
+- **Remaining:** bilingual backfill of the 7 original cornerstones (01, 04, 16, 19, 23, 24, 25). ⏳
 - Publish 2–3/week; interlink each new piece to ≥2 existing articles and the relevant product page.
 
 ## Research sources (validation, June 2026)
