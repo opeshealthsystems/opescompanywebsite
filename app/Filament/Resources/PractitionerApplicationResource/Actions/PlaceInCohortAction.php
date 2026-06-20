@@ -39,6 +39,11 @@ class PlaceInCohortAction
                     'status'    => 'active',
                     'placed_at' => now(),
                 ]);
+
+                $record->practitioner?->notify(
+                    new \App\Notifications\PlacedInCohort(Cohort::find($data['cohort_id']))
+                );
+
                 Notification::make()->title('Practitioner placed in cohort.')->success()->send();
             });
     }

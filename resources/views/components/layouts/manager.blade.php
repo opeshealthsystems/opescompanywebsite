@@ -46,6 +46,7 @@
                 </a>
             </div>
             <div class="cp-nav-user">
+                <x-notification-bell />
                 <span class="cp-nav-username">{{ auth()->user()->name }}</span>
                 <form method="POST" action="{{ route('logout') }}" style="margin:0">
                     @csrf

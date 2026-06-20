@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Observers\UserObserver;
 use Database\Factories\UserFactory;
 use Filament\Models\Contracts\FilamentUser;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -17,6 +19,7 @@ use App\Models\PerformanceReview;
 use App\Models\Timesheet;
 use App\Models\TrainingRecord;
 
+#[ObservedBy(UserObserver::class)]
 class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<UserFactory> */

@@ -117,6 +117,13 @@ Route::prefix('{locale}')
         Route::get('/practitioners',      [\App\Http\Controllers\Public\PractitionerDirectoryController::class, 'index'])->name('practitioners.index');
         Route::get('/practitioners/{id}', [\App\Http\Controllers\Public\PractitionerDirectoryController::class, 'show'])->name('practitioners.show')->where('id', '[0-9]+');
 
+        // Shared in-app notifications (any authenticated portal user)
+        Route::middleware('auth')->group(function () {
+            Route::get('/notifications',            [\App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index');
+            Route::post('/notifications/{id}/read', [\App\Http\Controllers\NotificationController::class, 'markRead'])->name('notifications.read');
+            Route::post('/notifications/read-all',  [\App\Http\Controllers\NotificationController::class, 'markAllRead'])->name('notifications.read-all');
+        });
+
         // Customer portal (auth + customer role required)
         Route::middleware(['auth', 'role:customer'])
             ->prefix('customer')

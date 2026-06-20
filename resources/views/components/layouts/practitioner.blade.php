@@ -72,6 +72,7 @@
             @endif
         </div>
         <div class="flex items-center gap-3 portal-actions">
+            <x-notification-bell />
             <span class="text-sm text-slate-400">{{ auth()->user()->name }}</span>
             <a href="{{ route('practitioner.profile', ['locale' => app()->getLocale()]) }}"
                class="flex items-center justify-center w-8 h-8 rounded transition-colors {{ request()->routeIs('practitioner.profile') ? 'bg-slate-700 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800' }}">

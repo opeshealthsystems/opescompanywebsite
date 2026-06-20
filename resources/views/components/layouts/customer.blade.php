@@ -68,6 +68,7 @@
             @endif
         </div>
         <div class="cp-nav-user portal-actions">
+            <x-notification-bell />
             <span class="cp-nav-username">{{ auth()->user()->name }}</span>
             <a href="{{ route('customer.profile', ['locale' => app()->getLocale()]) }}"
                class="cp-nav-link {{ request()->routeIs('customer.profile') ? 'cp-nav-link-active' : '' }}">
