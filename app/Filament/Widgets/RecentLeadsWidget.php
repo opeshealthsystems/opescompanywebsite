@@ -14,6 +14,12 @@ class RecentLeadsWidget extends BaseWidget
     protected int | string | array $columnSpan = 'full';
     protected static ?int $sort = 6;
 
+    public static function canView(): bool
+    {
+        // CRM lead PII (names/emails) — hidden from support on the shared dashboard.
+        return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
+    }
+
     public function table(Table $table): Table
     {
         return $table

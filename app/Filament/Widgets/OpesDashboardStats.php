@@ -33,13 +33,11 @@ class OpesDashboardStats extends BaseWidget
             ->where('end_date', '<=', $now->copy()->addDays(30))
             ->count();
 
-        $outstandingInvoices = Invoice::whereIn('status', ['sent', 'overdue'])->count();
-        $overdueInvoices = Invoice::where('status', 'overdue')->count();
-
         $pendingAssignments = TesterAssignment::where('status', 'pending')->count();
         $activeAssignments = TesterAssignment::where('status', 'in_progress')->count();
 
-        return [
+        // Operational stats — visible to all panel users (incl. support).
+        $stats = [
             Stat::make('Customers', $totalCustomers)
                 ->description($newCustomers . ' new this month')
                 ->icon('heroicon-o-users')
@@ -55,11 +53,6 @@ class OpesDashboardStats extends BaseWidget
                 ->icon('heroicon-o-key')
                 ->color($expiringSoon > 0 ? 'warning' : 'success'),
 
-            Stat::make('Outstanding Invoices', $outstandingInvoices)
-                ->description($overdueInvoices . ' overdue')
-                ->icon('heroicon-o-banknotes')
-                ->color($overdueInvoices > 0 ? 'danger' : ($outstandingInvoices > 0 ? 'warning' : 'success')),
-
             Stat::make('Tester Assignments', $activeAssignments . ' active')
                 ->description($pendingAssignments . ' pending')
                 ->icon('heroicon-o-beaker')
@@ -69,11 +62,25 @@ class OpesDashboardStats extends BaseWidget
                 ->description('super admins + admins + support')
                 ->icon('heroicon-o-shield-check')
                 ->color('info'),
+        ];
 
-            Stat::make('New Leads', Lead::where('status', 'new')->count())
+        // Finance + CRM aggregates — restricted away from the support (helpdesk) role.
+        if (auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false) {
+            $outstandingInvoices = Invoice::whereIn('status', ['sent', 'overdue'])->count();
+            $overdueInvoices = Invoice::where('status', 'overdue')->count();
+            $newLeads = Lead::where('status', 'new')->count();
+
+            $stats[] = Stat::make('Outstanding Invoices', $outstandingInvoices)
+                ->description($overdueInvoices . ' overdue')
+                ->icon('heroicon-o-banknotes')
+                ->color($overdueInvoices > 0 ? 'danger' : ($outstandingInvoices > 0 ? 'warning' : 'success'));
+
+            $stats[] = Stat::make('New Leads', $newLeads)
                 ->description(Lead::where('status', 'qualified')->count() . ' qualified')
                 ->icon('heroicon-o-inbox')
-                ->color(Lead::where('status', 'new')->count() > 0 ? 'warning' : 'success'),
-        ];
+                ->color($newLeads > 0 ? 'warning' : 'success');
+        }
+
+        return $stats;
     }
 }
