@@ -180,6 +180,7 @@ class IssueReport extends Model
     public function closeIssue(): void
     {
         $this->update(['status' => 'closed']);
+        $this->cohortMember?->user?->notify(new \App\Notifications\IssueClosed($this));
     }
 
     public function clinicalApproved(): bool
