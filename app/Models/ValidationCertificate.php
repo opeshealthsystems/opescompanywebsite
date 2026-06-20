@@ -66,7 +66,7 @@ class ValidationCertificate extends Model
 
         abort_if($result['tier'] === 'not_certified', 422, 'Member is not eligible for certification.');
 
-        return static::create([
+        $certificate = static::create([
             'cohort_member_id'    => $evaluation->cohort_member_id,
             'final_evaluation_id' => $evaluation->id,
             'score'               => $result['score'],
@@ -74,5 +74,9 @@ class ValidationCertificate extends Model
             'issued_by'           => $issuedById,
             'issued_at'           => now(),
         ]);
+
+        $certificate->cohortMember?->user?->notify(new \App\Notifications\CertificateIssued($certificate));
+
+        return $certificate;
     }
 }
