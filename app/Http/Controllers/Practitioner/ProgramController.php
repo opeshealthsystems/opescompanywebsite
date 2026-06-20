@@ -66,6 +66,13 @@ class ProgramController extends Controller
         ]);
 
         Mail::to(auth()->user()->email)->queue(new PractitionerApplicationReceived($application));
+        auth()->user()->notify(new \App\Notifications\FeedEntry(
+            'practitioner.application_received',
+            'Application received',
+            'We received your application to ' . $program->title . '.',
+            'clipboard-document',
+            route('practitioner.applications', ['locale' => 'en']),
+        ));
 
         AdminNotifier::notify(
             'New programme application',

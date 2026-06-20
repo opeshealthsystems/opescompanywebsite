@@ -111,6 +111,13 @@ class PractitionerBugReportResource extends Resource
                             \Illuminate\Support\Facades\Mail::to($record->practitioner->email)
                                 ->queue(new \App\Mail\BugReportResponded($record));
                         }
+                        $record->practitioner?->notify(new \App\Notifications\FeedEntry(
+                            'practitioner.bug_report_responded',
+                            'Response to your bug report',
+                            'Your bug report received a response.',
+                            'bug-ant',
+                            route('practitioner.bug-reports.show', ['locale' => 'en', 'bugReport' => $record->id]),
+                        ));
 
                         Notification::make()->title('Response sent.')->success()->send();
                     }),
