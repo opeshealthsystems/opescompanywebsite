@@ -17,10 +17,10 @@ Every one of the 70 articles is **English-only**, yet Cameroon is bilingual and 
 | # | Tier | Working title (EN) | French title | Primary keyword (EN / FR) | Intent | Funnel | Category | Status |
 |---|------|--------------------|--------------|----------------------------|--------|--------|----------|--------|
 | 71 | P0 | Mobile Money Hospital Payments in Cameroon (MTN MoMo & Orange Money) | Paiement des Soins par Mobile Money au Cameroun (MTN MoMo & Orange Money) | mobile money hospital payment Cameroon / paiement hôpital mobile money | Commercial + how-to | MOFU | HMS Solutions | ✅ EN + FR |
-| 72 | P0 | Universal Health Coverage (CSU) in Cameroon: What Hospitals Must Know | — (FR queued) | universal health coverage Cameroon / couverture santé universelle Cameroun | Informational + local | TOFU | Digital Health in Cameroon | ✅ EN |
-| 73 | P0 | Counterfeit Medicines in Cameroon: How Pharmacy Software & Traceability Fight Back | — (FR queued) | counterfeit medicines Cameroon / faux médicaments Cameroun | Problem-aware | TOFU/MOFU | Healthcare Challenges | ✅ EN |
-| 74 | P0 | Tuberculosis Digital Case Management in Cameroon (DOTS, Adherence, Reporting) | — | tuberculosis management software Cameroon / gestion tuberculose Cameroun | Clinical + donor | MOFU | HMS Solutions | ⏳ |
-| 75 | P0 | Major Hospitals in Cameroon: Yaoundé & Douala Referral Centres (2026) | — | best hospitals Cameroon / meilleurs hôpitaux Cameroun | Informational/listicle | TOFU | Insights & Case Studies | ⏳ |
+| 72 | P0 | Universal Health Coverage (CSU) in Cameroon: What Hospitals Must Know | La Couverture Santé Universelle (CSU) au Cameroun | universal health coverage Cameroon / couverture santé universelle Cameroun | Informational + local | TOFU | Digital Health in Cameroon | ✅ EN + FR |
+| 73 | P0 | Counterfeit Medicines in Cameroon: How Pharmacy Software & Traceability Fight Back | Les Faux Médicaments au Cameroun | counterfeit medicines Cameroon / faux médicaments Cameroun | Problem-aware | TOFU/MOFU | Healthcare Challenges | ✅ EN + FR |
+| 74 | P0 | Tuberculosis Digital Case Management in Cameroon (DOTS, Adherence, Reporting) | — | tuberculosis management software Cameroon / gestion tuberculose Cameroun | Clinical + donor | MOFU | HMS Solutions | ✅ EN |
+| 75 | P0 | Major Hospitals in Cameroon: Yaoundé & Douala Referral Centres (2026) | — | best hospitals Cameroon / meilleurs hôpitaux Cameroun | Informational/listicle | TOFU | Insights & Case Studies | ✅ EN |
 | 76 | P1 | CENAME & the Drug Supply Chain: Connecting Hospital Pharmacy Systems to National Procurement | — | CENAME Cameroon / chaîne approvisionnement médicaments Cameroun | Operational | MOFU | Buyer's Guide | ⏳ |
 | 77 | P1 | Health Insurance in Cameroon: CNPS, Mutuelles, Private Insurers & the CSU (Buyer's Explainer) | — | health insurance Cameroon / assurance maladie Cameroun | Informational | TOFU | Buyer's Guide | ⏳ |
 | 78 | P1 | Disease Surveillance & Outbreak Response (IDSR): How Hospital Data Feeds Early Warning | — | disease surveillance Cameroon IDSR / surveillance épidémiologique Cameroun | Public-health | MOFU | HMS Solutions | ⏳ |
@@ -37,7 +37,7 @@ Every one of the 70 articles is **English-only**, yet Cameroon is bilingual and 
 ---
 
 ## Recommended cadence
-- **Sprint 1 (P0):** 71–75 + FR of 71. (71–73 + 71-FR drafted in this batch.)
+- **Sprint 1 (P0):** 71–75 + FR of 71–73. ✅ **Complete** (71–75 drafted; French companions for 71, 72, 73 done).
 - **Sprint 2 (P1):** 76–80, plus FR companions for 01/04/24/25.
 - **Sprint 3 (P2):** 81–85, plus FR companions for 16/19/23.
 - Publish 2–3/week; interlink each new piece to ≥2 existing articles and the relevant product page.
