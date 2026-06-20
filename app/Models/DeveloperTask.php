@@ -72,6 +72,7 @@ class DeveloperTask extends Model
         $issue = $this->issueReport()->first();
         if ($issue && in_array($issue->status, ['sent_to_development', 'retest_failed'], true)) {
             $issue->update(['status' => 'ready_for_retest']);
+            $issue->cohortMember?->user?->notify(new \App\Notifications\IssueReadyForRetest($issue));
         }
     }
 

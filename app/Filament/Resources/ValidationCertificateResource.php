@@ -65,7 +65,7 @@ class ValidationCertificateResource extends Resource
                         Forms\Components\DatePicker::make('term_end')->native(false),
                     ])
                     ->action(function (ValidationCertificate $r, array $data) {
-                        AdvisoryCouncilMember::create([
+                        $member = AdvisoryCouncilMember::create([
                             'user_id'                   => $r->cohortMember->user_id,
                             'validation_certificate_id' => $r->id,
                             'title'                     => $data['title'],
@@ -75,6 +75,7 @@ class ValidationCertificateResource extends Resource
                             'invited_by'                => auth()->id(),
                             'invited_at'                => now(),
                         ]);
+                        $r->cohortMember->user?->notify(new \App\Notifications\CouncilInvitation($member));
                         Notification::make()->title('Practitioner invited to the Advisory Council.')->success()->send();
                     }),
             ]);

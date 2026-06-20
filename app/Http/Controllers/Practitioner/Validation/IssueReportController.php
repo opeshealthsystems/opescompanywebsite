@@ -104,11 +104,13 @@ class IssueReportController extends Controller
             }
         }
 
-        IssueReport::create(array_merge($validated, [
+        $issue = IssueReport::create(array_merge($validated, [
             'cohort_member_id' => $member->id,
             'attachments'      => $paths ?: null,
             'status'           => 'submitted',
         ]));
+
+        $member->user?->notify(new \App\Notifications\IssueSubmitted($issue));
 
         return redirect()->route('practitioner.validation.issues.index', ['locale' => app()->getLocale()])
             ->with('success', 'Issue report submitted.');
