@@ -24,8 +24,12 @@ class BlogPostSeeder extends Seeder
             ->sort()
             ->values();
 
-        // Spread published dates weekly from 2025-08-04 forward
+        // Spread published dates evenly from 2025-08-04 up to a few days ago, so posts
+        // always have realistic past dates (never future-dated, however many articles exist).
         $startDate = Carbon::parse('2025-08-04');
+        $endDate   = Carbon::today()->subDays(2);
+        $spanDays  = max(1, $startDate->diffInDays($endDate));
+        $lastIndex = max(1, $files->count() - 1);
 
         foreach ($files as $index => $filePath) {
             [$title, $excerpt, $body] = $this->parseArticle(file_get_contents($filePath));
@@ -82,7 +86,7 @@ class BlogPostSeeder extends Seeder
                 'category'     => $category,
                 'author'       => 'OPES Health Systems',
                 'published'    => true,
-                'published_at' => (clone $startDate)->addWeeks($index),
+                'published_at' => (clone $startDate)->addDays((int) round($index * $spanDays / $lastIndex)),
             ]);
         }
 
