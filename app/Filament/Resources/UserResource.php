@@ -95,7 +95,11 @@ class UserResource extends Resource
                         ->relationship('roles', 'name')
                         ->columns(2)
                         ->columnSpanFull()
-                        ->searchable(),
+                        ->searchable()
+                        // Role assignment is a super_admin privilege (admin is deliberately
+                        // denied manage_roles). Hidden — and therefore never dehydrated or
+                        // synced — for everyone else, so an admin cannot grant super_admin.
+                        ->visible(fn () => auth()->user()?->hasRole('super_admin') ?? false),
                 ]),
         ]);
     }

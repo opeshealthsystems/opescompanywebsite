@@ -14,6 +14,12 @@ class RecentInvoicesWidget extends BaseWidget
     protected int | string | array $columnSpan = 'full';
     protected static ?int $sort = 5;
 
+    public static function canView(): bool
+    {
+        // Financial data — hidden from support (helpdesk) on the shared dashboard.
+        return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
+    }
+
     public function table(Table $table): Table
     {
         return $table

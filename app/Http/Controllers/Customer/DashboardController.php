@@ -15,7 +15,7 @@ class DashboardController extends Controller
         $user    = Auth::user();
         $profile = $user->customerProfile;
 
-        $activeLicenses  = License::where('customer_id', $user->id)->where('status', 'active')->count();
+        $activeLicenses  = License::where('user_id', $user->id)->where('status', 'active')->count();
         $openTickets     = Ticket::where('user_id', $user->id)->whereNotIn('status', ['closed', 'resolved'])->count();
         $pendingInvoices = Invoice::where('customer_id', $user->id)->whereIn('status', ['sent', 'overdue'])->count();
 

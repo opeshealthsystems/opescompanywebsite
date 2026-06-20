@@ -31,10 +31,8 @@ class DashboardController extends Controller
             ->get();
 
         $payoutApps = PractitionerApplication::where('practitioner_id', $user->id)
+            ->where(fn ($q) => $q->where('payout_status', '!=', 'not_applicable')->orWhere('status', 'approved'))
             ->with('program')
-            ->whereNotNull('payout_status')
-            ->orWhere('status', 'approved')
-            ->where('practitioner_id', $user->id)
             ->latest()
             ->take(5)
             ->get();

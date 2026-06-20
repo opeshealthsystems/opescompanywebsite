@@ -1,0 +1,138 @@
+{
+  "summary": "Exhaustive RBAC + bug audit of the Filament admin panel and all account-type dashboards, with adversarial verification",
+  "agentCount": 12,
+  "logs": [
+    "Collected 11 raw findings across 5 areas.",
+    "Adversarially verifying 7 BLOCKER/IMPORTANT findings.",
+    "Confirmed REAL: 7 · refuted: 0 · MINOR (unverified): 4"
+  ],
+  "result": {
+    "summary": {
+      "raw": 11,
+      "confirmed": 7,
+      "refuted": 0,
+      "minor": 4
+    },
+    "confirmed": [
+      {
+        "severity": "BLOCKER",
+        "title": "Admin can self-escalate to super_admin via UserResource roles checkbox",
+        "file": "app/Filament/Resources/UserResource.php",
+        "issue": "UserResource::canAccess() (line 26-29) admits both 'admin' and 'super_admin'. The form (lines 94-98) contains Forms\\Components\\CheckboxList::make('roles')->relationship('roles','name') which lists ALL roles with no filtering, disabling, or actor-role guard. An 'admin' is deliberately denied the manage_roles permission in RolePermissionSeeder.php (line 49: array_diff($permissions, ['manage_roles'])) and RoleResource is correctly locked to super_admin only (RoleResource.php line 25: hasRole('super_admin')). But via UserResource an admin can open any user (including their own account) and tick the 'super_admin' role, granting full privileges. There is no UserPolicy and no model observer (app/Policies has no UserPolicy.php; app/Observers is empty), so nothing blocks the role mass-assignment. This bypasses the entire RoleResource super_admin gate.",
+        "fix": "Restrict the roles CheckboxList so non-super_admins cannot grant super_admin (and arguably cannot manage roles at all). E.g. ->options(fn () => auth()->user()->hasRole('super_admin') ? Role::pluck('name','id') : Role::where('name','!=','super_admin')->pluck('name','id')) and ->disabled(fn () => ! auth()->user()->hasPermissionTo('manage_roles')), plus a saving guard/UserPolicy that rejects assigning super_admin unless the actor is super_admin. Simplest: gate the whole roles field on hasRole('super_admin').",
+        "area": "resource-rbac",
+        "verification": {
+          "verdict": "REAL",
+          "note": "Confirmed: UserResource::canAccess (L26-29) admits 'admin'; form CheckboxList 'roles' (L94-98) lists all roles with no filter/disable/guard; admin is denied manage_roles (RolePermissionSeeder L49) and RoleResource is super_admin-only (L25); no UserPolicy, no Observer, no User-policy registration in AppServiceProvider::boot, no Gate::before, and EditUser/CreateUser have no mutate guard — so an admin can tick 'super_admin' on any user (incl. self) and save, fully self-escalating."
+        }
+      },
+      {
+        "severity": "IMPORTANT",
+        "title": "Support (helpdesk) role can read and manage all employee/business documents (PII + contracts)",
+        "file": "app/Filament/Resources/DocumentResource.php",
+        "issue": "canAccess() (lines 24-27) grants the 'support' role. Support's permission set in RolePermissionSeeder.php (line 50) is only ['view_admin_panel','manage_tickets','assign_tickets','manage_bug_reports'] — it has no manage_documents. The resource exposes employee contracts (type contract_employee), business contracts (contract_business), receipts and letterheads, including recipient names/emails and a PDF download of every document (route documents.pdf, lines 183-187). Support can also create, edit, and void (lines 180-194) these legal/HR documents. This is HR/PII and legal data a helpdesk role should not see or mutate.",
+        "fix": "Remove 'support' from DocumentResource::canAccess() — restrict to ['super_admin','admin'] like the other Documents-group resources (DocumentTemplateResource is already admin-only). If support legitimately needs a narrow slice (e.g. receipts only), scope getEloquentQuery() by type and hide contract types, but do not expose contracts.",
+        "area": "resource-rbac",
+        "verification": {
+          "verdict": "REAL",
+          "note": "Verified DocumentResource::canAccess() (lines 24-27) grants 'support' via hasAnyRole(['super_admin','admin','support']); User::canAccessPanel (User.php:49) admits 'support' to the panel; RolePermissionSeeder.php:50 gives 'support' only view_admin_panel/manage_tickets/assign_tickets/manage_bug_reports (no manage_documents), yet the resource never checks that permission. Support can list, view, create, edit, and void contract_employee/contract_business/receipt/letterhead docs incl. recipient names/emails, and DocumentController::pdf (lines 14-17) likewise allows 'support' to download every document PDF."
+        }
+      },
+      {
+        "severity": "IMPORTANT",
+        "title": "Support role can read, edit and bulk-delete all employees' leave requests",
+        "file": "app/Filament/Resources/LeaveRequestResource.php",
+        "issue": "canAccess() (lines 24-27) grants 'support', which lacks the manage_leave_requests permission (only super_admin/admin/manager/hr have it per RolePermissionSeeder.php lines 54-56). The resource lists every employee's leave with reasons (medical/personal — lines 79-82 reason field, infolist lines 290-296). Approve/reject actions are correctly gated to admin via ->visible() (lines 174,193), but ViewAction, EditAction (lines 166-167) and especially the DeleteBulkAction (line 252) are NOT gated — so support can edit leave records and bulk-delete them. The form's admin-only Status section is hidden from support (line 87) but the edit/delete capability itself is not.",
+        "fix": "Remove 'support' from LeaveRequestResource::canAccess() (restrict to super_admin/admin; HR/manager are handled via their own portals). At minimum, gate EditAction and the DeleteBulkAction behind hasAnyRole(['super_admin','admin']) so a helpdesk role cannot mutate or destroy leave records.",
+        "area": "resource-rbac",
+        "verification": {
+          "verdict": "REAL",
+          "note": "Verified: canAccess() (LeaveRequestResource.php:24-27) admits 'support', which per RolePermissionSeeder.php:50 lacks manage_leave_requests (only super_admin/admin/manager/hr have it, lines 48-55). No LeaveRequest policy or Gate exists. ViewAction/EditAction (lines 166-167) and DeleteBulkAction (line 252) have no ->visible() gate, and EditLeaveRequest.php:15 adds an ungated DeleteAction — so support can read employee leave reasons (form lines 79-82, infolist lines 290-296), edit records, and delete them (single + bulk). Only approve/reject (lines 174,193) and the Status form section (line 87) are correctly admin-gated."
+        }
+      },
+      {
+        "severity": "IMPORTANT",
+        "title": "RecentInvoicesWidget leaks invoice amounts to support on the default Dashboard",
+        "file": "app/Filament/Widgets/RecentInvoicesWidget.php",
+        "issue": "The widget has no canView() override, so it renders on the default Dashboard (app/Filament/Pages/Dashboard.php getWidgets()) for every panel user. User::canAccessPanel grants access to super_admin/admin/support, so the 'support' role sees outstanding invoice numbers, customer names, and grand_total monetary amounts. This directly bypasses the resource-level RBAC: InvoiceResource::canAccess() (app/Filament/Resources/InvoiceResource.php:25) requires the 'manage_accounting' permission, which support does not have, and the sibling FinancialOverviewWidget IS gated with canView() to super_admin/admin only. Support is thus blocked from the Invoice resource and all financial Pages yet still sees invoice financials on the dashboard.",
+        "fix": "Add `public static function canView(): bool { return auth()->user()?->hasPermissionTo('manage_accounting') ?? false; }` to RecentInvoicesWidget (mirroring InvoiceResource::canAccess and the FinancialOverviewWidget pattern) so the widget is hidden from support.",
+        "area": "admin-dashboards",
+        "verification": {
+          "verdict": "REAL",
+          "note": "Confirmed: RecentInvoicesWidget.php has no canView() override and is registered in Dashboard::getWidgets() (line 22); User::canAccessPanel (User.php:49) grants 'support'; RolePermissionSeeder.php:50 gives support only ['view_admin_panel','manage_tickets','assign_tickets','manage_bug_reports'] (no manage_accounting), so InvoiceResource::canAccess() (line 27) blocks support, yet the widget exposes invoice_number, customer.name, and grand_total — while sibling FinancialOverviewWidget IS gated via canView() to super_admin/admin (line 18-21)."
+        }
+      },
+      {
+        "severity": "IMPORTANT",
+        "title": "RecentLeadsWidget leaks CRM lead data (names/emails) to support on the default Dashboard",
+        "file": "app/Filament/Widgets/RecentLeadsWidget.php",
+        "issue": "The widget has no canView() override, so it renders on the default Dashboard for the 'support' role (User::canAccessPanel allows support into the admin panel). It exposes lead name, email (copyable), facility_type, interested-in products, and source. This contradicts the resource-level RBAC: LeadResource::canAccess() (app/Filament/Resources/LeadResource.php:25) restricts the Lead resource to super_admin/admin only, and the sibling CrmPipelineWidget is correctly gated via canView() to super_admin/admin. Support can read the same CRM pipeline/lead PII on the dashboard that the Lead resource deliberately hides from them.",
+        "fix": "Add `public static function canView(): bool { return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false; }` to RecentLeadsWidget, matching LeadResource::canAccess() and the CrmPipelineWidget gate.",
+        "area": "admin-dashboards",
+        "verification": {
+          "verdict": "REAL",
+          "note": "Confirmed: RecentLeadsWidget.php has no canView() (verified full file), is registered in Dashboard.php:19 (no page gate), exposes Lead name/email(copyable)/facility_type/products/source; User::canAccessPanel (User.php:49) admits 'support', while LeadResource::canAccess (LeadResource.php:27) and sibling CrmPipelineWidget::canView (line 18) both restrict the same data to super_admin/admin — so support leaks lead PII on the dashboard."
+        }
+      },
+      {
+        "severity": "BLOCKER",
+        "title": "Customer dashboard 500s for every customer (queries non-existent licenses.customer_id column)",
+        "file": "app/Http/Controllers/Customer/DashboardController.php",
+        "issue": "Line 18 runs `License::where('customer_id', $user->id)->where('status','active')->count()`. The `licenses` table (database/migrations/2026_06_13_230000_create_licenses_table.php) has NO `customer_id` column — the customer foreign key is `user_id`. The License model (app/Models/License.php) has no `customer_id` alias/accessor/append; its `customer()` relation belongsTo uses `'user_id'`. So this query emits `select count(*) from licenses where customer_id = ? and status = 'active'`, which throws Illuminate\\Database\\QueryException 'SQLSTATE[42S22]: Column not found: 1054 Unknown column customer_id'. The customer portal landing page (/{locale}/customer/dashboard) therefore returns HTTP 500 for EVERY customer on first load — the dashboard is completely broken. (Note: the sibling Customer\\LicenseController::index correctly uses `License::where('user_id', ...)`, and the invoices query in the same dashboard is fine because invoices.customer_id does exist.)",
+        "fix": "Change line 18 to `License::where('user_id', $user->id)->where('status', 'active')->count()` to match the actual licenses schema and the LicenseController.",
+        "area": "public-portals",
+        "verification": {
+          "verdict": "REAL",
+          "note": "Confirmed: licenses migration (only one, 2026_06_13_230000) has user_id/issued_by but no customer_id; License model has no customer_id alias/accessor; DashboardController.php:18 queries License::where('customer_id',...), so /{locale}/customer/dashboard (web.php:125, auth+role:customer) throws QueryException 42S22 unknown column customer_id -> HTTP 500 for every customer. Static-only verification (php not on Bash PATH), but source evidence is unambiguous."
+        }
+      },
+      {
+        "severity": "IMPORTANT",
+        "title": "HR employee search leaks non-employee users via unparenthesized orWhere",
+        "file": "app/Http/Controllers/HR/EmployeeController.php",
+        "issue": "index() builds: User::whereNotNull('employee_id')->when($search, fn($q) => $q->where('name','like',...)->orWhere('email','like',...)). The orWhere is NOT wrapped in a closure, so it breaks out of the whereNotNull('employee_id') AND-group. The effective SQL becomes (employee_id IS NOT NULL AND name LIKE X) OR (email LIKE X). When a support/HR user searches the staff directory by a term, any user whose email matches — including customers and other non-staff accounts that have employee_id = NULL — is returned and rendered in the HR employee list. This leaks non-employee records (names, emails, and via the linked show page, profile data) into a screen that is supposed to be scoped to employees only. The department_id and employment_type when() filters also OR incorrectly relative to that broken group.",
+        "fix": "Wrap the search clause in a single closure so the OR is grouped: ->when($request->search, fn($q) => $q->where(fn($w) => $w->where('name','like','%'.$request->search.'%')->orWhere('email','like','%'.$request->search.'%'))). This keeps whereNotNull('employee_id') as an outer AND constraint.",
+        "area": "staff-portals",
+        "verification": {
+          "verdict": "REAL",
+          "note": "Confirmed via generated SQL (\"... where employee_id is not null and name like ? or email like ? and department_id = ?\"): the orWhere at EmployeeController.php:17-18 is not wrapped in a closure, so OR breaks out of the whereNotNull('employee_id') group, returning non-employee users (employee_id NULL) whose email matches; route /hr/employees is role:hr-gated (web.php:248-253) and employee_id is the nullable unique employee marker (migration 2026_06_13_200000)."
+        }
+      }
+    ],
+    "refuted": [],
+    "minors": [
+      {
+        "severity": "MINOR",
+        "title": "OpesDashboardStats has no canView() and surfaces a few cross-domain counts to support",
+        "file": "app/Filament/Widgets/OpesDashboardStats.php",
+        "issue": "This stats widget (added to the default Dashboard) has no canView() override, so it renders for the 'support' role. Most stats are operational (customers, tickets, licenses) and reasonable for support, but it also surfaces 'Outstanding Invoices'/'overdue' counts and 'New Leads'/'qualified' counts — count-only, no monetary amounts or PII — which the dedicated Invoice/Lead resources hide from support. Lower severity than the table widgets because only aggregate counts (not amounts, customer names, or emails) are exposed.",
+        "fix": "If support should not see CRM/finance aggregates, either add a canView() restricting to super_admin/admin, or split the finance/lead stats out of this shared widget into a gated one. If a high-level count is acceptable for support, document that decision; the table widgets (RecentInvoices/RecentLeads) are the higher-priority leaks to fix first.",
+        "area": "admin-dashboards"
+      },
+      {
+        "severity": "MINOR",
+        "title": "Practitioner dashboard payout query uses ungrouped orWhere and a never-null column",
+        "file": "app/Http/Controllers/Practitioner/DashboardController.php",
+        "issue": "Lines 33-40 build `where('practitioner_id', $user->id)->whereNotNull('payout_status')->orWhere('status','approved')->where('practitioner_id', $user->id)`. This is NOT an IDOR leak — SQL precedence makes it `(practitioner_id=X AND payout_status IS NOT NULL) OR (status='approved' AND practitioner_id=X)`, so both branches are scoped to the current practitioner. However it is a logic smell: `payout_status` defaults to 'not_applicable' and is NOT nullable (2026_06_18_200000_add_payout_fields_to_practitioner_applications_table.php), so `whereNotNull('payout_status')` matches essentially every application, making the second `orWhere('status','approved')` clause redundant. The intent (show apps that are approved OR have a payout) is not what the query expresses.",
+        "fix": "Group the OR logic and drop the redundant duplicate clause, e.g. `PractitionerApplication::where('practitioner_id', $user->id)->where(fn($q) => $q->where('payout_status','!=','not_applicable')->orWhere('status','approved'))->with('program')->latest()->take(5)->get();`",
+        "area": "public-portals"
+      },
+      {
+        "severity": "MINOR",
+        "title": "Support web portal is unreachable from login (support users are redirected to /admin)",
+        "file": "app/Http/Controllers/Auth/LoginController.php",
+        "issue": "At line 57, hasAnyRole(['super_admin','admin','support']) redirects support users to /admin (the Filament panel) BEFORE the portalRoutes loop runs. The dedicated Support web portal (support.dashboard, support.tickets, support.profile under role:support middleware, with its own x-layouts.support) is therefore never reached via the login flow — only super_admin/admin/support can access /admin per canAccessPanel, so support lands in Filament instead of their purpose-built portal. The portal still works via direct URL (middleware grants role:support), but the two competing support surfaces are inconsistent: manager/hr/accountant get their portal, support silently gets Filament. No 500/security failure, but the support portal is effectively dead from the primary entry point.",
+        "fix": "Decide on one support surface. Either remove 'support' from the line-57 hasAnyRole admin-redirect and add 'support' => 'support.dashboard' to the $portalRoutes map so support users land on their web portal, or intentionally retire the support web portal routes/views if Filament is the canonical support workspace. As-is the support portal code is orphaned relative to login.",
+        "area": "staff-portals"
+      },
+      {
+        "severity": "MINOR",
+        "title": "Orphaned auth view references an unregistered route name (route('practitioner.register.post'))",
+        "file": "resources/views/auth/practitioner-register.blade.php:14",
+        "issue": "The view contains `<form action=\"{{ route('practitioner.register.post') }}\">`. The route name `practitioner.register.post` is NOT registered anywhere (confirmed via `php artisan route:list` JSON: practitioner-register sign-up was unified into the standard register page; routes/web.php line 35 only defines `practitioner.register` as a GET redirect, with the POST handled by `register.post`). If this view were ever rendered, the `route()` call would throw `RouteNotFoundException` (HTTP 500). However, no controller or route returns this view — `RegisterController::show()` returns `auth.register` (RegisterController.php:27), and a repo-wide grep for `practitioner-register` finds only a planning doc, never a controller. It is therefore unreachable dead code, not a live 500. Reported as MINOR for cleanup, not as a runtime defect.",
+        "fix": "Delete the orphaned file resources/views/auth/practitioner-register.blade.php (the practitioner sign-up flow is now the unified auth.register page). If it must be kept, change the form action to `route('register.post')`.",
+        "area": "locale-route-and-auth"
+      }
+    ]
+  }
+}
