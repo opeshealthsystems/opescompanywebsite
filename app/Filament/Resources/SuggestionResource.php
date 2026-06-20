@@ -93,6 +93,13 @@ class SuggestionResource extends Resource
                             \Illuminate\Support\Facades\Mail::to($record->user->email)
                                 ->queue(new \App\Mail\SuggestionResponded($record));
                         }
+                        $record->user?->notify(new \App\Notifications\FeedEntry(
+                            'practitioner.suggestion_responded',
+                            'Response to your suggestion',
+                            'Your suggestion received a response.',
+                            'light-bulb',
+                            route('practitioner.suggestions', ['locale' => 'en']),
+                        ));
 
                         Notification::make()->title('Response sent.')->success()->send();
                     }),

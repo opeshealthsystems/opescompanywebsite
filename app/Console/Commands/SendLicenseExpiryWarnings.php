@@ -32,6 +32,13 @@ class SendLicenseExpiryWarnings extends Command
                     continue;
                 }
                 Mail::to($email)->queue(new LicenseExpiryWarning($license, $days));
+                $license->customer?->notify(new \App\Notifications\FeedEntry(
+                    'licensing.expiry',
+                    'License expiring soon',
+                    $license->product_name . ' expires in ' . $days . ' days.',
+                    'key',
+                    route('customer.licenses.show', ['locale' => 'en', 'id' => $license->id]),
+                ));
                 $this->line("  Queued {$days}-day warning → {$email} ({$license->product_name})");
                 $sent++;
             }

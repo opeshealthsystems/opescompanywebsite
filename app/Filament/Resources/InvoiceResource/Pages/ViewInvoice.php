@@ -29,6 +29,13 @@ class ViewInvoice extends ViewRecord
                     $customerEmail = $this->record->customer?->email;
                     if ($customerEmail) {
                         Mail::to($customerEmail)->queue(new InvoiceIssued($this->record->load('items')));
+                        $this->record->customer?->notify(new \App\Notifications\FeedEntry(
+                            'accounting.invoice_issued',
+                            'Invoice issued',
+                            'Invoice ' . $this->record->invoice_number . ' is ready to view.',
+                            'document-text',
+                            route('customer.invoices.show', ['locale' => 'en', 'id' => $this->record->id]),
+                        ));
                     }
                     Notification::make()->title('Invoice sent to customer.')->success()->send();
                     $this->refreshFormData(['status']);

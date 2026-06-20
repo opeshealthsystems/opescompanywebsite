@@ -124,6 +124,13 @@ class PractitionerApplicationResource extends Resource
                             Mail::to($record->practitioner->email)
                                 ->queue(new \App\Mail\PractitionerApplicationApproved($record));
                         }
+                        $record->practitioner?->notify(new \App\Notifications\FeedEntry(
+                            'practitioner.application_approved',
+                            'Application approved',
+                            'Your programme application was approved.',
+                            'check-circle',
+                            route('practitioner.applications', ['locale' => 'en']),
+                        ));
                         Notification::make()->title('Application approved')->success()->send();
                     }),
                 Tables\Actions\Action::make('reject')
@@ -147,6 +154,13 @@ class PractitionerApplicationResource extends Resource
                             Mail::to($record->practitioner->email)
                                 ->queue(new \App\Mail\PractitionerApplicationRejected($record));
                         }
+                        $record->practitioner?->notify(new \App\Notifications\FeedEntry(
+                            'practitioner.application_rejected',
+                            'Application update',
+                            'There is an update on your programme application.',
+                            'clipboard-document',
+                            route('practitioner.applications', ['locale' => 'en']),
+                        ));
                         Notification::make()->title('Application rejected')->danger()->send();
                     }),
                 Tables\Actions\Action::make('pay_now')

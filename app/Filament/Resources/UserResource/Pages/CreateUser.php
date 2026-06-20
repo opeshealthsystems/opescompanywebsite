@@ -19,5 +19,12 @@ class CreateUser extends CreateRecord
     protected function afterCreate(): void
     {
         Mail::to($this->record->email)->queue(new WelcomeEmail($this->record));
+        $this->record->notify(new \App\Notifications\FeedEntry(
+            'account.welcome',
+            'Welcome to OPES',
+            'Welcome to OPES Health Systems.',
+            'sparkles',
+            null,
+        ));
     }
 }

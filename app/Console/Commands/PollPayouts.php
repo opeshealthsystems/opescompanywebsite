@@ -34,6 +34,13 @@ class PollPayouts extends Command
             if ($status === 'paid') {
                 $application->update(['payout_status' => 'paid', 'paid_at' => now()]);
                 Mail::to($application->practitioner->email)->queue(new PayoutSettled($application));
+                $application->practitioner?->notify(new \App\Notifications\FeedEntry(
+                    'practitioner.payout_settled',
+                    'Payout settled',
+                    'Your payout of ' . $application->payout_amount . ' ' . $application->payout_currency . ' has been settled.',
+                    'banknotes',
+                    route('practitioner.dashboard', ['locale' => 'en']),
+                ));
                 AdminNotifier::notify(
                     'Payout settled',
                     $application->practitioner->name.' was paid '.$application->payout_amount.' '.$application->payout_currency,

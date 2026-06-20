@@ -55,6 +55,13 @@ class EnrollmentsRelationManager extends RelationManager
                             \Illuminate\Support\Facades\Mail::to($record->user->email)
                                 ->queue(new \App\Mail\CourseCertificateIssued($cert));
                         }
+                        $record->user?->notify(new \App\Notifications\FeedEntry(
+                            'learning.certificate',
+                            'Course certificate issued',
+                            'Your course certificate is ready.',
+                            'academic-cap',
+                            null,
+                        ));
 
                         Notification::make()->title('Enrollment completed, certificate issued.')->success()->send();
                     }),

@@ -114,6 +114,13 @@ class ServiceRequestResource extends Resource
                             \Illuminate\Support\Facades\Mail::to($record->customer->email)
                                 ->queue(new \App\Mail\ServiceRequestConfirmed($record));
                         }
+                        $record->customer?->notify(new \App\Notifications\FeedEntry(
+                            'support.service_request',
+                            'Service request confirmed',
+                            'Your service request has been confirmed.',
+                            'wrench',
+                            route('customer.service-requests.show', ['locale' => 'en', 'serviceRequest' => $record->id]),
+                        ));
 
                         Notification::make()->title('Service request confirmed.')->success()->send();
                     }),

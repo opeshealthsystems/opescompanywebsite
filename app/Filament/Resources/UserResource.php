@@ -161,6 +161,13 @@ class UserResource extends Resource
                     ->modalDescription(fn (User $record) => "Send a welcome email to {$record->email}?")
                     ->action(function (User $record) {
                         Mail::to($record->email)->queue(new WelcomeEmail($record));
+                        $record->notify(new \App\Notifications\FeedEntry(
+                            'account.welcome',
+                            'Welcome to OPES',
+                            'Welcome to OPES Health Systems.',
+                            'sparkles',
+                            null,
+                        ));
                         Notification::make()->title('Welcome email queued')->success()->send();
                     }),
                 Tables\Actions\DeleteAction::make()

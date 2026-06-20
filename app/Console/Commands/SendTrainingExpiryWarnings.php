@@ -32,6 +32,13 @@ class SendTrainingExpiryWarnings extends Command
                     continue;
                 }
                 Mail::to($email)->queue(new TrainingExpiryWarning($training, $days));
+                \App\Models\User::where('email', $email)->first()?->notify(new \App\Notifications\FeedEntry(
+                    'hr.training_expiry',
+                    'Training expiring soon',
+                    $training->title . ' expires in ' . $days . ' days.',
+                    'academic-cap',
+                    null,
+                ));
                 $this->line("  Queued {$days}-day warning → {$email} ({$training->title})");
                 $sent++;
             }

@@ -48,6 +48,13 @@ class ViewTicket extends ViewRecord
                         $customerEmail = $this->record->user?->email;
                         if ($customerEmail) {
                             Mail::to($customerEmail)->queue(new TicketReplied($this->record, $reply));
+                            $this->record->user?->notify(new \App\Notifications\FeedEntry(
+                                'support.ticket_replied',
+                                'New reply on your ticket',
+                                'There is a new reply on "' . $this->record->subject . '".',
+                                'chat-bubble-left-right',
+                                route('customer.tickets.show', ['locale' => 'en', 'id' => $this->record->id]),
+                            ));
                         }
                     }
                     Notification::make()->title('Reply added')->success()->send();
@@ -92,6 +99,13 @@ class ViewTicket extends ViewRecord
                         $customerEmail = $this->record->user?->email;
                         if ($customerEmail) {
                             Mail::to($customerEmail)->queue(new TicketStatusChanged($this->record, $data['status']));
+                            $this->record->user?->notify(new \App\Notifications\FeedEntry(
+                                'support.ticket_status',
+                                'Ticket status updated',
+                                '"' . $this->record->subject . '" is now ' . str_replace('_', ' ', $data['status']) . '.',
+                                'arrow-path',
+                                route('customer.tickets.show', ['locale' => 'en', 'id' => $this->record->id]),
+                            ));
                         }
                     }
                     Notification::make()->title('Ticket updated')->success()->send();

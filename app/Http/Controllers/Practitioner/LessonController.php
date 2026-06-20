@@ -63,6 +63,13 @@ class LessonController extends Controller
                 \Illuminate\Support\Facades\Mail::to(auth()->user()->email)
                     ->queue(new \App\Mail\CourseCertificateIssued($cert));
             }
+            auth()->user()->notify(new \App\Notifications\FeedEntry(
+                'learning.certificate',
+                'Course certificate issued',
+                'Your certificate for ' . $course->title . ' is ready.',
+                'academic-cap',
+                route('practitioner.certificates', ['locale' => 'en']),
+            ));
 
             return redirect()
                 ->route('practitioner.courses.show', ['locale' => app()->getLocale(), 'course' => $course->slug])
