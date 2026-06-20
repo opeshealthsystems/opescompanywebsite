@@ -10,7 +10,11 @@ class BlogController extends Controller
 {
     public function index(Request $request)
     {
+        // reorder() drops the published_at ordering injected by the published() scope:
+        // a SELECT DISTINCT may only ORDER BY columns in its SELECT list (MySQL error 3065),
+        // and this query selects only `category`. (Mirrors the $categories query below.)
         $availableCategories = BlogPost::published()
+            ->reorder()
             ->distinct()
             ->orderBy('category')
             ->pluck('category')
