@@ -36,6 +36,9 @@ class PartnerApplicationController extends Controller
             'ip_address' => $request->ip(),
         ]));
 
+        \Illuminate\Support\Facades\Notification::route('mail', $app->email)
+            ->notify(new \App\Notifications\PartnerApplicationReceived($app->contact_name, $app->organization_name));
+
         $admins = User::role(['admin', 'super_admin'])->get();
         if ($admins->isNotEmpty()) {
             Notification::make()
