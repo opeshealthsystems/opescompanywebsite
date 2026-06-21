@@ -73,6 +73,7 @@ class BlogPostSeeder extends Seeder
                 $num === 85 => "Buyer's Guide",              // ICD-10 / ICD-11 coding standards
                 $num === 86 => 'Digital Health in Cameroon', // Govt digitalisation plan + OPES contribution
                 $num >= 87 && $num <= 109 => 'Problems & Solutions', // Problem → harm → OPES product series (87–108) + pillar hub (109)
+                $num >= 110 && $num <= 113 => "Buyer's Guide",         // Competitor-comparison series (hub + 3 head-to-heads)
                 default    => 'Insights & Case Studies',
             };
 
