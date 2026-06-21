@@ -144,6 +144,44 @@
             </div>
         </div>
 
+        {{-- Markets dropdown (CEMAC country landing pages — data-driven from config/markets.php) --}}
+        <div class="nav-dropdown-wrap">
+            <a href="{{ url($locale.'/markets') }}" class="nav-dropdown-trigger">
+                {{ $locale === 'fr' ? 'Marchés' : 'Markets' }}
+                <i data-lucide="chevron-down" style="width:13px;height:13px;opacity:.5;transition:transform 0.2s"></i>
+            </a>
+            <div class="nav-dropdown nav-dropdown--narrow">
+                <div class="nav-dd-section">
+                    <div class="nav-dd-section-label">{{ $locale === 'fr' ? 'Marché d\'origine' : 'Home market' }}</div>
+                    <a href="{{ url($locale.'/products') }}" class="nav-dd-item">
+                        <span style="font-size:15px;line-height:1;width:14px;text-align:center;flex-shrink:0">🇨🇲</span>
+                        <div>
+                            <div class="nav-dd-name">{{ $locale === 'fr' ? 'Cameroun' : 'Cameroon' }}</div>
+                            <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Marché principal — 22 systèmes' : 'Home market — 22 systems' }}</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="nav-dd-section">
+                    <div class="nav-dd-section-label">{{ $locale === 'fr' ? 'Zone CEMAC' : 'CEMAC region' }}</div>
+                    @foreach(config('markets') as $m)
+                    <a href="{{ url($locale.'/markets/'.$m['slug']) }}" class="nav-dd-item">
+                        <span style="font-size:15px;line-height:1;width:14px;text-align:center;flex-shrink:0">{{ $m['flag'] }}</span>
+                        <div>
+                            <div class="nav-dd-name">{{ $m['name'] }}</div>
+                            <div class="nav-dd-sub">{{ $m['capital'] }}</div>
+                        </div>
+                    </a>
+                    @endforeach
+                </div>
+                <div class="nav-dd-footer">
+                    <a href="{{ url($locale.'/markets') }}">
+                        {{ $locale === 'fr' ? 'Tous les marchés CEMAC' : 'All CEMAC markets' }}
+                        <i data-lucide="arrow-right" style="width:11px;height:11px"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
         {{-- Platform dropdown --}}
         <div class="nav-dropdown-wrap">
             <a href="{{ url($locale.'/architecture') }}" class="nav-dropdown-trigger">

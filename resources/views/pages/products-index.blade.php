@@ -26,11 +26,11 @@
     <div class="pi-cat-header">
         <div class="pi-cat-dot" style="background:#00C896"></div>
         <h2 class="pi-cat-title">{{ __('products.cat_core') }}</h2>
-        <span class="pi-cat-count">{{ trans_choice('products.systems_count', count($grouped['Core Platform']), ['count' => count($grouped['Core Platform'])]) }}</span>
+        <span class="pi-cat-count">{{ trans_choice('products.systems_count', count($grouped['Core Platform'] ?? []), ['count' => count($grouped['Core Platform'] ?? [])]) }}</span>
     </div>
     <p class="pi-cat-desc">{{ __('products.cat_core_desc') }}</p>
     <div class="pi-grid">
-        @foreach($grouped['Core Platform'] as $p)
+        @foreach(($grouped['Core Platform'] ?? []) as $p)
         <a href="{{ url($locale.'/products/'.$p['slug']) }}" class="pi-card">
             <div class="pi-card-icon" style="background:rgba(0,200,150,0.1);border-color:rgba(0,200,150,0.2)">
                 <i data-lucide="{{ $p['icon'] }}" style="width:24px;height:24px;color:{{ $p['color'] }}"></i>
@@ -55,11 +55,11 @@
     <div class="pi-cat-header">
         <div class="pi-cat-dot" style="background:#1A6FE8"></div>
         <h2 class="pi-cat-title">{{ __('products.cat_diagnostics') }}</h2>
-        <span class="pi-cat-count">{{ trans_choice('products.systems_count', count($grouped['Diagnostics']), ['count' => count($grouped['Diagnostics'])]) }}</span>
+        <span class="pi-cat-count">{{ trans_choice('products.systems_count', count($grouped['Diagnostics'] ?? []), ['count' => count($grouped['Diagnostics'] ?? [])]) }}</span>
     </div>
     <p class="pi-cat-desc">{{ __('products.cat_diagnostics_desc') }}</p>
     <div class="pi-grid">
-        @foreach($grouped['Diagnostics'] as $p)
+        @foreach(($grouped['Diagnostics'] ?? []) as $p)
         <a href="{{ url($locale.'/products/'.$p['slug']) }}" class="pi-card">
             <div class="pi-card-icon" style="background:rgba(26,111,232,0.1);border-color:rgba(26,111,232,0.2)">
                 <i data-lucide="{{ $p['icon'] }}" style="width:24px;height:24px;color:{{ $p['color'] }}"></i>
@@ -84,11 +84,11 @@
     <div class="pi-cat-header">
         <div class="pi-cat-dot" style="background:#94a3b8"></div>
         <h2 class="pi-cat-title">{{ __('products.cat_specialist') }}</h2>
-        <span class="pi-cat-count">{{ trans_choice('products.systems_count', count($grouped['Specialist']), ['count' => count($grouped['Specialist'])]) }}</span>
+        <span class="pi-cat-count">{{ trans_choice('products.systems_count', count($grouped['Specialist'] ?? []), ['count' => count($grouped['Specialist'] ?? [])]) }}</span>
     </div>
     <p class="pi-cat-desc">{{ __('products.cat_specialist_desc') }}</p>
     <div class="pi-grid">
-        @foreach($grouped['Specialist'] as $p)
+        @foreach(($grouped['Specialist'] ?? []) as $p)
         <a href="{{ url($locale.'/products/'.$p['slug']) }}" class="pi-card">
             <div class="pi-card-icon" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1)">
                 <i data-lucide="{{ $p['icon'] }}" style="width:24px;height:24px;color:{{ $p['color'] }}"></i>

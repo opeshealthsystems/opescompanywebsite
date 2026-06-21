@@ -49,9 +49,24 @@ class MarketPageTest extends TestCase
 
     /**
      * Guard: the new country pages must NOT affect the existing landing page.
+     * (Also exercises the navbar, which now renders the Markets dropdown.)
      */
     public function test_home_page_still_renders(): void
     {
         $this->get('/en')->assertOk();
+    }
+
+    /**
+     * Guard: the products index must not 500 when there are no products
+     * (the hardening for the "Undefined array key 'Core Platform'" bug).
+     */
+    public function test_products_index_renders_without_products(): void
+    {
+        $this->get('/en/products')->assertOk();
+    }
+
+    public function test_navbar_shows_markets_menu(): void
+    {
+        $this->get('/en')->assertOk()->assertSee('Markets')->assertSee('/en/markets/gabon');
     }
 }
