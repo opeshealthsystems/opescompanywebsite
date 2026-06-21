@@ -70,6 +70,11 @@ Route::prefix('{locale}')
         Route::get('/contact',        [ContactController::class, 'show'])->name('contact');
         Route::post('/contact',       [ContactController::class, 'submit'])->name('contact.submit');
         Route::get('/solutions',      fn () => view('pages.solutions'))->name('solutions');
+        // CEMAC market landing pages (data-driven from config/markets.php; additive, does not affect the home page)
+        Route::get('/markets',          [\App\Http\Controllers\MarketController::class, 'index'])->name('markets.index');
+        Route::get('/markets/{country}',[\App\Http\Controllers\MarketController::class, 'show'])
+            ->where('country', 'gabon|congo-brazzaville|chad|central-african-republic|equatorial-guinea')
+            ->name('markets.show');
         Route::get('/about',          fn () => view('pages.about'))->name('about');
         Route::get('/blog',              [BlogController::class, 'index'])->name('blog');
         Route::get('/blog/{slug}',       [BlogController::class, 'show'])->name('blog.show');
