@@ -21,9 +21,9 @@
 
         {{-- Products dropdown --}}
         <div class="nav-dropdown-wrap">
-            <a href="{{ url($locale.'/products') }}" class="nav-dropdown-trigger">
+            <a href="{{ url($locale.'/products') }}" class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
                 {{ __('nav.products') }}
-                <i data-lucide="chevron-down" style="width:13px;height:13px;opacity:.5;transition:transform 0.2s"></i>
+                <i data-lucide="chevron-down" aria-hidden="true" style="width:13px;height:13px;opacity:.5;transition:transform 0.2s"></i>
             </a>
             <div class="nav-dropdown">
                 <div class="nav-dd-section">
@@ -95,9 +95,9 @@
 
         {{-- Solutions dropdown --}}
         <div class="nav-dropdown-wrap">
-            <a href="{{ url($locale.'/solutions') }}" class="nav-dropdown-trigger">
+            <a href="{{ url($locale.'/solutions') }}" class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
                 {{ __('nav.solutions') }}
-                <i data-lucide="chevron-down" style="width:13px;height:13px;opacity:.5;transition:transform 0.2s"></i>
+                <i data-lucide="chevron-down" aria-hidden="true" style="width:13px;height:13px;opacity:.5;transition:transform 0.2s"></i>
             </a>
             <div class="nav-dropdown nav-dropdown--narrow">
                 <a href="{{ url($locale.'/solutions') }}" class="nav-dd-item">
@@ -146,9 +146,9 @@
 
         {{-- Markets dropdown (CEMAC country landing pages — data-driven from config/markets.php) --}}
         <div class="nav-dropdown-wrap">
-            <a href="{{ url($locale.'/markets') }}" class="nav-dropdown-trigger">
+            <a href="{{ url($locale.'/markets') }}" class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
                 {{ $locale === 'fr' ? 'Marchés' : 'Markets' }}
-                <i data-lucide="chevron-down" style="width:13px;height:13px;opacity:.5;transition:transform 0.2s"></i>
+                <i data-lucide="chevron-down" aria-hidden="true" style="width:13px;height:13px;opacity:.5;transition:transform 0.2s"></i>
             </a>
             <div class="nav-dropdown nav-dropdown--narrow">
                 <div class="nav-dd-section">
@@ -184,9 +184,9 @@
 
         {{-- Platform dropdown --}}
         <div class="nav-dropdown-wrap">
-            <a href="{{ url($locale.'/architecture') }}" class="nav-dropdown-trigger">
+            <a href="{{ url($locale.'/architecture') }}" class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
                 {{ $locale === 'fr' ? 'Plateforme' : 'Platform' }}
-                <i data-lucide="chevron-down" style="width:13px;height:13px;opacity:.5;transition:transform 0.2s"></i>
+                <i data-lucide="chevron-down" aria-hidden="true" style="width:13px;height:13px;opacity:.5;transition:transform 0.2s"></i>
             </a>
             <div class="nav-dropdown nav-dropdown--narrow">
                 <a href="{{ url($locale.'/architecture') }}" class="nav-dd-item">
@@ -252,6 +252,8 @@
                         <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Cadre de gestion de la qualité' : 'Quality management framework' }}</div>
                     </div>
                 </a>
+                @auth
+                @if(auth()->user()->hasAnyRole(['admin','super_admin']))
                 <a href="{{ url($locale.'/risk') }}" class="nav-dd-item">
                     <i data-lucide="shield-alert" style="width:14px;height:14px;color:#A855F7"></i>
                     <div>
@@ -259,11 +261,13 @@
                         <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Cadre ERM & contrôles' : 'ERM framework & controls' }}</div>
                     </div>
                 </a>
+                @endif
+                @endauth
             </div>
         </div>
 
         @auth
-            @if(auth()->user()->hasAnyRole(['customer','admin','super_admin','support']))
+            @if(auth()->user()->hasAnyRole(['admin','super_admin']))
             <a href="{{ url($locale.'/strategy') }}">{{ $locale === 'fr' ? 'Stratégie' : 'Strategy' }}</a>
             @endif
         @endauth
@@ -278,9 +282,15 @@
         <x-language-switcher />
 
         @auth
+        @php
+            $acctUser = auth()->user();
+            $acctPortal = collect(['customer','practitioner','tester','manager','hr','accountant','support'])
+                ->first(fn ($r) => $acctUser->hasRole($r));
+            $acctIsAdmin = $acctUser->hasAnyRole(['admin','super_admin']);
+        @endphp
         {{-- Logged-in account menu --}}
         <div class="nav-account">
-            <button class="nav-account-avatar" aria-label="Account menu" type="button">
+            <button class="nav-account-avatar" aria-label="Account menu" aria-haspopup="menu" aria-expanded="false" type="button">
                 {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
             </button>
             <div class="nav-account-drop">
@@ -289,18 +299,26 @@
                     <div class="nav-account-drop-email">{{ auth()->user()->email }}</div>
                 </div>
                 <div class="nav-account-drop-divider"></div>
-                <a href="{{ route('customer.dashboard', ['locale' => $locale]) }}" class="nav-account-drop-item">
+                @if($acctIsAdmin)
+                <a href="{{ url('admin') }}" class="nav-account-drop-item">
+                    <i data-lucide="layout-dashboard" style="width:14px;height:14px"></i> {{ $locale === 'fr' ? 'Console admin' : 'Admin panel' }}
+                </a>
+                @elseif($acctPortal)
+                <a href="{{ route($acctPortal.'.dashboard', ['locale' => $locale]) }}" class="nav-account-drop-item">
                     <i data-lucide="layout-dashboard" style="width:14px;height:14px"></i> {{ $locale === 'fr' ? 'Tableau de bord' : 'Dashboard' }}
                 </a>
-                <a href="{{ route('customer.profile', ['locale' => $locale]) }}" class="nav-account-drop-item">
+                <a href="{{ route($acctPortal.'.profile', ['locale' => $locale]) }}" class="nav-account-drop-item">
                     <i data-lucide="user" style="width:14px;height:14px"></i> {{ $locale === 'fr' ? 'Profil' : 'Profile' }}
                 </a>
+                @if($acctPortal === 'customer')
                 <a href="{{ route('customer.licenses', ['locale' => $locale]) }}" class="nav-account-drop-item">
                     <i data-lucide="key" style="width:14px;height:14px"></i> {{ $locale === 'fr' ? 'Licences' : 'Licenses' }}
                 </a>
                 <a href="{{ route('customer.tickets', ['locale' => $locale]) }}" class="nav-account-drop-item">
                     <i data-lucide="ticket" style="width:14px;height:14px"></i> Support
                 </a>
+                @endif
+                @endif
                 <div class="nav-account-drop-divider"></div>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
@@ -328,17 +346,53 @@
 (function () {
     var nav = document.getElementById('siteNav');
     if (!nav) return;
+
+    // Mobile drawer (hamburger).
     var toggle = nav.querySelector('.nav-toggle');
-    if (!toggle) return;
-    toggle.addEventListener('click', function () {
-        var open = nav.classList.toggle('nav-open');
-        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-    // Close the drawer after tapping a link.
-    nav.querySelectorAll('.nav-collapse a').forEach(function (link) {
-        link.addEventListener('click', function () {
-            nav.classList.remove('nav-open');
-            toggle.setAttribute('aria-expanded', 'false');
+    if (toggle) {
+        toggle.addEventListener('click', function () {
+            var open = nav.classList.toggle('nav-open');
+            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+        // Close the drawer after tapping a link.
+        nav.querySelectorAll('.nav-collapse a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                nav.classList.remove('nav-open');
+                toggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+    }
+
+    // Account menu — tap/click operable (touch has no hover) + state announced.
+    var account = nav.querySelector('.nav-account');
+    var avatar = account && account.querySelector('.nav-account-avatar');
+    if (account && avatar) {
+        var setAccount = function (open) {
+            account.classList.toggle('open', open);
+            avatar.setAttribute('aria-expanded', open ? 'true' : 'false');
+        };
+        avatar.addEventListener('click', function (e) {
+            e.stopPropagation();
+            setAccount(!account.classList.contains('open'));
+        });
+        document.addEventListener('click', function (e) {
+            if (!account.contains(e.target)) setAccount(false);
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') setAccount(false);
+        });
+    }
+
+    // Mega-menu triggers: keep aria-expanded in sync with the hover/focus reveal.
+    nav.querySelectorAll('.nav-dropdown-wrap').forEach(function (wrap) {
+        var trigger = wrap.querySelector('.nav-dropdown-trigger');
+        if (!trigger) return;
+        var setState = function (open) { trigger.setAttribute('aria-expanded', open ? 'true' : 'false'); };
+        wrap.addEventListener('mouseenter', function () { setState(true); });
+        wrap.addEventListener('mouseleave', function () { setState(false); });
+        wrap.addEventListener('focusin', function () { setState(true); });
+        wrap.addEventListener('focusout', function () {
+            if (!wrap.contains(document.activeElement)) setState(false);
         });
     });
 })();
