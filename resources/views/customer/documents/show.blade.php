@@ -24,7 +24,7 @@
             <span style="color:#00C896;font-size:1.5rem;font-weight:700;">&#10003;</span>
             <div>
                 <p style="color:#00C896;font-weight:600;font-size:0.9rem;margin:0;">Signed by {{ $document->signed_by_name }}</p>
-                <p style="color:#64748b;font-size:0.8rem;margin:0.1rem 0 0;">{{ $document->signed_at?->format('d M Y, H:i') }} UTC</p>
+                <p style="color:var(--text-muted);font-size:0.8rem;margin:0.1rem 0 0;">{{ $document->signed_at?->format('d M Y, H:i') }} UTC</p>
             </div>
         </div>
     @elseif($document->status === 'pending_signature')
@@ -32,7 +32,7 @@
             <span style="color:#eab308;font-size:1.5rem;">&#9203;</span>
             <div>
                 <p style="color:#eab308;font-weight:600;font-size:0.9rem;margin:0;">Awaiting your signature</p>
-                <p style="color:#64748b;font-size:0.8rem;margin:0.1rem 0 0;">
+                <p style="color:var(--text-muted);font-size:0.8rem;margin:0.1rem 0 0;">
                     Token expires {{ $document->signature_token_expires_at?->format('d M Y') }}
                 </p>
             </div>
@@ -41,11 +41,11 @@
 
     <div class="cp-section-card" style="padding:0;">
         <div style="background:#1e293b;padding:0.75rem 1.25rem;border-bottom:1px solid #334155;border-radius:12px 12px 0 0;display:flex;justify-content:space-between;align-items:center;">
-            <span style="color:#94a3b8;font-size:0.8125rem;">Document Content</span>
-            <span style="color:#64748b;font-size:0.75rem;">Issued {{ $document->created_at->format('d M Y') }}</span>
+            <span style="color:var(--text-muted);font-size:0.8125rem;">Document Content</span>
+            <span style="color:var(--text-muted);font-size:0.75rem;">Issued {{ $document->created_at->format('d M Y') }}</span>
         </div>
         <div style="padding:2rem;background:white;border-radius:0 0 12px 12px;overflow-x:auto;">
-            {!! $document->body_rendered ?? '<em style="color:#94a3b8;">No content available.</em>' !!}
+            {!! $document->body_rendered ?? '<em style="color:var(--text-muted);">No content available.</em>' !!}
         </div>
     </div>
 </x-layouts.customer>

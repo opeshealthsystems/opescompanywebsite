@@ -73,7 +73,7 @@
             <tbody>
                 @foreach($overdueInvoices as $inv)
                 <tr>
-                    <td style="font-family:monospace;font-size:.8125rem;color:#94a3b8">{{ $inv->reference }}</td>
+                    <td style="font-family:monospace;font-size:.8125rem;color:var(--text-muted)">{{ $inv->reference }}</td>
                     <td style="color:#f1f5f9">{{ $inv->customer->name ?? '—' }}</td>
                     <td style="color:#ef4444;font-weight:600">{{ number_format($inv->grand_total ?? 0, 0) }}</td>
                     <td style="color:#ef4444;font-size:.8125rem">{{ $inv->due_date?->format('M j, Y') }}</td>
@@ -104,10 +104,10 @@
             <tbody>
                 @foreach($recentPayments as $inv)
                 <tr>
-                    <td style="font-family:monospace;font-size:.8125rem;color:#94a3b8">{{ $inv->reference }}</td>
+                    <td style="font-family:monospace;font-size:.8125rem;color:var(--text-muted)">{{ $inv->reference }}</td>
                     <td style="color:#f1f5f9">{{ $inv->customer->name ?? '—' }}</td>
                     <td style="color:#00C896;font-weight:600">{{ number_format($inv->grand_total ?? 0, 0) }}</td>
-                    <td style="color:#64748b;font-size:.8125rem">{{ $inv->paid_at?->format('M j') }}</td>
+                    <td style="color:var(--text-muted);font-size:.8125rem">{{ $inv->paid_at?->format('M j') }}</td>
                 </tr>
                 @endforeach
             </tbody>

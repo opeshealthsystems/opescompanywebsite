@@ -53,7 +53,7 @@
         @php $val = $payrollCost[$m] ?? 0; $pct = ($val / $maxPay) * 100; @endphp
         <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:.25rem;height:100%;justify-content:flex-end">
             <div style="width:100%;background:rgba(139,92,246,.6);border-radius:3px 3px 0 0;height:{{ max(2, $pct) }}%" title="{{ number_format($val,0) }}"></div>
-            <span style="color:#64748b;font-size:.625rem;white-space:nowrap">{{ \Carbon\Carbon::parse($m.'-01')->format('M') }}</span>
+            <span style="color:var(--text-muted);font-size:.625rem;white-space:nowrap">{{ \Carbon\Carbon::parse($m.'-01')->format('M') }}</span>
         </div>
         @endforeach
     </div>
@@ -70,17 +70,17 @@
     <div style="margin-bottom:1rem">
         <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem">
             <span class="portal-badge {{ $badgeCls }}">{{ $bucket }}</span>
-            <span style="color:#64748b;font-size:.8125rem">{{ $ar[$bucket]->count() }} invoice(s) · Total: {{ number_format($ar[$bucket]->sum('grand_total'), 0) }} XAF</span>
+            <span style="color:var(--text-muted);font-size:.8125rem">{{ $ar[$bucket]->count() }} invoice(s) · Total: {{ number_format($ar[$bucket]->sum('grand_total'), 0) }} XAF</span>
         </div>
         <table class="portal-table">
             <thead><tr><th>Reference</th><th>Customer</th><th>Amount</th><th>Due</th></tr></thead>
             <tbody>
                 @foreach($ar[$bucket] as $inv)
                 <tr>
-                    <td style="font-family:monospace;font-size:.8125rem;color:#94a3b8">{{ $inv->reference }}</td>
+                    <td style="font-family:monospace;font-size:.8125rem;color:var(--text-muted)">{{ $inv->reference }}</td>
                     <td style="color:#f1f5f9">{{ $inv->customer->name ?? '—' }}</td>
                     <td style="font-weight:600">{{ number_format($inv->grand_total ?? 0, 0) }}</td>
-                    <td style="color:#64748b;font-size:.8125rem">{{ $inv->due_date?->format('M j, Y') }}</td>
+                    <td style="color:var(--text-muted);font-size:.8125rem">{{ $inv->due_date?->format('M j, Y') }}</td>
                 </tr>
                 @endforeach
             </tbody>

@@ -67,7 +67,7 @@
                 <td><span class="portal-badge {{ $entry->status === 'paid' ? 'portal-badge-green' : 'portal-badge-amber' }}">{{ ucfirst($entry->status) }}</span></td>
             </tr>
             @empty
-            <tr><td colspan="5" style="text-align:center;padding:2rem;color:#475569">No entries.</td></tr>
+            <tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--text-faint)">No entries.</td></tr>
             @endforelse
         </tbody>
     </table>

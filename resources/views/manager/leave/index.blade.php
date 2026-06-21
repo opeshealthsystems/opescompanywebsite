@@ -53,7 +53,7 @@
                 <td>{{ $leave->end_date?->format('M j, Y') }}</td>
                 <td>{{ $leave->total_days ?? '—' }}</td>
                 <td><span class="portal-badge {{ $badge }}">{{ ucfirst($leave->status) }}</span></td>
-                <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#94a3b8;font-size:.8125rem">
+                <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-muted);font-size:.8125rem">
                     {{ $leave->reason ?? '—' }}
                 </td>
                 <td>
@@ -75,7 +75,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="8" style="text-align:center;padding:2rem;color:#475569">No leave requests found.</td>
+                <td colspan="8" style="text-align:center;padding:2rem;color:var(--text-faint)">No leave requests found.</td>
             </tr>
             @endforelse
         </tbody>

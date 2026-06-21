@@ -12,7 +12,7 @@
 
     @if($applications->isEmpty())
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-12 text-center">
-            <i data-lucide="clipboard-list" style="width:40px;height:40px;color:#475569;margin:0 auto 16px"></i>
+            <i data-lucide="clipboard-list" style="width:40px;height:40px;color:var(--text-faint);margin:0 auto 16px"></i>
             <p class="text-slate-400 text-base">You haven't applied to any programmes yet.</p>
             <a href="{{ route('practitioner.programs', ['locale' => app()->getLocale()]) }}"
                class="inline-block mt-4 text-sm text-emerald-400 hover:text-emerald-300 no-underline">

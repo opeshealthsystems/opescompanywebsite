@@ -95,9 +95,9 @@
         <table style="width:100%;border-collapse:collapse;font-size:.8125rem">
             <thead>
                 <tr>
-                    <th style="text-align:left;color:#64748b;font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em;padding:.375rem .5rem;border-bottom:1px solid #1e293b">Program</th>
-                    <th style="text-align:left;color:#64748b;font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em;padding:.375rem .5rem;border-bottom:1px solid #1e293b">Status</th>
-                    <th style="text-align:left;color:#64748b;font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em;padding:.375rem .5rem;border-bottom:1px solid #1e293b">Payout</th>
+                    <th style="text-align:left;color:var(--text-muted);font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em;padding:.375rem .5rem;border-bottom:1px solid #1e293b">Program</th>
+                    <th style="text-align:left;color:var(--text-muted);font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em;padding:.375rem .5rem;border-bottom:1px solid #1e293b">Status</th>
+                    <th style="text-align:left;color:var(--text-muted);font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em;padding:.375rem .5rem;border-bottom:1px solid #1e293b">Payout</th>
                 </tr>
             </thead>
             <tbody>
@@ -110,7 +110,7 @@
                     </td>
                     <td style="padding:.5rem;border-bottom:1px solid #0f172a">
                         @if($app->payout_status)
-                            @php $pc = match($app->payout_status) { 'paid' => '#00C896', 'initiated' => '#1A6FE8', default => '#64748b' }; @endphp
+                            @php $pc = match($app->payout_status) { 'paid' => '#00C896', 'initiated' => '#1A6FE8', default => 'var(--text-muted)' }; @endphp
                             <span style="color:{{ $pc }};font-size:.6875rem;font-weight:700;text-transform:uppercase">{{ ucfirst($app->payout_status) }}</span>
                         @else
                             <span style="color:#334155;font-size:.75rem">N/A</span>

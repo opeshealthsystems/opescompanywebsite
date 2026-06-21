@@ -173,7 +173,7 @@
     </div>
     @elseif($application->status === 'approved')
     <div class="bg-slate-900 border border-slate-700 rounded-xl p-6 text-center">
-        <i data-lucide="file-plus" style="width:32px;height:32px;color:#475569;margin:0 auto 12px"></i>
+        <i data-lucide="file-plus" style="width:32px;height:32px;color:var(--text-faint);margin:0 auto 12px"></i>
         <p class="text-slate-400 text-sm mb-4">You haven't submitted any findings for this application yet.</p>
         <a href="{{ route('practitioner.findings.create', ['locale' => app()->getLocale(), 'application' => $application->id]) }}"
            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold no-underline transition-colors">

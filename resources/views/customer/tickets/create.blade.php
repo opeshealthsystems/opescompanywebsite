@@ -12,7 +12,7 @@
             @csrf
 
             <div style="margin-bottom:1.25rem;">
-                <label style="display:block;color:#94a3b8;font-size:0.8125rem;font-weight:600;margin-bottom:0.5rem;">Subject *</label>
+                <label style="display:block;color:var(--text-muted);font-size:0.8125rem;font-weight:600;margin-bottom:0.5rem;">Subject *</label>
                 <input type="text" name="subject" value="{{ old('subject') }}" required maxlength="255"
                     style="width:100%;background:#0f172a;border:1px solid #334155;border-radius:8px;padding:0.625rem 0.875rem;color:#e2e8f0;font-size:0.875rem;box-sizing:border-box;"
                     placeholder="Brief description of your issue">
@@ -23,7 +23,7 @@
 
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem;">
                 <div>
-                    <label style="display:block;color:#94a3b8;font-size:0.8125rem;font-weight:600;margin-bottom:0.5rem;">Category *</label>
+                    <label style="display:block;color:var(--text-muted);font-size:0.8125rem;font-weight:600;margin-bottom:0.5rem;">Category *</label>
                     <select name="type" required
                         style="width:100%;background:#0f172a;border:1px solid #334155;border-radius:8px;padding:0.625rem 0.875rem;color:#e2e8f0;font-size:0.875rem;box-sizing:border-box;">
                         @foreach(\App\Models\Ticket::typeOptions() as $value => $label)
@@ -35,7 +35,7 @@
                     @enderror
                 </div>
                 <div>
-                    <label style="display:block;color:#94a3b8;font-size:0.8125rem;font-weight:600;margin-bottom:0.5rem;">Priority *</label>
+                    <label style="display:block;color:var(--text-muted);font-size:0.8125rem;font-weight:600;margin-bottom:0.5rem;">Priority *</label>
                     <select name="priority" required
                         style="width:100%;background:#0f172a;border:1px solid #334155;border-radius:8px;padding:0.625rem 0.875rem;color:#e2e8f0;font-size:0.875rem;box-sizing:border-box;">
                         @foreach(\App\Models\Ticket::priorityOptions() as $value => $label)
@@ -49,7 +49,7 @@
             </div>
 
             <div style="margin-bottom:1.5rem;">
-                <label style="display:block;color:#94a3b8;font-size:0.8125rem;font-weight:600;margin-bottom:0.5rem;">Description *</label>
+                <label style="display:block;color:var(--text-muted);font-size:0.8125rem;font-weight:600;margin-bottom:0.5rem;">Description *</label>
                 <textarea name="description" required maxlength="10000" rows="7"
                     style="width:100%;background:#0f172a;border:1px solid #334155;border-radius:8px;padding:0.625rem 0.875rem;color:#e2e8f0;font-size:0.875rem;box-sizing:border-box;resize:vertical;"
                     placeholder="Please provide as much detail as possible...">{{ old('description') }}</textarea>

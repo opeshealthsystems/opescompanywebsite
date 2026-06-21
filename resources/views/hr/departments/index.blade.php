@@ -18,9 +18,9 @@
             @forelse($departments as $dept)
             <tr>
                 <td style="font-weight:500;color:#f1f5f9">{{ $dept->name }}</td>
-                <td style="font-family:monospace;font-size:.8125rem;color:#64748b">{{ $dept->code }}</td>
-                <td style="color:#94a3b8">{{ $dept->head->name ?? '—' }}</td>
-                <td style="color:#64748b;font-size:.8125rem">{{ $dept->parent->name ?? '—' }}</td>
+                <td style="font-family:monospace;font-size:.8125rem;color:var(--text-muted)">{{ $dept->code }}</td>
+                <td style="color:var(--text-muted)">{{ $dept->head->name ?? '—' }}</td>
+                <td style="color:var(--text-muted);font-size:.8125rem">{{ $dept->parent->name ?? '—' }}</td>
                 <td>
                     <span class="portal-badge portal-badge-blue">{{ $dept->members_count }}</span>
                 </td>
@@ -39,7 +39,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="7" style="text-align:center;padding:2rem;color:#475569">No departments found.</td>
+                <td colspan="7" style="text-align:center;padding:2rem;color:var(--text-faint)">No departments found.</td>
             </tr>
             @endforelse
         </tbody>
@@ -51,10 +51,10 @@
 <div id="head-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center">
     <div style="background:#1E293B;border:1px solid #334155;border-radius:12px;padding:2rem;width:100%;max-width:420px;margin:1rem">
         <h3 style="color:#f1f5f9;margin:0 0 1rem">Change Department Head</h3>
-        <p id="modal-dept-name" style="color:#94a3b8;font-size:.875rem;margin:0 0 1.25rem"></p>
+        <p id="modal-dept-name" style="color:var(--text-muted);font-size:.875rem;margin:0 0 1.25rem"></p>
         <form id="head-form" method="POST">
             @csrf
-            <label style="display:block;color:#94a3b8;font-size:.8125rem;margin-bottom:.5rem">Select New Head</label>
+            <label style="display:block;color:var(--text-muted);font-size:.8125rem;margin-bottom:.5rem">Select New Head</label>
             <select name="head_id" required style="width:100%;background:#0F172A;border:1px solid #334155;color:#e2e8f0;border-radius:6px;padding:.5rem .75rem;margin-bottom:1rem">
                 <option value="">Select employee…</option>
                 @foreach($employees as $emp)

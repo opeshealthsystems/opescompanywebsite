@@ -19,11 +19,11 @@
             <table style="width:100%;border-collapse:collapse;">
                 <thead>
                     <tr style="border-bottom:1px solid #334155;">
-                        <th style="text-align:left;padding:0.75rem;color:#94a3b8;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Product</th>
-                        <th style="text-align:left;padding:0.75rem;color:#94a3b8;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Plan</th>
-                        <th style="text-align:center;padding:0.75rem;color:#94a3b8;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Seats</th>
-                        <th style="text-align:left;padding:0.75rem;color:#94a3b8;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Status</th>
-                        <th style="text-align:left;padding:0.75rem;color:#94a3b8;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Expires</th>
+                        <th style="text-align:left;padding:0.75rem;color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Product</th>
+                        <th style="text-align:left;padding:0.75rem;color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Plan</th>
+                        <th style="text-align:center;padding:0.75rem;color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Seats</th>
+                        <th style="text-align:left;padding:0.75rem;color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Status</th>
+                        <th style="text-align:left;padding:0.75rem;color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Expires</th>
                         <th style="padding:0.75rem;"></th>
                     </tr>
                 </thead>
@@ -34,28 +34,28 @@
                             'active'    => '#00C896',
                             'suspended' => '#eab308',
                             'expired'   => '#ef4444',
-                            'cancelled' => '#64748b',
-                            default     => '#94a3b8',
+                            'cancelled' => 'var(--text-muted)',
+                            default     => 'var(--text-muted)',
                         };
                         $expiring = $license->isExpiringSoon();
                     @endphp
                     <tr style="border-bottom:1px solid #1e293b;">
                         <td style="padding:0.75rem;">
                             <div style="color:#e2e8f0;font-size:0.875rem;font-weight:500;">{{ $license->product_name }}</div>
-                            <div style="color:#475569;font-size:0.75rem;font-family:monospace;">{{ $license->license_key }}</div>
+                            <div style="color:var(--text-faint);font-size:0.75rem;font-family:monospace;">{{ $license->license_key }}</div>
                         </td>
                         <td style="padding:0.75rem;">
-                            <span style="background:rgba(100,116,139,0.15);color:#94a3b8;font-size:0.7rem;font-weight:600;padding:0.2rem 0.5rem;border-radius:20px;text-transform:uppercase;letter-spacing:0.04em;">
+                            <span style="background:rgba(100,116,139,0.15);color:var(--text-muted);font-size:0.7rem;font-weight:600;padding:0.2rem 0.5rem;border-radius:20px;text-transform:uppercase;letter-spacing:0.04em;">
                                 {{ \App\Models\License::planLabel($license->plan) }}
                             </span>
                         </td>
-                        <td style="padding:0.75rem;color:#94a3b8;font-size:0.875rem;text-align:center;">{{ $license->seats }}</td>
+                        <td style="padding:0.75rem;color:var(--text-muted);font-size:0.875rem;text-align:center;">{{ $license->seats }}</td>
                         <td style="padding:0.75rem;">
                             <span style="color:{{ $statusColor }};font-size:0.8125rem;font-weight:600;text-transform:capitalize;">
                                 {{ $license->status }}
                             </span>
                         </td>
-                        <td style="padding:0.75rem;color:{{ $expiring ? '#eab308' : '#64748b' }};font-size:0.8125rem;">
+                        <td style="padding:0.75rem;color:{{ $expiring ? '#eab308' : 'var(--text-muted)' }};font-size:0.8125rem;">
                             {{ $license->end_date?->format('d M Y') }}
                             @if($expiring)
                                 <span style="font-size:0.7rem;"> &#9888; Expiring soon</span>

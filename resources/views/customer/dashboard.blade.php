@@ -81,7 +81,7 @@
                 <li style="padding:10px 0;border-bottom:1px solid #1e293b;display:flex;justify-content:space-between;align-items:center">
                     <a href="{{ route('customer.tickets.show', ['locale' => app()->getLocale(), 'ticket' => $ticket->id]) }}"
                        style="color:#e2e8f0;text-decoration:none;font-size:0.875rem">{{ $ticket->subject }}</a>
-                    <span style="font-size:0.75rem;color:{{ $ticket->status === 'open' ? '#00C896' : '#94a3b8' }}">
+                    <span style="font-size:0.75rem;color:{{ $ticket->status === 'open' ? '#00C896' : 'var(--text-muted)' }}">
                         {{ ucfirst($ticket->status) }}
                     </span>
                 </li>
@@ -102,9 +102,9 @@
             <h2 class="cp-section-title">
                 <i data-lucide="file-text" style="width:18px;height:18px;color:#00C896"></i> Product Brochures
             </h2>
-            <span style="font-size:0.8125rem;color:#64748b">{{ count($allProducts) }} products</span>
+            <span style="font-size:0.8125rem;color:var(--text-muted)">{{ count($allProducts) }} products</span>
         </div>
-        <p style="font-size:0.875rem;color:#94a3b8;margin:0 0 16px">Download a full product brochure (PDF) for any OPES Health Systems product.</p>
+        <p style="font-size:0.875rem;color:var(--text-muted);margin:0 0 16px">Download a full product brochure (PDF) for any OPES Health Systems product.</p>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px">
             @foreach($allProducts as $slug => $prod)
             <a href="{{ route('product.brochure', ['locale' => app()->getLocale(), 'slug' => $slug]) }}"
@@ -114,9 +114,9 @@
                 <i data-lucide="file-down" style="width:16px;height:16px;color:{{ $prod['color'] }};flex-shrink:0"></i>
                 <div style="min-width:0">
                     <div style="font-size:0.8125rem;font-weight:600;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ $prod['name'] }}</div>
-                    <div style="font-size:0.75rem;color:#64748b">{{ $prod['category'] }}</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted)">{{ $prod['category'] }}</div>
                 </div>
-                <i data-lucide="download" style="width:14px;height:14px;color:#475569;margin-left:auto;flex-shrink:0"></i>
+                <i data-lucide="download" style="width:14px;height:14px;color:var(--text-faint);margin-left:auto;flex-shrink:0"></i>
             </a>
             @endforeach
         </div>

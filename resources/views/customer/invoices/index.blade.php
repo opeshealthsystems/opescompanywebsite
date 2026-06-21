@@ -19,10 +19,10 @@
             <table style="width:100%;border-collapse:collapse;">
                 <thead>
                     <tr style="border-bottom:1px solid #334155;">
-                        <th style="text-align:left;padding:0.75rem;color:#94a3b8;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Invoice #</th>
-                        <th style="text-align:left;padding:0.75rem;color:#94a3b8;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Status</th>
-                        <th style="text-align:left;padding:0.75rem;color:#94a3b8;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Due Date</th>
-                        <th style="text-align:right;padding:0.75rem;color:#94a3b8;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Date</th>
+                        <th style="text-align:left;padding:0.75rem;color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Invoice #</th>
+                        <th style="text-align:left;padding:0.75rem;color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Status</th>
+                        <th style="text-align:left;padding:0.75rem;color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Due Date</th>
+                        <th style="text-align:right;padding:0.75rem;color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Date</th>
                         <th style="padding:0.75rem;"></th>
                     </tr>
                 </thead>
@@ -33,7 +33,7 @@
                             'sent'    => '#3b82f6',
                             'paid'    => '#00C896',
                             'overdue' => '#ef4444',
-                            default   => '#94a3b8',
+                            default   => 'var(--text-muted)',
                         };
                     @endphp
                     <tr style="border-bottom:1px solid #1e293b;">
@@ -43,8 +43,8 @@
                                 {{ \App\Models\Invoice::statusOptions()[$invoice->status] ?? $invoice->status }}
                             </span>
                         </td>
-                        <td style="padding:0.75rem;color:#64748b;font-size:0.8125rem;">{{ $invoice->due_date?->format('d M Y') ?? '—' }}</td>
-                        <td style="padding:0.75rem;color:#64748b;font-size:0.8125rem;text-align:right;">{{ $invoice->created_at->format('d M Y') }}</td>
+                        <td style="padding:0.75rem;color:var(--text-muted);font-size:0.8125rem;">{{ $invoice->due_date?->format('d M Y') ?? '—' }}</td>
+                        <td style="padding:0.75rem;color:var(--text-muted);font-size:0.8125rem;text-align:right;">{{ $invoice->created_at->format('d M Y') }}</td>
                         <td style="padding:0.75rem;text-align:right;">
                             <a href="{{ route('customer.invoices.show', ['locale' => app()->getLocale(), 'id' => $invoice->id]) }}"
                                class="cp-btn-outline" style="font-size:0.75rem;padding:0.375rem 0.75rem;">View</a>

@@ -50,9 +50,9 @@
                 <td style="font-weight:500;color:#f1f5f9">{{ $exp->title }}</td>
                 <td><span class="portal-badge portal-badge-blue">{{ ucfirst($exp->category) }}</span></td>
                 <td style="font-weight:600">{{ number_format($exp->amount, 2) }} {{ $exp->currency ?? 'XAF' }}</td>
-                <td style="color:#94a3b8">{{ $exp->vendor ?? '—' }}</td>
-                <td style="color:#64748b;font-size:.8125rem">{{ $exp->expense_date?->format('M j, Y') }}</td>
-                <td style="color:#94a3b8">{{ $exp->submitter->name ?? '—' }}</td>
+                <td style="color:var(--text-muted)">{{ $exp->vendor ?? '—' }}</td>
+                <td style="color:var(--text-muted);font-size:.8125rem">{{ $exp->expense_date?->format('M j, Y') }}</td>
+                <td style="color:var(--text-muted)">{{ $exp->submitter->name ?? '—' }}</td>
                 <td><span class="portal-badge {{ $badge }}">{{ ucfirst($exp->status) }}</span></td>
                 <td>
                     @if($exp->status === 'pending')
@@ -71,7 +71,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="8" style="text-align:center;padding:2rem;color:#475569">No expenses found.</td>
+                <td colspan="8" style="text-align:center;padding:2rem;color:var(--text-faint)">No expenses found.</td>
             </tr>
             @endforelse
         </tbody>

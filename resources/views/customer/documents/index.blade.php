@@ -19,11 +19,11 @@
             <table style="width:100%;border-collapse:collapse;">
                 <thead>
                     <tr style="border-bottom:1px solid #334155;">
-                        <th style="text-align:left;padding:0.75rem;color:#94a3b8;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Reference</th>
-                        <th style="text-align:left;padding:0.75rem;color:#94a3b8;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Title</th>
-                        <th style="text-align:left;padding:0.75rem;color:#94a3b8;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Type</th>
-                        <th style="text-align:left;padding:0.75rem;color:#94a3b8;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Status</th>
-                        <th style="text-align:left;padding:0.75rem;color:#94a3b8;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Date</th>
+                        <th style="text-align:left;padding:0.75rem;color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Reference</th>
+                        <th style="text-align:left;padding:0.75rem;color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Title</th>
+                        <th style="text-align:left;padding:0.75rem;color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Type</th>
+                        <th style="text-align:left;padding:0.75rem;color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Status</th>
+                        <th style="text-align:left;padding:0.75rem;color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Date</th>
                         <th style="padding:0.75rem;"></th>
                     </tr>
                 </thead>
@@ -33,7 +33,7 @@
                         <td style="padding:0.75rem;color:#00C896;font-size:0.8125rem;font-family:monospace;">{{ $doc->reference_number }}</td>
                         <td style="padding:0.75rem;color:#e2e8f0;font-size:0.875rem;">{{ $doc->title }}</td>
                         <td style="padding:0.75rem;">
-                            <span style="background:rgba(100,116,139,0.15);color:#94a3b8;font-size:0.7rem;font-weight:600;padding:0.2rem 0.5rem;border-radius:20px;text-transform:uppercase;letter-spacing:0.04em;">
+                            <span style="background:rgba(100,116,139,0.15);color:var(--text-muted);font-size:0.7rem;font-weight:600;padding:0.2rem 0.5rem;border-radius:20px;text-transform:uppercase;letter-spacing:0.04em;">
                                 {{ \App\Models\DocumentTemplate::typeLabel($doc->type) }}
                             </span>
                         </td>
@@ -43,14 +43,14 @@
                                     'signed'            => '#00C896',
                                     'pending_signature' => '#eab308',
                                     'voided'            => '#ef4444',
-                                    default             => '#94a3b8',
+                                    default             => 'var(--text-muted)',
                                 };
                             @endphp
                             <span style="color:{{ $statusColor }};font-size:0.8125rem;font-weight:600;text-transform:capitalize;">
                                 {{ str_replace('_', ' ', $doc->status) }}
                             </span>
                         </td>
-                        <td style="padding:0.75rem;color:#64748b;font-size:0.8125rem;">{{ $doc->created_at->format('d M Y') }}</td>
+                        <td style="padding:0.75rem;color:var(--text-muted);font-size:0.8125rem;">{{ $doc->created_at->format('d M Y') }}</td>
                         <td style="padding:0.75rem;text-align:right;">
                             <a href="{{ route('customer.documents.show', ['locale' => app()->getLocale(), 'id' => $doc->id]) }}"
                                class="cp-btn-outline" style="font-size:0.75rem;padding:0.375rem 0.75rem;">View</a>

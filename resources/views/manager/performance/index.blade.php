@@ -65,7 +65,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" style="text-align:center;padding:2rem;color:#475569">No reviews yet.</td>
+                    <td colspan="5" style="text-align:center;padding:2rem;color:var(--text-faint)">No reviews yet.</td>
                 </tr>
                 @endforelse
             </tbody>
@@ -83,7 +83,7 @@
             @csrf
             <div style="display:flex;flex-direction:column;gap:1rem">
                 <div>
-                    <label style="display:block;color:#94a3b8;font-size:.8125rem;margin-bottom:.375rem">Employee</label>
+                    <label style="display:block;color:var(--text-muted);font-size:.8125rem;margin-bottom:.375rem">Employee</label>
                     <select name="user_id" required style="width:100%;background:#0F172A;border:1px solid #334155;color:#e2e8f0;border-radius:6px;padding:.5rem .75rem">
                         <option value="">Select employee…</option>
                         @foreach($teamMembers as $member)
@@ -92,25 +92,25 @@
                     </select>
                 </div>
                 <div>
-                    <label style="display:block;color:#94a3b8;font-size:.8125rem;margin-bottom:.375rem">Review Period</label>
+                    <label style="display:block;color:var(--text-muted);font-size:.8125rem;margin-bottom:.375rem">Review Period</label>
                     <input type="text" name="review_period" placeholder="e.g. Q2 2026" required
                            style="width:100%;background:#0F172A;border:1px solid #334155;color:#e2e8f0;border-radius:6px;padding:.5rem .75rem">
                 </div>
                 <div>
-                    <label style="display:block;color:#94a3b8;font-size:.8125rem;margin-bottom:.375rem">Review Date</label>
+                    <label style="display:block;color:var(--text-muted);font-size:.8125rem;margin-bottom:.375rem">Review Date</label>
                     <input type="date" name="review_date" required
                            style="width:100%;background:#0F172A;border:1px solid #334155;color:#e2e8f0;border-radius:6px;padding:.5rem .75rem">
                 </div>
                 <div>
-                    <label style="display:block;color:#94a3b8;font-size:.8125rem;margin-bottom:.375rem">Strengths</label>
+                    <label style="display:block;color:var(--text-muted);font-size:.8125rem;margin-bottom:.375rem">Strengths</label>
                     <textarea name="strengths" rows="2" style="width:100%;background:#0F172A;border:1px solid #334155;color:#e2e8f0;border-radius:6px;padding:.5rem .75rem;resize:vertical"></textarea>
                 </div>
                 <div>
-                    <label style="display:block;color:#94a3b8;font-size:.8125rem;margin-bottom:.375rem">Areas for Improvement</label>
+                    <label style="display:block;color:var(--text-muted);font-size:.8125rem;margin-bottom:.375rem">Areas for Improvement</label>
                     <textarea name="areas_for_improvement" rows="2" style="width:100%;background:#0F172A;border:1px solid #334155;color:#e2e8f0;border-radius:6px;padding:.5rem .75rem;resize:vertical"></textarea>
                 </div>
                 <div>
-                    <label style="display:block;color:#94a3b8;font-size:.8125rem;margin-bottom:.375rem">Goals for Next Period</label>
+                    <label style="display:block;color:var(--text-muted);font-size:.8125rem;margin-bottom:.375rem">Goals for Next Period</label>
                     <textarea name="goals_for_next_period" rows="2" style="width:100%;background:#0F172A;border:1px solid #334155;color:#e2e8f0;border-radius:6px;padding:.5rem .75rem;resize:vertical"></textarea>
                 </div>
                 <button type="submit" class="cp-btn-primary" style="align-self:flex-start">

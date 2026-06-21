@@ -93,7 +93,7 @@
                 <i data-lucide="flask-conical" style="width:20px;height:20px;color:#00C896"></i>
                 <span class="text-sm font-medium text-white">Daily Sessions</span>
             </div>
-            <i data-lucide="arrow-right" style="width:16px;height:16px;color:#64748b"></i>
+            <i data-lucide="arrow-right" style="width:16px;height:16px;color:var(--text-muted)"></i>
         </a>
         <a href="{{ route('practitioner.validation.issues.index', ['locale' => $locale]) }}"
            class="bg-slate-900 border border-slate-800 rounded-xl p-5 flex items-center justify-between no-underline hover:border-slate-600 transition-colors">
@@ -101,7 +101,7 @@
                 <i data-lucide="file-warning" style="width:20px;height:20px;color:#1A6FE8"></i>
                 <span class="text-sm font-medium text-white">Issue Reports</span>
             </div>
-            <i data-lucide="arrow-right" style="width:16px;height:16px;color:#64748b"></i>
+            <i data-lucide="arrow-right" style="width:16px;height:16px;color:var(--text-muted)"></i>
         </a>
     </div>
 @endif

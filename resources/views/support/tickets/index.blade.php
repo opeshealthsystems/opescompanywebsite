@@ -25,33 +25,33 @@
     <table style="width:100%;border-collapse:collapse">
         <thead>
             <tr style="border-bottom:1px solid #1e293b">
-                <th style="text-align:left;padding:.75rem 1rem;color:#64748b;font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em">Subject</th>
-                <th style="text-align:left;padding:.75rem 1rem;color:#64748b;font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em">From</th>
-                <th style="text-align:left;padding:.75rem 1rem;color:#64748b;font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em">Priority</th>
-                <th style="text-align:left;padding:.75rem 1rem;color:#64748b;font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em">Status</th>
-                <th style="text-align:left;padding:.75rem 1rem;color:#64748b;font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em">Created</th>
+                <th style="text-align:left;padding:.75rem 1rem;color:var(--text-muted);font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em">Subject</th>
+                <th style="text-align:left;padding:.75rem 1rem;color:var(--text-muted);font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em">From</th>
+                <th style="text-align:left;padding:.75rem 1rem;color:var(--text-muted);font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em">Priority</th>
+                <th style="text-align:left;padding:.75rem 1rem;color:var(--text-muted);font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em">Status</th>
+                <th style="text-align:left;padding:.75rem 1rem;color:var(--text-muted);font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em">Created</th>
                 <th style="padding:.75rem 1rem"></th>
             </tr>
         </thead>
         <tbody>
             @forelse($tickets as $ticket)
             @php
-                $pc = match($ticket->priority) { 'urgent'=>'#ef4444','high'=>'#f97316','medium'=>'#F59E0B', default=>'#64748b' };
-                $sc = match($ticket->status) { 'open'=>'#1A6FE8','in_progress'=>'#F59E0B','resolved'=>'#00C896','closed'=>'#64748b', default=>'#64748b' };
+                $pc = match($ticket->priority) { 'urgent'=>'#ef4444','high'=>'#f97316','medium'=>'#F59E0B', default=>'var(--text-muted)' };
+                $sc = match($ticket->status) { 'open'=>'#1A6FE8','in_progress'=>'#F59E0B','resolved'=>'#00C896','closed'=>'var(--text-muted)', default=>'var(--text-muted)' };
             @endphp
             <tr style="border-bottom:1px solid #0f172a">
                 <td style="padding:.75rem 1rem;color:#e2e8f0;font-size:.875rem">{{ Str::limit($ticket->subject, 50) }}</td>
-                <td style="padding:.75rem 1rem;color:#64748b;font-size:.8125rem">{{ $ticket->customer?->name ?? '—' }}</td>
+                <td style="padding:.75rem 1rem;color:var(--text-muted);font-size:.8125rem">{{ $ticket->customer?->name ?? '—' }}</td>
                 <td style="padding:.75rem 1rem"><span style="color:{{ $pc }};font-size:.75rem;font-weight:700;text-transform:uppercase">{{ $ticket->priority }}</span></td>
                 <td style="padding:.75rem 1rem"><span style="color:{{ $sc }};font-size:.75rem;font-weight:700;text-transform:uppercase">{{ ucfirst(str_replace('_', ' ', $ticket->status)) }}</span></td>
-                <td style="padding:.75rem 1rem;color:#475569;font-size:.8125rem">{{ $ticket->created_at->format('d M Y') }}</td>
+                <td style="padding:.75rem 1rem;color:var(--text-faint);font-size:.8125rem">{{ $ticket->created_at->format('d M Y') }}</td>
                 <td style="padding:.75rem 1rem;text-align:right">
                     <a href="{{ route('support.tickets.show', ['locale'=>$locale,'ticket'=>$ticket->id]) }}"
                        style="font-size:.75rem;color:#F97316;text-decoration:none;font-weight:600">Open →</a>
                 </td>
             </tr>
             @empty
-            <tr><td colspan="6" style="padding:3rem;text-align:center;color:#475569">No tickets found.</td></tr>
+            <tr><td colspan="6" style="padding:3rem;text-align:center;color:var(--text-faint)">No tickets found.</td></tr>
             @endforelse
         </tbody>
     </table>

@@ -47,9 +47,9 @@
             @forelse($employees as $emp)
             <tr>
                 <td style="font-weight:500;color:#f1f5f9">{{ $emp->name }}</td>
-                <td style="color:#94a3b8;font-size:.8125rem">{{ $emp->email }}</td>
+                <td style="color:var(--text-muted);font-size:.8125rem">{{ $emp->email }}</td>
                 <td>{{ $emp->department->name ?? $emp->department ?? '—' }}</td>
-                <td style="color:#94a3b8">{{ $emp->position ?? '—' }}</td>
+                <td style="color:var(--text-muted)">{{ $emp->position ?? '—' }}</td>
                 <td>
                     @if($emp->employeeProfile)
                         <span class="portal-badge portal-badge-blue">{{ ucfirst(str_replace('_',' ',$emp->employeeProfile->employment_type)) }}</span>
@@ -57,7 +57,7 @@
                         <span class="portal-badge portal-badge-gray">—</span>
                     @endif
                 </td>
-                <td style="color:#64748b;font-size:.8125rem">{{ $emp->hire_date ? \Carbon\Carbon::parse($emp->hire_date)->format('M j, Y') : '—' }}</td>
+                <td style="color:var(--text-muted);font-size:.8125rem">{{ $emp->hire_date ? \Carbon\Carbon::parse($emp->hire_date)->format('M j, Y') : '—' }}</td>
                 <td>
                     <a href="{{ route('hr.employees.show', ['locale' => $locale, 'user' => $emp->id]) }}" class="cp-btn-outline" style="font-size:.75rem;padding:.25rem .625rem">
                         View
@@ -66,7 +66,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="7" style="text-align:center;padding:2rem;color:#475569">No employees found.</td>
+                <td colspan="7" style="text-align:center;padding:2rem;color:var(--text-faint)">No employees found.</td>
             </tr>
             @endforelse
         </tbody>

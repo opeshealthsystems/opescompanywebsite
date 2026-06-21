@@ -8,7 +8,7 @@
 
     @if($programs->isEmpty())
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-12 text-center">
-            <i data-lucide="beaker" style="width:40px;height:40px;color:#475569;margin:0 auto 16px"></i>
+            <i data-lucide="beaker" style="width:40px;height:40px;color:var(--text-faint);margin:0 auto 16px"></i>
             <p class="text-slate-400 text-base">No programmes currently open.</p>
             <p class="text-slate-500 text-sm mt-1">Check back soon — new programmes are added regularly.</p>
         </div>

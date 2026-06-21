@@ -6,7 +6,7 @@
             ← Knowledge Base
         </a>
         @if($article->category)
-        <span style="color:#475569;">/</span>
+        <span style="color:var(--text-faint);">/</span>
         <a href="{{ route('customer.knowledge-base.category', ['locale' => app()->getLocale(), 'slug' => $article->category->slug]) }}"
            style="color:#00C896;text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
             {{ $article->category->name }}
@@ -16,7 +16,7 @@
 
     <div class="cp-section-card">
         <h1 style="color:#e2e8f0;font-size:1.5rem;font-weight:700;margin:0 0 0.5rem;">{{ $article->title }}</h1>
-        <p style="color:#64748b;font-size:0.8125rem;margin:0 0 1.5rem;">
+        <p style="color:var(--text-muted);font-size:0.8125rem;margin:0 0 1.5rem;">
             {{ $article->published_at?->format('d M Y') ?? '' }}
             @if($article->published_at) &middot; @endif
             {{ number_format($article->views) }} view{{ $article->views !== 1 ? 's' : '' }}

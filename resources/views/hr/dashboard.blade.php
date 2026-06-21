@@ -76,7 +76,7 @@
             <div style="display:flex;align-items:center;justify-content:space-between;padding:.625rem 0;border-bottom:1px solid #1e293b">
                 <div>
                     <p style="color:#f1f5f9;font-size:.875rem;font-weight:500;margin:0">{{ $ep->user->name ?? '—' }}</p>
-                    <p style="color:#64748b;font-size:.75rem;margin:0">{{ ucfirst(str_replace('_',' ',$ep->employment_type)) }}</p>
+                    <p style="color:var(--text-muted);font-size:.75rem;margin:0">{{ ucfirst(str_replace('_',' ',$ep->employment_type)) }}</p>
                 </div>
                 <span class="portal-badge portal-badge-red">{{ $ep->contract_end_date?->format('M j') }}</span>
             </div>
@@ -107,9 +107,9 @@
                 </div>
                 <div style="flex:1">
                     <p style="color:#f1f5f9;font-size:.875rem;font-weight:500;margin:0">{{ $emp->name }}</p>
-                    <p style="color:#64748b;font-size:.75rem;margin:0">{{ $emp->position ?? 'Employee' }} · {{ $emp->department ?? '—' }}</p>
+                    <p style="color:var(--text-muted);font-size:.75rem;margin:0">{{ $emp->position ?? 'Employee' }} · {{ $emp->department ?? '—' }}</p>
                 </div>
-                <span style="color:#64748b;font-size:.75rem">{{ $emp->created_at?->format('M j') }}</span>
+                <span style="color:var(--text-muted);font-size:.75rem">{{ $emp->created_at?->format('M j') }}</span>
             </div>
             @endforeach
         </div>

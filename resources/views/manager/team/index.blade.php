@@ -34,14 +34,14 @@
             <tr>
                 <td style="font-weight:500;color:#f1f5f9">{{ $member->name }}</td>
                 <td>{{ $member->position ?? '—' }}</td>
-                <td style="color:#94a3b8">{{ $member->email }}</td>
+                <td style="color:var(--text-muted)">{{ $member->email }}</td>
                 <td>{{ $member->department ?? '—' }}</td>
-                <td style="font-family:monospace;font-size:.8125rem;color:#64748b">{{ $member->employee_id ?? '—' }}</td>
+                <td style="font-family:monospace;font-size:.8125rem;color:var(--text-muted)">{{ $member->employee_id ?? '—' }}</td>
                 <td><span class="portal-badge portal-badge-green">Active</span></td>
             </tr>
             @empty
             <tr>
-                <td colspan="6" style="text-align:center;padding:2rem;color:#475569">No team members found.</td>
+                <td colspan="6" style="text-align:center;padding:2rem;color:var(--text-faint)">No team members found.</td>
             </tr>
             @endforelse
         </tbody>

@@ -42,7 +42,7 @@
             <i data-lucide="inbox" style="width:16px;height:16px;color:#F97316"></i> My Queue
         </h2>
         @forelse($myQueue as $ticket)
-        @php $pc = match($ticket->priority) { 'urgent'=>'#ef4444','high'=>'#f97316','medium'=>'#F59E0B', default=>'#64748b' }; @endphp
+        @php $pc = match($ticket->priority) { 'urgent'=>'#ef4444','high'=>'#f97316','medium'=>'#F59E0B', default=>'var(--text-muted)' }; @endphp
         <div class="flex items-start justify-between gap-3 mb-3 pb-3 border-b border-slate-800 last:border-0 last:mb-0 last:pb-0">
             <div>
                 <p class="text-sm text-slate-200 font-medium">{{ Str::limit($ticket->subject, 45) }}</p>
@@ -64,7 +64,7 @@
             <i data-lucide="alert-circle" style="width:16px;height:16px;color:#F59E0B"></i> Unassigned Tickets
         </h2>
         @forelse($unassigned as $ticket)
-        @php $pc = match($ticket->priority) { 'urgent'=>'#ef4444','high'=>'#f97316','medium'=>'#F59E0B', default=>'#64748b' }; @endphp
+        @php $pc = match($ticket->priority) { 'urgent'=>'#ef4444','high'=>'#f97316','medium'=>'#F59E0B', default=>'var(--text-muted)' }; @endphp
         <div class="flex items-start justify-between gap-3 mb-3 pb-3 border-b border-slate-800 last:border-0 last:mb-0 last:pb-0">
             <div>
                 <p class="text-sm text-slate-200 font-medium">{{ Str::limit($ticket->subject, 45) }}</p>

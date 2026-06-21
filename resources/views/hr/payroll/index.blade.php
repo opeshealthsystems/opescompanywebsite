@@ -34,14 +34,14 @@
                 };
             @endphp
             <tr>
-                <td style="font-family:monospace;font-size:.8125rem;color:#94a3b8">{{ $run->reference }}</td>
+                <td style="font-family:monospace;font-size:.8125rem;color:var(--text-muted)">{{ $run->reference }}</td>
                 <td style="color:#f1f5f9">
                     {{ $run->period_start?->format('M j') }} – {{ $run->period_end?->format('M j, Y') }}
                 </td>
                 <td>{{ $run->entries_count }}</td>
                 <td>{{ number_format($run->total_gross ?? 0, 2) }}</td>
                 <td style="font-weight:600;color:#f1f5f9">{{ number_format($run->total_net ?? 0, 2) }}</td>
-                <td style="color:#64748b">{{ $run->currency ?? 'XAF' }}</td>
+                <td style="color:var(--text-muted)">{{ $run->currency ?? 'XAF' }}</td>
                 <td><span class="portal-badge {{ $badge }}">{{ ucfirst($run->status) }}</span></td>
                 <td>
                     <a href="{{ route('hr.payroll.show', ['locale' => $locale, 'run' => $run->id]) }}" class="cp-btn-outline" style="font-size:.75rem;padding:.25rem .625rem">Details</a>
@@ -49,7 +49,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="8" style="text-align:center;padding:2rem;color:#475569">No payroll runs found.</td>
+                <td colspan="8" style="text-align:center;padding:2rem;color:var(--text-faint)">No payroll runs found.</td>
             </tr>
             @endforelse
         </tbody>

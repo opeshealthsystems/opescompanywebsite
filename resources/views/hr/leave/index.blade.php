@@ -51,7 +51,7 @@
             @endphp
             <tr>
                 <td style="font-weight:500;color:#f1f5f9">{{ $leave->employee->name ?? '—' }}</td>
-                <td style="color:#94a3b8;font-size:.8125rem">{{ $leave->employee->department ?? '—' }}</td>
+                <td style="color:var(--text-muted);font-size:.8125rem">{{ $leave->employee->department ?? '—' }}</td>
                 <td><span class="portal-badge portal-badge-purple">{{ ucfirst($leave->type) }}</span></td>
                 <td>{{ $leave->start_date?->format('M j') }}</td>
                 <td>{{ $leave->end_date?->format('M j, Y') }}</td>
@@ -74,7 +74,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="8" style="text-align:center;padding:2rem;color:#475569">No leave requests found.</td>
+                <td colspan="8" style="text-align:center;padding:2rem;color:var(--text-faint)">No leave requests found.</td>
             </tr>
             @endforelse
         </tbody>

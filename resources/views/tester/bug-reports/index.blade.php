@@ -18,11 +18,11 @@
     <table style="width:100%;border-collapse:collapse">
         <thead>
             <tr style="border-bottom:1px solid #1e293b">
-                <th style="text-align:left;padding:.75rem 1rem;color:#64748b;font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em">Subject</th>
-                <th style="text-align:left;padding:.75rem 1rem;color:#64748b;font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em">Assignment</th>
-                <th style="text-align:left;padding:.75rem 1rem;color:#64748b;font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em">Priority</th>
-                <th style="text-align:left;padding:.75rem 1rem;color:#64748b;font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em">Status</th>
-                <th style="text-align:left;padding:.75rem 1rem;color:#64748b;font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em">Filed</th>
+                <th style="text-align:left;padding:.75rem 1rem;color:var(--text-muted);font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em">Subject</th>
+                <th style="text-align:left;padding:.75rem 1rem;color:var(--text-muted);font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em">Assignment</th>
+                <th style="text-align:left;padding:.75rem 1rem;color:var(--text-muted);font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em">Priority</th>
+                <th style="text-align:left;padding:.75rem 1rem;color:var(--text-muted);font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em">Status</th>
+                <th style="text-align:left;padding:.75rem 1rem;color:var(--text-muted);font-size:.6875rem;text-transform:uppercase;letter-spacing:.05em">Filed</th>
             </tr>
         </thead>
         <tbody>
@@ -32,19 +32,19 @@
                     'urgent' => '#ef4444',
                     'high'   => '#f97316',
                     'medium' => '#F59E0B',
-                    default  => '#64748b',
+                    default  => 'var(--text-muted)',
                 };
                 $statusColor = match($report->status) {
                     'open'        => '#1A6FE8',
                     'in_progress' => '#F59E0B',
                     'resolved'    => '#00C896',
-                    'closed'      => '#64748b',
-                    default       => '#64748b',
+                    'closed'      => 'var(--text-muted)',
+                    default       => 'var(--text-muted)',
                 };
             @endphp
             <tr style="border-bottom:1px solid #0f172a">
                 <td style="padding:.75rem 1rem;color:#e2e8f0;font-size:.875rem">{{ Str::limit($report->subject, 50) }}</td>
-                <td style="padding:.75rem 1rem;color:#64748b;font-size:.8125rem">
+                <td style="padding:.75rem 1rem;color:var(--text-muted);font-size:.8125rem">
                     {{ $report->testerAssignment?->product_name ?? '—' }}
                 </td>
                 <td style="padding:.75rem 1rem">
@@ -57,7 +57,7 @@
                         {{ ucfirst(str_replace('_', ' ', $report->status)) }}
                     </span>
                 </td>
-                <td style="padding:.75rem 1rem;color:#475569;font-size:.8125rem">
+                <td style="padding:.75rem 1rem;color:var(--text-faint);font-size:.8125rem">
                     {{ $report->created_at->format('d M Y') }}
                 </td>
             </tr>

@@ -43,19 +43,19 @@
                 };
             @endphp
             <tr>
-                <td style="font-family:monospace;font-size:.8125rem;color:#94a3b8">{{ $inv->reference }}</td>
+                <td style="font-family:monospace;font-size:.8125rem;color:var(--text-muted)">{{ $inv->reference }}</td>
                 <td style="font-weight:500;color:#f1f5f9">{{ $inv->customer->name ?? '—' }}</td>
                 <td style="font-weight:600">{{ number_format($inv->grand_total ?? 0, 2) }}</td>
                 <td><span class="portal-badge {{ $badge }}">{{ ucfirst($inv->status) }}</span></td>
-                <td style="color:{{ $inv->status === 'overdue' ? '#ef4444' : '#94a3b8' }};font-size:.8125rem">{{ $inv->due_date?->format('M j, Y') }}</td>
-                <td style="color:#64748b;font-size:.8125rem">{{ $inv->created_at?->format('M j, Y') }}</td>
+                <td style="color:{{ $inv->status === 'overdue' ? '#ef4444' : 'var(--text-muted)' }};font-size:.8125rem">{{ $inv->due_date?->format('M j, Y') }}</td>
+                <td style="color:var(--text-muted);font-size:.8125rem">{{ $inv->created_at?->format('M j, Y') }}</td>
                 <td>
                     <a href="{{ route('accountant.invoices.show', ['locale' => $locale, 'invoice' => $inv->id]) }}" class="cp-btn-outline" style="font-size:.75rem;padding:.25rem .625rem">View</a>
                 </td>
             </tr>
             @empty
             <tr>
-                <td colspan="7" style="text-align:center;padding:2rem;color:#475569">No invoices found.</td>
+                <td colspan="7" style="text-align:center;padding:2rem;color:var(--text-faint)">No invoices found.</td>
             </tr>
             @endforelse
         </tbody>

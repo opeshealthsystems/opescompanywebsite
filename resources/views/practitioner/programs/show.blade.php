@@ -120,7 +120,7 @@
         </div>
     @elseif($program->isFull())
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 text-center">
-            <i data-lucide="users" style="width:32px;height:32px;color:#475569;margin:0 auto 12px"></i>
+            <i data-lucide="users" style="width:32px;height:32px;color:var(--text-faint);margin:0 auto 12px"></i>
             <p class="text-slate-400">This programme has reached its maximum number of participants.</p>
         </div>
     @else

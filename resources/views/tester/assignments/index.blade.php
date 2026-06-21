@@ -18,10 +18,10 @@
             <table style="width:100%;border-collapse:collapse;">
                 <thead>
                     <tr style="border-bottom:1px solid #334155;">
-                        <th style="text-align:left;padding:0.75rem;color:#94a3b8;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Title</th>
-                        <th style="text-align:left;padding:0.75rem;color:#94a3b8;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Product</th>
-                        <th style="text-align:left;padding:0.75rem;color:#94a3b8;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Status</th>
-                        <th style="text-align:left;padding:0.75rem;color:#94a3b8;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Due Date</th>
+                        <th style="text-align:left;padding:0.75rem;color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Title</th>
+                        <th style="text-align:left;padding:0.75rem;color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Product</th>
+                        <th style="text-align:left;padding:0.75rem;color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Status</th>
+                        <th style="text-align:left;padding:0.75rem;color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Due Date</th>
                         <th style="padding:0.75rem;"></th>
                     </tr>
                 </thead>
@@ -29,23 +29,23 @@
                     @foreach($assignments as $assignment)
                     @php
                         $statusColor = match($assignment->status) {
-                            'pending'     => '#94a3b8',
+                            'pending'     => 'var(--text-muted)',
                             'in_progress' => '#eab308',
                             'completed'   => '#00C896',
-                            'cancelled'   => '#64748b',
-                            default       => '#94a3b8',
+                            'cancelled'   => 'var(--text-muted)',
+                            default       => 'var(--text-muted)',
                         };
                         $overdue = $assignment->isOverdue();
                     @endphp
                     <tr style="border-bottom:1px solid #1e293b;">
                         <td style="padding:0.75rem;color:#e2e8f0;font-size:0.875rem;">{{ Str::limit($assignment->title, 45) }}</td>
-                        <td style="padding:0.75rem;color:#94a3b8;font-size:0.875rem;">{{ $assignment->product_name }}</td>
+                        <td style="padding:0.75rem;color:var(--text-muted);font-size:0.875rem;">{{ $assignment->product_name }}</td>
                         <td style="padding:0.75rem;">
                             <span style="color:{{ $statusColor }};font-size:0.8125rem;font-weight:600;">
                                 {{ \App\Models\TesterAssignment::statusOptions()[$assignment->status] ?? $assignment->status }}
                             </span>
                         </td>
-                        <td style="padding:0.75rem;color:{{ $overdue ? '#ef4444' : '#64748b' }};font-size:0.8125rem;">
+                        <td style="padding:0.75rem;color:{{ $overdue ? '#ef4444' : 'var(--text-muted)' }};font-size:0.8125rem;">
                             {{ $assignment->due_date?->format('d M Y') ?? '—' }}
                             @if($overdue) <span style="font-size:0.7rem;">&#9888;</span> @endif
                         </td>

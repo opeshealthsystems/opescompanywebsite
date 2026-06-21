@@ -6,7 +6,7 @@
         <a href="{{ route('support.tickets', ['locale'=>$locale]) }}" class="text-xs text-slate-500 hover:text-slate-300 no-underline">← Back to Queue</a>
         <h1 class="text-xl font-bold text-white mt-1">{{ $ticket->subject }}</h1>
         <div class="flex items-center gap-2 mt-1 flex-wrap">
-            @php $pc = match($ticket->priority) { 'urgent'=>'#ef4444','high'=>'#f97316','medium'=>'#F59E0B', default=>'#64748b' }; @endphp
+            @php $pc = match($ticket->priority) { 'urgent'=>'#ef4444','high'=>'#f97316','medium'=>'#F59E0B', default=>'var(--text-muted)' }; @endphp
             <span style="color:{{ $pc }};font-size:.6875rem;font-weight:700;text-transform:uppercase">{{ $ticket->priority }}</span>
             <span class="text-slate-600">·</span>
             <span class="text-slate-400 text-xs">{{ $ticket->customer?->name ?? 'Unknown customer' }}</span>

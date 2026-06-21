@@ -16,8 +16,8 @@
             'in_progress'      => '#eab308',
             'pending_customer' => '#3b82f6',
             'resolved'         => '#00C896',
-            'closed'           => '#64748b',
-            default            => '#94a3b8',
+            'closed'           => 'var(--text-muted)',
+            default            => 'var(--text-muted)',
         };
         $isOpen = $ticket->isOpen();
     @endphp
@@ -26,18 +26,18 @@
         <span style="color:{{ $statusColor }};font-weight:700;font-size:0.875rem;text-transform:uppercase;letter-spacing:0.05em;">
             {{ \App\Models\Ticket::statusOptions()[$ticket->status] ?? $ticket->status }}
         </span>
-        <span style="color:#64748b;font-size:0.8rem;">&#183;</span>
-        <span style="color:#94a3b8;font-size:0.8125rem;">{{ \App\Models\Ticket::typeLabel($ticket->type) }}</span>
-        <span style="color:#64748b;font-size:0.8rem;">&#183;</span>
-        <span style="color:#94a3b8;font-size:0.8125rem;text-transform:capitalize;">{{ $ticket->priority }} priority</span>
+        <span style="color:var(--text-muted);font-size:0.8rem;">&#183;</span>
+        <span style="color:var(--text-muted);font-size:0.8125rem;">{{ \App\Models\Ticket::typeLabel($ticket->type) }}</span>
+        <span style="color:var(--text-muted);font-size:0.8rem;">&#183;</span>
+        <span style="color:var(--text-muted);font-size:0.8125rem;text-transform:capitalize;">{{ $ticket->priority }} priority</span>
     </div>
 
     <div class="cp-section-card" style="margin-bottom:1rem;">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem;">
             <span style="color:#e2e8f0;font-weight:600;font-size:0.875rem;">Original Request</span>
-            <span style="color:#64748b;font-size:0.75rem;">{{ $ticket->created_at->format('d M Y, H:i') }}</span>
+            <span style="color:var(--text-muted);font-size:0.75rem;">{{ $ticket->created_at->format('d M Y, H:i') }}</span>
         </div>
-        <p style="color:#94a3b8;font-size:0.875rem;line-height:1.7;white-space:pre-wrap;">{{ $ticket->description }}</p>
+        <p style="color:var(--text-muted);font-size:0.875rem;line-height:1.7;white-space:pre-wrap;">{{ $ticket->description }}</p>
     </div>
 
     @foreach($ticket->publicReplies as $reply)
@@ -50,16 +50,16 @@
     <div style="background:{{ $bgColor }};border:1px solid {{ $borderColor }};border-radius:10px;padding:1rem 1.25rem;margin-bottom:0.75rem;">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem;">
             <span style="color:{{ $isStaff ? '#00C896' : '#e2e8f0' }};font-weight:600;font-size:0.875rem;">{{ $authorLabel }}</span>
-            <span style="color:#64748b;font-size:0.75rem;">{{ $reply->created_at->format('d M Y, H:i') }}</span>
+            <span style="color:var(--text-muted);font-size:0.75rem;">{{ $reply->created_at->format('d M Y, H:i') }}</span>
         </div>
-        <p style="color:#94a3b8;font-size:0.875rem;line-height:1.7;white-space:pre-wrap;">{{ $reply->body }}</p>
+        <p style="color:var(--text-muted);font-size:0.875rem;line-height:1.7;white-space:pre-wrap;">{{ $reply->body }}</p>
     </div>
     @endforeach
 
     @if($ticket->resolution)
     <div style="background:rgba(0,200,150,0.06);border:1px solid rgba(0,200,150,0.2);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1rem;">
         <p style="color:#00C896;font-weight:600;font-size:0.875rem;margin-bottom:0.5rem;">&#10003; Resolution</p>
-        <p style="color:#94a3b8;font-size:0.875rem;line-height:1.7;">{{ $ticket->resolution }}</p>
+        <p style="color:var(--text-muted);font-size:0.875rem;line-height:1.7;">{{ $ticket->resolution }}</p>
     </div>
     @endif
 
@@ -78,7 +78,7 @@
         </form>
     </div>
     @else
-    <div style="text-align:center;padding:1.5rem;color:#64748b;font-size:0.875rem;">
+    <div style="text-align:center;padding:1.5rem;color:var(--text-muted);font-size:0.875rem;">
         This ticket is {{ $ticket->status }}. <a href="{{ route('customer.tickets.create', ['locale' => app()->getLocale()]) }}" style="color:#00C896;">Open a new ticket</a> if you need further assistance.
     </div>
     @endif

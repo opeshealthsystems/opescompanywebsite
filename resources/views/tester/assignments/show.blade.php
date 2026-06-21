@@ -9,11 +9,11 @@
 
     @php
         $statusColor = match($assignment->status) {
-            'pending'     => '#94a3b8',
+            'pending'     => 'var(--text-muted)',
             'in_progress' => '#eab308',
             'completed'   => '#00C896',
-            'cancelled'   => '#64748b',
-            default       => '#94a3b8',
+            'cancelled'   => 'var(--text-muted)',
+            default       => 'var(--text-muted)',
         };
         $isActive = $assignment->isActive();
         $overdue  = $assignment->isOverdue();
@@ -22,7 +22,7 @@
     @if($overdue)
         <div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;">
             <p style="color:#ef4444;font-weight:600;font-size:0.875rem;margin:0;">&#9888; This assignment is overdue</p>
-            <p style="color:#64748b;font-size:0.8rem;margin:0.25rem 0 0;">Due date was {{ $assignment->due_date->format('d M Y') }}. Please update the status or contact your admin.</p>
+            <p style="color:var(--text-muted);font-size:0.8rem;margin:0.25rem 0 0;">Due date was {{ $assignment->due_date->format('d M Y') }}. Please update the status or contact your admin.</p>
         </div>
     @endif
 
@@ -32,21 +32,21 @@
                 {{ \App\Models\TesterAssignment::statusOptions()[$assignment->status] ?? $assignment->status }}
             </span>
             @if($assignment->due_date)
-                <span style="color:{{ $overdue ? '#ef4444' : '#64748b' }};font-size:0.8125rem;">
+                <span style="color:{{ $overdue ? '#ef4444' : 'var(--text-muted)' }};font-size:0.8125rem;">
                     Due: {{ $assignment->due_date->format('d M Y') }}
                 </span>
             @endif
         </div>
 
         <div style="margin-bottom:1.25rem;">
-            <p style="color:#94a3b8;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem;">What to test</p>
+            <p style="color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem;">What to test</p>
             <p style="color:#e2e8f0;font-size:0.875rem;line-height:1.7;white-space:pre-wrap;">{{ $assignment->description }}</p>
         </div>
 
         @if($assignment->notes)
         <div style="border-top:1px solid #334155;padding-top:1rem;">
-            <p style="color:#94a3b8;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem;">Admin Notes</p>
-            <p style="color:#94a3b8;font-size:0.875rem;line-height:1.6;">{{ $assignment->notes }}</p>
+            <p style="color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem;">Admin Notes</p>
+            <p style="color:var(--text-muted);font-size:0.875rem;line-height:1.6;">{{ $assignment->notes }}</p>
         </div>
         @endif
     </div>
@@ -73,7 +73,7 @@
             @csrf
 
             <div style="margin-bottom:1rem;">
-                <label style="display:block;color:#94a3b8;font-size:0.8125rem;font-weight:600;margin-bottom:0.5rem;">Bug Title *</label>
+                <label style="display:block;color:var(--text-muted);font-size:0.8125rem;font-weight:600;margin-bottom:0.5rem;">Bug Title *</label>
                 <input type="text" name="subject" value="{{ old('subject') }}" required maxlength="255"
                     style="width:100%;background:#0f172a;border:1px solid #334155;border-radius:8px;padding:0.625rem 0.875rem;color:#e2e8f0;font-size:0.875rem;box-sizing:border-box;"
                     placeholder="Brief description of the bug">
@@ -81,7 +81,7 @@
             </div>
 
             <div style="margin-bottom:1rem;">
-                <label style="display:block;color:#94a3b8;font-size:0.8125rem;font-weight:600;margin-bottom:0.5rem;">Priority *</label>
+                <label style="display:block;color:var(--text-muted);font-size:0.8125rem;font-weight:600;margin-bottom:0.5rem;">Priority *</label>
                 <select name="priority" required
                     style="width:200px;background:#0f172a;border:1px solid #334155;border-radius:8px;padding:0.625rem 0.875rem;color:#e2e8f0;font-size:0.875rem;">
                     @foreach(\App\Models\Ticket::priorityOptions() as $value => $label)
@@ -92,7 +92,7 @@
             </div>
 
             <div style="margin-bottom:1.25rem;">
-                <label style="display:block;color:#94a3b8;font-size:0.8125rem;font-weight:600;margin-bottom:0.5rem;">Steps to Reproduce / Description *</label>
+                <label style="display:block;color:var(--text-muted);font-size:0.8125rem;font-weight:600;margin-bottom:0.5rem;">Steps to Reproduce / Description *</label>
                 <textarea name="description" required maxlength="10000" rows="6"
                     style="width:100%;background:#0f172a;border:1px solid #334155;border-radius:8px;padding:0.625rem 0.875rem;color:#e2e8f0;font-size:0.875rem;box-sizing:border-box;resize:vertical;"
                     placeholder="Describe the bug and steps to reproduce it...">{{ old('description') }}</textarea>
@@ -106,7 +106,7 @@
 
     @if($assignment->bugReports->isNotEmpty())
     <div style="margin-top:1.5rem;">
-        <h2 style="color:#94a3b8;font-size:0.875rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:1rem;">
+        <h2 style="color:var(--text-muted);font-size:0.875rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:1rem;">
             Bug Reports Filed ({{ $assignment->bugReports->count() }})
         </h2>
         <div class="cp-section-card" style="padding:0;">
@@ -114,7 +114,7 @@
             @php
                 $priorityColor = match($bug->priority) {
                     'urgent' => '#ef4444', 'high' => '#f97316',
-                    'medium' => '#3b82f6', 'low'  => '#64748b', default => '#94a3b8',
+                    'medium' => '#3b82f6', 'low'  => 'var(--text-muted)', default => 'var(--text-muted)',
                 };
             @endphp
             <div style="padding:0.875rem 1rem;border-bottom:1px solid #1e293b;">
@@ -122,7 +122,7 @@
                     <span style="color:#e2e8f0;font-size:0.875rem;font-weight:500;">{{ $bug->subject }}</span>
                     <div style="display:flex;gap:0.5rem;align-items:center;">
                         <span style="color:{{ $priorityColor }};font-size:0.75rem;font-weight:600;text-transform:capitalize;">{{ $bug->priority }}</span>
-                        <span style="color:#64748b;font-size:0.75rem;">{{ $bug->created_at->diffForHumans() }}</span>
+                        <span style="color:var(--text-muted);font-size:0.75rem;">{{ $bug->created_at->diffForHumans() }}</span>
                     </div>
                 </div>
             </div>

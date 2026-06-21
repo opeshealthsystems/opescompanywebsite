@@ -122,7 +122,7 @@
                 </div>
                 <div style="flex:1;min-width:0">
                     <p style="color:#f1f5f9;font-size:.875rem;font-weight:500;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ $member->name }}</p>
-                    <p style="color:#64748b;font-size:.75rem;margin:0">{{ $member->position ?? 'Employee' }}</p>
+                    <p style="color:var(--text-muted);font-size:.75rem;margin:0">{{ $member->position ?? 'Employee' }}</p>
                 </div>
                 <span class="portal-badge portal-badge-green">Active</span>
             </div>
@@ -153,7 +153,7 @@
                     <p style="color:#f1f5f9;font-size:.875rem;font-weight:500;margin:0">{{ $review->employee->name ?? '—' }}</p>
                     <span class="portal-badge portal-badge-amber">{{ ucfirst($review->status) }}</span>
                 </div>
-                <p style="color:#64748b;font-size:.75rem;margin:.25rem 0 0">{{ $review->review_period }} · {{ $review->review_date?->format('M j, Y') }}</p>
+                <p style="color:var(--text-muted);font-size:.75rem;margin:.25rem 0 0">{{ $review->review_period }} · {{ $review->review_date?->format('M j, Y') }}</p>
             </div>
             @endforeach
         </div>

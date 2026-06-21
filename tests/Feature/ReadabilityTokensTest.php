@@ -76,4 +76,39 @@ class ReadabilityTokensTest extends TestCase
             }
         }
     }
+
+    /** SP2 — portal views + portal layout components (tokens already defined by SP1). */
+    private function sp2Files(): array
+    {
+        $files = [];
+        foreach (['customer', 'practitioner', 'tester', 'support', 'hr', 'manager', 'accountant'] as $dir) {
+            $base = base_path("resources/views/{$dir}");
+            if (! is_dir($base)) {
+                continue;
+            }
+            $it = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($base, \FilesystemIterator::SKIP_DOTS));
+            foreach ($it as $f) {
+                if ($f->isFile() && str_ends_with($f->getFilename(), '.blade.php')) {
+                    $files[] = $f->getPathname();
+                }
+            }
+        }
+        foreach (['customer', 'practitioner', 'tester', 'support', 'hr', 'manager', 'accountant', 'auth'] as $layout) {
+            $p = base_path("resources/views/components/layouts/{$layout}.blade.php");
+            if (is_file($p)) {
+                $files[] = $p;
+            }
+        }
+        return $files;
+    }
+
+    public function test_sp2_portal_views_have_no_faint_text_hexes(): void
+    {
+        foreach ($this->sp2Files() as $file) {
+            $c = file_get_contents($file);
+            foreach (['#475569', '#64748b', '#94a3b8'] as $hex) {
+                $this->assertStringNotContainsString($hex, $c, basename($file)." still uses {$hex}");
+            }
+        }
+    }
 }

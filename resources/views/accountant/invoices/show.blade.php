@@ -50,12 +50,12 @@
                 ];
             @endphp
             <div style="display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid #1e293b">
-                <span style="color:#64748b;font-size:.875rem">Status</span>
+                <span style="color:var(--text-muted);font-size:.875rem">Status</span>
                 <span class="portal-badge {{ $badge }}">{{ ucfirst($invoice->status) }}</span>
             </div>
             @foreach(array_slice($rows, 1, null, true) as $label => $value)
             <div style="display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid #1e293b">
-                <span style="color:#64748b;font-size:.875rem">{{ $label }}</span>
+                <span style="color:var(--text-muted);font-size:.875rem">{{ $label }}</span>
                 <span style="color:#e2e8f0;font-size:.875rem">{{ $value }}</span>
             </div>
             @endforeach
@@ -79,7 +79,7 @@
             @endphp
             @foreach($fin as $label => $value)
             <div style="display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid #1e293b">
-                <span style="color:#64748b;font-size:.875rem">{{ $label }}</span>
+                <span style="color:var(--text-muted);font-size:.875rem">{{ $label }}</span>
                 <span style="color:{{ $label === 'Grand Total' ? '#f1f5f9' : ($label === 'Amount Outstanding' ? '#ef4444' : '#e2e8f0') }};font-size:.875rem;font-weight:{{ $label === 'Grand Total' ? '700' : '400' }}">{{ $value }}</span>
             </div>
             @endforeach

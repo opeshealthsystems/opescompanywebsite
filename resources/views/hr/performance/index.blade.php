@@ -49,9 +49,9 @@
                 @endphp
                 <tr>
                     <td style="font-weight:500;color:#f1f5f9">{{ $review->employee->name ?? '—' }}</td>
-                    <td style="color:#94a3b8">{{ $review->reviewer->name ?? '—' }}</td>
+                    <td style="color:var(--text-muted)">{{ $review->reviewer->name ?? '—' }}</td>
                     <td>{{ $review->review_period }}</td>
-                    <td style="color:#64748b;font-size:.8125rem">{{ $review->review_date?->format('M j, Y') }}</td>
+                    <td style="color:var(--text-muted);font-size:.8125rem">{{ $review->review_date?->format('M j, Y') }}</td>
                     <td>
                         @if($r > 0)
                         <span style="color:#F59E0B">@for($i=1;$i<=5;$i++){{ $i<=$r?'★':'☆' }}@endfor</span>
@@ -63,7 +63,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" style="text-align:center;padding:2rem;color:#475569">No reviews found.</td>
+                    <td colspan="6" style="text-align:center;padding:2rem;color:var(--text-faint)">No reviews found.</td>
                 </tr>
                 @endforelse
             </tbody>
@@ -81,7 +81,7 @@
             @csrf
             <div style="display:flex;flex-direction:column;gap:.875rem">
                 <div>
-                    <label style="display:block;color:#94a3b8;font-size:.8125rem;margin-bottom:.375rem">Employee</label>
+                    <label style="display:block;color:var(--text-muted);font-size:.8125rem;margin-bottom:.375rem">Employee</label>
                     <select name="user_id" required style="width:100%;background:#0F172A;border:1px solid #334155;color:#e2e8f0;border-radius:6px;padding:.5rem .75rem">
                         <option value="">Select employee…</option>
                         @foreach($employees as $emp)
@@ -90,17 +90,17 @@
                     </select>
                 </div>
                 <div>
-                    <label style="display:block;color:#94a3b8;font-size:.8125rem;margin-bottom:.375rem">Review Period</label>
+                    <label style="display:block;color:var(--text-muted);font-size:.8125rem;margin-bottom:.375rem">Review Period</label>
                     <input type="text" name="review_period" placeholder="e.g. Q2 2026" required
                            style="width:100%;background:#0F172A;border:1px solid #334155;color:#e2e8f0;border-radius:6px;padding:.5rem .75rem">
                 </div>
                 <div>
-                    <label style="display:block;color:#94a3b8;font-size:.8125rem;margin-bottom:.375rem">Review Date</label>
+                    <label style="display:block;color:var(--text-muted);font-size:.8125rem;margin-bottom:.375rem">Review Date</label>
                     <input type="date" name="review_date" required
                            style="width:100%;background:#0F172A;border:1px solid #334155;color:#e2e8f0;border-radius:6px;padding:.5rem .75rem">
                 </div>
                 <div>
-                    <label style="display:block;color:#94a3b8;font-size:.8125rem;margin-bottom:.375rem">Goals for Next Period</label>
+                    <label style="display:block;color:var(--text-muted);font-size:.8125rem;margin-bottom:.375rem">Goals for Next Period</label>
                     <textarea name="goals_for_next_period" rows="2"
                               style="width:100%;background:#0F172A;border:1px solid #334155;color:#e2e8f0;border-radius:6px;padding:.5rem .75rem;resize:vertical"></textarea>
                 </div>
