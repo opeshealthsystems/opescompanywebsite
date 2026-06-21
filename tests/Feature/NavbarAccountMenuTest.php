@@ -24,8 +24,8 @@ class NavbarAccountMenuTest extends TestCase
         $this->seed(RolePermissionSeeder::class);
     }
 
-    /** Render a public page (which carries the navbar) and return only the <nav> region. */
-    private function navFor(?string $role): string
+    /** Render a public page (which carries the navbar + footer) and return the full HTML. */
+    private function pageFor(?string $role): string
     {
         if ($role !== null) {
             $user = User::factory()->create();
@@ -35,8 +35,14 @@ class NavbarAccountMenuTest extends TestCase
             $res = $this->get('/en');
         }
         $res->assertOk();
-        $html = $res->getContent();
-        preg_match('/<nav class="site-nav".*?<\/nav>/s', $html, $m);
+
+        return $res->getContent();
+    }
+
+    /** Only the <nav> region (so footer links don't interfere with nav assertions). */
+    private function navFor(?string $role): string
+    {
+        preg_match('/<nav class="site-nav".*?<\/nav>/s', $this->pageFor($role), $m);
 
         return $m[0] ?? '';
     }
@@ -107,5 +113,39 @@ class NavbarAccountMenuTest extends TestCase
         $this->assertStringNotContainsString('nav-account-drop-header', $nav);
         $this->assertStringNotContainsString('/en/strategy', $nav);
         $this->assertStringNotContainsString('/en/risk', $nav);
+    }
+
+    public function test_previously_orphaned_public_pages_are_linked_in_nav(): void
+    {
+        $nav = $this->navFor(null); // visible to everyone
+        $this->assertStringContainsString('/en/courses', $nav);
+        $this->assertStringContainsString('/en/practitioners', $nav);
+    }
+
+    public function test_solutions_dropdown_items_use_section_anchors(): void
+    {
+        $nav = $this->navFor(null);
+        foreach (['#hospitals', '#clinics', '#laboratories', '#government'] as $anchor) {
+            $this->assertStringContainsString('/solutions'.$anchor, $nav);
+        }
+    }
+
+    public function test_footer_confidential_links_hidden_from_guests_and_non_admin_roles(): void
+    {
+        // Footer links /risk, /strategy, /financial-model only for admin|super_admin.
+        foreach ([null, 'customer', 'support'] as $role) {
+            $page = $this->pageFor($role);
+            $label = $role ?? 'guest';
+            $this->assertStringNotContainsString('/en/risk', $page, "{$label} should not see /risk");
+            $this->assertStringNotContainsString('/en/strategy', $page, "{$label} should not see /strategy");
+            $this->assertStringNotContainsString('/en/financial-model', $page, "{$label} should not see /financial-model");
+        }
+    }
+
+    public function test_admin_sees_confidential_links_in_footer(): void
+    {
+        $page = $this->pageFor('super_admin');
+        $this->assertStringContainsString('/en/risk', $page);
+        $this->assertStringContainsString('/en/financial-model', $page);
     }
 }

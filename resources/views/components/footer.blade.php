@@ -68,9 +68,13 @@ $current = $locale;
             <a href="{{ url($locale.'/quality') }}">
                 <i data-lucide="badge-check" style="width:12px;height:12px"></i>{{ $isFr ? 'Qualité (SGQ)' : 'Quality (QMS)' }}
             </a>
+            @auth
+            @if(auth()->user()->hasAnyRole(['admin','super_admin']))
             <a href="{{ url($locale.'/risk') }}">
                 <i data-lucide="shield-alert" style="width:12px;height:12px"></i>{{ $isFr ? 'Gestion des risques' : 'Risk Management' }}
             </a>
+            @endif
+            @endauth
             <a href="{{ url($locale.'/national-platform') }}">
                 <i data-lucide="building-2" style="width:12px;height:12px"></i>{{ $isFr ? 'Plateforme nationale' : 'National Platform' }}
             </a>
@@ -82,7 +86,7 @@ $current = $locale;
                 <i data-lucide="info" style="width:12px;height:12px"></i>{{ $isFr ? 'À propos d\'OPES' : 'About OPES' }}
             </a>
             @auth
-                @if(auth()->user()->hasAnyRole(['admin','super_admin','support']))
+                @if(auth()->user()->hasAnyRole(['admin','super_admin']))
                 <a href="{{ url($locale.'/strategy') }}">
                     <i data-lucide="map" style="width:12px;height:12px"></i>{{ $isFr ? 'Stratégie 2026–2031' : 'Strategy 2026–2031' }}
                 </a>

@@ -19,14 +19,14 @@
     <div class="sol-grid">
 
         @foreach([
-            ['icon'=>'hospital','color'=>'#00C896','bg'=>'rgba(0,200,150,0.08)','title'=>__('solutions.facility_0_title'),'desc'=>__('solutions.facility_0_desc'),'systems'=>['OPES Hospital HIS','OPES EMR','OPESCare','OPES Lab','PHARMIS','RADIS','RCMIS']],
-            ['icon'=>'stethoscope','color'=>'#1A6FE8','bg'=>'rgba(26,111,232,0.08)','title'=>__('solutions.facility_1_title'),'desc'=>__('solutions.facility_1_desc'),'systems'=>['OPES EMR','Opes Triage','OPESCare']],
-            ['icon'=>'microscope','color'=>'#00C896','bg'=>'rgba(0,200,150,0.08)','title'=>__('solutions.facility_2_title'),'desc'=>__('solutions.facility_2_desc'),'systems'=>['OPES Lab','OPESCare']],
-            ['icon'=>'pill','color'=>'#1A6FE8','bg'=>'rgba(26,111,232,0.08)','title'=>__('solutions.facility_3_title'),'desc'=>__('solutions.facility_3_desc'),'systems'=>['PHARMIS','OPESCare']],
-            ['icon'=>'shield-check','color'=>'#00C896','bg'=>'rgba(0,200,150,0.08)','title'=>__('solutions.facility_4_title'),'desc'=>__('solutions.facility_4_desc'),'systems'=>['UHC IS','OPES CDMS','OPESCare','RCMIS']],
-            ['icon'=>'users','color'=>'#1A6FE8','bg'=>'rgba(26,111,232,0.08)','title'=>__('solutions.facility_5_title'),'desc'=>__('solutions.facility_5_desc'),'systems'=>['OPESCare','OPES Hospital HIS','OPES EMR','All 22 systems']],
+            ['id'=>'hospitals','icon'=>'hospital','color'=>'#00C896','bg'=>'rgba(0,200,150,0.08)','title'=>__('solutions.facility_0_title'),'desc'=>__('solutions.facility_0_desc'),'systems'=>['OPES Hospital HIS','OPES EMR','OPESCare','OPES Lab','PHARMIS','RADIS','RCMIS']],
+            ['id'=>'clinics','icon'=>'stethoscope','color'=>'#1A6FE8','bg'=>'rgba(26,111,232,0.08)','title'=>__('solutions.facility_1_title'),'desc'=>__('solutions.facility_1_desc'),'systems'=>['OPES EMR','Opes Triage','OPESCare']],
+            ['id'=>'laboratories','icon'=>'microscope','color'=>'#00C896','bg'=>'rgba(0,200,150,0.08)','title'=>__('solutions.facility_2_title'),'desc'=>__('solutions.facility_2_desc'),'systems'=>['OPES Lab','OPESCare']],
+            ['id'=>'pharmacies','icon'=>'pill','color'=>'#1A6FE8','bg'=>'rgba(26,111,232,0.08)','title'=>__('solutions.facility_3_title'),'desc'=>__('solutions.facility_3_desc'),'systems'=>['PHARMIS','OPESCare']],
+            ['id'=>'government','icon'=>'shield-check','color'=>'#00C896','bg'=>'rgba(0,200,150,0.08)','title'=>__('solutions.facility_4_title'),'desc'=>__('solutions.facility_4_desc'),'systems'=>['UHC IS','OPES CDMS','OPESCare','RCMIS']],
+            ['id'=>'multi-site','icon'=>'users','color'=>'#1A6FE8','bg'=>'rgba(26,111,232,0.08)','title'=>__('solutions.facility_5_title'),'desc'=>__('solutions.facility_5_desc'),'systems'=>['OPESCare','OPES Hospital HIS','OPES EMR','All 22 systems']],
         ] as $sol)
-        <div class="sol-card">
+        <div class="sol-card" id="{{ $sol['id'] }}" style="scroll-margin-top:90px">
             <div class="sol-card-icon" style="background:{{ $sol['bg'] }}">
                 <i data-lucide="{{ $sol['icon'] }}" style="width:24px;height:24px;color:{{ $sol['color'] }}"></i>
             </div>

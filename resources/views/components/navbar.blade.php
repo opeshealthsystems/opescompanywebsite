@@ -100,28 +100,28 @@
                 <i data-lucide="chevron-down" aria-hidden="true" style="width:13px;height:13px;opacity:.5;transition:transform 0.2s"></i>
             </a>
             <div class="nav-dropdown nav-dropdown--narrow">
-                <a href="{{ url($locale.'/solutions') }}" class="nav-dd-item">
+                <a href="{{ url($locale.'/solutions').'#hospitals' }}" class="nav-dd-item">
                     <i data-lucide="hospital" style="width:14px;height:14px;color:#00C896"></i>
                     <div>
                         <div class="nav-dd-name">{{ $locale === 'fr' ? 'Hôpitaux' : 'Hospitals' }}</div>
                         <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Transformation numérique complète' : 'Full-suite digital transformation' }}</div>
                     </div>
                 </a>
-                <a href="{{ url($locale.'/solutions') }}" class="nav-dd-item">
+                <a href="{{ url($locale.'/solutions').'#clinics' }}" class="nav-dd-item">
                     <i data-lucide="stethoscope" style="width:14px;height:14px;color:#1A6FE8"></i>
                     <div>
                         <div class="nav-dd-name">{{ $locale === 'fr' ? 'Cliniques' : 'Clinics' }}</div>
                         <div class="nav-dd-sub">{{ $locale === 'fr' ? 'DME & triage pour petits établissements' : 'EMR & triage for smaller facilities' }}</div>
                     </div>
                 </a>
-                <a href="{{ url($locale.'/solutions') }}" class="nav-dd-item">
+                <a href="{{ url($locale.'/solutions').'#laboratories' }}" class="nav-dd-item">
                     <i data-lucide="microscope" style="width:14px;height:14px;color:#00C896"></i>
                     <div>
                         <div class="nav-dd-name">{{ $locale === 'fr' ? 'Laboratoires' : 'Laboratories' }}</div>
                         <div class="nav-dd-sub">OPES Lab + OPESCare</div>
                     </div>
                 </a>
-                <a href="{{ url($locale.'/solutions') }}" class="nav-dd-item">
+                <a href="{{ url($locale.'/solutions').'#government' }}" class="nav-dd-item">
                     <i data-lucide="shield-check" style="width:14px;height:14px;color:#1A6FE8"></i>
                     <div>
                         <div class="nav-dd-name">{{ $locale === 'fr' ? 'Gouvernement & ONG' : 'Government & NGOs' }}</div>
@@ -222,6 +222,20 @@
                     <div>
                         <div class="nav-dd-name">OPES Academy</div>
                         <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Certification et formation' : 'Certification & training' }}</div>
+                    </div>
+                </a>
+                <a href="{{ url($locale.'/courses') }}" class="nav-dd-item">
+                    <i data-lucide="book-open" style="width:14px;height:14px;color:#1A6FE8"></i>
+                    <div>
+                        <div class="nav-dd-name">{{ $locale === 'fr' ? 'Cours' : 'Courses' }}</div>
+                        <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Catalogue de formation public' : 'Public training catalog' }}</div>
+                    </div>
+                </a>
+                <a href="{{ url($locale.'/practitioners') }}" class="nav-dd-item">
+                    <i data-lucide="users" style="width:14px;height:14px;color:#00C896"></i>
+                    <div>
+                        <div class="nav-dd-name">{{ $locale === 'fr' ? 'Annuaire des praticiens' : 'Practitioner Directory' }}</div>
+                        <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Praticiens vérifiés' : 'Verified practitioners' }}</div>
                     </div>
                 </a>
                 <a href="{{ url($locale.'/compliance') }}" class="nav-dd-item">
