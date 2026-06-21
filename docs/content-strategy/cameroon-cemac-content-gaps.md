@@ -2,7 +2,7 @@
 
 > Gap analysis of the original 70 articles (`content/articles/`) against high-intent, evergreen Cameroon/CEMAC health-tech search. Validated June 2026 with live web research (sources per row). Topics prioritised by search demand × commercial intent × competitive gap.
 >
-> **⚑ Status (June 2026): fully executed.** The blog has grown from 70 → **109 articles, all bilingual EN/FR**. The language gap is closed, every backlog topic below is drafted, and a product-led **"Problems & Solutions"** series (87–109) has been added. This file is now a record of the completed programme rather than an open backlog.
+> **⚑ Status (June 2026): fully executed.** The blog has grown from 70 → **113 articles, all bilingual EN/FR**. The language gap is closed, every backlog topic below is drafted, a product-led **"Problems & Solutions"** series (87–109) has been added, and a sourced **competitor-comparison series** (110–113) now targets the "vs / alternative" search intent. This file is now a record of the completed programme rather than an open backlog.
 >
 > **Status legend:** ✅ done · ⏳ queued · 🔁 backfill (translate existing).
 
@@ -58,6 +58,7 @@ Every new article follows an answer-engine + generative-engine + search-engine s
 - **Cornerstone backfill:** French companions for the 7 original cornerstones (01, 04, 16, 19, 23, 24, 25). ✅ **Complete.**
 - **Full bilingual pass:** French companions for the remaining 63 originals (02, 03, 05–15, 17–22, 26–70). ✅ **Complete** — **all 109 articles now bilingual.**
 - **Govt + product programme (86–109):** article 86 (Cameroon national digitalisation plan + OPES contribution); the 22-article **"Problems & Solutions"** series (87–108 — one *problem → harm → OPES product* per system, mapped across the full 22-product catalogue); and pillar hub 109 ("The Real Cost of Paper-Based Healthcare"). ✅ **Complete & bilingual.** Filed under the new `Problems & Solutions` category.
+- **Competitor-comparison series (110–113):** comparison hub (110) + head-to-heads vs **Evolucare** (111, imported European HIS), **GESMEDIC** (112, imported French document suite), and a respectful peer comparison with **ProsoftAfrica** (113, the nearest Cameroonian rival). ✅ **Complete & bilingual** (Buyer's Guide). Targets "OPES vs X / X alternative" intent and the contested French SERPs the gap analysis named. **Discipline for any future competitor content:** use ONLY verified public facts (web-researched), mark unknowns "Not specified publicly" (never a false ✗), add a "publicly available info as of 2026 — verify with vendor" disclaimer, never disparage, and run an adversarial fairness/accuracy audit before publishing. These four passed that audit (3 skeptical auditors, 0 fabrications).
 - Publish 2–3/week; interlink each new piece to ≥2 existing articles and the relevant product page.
 
 ## Research sources (validation, June 2026)
