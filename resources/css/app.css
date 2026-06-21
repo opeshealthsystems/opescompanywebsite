@@ -9,6 +9,31 @@
     --font-display: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
 }
 
+/* ── Readability design tokens (AA-compliant text + readable type floor) ── */
+:root {
+    /* surfaces */
+    --bg: #0F172A;
+    --surface: #131d31;
+    --surface-2: #1a2438;
+    --border: #243149;
+
+    /* text — all ≥4.5:1 on --bg */
+    --text: #e8edf5;
+    --text-2: #c2cde0;
+    --text-muted: #9fb0c9;   /* replaces #64748b and #94a3b8 */
+    --text-faint: #8696b4;   /* replaces #475569 */
+
+    /* brand */
+    --green: #00C896;
+    --blue: #2f7df0;
+    --purple: #A855F7;
+
+    /* type scale — readable floor */
+    --fs-2xs: 12px;
+    --fs-xs: 13px;
+    --fs-sm: 14px;
+}
+
 /* ═══════════════════════════════════════════════════════════════════
    OPES Health Systems — Design System
    Dark theme: #0F172A surface · #00C896 green · #1A6FE8 blue
