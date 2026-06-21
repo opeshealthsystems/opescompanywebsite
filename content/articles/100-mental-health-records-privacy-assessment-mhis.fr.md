@@ -6,7 +6,7 @@
 
 ---
 
-**Réponse rapide :** Lorsque les notes de santé mentale sont sur papier ou noyées dans le dossier général, la confidentialité est difficile à protéger, les évaluations validées sont appliquées de façon inégale et les injections à action prolongée (retard) sont manquées — au risque de stigmatisation, de risque non détecté et de rechute. OPES MHIS y remédie grâce à des dossiers psychiatriques isolés, des échelles validées intégrées et des alertes d'injection retard.
+**Réponse rapide :** Lorsque les notes de santé mentale sont sur papier ou noyées dans le dossier général, la confidentialité est difficile à protéger, les évaluations validées sont appliquées de façon inégale et les injections à action prolongée (retard) sont manquées — au risque de stigmatisation, de risque non détecté et de rechute. OPES MHIS aide les équipes à réduire ces risques en isolant les dossiers psychiatriques, en facilitant l'application cohérente des échelles validées et en rappelant aux cliniciens qu'une dose retard arrive à échéance.
 
 **Faits clés**
 - Les dossiers de santé mentale exigent un niveau de confidentialité plus élevé que la plupart des données cliniques, car une atteinte peut entraîner stigmatisation, discrimination et préjudice social réel.
@@ -47,7 +47,7 @@ Au fond de ces trois problèmes se trouve le même thème : **des soins fragment
 
 **Une documentation de thérapie structurée.** Le module Notes de thérapie et de séance fournit des modèles pour les séances individuelles, de groupe et familiales, avec un suivi des objectifs, afin que le travail thérapeutique soit consigné clairement et que les progrès puissent être suivis dans le temps.
 
-**Alertes d'injection retard et prescription plus sûre.** Le module de médication psychiatrique tient à jour le calendrier d'injection retard de chaque patient et déclenche des alertes avant qu'une dose ne soit due, afin que le traitement à action prolongée reste sur les rails. Il comprend également des échelles d'évaluation des effets secondaires et un registre des substances contrôlées, ce qui maintient la prescription psychiatrique documentée et responsable.
+**Alertes d'injection retard et prescription plus sûre.** Le module de médication psychiatrique tient à jour le calendrier d'injection retard de chaque patient et déclenche un rappel avant qu'une dose ne soit due, afin que l'équipe soignante puisse maintenir le traitement à action prolongée dans les délais. Il comprend également des échelles d'évaluation des effets secondaires et un registre des substances contrôlées, ce qui maintient la prescription psychiatrique documentée et responsable.
 
 Tout au long, MHIS transforme les soins de santé mentale, d'une pratique improvisée sur papier, en quelque chose de structuré, de cohérent et de correctement protégé.
 
@@ -77,6 +77,6 @@ Oui. MHIS s'intègre à PHARMIS pour la gestion de la médication — en gardant
 
 ## Conclusion
 
-Les soins de santé mentale comportent un devoir de confidentialité inhabituellement élevé et un coût inhabituellement élevé lorsque l'évaluation ou la continuité du traitement se relâche. Les notes papier et les dossiers généraux partagés ne peuvent satisfaire ce devoir : ils exposent des antécédents sensibles, laissent l'évaluation incohérente et permettent que des doses retard soient manquées. MHIS répond directement à chaque lacune — dossiers isolés, évaluation validée intégrée et alertes d'injection retard appuyées par l'intégration PHARMIS — afin que les soins psychiatriques soient protégés, structurés et continus.
+Les soins de santé mentale comportent un devoir de confidentialité inhabituellement élevé et un coût inhabituellement élevé lorsque l'évaluation ou la continuité du traitement se relâche. Les notes papier et les dossiers généraux partagés ne peuvent satisfaire ce devoir : ils exposent des antécédents sensibles, laissent l'évaluation incohérente et permettent que des doses retard soient manquées. MHIS aide les équipes cliniques à combler directement chaque lacune — dossiers isolés, évaluation validée intégrée et rappels d'injection retard appuyés par l'intégration PHARMIS — afin que les soins psychiatriques soient mieux protégés, structurés et continus.
 
 **OPES Health Systems** conçoit des technologies de santé connectées pour le Cameroun et la région CEMAC, dont [MHIS](/fr/products/mhis), le système d'information de santé mentale. [Demandez une démo](/fr/book-demo) pour voir comment MHIS protège les dossiers de santé mentale tout en gardant l'évaluation cohérente et le traitement retard à jour.

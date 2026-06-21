@@ -1,17 +1,17 @@
 # Paper Partograms and Lost Antenatal Records: A Maternal-Health Risk — and How GYNOBSIS Fixes It
 
-**Meta Description:** Paper partograms and lost antenatal records hide danger signs in pregnancy and labour. See how GYNOBSIS digitises ANC, the partogram, and newborn records to protect mothers and babies.
+**Meta Description:** Paper partograms and lost antenatal records hide danger signs in pregnancy and labour. See how GYNOBSIS digitises ANC, the partogram, and newborn records so danger signs are less likely to go unrecorded or unseen.
 
 **Target Keywords:** maternity software Cameroon, digital partogram, antenatal care records, obstetrics information system Africa, newborn registration, OB/GYN software CEMAC
 
 ---
 
-**Quick answer:** When antenatal visits, partograms, and newborn records live only on paper, danger signs go unnoticed, escalation in obstructed labour is delayed, and babies are never linked to their mother's history. GYNOBSIS digitises antenatal care, runs a WHO partogram with automatic alerts, and gives every newborn a Health ID at birth.
+**Quick answer:** When antenatal visits, partograms, and newborn records live only on paper, danger signs go unnoticed, escalation in obstructed labour is delayed, and babies are never linked to their mother's history. GYNOBSIS digitises antenatal care, runs a digital partogram that highlights when readings cross the alert and action lines, and gives every newborn a Health ID at birth.
 
 **Key facts**
 - GYNOBSIS — the Obstetrics & Gynaecology Information System — covers the full pathway: antenatal care, labour and delivery, postnatal follow-up, and gynaecology clinics, in one connected record.
 - The WHO recommends a structured antenatal-care schedule; GYNOBSIS tracks each visit against that schedule and flags missed appointments and obstetric risk.
-- The partogram is a WHO tool for monitoring the progress of labour; GYNOBSIS replaces the paper partogram with a digital one that raises automatic alerts on abnormal labour patterns such as prolonged labour.
+- A partogram is the standard labour-monitoring chart; GYNOBSIS replaces the paper partogram with a digital one that visually highlights when the clinician's plotted readings cross the alert or action line, so the threshold is harder to miss.
 - GYNOBSIS creates a newborn OPESCare Health ID at the moment of birth, linking the baby to the mother's record so no child starts life without a digital record.
 - GYNOBSIS produces maternal-health reporting — maternal mortality, caesarean rate, ANC coverage — for Ministry of Health HMIS submission.
 
@@ -41,7 +41,7 @@ The harm is not abstract. It shows up as missed danger signs, delayed decisions,
 
 **Antenatal care on the WHO schedule.** The GYNOBSIS Antenatal Care module tracks each pregnancy against the WHO ANC visit schedule, so missed visits become visible instead of silent. It supports obstetric risk scoring, ANC laboratory orders, and ultrasound report filing — so a rising blood pressure or an abnormal scan is captured in a structured record that can be reviewed at a glance, not buried across loose pages.
 
-**A digital partogram that watches labour with you.** The GYNOBSIS Labour & Delivery module replaces the paper partogram with a WHO digital partogram that raises automatic alerts on abnormal labour patterns such as prolonged labour. Instead of relying on a hand-drawn chart being read correctly at the right moment, the system flags when labour is deviating from the expected progress — prompting earlier escalation. The module also captures mode-of-delivery coding and APGAR scoring as part of the structured delivery record.
+**A digital partogram that charts labour with you.** The GYNOBSIS Labour & Delivery module replaces the paper partogram with a digital partogram (the standard labour-monitoring chart). As the clinician records observations, the system plots them against the reference lines and visually highlights when a reading crosses the alert or action line. Instead of relying on a hand-drawn chart being read correctly at the right moment, the digital chart keeps the clinician's own threshold in plain sight — making it easier to act early. The module also captures mode-of-delivery coding and APGAR scoring as part of the structured delivery record.
 
 **A Health ID for every newborn at birth.** At the moment of delivery, GYNOBSIS creates a newborn OPESCare Health ID — so every baby starts life with a digital record rather than a line in a register. The newborn is linked directly to the mother's record, closing the gap that leaves mother and child disconnected.
 
@@ -63,7 +63,7 @@ Continuity also runs the other way, back toward the mother. With antenatal, deli
 GYNOBSIS addresses three specific gaps in paper-based maternity care: antenatal visits that are not systematically tracked, partograms still drawn on paper and never analysed in real time, and newborns who are never linked to the mother's record at birth. It replaces those weak points with a connected digital obstetrics and gynaecology record.
 
 ### How does the GYNOBSIS digital partogram work?
-GYNOBSIS implements the WHO partogram digitally within its Labour & Delivery module. As labour is recorded, the system monitors the progress against expected patterns and raises automatic alerts on abnormal labour patterns such as prolonged labour — prompting earlier escalation than a paper chart that has to be read correctly at exactly the right moment.
+GYNOBSIS provides a partogram (the standard labour-monitoring chart) digitally within its Labour & Delivery module. As the clinician records labour, the system plots each reading against the reference lines and visually highlights when a reading crosses the alert or action line — keeping the threshold in plain sight so it is easier to act early, compared with a paper chart that has to be read correctly at exactly the right moment.
 
 ### Does GYNOBSIS create a record for the newborn?
 Yes. At birth, GYNOBSIS creates a newborn OPESCare Health ID and links the baby to the mother's record. Every newborn starts life with a digital record, and that same Health ID can carry forward into paediatric follow-up in PAEDIS for growth monitoring and vaccination.
@@ -73,6 +73,6 @@ Yes. Because antenatal, labour, and delivery data are captured in structured for
 
 ## Conclusion
 
-Maternity care lived on paper is maternity care that cannot warn you in time. Antenatal trends go unread, partograms are plotted too late or not at all, and newborns are left disconnected from the mothers who carried them. GYNOBSIS closes those gaps — WHO-aligned antenatal tracking, a digital partogram that raises its own alerts, and a Health ID for every baby at birth — so that the information needed to protect mothers and newborns is there when it counts.
+Maternity care lived on paper is maternity care that cannot warn you in time. Antenatal trends go unread, partograms are plotted too late or not at all, and newborns are left disconnected from the mothers who carried them. GYNOBSIS closes those gaps — WHO-aligned antenatal tracking, a digital partogram that highlights when readings cross the alert and action lines, and a Health ID for every baby at birth — so that the information care teams need is in front of them when it counts.
 
-**OPES Health Systems** gives Cameroonian and CEMAC facilities a complete OB/GYN system that keeps antenatal, labour, postnatal, and newborn records connected. [Book a demo](/en/book-demo) to see how GYNOBSIS protects mothers and babies from the risks of paper-based care.
+**OPES Health Systems** gives Cameroonian and CEMAC facilities a complete OB/GYN system that keeps antenatal, labour, postnatal, and newborn records connected. [Book a demo](/en/book-demo) to see how GYNOBSIS helps care teams keep the information they need in front of them, reducing the risk that danger signs go unrecorded or unseen.

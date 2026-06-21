@@ -1,4 +1,4 @@
-# Lost Vaccination Cards and Undetected Growth Faltering — and How PAEDIS Protects Every Child
+# Lost Vaccination Cards and Undetected Growth Faltering — and How PAEDIS Helps Clinics Keep Every Child's Vaccination and Growth Record Complete
 
 **Meta Description:** Lost paper vaccination cards and unplotted growth leave children unprotected and malnutrition unnoticed. See how PAEDIS keeps a complete child health record.
 
@@ -10,9 +10,9 @@
 
 **Key facts**
 - PAEDIS keeps a complete child health record — growth, immunisation, illness, and development — from birth through adolescence, so an immunisation history is never lost with a misplaced card.
-- Growth Monitoring uses the WHO 2006 Child Growth Standards, calculates z-scores automatically, and raises faltering-growth alerts before malnutrition becomes critical.
+- Growth Monitoring uses the WHO 2006 Child Growth Standards, calculates z-scores automatically, and plots every measurement so a drifting z-score is highlighted for clinician review.
 - The Vaccination/EPI module follows Cameroon's national EPI schedule with due-date alerts for every dose, records vaccine batch and lot numbers, and prints vaccination certificates.
-- IMCI Clinical Support applies the WHO IMCI classify-and-treat algorithm at every consultation, with danger-sign alerts and referral decision support for common under-5 illnesses.
+- IMCI Documentation Support structures the clinician-led WHO IMCI assessment at every consultation, prompting the recording of danger signs and referral decisions for common under-5 illnesses — with clinical judgement remaining entirely with the practitioner.
 - PAEDIS links to GYNOBSIS for newborn registration and is bound to the OPESCare Health ID, so each child has one continuous record.
 
 ## Why are paper-based child-health records a problem?
@@ -35,11 +35,11 @@ Inconsistent under-5 care completes the picture. When IMCI is not applied the sa
 
 PAEDIS — the OPES Paediatrics Information System — replaces the fragile paper card with a complete, permanent digital record. It is built around the three things paper does worst.
 
-**Growth Monitoring.** PAEDIS plots every measurement against the WHO 2006 Child Growth Standards and calculates z-scores automatically — no manual charting, no skipped plots. Crucially, it does not wait for a clinician to notice a worrying trend: PAEDIS raises **faltering-growth alerts** when a child's z-scores drift, flagging the problem early enough to act before it becomes a crisis.
+**Growth Monitoring.** PAEDIS plots every measurement against the WHO 2006 Child Growth Standards and calculates z-scores automatically — no manual charting, no skipped plots. Crucially, the trend is never left invisible on a blank chart: when a child's z-scores drift, PAEDIS **highlights the drifting measurement for clinician review**, surfacing the data early so the clinician can decide whether to act.
 
 **Vaccination / EPI.** PAEDIS follows Cameroon's national EPI schedule and generates **due-date alerts for every dose**, so no vaccination is missed simply because a card was lost or a date forgotten. Each dose is recorded with its **vaccine batch and lot number** — essential for safety and recall traceability — and the system **prints vaccination certificates** on demand, so a family always has proof even if their paper booklet is gone.
 
-**IMCI Clinical Support.** At every consultation, PAEDIS runs the WHO IMCI **classify-and-treat algorithm**, guiding the clinician through structured assessment of common under-5 illnesses. It raises **danger-sign alerts** and provides **referral decision support**, so the child who needs urgent care is identified consistently — not just when the clinician happens to remember every step.
+**IMCI Documentation Support.** At every consultation, PAEDIS structures the clinician-led WHO IMCI assessment of common under-5 illnesses, providing a consistent checklist so no step is skipped from memory. It **prompts the clinician to record danger signs** and **documents the referral decision they make**, so the structured assessment is captured the same way every time — while the clinical classification, treatment, and referral judgement remain entirely with the practitioner.
 
 Together these modules turn child health from something improvised at each visit into something systematic. For a deeper look at the paediatric care problem, see our overview of [paediatric care software](/en/blog/47-pediatric-care-software-children-health-records-africa) and how a connected [vaccination and immunisation management](/en/blog/51-vaccination-immunization-management-system-cameroon) system supports EPI compliance.
 
@@ -54,10 +54,10 @@ The result is one record that spans birth through adolescence: growth, vaccines,
 ## Frequently Asked Questions
 
 ### What is PAEDIS?
-PAEDIS is the OPES Paediatrics Information System: a complete paediatric record covering growth monitoring, immunisation schedules, IMCI protocols, and neonatal intensive care. It keeps a child's full health history — growth, vaccines, illness, and development — in one place from birth through adolescence, bound to the OPESCare Health ID so it is never lost with a paper card.
+PAEDIS is the OPES Paediatrics Information System: a complete paediatric record covering growth monitoring, immunisation schedules, IMCI documentation, and neonatal record-keeping. It keeps a child's full health history — growth, vaccines, illness, and development — in one place from birth through adolescence, bound to the OPESCare Health ID so it is never lost with a paper card.
 
-### How does PAEDIS detect growth faltering early?
-PAEDIS plots every weight and height measurement against the WHO 2006 Child Growth Standards and calculates z-scores automatically. When a child's z-scores drift in a concerning direction, the system raises a faltering-growth alert — surfacing the problem early, while malnutrition is still most treatable, rather than waiting until a child is visibly wasted.
+### How does PAEDIS help clinicians spot growth faltering early?
+PAEDIS plots every weight and height measurement against the WHO 2006 Child Growth Standards and calculates z-scores automatically. When a child's z-scores drift in a concerning direction, the system highlights the drifting measurement for clinician review — surfacing the data early, rather than leaving it hidden on a blank chart, so the clinician can assess and decide whether to act.
 
 ### Does PAEDIS follow the Cameroon EPI schedule?
 Yes. The PAEDIS Vaccination/EPI module follows Cameroon's national Expanded Programme on Immunization schedule. It generates due-date alerts for every dose, records each vaccine's batch and lot number for safety and recall traceability, and prints vaccination certificates on demand.
@@ -67,6 +67,6 @@ With PAEDIS, a lost card no longer means a lost history. Because each child's im
 
 ## Conclusion
 
-When child health lives on paper, the system fails in the moments that matter most: the lost card that erases an immunisation history, the blank growth chart that hides faltering, the danger sign missed for want of a consistent protocol. PAEDIS closes all three gaps at once — WHO growth charts with automatic z-score alerts, the Cameroon EPI schedule with due-date prompts and batch tracking, and IMCI decision support at every consultation, all in one permanent record from birth. For Cameroonian and CEMAC facilities, that is how every child stays protected, monitored, and accounted for.
+When child health lives on paper, the system fails in the moments that matter most: the lost card that erases an immunisation history, the blank growth chart that hides faltering, the danger sign missed for want of a consistent protocol. PAEDIS closes all three gaps at once — WHO growth charts with automatic z-score alerts, the Cameroon EPI schedule with due-date prompts and batch tracking, and IMCI decision support at every consultation, all in one permanent record from birth. For Cameroonian and CEMAC facilities, that is how the clinic keeps a complete, reliable record for every child — so the work of clinicians, vaccines, and the EPI programme is fully documented and never lost.
 
-**OPES Health Systems** builds connected health software for Cameroon and the CEMAC region, with PAEDIS keeping a complete paediatric record from birth through adolescence. [Book a demo](/en/book-demo) to see how PAEDIS protects every child's growth and immunisation history.
+**OPES Health Systems** builds connected health software for Cameroon and the CEMAC region, with PAEDIS keeping a complete paediatric record from birth through adolescence. [Book a demo](/en/book-demo) to see how PAEDIS keeps a complete, reliable record of every child's growth and immunisation history.

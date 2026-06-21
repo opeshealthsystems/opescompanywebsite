@@ -6,7 +6,7 @@
 
 ---
 
-**Quick answer:** When mental-health notes live on paper or buried in the general record, confidentiality is hard to protect, validated assessments are applied unevenly, and long-acting (depot) injections get missed — risking stigma, missed risk, and relapse. OPES MHIS solves this with privacy-isolated psychiatric records, embedded validated scales, and depot-injection alerts.
+**Quick answer:** When mental-health notes live on paper or buried in the general record, confidentiality is hard to protect, validated assessments are applied unevenly, and long-acting (depot) injections get missed — risking stigma, missed risk, and relapse. MHIS helps teams reduce these risks by isolating psychiatric records, making validated scales easy to apply consistently, and prompting clinicians before a depot dose is due.
 
 **Key facts**
 - Mental-health records demand a higher standard of confidentiality than most clinical data, because a breach can lead to stigma, discrimination, and real social harm.
@@ -47,7 +47,7 @@ Underlying all three is the same theme: **fragmented, undocumented care**. When 
 
 **Structured therapy documentation.** The Therapy & Session Notes module provides templates for individual, group, and family sessions, with goal tracking, so the therapeutic work is recorded clearly and progress can be followed over time.
 
-**Depot-injection alerts and safer prescribing.** The Psychiatric Medication module maintains each patient's depot-injection schedule and raises alerts before a dose is due, so long-acting treatment stays on track. It also includes side-effect rating scales and a controlled-substance registry, keeping psychiatric prescribing documented and accountable.
+**Depot-injection alerts and safer prescribing.** The Psychiatric Medication module maintains each patient's depot-injection schedule and raises a reminder before a dose is due so the care team can keep long-acting treatment on schedule. It also includes side-effect rating scales and a controlled-substance registry, keeping psychiatric prescribing documented and accountable.
 
 Throughout, MHIS turns mental-health care from something improvised on paper into something structured, consistent, and properly protected.
 
@@ -77,6 +77,6 @@ Yes. MHIS integrates with PHARMIS for medication management — keeping depot sc
 
 ## Conclusion
 
-Mental-health care carries an unusually high duty of confidentiality and an unusually high cost when assessment or medication continuity slips. Paper notes and shared general records cannot meet that duty: they expose sensitive history, leave assessment inconsistent, and let depot doses be missed. MHIS answers each gap directly — privacy-isolated records, embedded validated assessment, and depot-injection alerts backed by PHARMIS integration — so psychiatric care is protected, structured, and continuous.
+Mental-health care carries an unusually high duty of confidentiality and an unusually high cost when assessment or medication continuity slips. Paper notes and shared general records cannot meet that duty: they expose sensitive history, leave assessment inconsistent, and let depot doses be missed. MHIS helps clinical teams close each gap directly — privacy-isolated records, embedded validated assessment, and depot-injection reminders backed by PHARMIS integration — so psychiatric care is better protected, structured, and continuous.
 
 **OPES Health Systems** builds connected health technology for Cameroon and the CEMAC region, including [MHIS](/en/products/mhis), the Mental Health Information System. [Book a demo](/en/book-demo) to see how MHIS protects mental-health records while keeping assessment consistent and depot treatment on schedule.

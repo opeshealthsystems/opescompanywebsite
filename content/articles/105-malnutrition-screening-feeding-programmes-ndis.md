@@ -9,10 +9,10 @@
 **Quick answer:** When nutrition care runs on paper, malnutrition is not screened at admission and therapeutic feeding programmes are not tracked systematically — so at-risk patients, especially children, go unidentified, outcomes stay invisible, and relapse and mortality risk rise. NDIS builds screening into admission and tracks feeding programmes end to end.
 
 **Key facts**
-- NDIS, the Nutrition & Dietetics Information System, builds validated malnutrition screening into admission so no at-risk patient is missed.
-- MUST, NRS-2002, and STAMP are validated, widely used screening tools; NDIS supports all three for adults and children.
+- NDIS, the Nutrition & Dietetics Information System, prompts malnutrition screening at admission so fewer at-risk patients are missed.
+- MUST, NRS-2002, and STAMP are validated, widely used screening tools; NDIS supports MUST and NRS-2002 for adults and STAMP for children.
 - MUAC (mid-upper-arm circumference) and weight-for-height z-scores are standard anthropometric measures; NDIS records them and tracks change over time.
-- NDIS manages therapeutic feeding for severe and moderate acute malnutrition (SAM/MAM) and produces programme outcomes for ministries and donors such as UNICEF and WFP.
+- NDIS manages therapeutic feeding for severe and moderate acute malnutrition (SAM/MAM) and produces reporting in the formats ministries and donors such as UNICEF and WFP require.
 - NDIS integrates nutritional biomarkers from OPES Lab and links to PAEDIS for children, and is tablet-optimised for community use.
 
 ## Why does paper-based nutrition care miss malnutrition?
@@ -35,13 +35,13 @@ The third harm lands at the level of the programme itself. Nutrition programmes 
 
 **NDIS** — the Nutrition & Dietetics Information System — is built around the two failures above: malnutrition that is not identified at admission, and therapeutic feeding that is not tracked systematically.
 
-**Screening built into admission.** The NDIS Nutritional Assessment module puts validated screening — MUST, NRS-2002, and STAMP for paediatric cases — into the admission workflow, so every relevant patient is screened rather than only the ones someone remembers to assess. NDIS captures anthropometric measurements, calculates BMI and weight-for-height z-scores, and records MUAC, turning a skippable paper form into a structured step that flags at-risk patients automatically.
+**Screening built into admission.** The NDIS Nutritional Assessment module puts validated screening — MUST, NRS-2002, and STAMP for paediatric cases — into the admission workflow, so every relevant patient is screened rather than only the ones someone remembers to assess. NDIS captures anthropometric measurements, calculates BMI and weight-for-height z-scores, and records MUAC, turning a skippable paper form into a structured step that automatically flags patients whose entered scores cross validated risk thresholds.
 
 **Anthropometric tracking over time.** Because NDIS stores each measurement against the patient over time, weight, MUAC, and z-scores become a trend rather than a scattered set of numbers. Clinicians can see at a glance whether a child on a feeding programme is gaining as expected or stalling — the trajectory that paper hides.
 
 **Dietary counselling that is recorded and followed up.** The NDIS Dietary Counselling module captures 24-hour dietary recall, applies dietary-plan templates, scores food-group adequacy, and supports goal-setting with progress tracking. Counselling stops being an undocumented conversation and becomes a recorded plan you can return to and measure against.
 
-**Therapeutic feeding tracked end to end.** For severe and moderate acute malnutrition, NDIS manages the feeding programme as a tracked pathway, so enrolment, measurements, progress, and SAM/MAM outcomes are captured systematically instead of living on loose registers. The same discipline that makes nutrition care safer also makes it reportable.
+**Therapeutic feeding tracked end to end.** For severe and moderate acute malnutrition, NDIS manages the feeding programme as a tracked pathway, so enrolment, measurements, progress, and SAM/MAM outcomes are captured systematically instead of living on loose registers. The same structured workflow that supports clinicians in delivering nutrition care also makes it reportable.
 
 This connected approach mirrors how other OPES modules close care gaps — much as structured records transform [paediatric care](/en/blog/47-pediatric-care-software-children-health-records-africa) and [chronic disease management for diabetes and hypertension](/en/blog/50-chronic-disease-diabetes-hypertension-management-africa).
 
@@ -73,6 +73,6 @@ Because nutrition assessments and SAM/MAM outcomes are recorded systematically, 
 
 ## Conclusion
 
-When nutrition care runs on paper, malnutrition is missed where it should be caught — at admission — and feeding programmes lose sight of the very outcomes that justify them. The cost is borne first by patients, especially children, and then by programmes that cannot show their results. NDIS builds validated screening into admission, tracks anthropometric measures and feeding over time, and turns SAM/MAM outcomes into reports ministries and donors can trust. With nutrition care visible, no at-risk patient has to go unseen.
+When nutrition care runs on paper, malnutrition is missed where it should be caught — at admission — and feeding programmes lose sight of the very outcomes that justify them. The cost is borne first by patients, especially children, and then by programmes that cannot show their results. NDIS builds validated screening into admission, tracks anthropometric measures and feeding over time, and turns SAM/MAM outcomes into reports ministries and donors can trust. With nutrition care visible, it helps ensure at-risk patients are flagged.
 
-**OPES Health Systems** gives Cameroonian and CEMAC facilities the nutrition screening, anthropometric tracking, and feeding-programme reporting they need through NDIS. [Book a demo](/en/book-demo) to see how NDIS makes sure no malnourished patient is missed.
+**OPES Health Systems** gives Cameroonian and CEMAC facilities the nutrition screening, anthropometric tracking, and feeding-programme reporting they need through NDIS. [Book a demo](/en/book-demo) to see how NDIS helps ensure at-risk patients are flagged.

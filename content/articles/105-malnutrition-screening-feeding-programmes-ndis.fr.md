@@ -9,10 +9,10 @@
 **Réponse rapide :** Quand les soins nutritionnels reposent sur le papier, la malnutrition n'est pas dépistée à l'admission et les programmes nutritionnels thérapeutiques ne sont pas suivis systématiquement — les patients à risque, surtout les enfants, passent inaperçus, les résultats restent invisibles et les risques de rechute et de décès augmentent. NDIS intègre le dépistage à l'admission et suit les programmes de bout en bout.
 
 **Faits clés**
-- NDIS, le Nutrition & Dietetics Information System, intègre un dépistage validé de la malnutrition à l'admission afin qu'aucun patient à risque ne soit oublié.
-- MUST, NRS-2002 et STAMP sont des outils de dépistage validés et largement utilisés ; NDIS prend en charge les trois, pour adultes et enfants.
+- NDIS, le Nutrition & Dietetics Information System, invite au dépistage de la malnutrition à l'admission afin que moins de patients à risque soient oubliés.
+- MUST, NRS-2002 et STAMP sont des outils de dépistage validés et largement utilisés ; NDIS prend en charge MUST et NRS-2002 pour les adultes et STAMP pour les enfants.
 - Le PB (périmètre brachial / MUAC) et les z-scores poids-pour-taille sont des mesures anthropométriques standard ; NDIS les enregistre et suit leur évolution dans le temps.
-- NDIS gère l'alimentation thérapeutique pour la malnutrition aiguë sévère et modérée (MAS/MAM) et produit des résultats de programme pour les ministères et les bailleurs comme l'UNICEF et le PAM.
+- NDIS gère l'alimentation thérapeutique pour la malnutrition aiguë sévère et modérée (MAS/MAM) et produit le reporting dans les formats exigés par les ministères et les bailleurs comme l'UNICEF et le PAM.
 - NDIS intègre les biomarqueurs nutritionnels d'OPES Lab, se relie à PAEDIS pour les enfants et est optimisé pour tablette en usage communautaire.
 
 ## Pourquoi les soins nutritionnels sur papier manquent-ils la malnutrition ?
@@ -35,13 +35,13 @@ Le troisième préjudice se situe au niveau du programme lui-même. Les programm
 
 **NDIS** — le Nutrition & Dietetics Information System — est conçu autour des deux échecs ci-dessus : la malnutrition non identifiée à l'admission et l'alimentation thérapeutique non suivie systématiquement.
 
-**Le dépistage intégré à l'admission.** Le module d'évaluation nutritionnelle de NDIS intègre un dépistage validé — MUST, NRS-2002 et STAMP pour les cas pédiatriques — au flux d'admission, afin que chaque patient concerné soit dépisté, et pas seulement ceux que quelqu'un pense à évaluer. NDIS saisit les mesures anthropométriques, calcule l'IMC et les z-scores poids-pour-taille, et enregistre le PB, transformant un formulaire papier que l'on peut sauter en une étape structurée qui signale automatiquement les patients à risque.
+**Le dépistage intégré à l'admission.** Le module d'évaluation nutritionnelle de NDIS intègre un dépistage validé — MUST, NRS-2002 et STAMP pour les cas pédiatriques — au flux d'admission, afin que chaque patient concerné soit dépisté, et pas seulement ceux que quelqu'un pense à évaluer. NDIS saisit les mesures anthropométriques, calcule l'IMC et les z-scores poids-pour-taille, et enregistre le PB, transformant un formulaire papier que l'on peut sauter en une étape structurée qui signale automatiquement les patients dont les scores saisis franchissent les seuils de risque validés.
 
 **Le suivi anthropométrique dans le temps.** Parce que NDIS stocke chaque mesure rattachée au patient au fil du temps, le poids, le PB et les z-scores deviennent une tendance plutôt qu'un ensemble de chiffres épars. Les cliniciens voient d'un coup d'œil si un enfant inscrit à un programme nutritionnel prend du poids comme prévu ou stagne — la trajectoire que le papier dissimule.
 
 **Un conseil diététique enregistré et suivi.** Le module de conseil diététique de NDIS saisit le rappel alimentaire des 24 heures, applique des modèles de plan diététique, évalue l'adéquation des groupes alimentaires et prend en charge la fixation d'objectifs avec suivi des progrès. Le conseil cesse d'être une conversation non documentée pour devenir un plan enregistré que l'on peut reprendre et mesurer.
 
-**Une alimentation thérapeutique suivie de bout en bout.** Pour la malnutrition aiguë sévère et modérée, NDIS gère le programme nutritionnel comme un parcours suivi, de sorte que l'inscription, les mesures, les progrès et les résultats MAS/MAM sont saisis systématiquement au lieu de vivre sur des registres volants. La même discipline qui rend les soins nutritionnels plus sûrs les rend aussi rapportables.
+**Une alimentation thérapeutique suivie de bout en bout.** Pour la malnutrition aiguë sévère et modérée, NDIS gère le programme nutritionnel comme un parcours suivi, de sorte que l'inscription, les mesures, les progrès et les résultats MAS/MAM sont saisis systématiquement au lieu de vivre sur des registres volants. Le même flux de travail structuré qui aide les cliniciens à dispenser les soins nutritionnels les rend aussi rapportables.
 
 Cette approche connectée reflète la façon dont d'autres modules OPES comblent les lacunes de soins — tout comme des dossiers structurés transforment les [soins pédiatriques](/fr/blog/47-pediatric-care-software-children-health-records-africa) et la [gestion des maladies chroniques comme le diabète et l'hypertension](/fr/blog/50-chronic-disease-diabetes-hypertension-management-africa).
 
@@ -73,6 +73,6 @@ Parce que les évaluations nutritionnelles et les résultats MAS/MAM sont enregi
 
 ## Conclusion
 
-Quand les soins nutritionnels reposent sur le papier, la malnutrition est manquée là où elle devrait être détectée — à l'admission — et les programmes nutritionnels perdent de vue les résultats mêmes qui les justifient. Le coût est supporté d'abord par les patients, surtout les enfants, puis par les programmes incapables de montrer leurs résultats. NDIS intègre un dépistage validé à l'admission, suit les mesures anthropométriques et l'alimentation dans le temps, et transforme les résultats MAS/MAM en rapports auxquels ministères et bailleurs peuvent se fier. Avec des soins nutritionnels visibles, aucun patient à risque ne reste invisible.
+Quand les soins nutritionnels reposent sur le papier, la malnutrition est manquée là où elle devrait être détectée — à l'admission — et les programmes nutritionnels perdent de vue les résultats mêmes qui les justifient. Le coût est supporté d'abord par les patients, surtout les enfants, puis par les programmes incapables de montrer leurs résultats. NDIS intègre un dépistage validé à l'admission, suit les mesures anthropométriques et l'alimentation dans le temps, et transforme les résultats MAS/MAM en rapports auxquels ministères et bailleurs peuvent se fier. Avec des soins nutritionnels visibles, il aide à garantir que les patients à risque soient signalés.
 
-**OPES Health Systems** donne aux structures camerounaises et de la CEMAC le dépistage nutritionnel, le suivi anthropométrique et le reporting des programmes nutritionnels dont elles ont besoin grâce à NDIS. [Demandez une démo](/fr/book-demo) pour voir comment NDIS garantit qu'aucun patient malnutri n'est oublié.
+**OPES Health Systems** donne aux structures camerounaises et de la CEMAC le dépistage nutritionnel, le suivi anthropométrique et le reporting des programmes nutritionnels dont elles ont besoin grâce à NDIS. [Demandez une démo](/fr/book-demo) pour voir comment NDIS aide à garantir que les patients à risque soient signalés.

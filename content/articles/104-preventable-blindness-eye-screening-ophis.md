@@ -1,4 +1,4 @@
-# Preventable Blindness and Missed Eye Screening: The Cost of Paper Ophthalmology — and How OPHIS Fixes It
+# Preventable Blindness and Missed Eye Screening: The Cost of Paper Ophthalmology — and How OPHIS Helps Clinics Catch It Earlier
 
 **Meta Description:** Paper eye records miss sight-threatening disease — acuity untracked, retinopathy unscreened, fundus images lost. See how OPHIS structures ophthalmology to prevent blindness.
 
@@ -6,14 +6,14 @@
 
 ---
 
-**Quick answer:** On paper, visual acuity is never tracked over time, diabetic-retinopathy screening is not systematic, and fundus images are never archived — so sight-threatening disease progresses undetected until it is too late. OPHIS, the OPES Ophthalmology Information System, structures every eye examination, archives fundus images, and makes screening a routine, so blindness is caught while it is still preventable.
+**Quick answer:** On paper, visual acuity is never tracked over time, diabetic-retinopathy screening is not systematic, and fundus images are never archived — so sight-threatening disease progresses undetected until it is too late. OPHIS, the OPES Ophthalmology Information System, structures every eye examination, archives fundus images, and makes screening a routine, so clinicians have the longitudinal data needed to detect sight-threatening change earlier.
 
 **Key facts**
 - Diabetic retinopathy, cataract, glaucoma, and trachoma are among the leading causes of avoidable blindness — and most cases are preventable when detected and managed early.
 - Diabetic-retinopathy screening depends on regular fundus imaging; without an archive of comparable images, progression cannot be judged objectively.
 - OPHIS records visual acuity in both Snellen and LogMAR, tracks intraocular pressure over time, and stores structured slit-lamp and fundus findings for every visit.
 - OPHIS grades diabetic retinopathy on the ETDRS scale — a standard grading framework — and keeps a fundus-photo archive for before/after and visit-to-visit comparison.
-- OPHIS links eye records to ENDOIS diabetes records and ships with cataract and trachoma programme workflows, so blindness-prevention screening can actually function.
+- OPHIS links eye records to ENDOIS diabetes records and ships with cataract and trachoma programme workflows, which supports the record-keeping that blindness-prevention screening programmes rely on.
 
 ## Why does paper-based eye care miss sight-threatening disease?
 
@@ -39,17 +39,17 @@ Whole screening programmes depend on records that paper cannot provide. Cataract
 
 **Structured clinical examination.** Slit-lamp findings and fundus observations are captured in structured notation and templates rather than free-form scrawl, so they are consistent, complete, and comparable between visits and between clinicians. The next examiner inherits a real record, not a blank page.
 
-**Fundus archive with ETDRS grading.** OPHIS keeps a fundus-photo archive and files OCT images alongside the clinical record. Diabetic retinopathy is graded on the ETDRS scale — a standard framework — so grading is consistent over time and across staff. Because the images are archived, before/after surgical comparison and visit-to-visit progression tracking become routine, giving clinicians the objective baseline that paper can never offer.
+**Fundus archive with ETDRS grading.** OPHIS keeps a fundus-photo archive and files OCT images alongside the clinical record. OPHIS records diabetic-retinopathy grades on the standard ETDRS scale, so gradings are captured the same way across visits and staff. Because the images are archived, before/after surgical comparison and visit-to-visit progression tracking become routine, giving clinicians the objective baseline that paper can never offer.
 
 **Refraction and spectacles.** OPHIS imports auto-refractor readings, prints spectacle prescriptions, and supports low-vision assessment, so the refraction workflow is as structured and recorded as the clinical one. The same disciplined record-keeping that protects sight also runs the everyday work of the eye clinic. For facilities already running a [hospital management system](/en/blog/24-what-is-hospital-management-system-complete-guide), OPHIS brings that same structure to ophthalmology specifically.
 
 ## How does OPHIS support blindness-prevention programmes?
 
-A structured record is the foundation; a screening programme is what you build on it. OPHIS is designed so that blindness-prevention work — the kind that depends on systematic records — can actually run.
+A structured record is the foundation; a screening programme is what you build on it. OPHIS supports the record-keeping that blindness-prevention screening programmes rely on — the kind of work that depends on systematic records.
 
 **Diabetic retinopathy linked to diabetes records.** OPHIS links eye records to ENDOIS, the OPES diabetes records, so the connection between a patient's diabetes and their retinopathy risk is explicit rather than left to chance. Diabetic patients can be identified for fundus screening on a schedule, graded on the ETDRS scale, and followed over time — turning retinopathy screening from an accident of who walks in into a managed, systematic process.
 
-**Cataract and trachoma programme workflows.** OPHIS ships with workflows for cataract and trachoma programmes — two major drivers of avoidable blindness in the region. Because patients, screenings, and gradings are recorded in a queryable system, a programme can see who has been screened, who is due, and who needs surgery or treatment, and can measure its own coverage instead of guessing.
+**Cataract and trachoma programme workflows.** OPHIS ships with workflows for cataract and trachoma programmes — two major drivers of avoidable blindness addressed by national programmes in parts of the region. Because patients, screenings, and gradings are recorded in a queryable system, a programme can see who has been screened, who is due, and who needs surgery or treatment, and can measure its own coverage instead of guessing.
 
 **An objective fundus archive.** Across all of these, the fundus-photo archive is what makes progression real rather than remembered. Comparing this year's retina to last year's, or the eye before and after surgery, lets programmes track outcomes objectively and act on genuine change. In a region where diabetic retinopathy, cataract, glaucoma, and trachoma cause so much avoidable blindness, that objective, longitudinal view is the difference between reacting to lost sight and preventing it.
 
@@ -69,6 +69,6 @@ OPHIS ships with workflows for cataract, trachoma, and diabetic-retinopathy prog
 
 ## Conclusion
 
-Paper ophthalmology fails sight in slow motion: acuity is never trended, pressure climbs unseen, screening is not systematic, and no fundus image survives to compare against. The harm is preventable blindness from glaucoma, diabetic retinopathy, cataract, and trachoma — disease that early, structured records would have caught. OPHIS gives Cameroonian and CEMAC eye clinics the longitudinal records, fundus archive, ETDRS grading, and programme workflows that turn reactive eye care into genuine blindness prevention.
+Paper ophthalmology fails sight in slow motion: acuity is never trended, pressure climbs unseen, screening is not systematic, and no fundus image survives to compare against. The harm is preventable blindness from glaucoma, diabetic retinopathy, cataract, and trachoma — disease that early, structured records would have caught. OPHIS gives Cameroonian and CEMAC eye clinics the longitudinal records, fundus archive, ETDRS grading, and programme workflows that give eye clinics the structured records and screening workflows that underpin blindness-prevention programmes.
 
 **OPES Health Systems** brings structured, longitudinal ophthalmology — acuity, fundus imaging, and systematic screening — to Cameroonian and CEMAC eye clinics with OPHIS. [Book a demo](/en/book-demo) to see how OPHIS helps prevent avoidable blindness.

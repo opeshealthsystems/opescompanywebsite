@@ -1,4 +1,4 @@
-# Cartes de vaccination perdues et retard de croissance non détecté — comment PAEDIS protège chaque enfant
+# Cartes de vaccination perdues et retard de croissance non détecté — comment PAEDIS aide les cliniques à tenir un dossier de vaccination et de croissance complet pour chaque enfant
 
 **Meta Description:** Les cartes de vaccination papier perdues et la croissance non suivie laissent les enfants sans protection. Découvrez comment PAEDIS tient un dossier complet de l'enfant.
 
@@ -10,9 +10,9 @@
 
 **Faits clés**
 - PAEDIS tient un dossier de santé complet de l'enfant — croissance, vaccination, maladie et développement — de la naissance à l'adolescence, afin qu'un historique vaccinal ne soit jamais perdu avec une carte égarée.
-- Le module de Suivi de la Croissance utilise les Normes OMS de croissance de l'enfant 2006, calcule automatiquement les z-scores et déclenche des alertes de retard de croissance avant que la malnutrition ne devienne critique.
+- Le module de Suivi de la Croissance utilise les Normes OMS de croissance de l'enfant 2006, calcule automatiquement les z-scores et reporte chaque mesure afin qu'un z-score qui dérive soit mis en évidence pour examen par le clinicien.
 - Le module Vaccination/PEV suit le calendrier national du PEV camerounais avec des alertes d'échéance pour chaque dose, enregistre les numéros de lot des vaccins et imprime les certificats de vaccination.
-- L'Aide Clinique PCIME applique l'algorithme OMS de la PCIME « classer et traiter » à chaque consultation, avec alertes de signes de danger et aide à la décision de référence pour les maladies courantes du moins de 5 ans.
+- L'Aide à la Documentation PCIME structure l'évaluation PCIME de l'OMS menée par le clinicien à chaque consultation, en invitant à consigner les signes de danger et les décisions de référence pour les maladies courantes du moins de 5 ans — le jugement clinique demeurant entièrement celui du praticien.
 - PAEDIS est relié à GYNOBSIS pour l'enregistrement du nouveau-né et rattaché à l'Identifiant Santé OPESCare, pour que chaque enfant ait un dossier continu.
 
 ## Pourquoi les dossiers papier de santé de l'enfant posent-ils problème ?
@@ -35,11 +35,11 @@ La prise en charge inconstante du moins de 5 ans complète le tableau. Quand la 
 
 PAEDIS — le Système d'Information Pédiatrique d'OPES — remplace la carte papier fragile par un dossier numérique complet et permanent. Il est construit autour des trois choses que le papier fait le plus mal.
 
-**Suivi de la Croissance.** PAEDIS reporte chaque mesure sur les Normes OMS de croissance de l'enfant 2006 et calcule automatiquement les z-scores — sans tracé manuel, sans report omis. Surtout, il n'attend pas qu'un clinicien remarque une tendance inquiétante : PAEDIS déclenche des **alertes de retard de croissance** lorsque les z-scores d'un enfant dérivent, signalant le problème assez tôt pour agir avant qu'il ne devienne une crise.
+**Suivi de la Croissance.** PAEDIS reporte chaque mesure sur les Normes OMS de croissance de l'enfant 2006 et calcule automatiquement les z-scores — sans tracé manuel, sans report omis. Surtout, la tendance n'est jamais laissée invisible sur une courbe vierge : lorsque les z-scores d'un enfant dérivent, PAEDIS **met en évidence la mesure qui dérive pour examen par le clinicien**, faisant apparaître la donnée assez tôt pour que le clinicien décide s'il y a lieu d'agir.
 
 **Vaccination / PEV.** PAEDIS suit le calendrier national du PEV camerounais et génère des **alertes d'échéance pour chaque dose**, pour qu'aucune vaccination ne soit manquée simplement parce qu'une carte a été perdue ou une date oubliée. Chaque dose est enregistrée avec son **numéro de lot de vaccin** — essentiel pour la sécurité et la traçabilité des rappels — et le système **imprime les certificats de vaccination** à la demande, pour qu'une famille ait toujours une preuve même si son carnet papier a disparu.
 
-**Aide Clinique PCIME.** À chaque consultation, PAEDIS exécute l'algorithme OMS de la PCIME **« classer et traiter »**, guidant le clinicien dans l'évaluation structurée des maladies courantes du moins de 5 ans. Il déclenche des **alertes de signes de danger** et fournit une **aide à la décision de référence**, pour que l'enfant qui a besoin de soins urgents soit identifié de façon constante — et non seulement quand le clinicien se souvient par hasard de chaque étape.
+**Aide à la Documentation PCIME.** À chaque consultation, PAEDIS structure l'évaluation PCIME de l'OMS menée par le clinicien pour les maladies courantes du moins de 5 ans, en fournissant une liste de contrôle cohérente pour qu'aucune étape ne soit omise par oubli. Il **invite le clinicien à consigner les signes de danger** et **enregistre la décision de référence qu'il prend**, pour que l'évaluation structurée soit capturée de la même manière à chaque fois — tandis que la classification clinique, le traitement et la décision de référence demeurent entièrement du ressort du praticien.
 
 Ensemble, ces modules transforment la santé de l'enfant : d'une chose improvisée à chaque visite, elle devient systématique. Pour un examen plus approfondi du problème des soins pédiatriques, consultez notre présentation du [logiciel de soins pédiatriques](/fr/blog/47-pediatric-care-software-children-health-records-africa) et de la façon dont un système connecté de [gestion de la vaccination et de l'immunisation](/fr/blog/51-vaccination-immunization-management-system-cameroon) soutient la conformité au PEV.
 
@@ -54,10 +54,10 @@ Le résultat est un dossier unique qui s'étend de la naissance à l'adolescence
 ## Questions Fréquentes
 
 ### Qu'est-ce que PAEDIS ?
-PAEDIS est le Système d'Information Pédiatrique d'OPES : un dossier pédiatrique complet couvrant le suivi de la croissance, les calendriers de vaccination, les protocoles PCIME et les soins intensifs néonatals. Il tient l'historique de santé complet d'un enfant — croissance, vaccins, maladie et développement — en un seul endroit, de la naissance à l'adolescence, rattaché à l'Identifiant Santé OPESCare pour qu'il ne soit jamais perdu avec une carte papier.
+PAEDIS est le Système d'Information Pédiatrique d'OPES : un dossier pédiatrique complet couvrant le suivi de la croissance, les calendriers de vaccination, la documentation PCIME et la tenue du dossier néonatal. Il tient l'historique de santé complet d'un enfant — croissance, vaccins, maladie et développement — en un seul endroit, de la naissance à l'adolescence, rattaché à l'Identifiant Santé OPESCare pour qu'il ne soit jamais perdu avec une carte papier.
 
-### Comment PAEDIS détecte-t-il tôt le retard de croissance ?
-PAEDIS reporte chaque mesure de poids et de taille sur les Normes OMS de croissance de l'enfant 2006 et calcule automatiquement les z-scores. Lorsque les z-scores d'un enfant dérivent dans une direction préoccupante, le système déclenche une alerte de retard de croissance — faisant apparaître le problème tôt, tant que la malnutrition est encore le plus facilement traitable, au lieu d'attendre qu'un enfant soit visiblement émacié.
+### Comment PAEDIS aide-t-il les cliniciens à repérer tôt le retard de croissance ?
+PAEDIS reporte chaque mesure de poids et de taille sur les Normes OMS de croissance de l'enfant 2006 et calcule automatiquement les z-scores. Lorsque les z-scores d'un enfant dérivent dans une direction préoccupante, le système met en évidence la mesure qui dérive pour examen par le clinicien — faisant apparaître la donnée tôt, au lieu de la laisser cachée sur une courbe vierge, pour que le clinicien puisse évaluer et décider s'il y a lieu d'agir.
 
 ### PAEDIS suit-il le calendrier du PEV camerounais ?
 Oui. Le module Vaccination/PEV de PAEDIS suit le calendrier national du Programme élargi de vaccination du Cameroun. Il génère des alertes d'échéance pour chaque dose, enregistre le numéro de lot de chaque vaccin pour la sécurité et la traçabilité des rappels, et imprime les certificats de vaccination à la demande.
@@ -67,6 +67,6 @@ Avec PAEDIS, une carte perdue ne signifie plus un historique perdu. Parce que le
 
 ## Conclusion
 
-Quand la santé de l'enfant repose sur le papier, le système échoue dans les moments qui comptent le plus : la carte perdue qui efface un historique vaccinal, la courbe de croissance vierge qui masque le retard, le signe de danger manqué faute d'un protocole constant. PAEDIS comble ces trois failles à la fois — courbes de croissance OMS avec alertes z-score automatiques, calendrier du PEV camerounais avec rappels d'échéance et suivi des lots, et aide à la décision PCIME à chaque consultation, le tout dans un dossier permanent dès la naissance. Pour les établissements du Cameroun et de la CEMAC, c'est ainsi que chaque enfant reste protégé, suivi et pris en compte.
+Quand la santé de l'enfant repose sur le papier, le système échoue dans les moments qui comptent le plus : la carte perdue qui efface un historique vaccinal, la courbe de croissance vierge qui masque le retard, le signe de danger manqué faute d'un protocole constant. PAEDIS comble ces trois failles à la fois — courbes de croissance OMS avec alertes z-score automatiques, calendrier du PEV camerounais avec rappels d'échéance et suivi des lots, et aide à la décision PCIME à chaque consultation, le tout dans un dossier permanent dès la naissance. Pour les établissements du Cameroun et de la CEMAC, c'est ainsi que la clinique tient un dossier complet et fiable pour chaque enfant — afin que le travail des cliniciens, les vaccins et le programme du PEV soient pleinement documentés et jamais perdus.
 
-**OPES Health Systems** conçoit des logiciels de santé connectés pour le Cameroun et la région CEMAC, PAEDIS tenant un dossier pédiatrique complet de la naissance à l'adolescence. [Demandez une démo](/fr/book-demo) pour voir comment PAEDIS protège la croissance et l'historique vaccinal de chaque enfant.
+**OPES Health Systems** conçoit des logiciels de santé connectés pour le Cameroun et la région CEMAC, PAEDIS tenant un dossier pédiatrique complet de la naissance à l'adolescence. [Demandez une démo](/fr/book-demo) pour voir comment PAEDIS tient un dossier complet et fiable de la croissance et de l'historique vaccinal de chaque enfant.
