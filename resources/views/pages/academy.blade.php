@@ -163,12 +163,12 @@
                 <i data-lucide="{{ $track['icon'] }}" style="width:20px;height:20px;color:{{ $track['color'] }}"></i>
             </div>
             <div style="font-weight:800;color:#e2e8f0;font-size:15px;margin-bottom:2px">{{ $track['title'] }}</div>
-            <div style="font-size:11px;color:{{ $track['color'] }};font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px">{{ $track['cert'] }}</div>
-            <div style="font-size:11px;color:var(--text-faint);margin-bottom:10px;font-style:italic">{{ $track['audience'] }}</div>
-            <div style="font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:14px">{{ $track['desc'] }}</div>
+            <div style="font-size:var(--fs-xs);color:{{ $track['color'] }};font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px">{{ $track['cert'] }}</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-faint);margin-bottom:10px;font-style:italic">{{ $track['audience'] }}</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.6;margin-bottom:14px">{{ $track['desc'] }}</div>
             <div style="display:flex;flex-wrap:wrap;gap:6px">
                 @foreach($track['modules'] as $m)
-                <span style="font-size:10px;color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:4px;padding:2px 7px">{{ $m }}</span>
+                <span style="font-size:var(--fs-2xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:4px;padding:2px 7px">{{ $m }}</span>
                 @endforeach
             </div>
         </div>
@@ -201,12 +201,12 @@
         @endphp
         @foreach($steps as $step)
         <div style="background:#0f1a2e;border:1px solid #1e293b;border-radius:12px;padding:20px 16px;text-align:center">
-            <div style="font-size:11px;color:var(--text-faint);font-weight:700;margin-bottom:10px">{{ $step['step'] }}</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-faint);font-weight:700;margin-bottom:10px">{{ $step['step'] }}</div>
             <div style="width:44px;height:44px;border-radius:50%;background:{{ $step['color'] }}15;display:flex;align-items:center;justify-content:center;margin:0 auto 12px">
                 <i data-lucide="{{ $step['icon'] }}" style="width:20px;height:20px;color:{{ $step['color'] }}"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:6px">{{ $step['title'] }}</div>
-            <div style="font-size:12px;color:var(--text-muted);line-height:1.55">{{ $step['desc'] }}</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.55">{{ $step['desc'] }}</div>
         </div>
         @endforeach
     </div>

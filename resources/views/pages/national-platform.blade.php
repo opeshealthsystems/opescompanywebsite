@@ -79,7 +79,7 @@
                 <div style="font-weight:700;color:#e2e8f0;font-size:13px">{{ $c[2] }}</div>
             </div>
             @foreach($c[3] as $item)
-            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);padding:3px 0">
+            <div style="display:flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:var(--text-muted);padding:3px 0">
                 <i data-lucide="chevron-right" style="width:10px;height:10px;color:{{ $c[1] }};flex-shrink:0"></i>{{ $item }}
             </div>
             @endforeach
@@ -95,42 +95,42 @@
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px">
         {{-- UHC --}}
         <div>
-            <div style="font-size:10px;font-weight:800;color:#00C896;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px">
+            <div style="font-size:var(--fs-2xs);font-weight:800;color:#00C896;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px">
                 {{ $isFr ? 'Couche CSU / UHC' : 'UHC layer' }}
             </div>
             @foreach($isFr
                 ? ['Enregistrement des bénéficiaires','Traitement des demandes','Remboursement des prestataires','Administration des prestations']
                 : ['Beneficiary registration','Claims processing','Provider reimbursement','Benefits administration']
             as $item)
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;font-size:12px;color:var(--text-muted);border-left:2px solid #00C896">
+            <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;font-size:var(--fs-xs);color:var(--text-muted);border-left:2px solid #00C896">
                 <i data-lucide="check-circle" style="width:11px;height:11px;color:#00C896;flex-shrink:0"></i>{{ $item }}
             </div>
             @endforeach
         </div>
         {{-- Public health programs --}}
         <div>
-            <div style="font-size:10px;font-weight:800;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px">
+            <div style="font-size:var(--fs-2xs);font-weight:800;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px">
                 {{ $isFr ? 'Programmes de santé publique' : 'Public health programs' }}
             </div>
             @foreach($isFr
                 ? ['Programme VIH','Programme Tuberculose','Programme Paludisme','Programme de vaccination','Santé maternelle','Programme MNT']
                 : ['HIV programme','TB programme','Malaria programme','Immunization programme','Maternal health programme','NCD programme']
             as $prog)
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;font-size:12px;color:var(--text-muted);border-left:2px solid #1A6FE8">
+            <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;font-size:var(--fs-xs);color:var(--text-muted);border-left:2px solid #1A6FE8">
                 <i data-lucide="check-circle" style="width:11px;height:11px;color:#1A6FE8;flex-shrink:0"></i>{{ $prog }}
             </div>
             @endforeach
         </div>
         {{-- National registries --}}
         <div>
-            <div style="font-size:10px;font-weight:800;color:#00C896;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px">
+            <div style="font-size:var(--fs-2xs);font-weight:800;color:#00C896;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px">
                 {{ $isFr ? 'Registres nationaux' : 'National registries' }}
             </div>
             @foreach($isFr
                 ? ['Registre de vaccination','Registre maternel','Registre des cancers','Registre des maladies chroniques','Registre des maladies rares']
                 : ['Immunization registry','Maternal registry','Cancer registry','Chronic disease registry','Rare disease registry']
             as $reg)
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;font-size:12px;color:var(--text-muted);border-left:2px solid #00C896">
+            <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;font-size:var(--fs-xs);color:var(--text-muted);border-left:2px solid #00C896">
                 <i data-lucide="database" style="width:11px;height:11px;color:#00C896;flex-shrink:0"></i>{{ $reg }}
             </div>
             @endforeach
@@ -156,8 +156,8 @@
             <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:#0F172A;border-radius:10px;margin-bottom:8px;border-left:3px solid {{ $db[1] }}">
                 <i data-lucide="{{ $db[0] }}" style="width:15px;height:15px;color:{{ $db[1] }};flex-shrink:0;margin-top:2px"></i>
                 <div>
-                    <div style="font-weight:700;color:#e2e8f0;font-size:12px;margin-bottom:3px">{{ $db[2] }}</div>
-                    <div style="font-size:11px;color:var(--text-muted)">{{ $db[3] }}</div>
+                    <div style="font-weight:700;color:#e2e8f0;font-size:var(--fs-xs);margin-bottom:3px">{{ $db[2] }}</div>
+                    <div style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $db[3] }}</div>
                 </div>
             </div>
             @endforeach
@@ -174,8 +174,8 @@
             as $gov)
             <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;border-left:2px solid {{ $gov[0] }}">
                 <div>
-                    <div style="font-weight:700;font-size:11px;color:#e2e8f0">{{ $gov[1] }}</div>
-                    <div style="font-size:10px;color:var(--text-muted)">{{ $gov[2] }}</div>
+                    <div style="font-weight:700;font-size:var(--fs-xs);color:#e2e8f0">{{ $gov[1] }}</div>
+                    <div style="font-size:var(--fs-2xs);color:var(--text-muted)">{{ $gov[2] }}</div>
                 </div>
             </div>
             @endforeach
@@ -202,8 +202,8 @@
             <div style="position:absolute;top:22px;right:-1px;width:50%;height:2px;background:{{ $ph[1] }}40;z-index:0"></div>
             @endif
             <div style="width:44px;height:44px;border-radius:50%;background:{{ $ph[1] }}20;border:2px solid {{ $ph[1] }};display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:14px;font-weight:800;color:{{ $ph[1] }};position:relative;z-index:1">{{ $ph[0] }}</div>
-            <div style="font-weight:700;color:#e2e8f0;font-size:11px;margin-bottom:4px">{{ $ph[2] }}</div>
-            <div style="font-size:10px;color:var(--text-muted);line-height:1.4">{{ $ph[3] }}</div>
+            <div style="font-weight:700;color:#e2e8f0;font-size:var(--fs-xs);margin-bottom:4px">{{ $ph[2] }}</div>
+            <div style="font-size:var(--fs-2xs);color:var(--text-muted);line-height:1.4">{{ $ph[3] }}</div>
         </div>
         @endforeach
     </div>
@@ -225,7 +225,7 @@
         as $out)
         <div style="display:flex;align-items:center;gap:8px;background:#0F172A;border:1px solid #1e293b;border-radius:8px;padding:10px 14px;text-align:left">
             <i data-lucide="check-circle" style="width:12px;height:12px;color:{{ $out[0] }};flex-shrink:0"></i>
-            <span style="font-size:12px;color:var(--text-muted);font-weight:600">{{ $out[1] }}</span>
+            <span style="font-size:var(--fs-xs);color:var(--text-muted);font-weight:600">{{ $out[1] }}</span>
         </div>
         @endforeach
     </div>

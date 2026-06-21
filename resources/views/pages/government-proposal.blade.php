@@ -20,7 +20,7 @@
             : 'A complete 17-section framework for preparing technical and financial proposals for governments, Ministries of Health, development partners, and donor organisations.' }}
     </p>
     <div style="background:#F59E0B0D;border:1px solid #F59E0B20;border-radius:10px;padding:12px 20px;margin-top:20px;display:inline-block;max-width:620px">
-        <p style="font-size:11px;color:#F59E0B;text-align:center;margin:0">
+        <p style="font-size:var(--fs-xs);color:#F59E0B;text-align:center;margin:0">
             {{ $isFr
                 ? 'Ce document contient des informations propriétaires et confidentielles appartenant à OPES Health Systems et est destiné exclusivement à l\'organisation destinataire.'
                 : 'This document contains proprietary and confidential information belonging to OPES Health Systems and is intended solely for the recipient organisation.' }}
@@ -53,7 +53,7 @@
     </div>
     <h2 class="section-title">{{ $isFr ? 'En-tête de chaque proposition' : 'Header for every proposal' }}</h2>
     <div style="background:#0F172A;border:1px solid #1e293b;border-radius:14px;padding:28px 32px;margin-top:24px;max-width:720px">
-        <div style="font-size:10px;font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px">{{ $isFr ? 'PAGE DE COUVERTURE' : 'COVER PAGE' }}</div>
+        <div style="font-size:var(--fs-2xs);font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px">{{ $isFr ? 'PAGE DE COUVERTURE' : 'COVER PAGE' }}</div>
         @foreach($isFr
             ? [['file-text','#00C896','Titre de la proposition','Ex: Plateforme nationale d\'échange d\'informations de santé pour la République du Cameroun'],
                ['building-2','#1A6FE8','Préparé par','OPES Health Systems — Building the Digital Health Infrastructure of Africa'],
@@ -69,8 +69,8 @@
         <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #0f172a">
             <i data-lucide="{{ $field[0] }}" style="width:13px;height:13px;color:{{ $field[1] }};flex-shrink:0;margin-top:2px"></i>
             <div>
-                <div style="font-size:11px;font-weight:700;color:#e2e8f0">{{ $field[2] }}</div>
-                <div style="font-size:11px;color:var(--text-faint);margin-top:2px">{{ $field[3] }}</div>
+                <div style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0">{{ $field[2] }}</div>
+                <div style="font-size:var(--fs-xs);color:var(--text-faint);margin-top:2px">{{ $field[3] }}</div>
             </div>
         </div>
         @endforeach
@@ -126,10 +126,10 @@
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:28px">
         @foreach($sections as $sec)
         <div style="display:flex;gap:10px;padding:12px 14px;background:#0F172A;border-radius:9px;border:1px solid #1e293b">
-            <div style="width:24px;height:24px;border-radius:6px;background:{{ $sec[2] }}15;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;font-weight:800;color:{{ $sec[2] }}">{{ $sec[0] }}</div>
+            <div style="width:24px;height:24px;border-radius:6px;background:{{ $sec[2] }}15;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:var(--fs-2xs);font-weight:800;color:{{ $sec[2] }}">{{ $sec[0] }}</div>
             <div>
-                <div style="font-size:12px;font-weight:700;color:#e2e8f0;margin-bottom:2px">{{ $sec[1] }}</div>
-                <div style="font-size:10px;color:var(--text-faint);line-height:1.4">{{ $sec[2] }}</div>
+                <div style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;margin-bottom:2px">{{ $sec[1] }}</div>
+                <div style="font-size:var(--fs-2xs);color:var(--text-faint);line-height:1.4">{{ $sec[2] }}</div>
             </div>
         </div>
         @endforeach
@@ -159,8 +159,8 @@
             <div style="display:flex;gap:12px;padding:14px;background:#0F172A;border-radius:10px;border-left:2px solid {{ $es[1] }};margin-bottom:10px">
                 <i data-lucide="{{ $es[0] }}" style="width:14px;height:14px;color:{{ $es[1] }};flex-shrink:0;margin-top:1px"></i>
                 <div>
-                    <div style="font-size:12px;font-weight:700;color:#e2e8f0;margin-bottom:4px">{{ $es[2] }}</div>
-                    <div style="font-size:11px;color:var(--text-muted);line-height:1.5">{{ $es[3] }}</div>
+                    <div style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;margin-bottom:4px">{{ $es[2] }}</div>
+                    <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.5">{{ $es[3] }}</div>
                 </div>
             </div>
             @endforeach
@@ -179,18 +179,18 @@
                 as $comp)
                 <div style="display:flex;align-items:center;gap:6px;padding:7px 9px;background:#0F172A;border-radius:7px;border:1px solid #1e293b">
                     <i data-lucide="check" style="width:10px;height:10px;color:#00C896;flex-shrink:0"></i>
-                    <span style="font-size:11px;color:var(--text-muted)">{{ $comp }}</span>
+                    <span style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $comp }}</span>
                 </div>
                 @endforeach
             </div>
-            <div style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">{{ $isFr ? 'Bénéfices stratégiques' : 'Strategic benefits' }}</div>
+            <div style="font-size:var(--fs-xs);font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">{{ $isFr ? 'Bénéfices stratégiques' : 'Strategic benefits' }}</div>
             @foreach($isFr
                 ? ['Meilleurs soins patients','Meilleur reporting','Meilleure planification','Meilleure gouvernance']
                 : ['Better care','Better reporting','Better planning','Better governance']
             as $ben)
             <div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #0f172a40">
                 <i data-lucide="arrow-right" style="width:10px;height:10px;color:#1A6FE8;flex-shrink:0"></i>
-                <span style="font-size:12px;color:var(--text-muted)">{{ $ben }}</span>
+                <span style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $ben }}</span>
             </div>
             @endforeach
         </div>
@@ -230,9 +230,9 @@
                         <div style="width:30px;height:30px;border-radius:50%;background:{{ $ph[1] }}15;display:flex;align-items:center;justify-content:center;margin:0 auto 8px">
                             <i data-lucide="{{ $ph[0] }}" style="width:13px;height:13px;color:{{ $ph[1] }}"></i>
                         </div>
-                        <div style="font-size:9px;font-weight:800;color:{{ $ph[1] }};text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">{{ $isFr ? 'Phase' : 'Phase' }} {{ $ph[2] }}</div>
-                        <div style="font-size:11px;font-weight:700;color:#e2e8f0;margin-bottom:6px">{{ $ph[3] }}</div>
-                        <div style="font-size:10px;color:var(--text-faint);line-height:1.5">{{ $ph[4] }}</div>
+                        <div style="font-size:var(--fs-2xs);font-weight:800;color:{{ $ph[1] }};text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">{{ $isFr ? 'Phase' : 'Phase' }} {{ $ph[2] }}</div>
+                        <div style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;margin-bottom:6px">{{ $ph[3] }}</div>
+                        <div style="font-size:var(--fs-2xs);color:var(--text-faint);line-height:1.5">{{ $ph[4] }}</div>
                     </div>
                 </div>
                 @if($idx < count($phases) - 1)
@@ -273,8 +273,8 @@
             <div style="display:flex;gap:10px;padding:10px 12px;background:#0F172A;border-radius:8px;border:1px solid #1e293b;margin-bottom:7px">
                 <i data-lucide="{{ $prin[0] }}" style="width:13px;height:13px;color:{{ $prin[1] }};flex-shrink:0;margin-top:1px"></i>
                 <div>
-                    <div style="font-size:12px;font-weight:700;color:#e2e8f0">{{ $prin[2] }}</div>
-                    <div style="font-size:11px;color:var(--text-faint);margin-top:1px">{{ $prin[3] }}</div>
+                    <div style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0">{{ $prin[2] }}</div>
+                    <div style="font-size:var(--fs-xs);color:var(--text-faint);margin-top:1px">{{ $prin[3] }}</div>
                 </div>
             </div>
             @endforeach
@@ -297,8 +297,8 @@
                    ['#1A6FE8','Data Governance Committee','Information governance — privacy, data quality, compliance']]
             as $idx => $com)
             <div style="padding:16px;background:#0F172A;border-radius:10px;border-left:3px solid {{ $com[0] }};margin-bottom:10px">
-                <div style="font-size:12px;font-weight:700;color:#e2e8f0;margin-bottom:4px">{{ $com[1] }}</div>
-                <div style="font-size:11px;color:var(--text-muted);line-height:1.5">{{ $com[2] }}</div>
+                <div style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;margin-bottom:4px">{{ $com[1] }}</div>
+                <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.5">{{ $com[2] }}</div>
             </div>
             @endforeach
         </div>
@@ -330,9 +330,9 @@
             <div style="padding:14px 16px;background:#0F172A;border-radius:10px;border-left:2px solid {{ $sus[0] }};margin-bottom:8px">
                 <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
                     <i data-lucide="{{ $sus[1] }}" style="width:12px;height:12px;color:{{ $sus[0] }}"></i>
-                    <div style="font-size:12px;font-weight:700;color:#e2e8f0">{{ $sus[2] }}</div>
+                    <div style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0">{{ $sus[2] }}</div>
                 </div>
-                <div style="font-size:11px;color:var(--text-muted);line-height:1.5">{{ $sus[3] }}</div>
+                <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.5">{{ $sus[3] }}</div>
             </div>
             @endforeach
         </div>
@@ -349,12 +349,12 @@
             as $role)
             <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#0F172A;border-radius:8px;border:1px solid #1e293b;margin-bottom:6px">
                 <div style="width:8px;height:8px;border-radius:50%;background:{{ $role[0] }};flex-shrink:0"></div>
-                <span style="font-size:12px;color:var(--text-muted);font-weight:500">{{ $role[1] }}</span>
+                <span style="font-size:var(--fs-xs);color:var(--text-muted);font-weight:500">{{ $role[1] }}</span>
             </div>
             @endforeach
             <div style="margin-top:14px;padding:12px 14px;background:#00C89608;border:1px solid #00C89620;border-radius:9px">
-                <div style="font-size:11px;color:#00C896;font-weight:600;margin-bottom:4px">{{ $isFr ? 'Formation via' : 'Training delivered via' }}</div>
-                <div style="font-size:11px;color:var(--text-muted)">{{ $isFr ? 'OPES Academy — Utilisateurs, administrateurs, certifications et transfert de connaissances' : 'OPES Academy — Users, administrators, certifications, and knowledge transfer' }}</div>
+                <div style="font-size:var(--fs-xs);color:#00C896;font-weight:600;margin-bottom:4px">{{ $isFr ? 'Formation via' : 'Training delivered via' }}</div>
+                <div style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $isFr ? 'OPES Academy — Utilisateurs, administrateurs, certifications et transfert de connaissances' : 'OPES Academy — Users, administrators, certifications, and knowledge transfer' }}</div>
             </div>
         </div>
     </div>
@@ -392,8 +392,8 @@
             <div style="width:32px;height:32px;border-radius:8px;background:{{ $why[1] }}15;display:flex;align-items:center;justify-content:center;margin-bottom:10px">
                 <i data-lucide="{{ $why[0] }}" style="width:14px;height:14px;color:{{ $why[1] }}"></i>
             </div>
-            <div style="font-size:12px;font-weight:700;color:#e2e8f0;margin-bottom:5px">{{ $why[2] }}</div>
-            <div style="font-size:11px;color:var(--text-muted);line-height:1.5">{{ $why[3] }}</div>
+            <div style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;margin-bottom:5px">{{ $why[2] }}</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.5">{{ $why[3] }}</div>
         </div>
         @endforeach
     </div>

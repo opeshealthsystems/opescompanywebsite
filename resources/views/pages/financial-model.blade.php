@@ -69,14 +69,14 @@
                 </div>
                 <div style="font-weight:700;color:#e2e8f0;font-size:13px">{{ $p[2] }}</div>
             </div>
-            <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;line-height:1.55">{{ $p[3] }}</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-muted);margin-bottom:10px;line-height:1.55">{{ $p[3] }}</div>
             @foreach($p[4] as $item)
-            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);padding:3px 0">
+            <div style="display:flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:var(--text-muted);padding:3px 0">
                 <i data-lucide="chevron-right" style="width:9px;height:9px;color:{{ $p[1] }};flex-shrink:0"></i>{{ $item }}
             </div>
             @endforeach
             @if($p[5])
-            <div style="margin-top:12px;background:{{ $p[1] }}10;border:1px solid {{ $p[1] }}20;border-radius:8px;padding:6px 10px;font-size:10px;font-weight:700;color:{{ $p[1] }};text-align:center">
+            <div style="margin-top:12px;background:{{ $p[1] }}10;border:1px solid {{ $p[1] }}20;border-radius:8px;padding:6px 10px;font-size:var(--fs-2xs);font-weight:700;color:{{ $p[1] }};text-align:center">
                 {{ $isFr ? 'Cible : ' : 'Target: ' }}{{ $p[5] }}
             </div>
             @endif
@@ -103,7 +103,7 @@
             as $idx => $ph)
             <div style="display:flex;gap:12px">
                 <div style="display:flex;flex-direction:column;align-items:center">
-                    <div style="width:30px;height:30px;border-radius:50%;background:{{ $ph[1] }}20;border:1px solid {{ $ph[1] }}60;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:800;color:{{ $ph[1] }}">{{ $ph[0] }}</div>
+                    <div style="width:30px;height:30px;border-radius:50%;background:{{ $ph[1] }}20;border:1px solid {{ $ph[1] }}60;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:var(--fs-xs);font-weight:800;color:{{ $ph[1] }}">{{ $ph[0] }}</div>
                     @if($idx < 4)<div style="width:1px;height:12px;background:#1e293b;margin:2px 0"></div>@endif
                 </div>
                 <div style="padding-top:6px;margin-bottom:{{ $idx < 4 ? '6px' : '0' }}">
@@ -125,7 +125,7 @@
                 as $kpi)
                 <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#0F172A;border-radius:8px;border-left:2px solid {{ $kpi[0] }}">
                     <i data-lucide="chevron-right" style="width:11px;height:11px;color:{{ $kpi[0] }};flex-shrink:0"></i>
-                    <span style="font-size:12px;color:var(--text-muted);font-weight:600">{{ $kpi[1] }}</span>
+                    <span style="font-size:var(--fs-xs);color:var(--text-muted);font-weight:600">{{ $kpi[1] }}</span>
                 </div>
                 @endforeach
             </div>
@@ -148,9 +148,9 @@
             : [['2026','10','facilities','var(--text-faint)'],['2027','50','facilities','#1A6FE8'],['2028','150','facilities','#00A87B'],['2029','Government','programmes','#00C896'],['2031','Regional','expansion','#FFB020']]
         as $t)
         <div style="background:#0F172A;border:2px solid {{ $t[3] }}40;border-radius:12px;padding:16px 20px;text-align:center;min-width:110px">
-            <div style="font-size:10px;font-weight:800;color:{{ $t[3] }};text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">{{ $t[0] }}</div>
+            <div style="font-size:var(--fs-2xs);font-weight:800;color:{{ $t[3] }};text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">{{ $t[0] }}</div>
             <div style="font-size:22px;font-weight:800;color:#e2e8f0;line-height:1.1">{{ $t[1] }}</div>
-            <div style="font-size:10px;color:var(--text-muted);margin-top:2px">{{ $t[2] }}</div>
+            <div style="font-size:var(--fs-2xs);color:var(--text-muted);margin-top:2px">{{ $t[2] }}</div>
         </div>
         @endforeach
     </div>

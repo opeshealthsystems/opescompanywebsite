@@ -24,7 +24,7 @@
             ? ['Ministères de la Santé','Conseils d\'administration','Investisseurs','Bailleurs de fonds','Comités techniques','Équipes d\'appels d\'offres']
             : ['Ministries of Health','Hospital Boards','Investors','Donors','Technical Committees','Procurement Teams']
         as $chip)
-        <span style="background:#0F172A;border:1px solid #1e293b;border-radius:20px;padding:5px 12px;font-size:11px;color:var(--text-muted)">{{ $chip }}</span>
+        <span style="background:#0F172A;border:1px solid #1e293b;border-radius:20px;padding:5px 12px;font-size:var(--fs-xs);color:var(--text-muted)">{{ $chip }}</span>
         @endforeach
     </div>
 </div>
@@ -48,11 +48,11 @@
 
 @php
 /* ── Reusable inline styles ──────────────────────────────────────── */
-$node     = 'background:#0F172A;border:1px solid #1e293b;border-radius:8px;padding:9px 14px;text-align:center;font-size:11px;font-weight:700;color:#e2e8f0;';
-$nodeTeal = 'background:#00C89610;border:1px solid #00C89640;border-radius:8px;padding:9px 14px;text-align:center;font-size:11px;font-weight:700;color:#00C896;';
-$nodeBlue = 'background:#1A6FE810;border:1px solid #1A6FE840;border-radius:8px;padding:9px 14px;text-align:center;font-size:11px;font-weight:700;color:#1A6FE8;';
-$nodeGov  = 'background:#F59E0B10;border:1px solid #F59E0B40;border-radius:8px;padding:9px 14px;text-align:center;font-size:11px;font-weight:700;color:#F59E0B;';
-$nodeRed  = 'background:#EF444410;border:1px solid #EF444440;border-radius:8px;padding:9px 14px;text-align:center;font-size:11px;font-weight:700;color:#EF4444;';
+$node     = 'background:#0F172A;border:1px solid #1e293b;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;';
+$nodeTeal = 'background:#00C89610;border:1px solid #00C89640;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#00C896;';
+$nodeBlue = 'background:#1A6FE810;border:1px solid #1A6FE840;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#1A6FE8;';
+$nodeGov  = 'background:#F59E0B10;border:1px solid #F59E0B40;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#F59E0B;';
+$nodeRed  = 'background:#EF444410;border:1px solid #EF444440;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#EF4444;';
 $arrow    = 'display:flex;justify-content:center;padding:5px 0;';
 $line     = 'width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;';
 $hline    = 'height:1px;background:linear-gradient(to right,transparent,#1e293b,transparent);margin:0 16%;';
@@ -64,7 +64,7 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
 {{-- ════════════════════════════════════════════════════════════════ --}}
 <div class="section" style="max-width:960px;margin:0 auto">
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-        <div style="width:32px;height:32px;border-radius:8px;background:#00C89615;border:1px solid #00C89630;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#00C896;flex-shrink:0">1</div>
+        <div style="width:32px;height:32px;border-radius:8px;background:#00C89615;border:1px solid #00C89630;display:flex;align-items:center;justify-content:center;font-size:var(--fs-xs);font-weight:800;color:#00C896;flex-shrink:0">1</div>
         <div>
             <div class="section-label" style="margin-bottom:4px"><i data-lucide="layers" style="width:12px;height:12px"></i> {{ $isFr ? 'Diagramme 1' : 'Diagram 1' }}</div>
             <h2 style="font-size:18px;font-weight:700;color:#e2e8f0;margin:0">{{ $isFr ? 'Architecture écosystème OPES Health OS' : 'OPES Health OS Ecosystem Architecture' }}</h2>
@@ -89,7 +89,7 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
             as $p)
             <div style="display:flex;flex-direction:column;align-items:center">
                 <div style="width:1px;height:16px;background:#1e293b"></div>
-                <div style="background:{{ $p[0] }}10;border:1px solid {{ $p[0] }}40;border-radius:8px;padding:8px 10px;text-align:center;font-size:11px;font-weight:700;color:{{ $p[0] }};width:100%">{{ $p[1] }}</div>
+                <div style="background:{{ $p[0] }}10;border:1px solid {{ $p[0] }}40;border-radius:8px;padding:8px 10px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:{{ $p[0] }};width:100%">{{ $p[1] }}</div>
             </div>
             @endforeach
         </div>
@@ -101,7 +101,7 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
             as $sub)
             <div style="display:flex;flex-direction:column;align-items:center">
                 <div style="width:1px;height:14px;background:#1e293b"></div>
-                <div style="background:#0F172A;border:1px dashed #1e293b;border-radius:8px;padding:7px 8px;text-align:center;font-size:10px;color:var(--text-faint);width:100%">{{ $sub[1] }}</div>
+                <div style="background:#0F172A;border:1px dashed #1e293b;border-radius:8px;padding:7px 8px;text-align:center;font-size:var(--fs-2xs);color:var(--text-faint);width:100%">{{ $sub[1] }}</div>
             </div>
             @endforeach
         </div>
@@ -132,9 +132,9 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
         {{-- DIAGRAM 2: Health ID Architecture --}}
         <div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-                <div style="width:28px;height:28px;border-radius:7px;background:#00C89615;border:1px solid #00C89630;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#00C896;flex-shrink:0">2</div>
+                <div style="width:28px;height:28px;border-radius:7px;background:#00C89615;border:1px solid #00C89630;display:flex;align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:800;color:#00C896;flex-shrink:0">2</div>
                 <div>
-                    <div style="font-size:10px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Diagramme 2' : 'Diagram 2' }}</div>
+                    <div style="font-size:var(--fs-2xs);color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Diagramme 2' : 'Diagram 2' }}</div>
                     <div style="font-size:14px;font-weight:700;color:#e2e8f0">OPES Health ID</div>
                 </div>
             </div>
@@ -153,15 +153,15 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
                     as $f)
                     <div style="display:flex;flex-direction:column;align-items:center">
                         <div style="width:1px;height:14px;background:#1e293b"></div>
-                        <div style="background:{{ $f[0] }}10;border:1px solid {{ $f[0] }}30;border-radius:7px;padding:7px 10px;text-align:center;font-size:11px;font-weight:700;color:{{ $f[0] }};width:100%">{{ $f[1] }}</div>
+                        <div style="background:{{ $f[0] }}10;border:1px solid {{ $f[0] }}30;border-radius:7px;padding:7px 10px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:{{ $f[0] }};width:100%">{{ $f[1] }}</div>
                     </div>
                     @endforeach
                 </div>
                 <div style="{{ $hline }}margin-top:14px"></div>
                 <div style="{{ $arrow }}"><div style="{{ $line }}"></div></div>
                 <div style="background:#00C89610;border:1px solid #00C89630;border-radius:8px;padding:12px;text-align:center">
-                    <div style="font-size:11px;font-weight:700;color:#00C896">{{ $isFr ? 'Dossier longitudinal' : 'Longitudinal Record' }}</div>
-                    <div style="font-size:10px;color:var(--text-faint);margin-top:4px">{{ $isFr ? 'Un patient · Une identité · Un dossier' : 'One Patient · One Identity · One Record' }}</div>
+                    <div style="font-size:var(--fs-xs);font-weight:700;color:#00C896">{{ $isFr ? 'Dossier longitudinal' : 'Longitudinal Record' }}</div>
+                    <div style="font-size:var(--fs-2xs);color:var(--text-faint);margin-top:4px">{{ $isFr ? 'Un patient · Une identité · Un dossier' : 'One Patient · One Identity · One Record' }}</div>
                 </div>
             </div>
         </div>
@@ -169,9 +169,9 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
         {{-- DIAGRAM 3: HIE --}}
         <div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-                <div style="width:28px;height:28px;border-radius:7px;background:#1A6FE815;border:1px solid #1A6FE830;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#1A6FE8;flex-shrink:0">3</div>
+                <div style="width:28px;height:28px;border-radius:7px;background:#1A6FE815;border:1px solid #1A6FE830;display:flex;align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:800;color:#1A6FE8;flex-shrink:0">3</div>
                 <div>
-                    <div style="font-size:10px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Diagramme 3' : 'Diagram 3' }}</div>
+                    <div style="font-size:var(--fs-2xs);color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Diagramme 3' : 'Diagram 3' }}</div>
                     <div style="font-size:14px;font-weight:700;color:#e2e8f0">{{ $isFr ? 'Échange d\'informations de santé (HIE)' : 'Health Information Exchange (HIE)' }}</div>
                 </div>
             </div>
@@ -183,7 +183,7 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
                             ? ['Hôpital A','Hôpital B','Laboratoire','Pharmacie','Assurance','Santé publique']
                             : ['Hospital A','Hospital B','Laboratory','Pharmacy','Insurance','Public Health']
                         as $sender)
-                        <div style="{{ $node }}font-size:10px;padding:7px 10px">{{ $sender }}</div>
+                        <div style="{{ $node }}font-size:var(--fs-2xs);padding:7px 10px">{{ $sender }}</div>
                         @endforeach
                     </div>
                     {{-- Arrows + HUB --}}
@@ -191,8 +191,8 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
                         <div style="font-size:18px;color:#1A6FE8">⇄</div>
                         <div style="background:#1A6FE810;border:2px solid #1A6FE840;border-radius:10px;padding:16px 12px;text-align:center">
                             <i data-lucide="share-2" style="width:20px;height:20px;color:#1A6FE8;display:block;margin:0 auto 6px"></i>
-                            <div style="font-size:10px;font-weight:800;color:#1A6FE8;letter-spacing:0.06em">OPES HIE</div>
-                            <div style="font-size:9px;color:var(--text-faint);margin-top:2px">{{ $isFr ? 'PLATEFORME' : 'PLATFORM' }}</div>
+                            <div style="font-size:var(--fs-2xs);font-weight:800;color:#1A6FE8;letter-spacing:0.06em">OPES HIE</div>
+                            <div style="font-size:var(--fs-2xs);color:var(--text-faint);margin-top:2px">{{ $isFr ? 'PLATEFORME' : 'PLATFORM' }}</div>
                         </div>
                         <div style="font-size:18px;color:#1A6FE8">⇄</div>
                     </div>
@@ -202,7 +202,7 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
                             ? [['#00C896','Référencements'],['#1A6FE8','Résultats'],['#00C896','Dossiers cliniques'],['#1A6FE8','Sinistres'],['#00C896','Notifications']]
                             : [['#00C896','Referrals'],['#1A6FE8','Results'],['#00C896','Clinical records'],['#1A6FE8','Claims'],['#00C896','Notifications']]
                         as $ex)
-                        <div style="background:{{ $ex[0] }}10;border:1px solid {{ $ex[0] }}30;border-radius:7px;padding:7px 10px;text-align:center;font-size:10px;font-weight:600;color:{{ $ex[0] }}">{{ $ex[1] }}</div>
+                        <div style="background:{{ $ex[0] }}10;border:1px solid {{ $ex[0] }}30;border-radius:7px;padding:7px 10px;text-align:center;font-size:var(--fs-2xs);font-weight:600;color:{{ $ex[0] }}">{{ $ex[1] }}</div>
                         @endforeach
                     </div>
                 </div>
@@ -218,9 +218,9 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
 {{-- ════════════════════════════════════════════════════════════════ --}}
 <div class="section" style="max-width:960px;margin:0 auto">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-        <div style="width:28px;height:28px;border-radius:7px;background:#00C89615;border:1px solid #00C89630;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#00C896;flex-shrink:0">4</div>
+        <div style="width:28px;height:28px;border-radius:7px;background:#00C89615;border:1px solid #00C89630;display:flex;align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:800;color:#00C896;flex-shrink:0">4</div>
         <div>
-            <div style="font-size:10px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Diagramme 4' : 'Diagram 4' }}</div>
+            <div style="font-size:var(--fs-2xs);color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Diagramme 4' : 'Diagram 4' }}</div>
             <div style="font-size:18px;font-weight:700;color:#e2e8f0">{{ $isFr ? 'Architecture OPES Hospital' : 'OPES Hospital Architecture' }}</div>
         </div>
     </div>
@@ -234,13 +234,13 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
                 <div style="{{ $arrow }}"><div style="{{ $line }}"></div></div>
                 <div style="{{ $nodeBlue }}">{{ $isFr ? 'Dossier médical électronique (DME)' : 'Electronic Medical Record (EMR)' }}</div>
                 <div style="{{ $arrow }}"><div style="{{ $line }}"></div></div>
-                <div style="{{ $nodeTeal }}font-size:10px">{{ $isFr ? 'Documentation clinique' : 'Clinical Documentation' }}</div>
+                <div style="{{ $nodeTeal }}font-size:var(--fs-2xs)">{{ $isFr ? 'Documentation clinique' : 'Clinical Documentation' }}</div>
                 <div style="{{ $arrow }}"><div style="{{ $line }}"></div></div>
-                <div style="background:#F59E0B10;border:1px solid #F59E0B40;border-radius:8px;padding:9px 14px;text-align:center;font-size:11px;font-weight:700;color:#F59E0B">{{ $isFr ? 'Tableau de bord exécutif' : 'Executive Dashboard' }}</div>
+                <div style="background:#F59E0B10;border:1px solid #F59E0B40;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#F59E0B">{{ $isFr ? 'Tableau de bord exécutif' : 'Executive Dashboard' }}</div>
             </div>
             {{-- Right: branch departments --}}
             <div>
-                <div style="font-size:10px;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:14px;padding-left:16px">{{ $isFr ? 'Départements connectés via EMR' : 'Departments connected via EMR' }}</div>
+                <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:14px;padding-left:16px">{{ $isFr ? 'Départements connectés via EMR' : 'Departments connected via EMR' }}</div>
                 <div style="display:flex;flex-direction:column;gap:8px">
                     @foreach($isFr
                         ? [['microscope','#00C896','Laboratoire'],['scan','#1A6FE8','Radiologie'],['pill','#00C896','Pharmacie'],['dollar-sign','#1A6FE8','Facturation'],['bed','#00C896','Admissions & Lits'],['heart-pulse','#1A6FE8','Chirurgie & Soins infirmiers']]
@@ -248,7 +248,7 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
                     as $dept)
                     <div style="display:flex;align-items:center;gap:10px;padding:9px 14px;background:#0F172A;border:1px solid #1e293b;border-radius:8px;border-left:2px solid {{ $dept[1] }}">
                         <i data-lucide="{{ $dept[0] }}" style="width:13px;height:13px;color:{{ $dept[1] }};flex-shrink:0"></i>
-                        <span style="font-size:11px;font-weight:700;color:#e2e8f0">{{ $dept[2] }}</span>
+                        <span style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0">{{ $dept[2] }}</span>
                         <div style="margin-left:auto">
                             <i data-lucide="arrow-left" style="width:10px;height:10px;color:#1e293b"></i>
                         </div>
@@ -271,9 +271,9 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
         {{-- DIAGRAM 5: Clinical Intelligence --}}
         <div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-                <div style="width:28px;height:28px;border-radius:7px;background:#00C89615;border:1px solid #00C89630;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#00C896;flex-shrink:0">5</div>
+                <div style="width:28px;height:28px;border-radius:7px;background:#00C89615;border:1px solid #00C89630;display:flex;align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:800;color:#00C896;flex-shrink:0">5</div>
                 <div>
-                    <div style="font-size:10px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Diagramme 5' : 'Diagram 5' }}</div>
+                    <div style="font-size:var(--fs-2xs);color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Diagramme 5' : 'Diagram 5' }}</div>
                     <div style="font-size:14px;font-weight:700;color:#e2e8f0">{{ $isFr ? 'OPES Intelligence Clinique' : 'OPES Clinical Intelligence' }}</div>
                 </div>
             </div>
@@ -292,7 +292,7 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
                         <div style="width:1px;height:14px;background:#1e293b"></div>
                         <div style="background:{{ $ci[0] }}10;border:1px solid {{ $ci[0] }}30;border-radius:8px;padding:10px;text-align:center;width:100%">
                             <i data-lucide="{{ $ci[1] }}" style="width:16px;height:16px;color:{{ $ci[0] }};margin:0 auto 5px;display:block"></i>
-                            <div style="font-size:11px;font-weight:700;color:{{ $ci[0] }}">{{ $ci[2] }}</div>
+                            <div style="font-size:var(--fs-xs);font-weight:700;color:{{ $ci[0] }}">{{ $ci[2] }}</div>
                         </div>
                     </div>
                     @endforeach
@@ -302,7 +302,7 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
                 <div style="{{ $node }}">{{ $isFr ? 'Professionnels de santé' : 'Healthcare professionals' }}</div>
                 <div style="{{ $arrow }}"><div style="{{ $line }}"></div></div>
                 <div style="background:#00C89610;border:1px solid #00C89630;border-radius:8px;padding:10px;text-align:center">
-                    <div style="font-size:12px;font-weight:700;color:#00C896">{{ $isFr ? 'Meilleures décisions' : 'Better decisions' }}</div>
+                    <div style="font-size:var(--fs-xs);font-weight:700;color:#00C896">{{ $isFr ? 'Meilleures décisions' : 'Better decisions' }}</div>
                 </div>
             </div>
         </div>
@@ -310,16 +310,16 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
         {{-- DIAGRAM 6: National Digital Health --}}
         <div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-                <div style="width:28px;height:28px;border-radius:7px;background:#1A6FE815;border:1px solid #1A6FE830;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#1A6FE8;flex-shrink:0">6</div>
+                <div style="width:28px;height:28px;border-radius:7px;background:#1A6FE815;border:1px solid #1A6FE830;display:flex;align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:800;color:#1A6FE8;flex-shrink:0">6</div>
                 <div>
-                    <div style="font-size:10px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Diagramme 6' : 'Diagram 6' }}</div>
+                    <div style="font-size:var(--fs-2xs);color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Diagramme 6' : 'Diagram 6' }}</div>
                     <div style="font-size:14px;font-weight:700;color:#e2e8f0">{{ $isFr ? 'Santé numérique nationale' : 'National Digital Health' }}</div>
                 </div>
             </div>
             <div style="{{ $card }}">
-                <div style="{{ $nodeGov }}font-size:12px;padding:11px">{{ $isFr ? 'Ministère de la Santé' : 'Ministry of Health' }}</div>
+                <div style="{{ $nodeGov }}font-size:var(--fs-xs);padding:11px">{{ $isFr ? 'Ministère de la Santé' : 'Ministry of Health' }}</div>
                 <div style="{{ $arrow }}"><div style="{{ $line }}"></div></div>
-                <div style="{{ $nodeBlue }}font-size:12px;padding:11px">{{ $isFr ? 'Plateforme nationale de santé numérique' : 'National Digital Health Platform' }}</div>
+                <div style="{{ $nodeBlue }}font-size:var(--fs-xs);padding:11px">{{ $isFr ? 'Plateforme nationale de santé numérique' : 'National Digital Health Platform' }}</div>
                 <div style="{{ $arrow }}"><div style="{{ $line }}"></div></div>
                 <div style="{{ $hline }}"></div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
@@ -331,7 +331,7 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
                         <div style="width:1px;height:14px;background:#1e293b"></div>
                         <div style="background:{{ $nc[0] }}10;border:1px solid {{ $nc[0] }}30;border-radius:8px;padding:9px;text-align:center;width:100%">
                             <i data-lucide="{{ $nc[1] }}" style="width:14px;height:14px;color:{{ $nc[0] }};margin:0 auto 4px;display:block"></i>
-                            <div style="font-size:11px;font-weight:700;color:{{ $nc[0] }}">{{ $nc[2] }}</div>
+                            <div style="font-size:var(--fs-xs);font-weight:700;color:{{ $nc[0] }}">{{ $nc[2] }}</div>
                         </div>
                     </div>
                     @endforeach
@@ -357,9 +357,9 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
         {{-- DIAGRAM 7: Public Health --}}
         <div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-                <div style="width:28px;height:28px;border-radius:7px;background:#00C89615;border:1px solid #00C89630;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#00C896;flex-shrink:0">7</div>
+                <div style="width:28px;height:28px;border-radius:7px;background:#00C89615;border:1px solid #00C89630;display:flex;align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:800;color:#00C896;flex-shrink:0">7</div>
                 <div>
-                    <div style="font-size:10px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Diagramme 7' : 'Diagram 7' }}</div>
+                    <div style="font-size:var(--fs-2xs);color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Diagramme 7' : 'Diagram 7' }}</div>
                     <div style="font-size:14px;font-weight:700;color:#e2e8f0">{{ $isFr ? 'Architecture santé publique' : 'OPES Public Health Architecture' }}</div>
                 </div>
             </div>
@@ -369,13 +369,13 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
                     : [['var(--text-muted)','Healthcare facilities'],['#1A6FE8','Public health reporting'],['#00C896','Disease surveillance engine'],['#1A6FE8','National analytics platform'],['#F59E0B','Government dashboards']]
                 as $idx => $ph)
                 @if($idx > 0)<div style="{{ $arrow }}"><div style="{{ $line }}"></div></div>@endif
-                <div style="background:{{ $ph[0] }}10;border:1px solid {{ $ph[0] }}30;border-radius:8px;padding:10px 14px;text-align:center;font-size:11px;font-weight:700;color:{{ $ph[0] }}">{{ $ph[1] }}</div>
+                <div style="background:{{ $ph[0] }}10;border:1px solid {{ $ph[0] }}30;border-radius:8px;padding:10px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:{{ $ph[0] }}">{{ $ph[1] }}</div>
                 @endforeach
                 <div style="margin-top:16px;padding-top:14px;border-top:1px solid #1e293b">
-                    <div style="font-size:10px;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">{{ $isFr ? 'Programmes soutenus' : 'Supported programmes' }}</div>
+                    <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">{{ $isFr ? 'Programmes soutenus' : 'Supported programmes' }}</div>
                     <div style="display:flex;flex-wrap:wrap;gap:5px">
                         @foreach(['HIV','TB','Malaria','Maternal Health','Immunisation','NCDs'] as $prog)
-                        <span style="background:#00C89610;border:1px solid #00C89625;border-radius:12px;padding:2px 9px;font-size:10px;font-weight:600;color:#00C896">{{ $prog }}</span>
+                        <span style="background:#00C89610;border:1px solid #00C89625;border-radius:12px;padding:2px 9px;font-size:var(--fs-2xs);font-weight:600;color:#00C896">{{ $prog }}</span>
                         @endforeach
                     </div>
                 </div>
@@ -385,9 +385,9 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
         {{-- DIAGRAM 8: Security Architecture --}}
         <div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-                <div style="width:28px;height:28px;border-radius:7px;background:#8B5CF615;border:1px solid #8B5CF630;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#8B5CF6;flex-shrink:0">8</div>
+                <div style="width:28px;height:28px;border-radius:7px;background:#8B5CF615;border:1px solid #8B5CF630;display:flex;align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:800;color:#8B5CF6;flex-shrink:0">8</div>
                 <div>
-                    <div style="font-size:10px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Diagramme 8' : 'Diagram 8' }}</div>
+                    <div style="font-size:var(--fs-2xs);color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Diagramme 8' : 'Diagram 8' }}</div>
                     <div style="font-size:14px;font-weight:700;color:#e2e8f0">{{ $isFr ? 'Architecture de sécurité' : 'OPES Security Architecture' }}</div>
                 </div>
             </div>
@@ -399,7 +399,7 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
                 @if($idx > 0)<div style="{{ $arrow }}"><div style="width:1px;height:14px;background:{{ $layer[1] }}40;margin:0 auto;"></div></div>@endif
                 <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:{{ $layer[1] }}08;border:1px solid {{ $layer[1] }}25;border-radius:8px">
                     <i data-lucide="{{ $layer[0] }}" style="width:13px;height:13px;color:{{ $layer[1] }};flex-shrink:0"></i>
-                    <span style="font-size:11px;font-weight:700;color:{{ $layer[1] }}">{{ $layer[2] }}</span>
+                    <span style="font-size:var(--fs-xs);font-weight:700;color:{{ $layer[1] }}">{{ $layer[2] }}</span>
                 </div>
                 @endforeach
             </div>
@@ -418,9 +418,9 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
         {{-- DIAGRAM 9: Disaster Recovery --}}
         <div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-                <div style="width:28px;height:28px;border-radius:7px;background:#1A6FE815;border:1px solid #1A6FE830;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#1A6FE8;flex-shrink:0">9</div>
+                <div style="width:28px;height:28px;border-radius:7px;background:#1A6FE815;border:1px solid #1A6FE830;display:flex;align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:800;color:#1A6FE8;flex-shrink:0">9</div>
                 <div>
-                    <div style="font-size:10px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Diagramme 9' : 'Diagram 9' }}</div>
+                    <div style="font-size:var(--fs-2xs);color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Diagramme 9' : 'Diagram 9' }}</div>
                     <div style="font-size:14px;font-weight:700;color:#e2e8f0">{{ $isFr ? 'Architecture de reprise après sinistre' : 'Disaster Recovery Architecture' }}</div>
                 </div>
             </div>
@@ -428,7 +428,7 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
                 <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center">
                     {{-- Primary --}}
                     <div>
-                        <div style="text-align:center;font-size:10px;font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Site principal' : 'Primary site' }}</div>
+                        <div style="text-align:center;font-size:var(--fs-2xs);font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Site principal' : 'Primary site' }}</div>
                         @foreach($isFr
                             ? [['#00C896','server','Serveurs applicatifs'],['#1A6FE8','database','Base de données principale']]
                             : [['#00C896','server','Application servers'],['#1A6FE8','database','Primary database']]
@@ -436,19 +436,19 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
                         @if($idx > 0)<div style="{{ $arrow }}"><div style="width:1px;height:12px;background:#1e293b;margin:0 auto"></div></div>@endif
                         <div style="background:{{ $pr[0] }}10;border:1px solid {{ $pr[0] }}30;border-radius:7px;padding:9px;text-align:center">
                             <i data-lucide="{{ $pr[1] }}" style="width:14px;height:14px;color:{{ $pr[0] }};display:block;margin:0 auto 4px"></i>
-                            <div style="font-size:10px;font-weight:700;color:{{ $pr[0] }}">{{ $pr[2] }}</div>
+                            <div style="font-size:var(--fs-2xs);font-weight:700;color:{{ $pr[0] }}">{{ $pr[2] }}</div>
                         </div>
                         @endforeach
                     </div>
                     {{-- Replication --}}
                     <div style="text-align:center;padding:0 4px">
-                        <div style="font-size:10px;color:var(--text-faint);margin-bottom:6px">{{ $isFr ? 'Réplication' : 'Replication' }}</div>
+                        <div style="font-size:var(--fs-2xs);color:var(--text-faint);margin-bottom:6px">{{ $isFr ? 'Réplication' : 'Replication' }}</div>
                         <div style="font-size:20px;color:#00C896">⇄</div>
-                        <div style="font-size:9px;color:var(--text-faint);margin-top:4px">RPO · RTO</div>
+                        <div style="font-size:var(--fs-2xs);color:var(--text-faint);margin-top:4px">RPO · RTO</div>
                     </div>
                     {{-- Secondary --}}
                     <div>
-                        <div style="text-align:center;font-size:10px;font-weight:700;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Site secondaire' : 'Secondary site' }}</div>
+                        <div style="text-align:center;font-size:var(--fs-2xs);font-weight:700;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Site secondaire' : 'Secondary site' }}</div>
                         @foreach($isFr
                             ? [['#1A6FE8','cloud','Site de reprise'],['#F59E0B','hard-drive','Systèmes de sauvegarde'],['#00C896','refresh-cw','Services de récupération']]
                             : [['#1A6FE8','cloud','Recovery site'],['#F59E0B','hard-drive','Backup systems'],['#00C896','refresh-cw','Recovery services']]
@@ -456,14 +456,14 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
                         @if($idx > 0)<div style="{{ $arrow }}"><div style="width:1px;height:12px;background:#1e293b;margin:0 auto"></div></div>@endif
                         <div style="background:{{ $sec[0] }}10;border:1px solid {{ $sec[0] }}30;border-radius:7px;padding:9px;text-align:center">
                             <i data-lucide="{{ $sec[1] }}" style="width:14px;height:14px;color:{{ $sec[0] }};display:block;margin:0 auto 4px"></i>
-                            <div style="font-size:10px;font-weight:700;color:{{ $sec[0] }}">{{ $sec[2] }}</div>
+                            <div style="font-size:var(--fs-2xs);font-weight:700;color:{{ $sec[0] }}">{{ $sec[2] }}</div>
                         </div>
                         @endforeach
                     </div>
                 </div>
                 <div style="margin-top:16px;padding-top:14px;border-top:1px solid #1e293b;display:flex;gap:10px;justify-content:center">
                     @foreach(['RPO','RTO','High Availability'] as $target)
-                    <span style="background:#00C89610;border:1px solid #00C89625;border-radius:12px;padding:3px 10px;font-size:10px;font-weight:700;color:#00C896">{{ $target }}</span>
+                    <span style="background:#00C89610;border:1px solid #00C89625;border-radius:12px;padding:3px 10px;font-size:var(--fs-2xs);font-weight:700;color:#00C896">{{ $target }}</span>
                     @endforeach
                 </div>
             </div>
@@ -472,16 +472,16 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
         {{-- DIAGRAM 10: Governance Architecture --}}
         <div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-                <div style="width:28px;height:28px;border-radius:7px;background:#F59E0B15;border:1px solid #F59E0B30;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#F59E0B;flex-shrink:0">10</div>
+                <div style="width:28px;height:28px;border-radius:7px;background:#F59E0B15;border:1px solid #F59E0B30;display:flex;align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:800;color:#F59E0B;flex-shrink:0">10</div>
                 <div>
-                    <div style="font-size:10px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Diagramme 10' : 'Diagram 10' }}</div>
+                    <div style="font-size:var(--fs-2xs);color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Diagramme 10' : 'Diagram 10' }}</div>
                     <div style="font-size:14px;font-weight:700;color:#e2e8f0">{{ $isFr ? 'Architecture de gouvernance' : 'Governance Architecture' }}</div>
                 </div>
             </div>
             <div style="{{ $card }}">
-                <div style="{{ $nodeGov }}font-size:12px;padding:11px">{{ $isFr ? 'Conseil d\'administration' : 'Board of Directors' }}</div>
+                <div style="{{ $nodeGov }}font-size:var(--fs-xs);padding:11px">{{ $isFr ? 'Conseil d\'administration' : 'Board of Directors' }}</div>
                 <div style="{{ $arrow }}"><div style="{{ $line }}"></div></div>
-                <div style="{{ $nodeBlue }}font-size:12px;padding:11px">{{ $isFr ? 'Directeur Général (CEO)' : 'Chief Executive Officer' }}</div>
+                <div style="{{ $nodeBlue }}font-size:var(--fs-xs);padding:11px">{{ $isFr ? 'Directeur Général (CEO)' : 'Chief Executive Officer' }}</div>
                 <div style="{{ $arrow }}"><div style="{{ $line }}"></div></div>
                 <div style="{{ $hline }}"></div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
@@ -491,13 +491,13 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
                     as $gov)
                     <div style="display:flex;flex-direction:column;align-items:center">
                         <div style="width:1px;height:14px;background:#1e293b"></div>
-                        <div style="background:{{ $gov[0] }}10;border:1px solid {{ $gov[0] }}30;border-radius:7px;padding:8px;text-align:center;width:100%;font-size:10px;font-weight:700;color:{{ $gov[0] }}">{{ $gov[1] }}</div>
+                        <div style="background:{{ $gov[0] }}10;border:1px solid {{ $gov[0] }}30;border-radius:7px;padding:8px;text-align:center;width:100%;font-size:var(--fs-2xs);font-weight:700;color:{{ $gov[0] }}">{{ $gov[1] }}</div>
                     </div>
                     @endforeach
                 </div>
                 <div style="{{ $hline }}margin-top:14px"></div>
                 <div style="{{ $arrow }}"><div style="{{ $line }}"></div></div>
-                <div style="{{ $nodeTeal }}font-size:11px">{{ $isFr ? 'Produits & Services' : 'Products & Services' }}</div>
+                <div style="{{ $nodeTeal }}font-size:var(--fs-xs)">{{ $isFr ? 'Produits & Services' : 'Products & Services' }}</div>
             </div>
         </div>
     </div>
@@ -510,9 +510,9 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
 {{-- ════════════════════════════════════════════════════════════════ --}}
 <div class="section" style="max-width:760px;margin:0 auto">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-        <div style="width:28px;height:28px;border-radius:7px;background:#1A6FE815;border:1px solid #1A6FE830;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#1A6FE8;flex-shrink:0">11</div>
+        <div style="width:28px;height:28px;border-radius:7px;background:#1A6FE815;border:1px solid #1A6FE830;display:flex;align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:800;color:#1A6FE8;flex-shrink:0">11</div>
         <div>
-            <div style="font-size:10px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Diagramme 11' : 'Diagram 11' }}</div>
+            <div style="font-size:var(--fs-2xs);color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Diagramme 11' : 'Diagram 11' }}</div>
             <div style="font-size:18px;font-weight:700;color:#e2e8f0">{{ $isFr ? 'Écosystème OPES Academy' : 'OPES Academy Ecosystem' }}</div>
         </div>
     </div>
@@ -520,12 +520,12 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
         <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:center">
             {{-- Sources --}}
             <div>
-                <div style="text-align:center;font-size:10px;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Institutions partenaires' : 'Partner institutions' }}</div>
+                <div style="text-align:center;font-size:var(--fs-2xs);font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Institutions partenaires' : 'Partner institutions' }}</div>
                 @foreach($isFr
                     ? ['Universités','Écoles de soins infirmiers','Facultés de médecine']
                     : ['Universities','Nursing schools','Medical schools']
                 as $src)
-                <div style="{{ $node }}font-size:10px;padding:7px 10px;margin-bottom:6px">{{ $src }}</div>
+                <div style="{{ $node }}font-size:var(--fs-2xs);padding:7px 10px;margin-bottom:6px">{{ $src }}</div>
                 @endforeach
             </div>
             {{-- Academy HUB --}}
@@ -533,26 +533,26 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
                 <div style="font-size:18px;color:#1A6FE8">→</div>
                 <div style="background:#1A6FE810;border:2px solid #1A6FE840;border-radius:12px;padding:18px 14px;text-align:center">
                     <i data-lucide="graduation-cap" style="width:22px;height:22px;color:#1A6FE8;display:block;margin:0 auto 8px"></i>
-                    <div style="font-size:11px;font-weight:800;color:#1A6FE8">OPES</div>
-                    <div style="font-size:11px;font-weight:800;color:#1A6FE8">ACADEMY</div>
+                    <div style="font-size:var(--fs-xs);font-weight:800;color:#1A6FE8">OPES</div>
+                    <div style="font-size:var(--fs-xs);font-weight:800;color:#1A6FE8">ACADEMY</div>
                 </div>
                 <div style="font-size:18px;color:#1A6FE8">→</div>
             </div>
             {{-- Outputs --}}
             <div>
-                <div style="text-align:center;font-size:10px;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Rôles certifiés' : 'Certified roles' }}</div>
+                <div style="text-align:center;font-size:var(--fs-2xs);font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Rôles certifiés' : 'Certified roles' }}</div>
                 @foreach($isFr
                     ? [['#00C896','Utilisateurs certifiés'],['#1A6FE8','Administrateurs certifiés'],['#00C896','Implémenteurs certifiés'],['#1A6FE8','Formateurs certifiés']]
                     : [['#00C896','Certified users'],['#1A6FE8','Certified administrators'],['#00C896','Certified implementers'],['#1A6FE8','Certified trainers']]
                 as $role)
-                <div style="background:{{ $role[0] }}10;border:1px solid {{ $role[0] }}30;border-radius:7px;padding:7px 10px;text-align:center;font-size:10px;font-weight:700;color:{{ $role[0] }};margin-bottom:6px">{{ $role[1] }}</div>
+                <div style="background:{{ $role[0] }}10;border:1px solid {{ $role[0] }}30;border-radius:7px;padding:7px 10px;text-align:center;font-size:var(--fs-2xs);font-weight:700;color:{{ $role[0] }};margin-bottom:6px">{{ $role[1] }}</div>
                 @endforeach
             </div>
         </div>
         <div style="{{ $arrow }}margin-top:12px"><div style="{{ $line }}"></div></div>
         <div style="background:#00C89610;border:1px solid #00C89630;border-radius:10px;padding:14px;text-align:center">
             <div style="font-size:13px;font-weight:700;color:#00C896">{{ $isFr ? 'Effectifs de santé numériques' : 'Digital health workforce' }}</div>
-            <div style="font-size:10px;color:var(--text-faint);margin-top:4px">{{ $isFr ? 'Adoption · Capacité · Durabilité' : 'Adoption · Capacity · Sustainability' }}</div>
+            <div style="font-size:var(--fs-2xs);color:var(--text-faint);margin-top:4px">{{ $isFr ? 'Adoption · Capacité · Durabilité' : 'Adoption · Capacity · Sustainability' }}</div>
         </div>
     </div>
 </div>
@@ -564,9 +564,9 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
 {{-- ════════════════════════════════════════════════════════════════ --}}
 <div class="section" style="max-width:960px;margin:0 auto">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-        <div style="width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#00C896,#1A6FE8);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff;flex-shrink:0">12</div>
+        <div style="width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#00C896,#1A6FE8);display:flex;align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:800;color:#fff;flex-shrink:0">12</div>
         <div>
-            <div style="font-size:10px;color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Diagramme 12' : 'Diagram 12' }}</div>
+            <div style="font-size:var(--fs-2xs);color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Diagramme 12' : 'Diagram 12' }}</div>
             <div style="font-size:18px;font-weight:700;color:#e2e8f0">{{ $isFr ? 'Vue enterprise complète OPES Health OS' : 'Complete OPES Health OS Enterprise View' }}</div>
         </div>
     </div>
@@ -589,11 +589,11 @@ $card     = 'background:#080E1A;border:1px solid #1e293b;border-radius:16px;padd
         <div style="padding:16px 24px;border-bottom:1px solid #0f172a;display:flex;align-items:center;gap:20px">
             <div style="display:flex;align-items:center;gap:8px;min-width:200px">
                 <i data-lucide="{{ $layer[3] }}" style="width:14px;height:14px;color:{{ $layer[0] }};flex-shrink:0"></i>
-                <span style="font-size:12px;font-weight:700;color:{{ $layer[0] }}">{{ $layer[1] }}</span>
+                <span style="font-size:var(--fs-xs);font-weight:700;color:{{ $layer[0] }}">{{ $layer[1] }}</span>
             </div>
             <div style="flex:1;display:flex;flex-wrap:wrap;gap:6px">
                 @foreach($layer[2] as $comp)
-                <span style="background:{{ $layer[0] }}10;border:1px solid {{ $layer[0] }}25;border-radius:12px;padding:3px 10px;font-size:11px;font-weight:600;color:{{ $layer[0] }}">{{ $comp }}</span>
+                <span style="background:{{ $layer[0] }}10;border:1px solid {{ $layer[0] }}25;border-radius:12px;padding:3px 10px;font-size:var(--fs-xs);font-weight:600;color:{{ $layer[0] }}">{{ $comp }}</span>
                 @endforeach
             </div>
         </div>

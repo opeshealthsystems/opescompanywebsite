@@ -165,7 +165,7 @@
                 </div>
                 <div>
                     <div style="font-weight:800;color:#e2e8f0;font-size:17px">{{ $tier['name'] }}</div>
-                    <div style="font-size:11px;color:{{ $tier['color'] }};text-transform:uppercase;letter-spacing:0.07em;font-weight:700">{{ $tier['tagline'] }}</div>
+                    <div style="font-size:var(--fs-xs);color:{{ $tier['color'] }};text-transform:uppercase;letter-spacing:0.07em;font-weight:700">{{ $tier['tagline'] }}</div>
                 </div>
             </div>
 
@@ -191,8 +191,8 @@
                 @endphp
                 @foreach($attrs as $attr)
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
-                    <span style="color:var(--text-faint);font-size:12px">{{ $attr[0] }}</span>
-                    <span style="color:var(--text-muted);font-size:12px;font-weight:600;text-align:right">{{ $attr[1] }}</span>
+                    <span style="color:var(--text-faint);font-size:var(--fs-xs)">{{ $attr[0] }}</span>
+                    <span style="color:var(--text-muted);font-size:var(--fs-xs);font-weight:600;text-align:right">{{ $attr[1] }}</span>
                 </div>
                 @endforeach
             </div>
@@ -296,8 +296,8 @@
         as $p)
         <div style="background:#0F172A;border:1px solid {{ $p[3] }}30;border-radius:10px;padding:14px;text-align:left">
             <div style="font-weight:800;color:{{ $p[3] }};font-size:16px;margin-bottom:2px">{{ $p[0] }}</div>
-            <div style="font-weight:700;color:#e2e8f0;font-size:12px;margin-bottom:4px">{{ $p[1] }}</div>
-            <div style="font-size:11px;color:var(--text-muted);line-height:1.5">{{ $p[2] }}</div>
+            <div style="font-weight:700;color:#e2e8f0;font-size:var(--fs-xs);margin-bottom:4px">{{ $p[1] }}</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.5">{{ $p[2] }}</div>
         </div>
         @endforeach
     </div>

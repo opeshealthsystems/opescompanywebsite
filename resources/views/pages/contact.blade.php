@@ -122,7 +122,7 @@
                 </div>
                 <div>
                     <div style="font-weight:600;color:#e2e8f0;font-size:13px">{{ $s['step'] }}</div>
-                    <div style="color:var(--text-muted);font-size:12px">{{ $s['desc'] }}</div>
+                    <div style="color:var(--text-muted);font-size:var(--fs-xs)">{{ $s['desc'] }}</div>
                 </div>
             </div>
             @endforeach

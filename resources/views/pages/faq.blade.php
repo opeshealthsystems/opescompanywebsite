@@ -9,7 +9,7 @@
 .faq-hero h1{font-size:clamp(28px,4vw,42px);font-weight:800;color:#e2e8f0;margin:16px 0 12px;line-height:1.15}
 .faq-hero p{color:var(--text-muted);font-size:15px;line-height:1.7;max-width:560px;margin:0 auto}
 .faq-cats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:0 24px 36px}
-.faq-cat-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;background:#0f172a;border:1px solid #1e293b;color:var(--text-muted);font-size:12px;font-weight:600;text-decoration:none;transition:all 0.15s;cursor:pointer}
+.faq-cat-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;background:#0f172a;border:1px solid #1e293b;color:var(--text-muted);font-size:var(--fs-xs);font-weight:600;text-decoration:none;transition:all 0.15s;cursor:pointer}
 .faq-cat-pill:hover,.faq-cat-pill.active{background:#00C89612;border-color:#00C89640;color:#00C896}
 .faq-body{max-width:820px;margin:0 auto;padding:0 24px 80px}
 .faq-section{margin-bottom:48px}

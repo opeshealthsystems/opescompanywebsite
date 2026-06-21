@@ -163,9 +163,9 @@ $accentBg = $isCore ? 'rgba(0,200,150,0.1)' : ($isDiag ? 'rgba(26,111,232,0.1)' 
         <div class="pd-wf-step">
             <div class="pd-wf-node" style="border-color:{{ $color }};{{ $i === 0 ? 'background:'.$color.';' : ($i === count($product['workflow'])-1 ? 'background:#1e293b;border-color:var(--text-faint);' : '') }}">
                 @if($i === 0)
-                <span style="color:#fff;font-weight:700;font-size:12px">{{ $i+1 }}</span>
+                <span style="color:#fff;font-weight:700;font-size:var(--fs-xs)">{{ $i+1 }}</span>
                 @else
-                <span style="color:{{ $i === count($product['workflow'])-1 ? 'var(--text-muted)' : $color }};font-weight:700;font-size:12px">{{ $i+1 }}</span>
+                <span style="color:{{ $i === count($product['workflow'])-1 ? 'var(--text-muted)' : $color }};font-weight:700;font-size:var(--fs-xs)">{{ $i+1 }}</span>
                 @endif
             </div>
             <div class="pd-wf-label">{{ $step['step'] }}</div>

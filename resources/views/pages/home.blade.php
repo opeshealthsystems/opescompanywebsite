@@ -572,7 +572,7 @@
                 · <span>{{ implode(', ', array_filter([$profession, $specialty, $workplace])) }}</span>
                 @endif
                 @if($program)
-                <span style="margin-left:6px;font-size:11px;color:var(--text-faint);background:#0f172a;padding:2px 7px;border-radius:8px;border:1px solid #1e293b">{{ $program }}</span>
+                <span style="margin-left:6px;font-size:var(--fs-xs);color:var(--text-faint);background:#0f172a;padding:2px 7px;border-radius:8px;border:1px solid #1e293b">{{ $program }}</span>
                 @endif
             </div>
         </div>

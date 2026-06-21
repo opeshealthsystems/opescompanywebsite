@@ -24,7 +24,7 @@
             ? ['Représentants commerciaux','Responsables de compte','Développement commercial','Partenaires','Consultants','Direction']
             : ['Sales Representatives','Account Managers','Business Development','Channel Partners','Consultants','Executive Leadership']
         as $chip)
-        <span style="background:#F59E0B0D;border:1px solid #F59E0B20;border-radius:20px;padding:5px 12px;font-size:11px;color:#F59E0B">{{ $chip }}</span>
+        <span style="background:#F59E0B0D;border:1px solid #F59E0B20;border-radius:20px;padding:5px 12px;font-size:var(--fs-xs);color:#F59E0B">{{ $chip }}</span>
         @endforeach
     </div>
 </div>
@@ -62,14 +62,14 @@
             </p>
         </div>
         <div>
-            <div style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px">{{ $isFr ? 'OPES vend :' : 'OPES sells:' }}</div>
+            <div style="font-size:var(--fs-xs);font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px">{{ $isFr ? 'OPES vend :' : 'OPES sells:' }}</div>
             @foreach($isFr
                 ? [['heart-pulse','#00C896','Meilleurs soins patients'],['trending-up','#1A6FE8','Efficacité opérationnelle'],['dollar-sign','#00C896','Optimisation des revenus'],['zap','#1A6FE8','Transformation numérique'],['share-2','#00C896','Interopérabilité'],['cpu','#1A6FE8','Intelligence en santé'],['building-2','#00C896','Infrastructure de santé nationale']]
                 : [['heart-pulse','#00C896','Better patient care'],['trending-up','#1A6FE8','Operational efficiency'],['dollar-sign','#00C896','Revenue optimisation'],['zap','#1A6FE8','Digital transformation'],['share-2','#00C896','Interoperability'],['cpu','#1A6FE8','Healthcare intelligence'],['building-2','#00C896','National health infrastructure']]
             as $v)
             <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#0F172A;border-radius:8px;border:1px solid #1e293b;margin-bottom:6px">
                 <i data-lucide="{{ $v[0] }}" style="width:13px;height:13px;color:{{ $v[1] }};flex-shrink:0"></i>
-                <span style="font-size:12px;color:#e2e8f0;font-weight:600">{{ $v[2] }}</span>
+                <span style="font-size:var(--fs-xs);color:#e2e8f0;font-weight:600">{{ $v[2] }}</span>
             </div>
             @endforeach
         </div>
@@ -146,21 +146,21 @@
                 </div>
                 <div style="font-weight:700;color:#e2e8f0;font-size:13px">{{ $seg[4] }}</div>
             </div>
-            <div style="font-size:10px;font-weight:600;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">{{ $isFr ? 'Décideurs' : 'Decision makers' }}</div>
+            <div style="font-size:var(--fs-2xs);font-weight:600;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">{{ $isFr ? 'Décideurs' : 'Decision makers' }}</div>
             <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px">
                 @foreach($seg[5] as $dm)
-                <span style="background:#1e293b;border-radius:12px;padding:2px 8px;font-size:10px;color:var(--text-muted)">{{ $dm }}</span>
+                <span style="background:#1e293b;border-radius:12px;padding:2px 8px;font-size:var(--fs-2xs);color:var(--text-muted)">{{ $dm }}</span>
                 @endforeach
             </div>
-            <div style="font-size:10px;font-weight:600;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">{{ $isFr ? 'Besoins' : 'Primary needs' }}</div>
+            <div style="font-size:var(--fs-2xs);font-weight:600;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">{{ $isFr ? 'Besoins' : 'Primary needs' }}</div>
             <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px">
                 @foreach($seg[6] as $need)
-                <span style="background:{{ $seg[3] }}0D;border:1px solid {{ $seg[3] }}20;border-radius:12px;padding:2px 8px;font-size:10px;color:{{ $seg[3] }}">{{ $need }}</span>
+                <span style="background:{{ $seg[3] }}0D;border:1px solid {{ $seg[3] }}20;border-radius:12px;padding:2px 8px;font-size:var(--fs-2xs);color:{{ $seg[3] }}">{{ $need }}</span>
                 @endforeach
             </div>
-            <div style="font-size:10px;font-weight:600;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">{{ $isFr ? 'Produits recommandés' : 'Recommended products' }}</div>
+            <div style="font-size:var(--fs-2xs);font-weight:600;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">{{ $isFr ? 'Produits recommandés' : 'Recommended products' }}</div>
             @foreach($seg[7] as $prod)
-            <div style="font-size:11px;color:var(--text-muted);padding:2px 0">
+            <div style="font-size:var(--fs-xs);color:var(--text-muted);padding:2px 0">
                 <i data-lucide="chevron-right" style="width:9px;height:9px;color:{{ $seg[3] }};margin-right:4px"></i>{{ $prod }}
             </div>
             @endforeach
@@ -206,9 +206,9 @@
                         <div style="width:32px;height:32px;border-radius:50%;background:{{ $st[1] }}15;display:flex;align-items:center;justify-content:center;margin:0 auto 8px">
                             <i data-lucide="{{ $st[0] }}" style="width:14px;height:14px;color:{{ $st[1] }}"></i>
                         </div>
-                        <div style="font-size:9px;font-weight:800;color:{{ $st[1] }};text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">{{ $isFr ? 'Étape' : 'Stage' }} {{ $st[2] }}</div>
-                        <div style="font-size:11px;font-weight:700;color:#e2e8f0;margin-bottom:6px;line-height:1.3">{{ $st[3] }}</div>
-                        <div style="font-size:10px;color:var(--text-faint);line-height:1.5">{{ $st[4] }}</div>
+                        <div style="font-size:var(--fs-2xs);font-weight:800;color:{{ $st[1] }};text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">{{ $isFr ? 'Étape' : 'Stage' }} {{ $st[2] }}</div>
+                        <div style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;margin-bottom:6px;line-height:1.3">{{ $st[3] }}</div>
+                        <div style="font-size:var(--fs-2xs);color:var(--text-faint);line-height:1.5">{{ $st[4] }}</div>
                     </div>
                 </div>
                 @if($idx < count($stages) - 1)
@@ -245,11 +245,11 @@
             <div style="background:#0F172A;border:1px solid #1e293b;border-radius:10px;padding:14px;margin-bottom:10px">
                 <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
                     <i data-lucide="{{ $demo[0] }}" style="width:13px;height:13px;color:{{ $demo[1] }}"></i>
-                    <span style="font-size:12px;font-weight:700;color:#e2e8f0">{{ $demo[2] }}</span>
+                    <span style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0">{{ $demo[2] }}</span>
                 </div>
                 <div style="display:flex;flex-wrap:wrap;gap:4px">
                     @foreach($demo[3] as $step)
-                    <span style="background:{{ $demo[1] }}10;border:1px solid {{ $demo[1] }}20;border-radius:12px;padding:2px 8px;font-size:10px;color:{{ $demo[1] }}">{{ $step }}</span>
+                    <span style="background:{{ $demo[1] }}10;border:1px solid {{ $demo[1] }}20;border-radius:12px;padding:2px 8px;font-size:var(--fs-2xs);color:{{ $demo[1] }}">{{ $step }}</span>
                     @endforeach
                 </div>
             </div>
@@ -275,10 +275,10 @@
             <div style="margin-bottom:12px">
                 <div style="display:flex;align-items:center;gap:7px;margin-bottom:6px">
                     <i data-lucide="{{ $q[0] }}" style="width:11px;height:11px;color:{{ $q[1] }}"></i>
-                    <span style="font-size:11px;font-weight:700;color:{{ $q[1] }};text-transform:uppercase;letter-spacing:0.05em">{{ $q[2] }}</span>
+                    <span style="font-size:var(--fs-xs);font-weight:700;color:{{ $q[1] }};text-transform:uppercase;letter-spacing:0.05em">{{ $q[2] }}</span>
                 </div>
                 @foreach($q[3] as $question)
-                <div style="font-size:11px;color:var(--text-muted);padding:3px 0 3px 18px;border-left:1px solid {{ $q[1] }}20;margin-left:5px">{{ $question }}</div>
+                <div style="font-size:var(--fs-xs);color:var(--text-muted);padding:3px 0 3px 18px;border-left:1px solid {{ $q[1] }}20;margin-left:5px">{{ $question }}</div>
                 @endforeach
             </div>
             @endforeach
@@ -298,7 +298,7 @@
     <div style="background:#0F172A;border:1px solid #00C89630;border-radius:16px;padding:28px 32px;margin-top:24px;text-align:left">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
             <i data-lucide="quote" style="width:20px;height:20px;color:#00C896;opacity:0.5"></i>
-            <span style="font-size:10px;font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.08em">30 {{ $isFr ? 'secondes' : 'seconds' }}</span>
+            <span style="font-size:var(--fs-2xs);font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.08em">30 {{ $isFr ? 'secondes' : 'seconds' }}</span>
         </div>
         <p style="font-size:15px;color:#e2e8f0;line-height:1.75;font-style:italic">
             {{ $isFr
@@ -333,12 +333,12 @@
                 <div style="padding:18px 20px;border-right:1px solid #1e293b;background:{{ $obj[0] }}08">
                     <div style="display:flex;align-items:flex-start;gap:8px">
                         <i data-lucide="alert-circle" style="width:14px;height:14px;color:{{ $obj[0] }};flex-shrink:0;margin-top:1px"></i>
-                        <div style="font-size:12px;font-weight:700;color:#e2e8f0;line-height:1.4">{{ $obj[1] }}</div>
+                        <div style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;line-height:1.4">{{ $obj[1] }}</div>
                     </div>
                 </div>
                 <div style="padding:18px 20px;display:flex;align-items:flex-start;gap:8px">
                     <i data-lucide="check-circle" style="width:14px;height:14px;color:#00C896;flex-shrink:0;margin-top:1px"></i>
-                    <div style="font-size:12px;color:var(--text-muted);line-height:1.6">{{ $obj[2] }}</div>
+                    <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.6">{{ $obj[2] }}</div>
                 </div>
             </div>
         </div>
@@ -367,10 +367,10 @@
                    ['#F59E0B','vs International vendors',['Local support','African context','Flexible deployment','Cost-effective','National readiness']]]
             as $comp)
             <div style="background:#0F172A;border:1px solid #1e293b;border-radius:10px;padding:14px 16px;margin-bottom:10px">
-                <div style="font-size:11px;font-weight:700;color:{{ $comp[0] }};margin-bottom:8px">{{ $comp[1] }}</div>
+                <div style="font-size:var(--fs-xs);font-weight:700;color:{{ $comp[0] }};margin-bottom:8px">{{ $comp[1] }}</div>
                 <div style="display:flex;flex-wrap:wrap;gap:5px">
                     @foreach($comp[2] as $pt)
-                    <span style="background:{{ $comp[0] }}10;border:1px solid {{ $comp[0] }}20;border-radius:12px;padding:2px 9px;font-size:10px;color:{{ $comp[0] }}">✓ {{ $pt }}</span>
+                    <span style="background:{{ $comp[0] }}10;border:1px solid {{ $comp[0] }}20;border-radius:12px;padding:2px 9px;font-size:var(--fs-2xs);color:{{ $comp[0] }}">✓ {{ $pt }}</span>
                     @endforeach
                 </div>
             </div>
@@ -392,17 +392,17 @@
                    ['#F59E0B','Long-term benefits','Interoperability · Health intelligence · National connectivity']]
             as $level)
             <div style="padding:16px;background:#0F172A;border-radius:10px;border-left:3px solid {{ $level[0] }};margin-bottom:10px">
-                <div style="font-size:12px;font-weight:700;color:{{ $level[0] }};margin-bottom:6px">{{ $level[1] }}</div>
-                <div style="font-size:11px;color:var(--text-muted);line-height:1.6">{{ $level[2] }}</div>
+                <div style="font-size:var(--fs-xs);font-weight:700;color:{{ $level[0] }};margin-bottom:6px">{{ $level[1] }}</div>
+                <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.6">{{ $level[2] }}</div>
             </div>
             @endforeach
             <div style="background:#0F172A;border:1px solid #1e293b;border-radius:10px;padding:14px 16px;margin-top:6px">
-                <div style="font-size:11px;font-weight:700;color:#e2e8f0;margin-bottom:8px">{{ $isFr ? 'Composants d\'une proposition' : 'Proposal components' }}</div>
+                <div style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;margin-bottom:8px">{{ $isFr ? 'Composants d\'une proposition' : 'Proposal components' }}</div>
                 @foreach($isFr
                     ? ['Résumé exécutif','Énoncé du problème','Solution proposée','Architecture','Tarification','Plan d\'implémentation','Plan de support','ROI']
                     : ['Executive summary','Problem statement','Proposed solution','Architecture','Pricing','Implementation plan','Support plan','ROI']
                 as $comp)
-                <div style="font-size:11px;color:var(--text-faint);padding:2px 0">
+                <div style="font-size:var(--fs-xs);color:var(--text-faint);padding:2px 0">
                     <i data-lucide="chevron-right" style="width:9px;height:9px;color:#00C896;margin-right:4px"></i>{{ $comp }}
                 </div>
                 @endforeach
@@ -428,7 +428,7 @@
             as $acct)
             <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #0f172a">
                 <i data-lucide="chevron-right" style="width:9px;height:9px;color:#00C896;flex-shrink:0"></i>
-                <span style="font-size:12px;color:var(--text-muted)">{{ $acct }}</span>
+                <span style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $acct }}</span>
             </div>
             @endforeach
         </div>
@@ -443,7 +443,7 @@
                 : ['Pipeline value','Qualified opportunities','Proposal win rate','Average deal size','Customer acquisition cost','Revenue per sales representative','Customer retention rate']
             as $kpi)
             <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0F172A;border-radius:7px;border-left:2px solid #1A6FE8;margin-bottom:5px">
-                <span style="font-size:11px;color:var(--text-muted)">{{ $kpi }}</span>
+                <span style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $kpi }}</span>
             </div>
             @endforeach
         </div>
@@ -453,13 +453,13 @@
                 <i data-lucide="trending-up" style="width:12px;height:12px"></i>
                 {{ $isFr ? 'Expansion post-vente' : 'Post-sale expansion' }}
             </div>
-            <p style="font-size:11px;color:var(--text-faint);margin-bottom:12px">{{ $isFr ? 'Après l\'implémentation, identifier des opportunités pour :' : 'After implementation, identify opportunities for:' }}</p>
+            <p style="font-size:var(--fs-xs);color:var(--text-faint);margin-bottom:12px">{{ $isFr ? 'Après l\'implémentation, identifier des opportunités pour :' : 'After implementation, identify opportunities for:' }}</p>
             @foreach($isFr
                 ? ['Modules supplémentaires','Services d\'interopérabilité','Services Health ID','Analytique avancée','Programmes de formation','Services gérés']
                 : ['Additional modules','Interoperability services','Health ID services','Advanced analytics','Training programmes','Managed services']
             as $exp)
             <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0F172A;border-radius:7px;border-left:2px solid #00C896;margin-bottom:5px">
-                <span style="font-size:11px;color:var(--text-muted)">{{ $exp }}</span>
+                <span style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $exp }}</span>
             </div>
             @endforeach
         </div>

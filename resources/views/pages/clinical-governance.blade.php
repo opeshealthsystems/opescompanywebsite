@@ -66,7 +66,7 @@
                 <i data-lucide="{{ $p[0] }}" style="width:16px;height:16px;color:{{ $p[1] }}"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:6px">{{ $p[2] }}</div>
-            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">{{ $p[3] }}</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.6">{{ $p[3] }}</div>
         </div>
         @endforeach
     </div>
@@ -130,12 +130,12 @@
                 </div>
                 <div>
                     <div style="font-weight:700;color:#e2e8f0;font-size:13px">{{ $c['title'] }}</div>
-                    <div style="font-size:10px;color:{{ $c['color'] }};font-weight:600;text-transform:uppercase;letter-spacing:0.06em">{{ $c['role'] }}</div>
+                    <div style="font-size:var(--fs-2xs);color:{{ $c['color'] }};font-weight:600;text-transform:uppercase;letter-spacing:0.06em">{{ $c['role'] }}</div>
                 </div>
             </div>
             <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px">
                 @foreach($c['resp'] as $r)
-                <li style="display:flex;align-items:flex-start;gap:6px;font-size:12px;color:var(--text-muted)">
+                <li style="display:flex;align-items:flex-start;gap:6px;font-size:var(--fs-xs);color:var(--text-muted)">
                     <i data-lucide="chevron-right" style="width:11px;height:11px;color:{{ $c['color'] }};flex-shrink:0;margin-top:2px"></i>{{ $r }}
                 </li>
                 @endforeach
@@ -192,13 +192,13 @@
                 </div>
                 <div style="font-weight:700;color:#e2e8f0;font-size:13px">{{ $r['cat'] }}</div>
             </div>
-            <div style="font-size:10px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.07em;font-weight:700;margin-bottom:6px">{{ $isFr ? 'Exemples' : 'Examples' }}</div>
+            <div style="font-size:var(--fs-2xs);color:var(--text-faint);text-transform:uppercase;letter-spacing:0.07em;font-weight:700;margin-bottom:6px">{{ $isFr ? 'Exemples' : 'Examples' }}</div>
             @foreach($r['examples'] as $ex)
-            <div style="font-size:11px;color:var(--text-muted);padding:3px 0;border-bottom:1px solid #1e293b20">{{ $ex }}</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-muted);padding:3px 0;border-bottom:1px solid #1e293b20">{{ $ex }}</div>
             @endforeach
-            <div style="font-size:10px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.07em;font-weight:700;margin:10px 0 6px">{{ $isFr ? 'Contrôles' : 'Controls' }}</div>
+            <div style="font-size:var(--fs-2xs);color:var(--text-faint);text-transform:uppercase;letter-spacing:0.07em;font-weight:700;margin:10px 0 6px">{{ $isFr ? 'Contrôles' : 'Controls' }}</div>
             @foreach($r['controls'] as $ctrl)
-            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-muted);padding:3px 0">
+            <div style="display:flex;align-items:center;gap:5px;font-size:var(--fs-xs);color:var(--text-muted);padding:3px 0">
                 <i data-lucide="check" style="width:10px;height:10px;color:{{ $r['color'] }};flex-shrink:0"></i>{{ $ctrl }}
             </div>
             @endforeach
@@ -241,8 +241,8 @@
                     @endif
                 </div>
                 <div style="padding-top:6px;margin-bottom:{{ $idx < 4 ? '0' : '0' }}">
-                    <div style="font-weight:700;color:#e2e8f0;font-size:12px">{{ $step[2] }}</div>
-                    <div style="font-size:11px;color:var(--text-muted)">{{ $step[3] }}</div>
+                    <div style="font-weight:700;color:#e2e8f0;font-size:var(--fs-xs)">{{ $step[2] }}</div>
+                    <div style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $step[3] }}</div>
                 </div>
             </div>
             @endforeach
@@ -252,7 +252,7 @@
             <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:14px">
                 {{ $isFr ? 'Gouvernance des alertes' : 'Alert governance' }}
             </div>
-            <p style="font-size:12px;color:var(--text-muted);line-height:1.65;margin-bottom:14px">
+            <p style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.65;margin-bottom:14px">
                 {{ $isFr
                     ? 'La fatigue d\'alerte réduit la sécurité des patients. La plateforme régit la priorité, la fréquence, l\'escalade et la révision de chaque alerte.'
                     : 'Alert fatigue reduces patient safety. The platform governs priority, frequency, escalation, and review of every alert.' }}
@@ -264,13 +264,13 @@
             <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;border-left:3px solid {{ $al[0] }}">
                 <div style="width:8px;height:8px;border-radius:50%;background:{{ $al[0] }};flex-shrink:0"></div>
                 <div>
-                    <div style="font-weight:700;font-size:12px;color:#e2e8f0">{{ $al[1] }}</div>
-                    <div style="font-size:11px;color:var(--text-muted)">{{ $al[2] }}</div>
+                    <div style="font-weight:700;font-size:var(--fs-xs);color:#e2e8f0">{{ $al[1] }}</div>
+                    <div style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $al[2] }}</div>
                 </div>
             </div>
             @endforeach
             <div style="margin-top:14px;padding:12px;background:#0f1a2e;border:1px solid rgba(0,200,150,0.15);border-radius:8px">
-                <div style="font-size:11px;color:var(--text-muted);line-height:1.6">
+                <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.6">
                     <i data-lucide="info" style="width:11px;height:11px;color:#00C896;margin-right:4px;vertical-align:middle"></i>
                     {{ $isFr
                         ? 'Toutes les règles cliniques maintiennent un numéro de version, un auteur, une date d\'approbation et un historique complet des modifications.'
@@ -297,9 +297,9 @@
         as $v)
         <div style="background:#0F172A;border:1px solid {{ $v[1] }}30;border-radius:12px;padding:20px 16px;position:relative">
             <div style="font-size:28px;font-weight:900;color:{{ $v[1] }}18;position:absolute;top:12px;right:16px;line-height:1">{{ $v[0] }}</div>
-            <div style="font-size:10px;color:{{ $v[1] }};font-weight:800;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">{{ $isFr ? 'Étape' : 'Stage' }} {{ $v[0] }}</div>
+            <div style="font-size:var(--fs-2xs);color:{{ $v[1] }};font-weight:800;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">{{ $isFr ? 'Étape' : 'Stage' }} {{ $v[0] }}</div>
             <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:8px">{{ $v[2] }}</div>
-            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">{{ $v[3] }}</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.6">{{ $v[3] }}</div>
         </div>
         @endforeach
     </div>
@@ -333,8 +333,8 @@
                     @if($idx < 4)<div style="width:1px;height:18px;background:#1e293b;margin:2px 0"></div>@endif
                 </div>
                 <div style="padding-top:5px;margin-bottom:{{ $idx < 4 ? '8px' : '0' }}">
-                    <div style="font-weight:700;color:#e2e8f0;font-size:12px">{{ $step[2] }}</div>
-                    <div style="font-size:11px;color:var(--text-muted);line-height:1.5">{{ $step[3] }}</div>
+                    <div style="font-weight:700;color:#e2e8f0;font-size:var(--fs-xs)">{{ $step[2] }}</div>
+                    <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.5">{{ $step[3] }}</div>
                 </div>
             </div>
             @endforeach
@@ -350,18 +350,18 @@
                 as $kpi)
                 <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #1e293b">
                     <div style="width:6px;height:6px;border-radius:50%;background:{{ $kpi[1] }};flex-shrink:0"></div>
-                    <span style="font-size:12px;color:var(--text-muted)">{{ $kpi[0] }}</span>
+                    <span style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $kpi[0] }}</span>
                 </div>
                 @endforeach
             </div>
             <div style="background:#0f1a2e;border:1px solid rgba(0,200,150,0.15);border-radius:12px;padding:16px 18px">
-                <div style="font-weight:700;color:#00C896;font-size:12px;margin-bottom:8px">
+                <div style="font-weight:700;color:#00C896;font-size:var(--fs-xs);margin-bottom:8px">
                     {{ $isFr ? 'Terminologies cliniques supportées' : 'Supported clinical terminologies' }}
                 </div>
                 @foreach([['ICD-11','WHO International Classification of Diseases'],['SNOMED CT','Systematized Nomenclature of Medicine'],['LOINC','Logical Observation Identifiers Names and Codes']] as $term)
                 <div style="display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid #1e293b20">
-                    <div style="font-size:11px;font-weight:700;color:#e2e8f0;white-space:nowrap;min-width:80px">{{ $term[0] }}</div>
-                    <div style="font-size:11px;color:var(--text-faint)">{{ $term[1] }}</div>
+                    <div style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;white-space:nowrap;min-width:80px">{{ $term[0] }}</div>
+                    <div style="font-size:var(--fs-xs);color:var(--text-faint)">{{ $term[1] }}</div>
                 </div>
                 @endforeach
             </div>
@@ -380,7 +380,7 @@
     <h2 class="section-title">{{ $isFr ? 'Ce cadre s\'applique à toute la plateforme OPES Health OS' : 'This framework applies across the entire OPES Health OS platform' }}</h2>
     <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:24px;max-width:700px;margin-left:auto;margin-right:auto">
         @foreach(['OPES Health OS','OPES Clinic','OPES Hospital','OPES Specialty Suite','OPES Care','OPES Clinical Intelligence','OPES Academy','Customer Deployments'] as $scope)
-        <div style="background:#0F172A;border:1px solid #1e293b;border-radius:20px;padding:6px 14px;font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:5px">
+        <div style="background:#0F172A;border:1px solid #1e293b;border-radius:20px;padding:6px 14px;font-size:var(--fs-xs);color:var(--text-muted);display:flex;align-items:center;gap:5px">
             <i data-lucide="check" style="width:10px;height:10px;color:#00C896"></i>{{ $scope }}
         </div>
         @endforeach

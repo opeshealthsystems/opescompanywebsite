@@ -25,7 +25,7 @@
 <div class="section" style="max-width:960px;margin:0 auto">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
         <div style="background:linear-gradient(135deg,#0f1f2e,#0d1a14);border:1px solid rgba(0,200,150,0.2);border-radius:16px;padding:28px">
-            <div style="font-size:10px;font-weight:800;color:#00C896;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px">
+            <div style="font-size:var(--fs-2xs);font-weight:800;color:#00C896;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px">
                 {{ $isFr ? 'Vision 2031' : 'Vision 2031' }}
             </div>
             <p style="font-size:15px;font-weight:700;color:#e2e8f0;line-height:1.65;margin:0">
@@ -35,7 +35,7 @@
             </p>
         </div>
         <div style="background:linear-gradient(135deg,#0f152e,#0f1a2e);border:1px solid rgba(26,111,232,0.2);border-radius:16px;padding:28px">
-            <div style="font-size:10px;font-weight:800;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px">
+            <div style="font-size:var(--fs-2xs);font-weight:800;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px">
                 {{ $isFr ? 'Mission' : 'Mission' }}
             </div>
             <p style="font-size:15px;font-weight:700;color:#e2e8f0;line-height:1.65;margin:0">
@@ -91,12 +91,12 @@
                 <div style="width:36px;height:36px;border-radius:9px;background:{{ $t[2] }}15;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:800;color:{{ $t[2] }}">{{ $t[0] }}</div>
                 <div>
                     <div style="font-weight:700;color:#e2e8f0;font-size:13px">{{ $t[3] }}</div>
-                    <div style="font-size:11px;color:{{ $t[2] }};font-weight:600">{{ $isFr ? 'Thème '.$t[0] : 'Theme '.$t[0] }}</div>
+                    <div style="font-size:var(--fs-xs);color:{{ $t[2] }};font-weight:600">{{ $isFr ? 'Thème '.$t[0] : 'Theme '.$t[0] }}</div>
                 </div>
             </div>
-            <p style="font-size:11px;color:var(--text-muted);line-height:1.6;margin:0 0 12px">{{ $t[4] }}</p>
+            <p style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.6;margin:0 0 12px">{{ $t[4] }}</p>
             @foreach($t[5] as $target)
-            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);padding:4px 0">
+            <div style="display:flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:var(--text-muted);padding:4px 0">
                 <i data-lucide="check" style="width:10px;height:10px;color:{{ $t[2] }};flex-shrink:0"></i>{{ $target }}
             </div>
             @endforeach
@@ -136,11 +136,11 @@
                 <div style="width:56px;height:56px;border-radius:50%;background:{{ $y[1] }}20;border:2px solid {{ $y[1] }};display:flex;align-items:center;justify-content:center;margin:12px auto 14px;flex-shrink:0">
                     <i data-lucide="{{ $y[5] }}" style="width:20px;height:20px;color:{{ $y[1] }}"></i>
                 </div>
-                <div style="font-size:10px;font-weight:800;color:{{ $y[1] }};text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">{{ $y[0] }}</div>
+                <div style="font-size:var(--fs-2xs);font-weight:800;color:{{ $y[1] }};text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">{{ $y[0] }}</div>
                 <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:6px">{{ $y[2] }}</div>
-                <p style="font-size:11px;color:var(--text-muted);line-height:1.55;margin:0 0 8px">{{ $y[3] }}</p>
+                <p style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.55;margin:0 0 8px">{{ $y[3] }}</p>
                 @foreach($y[4] as $goal)
-                <div style="background:{{ $y[1] }}15;border:1px solid {{ $y[1] }}30;border-radius:20px;padding:3px 10px;font-size:10px;font-weight:600;color:{{ $y[1] }};margin-bottom:4px;display:inline-block">{{ $goal }}</div>
+                <div style="background:{{ $y[1] }}15;border:1px solid {{ $y[1] }}30;border-radius:20px;padding:3px 10px;font-size:var(--fs-2xs);font-weight:600;color:{{ $y[1] }};margin-bottom:4px;display:inline-block">{{ $goal }}</div>
                 @endforeach
             </div>
             @endforeach
@@ -177,7 +177,7 @@
                 <div style="font-weight:700;color:#e2e8f0;font-size:13px">{{ $cat[2] }}</div>
             </div>
             @foreach($cat[3] as $kpi)
-            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);padding:5px 0;border-bottom:1px solid #1e293b40">
+            <div style="display:flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:var(--text-muted);padding:5px 0;border-bottom:1px solid #1e293b40">
                 <i data-lucide="chevron-right" style="width:10px;height:10px;color:{{ $cat[1] }};flex-shrink:0"></i>{{ $kpi }}
             </div>
             @endforeach

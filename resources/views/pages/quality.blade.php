@@ -53,9 +53,9 @@
         <div style="background:#0F172A;border:1px solid #1e293b;border-radius:12px;padding:16px">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
                 <i data-lucide="{{ $p[0] }}" style="width:14px;height:14px;color:{{ $p[1] }}"></i>
-                <div style="font-weight:700;color:#e2e8f0;font-size:12px">{{ $p[2] }}</div>
+                <div style="font-weight:700;color:#e2e8f0;font-size:var(--fs-xs)">{{ $p[2] }}</div>
             </div>
-            <div style="font-size:11px;color:var(--text-muted);line-height:1.6">{{ $p[3] }}</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.6">{{ $p[3] }}</div>
         </div>
         @endforeach
     </div>
@@ -80,7 +80,7 @@
                 <i data-lucide="{{ $pr[0] }}" style="width:16px;height:16px;color:{{ $pr[1] }}"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:6px">{{ $pr[2] }}</div>
-            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">{{ $pr[3] }}</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.6">{{ $pr[3] }}</div>
         </div>
         @endforeach
     </div>
@@ -115,7 +115,7 @@
                 <i data-lucide="{{ $c[0] }}" style="width:18px;height:18px;color:{{ $c[1] }}"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:6px">{{ $c[2] }}</div>
-            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">{{ $c[3] }}</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.6">{{ $c[3] }}</div>
         </div>
         @endforeach
     </div>
@@ -153,14 +153,14 @@
         @foreach($domains as $d)
         <div style="background:#0F172A;border:1px solid #1e293b;border-radius:12px;padding:16px">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-                <div style="width:32px;height:32px;border-radius:8px;background:{{ $d[2] }}15;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;font-weight:800;color:{{ $d[2] }}">{{ $d[0] }}</div>
+                <div style="width:32px;height:32px;border-radius:8px;background:{{ $d[2] }}15;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:var(--fs-2xs);font-weight:800;color:{{ $d[2] }}">{{ $d[0] }}</div>
                 <div>
-                    <div style="font-weight:700;color:#e2e8f0;font-size:12px">{{ $d[3] }}</div>
-                    <div style="font-size:10px;color:{{ $d[2] }};font-weight:600">{{ $d[4] }}</div>
+                    <div style="font-weight:700;color:#e2e8f0;font-size:var(--fs-xs)">{{ $d[3] }}</div>
+                    <div style="font-size:var(--fs-2xs);color:{{ $d[2] }};font-weight:600">{{ $d[4] }}</div>
                 </div>
             </div>
             @foreach($d[5] as $act)
-            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);padding:3px 0">
+            <div style="display:flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:var(--text-muted);padding:3px 0">
                 <i data-lucide="chevron-right" style="width:10px;height:10px;color:{{ $d[2] }};flex-shrink:0"></i>{{ $act }}
             </div>
             @endforeach
@@ -195,8 +195,8 @@
                         @if($idx < 6)<div style="width:1px;height:14px;background:#1e293b;margin:2px 0"></div>@endif
                     </div>
                     <div style="padding-top:5px;margin-bottom:{{ $idx < 6 ? '8px' : '0' }}">
-                        <div style="font-weight:700;color:#e2e8f0;font-size:12px">{{ $step[2] }}</div>
-                        <div style="font-size:11px;color:var(--text-muted);line-height:1.5">{{ $step[3] }}</div>
+                        <div style="font-weight:700;color:#e2e8f0;font-size:var(--fs-xs)">{{ $step[2] }}</div>
+                        <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.5">{{ $step[3] }}</div>
                     </div>
                 </div>
                 @endforeach
@@ -212,25 +212,25 @@
             <h2 class="section-title" style="font-size:20px">{{ $isFr ? 'Prévenir et détecter' : 'Prevent and detect' }}</h2>
             <div style="margin-top:20px;display:flex;flex-direction:column;gap:16px">
                 <div style="background:#0f1a2e;border:1px solid rgba(0,200,150,0.2);border-radius:12px;padding:18px">
-                    <div style="font-size:10px;font-weight:800;color:#00C896;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">
+                    <div style="font-size:var(--fs-2xs);font-weight:800;color:#00C896;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">
                         {{ $isFr ? 'Assurance qualité (AQ) — Prévenir' : 'Quality Assurance (QA) — Prevent' }}
                     </div>
                     @foreach($isFr
                         ? ['Développement des standards','Revues de processus','Audits','Formation','Surveillance de conformité']
                         : ['Standards development','Process reviews','Audits','Training','Compliance monitoring']
                     as $item)
-                    <div style="font-size:12px;color:var(--text-muted);padding:4px 0;border-bottom:1px solid #1e293b30">{{ $item }}</div>
+                    <div style="font-size:var(--fs-xs);color:var(--text-muted);padding:4px 0;border-bottom:1px solid #1e293b30">{{ $item }}</div>
                     @endforeach
                 </div>
                 <div style="background:#0f152e;border:1px solid rgba(26,111,232,0.2);border-radius:12px;padding:18px">
-                    <div style="font-size:10px;font-weight:800;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">
+                    <div style="font-size:var(--fs-2xs);font-weight:800;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">
                         {{ $isFr ? 'Contrôle qualité (CQ) — Détecter' : 'Quality Control (QC) — Detect' }}
                     </div>
                     @foreach($isFr
                         ? ['Tests','Revues','Inspections','Vérification']
                         : ['Testing','Reviews','Inspections','Verification']
                     as $item)
-                    <div style="font-size:12px;color:var(--text-muted);padding:4px 0;border-bottom:1px solid #1e293b30">{{ $item }}</div>
+                    <div style="font-size:var(--fs-xs);color:var(--text-muted);padding:4px 0;border-bottom:1px solid #1e293b30">{{ $item }}</div>
                     @endforeach
                 </div>
             </div>
@@ -257,8 +257,8 @@
                 <div style="width:40px;height:40px;border-radius:50%;background:{{ $step[1] }}20;border:1px solid {{ $step[1] }}40;display:flex;align-items:center;justify-content:center;margin:0 auto 8px">
                     <i data-lucide="{{ $step[0] }}" style="width:16px;height:16px;color:{{ $step[1] }}"></i>
                 </div>
-                <div style="font-weight:700;color:#e2e8f0;font-size:11px;margin-bottom:3px">{{ $step[2] }}</div>
-                <div style="font-size:10px;color:var(--text-muted);line-height:1.4">{{ $step[3] }}</div>
+                <div style="font-weight:700;color:#e2e8f0;font-size:var(--fs-xs);margin-bottom:3px">{{ $step[2] }}</div>
+                <div style="font-size:var(--fs-2xs);color:var(--text-muted);line-height:1.4">{{ $step[3] }}</div>
             </div>
             @if($idx < 5)
             <i data-lucide="chevron-right" style="width:14px;height:14px;color:#334155;flex-shrink:0"></i>
@@ -297,7 +297,7 @@
                 <div style="font-weight:700;color:#e2e8f0;font-size:13px">{{ $cat[2] }}</div>
             </div>
             @foreach($cat[3] as $kpi)
-            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);padding:5px 0;border-bottom:1px solid #1e293b40">
+            <div style="display:flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:var(--text-muted);padding:5px 0;border-bottom:1px solid #1e293b40">
                 <i data-lucide="chevron-right" style="width:10px;height:10px;color:{{ $cat[1] }};flex-shrink:0"></i>{{ $kpi }}
             </div>
             @endforeach
@@ -325,8 +325,8 @@
         <div style="display:flex;align-items:center">
             <div style="text-align:center;width:130px;padding:16px 8px;background:#0F172A;border:1px solid #1e293b;border-radius:12px;{{ $level[0]==='5' ? 'border-color:#00C896;background:#0d1f19;' : '' }}">
                 <div style="width:44px;height:44px;border-radius:50%;background:{{ $level[3] }}25;border:2px solid {{ $level[3] }}60;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:18px;font-weight:800;color:{{ $level[3] }}">{{ $level[0] }}</div>
-                <div style="font-weight:700;color:#e2e8f0;font-size:12px;margin-bottom:4px">{{ $level[1] }}</div>
-                <div style="font-size:10px;color:var(--text-muted);line-height:1.4">{{ $level[2] }}</div>
+                <div style="font-weight:700;color:#e2e8f0;font-size:var(--fs-xs);margin-bottom:4px">{{ $level[1] }}</div>
+                <div style="font-size:var(--fs-2xs);color:var(--text-muted);line-height:1.4">{{ $level[2] }}</div>
             </div>
             @if($idx < 4)
             <i data-lucide="chevron-right" style="width:14px;height:14px;color:#334155;flex-shrink:0;margin:0 2px"></i>

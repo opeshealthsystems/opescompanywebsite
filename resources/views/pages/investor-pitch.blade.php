@@ -21,12 +21,12 @@
     </p>
     <div style="margin-top:20px;display:inline-flex;align-items:center;gap:14px;background:#0F172A;border:1px solid #1e293b;border-radius:12px;padding:14px 22px">
         <div style="text-align:left">
-            <div style="font-size:11px;color:var(--text-faint);margin-bottom:2px">{{ $isFr ? 'Fondateur & CEO' : 'Founder & CEO' }}</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-faint);margin-bottom:2px">{{ $isFr ? 'Fondateur & CEO' : 'Founder & CEO' }}</div>
             <div style="font-size:14px;font-weight:700;color:#e2e8f0">Jude Nshome</div>
         </div>
         <div style="width:1px;height:32px;background:#1e293b"></div>
         <div style="text-align:left">
-            <div style="font-size:11px;color:var(--text-faint);margin-bottom:2px">{{ $isFr ? 'Présentation' : 'Deck' }}</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-faint);margin-bottom:2px">{{ $isFr ? 'Présentation' : 'Deck' }}</div>
             <div style="font-size:14px;font-weight:700;color:#e2e8f0">20 {{ $isFr ? 'diapositives' : 'slides' }}</div>
         </div>
     </div>
@@ -59,11 +59,11 @@
                 {{ $isFr ? 'Diapositive 2 — Vision & mission' : 'Slide 2 — Vision & mission' }}
             </div>
             <div style="background:#00C89608;border:1px solid #00C89620;border-radius:14px;padding:20px;margin-bottom:12px">
-                <div style="font-size:10px;font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">{{ $isFr ? 'Notre vision' : 'Our vision' }}</div>
+                <div style="font-size:var(--fs-2xs);font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">{{ $isFr ? 'Notre vision' : 'Our vision' }}</div>
                 <p style="font-size:13px;color:#e2e8f0;line-height:1.65;margin:0">{{ $isFr ? 'Devenir le fournisseur d\'infrastructure de santé numérique interopérable le plus fiable d\'Afrique.' : 'To become Africa\'s most trusted provider of interoperable digital health infrastructure.' }}</p>
             </div>
             <div style="background:#1A6FE808;border:1px solid #1A6FE820;border-radius:14px;padding:20px">
-                <div style="font-size:10px;font-weight:700;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">{{ $isFr ? 'Notre mission' : 'Our mission' }}</div>
+                <div style="font-size:var(--fs-2xs);font-weight:700;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">{{ $isFr ? 'Notre mission' : 'Our mission' }}</div>
                 <p style="font-size:13px;color:#e2e8f0;line-height:1.65;margin:0">{{ $isFr ? 'Connecter les prestataires de soins, patients, assureurs, institutions de santé publique et gouvernements via des technologies de santé sécurisées, interopérables et intelligentes.' : 'To connect healthcare providers, patients, insurers, public health institutions, and governments through secure, interoperable, and intelligent healthcare technologies.' }}</p>
             </div>
         </div>
@@ -80,7 +80,7 @@
             as $prob)
             <div style="display:flex;align-items:center;gap:9px;padding:8px 10px;background:#EF444408;border-radius:7px;border-left:2px solid #EF444440;margin-bottom:5px">
                 <i data-lucide="x-circle" style="width:11px;height:11px;color:#EF4444;flex-shrink:0"></i>
-                <span style="font-size:12px;color:var(--text-muted)">{{ $prob }}</span>
+                <span style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $prob }}</span>
             </div>
             @endforeach
         </div>
@@ -115,8 +115,8 @@
             <div style="width:32px;height:32px;border-radius:8px;background:{{ $opp[1] }}15;display:flex;align-items:center;justify-content:center;margin-bottom:10px">
                 <i data-lucide="{{ $opp[0] }}" style="width:14px;height:14px;color:{{ $opp[1] }}"></i>
             </div>
-            <div style="font-size:12px;font-weight:700;color:#e2e8f0;margin-bottom:5px">{{ $opp[2] }}</div>
-            <div style="font-size:11px;color:var(--text-muted);line-height:1.5">{{ $opp[3] }}</div>
+            <div style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;margin-bottom:5px">{{ $opp[2] }}</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.5">{{ $opp[3] }}</div>
         </div>
         @endforeach
     </div>
@@ -134,14 +134,14 @@
                 {{ $isFr ? 'Diapositives 5–8 — La solution' : 'Slides 5–8 — The solution' }}
             </div>
             <h3 style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:14px">OPES Health OS</h3>
-            <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;line-height:1.6">{{ $isFr ? 'Système d\'exploitation de santé intégré pour prestataires, réseaux de santé, institutions de santé publique, assureurs et gouvernements.' : 'Integrated healthcare operating system for providers, health networks, public health institutions, insurers, and governments.' }}</p>
+            <p style="font-size:var(--fs-xs);color:var(--text-muted);margin-bottom:14px;line-height:1.6">{{ $isFr ? 'Système d\'exploitation de santé intégré pour prestataires, réseaux de santé, institutions de santé publique, assureurs et gouvernements.' : 'Integrated healthcare operating system for providers, health networks, public health institutions, insurers, and governments.' }}</p>
             @foreach($isFr
                 ? [['activity','#00C896','OPES Clinic'],['hospital','#1A6FE8','OPES Hospital'],['layout-grid','#00C896','OPES Specialty Suite'],['share-2','#1A6FE8','OPES Care'],['cpu','#00C896','OPES Clinical Intelligence'],['shield-check','#1A6FE8','OPES Insurance'],['bar-chart-2','#00C896','OPES Public Health'],['truck','#1A6FE8','OPES Supply Chain'],['wrench','#00C896','OPES Biomedical'],['graduation-cap','#1A6FE8','OPES Academy']]
                 : [['activity','#00C896','OPES Clinic'],['hospital','#1A6FE8','OPES Hospital'],['layout-grid','#00C896','OPES Specialty Suite'],['share-2','#1A6FE8','OPES Care'],['cpu','#00C896','OPES Clinical Intelligence'],['shield-check','#1A6FE8','OPES Insurance'],['bar-chart-2','#00C896','OPES Public Health'],['truck','#1A6FE8','OPES Supply Chain'],['wrench','#00C896','OPES Biomedical'],['graduation-cap','#1A6FE8','OPES Academy']]
             as $comp)
             <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:#0F172A;border-radius:7px;border:1px solid #1e293b;margin-bottom:5px">
                 <i data-lucide="{{ $comp[0] }}" style="width:12px;height:12px;color:{{ $comp[1] }};flex-shrink:0"></i>
-                <span style="font-size:12px;color:var(--text-muted);font-weight:500">{{ $comp[2] }}</span>
+                <span style="font-size:var(--fs-xs);color:var(--text-muted);font-weight:500">{{ $comp[2] }}</span>
             </div>
             @endforeach
         </div>
@@ -170,13 +170,13 @@
             as $layer)
             <div style="display:flex;gap:10px;padding:9px 12px;background:#0F172A;border-radius:7px;border-left:2px solid {{ $layer[0] }};margin-bottom:5px">
                 <div>
-                    <div style="font-size:11px;font-weight:700;color:#e2e8f0">{{ $layer[1] }}</div>
-                    <div style="font-size:10px;color:var(--text-faint);margin-top:1px">{{ $layer[2] }}</div>
+                    <div style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0">{{ $layer[1] }}</div>
+                    <div style="font-size:var(--fs-2xs);color:var(--text-faint);margin-top:1px">{{ $layer[2] }}</div>
                 </div>
             </div>
             @endforeach
             <div style="margin-top:14px;text-align:center;padding:12px;background:#0F172A;border-radius:10px;border:1px solid #1e293b">
-                <div style="font-size:11px;font-weight:700;color:#00C896">{{ $isFr ? 'Une plateforme · Une identité santé · Un écosystème connecté' : 'One Platform · One Health Identity · One Connected Ecosystem' }}</div>
+                <div style="font-size:var(--fs-xs);font-weight:700;color:#00C896">{{ $isFr ? 'Une plateforme · Une identité santé · Un écosystème connecté' : 'One Platform · One Health Identity · One Connected Ecosystem' }}</div>
             </div>
         </div>
     </div>
@@ -222,10 +222,10 @@
                ['10','#1A6FE8','handshake','Long-term partnership','Transformation commitment, not a transaction.']]
         as $adv)
         <div style="display:flex;gap:10px;padding:12px 14px;background:#0F172A;border-radius:9px;border:1px solid #1e293b">
-            <div style="width:22px;height:22px;border-radius:6px;background:{{ $adv[1] }}15;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:9px;font-weight:800;color:{{ $adv[1] }}">{{ $adv[0] }}</div>
+            <div style="width:22px;height:22px;border-radius:6px;background:{{ $adv[1] }}15;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:var(--fs-2xs);font-weight:800;color:{{ $adv[1] }}">{{ $adv[0] }}</div>
             <div>
-                <div style="font-size:12px;font-weight:700;color:#e2e8f0;margin-bottom:2px">{{ $adv[3] }}</div>
-                <div style="font-size:10px;color:var(--text-faint)">{{ $adv[4] }}</div>
+                <div style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;margin-bottom:2px">{{ $adv[3] }}</div>
+                <div style="font-size:var(--fs-2xs);color:var(--text-faint)">{{ $adv[4] }}</div>
             </div>
         </div>
         @endforeach
@@ -250,11 +250,11 @@
             as $rev)
             <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#0F172A;border-radius:7px;border:1px solid #1e293b;margin-bottom:5px">
                 <div style="width:8px;height:8px;border-radius:50%;background:{{ $rev[0] }};flex-shrink:0"></div>
-                <span style="font-size:12px;color:var(--text-muted);font-weight:500">{{ $rev[1] }}</span>
+                <span style="font-size:var(--fs-xs);color:var(--text-muted);font-weight:500">{{ $rev[1] }}</span>
             </div>
             @endforeach
             <div style="margin-top:14px">
-                <a href="{{ url($locale.'/financial-model') }}" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#00C896;font-weight:600;text-decoration:none">
+                <a href="{{ url($locale.'/financial-model') }}" style="display:inline-flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:#00C896;font-weight:600;text-decoration:none">
                     {{ $isFr ? 'Voir le modèle financier détaillé' : 'View detailed financial model' }}
                     <i data-lucide="arrow-right" style="width:11px;height:11px"></i>
                 </a>
@@ -281,12 +281,12 @@
             as $idx => $phase)
             <div style="display:flex;gap:12px;margin-bottom:8px">
                 <div style="display:flex;flex-direction:column;align-items:center">
-                    <div style="width:30px;height:30px;border-radius:50%;background:{{ $phase[0] }}20;border:1px solid {{ $phase[0] }}60;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;font-weight:800;color:{{ $phase[0] }}">{{ $idx + 1 }}</div>
+                    <div style="width:30px;height:30px;border-radius:50%;background:{{ $phase[0] }}20;border:1px solid {{ $phase[0] }}60;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:var(--fs-2xs);font-weight:800;color:{{ $phase[0] }}">{{ $idx + 1 }}</div>
                     @if($idx < 4)<div style="width:1px;height:10px;background:#1e293b;margin:2px 0"></div>@endif
                 </div>
                 <div style="padding-top:5px;margin-bottom:{{ $idx < 4 ? '0' : '0' }}">
-                    <div style="font-size:12px;font-weight:700;color:#e2e8f0">{{ $phase[2] }}</div>
-                    <div style="font-size:11px;color:var(--text-faint);margin-top:1px">{{ $phase[3] }}</div>
+                    <div style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0">{{ $phase[2] }}</div>
+                    <div style="font-size:var(--fs-xs);color:var(--text-faint);margin-top:1px">{{ $phase[3] }}</div>
                 </div>
             </div>
             @endforeach
@@ -322,9 +322,9 @@
                 <div style="width:36px;height:36px;border-radius:50%;background:{{ $ms[1] }}15;border:2px solid {{ $ms[1] }}40;margin:0 auto 10px;display:flex;align-items:center;justify-content:center">
                     <div style="width:10px;height:10px;border-radius:50%;background:{{ $ms[1] }}"></div>
                 </div>
-                <div style="font-size:11px;font-weight:800;color:{{ $ms[1] }};margin-bottom:4px">{{ $ms[0] }}</div>
-                <div style="font-size:11px;font-weight:700;color:#e2e8f0;margin-bottom:6px">{{ $ms[2] }}</div>
-                <div style="font-size:10px;color:var(--text-faint);line-height:1.5">{{ $ms[3] }}</div>
+                <div style="font-size:var(--fs-xs);font-weight:800;color:{{ $ms[1] }};margin-bottom:4px">{{ $ms[0] }}</div>
+                <div style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;margin-bottom:6px">{{ $ms[2] }}</div>
+                <div style="font-size:var(--fs-2xs);color:var(--text-faint);line-height:1.5">{{ $ms[3] }}</div>
             </div>
             @endforeach
         </div>
@@ -348,7 +348,7 @@
             as $impact)
             <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#0F172A;border-radius:8px;border:1px solid #1e293b;margin-bottom:6px">
                 <i data-lucide="{{ $impact[1] }}" style="width:13px;height:13px;color:{{ $impact[0] }};flex-shrink:0"></i>
-                <span style="font-size:12px;color:var(--text-muted)">{{ $impact[2] }}</span>
+                <span style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $impact[2] }}</span>
             </div>
             @endforeach
         </div>
@@ -364,7 +364,7 @@
                 : [['#00C896','Facilities connected'],['#1A6FE8','Active users'],['#00C896','Health IDs issued'],['#1A6FE8','Interoperability transactions'],['#00C896','Revenue growth'],['#1A6FE8','Certification growth']]
             as $metric)
             <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#0F172A;border-radius:8px;border-left:2px solid {{ $metric[0] }};margin-bottom:6px">
-                <span style="font-size:12px;color:var(--text-muted);font-weight:500">{{ $metric[1] }}</span>
+                <span style="font-size:var(--fs-xs);color:var(--text-muted);font-weight:500">{{ $metric[1] }}</span>
             </div>
             @endforeach
         </div>
@@ -389,7 +389,7 @@
             as $partner)
             <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#0F172A;border-radius:7px;border:1px solid #1e293b;margin-bottom:5px">
                 <i data-lucide="{{ $partner[0] }}" style="width:12px;height:12px;color:{{ $partner[1] }};flex-shrink:0"></i>
-                <span style="font-size:12px;color:var(--text-muted)">{{ $partner[2] }}</span>
+                <span style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $partner[2] }}</span>
             </div>
             @endforeach
         </div>
@@ -417,8 +417,8 @@
             <div style="display:flex;gap:10px;padding:10px 12px;background:#0F172A;border-radius:8px;border:1px solid #1e293b;margin-bottom:6px">
                 <i data-lucide="{{ $inv[1] }}" style="width:12px;height:12px;color:{{ $inv[0] }};flex-shrink:0;margin-top:1px"></i>
                 <div>
-                    <div style="font-size:11px;font-weight:700;color:#e2e8f0">{{ $inv[2] }}</div>
-                    <div style="font-size:10px;color:var(--text-faint);margin-top:1px">{{ $inv[3] }}</div>
+                    <div style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0">{{ $inv[2] }}</div>
+                    <div style="font-size:var(--fs-2xs);color:var(--text-faint);margin-top:1px">{{ $inv[3] }}</div>
                 </div>
             </div>
             @endforeach
@@ -432,7 +432,7 @@
     <p>{{ $isFr
         ? 'OPES Health Systems crée un écosystème de santé connecté permettant aux prestataires, institutions de santé publique, assureurs et gouvernements de délivrer de meilleurs soins grâce à une infrastructure numérique sécurisée, interopérable et intelligente.'
         : 'OPES Health Systems is creating a connected healthcare ecosystem enabling providers, public health institutions, insurers, and governments to deliver better healthcare through secure, interoperable, and intelligent digital infrastructure.' }}</p>
-    <div style="margin-top:16px;font-size:12px;color:var(--text-faint)">
+    <div style="margin-top:16px;font-size:var(--fs-xs);color:var(--text-faint)">
         Jude Nshome · Founder & CEO · <a href="mailto:{{ config('company.email') }}" style="color:#00C896;text-decoration:none">{{ config('company.email') }}</a> · {{ config('company.phone') }}
     </div>
     <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:16px">

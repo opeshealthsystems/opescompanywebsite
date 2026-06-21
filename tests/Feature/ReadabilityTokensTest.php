@@ -66,4 +66,14 @@ class ReadabilityTokensTest extends TestCase
             }
         }
     }
+
+    public function test_sp1_views_have_no_sub_13_font_sizes(): void
+    {
+        foreach ($this->sp1Files() as $file) {
+            $c = file_get_contents($file);
+            foreach (['font-size:9px', 'font-size:9.5px', 'font-size:10px', 'font-size:11px', 'font-size:12px', 'font-size:12.5px'] as $bad) {
+                $this->assertStringNotContainsString($bad, $c, basename($file)." still uses {$bad}");
+            }
+        }
+    }
 }

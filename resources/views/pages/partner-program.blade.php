@@ -65,16 +65,16 @@
                 <i data-lucide="{{ $cat[0] }}" style="width:17px;height:17px;color:{{ $cat[1] }}"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:4px">{{ $cat[2] }}</div>
-            <div style="font-size:11px;color:var(--text-muted);margin-bottom:12px">{{ $cat[3] }}</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-muted);margin-bottom:12px">{{ $cat[3] }}</div>
             @foreach($cat[4] as $fn)
-            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);padding:3px 0">
+            <div style="display:flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:var(--text-muted);padding:3px 0">
                 <i data-lucide="chevron-right" style="width:10px;height:10px;color:{{ $cat[1] }};flex-shrink:0"></i>{{ $fn }}
             </div>
             @endforeach
             @if(count($cat[5]))
             <div style="margin-top:10px;padding-top:10px;border-top:1px solid #1e293b">
                 @foreach($cat[5] as $ben)
-                <div style="display:flex;align-items:center;gap:6px;font-size:10px;color:#00C896;padding:2px 0">
+                <div style="display:flex;align-items:center;gap:6px;font-size:var(--fs-2xs);color:#00C896;padding:2px 0">
                     <i data-lucide="check" style="width:9px;height:9px;flex-shrink:0"></i>{{ $ben }}
                 </div>
                 @endforeach
@@ -104,8 +104,8 @@
                 <i data-lucide="award" style="width:20px;height:20px;color:{{ $level[0] }}"></i>
             </div>
             <div style="font-weight:800;color:{{ $level[0] }};font-size:15px;margin-bottom:4px">{{ $level[1] }}</div>
-            <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px">{{ $level[2] }}</div>
-            <div style="background:{{ $level[0] }}15;border-radius:8px;padding:8px;font-size:11px;color:#e2e8f0;font-weight:600">{{ $level[3] }}</div>
+            <div style="font-size:var(--fs-2xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px">{{ $level[2] }}</div>
+            <div style="background:{{ $level[0] }}15;border-radius:8px;padding:8px;font-size:var(--fs-xs);color:#e2e8f0;font-weight:600">{{ $level[3] }}</div>
         </div>
         @endforeach
     </div>
@@ -130,8 +130,8 @@
                 <div style="display:flex;align-items:center;gap:10px;padding:12px;background:#0F172A;border-radius:8px;border-left:2px solid {{ $b[1] }}">
                     <i data-lucide="{{ $b[0] }}" style="width:14px;height:14px;color:{{ $b[1] }};flex-shrink:0"></i>
                     <div>
-                        <div style="font-weight:700;color:#e2e8f0;font-size:12px">{{ $b[2] }}</div>
-                        <div style="font-size:11px;color:var(--text-muted)">{{ $b[3] }}</div>
+                        <div style="font-weight:700;color:#e2e8f0;font-size:var(--fs-xs)">{{ $b[2] }}</div>
+                        <div style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $b[3] }}</div>
                     </div>
                 </div>
                 @endforeach
@@ -144,23 +144,23 @@
                 {{ $isFr ? 'KPIs & gouvernance partenaires' : 'Partner KPIs & governance' }}
             </div>
             <div style="background:#0f1a2e;border:1px solid rgba(0,200,150,0.15);border-radius:12px;padding:18px;margin-bottom:16px">
-                <div style="font-size:11px;font-weight:700;color:#00C896;margin-bottom:10px">{{ $isFr ? 'Indicateurs de performance' : 'Performance indicators' }}</div>
+                <div style="font-size:var(--fs-xs);font-weight:700;color:#00C896;margin-bottom:10px">{{ $isFr ? 'Indicateurs de performance' : 'Performance indicators' }}</div>
                 @foreach($isFr
                     ? ['Revenus générés','Satisfaction client','Taux de succès des déploiements','Taux de complétion de la formation']
                     : ['Revenue generated','Customer satisfaction','Deployment success rate','Training completion rate']
                 as $kpi)
-                <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);padding:5px 0;border-bottom:1px solid #1e293b30">
+                <div style="display:flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:var(--text-muted);padding:5px 0;border-bottom:1px solid #1e293b30">
                     <i data-lucide="chevron-right" style="width:10px;height:10px;color:#00C896;flex-shrink:0"></i>{{ $kpi }}
                 </div>
                 @endforeach
             </div>
             <div style="background:#0f152e;border:1px solid rgba(26,111,232,0.15);border-radius:12px;padding:18px">
-                <div style="font-size:11px;font-weight:700;color:#1A6FE8;margin-bottom:10px">{{ $isFr ? 'Évaluation des partenaires' : 'Partner evaluation' }}</div>
+                <div style="font-size:var(--fs-xs);font-weight:700;color:#1A6FE8;margin-bottom:10px">{{ $isFr ? 'Évaluation des partenaires' : 'Partner evaluation' }}</div>
                 @foreach($isFr
                     ? ['Revues de performance','Audits qualité','Revues de certification','Revues de conformité']
                     : ['Performance reviews','Quality audits','Certification reviews','Compliance reviews']
                 as $ev)
-                <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);padding:5px 0;border-bottom:1px solid #1e293b30">
+                <div style="display:flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:var(--text-muted);padding:5px 0;border-bottom:1px solid #1e293b30">
                     <i data-lucide="chevron-right" style="width:10px;height:10px;color:#1A6FE8;flex-shrink:0"></i>{{ $ev }}
                 </div>
                 @endforeach

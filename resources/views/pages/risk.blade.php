@@ -54,8 +54,8 @@
             <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:#0F172A;border-radius:10px;margin-bottom:8px;border-left:3px solid {{ $p[1] }}">
                 <i data-lucide="{{ $p[0] }}" style="width:15px;height:15px;color:{{ $p[1] }};flex-shrink:0;margin-top:1px"></i>
                 <div>
-                    <div style="font-weight:700;color:#e2e8f0;font-size:12px;margin-bottom:3px">{{ $p[2] }}</div>
-                    <div style="font-size:11px;color:var(--text-muted);line-height:1.55">{{ $p[3] }}</div>
+                    <div style="font-weight:700;color:#e2e8f0;font-size:var(--fs-xs);margin-bottom:3px">{{ $p[2] }}</div>
+                    <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.55">{{ $p[3] }}</div>
                 </div>
             </div>
             @endforeach
@@ -72,12 +72,12 @@
             as $gov)
             <div style="padding:16px;background:#0F172A;border:1px solid #1e293b;border-radius:10px;margin-bottom:8px;border-left:3px solid {{ $gov[0] }}">
                 <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:4px">{{ $gov[1] }}</div>
-                <div style="font-size:11px;color:var(--text-muted)">{{ $gov[2] }}</div>
+                <div style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $gov[2] }}</div>
             </div>
             @endforeach
             {{-- Escalation --}}
             <div style="margin-top:16px;background:#0F172A;border:1px solid #1e293b;border-radius:10px;padding:14px">
-                <div style="font-size:11px;font-weight:700;color:var(--text-muted);margin-bottom:10px">
+                <div style="font-size:var(--fs-xs);font-weight:700;color:var(--text-muted);margin-bottom:10px">
                     {{ $isFr ? 'Modèle d\'escalade' : 'Escalation model' }}
                 </div>
                 @foreach($isFr
@@ -85,8 +85,8 @@
                     : ['Operational teams','Management','Executive Committee','Board Committee']
                 as $idx => $level)
                 <div style="display:flex;align-items:center;gap:8px;padding:6px 0">
-                    <div style="width:18px;height:18px;border-radius:4px;background:{{ ['#334155','var(--text-faint)','#1A6FE8','#00C896'][$idx] }}20;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:9px;font-weight:800;color:{{ ['#334155','var(--text-faint)','#1A6FE8','#00C896'][$idx] }}">{{ $idx+1 }}</div>
-                    <span style="font-size:11px;color:var(--text-muted)">{{ $level }}</span>
+                    <div style="width:18px;height:18px;border-radius:4px;background:{{ ['#334155','var(--text-faint)','#1A6FE8','#00C896'][$idx] }}20;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:var(--fs-2xs);font-weight:800;color:{{ ['#334155','var(--text-faint)','#1A6FE8','#00C896'][$idx] }}">{{ $idx+1 }}</div>
+                    <span style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $level }}</span>
                     @if($idx < 3)<i data-lucide="chevron-right" style="width:10px;height:10px;color:#334155;margin-left:auto"></i>@endif
                 </div>
                 @endforeach
@@ -126,10 +126,10 @@
         <div style="background:#0F172A;border:1px solid #1e293b;border-top:3px solid {{ $cat[1] }};border-radius:12px;padding:16px">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
                 <i data-lucide="{{ $cat[0] }}" style="width:14px;height:14px;color:{{ $cat[1] }}"></i>
-                <div style="font-weight:700;color:#e2e8f0;font-size:12px">{{ $cat[2] }}</div>
+                <div style="font-weight:700;color:#e2e8f0;font-size:var(--fs-xs)">{{ $cat[2] }}</div>
             </div>
             @foreach($cat[3] as $ex)
-            <div style="font-size:11px;color:var(--text-muted);padding:3px 0;border-bottom:1px solid #1e293b20">{{ $ex }}</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-muted);padding:3px 0;border-bottom:1px solid #1e293b20">{{ $ex }}</div>
             @endforeach
         </div>
         @endforeach
@@ -143,20 +143,20 @@
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px">
         {{-- Assessment --}}
         <div>
-            <div style="font-size:10px;font-weight:800;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px">{{ $isFr ? 'Évaluation des risques' : 'Risk assessment' }}</div>
+            <div style="font-size:var(--fs-2xs);font-weight:800;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px">{{ $isFr ? 'Évaluation des risques' : 'Risk assessment' }}</div>
             @foreach($isFr
                 ? [['#00C896','Impact','Gravité si le risque se matérialise.'],['#1A6FE8','Probabilité','Chance que le risque se produise.'],['#F59E0B','Détectabilité','Capacité à détecter le risque avant l\'impact.'],['var(--text-muted)','Risque résiduel','Risque restant après traitement.']]
                 : [['#00C896','Impact','Severity if the risk materialises.'],['#1A6FE8','Likelihood','Probability the risk will occur.'],['#F59E0B','Detectability','Ability to detect the risk before impact.'],['var(--text-muted)','Residual risk','Risk remaining after treatment.']]
             as $dim)
             <div style="padding:10px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;border-left:2px solid {{ $dim[0] }}">
-                <div style="font-weight:700;color:#e2e8f0;font-size:11px">{{ $dim[1] }}</div>
-                <div style="font-size:10px;color:var(--text-muted);margin-top:2px">{{ $dim[2] }}</div>
+                <div style="font-weight:700;color:#e2e8f0;font-size:var(--fs-xs)">{{ $dim[1] }}</div>
+                <div style="font-size:var(--fs-2xs);color:var(--text-muted);margin-top:2px">{{ $dim[2] }}</div>
             </div>
             @endforeach
         </div>
         {{-- Treatment --}}
         <div>
-            <div style="font-size:10px;font-weight:800;color:#00C896;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px">{{ $isFr ? 'Options de traitement' : 'Treatment options' }}</div>
+            <div style="font-size:var(--fs-2xs);font-weight:800;color:#00C896;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px">{{ $isFr ? 'Options de traitement' : 'Treatment options' }}</div>
             @foreach($isFr
                 ? [['ban','#EF4444','Éviter','Éliminer l\'activité génératrice de risque.'],['minimize-2','#F59E0B','Réduire','Atténuer l\'impact ou la probabilité.'],['arrow-left-right','#1A6FE8','Transférer','Transférer via assurance ou contrats.'],['check-circle','var(--text-muted)','Accepter','Tolérer le risque résiduel documenté.']]
                 : [['ban','#EF4444','Avoid','Eliminate the risk-generating activity.'],['minimize-2','#F59E0B','Reduce','Mitigate impact or likelihood.'],['arrow-left-right','#1A6FE8','Transfer','Transfer via insurance or contracts.'],['check-circle','var(--text-muted)','Accept','Tolerate the documented residual risk.']]
@@ -164,30 +164,30 @@
             <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px">
                 <i data-lucide="{{ $tr[0] }}" style="width:13px;height:13px;color:{{ $tr[1] }};flex-shrink:0;margin-top:1px"></i>
                 <div>
-                    <div style="font-weight:700;color:#e2e8f0;font-size:11px">{{ $tr[2] }}</div>
-                    <div style="font-size:10px;color:var(--text-muted);margin-top:2px">{{ $tr[3] }}</div>
+                    <div style="font-weight:700;color:#e2e8f0;font-size:var(--fs-xs)">{{ $tr[2] }}</div>
+                    <div style="font-size:var(--fs-2xs);color:var(--text-muted);margin-top:2px">{{ $tr[3] }}</div>
                 </div>
             </div>
             @endforeach
         </div>
         {{-- KRIs --}}
         <div>
-            <div style="font-size:10px;font-weight:800;color:#A855F7;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px">{{ $isFr ? 'Indicateurs clés de risque (KRI)' : 'Key risk indicators (KRIs)' }}</div>
+            <div style="font-size:var(--fs-2xs);font-weight:800;color:#A855F7;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px">{{ $isFr ? 'Indicateurs clés de risque (KRI)' : 'Key risk indicators (KRIs)' }}</div>
             @foreach($isFr
                 ? ['Disponibilité des systèmes','Volume d\'incidents de sécurité','Attrition client','Taux d\'incidents cliniques','Taux d\'échec des projets']
                 : ['System availability','Security incident volume','Customer churn','Clinical incident rate','Project failure rate']
             as $kri)
-            <div style="display:flex;align-items:center;gap:6px;padding:8px 10px;background:#0F172A;border-radius:8px;margin-bottom:6px;font-size:11px;color:var(--text-muted)">
+            <div style="display:flex;align-items:center;gap:6px;padding:8px 10px;background:#0F172A;border-radius:8px;margin-bottom:6px;font-size:var(--fs-xs);color:var(--text-muted)">
                 <i data-lucide="activity" style="width:11px;height:11px;color:#A855F7;flex-shrink:0"></i>{{ $kri }}
             </div>
             @endforeach
             <div style="margin-top:12px;background:#0f152e;border:1px solid rgba(168,85,247,0.15);border-radius:10px;padding:12px 14px">
-                <div style="font-size:10px;font-weight:700;color:#A855F7;margin-bottom:6px">{{ $isFr ? 'Intégrations ERM' : 'ERM integrations' }}</div>
+                <div style="font-size:var(--fs-2xs);font-weight:700;color:#A855F7;margin-bottom:6px">{{ $isFr ? 'Intégrations ERM' : 'ERM integrations' }}</div>
                 @foreach($isFr
                     ? ['Cadre cybersécurité','Reprise après sinistre','Gouvernance clinique','Management de la qualité (QMS)']
                     : ['Cybersecurity framework','Disaster recovery','Clinical governance','Quality management (QMS)']
                 as $int)
-                <div style="font-size:10px;color:var(--text-muted);padding:3px 0">{{ $int }}</div>
+                <div style="font-size:var(--fs-2xs);color:var(--text-muted);padding:3px 0">{{ $int }}</div>
                 @endforeach
             </div>
         </div>

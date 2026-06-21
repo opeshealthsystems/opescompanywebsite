@@ -164,9 +164,9 @@
         <div style="background:#0F172A;border:1px solid {{ $metric[1] }}25;border-radius:12px;padding:20px 16px;text-align:center">
             <i data-lucide="{{ $metric[0] }}" style="width:22px;height:22px;color:{{ $metric[1] }};margin-bottom:10px"></i>
             <div style="font-weight:800;color:{{ $metric[1] }};font-size:22px;margin-bottom:2px">{{ $metric[2] }}</div>
-            <div style="font-weight:700;color:#e2e8f0;font-size:12px;margin-bottom:4px">{{ $metric[3] }}</div>
+            <div style="font-weight:700;color:#e2e8f0;font-size:var(--fs-xs);margin-bottom:4px">{{ $metric[3] }}</div>
             <div style="font-size:16px;font-weight:800;color:#e2e8f0;margin:8px 0 4px">{{ $metric[4] }}</div>
-            <div style="font-size:11px;color:var(--text-muted)">{{ $metric[5] }}</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $metric[5] }}</div>
         </div>
         @endforeach
     </div>

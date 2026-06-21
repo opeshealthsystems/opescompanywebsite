@@ -174,12 +174,12 @@
                 <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
                     <i data-lucide="{{ $phase['icon'] }}" style="width:16px;height:16px;color:{{ $phase['color'] }}"></i>
                     <span style="font-weight:800;color:#e2e8f0;font-size:16px">{{ $phase['title'] }}</span>
-                    <span style="font-size:11px;color:var(--text-faint);background:#1e293b;padding:2px 8px;border-radius:20px;margin-left:4px">{{ $phase['duration'] }}</span>
+                    <span style="font-size:var(--fs-xs);color:var(--text-faint);background:#1e293b;padding:2px 8px;border-radius:20px;margin-left:4px">{{ $phase['duration'] }}</span>
                 </div>
                 <p style="color:var(--text-muted);font-size:13px;line-height:1.65;margin:8px 0 12px;max-width:680px">{{ $phase['desc'] }}</p>
                 <div style="display:flex;flex-wrap:wrap;gap:8px">
                     @foreach($phase['deliverables'] as $d)
-                    <span style="font-size:11px;color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                    <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
                         <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>{{ $d }}
                     </span>
                     @endforeach

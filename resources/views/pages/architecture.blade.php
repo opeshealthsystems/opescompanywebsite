@@ -60,7 +60,7 @@
                 </div>
                 <div style="flex:1;min-width:0">
                     <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:3px">{{ $layer['label'] }}</div>
-                    <div style="color:var(--text-muted);font-size:12px;line-height:1.5">{{ $layer['items'] }}</div>
+                    <div style="color:var(--text-muted);font-size:var(--fs-xs);line-height:1.5">{{ $layer['items'] }}</div>
                 </div>
             </div>
             @endforeach
@@ -176,7 +176,7 @@
                 <i data-lucide="{{ $item['icon'] }}" style="width:18px;height:18px;color:#00C896"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:6px">{{ $item['title'] }}</div>
-            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">{{ $item['desc'] }}</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.6">{{ $item['desc'] }}</div>
         </div>
         @endforeach
     </div>

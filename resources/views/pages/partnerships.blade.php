@@ -33,7 +33,7 @@
             <p class="sol-card-desc">{{ $p['desc'] }}</p>
             <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px">
                 @foreach($p['items'] as $item)
-                <li style="display:flex;align-items:flex-start;gap:8px;font-size:12px;color:var(--text-muted)">
+                <li style="display:flex;align-items:flex-start;gap:8px;font-size:var(--fs-xs);color:var(--text-muted)">
                     <i data-lucide="check" style="width:11px;height:11px;color:{{ $p['color'] }};flex-shrink:0;margin-top:2px"></i>
                     {{ $item }}
                 </li>

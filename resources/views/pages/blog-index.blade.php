@@ -28,7 +28,7 @@ $heroHeadlines = $featured->skip(1)->values();
                 <span class="blog-hero-eyebrow-sep">·</span>
                 <span class="blog-hero-date">{{ __('blog.eyebrow_region') }}</span>
             </div>
-            <a href="{{ url($locale.'/blog') }}" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--text-muted);text-decoration:none;transition:color 0.15s"
+            <a href="{{ url($locale.'/blog') }}" style="display:inline-flex;align-items:center;gap:5px;font-size:var(--fs-xs);font-weight:600;color:var(--text-muted);text-decoration:none;transition:color 0.15s"
                onmouseover="this.style.color='var(--text-muted)'" onmouseout="this.style.color='var(--text-muted)'">
                 {{ __('blog.all_articles_count', ['count' => $posts->total()]) }}
                 <i data-lucide="arrow-right" style="width:12px;height:12px"></i>
@@ -85,7 +85,7 @@ $heroHeadlines = $featured->skip(1)->values();
                 <a href="{{ url($locale.'/blog/'.$headline->slug) }}" class="blog-headline-item">
                     <span class="blog-headline-num">0{{ $i + 2 }}</span>
                     @php $hlColor = $catColors[$headline->category] ?? 'var(--text-muted)'; @endphp
-                    <span class="blog-cat" style="color:{{ $hlColor }};font-size:10px">
+                    <span class="blog-cat" style="color:{{ $hlColor }};font-size:var(--fs-2xs)">
                         {{ $headline->category }}
                     </span>
                     <span class="blog-headline-title">
@@ -221,7 +221,7 @@ $heroHeadlines = $featured->skip(1)->values();
                 <p class="blog-main-count">{{ trans_choice('blog.article_count', $posts->total(), ['count' => $posts->total()]) }}</p>
             </div>
             @if(!empty($search))
-            <a href="{{ url($locale.'/blog') }}" style="font-size:12px;color:var(--text-muted);text-decoration:none;display:inline-flex;align-items:center;gap:4px">
+            <a href="{{ url($locale.'/blog') }}" style="font-size:var(--fs-xs);color:var(--text-muted);text-decoration:none;display:inline-flex;align-items:center;gap:4px">
                 <i data-lucide="x" style="width:11px;height:11px"></i>
                 {{ $locale === 'fr' ? 'Effacer la recherche' : 'Clear search' }}
             </a>

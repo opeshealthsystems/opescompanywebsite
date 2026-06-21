@@ -110,7 +110,7 @@
                     </div>
                 </div>
                 @if($lesson->duration_minutes)
-                <div style="flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;color:var(--text-muted);font-size:12.5px">
+                <div style="flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;color:var(--text-muted);font-size:var(--fs-xs)">
                     <i data-lucide="clock" style="width:13px;height:13px"></i>{{ $lesson->duration_minutes }} min
                 </div>
                 @endif

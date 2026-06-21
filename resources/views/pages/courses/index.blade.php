@@ -39,7 +39,7 @@
 
                 <div class="pi-card-body" style="padding:18px">
                     {{-- Level badge --}}
-                    <div style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#00C896;background:rgba(0,200,150,0.1);border:1px solid rgba(0,200,150,0.2);border-radius:999px;padding:4px 10px;margin-bottom:10px">
+                    <div style="display:inline-flex;align-items:center;gap:6px;font-size:var(--fs-xs);font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#00C896;background:rgba(0,200,150,0.1);border:1px solid rgba(0,200,150,0.2);border-radius:999px;padding:4px 10px;margin-bottom:10px">
                         {{ \App\Models\Course::levelOptions()[$course->level] ?? ucfirst($course->level) }}
                     </div>
 
@@ -50,7 +50,7 @@
                     @endif
 
                     {{-- Meta row --}}
-                    <div style="display:flex;gap:16px;margin-top:14px;font-size:12.5px;color:var(--text-muted)">
+                    <div style="display:flex;gap:16px;margin-top:14px;font-size:var(--fs-xs);color:var(--text-muted)">
                         @if($course->duration_hours)
                         <span style="display:inline-flex;align-items:center;gap:5px">
                             <i data-lucide="clock" style="width:13px;height:13px"></i>{{ $course->duration_hours }}h

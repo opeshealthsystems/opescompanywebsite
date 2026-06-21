@@ -146,8 +146,8 @@
                 <i data-lucide="{{ $family['icon'] }}" style="width:20px;height:20px;color:{{ $family['color'] }}"></i>
             </div>
             <div style="font-weight:800;color:#e2e8f0;font-size:15px;margin-bottom:3px">{{ $family['name'] }}</div>
-            <div style="font-size:11px;color:{{ $family['color'] }};text-transform:uppercase;letter-spacing:0.07em;font-weight:700;margin-bottom:8px">{{ $family['tagline'] }}</div>
-            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">{{ $family['desc'] }}</div>
+            <div style="font-size:var(--fs-xs);color:{{ $family['color'] }};text-transform:uppercase;letter-spacing:0.07em;font-weight:700;margin-bottom:8px">{{ $family['tagline'] }}</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.6">{{ $family['desc'] }}</div>
         </div>
         @endforeach
     </div>
