@@ -24,7 +24,7 @@
 {{-- ── HOME MARKET ──────────────────────────────────────────────── --}}
 <div class="section" style="max-width:960px;margin:0 auto">
     <a href="{{ url($locale.'/products') }}" style="display:flex;align-items:center;gap:16px;padding:20px 24px;background:linear-gradient(135deg,#0f1f2e,#0d1a14);border:1px solid rgba(0,200,150,0.25);border-radius:16px;text-decoration:none">
-        <span style="font-size:32px">🇨🇲</span>
+        <img src="{{ asset('flags/cm.svg') }}" alt="Cameroon" style="width:42px;height:28px;border-radius:4px;object-fit:cover">
         <div style="flex:1">
             <div style="font-weight:800;color:#00C896;font-size:15px;margin-bottom:3px">{{ $isFr ? 'Cameroun — marché d\'origine' : 'Cameroon — home market' }}</div>
             <div style="font-size:12.5px;color:#94a3b8;line-height:1.6">{{ $isFr ? 'Conçu et développé au Cameroun : bilingue EN/FR, mobile money (MoMo, Orange Money), facturation CNPS/mutuelles/CSU, et les 22 systèmes OPES.' : 'Designed and built in Cameroon: bilingual EN/FR, mobile money (MoMo, Orange Money), CNPS/mutuelles/CSU billing, and all 22 OPES systems.' }}</div>
@@ -46,7 +46,7 @@
         @php $accent = $m['accent'] ?? '#00C896'; @endphp
         <a href="{{ url($locale.'/markets/'.$m['slug']) }}" style="display:block;background:#0F172A;border:1px solid #1e293b;border-radius:14px;padding:20px;text-decoration:none">
             <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
-                <span style="font-size:28px">{{ $m['flag'] }}</span>
+                <img src="{{ asset('flags/'.$m['code'].'.svg') }}" alt="" style="width:36px;height:24px;border-radius:3px;object-fit:cover">
                 <div>
                     <div style="font-weight:800;color:#e2e8f0;font-size:14px">{{ $m['name'] }}</div>
                     <div style="font-size:11px;color:#64748b">{{ $m['capital'] }} · {{ $m['currency'] }}</div>

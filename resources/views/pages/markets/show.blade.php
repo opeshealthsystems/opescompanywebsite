@@ -8,7 +8,7 @@
 <div class="about-hero">
     <div class="section-label" style="justify-content:center;margin-bottom:16px">
         <i data-lucide="map-pin" style="width:12px;height:12px"></i>
-        {{ $isFr ? 'Marché CEMAC' : 'CEMAC market' }} · {{ $market['flag'] }} {{ $market['name'] }}
+        {{ $isFr ? 'Marché CEMAC' : 'CEMAC market' }} · <img src="{{ asset('flags/'.$market['code'].'.svg') }}" alt="" style="height:11px;width:16px;border-radius:2px;object-fit:cover;vertical-align:-1px"> {{ $market['name'] }}
     </div>
     <h1 class="about-title">
         {{ $isFr ? 'Logiciel de gestion hospitalière' : 'Hospital management software' }}
@@ -169,7 +169,7 @@
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px">
         @foreach($others as $o)
         <a href="{{ url($locale.'/markets/'.$o['slug']) }}" style="display:flex;align-items:center;gap:10px;padding:12px 14px;background:#0F172A;border:1px solid #1e293b;border-radius:10px;text-decoration:none;transition:border-color .15s">
-            <span style="font-size:20px">{{ $o['flag'] }}</span>
+            <img src="{{ asset('flags/'.$o['code'].'.svg') }}" alt="" style="width:26px;height:17px;border-radius:3px;object-fit:cover;flex-shrink:0">
             <div>
                 <div style="font-weight:700;font-size:12.5px;color:#e2e8f0">{{ $o['name'] }}</div>
                 <div style="font-size:10px;color:#64748b">{{ $o['capital'] }}</div>

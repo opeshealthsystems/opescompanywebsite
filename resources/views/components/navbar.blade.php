@@ -154,7 +154,7 @@
                 <div class="nav-dd-section">
                     <div class="nav-dd-section-label">{{ $locale === 'fr' ? 'Marché d\'origine' : 'Home market' }}</div>
                     <a href="{{ url($locale.'/products') }}" class="nav-dd-item">
-                        <span style="font-size:15px;line-height:1;width:14px;text-align:center;flex-shrink:0">🇨🇲</span>
+                        <img src="{{ asset('flags/cm.svg') }}" alt="" style="width:18px;height:12px;border-radius:2px;object-fit:cover;flex-shrink:0">
                         <div>
                             <div class="nav-dd-name">{{ $locale === 'fr' ? 'Cameroun' : 'Cameroon' }}</div>
                             <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Marché principal — 22 systèmes' : 'Home market — 22 systems' }}</div>
@@ -165,7 +165,7 @@
                     <div class="nav-dd-section-label">{{ $locale === 'fr' ? 'Zone CEMAC' : 'CEMAC region' }}</div>
                     @foreach(config('markets') as $m)
                     <a href="{{ url($locale.'/markets/'.$m['slug']) }}" class="nav-dd-item">
-                        <span style="font-size:15px;line-height:1;width:14px;text-align:center;flex-shrink:0">{{ $m['flag'] }}</span>
+                        <img src="{{ asset('flags/'.$m['code'].'.svg') }}" alt="" style="width:18px;height:12px;border-radius:2px;object-fit:cover;flex-shrink:0">
                         <div>
                             <div class="nav-dd-name">{{ $m['name'] }}</div>
                             <div class="nav-dd-sub">{{ $m['capital'] }}</div>
