@@ -10,7 +10,7 @@
 
 **Key facts**
 - Based on publicly available vendor information as of 2026; verify current details with each provider before deciding.
-- ProsoftAfrica is a Cameroon-based hospital management software whose platform serves facilities in Nigeria, Ghana, Congo, Gabon, South Africa and beyond, and works even when connectivity is weak.
+- ProsoftAfrica is a Cameroon-based hospital management software which, according to ProsoftAfrica's publicly available materials, serves facilities in Nigeria, Ghana, Congo, Gabon and South Africa, and works even when connectivity is weak.
 - ProsoftAfrica's feature set covers patient registration, appointment scheduling, EHR, billing and insurance, pharmacy, laboratory (LIS), radiology (RIS), supply chain, HR and payroll, and reporting and analytics — with advanced multi-branch management for African hospital networks.
 - OPES Health Systems is a Cameroonian/CEMAC-built platform that emphasises a 22-system integrated ecosystem, the OPESCare universal Health ID with HL7 FHIR R4 interoperability, a 12-strong specialist clinical suite, full bilingual EN/FR depth, and local payment rails (MTN MoMo, Orange Money, CNPS/mutuelles/CSU).
 - Both are genuinely local, both tolerate weak connectivity, and both support multi-site operations — so this is a choice between two legitimate Cameroonian options, not a question of "the only local one".
@@ -23,9 +23,9 @@ That shared foundation matters. A facility evaluating local hospital software in
 
 ## What ProsoftAfrica offers
 
-ProsoftAfrica is a strong, established Cameroonian hospital management software provider. Based in Cameroon, its platform already serves facilities in Nigeria, Ghana, Congo, Gabon, South Africa and beyond — a meaningful multi-country footprint that speaks to its maturity.
+ProsoftAfrica is a strong, established Cameroonian hospital management software provider. Based in Cameroon, and according to ProsoftAfrica's publicly available materials, its platform serves facilities in Nigeria, Ghana, Congo, Gabon and South Africa — a meaningful multi-country footprint that speaks to its maturity.
 
-Its feature set is a complete hospital management system:
+Per ProsoftAfrica's published information, its feature set covers:
 
 - **Patient Registration & Management**
 - **Appointment Scheduling & Management**
@@ -70,7 +70,7 @@ The table below is a fair, side-by-side view. Where a row reflects a capability 
 | Bilingual EN/FR | ✓ (full, by design) | Not specified publicly |
 | Mobile money (MTN MoMo, Orange Money) | ✓ | Not specified publicly |
 | Local cover (CNPS / mutuelles / CSU) | ✓ | Not specified publicly |
-| Multi-country reach | ✓ (multi-site capable) | ✓ (Nigeria, Ghana, Congo, Gabon, South Africa and beyond) |
+| Multi-country reach | ✓ (multi-site capable) | ✓ (Nigeria, Ghana, Congo, Gabon, South Africa — per vendor materials) |
 
 Reading the table fairly: the top rows show how much these two platforms have in common — both are local, multi-branch, offline-capable and cover the full core of hospital management. ProsoftAfrica's verified multi-country footprint is a clear, demonstrated strength. The rows marked "Not specified publicly" for ProsoftAfrica are simply areas where OPES publishes specific detail and the verified ProsoftAfrica information does not speak to it; a buyer who needs those capabilities should ask ProsoftAfrica directly rather than assume.
 

@@ -10,7 +10,7 @@
 
 **Faits clés**
 - D'après les informations publiques des éditeurs en 2026 ; vérifiez les détails actuels auprès de chaque fournisseur avant de décider.
-- ProsoftAfrica est un logiciel camerounais de gestion hospitalière dont la plateforme dessert des établissements au Nigeria, au Ghana, au Congo, au Gabon, en Afrique du Sud et au-delà, et fonctionne même lorsque la connectivité est faible.
+- ProsoftAfrica est un logiciel camerounais de gestion hospitalière dont la plateforme, d'après les documents publics de ProsoftAfrica, dessert des établissements au Nigeria, au Ghana, au Congo, au Gabon et en Afrique du Sud, et fonctionne même lorsque la connectivité est faible.
 - L'offre de ProsoftAfrica couvre l'enregistrement des patients, la prise de rendez-vous, le DPI (EHR), la facturation et l'assurance, la pharmacie, le laboratoire (LIS), la radiologie (RIS), la chaîne d'approvisionnement, les RH et la paie, ainsi que le reporting et l'analytique — avec une gestion multi-sites avancée pour les réseaux hospitaliers africains.
 - OPES Health Systems est une plateforme camerounaise/CEMAC qui met l'accent sur un écosystème intégré de 22 systèmes, l'identifiant santé universel OPESCare avec interopérabilité HL7 FHIR R4, une suite clinique de 12 spécialités, un bilinguisme EN/FR complet et des moyens de paiement locaux (MTN MoMo, Orange Money, CNPS/mutuelles/CSU).
 - Les deux sont véritablement locales, tolèrent les connexions faibles et prennent en charge le multi-sites — il s'agit donc d'un choix entre deux options camerounaises légitimes, et non d'une question de « seule solution locale ».
@@ -23,9 +23,9 @@ Ce socle commun a son importance. Un établissement qui évalue un logiciel hosp
 
 ## Ce que propose ProsoftAfrica
 
-ProsoftAfrica est un fournisseur camerounais solide et établi de logiciels de gestion hospitalière. Basée au Cameroun, sa plateforme dessert déjà des établissements au Nigeria, au Ghana, au Congo, au Gabon, en Afrique du Sud et au-delà — une présence multi-pays significative qui témoigne de sa maturité.
+ProsoftAfrica est un fournisseur camerounais solide et établi de logiciels de gestion hospitalière. Basée au Cameroun, et d'après les documents publics de ProsoftAfrica, sa plateforme dessert des établissements au Nigeria, au Ghana, au Congo, au Gabon et en Afrique du Sud — une présence multi-pays significative qui témoigne de sa maturité.
 
-Son offre constitue un système complet de gestion hospitalière :
+D'après les informations publiées par ProsoftAfrica, son offre couvre :
 
 - **Enregistrement et gestion des patients**
 - **Prise et gestion des rendez-vous**
@@ -70,7 +70,7 @@ Le tableau ci-dessous offre une vue comparative et équitable. Lorsqu'une ligne 
 | Bilingue EN/FR | ✓ (complet, par conception) | Non précisé publiquement |
 | Mobile money (MTN MoMo, Orange Money) | ✓ | Non précisé publiquement |
 | Couverture locale (CNPS / mutuelles / CSU) | ✓ | Non précisé publiquement |
-| Portée multi-pays | ✓ (capacité multi-sites) | ✓ (Nigeria, Ghana, Congo, Gabon, Afrique du Sud et au-delà) |
+| Portée multi-pays | ✓ (capacité multi-sites) | ✓ (Nigeria, Ghana, Congo, Gabon, Afrique du Sud — selon les documents de l'éditeur) |
 
 Lecture équitable du tableau : les premières lignes montrent tout ce que ces deux plateformes ont en commun — toutes deux locales, multi-sites, tolérantes hors-ligne et couvrant l'ensemble du cœur de la gestion hospitalière. La présence multi-pays vérifiée de ProsoftAfrica est une force claire et démontrée. Les lignes marquées « Non précisé publiquement » pour ProsoftAfrica sont simplement des domaines où OPES publie un détail précis et où l'information vérifiée de ProsoftAfrica ne s'exprime pas ; un acheteur qui a besoin de ces capacités devrait interroger ProsoftAfrica directement plutôt que de présumer.
 
