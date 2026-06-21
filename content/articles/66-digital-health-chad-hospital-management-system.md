@@ -89,3 +89,7 @@ Hospital directors and clinic owners in Chad interested in understanding what HM
 Chad's health system faces challenges that no single technology can resolve. But the combination of growing urban private sector activity in N'Djamena, increasing donor interest in health data quality, the precedent set by DHIS2 and NGO-led digital pilots, and the cross-border integration imperative created by CEMAC all point toward a genuine and growing opportunity for hospital management software in the country.
 
 Facilities that invest in digital administration now — building the data culture, the staff competence, and the process discipline that accompany systematic HMS use — will be substantially better positioned to benefit from the next wave of health financing reform, whether that takes the form of results-based financing, performance-based contracts with donors, or eventual national health insurance expansion. The window is open, and the case for action is clear.
+
+---
+
+**Looking for the OPES solution in Chad?** See how OPES Health Systems adapts to Chad's offline-first realities, mobile-money billing, and bilingual needs on our dedicated [Chad market page](/en/markets/chad) — or [book a demo](/en/book-demo) tailored to your facility.

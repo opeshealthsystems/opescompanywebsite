@@ -85,3 +85,7 @@ Facility directors and administrators in Gabon are encouraged to contact OPES He
 Gabon sits at a genuinely interesting inflection point for health digitisation. The CNAM billing imperative is already creating commercial pressure for better administrative systems. The PSGE digital ambitions are catalysing infrastructure investment. The private sector is growing and increasingly receptive to efficiency tools. And the country's relatively higher income level and digital infrastructure make HMS implementation more straightforward than in most CEMAC peers.
 
 The facilities that invest in digital administration now will be first to benefit as CNAM's documentation requirements tighten, as telemedicine infrastructure matures, and as national health information integration deepens. The cost of delay is not neutral — every year of continued paper-based administration is a year of revenue leakage, missed reporting opportunities, and institutional knowledge that cannot be recovered. Gabon's health system modernisation agenda is underway, and the facilities best placed to lead it are those that have already built the digital foundation to participate.
+
+---
+
+**Looking for the OPES solution in Gabon?** See how OPES Health Systems delivers CNAM-ready billing, bilingual operation, and multi-site records on our dedicated [Gabon market page](/en/markets/gabon) — or [book a demo](/en/book-demo) tailored to your facility.

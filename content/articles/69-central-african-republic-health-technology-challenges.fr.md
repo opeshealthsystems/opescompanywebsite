@@ -97,6 +97,10 @@ Pour les structures gérées par les ONG à Bangui — celles dotées d'opérati
 
 OPES Health Systems accueille favorablement les échanges avec les ONG, les hôpitaux missionnaires et les partenaires de développement opérant en RCA sur la manière dont sa plateforme peut être configurée pour un déploiement en contexte fragile et sur les modèles de soutien qui ont du sens pour le contexte de Bangui.
 
+---
+
+**Vous cherchez la solution OPES en République centrafricaine ?** Découvrez comment OPES Health Systems est conçu pour les contextes fragiles et à faible connectivité et interagit avec les outils déjà utilisés par les acteurs humanitaires sur notre [page marché dédiée à la RCA](/fr/markets/central-african-republic) — ou [demandez une démo](/fr/book-demo) adaptée à votre établissement.
+
 ## Une vision à long terme de la santé numérique en République centrafricaine
 
 Le chemin de la République centrafricaine vers des systèmes de santé numériques fonctionnels est long, non linéaire et dépendant de conditions — sécurité, gouvernance, redressement économique — qui échappent au contrôle du secteur de la santé. Un optimisme réaliste exige de reconnaître à la fois la gravité réelle des contraintes actuelles et les progrès concrets que des acteurs déterminés ont réalisés, même dans des circonstances extraordinairement difficiles.

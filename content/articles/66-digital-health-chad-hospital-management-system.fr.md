@@ -89,3 +89,7 @@ Les directeurs d'hôpitaux et propriétaires de cliniques au Tchad intéressés 
 Le système de santé du Tchad fait face à des défis qu'aucune technologie isolée ne peut résoudre. Mais la combinaison d'une activité croissante du secteur privé urbain à N'Djamena, d'un intérêt accru des bailleurs pour la qualité des données sanitaires, du précédent établi par DHIS2 et les projets pilotes numériques menés par des ONG, et de l'impératif d'intégration transfrontalière créé par la CEMAC pointent tous vers une opportunité réelle et croissante pour les logiciels de gestion hospitalière dans le pays.
 
 Les établissements qui investissent dans l'administration numérique dès maintenant — en construisant la culture des données, la compétence du personnel et la discipline des processus qui accompagnent l'usage systématique d'un SGH — seront nettement mieux positionnés pour bénéficier de la prochaine vague de réforme du financement de la santé, qu'elle prenne la forme d'un financement basé sur les résultats, de contrats basés sur la performance avec les bailleurs ou d'une éventuelle expansion de l'assurance maladie nationale. La fenêtre est ouverte, et les arguments en faveur de l'action sont clairs.
+
+---
+
+**Vous cherchez la solution OPES au Tchad ?** Découvrez comment OPES Health Systems s'adapte aux réalités hors-ligne, à la facturation mobile money et aux besoins bilingues du Tchad sur notre [page marché dédiée au Tchad](/fr/markets/chad) — ou [demandez une démo](/fr/book-demo) adaptée à votre établissement.

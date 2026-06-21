@@ -102,3 +102,7 @@ OPES Health Systems welcomes conversations with NGOs, mission hospitals, and dev
 The Central African Republic's path to functioning digital health systems is long, non-linear, and dependent on conditions — security, governance, economic recovery — that lie outside the health sector's control. Realistic optimism requires acknowledging both the genuine severity of current constraints and the real progress that determined actors have made even in extraordinarily difficult circumstances.
 
 The facilities, NGOs, and development partners that invest now in the foundations of digital health in CAR — the data culture, the basic recording disciplines, the open-source tools in Bangui's more stable facilities — are building the base on which more comprehensive systems can eventually stand. The opportunity is not immediate and not uncomplicated. But it is real, and it belongs to those willing to engage with it honestly and patiently.
+
+---
+
+**Looking for the OPES solution in the Central African Republic?** See how OPES Health Systems is built for fragile, low-connectivity settings and interoperates with the tools humanitarian actors already use on our dedicated [Central African Republic market page](/en/markets/central-african-republic) — or [book a demo](/en/book-demo) tailored to your facility.

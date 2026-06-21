@@ -79,3 +79,7 @@ Hospital directors and clinic owners in the Republic of Congo are invited to con
 ## Conclusion: A Maturing Digital Health Market
 
 Congo-Brazzaville's digital health market is at an early but clearly advancing stage of development. The combination of a functioning DHIS2 infrastructure, active donor engagement from the World Bank and AFD, a growing private health sector with genuine purchasing power, and CNSS billing pressures creating commercial incentives for better administrative systems all point toward increasing demand for facility-level HMS solutions over the coming years. Facilities that move early will build the institutional knowledge and process maturity that late adopters will struggle to replicate quickly. The opportunity is real, the enabling conditions are in place, and the direction of travel is clear.
+
+---
+
+**Looking for the OPES solution in the Republic of Congo?** See how OPES Health Systems supports CNSS billing, bilingual operation, and Brazzaville–Pointe-Noire continuity on our dedicated [Republic of Congo market page](/en/markets/congo-brazzaville) — or [book a demo](/en/book-demo) tailored to your facility.
