@@ -41,7 +41,7 @@
                 <p class="pi-card-tagline">{{ Str::limit($p['tagline'], 90) }}</p>
             </div>
             <div class="pi-card-arrow">
-                <i data-lucide="arrow-right" style="width:14px;height:14px;color:#475569"></i>
+                <i data-lucide="arrow-right" style="width:14px;height:14px;color:var(--text-faint)"></i>
             </div>
         </a>
         @endforeach
@@ -70,7 +70,7 @@
                 <p class="pi-card-tagline">{{ Str::limit($p['tagline'], 90) }}</p>
             </div>
             <div class="pi-card-arrow">
-                <i data-lucide="arrow-right" style="width:14px;height:14px;color:#475569"></i>
+                <i data-lucide="arrow-right" style="width:14px;height:14px;color:var(--text-faint)"></i>
             </div>
         </a>
         @endforeach
@@ -82,7 +82,7 @@
 {{-- ── SPECIALIST SYSTEMS ──────────────────────────────────────────── --}}
 <div class="section pi-section">
     <div class="pi-cat-header">
-        <div class="pi-cat-dot" style="background:#94a3b8"></div>
+        <div class="pi-cat-dot" style="background:var(--text-muted)"></div>
         <h2 class="pi-cat-title">{{ __('products.cat_specialist') }}</h2>
         <span class="pi-cat-count">{{ trans_choice('products.systems_count', count($grouped['Specialist'] ?? []), ['count' => count($grouped['Specialist'] ?? [])]) }}</span>
     </div>
@@ -99,7 +99,7 @@
                 <p class="pi-card-tagline">{{ Str::limit($p['tagline'], 90) }}</p>
             </div>
             <div class="pi-card-arrow">
-                <i data-lucide="arrow-right" style="width:14px;height:14px;color:#475569"></i>
+                <i data-lucide="arrow-right" style="width:14px;height:14px;color:var(--text-faint)"></i>
             </div>
         </a>
         @endforeach

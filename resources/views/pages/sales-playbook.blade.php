@@ -55,14 +55,14 @@
                 {{ $isFr ? 'Philosophie commerciale' : 'Sales philosophy' }}
             </div>
             <h2 class="section-title" style="font-size:clamp(18px,2.5vw,26px)">{{ $isFr ? 'OPES ne vend pas de logiciels.' : 'OPES does not sell software.' }}</h2>
-            <p style="font-size:13px;color:#64748b;line-height:1.7;margin-top:12px">
+            <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-top:12px">
                 {{ $isFr
                     ? 'Chaque conversation commerciale commence par la valeur patient et la transformation organisationnelle — pas par les fonctionnalités ou le prix.'
                     : 'Every commercial conversation starts with patient value and organisational transformation — not features or price.' }}
             </p>
         </div>
         <div>
-            <div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px">{{ $isFr ? 'OPES vend :' : 'OPES sells:' }}</div>
+            <div style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px">{{ $isFr ? 'OPES vend :' : 'OPES sells:' }}</div>
             @foreach($isFr
                 ? [['heart-pulse','#00C896','Meilleurs soins patients'],['trending-up','#1A6FE8','Efficacité opérationnelle'],['dollar-sign','#00C896','Optimisation des revenus'],['zap','#1A6FE8','Transformation numérique'],['share-2','#00C896','Interopérabilité'],['cpu','#1A6FE8','Intelligence en santé'],['building-2','#00C896','Infrastructure de santé nationale']]
                 : [['heart-pulse','#00C896','Better patient care'],['trending-up','#1A6FE8','Operational efficiency'],['dollar-sign','#00C896','Revenue optimisation'],['zap','#1A6FE8','Digital transformation'],['share-2','#00C896','Interoperability'],['cpu','#1A6FE8','Healthcare intelligence'],['building-2','#00C896','National health infrastructure']]
@@ -146,21 +146,21 @@
                 </div>
                 <div style="font-weight:700;color:#e2e8f0;font-size:13px">{{ $seg[4] }}</div>
             </div>
-            <div style="font-size:10px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">{{ $isFr ? 'Décideurs' : 'Decision makers' }}</div>
+            <div style="font-size:10px;font-weight:600;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">{{ $isFr ? 'Décideurs' : 'Decision makers' }}</div>
             <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px">
                 @foreach($seg[5] as $dm)
-                <span style="background:#1e293b;border-radius:12px;padding:2px 8px;font-size:10px;color:#64748b">{{ $dm }}</span>
+                <span style="background:#1e293b;border-radius:12px;padding:2px 8px;font-size:10px;color:var(--text-muted)">{{ $dm }}</span>
                 @endforeach
             </div>
-            <div style="font-size:10px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">{{ $isFr ? 'Besoins' : 'Primary needs' }}</div>
+            <div style="font-size:10px;font-weight:600;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">{{ $isFr ? 'Besoins' : 'Primary needs' }}</div>
             <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px">
                 @foreach($seg[6] as $need)
                 <span style="background:{{ $seg[3] }}0D;border:1px solid {{ $seg[3] }}20;border-radius:12px;padding:2px 8px;font-size:10px;color:{{ $seg[3] }}">{{ $need }}</span>
                 @endforeach
             </div>
-            <div style="font-size:10px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">{{ $isFr ? 'Produits recommandés' : 'Recommended products' }}</div>
+            <div style="font-size:10px;font-weight:600;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">{{ $isFr ? 'Produits recommandés' : 'Recommended products' }}</div>
             @foreach($seg[7] as $prod)
-            <div style="font-size:11px;color:#94a3b8;padding:2px 0">
+            <div style="font-size:11px;color:var(--text-muted);padding:2px 0">
                 <i data-lucide="chevron-right" style="width:9px;height:9px;color:{{ $seg[3] }};margin-right:4px"></i>{{ $prod }}
             </div>
             @endforeach
@@ -208,7 +208,7 @@
                         </div>
                         <div style="font-size:9px;font-weight:800;color:{{ $st[1] }};text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">{{ $isFr ? 'Étape' : 'Stage' }} {{ $st[2] }}</div>
                         <div style="font-size:11px;font-weight:700;color:#e2e8f0;margin-bottom:6px;line-height:1.3">{{ $st[3] }}</div>
-                        <div style="font-size:10px;color:#475569;line-height:1.5">{{ $st[4] }}</div>
+                        <div style="font-size:10px;color:var(--text-faint);line-height:1.5">{{ $st[4] }}</div>
                     </div>
                 </div>
                 @if($idx < count($stages) - 1)
@@ -278,7 +278,7 @@
                     <span style="font-size:11px;font-weight:700;color:{{ $q[1] }};text-transform:uppercase;letter-spacing:0.05em">{{ $q[2] }}</span>
                 </div>
                 @foreach($q[3] as $question)
-                <div style="font-size:11px;color:#64748b;padding:3px 0 3px 18px;border-left:1px solid {{ $q[1] }}20;margin-left:5px">{{ $question }}</div>
+                <div style="font-size:11px;color:var(--text-muted);padding:3px 0 3px 18px;border-left:1px solid {{ $q[1] }}20;margin-left:5px">{{ $question }}</div>
                 @endforeach
             </div>
             @endforeach
@@ -338,7 +338,7 @@
                 </div>
                 <div style="padding:18px 20px;display:flex;align-items:flex-start;gap:8px">
                     <i data-lucide="check-circle" style="width:14px;height:14px;color:#00C896;flex-shrink:0;margin-top:1px"></i>
-                    <div style="font-size:12px;color:#64748b;line-height:1.6">{{ $obj[2] }}</div>
+                    <div style="font-size:12px;color:var(--text-muted);line-height:1.6">{{ $obj[2] }}</div>
                 </div>
             </div>
         </div>
@@ -393,7 +393,7 @@
             as $level)
             <div style="padding:16px;background:#0F172A;border-radius:10px;border-left:3px solid {{ $level[0] }};margin-bottom:10px">
                 <div style="font-size:12px;font-weight:700;color:{{ $level[0] }};margin-bottom:6px">{{ $level[1] }}</div>
-                <div style="font-size:11px;color:#64748b;line-height:1.6">{{ $level[2] }}</div>
+                <div style="font-size:11px;color:var(--text-muted);line-height:1.6">{{ $level[2] }}</div>
             </div>
             @endforeach
             <div style="background:#0F172A;border:1px solid #1e293b;border-radius:10px;padding:14px 16px;margin-top:6px">
@@ -402,7 +402,7 @@
                     ? ['Résumé exécutif','Énoncé du problème','Solution proposée','Architecture','Tarification','Plan d\'implémentation','Plan de support','ROI']
                     : ['Executive summary','Problem statement','Proposed solution','Architecture','Pricing','Implementation plan','Support plan','ROI']
                 as $comp)
-                <div style="font-size:11px;color:#475569;padding:2px 0">
+                <div style="font-size:11px;color:var(--text-faint);padding:2px 0">
                     <i data-lucide="chevron-right" style="width:9px;height:9px;color:#00C896;margin-right:4px"></i>{{ $comp }}
                 </div>
                 @endforeach
@@ -428,7 +428,7 @@
             as $acct)
             <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #0f172a">
                 <i data-lucide="chevron-right" style="width:9px;height:9px;color:#00C896;flex-shrink:0"></i>
-                <span style="font-size:12px;color:#94a3b8">{{ $acct }}</span>
+                <span style="font-size:12px;color:var(--text-muted)">{{ $acct }}</span>
             </div>
             @endforeach
         </div>
@@ -443,7 +443,7 @@
                 : ['Pipeline value','Qualified opportunities','Proposal win rate','Average deal size','Customer acquisition cost','Revenue per sales representative','Customer retention rate']
             as $kpi)
             <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0F172A;border-radius:7px;border-left:2px solid #1A6FE8;margin-bottom:5px">
-                <span style="font-size:11px;color:#94a3b8">{{ $kpi }}</span>
+                <span style="font-size:11px;color:var(--text-muted)">{{ $kpi }}</span>
             </div>
             @endforeach
         </div>
@@ -453,13 +453,13 @@
                 <i data-lucide="trending-up" style="width:12px;height:12px"></i>
                 {{ $isFr ? 'Expansion post-vente' : 'Post-sale expansion' }}
             </div>
-            <p style="font-size:11px;color:#475569;margin-bottom:12px">{{ $isFr ? 'Après l\'implémentation, identifier des opportunités pour :' : 'After implementation, identify opportunities for:' }}</p>
+            <p style="font-size:11px;color:var(--text-faint);margin-bottom:12px">{{ $isFr ? 'Après l\'implémentation, identifier des opportunités pour :' : 'After implementation, identify opportunities for:' }}</p>
             @foreach($isFr
                 ? ['Modules supplémentaires','Services d\'interopérabilité','Services Health ID','Analytique avancée','Programmes de formation','Services gérés']
                 : ['Additional modules','Interoperability services','Health ID services','Advanced analytics','Training programmes','Managed services']
             as $exp)
             <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0F172A;border-radius:7px;border-left:2px solid #00C896;margin-bottom:5px">
-                <span style="font-size:11px;color:#94a3b8">{{ $exp }}</span>
+                <span style="font-size:11px;color:var(--text-muted)">{{ $exp }}</span>
             </div>
             @endforeach
         </div>
@@ -479,7 +479,7 @@
         </a>
         <a href="{{ url($locale.'/contact') }}" class="btn-secondary">
             {{ $isFr ? 'Contacter l\'équipe commerciale' : 'Contact the commercial team' }}
-            <i data-lucide="mail" style="width:15px;height:15px;color:#94a3b8"></i>
+            <i data-lucide="mail" style="width:15px;height:15px;color:var(--text-muted)"></i>
         </a>
     </div>
 </div>

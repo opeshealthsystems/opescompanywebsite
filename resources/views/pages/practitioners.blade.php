@@ -87,12 +87,12 @@
             ['step'=>'03','icon'=>'file-text','color'=>'#00C896','bg'=>'rgba(0,200,150,0.08)','title'=>'Test & Report','desc'=>'Test our systems and share your honest findings — with optional video reviews.'],
         ] as $step)
         <div class="pi-card" style="flex-direction:column;align-items:center;text-align:center;position:relative">
-            <div style="font-size:11px;font-weight:700;color:#475569;letter-spacing:0.1em;margin-bottom:12px;text-transform:uppercase">Step {{ $step['step'] }}</div>
+            <div style="font-size:11px;font-weight:700;color:var(--text-faint);letter-spacing:0.1em;margin-bottom:12px;text-transform:uppercase">Step {{ $step['step'] }}</div>
             <div style="width:48px;height:48px;border-radius:12px;background:{{ $step['bg'] }};display:flex;align-items:center;justify-content:center;margin-bottom:16px">
                 <i data-lucide="{{ $step['icon'] }}" style="width:22px;height:22px;color:{{ $step['color'] }}"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:15px;margin-bottom:8px">{{ $step['title'] }}</div>
-            <div style="font-size:13px;color:#64748b;line-height:1.6">{{ $step['desc'] }}</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.6">{{ $step['desc'] }}</div>
         </div>
         @endforeach
     </div>
@@ -121,7 +121,7 @@
                 <i data-lucide="{{ $b['icon'] }}" style="width:18px;height:18px;color:{{ $b['color'] }}"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:14px;margin-bottom:6px">{{ $b['title'] }}</div>
-            <div style="font-size:13px;color:#64748b;line-height:1.6">{{ $b['desc'] }}</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.6">{{ $b['desc'] }}</div>
         </div>
         @endforeach
     </div>
@@ -149,7 +149,7 @@
             <p style="font-size:14px;color:#cbd5e1;line-height:1.7;margin-bottom:16px;font-style:italic">"{{ $t->opes_testimonial }}"</p>
             <div style="margin-top:auto">
                 <div style="font-weight:700;color:#e2e8f0;font-size:14px">{{ $t->user->name }}</div>
-                <div style="font-size:12px;color:#64748b;margin-top:2px">
+                <div style="font-size:12px;color:var(--text-muted);margin-top:2px">
                     {{ $profession }}@if($t->workplace_name) &middot; {{ $t->workplace_name }}@endif
                 </div>
             </div>
@@ -178,8 +178,8 @@
                 <div style="font-weight:700;color:#e2e8f0;font-size:14px">{{ $f->practitioner->name ?? 'Practitioner' }}</div>
                 @if($f->overall_rating)
                 <div style="font-size:13px;color:#00C896;font-weight:700;white-space:nowrap">
-                    @for($s = 1; $s <= 5; $s++)<i data-lucide="star" style="width:13px;height:13px;{{ $s <= $f->overall_rating ? 'color:#00C896;fill:#00C896' : 'color:#475569' }}"></i>@endfor
-                    <span style="margin-left:6px;color:#64748b">{{ $f->overall_rating }}/5</span>
+                    @for($s = 1; $s <= 5; $s++)<i data-lucide="star" style="width:13px;height:13px;{{ $s <= $f->overall_rating ? 'color:#00C896;fill:#00C896' : 'color:var(--text-faint)' }}"></i>@endfor
+                    <span style="margin-left:6px;color:var(--text-muted)">{{ $f->overall_rating }}/5</span>
                 </div>
                 @endif
             </div>

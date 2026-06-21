@@ -69,9 +69,9 @@
                 </div>
                 <div style="font-weight:700;color:#e2e8f0;font-size:13px">{{ $p[2] }}</div>
             </div>
-            <div style="font-size:11px;color:#64748b;margin-bottom:10px;line-height:1.55">{{ $p[3] }}</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:10px;line-height:1.55">{{ $p[3] }}</div>
             @foreach($p[4] as $item)
-            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#94a3b8;padding:3px 0">
+            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);padding:3px 0">
                 <i data-lucide="chevron-right" style="width:9px;height:9px;color:{{ $p[1] }};flex-shrink:0"></i>{{ $item }}
             </div>
             @endforeach
@@ -98,8 +98,8 @@
             </div>
             <h3 style="font-size:16px;font-weight:700;color:#e2e8f0;margin-bottom:20px">{{ $isFr ? 'Vers une infrastructure récurrente' : 'Toward recurring infrastructure' }}</h3>
             @foreach($isFr
-                ? [['1','#475569','Ventes de logiciels'],['2','#1A6FE8','Maintenance récurrente'],['3','#00A87B','Revenus d\'interopérabilité'],['4','#00C896','Revenus d\'infrastructure nationale'],['5','#FFB020','Revenus d\'écosystème régional']]
-                : [['1','#475569','Software sales'],['2','#1A6FE8','Recurring maintenance'],['3','#00A87B','Interoperability revenue'],['4','#00C896','National infrastructure revenue'],['5','#FFB020','Regional ecosystem revenue']]
+                ? [['1','var(--text-faint)','Ventes de logiciels'],['2','#1A6FE8','Maintenance récurrente'],['3','#00A87B','Revenus d\'interopérabilité'],['4','#00C896','Revenus d\'infrastructure nationale'],['5','#FFB020','Revenus d\'écosystème régional']]
+                : [['1','var(--text-faint)','Software sales'],['2','#1A6FE8','Recurring maintenance'],['3','#00A87B','Interoperability revenue'],['4','#00C896','National infrastructure revenue'],['5','#FFB020','Regional ecosystem revenue']]
             as $idx => $ph)
             <div style="display:flex;gap:12px">
                 <div style="display:flex;flex-direction:column;align-items:center">
@@ -125,7 +125,7 @@
                 as $kpi)
                 <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#0F172A;border-radius:8px;border-left:2px solid {{ $kpi[0] }}">
                     <i data-lucide="chevron-right" style="width:11px;height:11px;color:{{ $kpi[0] }};flex-shrink:0"></i>
-                    <span style="font-size:12px;color:#94a3b8;font-weight:600">{{ $kpi[1] }}</span>
+                    <span style="font-size:12px;color:var(--text-muted);font-weight:600">{{ $kpi[1] }}</span>
                 </div>
                 @endforeach
             </div>
@@ -144,13 +144,13 @@
     <h2 class="section-title">{{ $isFr ? 'Jalons annuels' : 'Annual milestones' }}</h2>
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px">
         @foreach($isFr
-            ? [['2026','10','établissements','#475569'],['2027','50','établissements','#1A6FE8'],['2028','150','établissements','#00A87B'],['2029','Programmes','gouvernementaux','#00C896'],['2031','Expansion','régionale','#FFB020']]
-            : [['2026','10','facilities','#475569'],['2027','50','facilities','#1A6FE8'],['2028','150','facilities','#00A87B'],['2029','Government','programmes','#00C896'],['2031','Regional','expansion','#FFB020']]
+            ? [['2026','10','établissements','var(--text-faint)'],['2027','50','établissements','#1A6FE8'],['2028','150','établissements','#00A87B'],['2029','Programmes','gouvernementaux','#00C896'],['2031','Expansion','régionale','#FFB020']]
+            : [['2026','10','facilities','var(--text-faint)'],['2027','50','facilities','#1A6FE8'],['2028','150','facilities','#00A87B'],['2029','Government','programmes','#00C896'],['2031','Regional','expansion','#FFB020']]
         as $t)
         <div style="background:#0F172A;border:2px solid {{ $t[3] }}40;border-radius:12px;padding:16px 20px;text-align:center;min-width:110px">
             <div style="font-size:10px;font-weight:800;color:{{ $t[3] }};text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">{{ $t[0] }}</div>
             <div style="font-size:22px;font-weight:800;color:#e2e8f0;line-height:1.1">{{ $t[1] }}</div>
-            <div style="font-size:10px;color:#64748b;margin-top:2px">{{ $t[2] }}</div>
+            <div style="font-size:10px;color:var(--text-muted);margin-top:2px">{{ $t[2] }}</div>
         </div>
         @endforeach
     </div>
@@ -169,7 +169,7 @@
         </a>
         <a href="{{ url($locale.'/contact') }}" class="btn-secondary">
             {{ $isFr ? 'Contacter notre équipe commerciale' : 'Contact our commercial team' }}
-            <i data-lucide="mail" style="width:15px;height:15px;color:#94a3b8"></i>
+            <i data-lucide="mail" style="width:15px;height:15px;color:var(--text-muted)"></i>
         </a>
     </div>
 </div>

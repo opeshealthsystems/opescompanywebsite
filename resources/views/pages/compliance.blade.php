@@ -105,7 +105,7 @@
         {{ $isFr ? 'Cybersécurité' : 'Cybersecurity' }}
     </div>
     <h2 class="section-title">{{ $isFr ? 'Cadre de sécurité de l\'information' : 'Information security framework' }}</h2>
-    <p style="color:#64748b;max-width:720px;font-size:15px;line-height:1.75;margin-bottom:36px">
+    <p style="color:var(--text-muted);max-width:720px;font-size:15px;line-height:1.75;margin-bottom:36px">
         {{ $isFr
             ? 'OPES Health Systems opère selon un cadre de cybersécurité multicouches qui protège les données de santé à chaque niveau — de l\'identité au réseau, du stockage à la transmission.'
             : 'OPES Health Systems operates a multi-layered cybersecurity framework that protects health data at every level — from identity to network, from storage to transmission.' }}
@@ -134,7 +134,7 @@
                 <i data-lucide="{{ $sec['icon'] }}" style="width:18px;height:18px;color:{{ $sec['color'] }}"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:14px;margin-bottom:6px">{{ $sec['title'] }}</div>
-            <div style="font-size:13px;color:#64748b;line-height:1.6">{{ $sec['desc'] }}</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.6">{{ $sec['desc'] }}</div>
         </div>
         @endforeach
     </div>
@@ -149,7 +149,7 @@
         {{ $isFr ? 'Continuité d\'activité' : 'Business continuity' }}
     </div>
     <h2 class="section-title">{{ $isFr ? 'Continuité & reprise après sinistre' : 'Business continuity & disaster recovery' }}</h2>
-    <p style="color:#64748b;max-width:720px;font-size:15px;line-height:1.75;margin-bottom:36px">
+    <p style="color:var(--text-muted);max-width:720px;font-size:15px;line-height:1.75;margin-bottom:36px">
         {{ $isFr
             ? 'Dans le secteur de la santé, l\'indisponibilité d\'un système peut avoir des conséquences directes sur la vie des patients. Notre architecture de continuité est conçue pour garantir que les données de santé restent accessibles, même en cas d\'incident majeur.'
             : 'In healthcare, system downtime can have direct consequences on patient lives. Our continuity architecture is designed to ensure health data remains accessible, even during a major incident.' }}
@@ -166,7 +166,7 @@
             <div style="font-weight:800;color:{{ $metric[1] }};font-size:22px;margin-bottom:2px">{{ $metric[2] }}</div>
             <div style="font-weight:700;color:#e2e8f0;font-size:12px;margin-bottom:4px">{{ $metric[3] }}</div>
             <div style="font-size:16px;font-weight:800;color:#e2e8f0;margin:8px 0 4px">{{ $metric[4] }}</div>
-            <div style="font-size:11px;color:#64748b">{{ $metric[5] }}</div>
+            <div style="font-size:11px;color:var(--text-muted)">{{ $metric[5] }}</div>
         </div>
         @endforeach
     </div>

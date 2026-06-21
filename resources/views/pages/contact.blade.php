@@ -18,7 +18,7 @@
     {{-- ── LEFT: FORM ─────────────────────────────────────── --}}
     <div class="contact-form-col">
         <h2 class="contact-form-title">{{ __('contact.form_title') }}</h2>
-        <p style="color:#64748b;font-size:13px;margin-bottom:24px">{{ __('contact.form_subtitle') }}</p>
+        <p style="color:var(--text-muted);font-size:13px;margin-bottom:24px">{{ __('contact.form_subtitle') }}</p>
 
         @if(session('success'))
         <div class="contact-success">
@@ -90,21 +90,21 @@
                 <i data-lucide="map-pin" style="width:15px;height:15px;color:#00C896;flex-shrink:0;margin-top:2px"></i>
                 <div>
                     <div style="font-weight:600;color:#e2e8f0">{{ __('contact.office_city') }}</div>
-                    <div style="color:#64748b;font-size:13px">{{ __('contact.office_region') }}</div>
+                    <div style="color:var(--text-muted);font-size:13px">{{ __('contact.office_region') }}</div>
                 </div>
             </div>
             <div class="ci-row">
                 <i data-lucide="mail" style="width:15px;height:15px;color:#1A6FE8;flex-shrink:0"></i>
                 <div>
                     <div style="color:#e2e8f0">contact@opeshealthsystems.com</div>
-                    <div style="color:#64748b;font-size:13px">{{ __('contact.office_email_note') }}</div>
+                    <div style="color:var(--text-muted);font-size:13px">{{ __('contact.office_email_note') }}</div>
                 </div>
             </div>
             <div class="ci-row">
                 <i data-lucide="phone" style="width:15px;height:15px;color:#00C896;flex-shrink:0"></i>
                 <div>
                     <div style="color:#e2e8f0">{{ config('company.phone') }}</div>
-                    <div style="color:#64748b;font-size:13px">{{ __('contact.office_phone_hours') }}</div>
+                    <div style="color:var(--text-muted);font-size:13px">{{ __('contact.office_phone_hours') }}</div>
                 </div>
             </div>
         </div>
@@ -122,7 +122,7 @@
                 </div>
                 <div>
                     <div style="font-weight:600;color:#e2e8f0;font-size:13px">{{ $s['step'] }}</div>
-                    <div style="color:#64748b;font-size:12px">{{ $s['desc'] }}</div>
+                    <div style="color:var(--text-muted);font-size:12px">{{ $s['desc'] }}</div>
                 </div>
             </div>
             @endforeach

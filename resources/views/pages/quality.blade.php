@@ -55,7 +55,7 @@
                 <i data-lucide="{{ $p[0] }}" style="width:14px;height:14px;color:{{ $p[1] }}"></i>
                 <div style="font-weight:700;color:#e2e8f0;font-size:12px">{{ $p[2] }}</div>
             </div>
-            <div style="font-size:11px;color:#64748b;line-height:1.6">{{ $p[3] }}</div>
+            <div style="font-size:11px;color:var(--text-muted);line-height:1.6">{{ $p[3] }}</div>
         </div>
         @endforeach
     </div>
@@ -80,7 +80,7 @@
                 <i data-lucide="{{ $pr[0] }}" style="width:16px;height:16px;color:{{ $pr[1] }}"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:6px">{{ $pr[2] }}</div>
-            <div style="font-size:12px;color:#64748b;line-height:1.6">{{ $pr[3] }}</div>
+            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">{{ $pr[3] }}</div>
         </div>
         @endforeach
     </div>
@@ -115,7 +115,7 @@
                 <i data-lucide="{{ $c[0] }}" style="width:18px;height:18px;color:{{ $c[1] }}"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:6px">{{ $c[2] }}</div>
-            <div style="font-size:12px;color:#64748b;line-height:1.6">{{ $c[3] }}</div>
+            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">{{ $c[3] }}</div>
         </div>
         @endforeach
     </div>
@@ -160,7 +160,7 @@
                 </div>
             </div>
             @foreach($d[5] as $act)
-            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#64748b;padding:3px 0">
+            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);padding:3px 0">
                 <i data-lucide="chevron-right" style="width:10px;height:10px;color:{{ $d[2] }};flex-shrink:0"></i>{{ $act }}
             </div>
             @endforeach
@@ -184,8 +184,8 @@
             <h2 class="section-title" style="font-size:20px">{{ $isFr ? 'Sept étapes, zéro compromis' : 'Seven stages, no compromises' }}</h2>
             <div style="margin-top:20px">
                 @foreach($isFr
-                    ? [['pen-line','#475569','Planifier','Définition des objectifs qualité et des standards.'],['drafting-compass','#1A6FE8','Concevoir','Conception orientée qualité avec revues intégrées.'],['hammer','#00C896','Construire','Développement conforme aux standards qualité.'],['check-square','#1A6FE8','Valider','Tests, revues cliniques et approbations de release.'],['rocket','#00C896','Déployer','Mise en production avec revue de préparation.'],['activity','#1A6FE8','Surveiller','Suivi continu des KPIs et incidents qualité.'],['trending-up','#00C896','Améliorer','Actions correctives et préventives, amélioration continue.']]
-                    : [['pen-line','#475569','Plan','Define quality objectives and standards.'],['drafting-compass','#1A6FE8','Design','Quality-oriented design with integrated reviews.'],['hammer','#00C896','Build','Development conforming to quality standards.'],['check-square','#1A6FE8','Validate','Testing, clinical reviews, and release approvals.'],['rocket','#00C896','Deploy','Production deployment with readiness review.'],['activity','#1A6FE8','Monitor','Continuous monitoring of KPIs and quality incidents.'],['trending-up','#00C896','Improve','Corrective and preventive actions, continuous improvement.']]
+                    ? [['pen-line','var(--text-faint)','Planifier','Définition des objectifs qualité et des standards.'],['drafting-compass','#1A6FE8','Concevoir','Conception orientée qualité avec revues intégrées.'],['hammer','#00C896','Construire','Développement conforme aux standards qualité.'],['check-square','#1A6FE8','Valider','Tests, revues cliniques et approbations de release.'],['rocket','#00C896','Déployer','Mise en production avec revue de préparation.'],['activity','#1A6FE8','Surveiller','Suivi continu des KPIs et incidents qualité.'],['trending-up','#00C896','Améliorer','Actions correctives et préventives, amélioration continue.']]
+                    : [['pen-line','var(--text-faint)','Plan','Define quality objectives and standards.'],['drafting-compass','#1A6FE8','Design','Quality-oriented design with integrated reviews.'],['hammer','#00C896','Build','Development conforming to quality standards.'],['check-square','#1A6FE8','Validate','Testing, clinical reviews, and release approvals.'],['rocket','#00C896','Deploy','Production deployment with readiness review.'],['activity','#1A6FE8','Monitor','Continuous monitoring of KPIs and quality incidents.'],['trending-up','#00C896','Improve','Corrective and preventive actions, continuous improvement.']]
                 as $idx => $step)
                 <div style="display:flex;gap:12px">
                     <div style="display:flex;flex-direction:column;align-items:center">
@@ -196,7 +196,7 @@
                     </div>
                     <div style="padding-top:5px;margin-bottom:{{ $idx < 6 ? '8px' : '0' }}">
                         <div style="font-weight:700;color:#e2e8f0;font-size:12px">{{ $step[2] }}</div>
-                        <div style="font-size:11px;color:#64748b;line-height:1.5">{{ $step[3] }}</div>
+                        <div style="font-size:11px;color:var(--text-muted);line-height:1.5">{{ $step[3] }}</div>
                     </div>
                 </div>
                 @endforeach
@@ -219,7 +219,7 @@
                         ? ['Développement des standards','Revues de processus','Audits','Formation','Surveillance de conformité']
                         : ['Standards development','Process reviews','Audits','Training','Compliance monitoring']
                     as $item)
-                    <div style="font-size:12px;color:#94a3b8;padding:4px 0;border-bottom:1px solid #1e293b30">{{ $item }}</div>
+                    <div style="font-size:12px;color:var(--text-muted);padding:4px 0;border-bottom:1px solid #1e293b30">{{ $item }}</div>
                     @endforeach
                 </div>
                 <div style="background:#0f152e;border:1px solid rgba(26,111,232,0.2);border-radius:12px;padding:18px">
@@ -230,7 +230,7 @@
                         ? ['Tests','Revues','Inspections','Vérification']
                         : ['Testing','Reviews','Inspections','Verification']
                     as $item)
-                    <div style="font-size:12px;color:#94a3b8;padding:4px 0;border-bottom:1px solid #1e293b30">{{ $item }}</div>
+                    <div style="font-size:12px;color:var(--text-muted);padding:4px 0;border-bottom:1px solid #1e293b30">{{ $item }}</div>
                     @endforeach
                 </div>
             </div>
@@ -249,8 +249,8 @@
     <h2 class="section-title">{{ $isFr ? 'Un processus structuré pour chaque incident significatif' : 'A structured process for every significant issue' }}</h2>
     <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:0;margin-top:28px;max-width:720px;margin-left:auto;margin-right:auto">
         @foreach($isFr
-            ? [['alert-circle','#64748b','Identification','Détection et enregistrement du problème.'],['search','#1A6FE8','Analyse','Identification de la cause racine.'],['tool','#00C896','Action corrective','Résolution de la cause immédiate.'],['shield-plus','#1A6FE8','Action préventive','Prévention de la récurrence.'],['check-circle','#00C896','Vérification','Confirmation que les actions sont efficaces.'],['archive','#64748b','Clôture','Documentation et clôture formelle.']]
-            : [['alert-circle','#64748b','Identification','Issue detected and recorded.'],['search','#1A6FE8','Root cause analysis','Underlying cause identified.'],['tool','#00C896','Corrective action','Immediate cause resolved.'],['shield-plus','#1A6FE8','Preventive action','Recurrence prevention put in place.'],['check-circle','#00C896','Verification','Effectiveness of actions confirmed.'],['archive','#64748b','Closure','Documentation and formal closure.']]
+            ? [['alert-circle','var(--text-muted)','Identification','Détection et enregistrement du problème.'],['search','#1A6FE8','Analyse','Identification de la cause racine.'],['tool','#00C896','Action corrective','Résolution de la cause immédiate.'],['shield-plus','#1A6FE8','Action préventive','Prévention de la récurrence.'],['check-circle','#00C896','Vérification','Confirmation que les actions sont efficaces.'],['archive','var(--text-muted)','Clôture','Documentation et clôture formelle.']]
+            : [['alert-circle','var(--text-muted)','Identification','Issue detected and recorded.'],['search','#1A6FE8','Root cause analysis','Underlying cause identified.'],['tool','#00C896','Corrective action','Immediate cause resolved.'],['shield-plus','#1A6FE8','Preventive action','Recurrence prevention put in place.'],['check-circle','#00C896','Verification','Effectiveness of actions confirmed.'],['archive','var(--text-muted)','Closure','Documentation and formal closure.']]
         as $idx => $step)
         <div style="display:flex;align-items:center">
             <div style="text-align:center;width:110px;padding:12px 6px">
@@ -258,7 +258,7 @@
                     <i data-lucide="{{ $step[0] }}" style="width:16px;height:16px;color:{{ $step[1] }}"></i>
                 </div>
                 <div style="font-weight:700;color:#e2e8f0;font-size:11px;margin-bottom:3px">{{ $step[2] }}</div>
-                <div style="font-size:10px;color:#64748b;line-height:1.4">{{ $step[3] }}</div>
+                <div style="font-size:10px;color:var(--text-muted);line-height:1.4">{{ $step[3] }}</div>
             </div>
             @if($idx < 5)
             <i data-lucide="chevron-right" style="width:14px;height:14px;color:#334155;flex-shrink:0"></i>
@@ -297,7 +297,7 @@
                 <div style="font-weight:700;color:#e2e8f0;font-size:13px">{{ $cat[2] }}</div>
             </div>
             @foreach($cat[3] as $kpi)
-            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#94a3b8;padding:5px 0;border-bottom:1px solid #1e293b40">
+            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);padding:5px 0;border-bottom:1px solid #1e293b40">
                 <i data-lucide="chevron-right" style="width:10px;height:10px;color:{{ $cat[1] }};flex-shrink:0"></i>{{ $kpi }}
             </div>
             @endforeach
@@ -318,15 +318,15 @@
     <div style="display:flex;gap:0;justify-content:center;margin-top:28px;flex-wrap:wrap">
         @php
         $levels = $isFr
-            ? [['1','Ad Hoc','Processus imprévisibles, réactifs.','#334155'],['2','Géré','Processus planifiés et suivis.','#475569'],['3','Défini','Processus standardisés.','#1A6FE8'],['4','Mesuré','Qualité mesurée quantitativement.','#00A87B'],['5','Optimisé','Amélioration continue et innovation.','#00C896']]
-            : [['1','Ad Hoc','Unpredictable, reactive processes.','#334155'],['2','Managed','Processes planned and tracked.','#475569'],['3','Defined','Standardised processes.','#1A6FE8'],['4','Measured','Quality managed quantitatively.','#00A87B'],['5','Optimized','Continuous improvement & innovation.','#00C896']];
+            ? [['1','Ad Hoc','Processus imprévisibles, réactifs.','#334155'],['2','Géré','Processus planifiés et suivis.','var(--text-faint)'],['3','Défini','Processus standardisés.','#1A6FE8'],['4','Mesuré','Qualité mesurée quantitativement.','#00A87B'],['5','Optimisé','Amélioration continue et innovation.','#00C896']]
+            : [['1','Ad Hoc','Unpredictable, reactive processes.','#334155'],['2','Managed','Processes planned and tracked.','var(--text-faint)'],['3','Defined','Standardised processes.','#1A6FE8'],['4','Measured','Quality managed quantitatively.','#00A87B'],['5','Optimized','Continuous improvement & innovation.','#00C896']];
         @endphp
         @foreach($levels as $idx => $level)
         <div style="display:flex;align-items:center">
             <div style="text-align:center;width:130px;padding:16px 8px;background:#0F172A;border:1px solid #1e293b;border-radius:12px;{{ $level[0]==='5' ? 'border-color:#00C896;background:#0d1f19;' : '' }}">
                 <div style="width:44px;height:44px;border-radius:50%;background:{{ $level[3] }}25;border:2px solid {{ $level[3] }}60;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:18px;font-weight:800;color:{{ $level[3] }}">{{ $level[0] }}</div>
                 <div style="font-weight:700;color:#e2e8f0;font-size:12px;margin-bottom:4px">{{ $level[1] }}</div>
-                <div style="font-size:10px;color:#64748b;line-height:1.4">{{ $level[2] }}</div>
+                <div style="font-size:10px;color:var(--text-muted);line-height:1.4">{{ $level[2] }}</div>
             </div>
             @if($idx < 4)
             <i data-lucide="chevron-right" style="width:14px;height:14px;color:#334155;flex-shrink:0;margin:0 2px"></i>
@@ -349,7 +349,7 @@
         </a>
         <a href="{{ url($locale.'/compliance') }}" class="btn-secondary">
             {{ $isFr ? 'Conformité & sécurité' : 'Compliance & trust' }}
-            <i data-lucide="shield-check" style="width:15px;height:15px;color:#94a3b8"></i>
+            <i data-lucide="shield-check" style="width:15px;height:15px;color:var(--text-muted)"></i>
         </a>
     </div>
 </div>

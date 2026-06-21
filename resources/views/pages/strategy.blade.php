@@ -94,9 +94,9 @@
                     <div style="font-size:11px;color:{{ $t[2] }};font-weight:600">{{ $isFr ? 'Thème '.$t[0] : 'Theme '.$t[0] }}</div>
                 </div>
             </div>
-            <p style="font-size:11px;color:#64748b;line-height:1.6;margin:0 0 12px">{{ $t[4] }}</p>
+            <p style="font-size:11px;color:var(--text-muted);line-height:1.6;margin:0 0 12px">{{ $t[4] }}</p>
             @foreach($t[5] as $target)
-            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#94a3b8;padding:4px 0">
+            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);padding:4px 0">
                 <i data-lucide="check" style="width:10px;height:10px;color:{{ $t[2] }};flex-shrink:0"></i>{{ $target }}
             </div>
             @endforeach
@@ -116,13 +116,13 @@
     <h2 class="section-title">{{ $isFr ? 'De la fondation au leadership régional' : 'From foundation to regional leadership' }}</h2>
     <div style="margin-top:28px">
         @php $years = $isFr ? [
-            ['2026','#475569','Fondation','Stabilisation produit, déploiements pilotes, mise en place de la gouvernance.',['10 établissements','2 hôpitaux phares'],'pen-line'],
+            ['2026','var(--text-faint)','Fondation','Stabilisation produit, déploiements pilotes, mise en place de la gouvernance.',['10 établissements','2 hôpitaux phares'],'pen-line'],
             ['2027','#1A6FE8','Expansion','Croissance commerciale, visibilité régionale, montée en échelle.',['50 établissements','10 hôpitaux'],'trending-up'],
             ['2028','#00A87B','Interopérabilité','Déploiement Health ID, mise en service de l\'HIE, réseau connecté.',['Réseau d\'établissements connectés'],'share-2'],
             ['2029','#00C896','Programmes nationaux','Engagement gouvernemental, registres nationaux, santé publique.',['Projets de santé publique'],'building-2'],
             ['2030–31','#FFB020','Leadership régional','Expansion multi-pays, infrastructure de santé numérique régionale.',['Infrastructure régionale déployée'],'globe'],
         ] : [
-            ['2026','#475569','Foundation','Product stabilization, pilot deployments, governance implementation.',['10 facilities','2 flagship hospitals'],'pen-line'],
+            ['2026','var(--text-faint)','Foundation','Product stabilization, pilot deployments, governance implementation.',['10 facilities','2 flagship hospitals'],'pen-line'],
             ['2027','#1A6FE8','Expansion','Commercial growth, regional visibility, scale-up.',['50 facilities','10 hospitals'],'trending-up'],
             ['2028','#00A87B','Interoperability','Health ID rollout, HIE deployment, connected facility network.',['Connected facility network'],'share-2'],
             ['2029','#00C896','National programs','Government engagement, national registries, public health projects.',['Public health projects launched'],'building-2'],
@@ -138,7 +138,7 @@
                 </div>
                 <div style="font-size:10px;font-weight:800;color:{{ $y[1] }};text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">{{ $y[0] }}</div>
                 <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:6px">{{ $y[2] }}</div>
-                <p style="font-size:11px;color:#64748b;line-height:1.55;margin:0 0 8px">{{ $y[3] }}</p>
+                <p style="font-size:11px;color:var(--text-muted);line-height:1.55;margin:0 0 8px">{{ $y[3] }}</p>
                 @foreach($y[4] as $goal)
                 <div style="background:{{ $y[1] }}15;border:1px solid {{ $y[1] }}30;border-radius:20px;padding:3px 10px;font-size:10px;font-weight:600;color:{{ $y[1] }};margin-bottom:4px;display:inline-block">{{ $goal }}</div>
                 @endforeach
@@ -177,7 +177,7 @@
                 <div style="font-weight:700;color:#e2e8f0;font-size:13px">{{ $cat[2] }}</div>
             </div>
             @foreach($cat[3] as $kpi)
-            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#94a3b8;padding:5px 0;border-bottom:1px solid #1e293b40">
+            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);padding:5px 0;border-bottom:1px solid #1e293b40">
                 <i data-lucide="chevron-right" style="width:10px;height:10px;color:{{ $cat[1] }};flex-shrink:0"></i>{{ $kpi }}
             </div>
             @endforeach
@@ -223,7 +223,7 @@
         </a>
         <a href="{{ url($locale.'/about') }}" class="btn-secondary">
             {{ $isFr ? 'À propos d\'OPES' : 'About OPES' }}
-            <i data-lucide="info" style="width:15px;height:15px;color:#94a3b8"></i>
+            <i data-lucide="info" style="width:15px;height:15px;color:var(--text-muted)"></i>
         </a>
     </div>
 </div>

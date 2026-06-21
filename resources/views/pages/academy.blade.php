@@ -26,7 +26,7 @@
             {{ $isFr ? 'Voir les cours disponibles' : 'Browse available courses' }} <i data-lucide="arrow-right" style="width:15px;height:15px"></i>
         </a>
         <a href="{{ url($locale.'/contact') }}" class="btn-secondary">
-            {{ $isFr ? 'Formations pour établissements' : 'Facility training packages' }} <i data-lucide="building-2" style="width:15px;height:15px;color:#94a3b8"></i>
+            {{ $isFr ? 'Formations pour établissements' : 'Facility training packages' }} <i data-lucide="building-2" style="width:15px;height:15px;color:var(--text-muted)"></i>
         </a>
     </div>
 </div>
@@ -164,11 +164,11 @@
             </div>
             <div style="font-weight:800;color:#e2e8f0;font-size:15px;margin-bottom:2px">{{ $track['title'] }}</div>
             <div style="font-size:11px;color:{{ $track['color'] }};font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px">{{ $track['cert'] }}</div>
-            <div style="font-size:11px;color:#475569;margin-bottom:10px;font-style:italic">{{ $track['audience'] }}</div>
-            <div style="font-size:12px;color:#64748b;line-height:1.6;margin-bottom:14px">{{ $track['desc'] }}</div>
+            <div style="font-size:11px;color:var(--text-faint);margin-bottom:10px;font-style:italic">{{ $track['audience'] }}</div>
+            <div style="font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:14px">{{ $track['desc'] }}</div>
             <div style="display:flex;flex-wrap:wrap;gap:6px">
                 @foreach($track['modules'] as $m)
-                <span style="font-size:10px;color:#64748b;background:#0F172A;border:1px solid #1e293b;border-radius:4px;padding:2px 7px">{{ $m }}</span>
+                <span style="font-size:10px;color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:4px;padding:2px 7px">{{ $m }}</span>
                 @endforeach
             </div>
         </div>
@@ -201,12 +201,12 @@
         @endphp
         @foreach($steps as $step)
         <div style="background:#0f1a2e;border:1px solid #1e293b;border-radius:12px;padding:20px 16px;text-align:center">
-            <div style="font-size:11px;color:#475569;font-weight:700;margin-bottom:10px">{{ $step['step'] }}</div>
+            <div style="font-size:11px;color:var(--text-faint);font-weight:700;margin-bottom:10px">{{ $step['step'] }}</div>
             <div style="width:44px;height:44px;border-radius:50%;background:{{ $step['color'] }}15;display:flex;align-items:center;justify-content:center;margin:0 auto 12px">
                 <i data-lucide="{{ $step['icon'] }}" style="width:20px;height:20px;color:{{ $step['color'] }}"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:6px">{{ $step['title'] }}</div>
-            <div style="font-size:12px;color:#64748b;line-height:1.55">{{ $step['desc'] }}</div>
+            <div style="font-size:12px;color:var(--text-muted);line-height:1.55">{{ $step['desc'] }}</div>
         </div>
         @endforeach
     </div>
@@ -224,7 +224,7 @@
         <h2 style="font-size:clamp(18px,2.5vw,26px);font-weight:700;color:#e2e8f0;margin-bottom:14px;line-height:1.3">
             {{ $isFr ? 'Formez tout votre établissement d\'un coup' : 'Train your entire facility at once' }}
         </h2>
-        <p style="color:#94a3b8;max-width:680px;line-height:1.75;font-size:14px;margin-bottom:24px">
+        <p style="color:var(--text-muted);max-width:680px;line-height:1.75;font-size:14px;margin-bottom:24px">
             {{ $isFr
                 ? 'OPES Academy propose des programmes de formation sur site pour les établissements qui souhaitent former l\'ensemble de leur personnel en même temps — avec un formateur certifié OPES déployé sur place, des supports adaptés à votre configuration système, et un suivi des certifications via le tableau de bord administrateur.'
                 : 'OPES Academy offers on-site training programmes for facilities that want to train all staff at once — with a certified OPES trainer deployed on-site, materials adapted to your system configuration, and certification tracking via the admin dashboard.' }}
@@ -248,7 +248,7 @@
             {{ $isFr ? 'Créer mon compte' : 'Create my account' }} <i data-lucide="arrow-right" style="width:15px;height:15px"></i>
         </a>
         <a href="{{ url($locale.'/courses') }}" class="btn-secondary">
-            {{ $isFr ? 'Explorer les cours' : 'Explore courses' }} <i data-lucide="book-open" style="width:15px;height:15px;color:#94a3b8"></i>
+            {{ $isFr ? 'Explorer les cours' : 'Explore courses' }} <i data-lucide="book-open" style="width:15px;height:15px;color:var(--text-muted)"></i>
         </a>
     </div>
 </div>

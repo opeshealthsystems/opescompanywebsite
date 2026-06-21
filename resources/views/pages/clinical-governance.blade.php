@@ -66,7 +66,7 @@
                 <i data-lucide="{{ $p[0] }}" style="width:16px;height:16px;color:{{ $p[1] }}"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:6px">{{ $p[2] }}</div>
-            <div style="font-size:12px;color:#64748b;line-height:1.6">{{ $p[3] }}</div>
+            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">{{ $p[3] }}</div>
         </div>
         @endforeach
     </div>
@@ -81,7 +81,7 @@
         {{ $isFr ? 'Structure de gouvernance' : 'Governance structure' }}
     </div>
     <h2 class="section-title">{{ $isFr ? 'Cinq comités, une mission : la sécurité du patient' : 'Five committees, one mission: patient safety' }}</h2>
-    <p style="color:#64748b;max-width:700px;font-size:14px;line-height:1.75;margin:12px 0 32px">
+    <p style="color:var(--text-muted);max-width:700px;font-size:14px;line-height:1.75;margin:12px 0 32px">
         {{ $isFr
             ? 'La gouvernance clinique OPES est structurée en cinq comités permanents, chacun doté d\'un mandat précis et d\'une composition multidisciplinaire, couvrant médecins, infirmiers, pharmaciens, biologistes et informaticiens cliniques.'
             : 'OPES clinical governance is structured across five standing committees, each with a defined mandate and multidisciplinary membership spanning physicians, nurses, pharmacists, lab specialists, and clinical informaticians.' }}
@@ -135,7 +135,7 @@
             </div>
             <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px">
                 @foreach($c['resp'] as $r)
-                <li style="display:flex;align-items:flex-start;gap:6px;font-size:12px;color:#94a3b8">
+                <li style="display:flex;align-items:flex-start;gap:6px;font-size:12px;color:var(--text-muted)">
                     <i data-lucide="chevron-right" style="width:11px;height:11px;color:{{ $c['color'] }};flex-shrink:0;margin-top:2px"></i>{{ $r }}
                 </li>
                 @endforeach
@@ -192,13 +192,13 @@
                 </div>
                 <div style="font-weight:700;color:#e2e8f0;font-size:13px">{{ $r['cat'] }}</div>
             </div>
-            <div style="font-size:10px;color:#475569;text-transform:uppercase;letter-spacing:0.07em;font-weight:700;margin-bottom:6px">{{ $isFr ? 'Exemples' : 'Examples' }}</div>
+            <div style="font-size:10px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.07em;font-weight:700;margin-bottom:6px">{{ $isFr ? 'Exemples' : 'Examples' }}</div>
             @foreach($r['examples'] as $ex)
-            <div style="font-size:11px;color:#64748b;padding:3px 0;border-bottom:1px solid #1e293b20">{{ $ex }}</div>
+            <div style="font-size:11px;color:var(--text-muted);padding:3px 0;border-bottom:1px solid #1e293b20">{{ $ex }}</div>
             @endforeach
-            <div style="font-size:10px;color:#475569;text-transform:uppercase;letter-spacing:0.07em;font-weight:700;margin:10px 0 6px">{{ $isFr ? 'Contrôles' : 'Controls' }}</div>
+            <div style="font-size:10px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.07em;font-weight:700;margin:10px 0 6px">{{ $isFr ? 'Contrôles' : 'Controls' }}</div>
             @foreach($r['controls'] as $ctrl)
-            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:#94a3b8;padding:3px 0">
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-muted);padding:3px 0">
                 <i data-lucide="check" style="width:10px;height:10px;color:{{ $r['color'] }};flex-shrink:0"></i>{{ $ctrl }}
             </div>
             @endforeach
@@ -216,7 +216,7 @@
         {{ $isFr ? 'Gouvernance du CDSS' : 'CDSS governance' }}
     </div>
     <h2 class="section-title">{{ $isFr ? 'Aide à la décision clinique gouvernée à chaque étape' : 'Clinical Decision Support governed at every stage' }}</h2>
-    <p style="color:#64748b;max-width:700px;font-size:14px;line-height:1.75;margin:12px 0 32px">
+    <p style="color:var(--text-muted);max-width:700px;font-size:14px;line-height:1.75;margin:12px 0 32px">
         {{ $isFr
             ? 'Le cadre s\'applique à OPES CDSS, OPES Triage et OPES Clinical Intelligence. Aucune règle clinique n\'est déployée sans avoir suivi un processus d\'approbation formel, versionnée et tracée.'
             : 'The framework applies to OPES CDSS, OPES Triage, and OPES Clinical Intelligence. No clinical rule is deployed without a formal approval process, version control, and full traceability.' }}
@@ -228,8 +228,8 @@
                 {{ $isFr ? 'Processus d\'approbation des règles' : 'Rule approval process' }}
             </div>
             @foreach($isFr
-                ? [['pen-line','#475569','Auteur','Rédaction de la règle clinique'],['search','#00C896','Revue clinique','Examen par le comité de contenu'],['check-circle','#1A6FE8','Validation','Tests fonctionnels et cliniques'],['badge-check','#00C896','Approbation','Signature du comité CDSS'],['rocket','#1A6FE8','Déploiement','Mise en production versionnée']]
-                : [['pen-line','#475569','Author','Clinical rule authored'],['search','#00C896','Clinical review','Content committee examination'],['check-circle','#1A6FE8','Validation','Functional and clinical testing'],['badge-check','#00C896','Approval','CDSS committee sign-off'],['rocket','#1A6FE8','Deployment','Versioned production release']]
+                ? [['pen-line','var(--text-faint)','Auteur','Rédaction de la règle clinique'],['search','#00C896','Revue clinique','Examen par le comité de contenu'],['check-circle','#1A6FE8','Validation','Tests fonctionnels et cliniques'],['badge-check','#00C896','Approbation','Signature du comité CDSS'],['rocket','#1A6FE8','Déploiement','Mise en production versionnée']]
+                : [['pen-line','var(--text-faint)','Author','Clinical rule authored'],['search','#00C896','Clinical review','Content committee examination'],['check-circle','#1A6FE8','Validation','Functional and clinical testing'],['badge-check','#00C896','Approval','CDSS committee sign-off'],['rocket','#1A6FE8','Deployment','Versioned production release']]
             as $idx => $step)
             <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:{{ $idx < 4 ? '0' : '0' }}">
                 <div style="display:flex;flex-direction:column;align-items:center">
@@ -242,7 +242,7 @@
                 </div>
                 <div style="padding-top:6px;margin-bottom:{{ $idx < 4 ? '0' : '0' }}">
                     <div style="font-weight:700;color:#e2e8f0;font-size:12px">{{ $step[2] }}</div>
-                    <div style="font-size:11px;color:#64748b">{{ $step[3] }}</div>
+                    <div style="font-size:11px;color:var(--text-muted)">{{ $step[3] }}</div>
                 </div>
             </div>
             @endforeach
@@ -252,25 +252,25 @@
             <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:14px">
                 {{ $isFr ? 'Gouvernance des alertes' : 'Alert governance' }}
             </div>
-            <p style="font-size:12px;color:#64748b;line-height:1.65;margin-bottom:14px">
+            <p style="font-size:12px;color:var(--text-muted);line-height:1.65;margin-bottom:14px">
                 {{ $isFr
                     ? 'La fatigue d\'alerte réduit la sécurité des patients. La plateforme régit la priorité, la fréquence, l\'escalade et la révision de chaque alerte.'
                     : 'Alert fatigue reduces patient safety. The platform governs priority, frequency, escalation, and review of every alert.' }}
             </p>
             @foreach($isFr
-                ? [['#ef4444','Critique','Risque vital immédiat — interruption obligatoire'],['#f97316','Élevée','Risque clinique significatif — action immédiate'],['#eab308','Moyenne','Attention requise — action dans les 2h'],['#94a3b8','Informative','Information contextuelle — aucune action immédiate']]
-                : [['#ef4444','Critical','Immediate life risk — mandatory interrupt'],['#f97316','High','Significant clinical risk — immediate action'],['#eab308','Medium','Attention required — action within 2 h'],['#94a3b8','Informational','Contextual information — no immediate action']]
+                ? [['#ef4444','Critique','Risque vital immédiat — interruption obligatoire'],['#f97316','Élevée','Risque clinique significatif — action immédiate'],['#eab308','Moyenne','Attention requise — action dans les 2h'],['var(--text-muted)','Informative','Information contextuelle — aucune action immédiate']]
+                : [['#ef4444','Critical','Immediate life risk — mandatory interrupt'],['#f97316','High','Significant clinical risk — immediate action'],['#eab308','Medium','Attention required — action within 2 h'],['var(--text-muted)','Informational','Contextual information — no immediate action']]
             as $al)
             <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;border-left:3px solid {{ $al[0] }}">
                 <div style="width:8px;height:8px;border-radius:50%;background:{{ $al[0] }};flex-shrink:0"></div>
                 <div>
                     <div style="font-weight:700;font-size:12px;color:#e2e8f0">{{ $al[1] }}</div>
-                    <div style="font-size:11px;color:#64748b">{{ $al[2] }}</div>
+                    <div style="font-size:11px;color:var(--text-muted)">{{ $al[2] }}</div>
                 </div>
             </div>
             @endforeach
             <div style="margin-top:14px;padding:12px;background:#0f1a2e;border:1px solid rgba(0,200,150,0.15);border-radius:8px">
-                <div style="font-size:11px;color:#94a3b8;line-height:1.6">
+                <div style="font-size:11px;color:var(--text-muted);line-height:1.6">
                     <i data-lucide="info" style="width:11px;height:11px;color:#00C896;margin-right:4px;vertical-align:middle"></i>
                     {{ $isFr
                         ? 'Toutes les règles cliniques maintiennent un numéro de version, un auteur, une date d\'approbation et un historique complet des modifications.'
@@ -299,7 +299,7 @@
             <div style="font-size:28px;font-weight:900;color:{{ $v[1] }}18;position:absolute;top:12px;right:16px;line-height:1">{{ $v[0] }}</div>
             <div style="font-size:10px;color:{{ $v[1] }};font-weight:800;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px">{{ $isFr ? 'Étape' : 'Stage' }} {{ $v[0] }}</div>
             <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:8px">{{ $v[2] }}</div>
-            <div style="font-size:12px;color:#64748b;line-height:1.6">{{ $v[3] }}</div>
+            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">{{ $v[3] }}</div>
         </div>
         @endforeach
     </div>
@@ -316,7 +316,7 @@
     <h2 class="section-title">{{ $isFr ? 'De la détection à l\'action corrective' : 'From detection to corrective action' }}</h2>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:32px;align-items:start">
         <div>
-            <p style="font-size:14px;color:#64748b;line-height:1.75;margin-bottom:24px">
+            <p style="font-size:14px;color:var(--text-muted);line-height:1.75;margin-bottom:24px">
                 {{ $isFr
                     ? 'Tout incident clinique — alerte manquante, calcul incorrect, défaillance de workflow, erreur de documentation — est soumis à un processus de revue formel en cinq étapes.'
                     : 'Every clinical incident — missing alert, incorrect calculation, workflow failure, documentation error — is subject to a five-step formal review process.' }}
@@ -334,7 +334,7 @@
                 </div>
                 <div style="padding-top:5px;margin-bottom:{{ $idx < 4 ? '8px' : '0' }}">
                     <div style="font-weight:700;color:#e2e8f0;font-size:12px">{{ $step[2] }}</div>
-                    <div style="font-size:11px;color:#64748b;line-height:1.5">{{ $step[3] }}</div>
+                    <div style="font-size:11px;color:var(--text-muted);line-height:1.5">{{ $step[3] }}</div>
                 </div>
             </div>
             @endforeach
@@ -350,7 +350,7 @@
                 as $kpi)
                 <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #1e293b">
                     <div style="width:6px;height:6px;border-radius:50%;background:{{ $kpi[1] }};flex-shrink:0"></div>
-                    <span style="font-size:12px;color:#94a3b8">{{ $kpi[0] }}</span>
+                    <span style="font-size:12px;color:var(--text-muted)">{{ $kpi[0] }}</span>
                 </div>
                 @endforeach
             </div>
@@ -361,7 +361,7 @@
                 @foreach([['ICD-11','WHO International Classification of Diseases'],['SNOMED CT','Systematized Nomenclature of Medicine'],['LOINC','Logical Observation Identifiers Names and Codes']] as $term)
                 <div style="display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid #1e293b20">
                     <div style="font-size:11px;font-weight:700;color:#e2e8f0;white-space:nowrap;min-width:80px">{{ $term[0] }}</div>
-                    <div style="font-size:11px;color:#475569">{{ $term[1] }}</div>
+                    <div style="font-size:11px;color:var(--text-faint)">{{ $term[1] }}</div>
                 </div>
                 @endforeach
             </div>
@@ -380,7 +380,7 @@
     <h2 class="section-title">{{ $isFr ? 'Ce cadre s\'applique à toute la plateforme OPES Health OS' : 'This framework applies across the entire OPES Health OS platform' }}</h2>
     <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:24px;max-width:700px;margin-left:auto;margin-right:auto">
         @foreach(['OPES Health OS','OPES Clinic','OPES Hospital','OPES Specialty Suite','OPES Care','OPES Clinical Intelligence','OPES Academy','Customer Deployments'] as $scope)
-        <div style="background:#0F172A;border:1px solid #1e293b;border-radius:20px;padding:6px 14px;font-size:12px;color:#94a3b8;display:flex;align-items:center;gap:5px">
+        <div style="background:#0F172A;border:1px solid #1e293b;border-radius:20px;padding:6px 14px;font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:5px">
             <i data-lucide="check" style="width:10px;height:10px;color:#00C896"></i>{{ $scope }}
         </div>
         @endforeach
@@ -400,7 +400,7 @@
         </a>
         <a href="{{ url($locale.'/compliance') }}" class="btn-secondary">
             {{ $isFr ? 'Conformité & sécurité' : 'Compliance & Trust' }}
-            <i data-lucide="shield-check" style="width:15px;height:15px;color:#94a3b8"></i>
+            <i data-lucide="shield-check" style="width:15px;height:15px;color:var(--text-muted)"></i>
         </a>
     </div>
 </div>

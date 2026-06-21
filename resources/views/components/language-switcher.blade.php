@@ -7,7 +7,7 @@
 @endphp
 
 <div class="lang-switcher">
-    <i data-lucide="globe" style="width:13px;height:13px;color:#64748b"></i>
+    <i data-lucide="globe" style="width:13px;height:13px;color:var(--text-muted)"></i>
     <a href="{{ url(implode('/', $toEn)) }}" class="{{ $current === 'en' ? 'lang-active' : '' }}">EN</a>
     <span class="lang-sep">·</span>
     <a href="{{ url(implode('/', $toFr)) }}" class="{{ $current === 'fr' ? 'lang-active' : '' }}">FR</a>

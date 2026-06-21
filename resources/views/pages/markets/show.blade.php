@@ -22,7 +22,7 @@
         </a>
         <a href="{{ url($locale.'/products') }}" class="btn-secondary">
             {{ $isFr ? 'Voir les 22 systèmes' : 'See the 22 systems' }}
-            <i data-lucide="layout-grid" style="width:15px;height:15px;color:#94a3b8"></i>
+            <i data-lucide="layout-grid" style="width:15px;height:15px;color:var(--text-muted)"></i>
         </a>
     </div>
 </div>
@@ -49,7 +49,7 @@
                 <i data-lucide="globe-2" style="width:12px;height:12px"></i>
                 {{ $isFr ? 'Le marché en bref' : 'The market in brief' }}
             </div>
-            <p style="font-size:14px;line-height:1.8;color:#94a3b8">{{ $market['intro'][$locale] }}</p>
+            <p style="font-size:14px;line-height:1.8;color:var(--text-muted)">{{ $market['intro'][$locale] }}</p>
         </div>
         {{-- Local driver highlight --}}
         <div style="background:linear-gradient(135deg,#0f1f2e,#0d1a14);border:1px solid {{ $accent }}33;border-radius:16px;padding:24px">
@@ -59,7 +59,7 @@
                 </div>
                 <div style="font-weight:800;color:#e2e8f0;font-size:14px">{{ $isFr ? $market['driver']['title_fr'] : $market['driver']['title_en'] }}</div>
             </div>
-            <p style="font-size:12.5px;line-height:1.7;color:#94a3b8;margin:0">{{ $isFr ? $market['driver']['desc_fr'] : $market['driver']['desc_en'] }}</p>
+            <p style="font-size:12.5px;line-height:1.7;color:var(--text-muted);margin:0">{{ $isFr ? $market['driver']['desc_fr'] : $market['driver']['desc_en'] }}</p>
         </div>
     </div>
 </div>
@@ -77,7 +77,7 @@
         @foreach($market['context'][$locale] as $item)
         <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:#0F172A;border-radius:10px;border-left:2px solid {{ $accent }}">
             <i data-lucide="check-circle" style="width:13px;height:13px;color:{{ $accent }};flex-shrink:0;margin-top:3px"></i>
-            <span style="font-size:13px;color:#94a3b8;line-height:1.6">{{ $item }}</span>
+            <span style="font-size:13px;color:var(--text-muted);line-height:1.6">{{ $item }}</span>
         </div>
         @endforeach
     </div>
@@ -101,7 +101,7 @@
                 </div>
                 <div style="font-weight:700;color:#e2e8f0;font-size:13px">{{ $isFr ? $f[2] : $f[1] }}</div>
             </div>
-            <p style="font-size:12px;color:#64748b;line-height:1.6;margin:0">{{ $isFr ? $f[4] : $f[3] }}</p>
+            <p style="font-size:12px;color:var(--text-muted);line-height:1.6;margin:0">{{ $isFr ? $f[4] : $f[3] }}</p>
         </div>
         @endforeach
     </div>
@@ -128,13 +128,13 @@
         <div style="background:#0F172A;border:1px solid #1e293b;border-radius:10px;padding:14px 16px">
             <div style="display:flex;align-items:center;gap:7px;margin-bottom:6px">
                 <i data-lucide="{{ $fact[0] }}" style="width:12px;height:12px;color:{{ $accent }}"></i>
-                <span style="font-size:10px;font-weight:800;color:#64748b;text-transform:uppercase;letter-spacing:0.06em">{{ $fact[1] }}</span>
+                <span style="font-size:10px;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em">{{ $fact[1] }}</span>
             </div>
             <div style="font-size:12.5px;color:#cbd5e1;line-height:1.5">{{ $fact[2] }}</div>
         </div>
         @endforeach
     </div>
-    <p style="font-size:11px;color:#475569;margin-top:14px">
+    <p style="font-size:11px;color:var(--text-faint);margin-top:14px">
         {{ $isFr
             ? 'Pour une analyse approfondie du système de santé, lisez notre article :'
             : 'For an in-depth look at the health system, read our article:' }}
@@ -155,7 +155,7 @@
         </a>
         <a href="{{ url($locale.'/contact') }}" class="btn-secondary">
             {{ $isFr ? 'Contacter notre équipe' : 'Contact our team' }}
-            <i data-lucide="mail" style="width:15px;height:15px;color:#94a3b8"></i>
+            <i data-lucide="mail" style="width:15px;height:15px;color:var(--text-muted)"></i>
         </a>
     </div>
 </div>
@@ -172,7 +172,7 @@
             <img src="{{ asset('flags/'.$o['code'].'.svg') }}" alt="" style="width:26px;height:17px;border-radius:3px;object-fit:cover;flex-shrink:0">
             <div>
                 <div style="font-weight:700;font-size:12.5px;color:#e2e8f0">{{ $o['name'] }}</div>
-                <div style="font-size:10px;color:#64748b">{{ $o['capital'] }}</div>
+                <div style="font-size:10px;color:var(--text-muted)">{{ $o['capital'] }}</div>
             </div>
         </a>
         @endforeach

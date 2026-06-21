@@ -24,7 +24,7 @@
             ? ['Cliniques','Hôpitaux','Réseaux hospitaliers','Laboratoires','Assureurs','Gouvernements','Santé publique']
             : ['Clinics','Hospitals','Hospital Networks','Laboratories','Insurers','Governments','Public Health']
         as $chip)
-        <span style="background:#0F172A;border:1px solid #1e293b;border-radius:20px;padding:5px 12px;font-size:11px;color:#64748b">{{ $chip }}</span>
+        <span style="background:#0F172A;border:1px solid #1e293b;border-radius:20px;padding:5px 12px;font-size:11px;color:var(--text-muted)">{{ $chip }}</span>
         @endforeach
     </div>
 </div>
@@ -83,7 +83,7 @@
                 </div>
                 <div>
                     <div style="font-weight:700;color:#e2e8f0;font-size:13px">{{ $f[1] }}</div>
-                    <div style="font-size:10px;color:#475569;margin-top:1px">{{ $f[4] }}</div>
+                    <div style="font-size:10px;color:var(--text-faint);margin-top:1px">{{ $f[4] }}</div>
                 </div>
             </div>
             <div style="display:flex;flex-wrap:wrap;gap:5px">
@@ -108,14 +108,14 @@
                 {{ $isFr ? 'Famille 1' : 'Family 1' }}
             </div>
             <h3 style="font-size:16px;font-weight:700;color:#e2e8f0;margin-bottom:6px">OPES Clinic</h3>
-            <p style="font-size:11px;color:#475569;margin-bottom:14px">{{ $isFr ? 'Cliniques · Cabinets médicaux · Centres ambulatoires' : 'Clinics · Medical practices · Outpatient centers' }}</p>
+            <p style="font-size:11px;color:var(--text-faint);margin-bottom:14px">{{ $isFr ? 'Cliniques · Cabinets médicaux · Centres ambulatoires' : 'Clinics · Medical practices · Outpatient centers' }}</p>
             @foreach($isFr
                 ? ['Enregistrement des patients','Gestion des rendez-vous','Dossier médical électronique','Prescriptions','Facturation','Gestion des stocks','Rapports','Historique patient','Documentation clinique']
                 : ['Patient registration','Appointment management','Electronic medical records','Prescriptions','Billing','Inventory management','Reporting','Patient history','Clinical documentation']
             as $cap)
             <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0F172A;border-radius:7px;border:1px solid #1e293b;margin-bottom:5px">
                 <i data-lucide="check" style="width:11px;height:11px;color:#00C896;flex-shrink:0"></i>
-                <span style="font-size:11px;color:#94a3b8">{{ $cap }}</span>
+                <span style="font-size:11px;color:var(--text-muted)">{{ $cap }}</span>
             </div>
             @endforeach
         </div>
@@ -126,14 +126,14 @@
                 {{ $isFr ? 'Famille 2' : 'Family 2' }}
             </div>
             <h3 style="font-size:16px;font-weight:700;color:#e2e8f0;margin-bottom:6px">OPES Hospital</h3>
-            <p style="font-size:11px;color:#475569;margin-bottom:14px">{{ $isFr ? 'Hôpitaux de district · Régionaux · De référence' : 'District · Regional · Referral hospitals' }}</p>
+            <p style="font-size:11px;color:var(--text-faint);margin-bottom:14px">{{ $isFr ? 'Hôpitaux de district · Régionaux · De référence' : 'District · Regional · Referral hospitals' }}</p>
             @foreach($isFr
                 ? ['Enregistrement','Admissions','Gestion des lits','Gestion des soins infirmiers','Gestion du bloc opératoire','Département des urgences','Facturation','Assurance maladie','Inventaire','Achats & approvisionnement','Rapports opérationnels','Tableaux de bord exécutifs']
                 : ['Registration','Admissions','Bed management','Nursing management','Theatre management','Emergency department','Billing','Insurance','Inventory','Procurement','Operational reporting','Executive dashboards']
             as $cap)
             <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0F172A;border-radius:7px;border:1px solid #1e293b;margin-bottom:5px">
                 <i data-lucide="check" style="width:11px;height:11px;color:#1A6FE8;flex-shrink:0"></i>
-                <span style="font-size:11px;color:#94a3b8">{{ $cap }}</span>
+                <span style="font-size:11px;color:var(--text-muted)">{{ $cap }}</span>
             </div>
             @endforeach
         </div>
@@ -149,7 +149,7 @@
         {{ $isFr ? 'Famille 3' : 'Family 3' }}
     </div>
     <h2 class="section-title">{{ $isFr ? 'OPES Specialty Suite — 12 systèmes départementaux' : 'OPES Specialty Suite — 12 departmental systems' }}</h2>
-    <p style="color:#64748b;font-size:14px;margin-bottom:28px">{{ $isFr ? 'Systèmes d\'information spécialisés pour chaque département clinique.' : 'Specialised information systems for every clinical department.' }}</p>
+    <p style="color:var(--text-muted);font-size:14px;margin-bottom:28px">{{ $isFr ? 'Systèmes d\'information spécialisés pour chaque département clinique.' : 'Specialised information systems for every clinical department.' }}</p>
     @php $specialties = $isFr ? [
         ['microscope','#00C896','OPES Lab IS','Opérations laboratoire',['Commandes d\'analyses','Suivi des échantillons','Résultats','Contrôle qualité','Intégration instruments']],
         ['pill','#1A6FE8','OPES Pharmacy IS','Opérations pharmacie',['Traitement ordonnances','Dispensation','Inventaire médicaments','Suivi lots','Surveillance péremption']],
@@ -186,11 +186,11 @@
                 </div>
                 <div>
                     <div style="font-weight:700;color:#e2e8f0;font-size:12px">{{ $sp[2] }}</div>
-                    <div style="font-size:10px;color:#475569">{{ $sp[3] }}</div>
+                    <div style="font-size:10px;color:var(--text-faint)">{{ $sp[3] }}</div>
                 </div>
             </div>
             @foreach($sp[4] as $cap)
-            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#64748b;padding:2px 0">
+            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);padding:2px 0">
                 <i data-lucide="chevron-right" style="width:9px;height:9px;color:{{ $sp[1] }};flex-shrink:0"></i>{{ $cap }}
             </div>
             @endforeach
@@ -208,7 +208,7 @@
         {{ $isFr ? 'Famille 4' : 'Family 4' }}
     </div>
     <h2 class="section-title">{{ $isFr ? 'OPES Care — Fondation d\'interopérabilité' : 'OPES Care — Interoperability Foundation' }}</h2>
-    <p style="color:#64748b;font-size:14px;margin-bottom:28px">{{ $isFr ? 'L\'infrastructure qui connecte tous les produits OPES et les systèmes externes via l\'identifiant patient unique.' : 'The infrastructure that connects all OPES products and external systems through the unique patient identifier.' }}</p>
+    <p style="color:var(--text-muted);font-size:14px;margin-bottom:28px">{{ $isFr ? 'L\'infrastructure qui connecte tous les produits OPES et les systèmes externes via l\'identifiant patient unique.' : 'The infrastructure that connects all OPES products and external systems through the unique patient identifier.' }}</p>
     @php $careComps = $isFr ? [
         ['fingerprint','#00C896','OPES Health ID','Identification unique du patient, reconnaissance QR, inter-établissements, dossiers longitudinaux'],
         ['users','#1A6FE8','Index Patient Maître','Détection de doublons, résolution d\'identité, correspondance de dossiers'],
@@ -234,7 +234,7 @@
             </div>
             <div>
                 <div style="font-weight:700;color:#e2e8f0;font-size:12px;margin-bottom:3px">{{ $c[2] }}</div>
-                <div style="font-size:11px;color:#64748b;line-height:1.5">{{ $c[3] }}</div>
+                <div style="font-size:11px;color:var(--text-muted);line-height:1.5">{{ $c[3] }}</div>
             </div>
         </div>
         @endforeach
@@ -250,7 +250,7 @@
         {{ $isFr ? 'Famille 5' : 'Family 5' }}
     </div>
     <h2 class="section-title">{{ $isFr ? 'OPES Clinical Intelligence' : 'OPES Clinical Intelligence' }}</h2>
-    <p style="color:#64748b;font-size:14px;margin-bottom:28px">{{ $isFr ? 'La couche d\'intelligence clinique et d\'analytique de santé publique de la plateforme OPES.' : 'The clinical intelligence and population health analytics layer of the OPES platform.' }}</p>
+    <p style="color:var(--text-muted);font-size:14px;margin-bottom:28px">{{ $isFr ? 'La couche d\'intelligence clinique et d\'analytique de santé publique de la plateforme OPES.' : 'The clinical intelligence and population health analytics layer of the OPES platform.' }}</p>
     @php $ciComps = $isFr ? [
         ['cpu','#00C896','OPES CDSS','Vérification des interactions médicamenteuses, directives cliniques, aide au diagnostic, recommandations thérapeutiques'],
         ['zap','#1A6FE8','OPES Triage','Évaluation des risques, priorisation des patients, classification des urgences'],
@@ -274,7 +274,7 @@
             </div>
             <div>
                 <div style="font-weight:700;color:#e2e8f0;font-size:12px;margin-bottom:3px">{{ $c[2] }}</div>
-                <div style="font-size:11px;color:#64748b;line-height:1.5">{{ $c[3] }}</div>
+                <div style="font-size:11px;color:var(--text-muted);line-height:1.5">{{ $c[3] }}</div>
             </div>
         </div>
         @endforeach
@@ -294,25 +294,25 @@
             </div>
             <h3 style="font-size:16px;font-weight:700;color:#e2e8f0;margin-bottom:16px">OPES Academy</h3>
             <div style="margin-bottom:20px">
-                <div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Programmes de certification' : 'Certification programmes' }}</div>
+                <div style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Programmes de certification' : 'Certification programmes' }}</div>
                 @foreach($isFr
                     ? ['Utilisateur certifié','Professionnel certifié','Administrateur certifié','Implémenteur certifié','Formateur certifié']
                     : ['Certified User','Certified Professional','Certified Administrator','Certified Implementer','Certified Trainer']
                 as $cert)
                 <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0F172A;border-radius:7px;border:1px solid #1e293b;margin-bottom:5px">
                     <i data-lucide="award" style="width:11px;height:11px;color:#1A6FE8;flex-shrink:0"></i>
-                    <span style="font-size:11px;color:#94a3b8">{{ $cert }}</span>
+                    <span style="font-size:11px;color:var(--text-muted)">{{ $cert }}</span>
                 </div>
                 @endforeach
             </div>
-            <div style="font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Développement des capacités' : 'Workforce development' }}</div>
+            <div style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Développement des capacités' : 'Workforce development' }}</div>
             @foreach($isFr
                 ? ['Formation santé numérique','Renforcement des capacités','Programmes de certification']
                 : ['Digital health training','Capacity building','Certification programmes']
             as $cap)
             <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0F172A;border-radius:7px;border:1px solid #1e293b;margin-bottom:5px">
                 <i data-lucide="check" style="width:11px;height:11px;color:#1A6FE8;flex-shrink:0"></i>
-                <span style="font-size:11px;color:#94a3b8">{{ $cap }}</span>
+                <span style="font-size:11px;color:var(--text-muted)">{{ $cap }}</span>
             </div>
             @endforeach
             <div style="margin-top:16px">
@@ -329,7 +329,7 @@
                 {{ $isFr ? 'Services partagés enterprise' : 'Enterprise shared services' }}
             </div>
             <h3 style="font-size:16px;font-weight:700;color:#e2e8f0;margin-bottom:6px">{{ $isFr ? 'Inclus dans tous les produits OPES' : 'Included across all OPES products' }}</h3>
-            <p style="font-size:11px;color:#475569;margin-bottom:16px">{{ $isFr ? 'Services communs disponibles pour toute la suite.' : 'Common services available across the entire suite.' }}</p>
+            <p style="font-size:11px;color:var(--text-faint);margin-bottom:16px">{{ $isFr ? 'Services communs disponibles pour toute la suite.' : 'Common services available across the entire suite.' }}</p>
             @foreach($isFr
                 ? [['shield','#00C896','Sécurité','Authentification, MFA, journaux d\'audit, chiffrement'],
                    ['scale','#1A6FE8','Conformité','Gestion du consentement, gouvernance des données, contrôles réglementaires'],
@@ -344,7 +344,7 @@
                 <i data-lucide="{{ $svc[0] }}" style="width:14px;height:14px;color:{{ $svc[1] }};margin-top:1px;flex-shrink:0"></i>
                 <div>
                     <div style="font-size:12px;font-weight:700;color:#e2e8f0">{{ $svc[2] }}</div>
-                    <div style="font-size:11px;color:#475569;margin-top:2px">{{ $svc[3] }}</div>
+                    <div style="font-size:11px;color:var(--text-faint);margin-top:2px">{{ $svc[3] }}</div>
                 </div>
             </div>
             @endforeach
@@ -376,7 +376,7 @@
             </div>
             <div style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:4px">{{ $dep[2] }}</div>
             <div style="font-size:10px;font-weight:600;color:{{ $dep[1] }};text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $dep[3] }}</div>
-            <div style="font-size:12px;color:#64748b;line-height:1.6">{{ $dep[4] }}</div>
+            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">{{ $dep[4] }}</div>
         </div>
         @endforeach
     </div>
@@ -395,8 +395,8 @@
         <table style="width:100%;border-collapse:collapse;font-size:12px">
             <thead>
                 <tr style="border-bottom:1px solid #1e293b">
-                    <th style="text-align:left;padding:10px 14px;color:#64748b;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Type de client' : 'Customer type' }}</th>
-                    <th style="text-align:left;padding:10px 14px;color:#64748b;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Produits recommandés' : 'Recommended products' }}</th>
+                    <th style="text-align:left;padding:10px 14px;color:var(--text-muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Type de client' : 'Customer type' }}</th>
+                    <th style="text-align:left;padding:10px 14px;color:var(--text-muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? 'Produits recommandés' : 'Recommended products' }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -421,7 +421,7 @@
                        ['Public Health Programmes','Clinical Intelligence + Registries','#00C896']]
                 as $idx => $row)
                 <tr style="border-bottom:1px solid #0f172a40;{{ $idx % 2 === 0 ? 'background:#0F172A40' : '' }}">
-                    <td style="padding:10px 14px;color:#94a3b8;font-weight:600">{{ $row[0] }}</td>
+                    <td style="padding:10px 14px;color:var(--text-muted);font-weight:600">{{ $row[0] }}</td>
                     <td style="padding:10px 14px">
                         <span style="background:{{ $row[2] }}10;border:1px solid {{ $row[2] }}25;color:{{ $row[2] }};border-radius:20px;padding:3px 10px;font-size:11px;font-weight:600">{{ $row[1] }}</span>
                     </td>
@@ -450,7 +450,7 @@
             as $i => $diff)
             <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #0f172a">
                 <div style="width:20px;height:20px;border-radius:50%;background:{{ $i % 2 === 0 ? '#00C89615' : '#1A6FE815' }};border:1px solid {{ $i % 2 === 0 ? '#00C89630' : '#1A6FE830' }};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:9px;font-weight:800;color:{{ $i % 2 === 0 ? '#00C896' : '#1A6FE8' }}">{{ $i + 1 }}</div>
-                <span style="font-size:12px;color:#94a3b8;padding-top:2px;line-height:1.5">{{ $diff }}</span>
+                <span style="font-size:12px;color:var(--text-muted);padding-top:2px;line-height:1.5">{{ $diff }}</span>
             </div>
             @endforeach
         </div>
@@ -461,14 +461,14 @@
                 {{ $isFr ? 'Capacités numériques nationales' : 'National digital health capabilities' }}
             </div>
             <h3 style="font-size:16px;font-weight:700;color:#e2e8f0;margin-bottom:6px">{{ $isFr ? 'Prêt pour les Ministères de la Santé' : 'Ready for Ministries of Health' }}</h3>
-            <p style="font-size:11px;color:#475569;margin-bottom:16px">{{ $isFr ? 'OPES Health OS supporte les programmes de santé nationaux à grande échelle.' : 'OPES Health OS supports large-scale national health programmes.' }}</p>
+            <p style="font-size:11px;color:var(--text-faint);margin-bottom:16px">{{ $isFr ? 'OPES Health OS supporte les programmes de santé nationaux à grande échelle.' : 'OPES Health OS supports large-scale national health programmes.' }}</p>
             @foreach($isFr
                 ? ['Identifiant national de santé','HIE national','Registre national des professionnels','Registre national des établissements','Surveillance des maladies','Programmes de vaccination','Programmes CSU (Couverture Santé Universelle)','Tableaux de bord de santé nationaux','Analytique de santé populationnelle']
                 : ['National Health ID','National HIE','National Provider Registry','National Facility Registry','Disease surveillance','Immunisation programmes','UHC programmes','National health dashboards','Population health analytics']
             as $cap)
             <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #0f172a40">
                 <i data-lucide="check-circle" style="width:12px;height:12px;color:#00C896;flex-shrink:0"></i>
-                <span style="font-size:12px;color:#94a3b8">{{ $cap }}</span>
+                <span style="font-size:12px;color:var(--text-muted)">{{ $cap }}</span>
             </div>
             @endforeach
             <div style="margin-top:16px">
@@ -494,7 +494,7 @@
         </a>
         <a href="{{ url($locale.'/contact') }}" class="btn-secondary">
             {{ $isFr ? 'Parler à notre équipe' : 'Talk to our team' }}
-            <i data-lucide="mail" style="width:15px;height:15px;color:#94a3b8"></i>
+            <i data-lucide="mail" style="width:15px;height:15px;color:var(--text-muted)"></i>
         </a>
     </div>
 </div>

@@ -68,7 +68,7 @@
                 <i data-lucide="{{ $p[0] }}" style="width:16px;height:16px;color:{{ $p[1] }}"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:6px">{{ $p[2] }}</div>
-            <div style="font-size:12px;color:#64748b;line-height:1.6">{{ $p[3] }}</div>
+            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">{{ $p[3] }}</div>
         </div>
         @endforeach
     </div>
@@ -103,7 +103,7 @@
                 <i data-lucide="{{ $c[0] }}" style="width:18px;height:18px;color:{{ $c[1] }}"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:14px;margin-bottom:6px">{{ $c[2] }}</div>
-            <div style="font-size:12px;color:#64748b;line-height:1.6">{{ $c[3] }}</div>
+            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">{{ $c[3] }}</div>
         </div>
         @endforeach
     </div>
@@ -147,7 +147,7 @@
             </div>
             <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px">
                 @foreach($a[4] as $fn)
-                <li style="display:flex;align-items:center;gap:6px;font-size:12px;color:#94a3b8">
+                <li style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted)">
                     <i data-lucide="chevron-right" style="width:11px;height:11px;color:{{ $a[1] }};flex-shrink:0"></i>{{ $fn }}
                 </li>
                 @endforeach
@@ -187,7 +187,7 @@
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:10px">{{ $cat[2] }}</div>
             @foreach($cat[3] as $item)
-            <div style="font-size:11px;color:#64748b;padding:4px 0;border-bottom:1px solid #1e293b20">{{ $item }}</div>
+            <div style="font-size:11px;color:var(--text-muted);padding:4px 0;border-bottom:1px solid #1e293b20">{{ $item }}</div>
             @endforeach
         </div>
         @endforeach
@@ -211,8 +211,8 @@
                 {{ $isFr ? 'Cycle de vie des APIs' : 'API lifecycle' }}
             </div>
             @foreach($isFr
-                ? [['pen-line','#475569','Conception','Design de l\'API selon les standards FHIR et REST.'],['search','#00C896','Revue','Revue par le Comité d\'architecture technique.'],['badge-check','#1A6FE8','Approbation','Validation sécurité, documentation et versioning.'],['rocket','#00C896','Déploiement','Mise en production via l\'API Gateway sécurisé.'],['activity','#1A6FE8','Surveillance','Monitoring de disponibilité, performance et sécurité.'],['archive','#475569','Retrait','Procédure formelle de dépréciation et retrait.']]
-                : [['pen-line','#475569','Design','API designed to FHIR and REST standards.'],['search','#00C896','Review','Technical Architecture Committee review.'],['badge-check','#1A6FE8','Approval','Security, documentation and versioning validation.'],['rocket','#00C896','Deployment','Production via the secured API Gateway.'],['activity','#1A6FE8','Monitoring','Availability, performance and security monitoring.'],['archive','#475569','Retirement','Formal deprecation and retirement procedure.']]
+                ? [['pen-line','var(--text-faint)','Conception','Design de l\'API selon les standards FHIR et REST.'],['search','#00C896','Revue','Revue par le Comité d\'architecture technique.'],['badge-check','#1A6FE8','Approbation','Validation sécurité, documentation et versioning.'],['rocket','#00C896','Déploiement','Mise en production via l\'API Gateway sécurisé.'],['activity','#1A6FE8','Surveillance','Monitoring de disponibilité, performance et sécurité.'],['archive','var(--text-faint)','Retrait','Procédure formelle de dépréciation et retrait.']]
+                : [['pen-line','var(--text-faint)','Design','API designed to FHIR and REST standards.'],['search','#00C896','Review','Technical Architecture Committee review.'],['badge-check','#1A6FE8','Approval','Security, documentation and versioning validation.'],['rocket','#00C896','Deployment','Production via the secured API Gateway.'],['activity','#1A6FE8','Monitoring','Availability, performance and security monitoring.'],['archive','var(--text-faint)','Retirement','Formal deprecation and retirement procedure.']]
             as $idx => $step)
             <div style="display:flex;gap:12px">
                 <div style="display:flex;flex-direction:column;align-items:center">
@@ -223,7 +223,7 @@
                 </div>
                 <div style="padding-top:5px;margin-bottom:{{ $idx < 5 ? '8px' : '0' }}">
                     <div style="font-weight:700;color:#e2e8f0;font-size:12px">{{ $step[2] }}</div>
-                    <div style="font-size:11px;color:#64748b;line-height:1.5">{{ $step[3] }}</div>
+                    <div style="font-size:11px;color:var(--text-muted);line-height:1.5">{{ $step[3] }}</div>
                 </div>
             </div>
             @endforeach
@@ -234,7 +234,7 @@
             <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:14px">
                 {{ $isFr ? 'Processus d\'intégration partenaire' : 'Partner onboarding process' }}
             </div>
-            <p style="font-size:12px;color:#64748b;line-height:1.65;margin-bottom:16px">
+            <p style="font-size:12px;color:var(--text-muted);line-height:1.65;margin-bottom:16px">
                 {{ $isFr
                     ? 'Tout établissement ou organisation souhaitant participer à l\'échange d\'informations doit compléter le processus d\'homologation suivant.'
                     : 'Every facility or organisation wishing to participate in information exchange must complete the following certification process.' }}
@@ -247,7 +247,7 @@
                 <div style="width:20px;height:20px;border-radius:50%;background:{{ $step[0] }}20;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;font-weight:800;color:{{ $step[0] }}">{{ $step[1] }}</div>
                 <div>
                     <div style="font-weight:700;font-size:12px;color:#e2e8f0">{{ $step[2] }}</div>
-                    <div style="font-size:11px;color:#64748b">{{ $step[3] }}</div>
+                    <div style="font-size:11px;color:var(--text-muted)">{{ $step[3] }}</div>
                 </div>
             </div>
             @endforeach
@@ -259,7 +259,7 @@
                         ? ['Hôpitaux','Cliniques','Laboratoires','Pharmacies','Assureurs','Programmes de santé publique','Ministères','Instituts de recherche']
                         : ['Hospitals','Clinics','Laboratories','Pharmacies','Insurers','Public health programmes','Government agencies','Research institutions']
                     as $participant)
-                    <span style="background:#1e293b;color:#94a3b8;font-size:10px;padding:3px 8px;border-radius:12px">{{ $participant }}</span>
+                    <span style="background:#1e293b;color:var(--text-muted);font-size:10px;padding:3px 8px;border-radius:12px">{{ $participant }}</span>
                     @endforeach
                 </div>
             </div>
@@ -295,7 +295,7 @@
                 <i data-lucide="{{ $item[0] }}" style="width:16px;height:16px;color:{{ $item[1] }}"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:6px">{{ $item[2] }}</div>
-            <div style="font-size:12px;color:#64748b;line-height:1.6">{{ $item[3] }}</div>
+            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">{{ $item[3] }}</div>
         </div>
         @endforeach
     </div>
@@ -320,7 +320,7 @@
                 <i data-lucide="{{ $kpi[0] }}" style="width:14px;height:14px;color:{{ $kpi[1] }}"></i>
                 <div style="font-weight:700;color:#e2e8f0;font-size:12px">{{ $kpi[2] }}</div>
             </div>
-            <div style="font-size:11px;color:#64748b;line-height:1.55">{{ $kpi[3] }}</div>
+            <div style="font-size:11px;color:var(--text-muted);line-height:1.55">{{ $kpi[3] }}</div>
         </div>
         @endforeach
     </div>
@@ -346,7 +346,7 @@
         ] as $std)
         <div style="background:#0F172A;border:1px solid {{ $std[1] }}30;border-radius:10px;padding:12px 18px;text-align:center">
             <div style="font-weight:800;color:{{ $std[1] }};font-size:13px">{{ $std[0] }}</div>
-            <div style="font-size:10px;color:#475569;margin-top:3px">{{ $std[2] }}</div>
+            <div style="font-size:10px;color:var(--text-faint);margin-top:3px">{{ $std[2] }}</div>
         </div>
         @endforeach
     </div>
@@ -365,7 +365,7 @@
         </a>
         <a href="{{ url($locale.'/architecture') }}" class="btn-secondary">
             {{ $isFr ? 'Architecture technique' : 'Technical architecture' }}
-            <i data-lucide="cpu" style="width:15px;height:15px;color:#94a3b8"></i>
+            <i data-lucide="cpu" style="width:15px;height:15px;color:var(--text-muted)"></i>
         </a>
     </div>
 </div>

@@ -102,7 +102,7 @@ $isFr       = $locale === 'fr';
     display: flex;
     align-items: center;
     gap: 6px;
-    color: #94a3b8;
+    color: var(--text-muted);
     font-size: 0.82rem;
 }
 .blog-engage-stat svg { opacity: 0.6; }
@@ -117,7 +117,7 @@ $isFr       = $locale === 'fr';
     border: 1px solid #1e293b;
     border-radius: 20px;
     padding: 7px 16px;
-    color: #94a3b8;
+    color: var(--text-muted);
     font-size: 0.82rem;
     cursor: pointer;
     transition: border-color .2s, color .2s, background .2s;
@@ -172,9 +172,9 @@ $isFr       = $locale === 'fr';
     flex-shrink: 0;
 }
 .blog-comment-name { font-weight: 600; color: #e2e8f0; font-size: 0.88rem; }
-.blog-comment-date { color: #64748b; font-size: 0.75rem; margin-left: auto; }
-.blog-comment-body { color: #94a3b8; font-size: 0.88rem; line-height: 1.6; }
-.blog-no-comments { color: #64748b; font-size: 0.88rem; padding: 20px 0; }
+.blog-comment-date { color: var(--text-muted); font-size: 0.75rem; margin-left: auto; }
+.blog-comment-body { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; }
+.blog-no-comments { color: var(--text-muted); font-size: 0.88rem; padding: 20px 0; }
 
 /* ── Comment form ─────────────────────────────────────────── */
 .blog-comment-form {
@@ -192,7 +192,7 @@ $isFr       = $locale === 'fr';
 }
 .bcf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
 .bcf-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
-.bcf-group label { font-size: 0.78rem; font-weight: 600; color: #64748b; letter-spacing: .04em; text-transform: uppercase; }
+.bcf-group label { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); letter-spacing: .04em; text-transform: uppercase; }
 .bcf-group input, .bcf-group textarea {
     background: #0f172a;
     border: 1px solid #1e293b;
@@ -330,7 +330,7 @@ $isFr       = $locale === 'fr';
             <div class="blog-comments-title">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00C896" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                 {{ $isFr ? 'Commentaires' : 'Comments' }}
-                <span style="background:#1e293b;color:#94a3b8;font-size:0.75rem;padding:2px 9px;border-radius:10px;font-weight:600">{{ $comments->count() }}</span>
+                <span style="background:#1e293b;color:var(--text-muted);font-size:0.75rem;padding:2px 9px;border-radius:10px;font-weight:600">{{ $comments->count() }}</span>
             </div>
 
             @if($comments->isEmpty())
@@ -402,9 +402,9 @@ $isFr       = $locale === 'fr';
                 'HMS Solutions'              => '#1A6FE8',
                 "Buyer's Guide"              => '#8b5cf6',
                 'AI & Technology'            => '#f59e0b',
-                'Insights & Case Studies'    => '#94a3b8',
+                'Insights & Case Studies'    => 'var(--text-muted)',
             ];
-            $relColor = $relColors[$rp->category] ?? '#64748b';
+            $relColor = $relColors[$rp->category] ?? 'var(--text-muted)';
             @endphp
             <a href="{{ url($locale.'/blog/'.$rp->slug) }}" class="blog-card">
                 <div class="blog-card-img blog-card-img-gradient" style="background:linear-gradient(135deg,{{ $relColor }}22,{{ $relColor }}08)">

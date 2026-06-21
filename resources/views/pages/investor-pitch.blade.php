@@ -21,12 +21,12 @@
     </p>
     <div style="margin-top:20px;display:inline-flex;align-items:center;gap:14px;background:#0F172A;border:1px solid #1e293b;border-radius:12px;padding:14px 22px">
         <div style="text-align:left">
-            <div style="font-size:11px;color:#475569;margin-bottom:2px">{{ $isFr ? 'Fondateur & CEO' : 'Founder & CEO' }}</div>
+            <div style="font-size:11px;color:var(--text-faint);margin-bottom:2px">{{ $isFr ? 'Fondateur & CEO' : 'Founder & CEO' }}</div>
             <div style="font-size:14px;font-weight:700;color:#e2e8f0">Jude Nshome</div>
         </div>
         <div style="width:1px;height:32px;background:#1e293b"></div>
         <div style="text-align:left">
-            <div style="font-size:11px;color:#475569;margin-bottom:2px">{{ $isFr ? 'Présentation' : 'Deck' }}</div>
+            <div style="font-size:11px;color:var(--text-faint);margin-bottom:2px">{{ $isFr ? 'Présentation' : 'Deck' }}</div>
             <div style="font-size:14px;font-weight:700;color:#e2e8f0">20 {{ $isFr ? 'diapositives' : 'slides' }}</div>
         </div>
     </div>
@@ -80,7 +80,7 @@
             as $prob)
             <div style="display:flex;align-items:center;gap:9px;padding:8px 10px;background:#EF444408;border-radius:7px;border-left:2px solid #EF444440;margin-bottom:5px">
                 <i data-lucide="x-circle" style="width:11px;height:11px;color:#EF4444;flex-shrink:0"></i>
-                <span style="font-size:12px;color:#94a3b8">{{ $prob }}</span>
+                <span style="font-size:12px;color:var(--text-muted)">{{ $prob }}</span>
             </div>
             @endforeach
         </div>
@@ -116,7 +116,7 @@
                 <i data-lucide="{{ $opp[0] }}" style="width:14px;height:14px;color:{{ $opp[1] }}"></i>
             </div>
             <div style="font-size:12px;font-weight:700;color:#e2e8f0;margin-bottom:5px">{{ $opp[2] }}</div>
-            <div style="font-size:11px;color:#64748b;line-height:1.5">{{ $opp[3] }}</div>
+            <div style="font-size:11px;color:var(--text-muted);line-height:1.5">{{ $opp[3] }}</div>
         </div>
         @endforeach
     </div>
@@ -134,14 +134,14 @@
                 {{ $isFr ? 'Diapositives 5–8 — La solution' : 'Slides 5–8 — The solution' }}
             </div>
             <h3 style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:14px">OPES Health OS</h3>
-            <p style="font-size:12px;color:#64748b;margin-bottom:14px;line-height:1.6">{{ $isFr ? 'Système d\'exploitation de santé intégré pour prestataires, réseaux de santé, institutions de santé publique, assureurs et gouvernements.' : 'Integrated healthcare operating system for providers, health networks, public health institutions, insurers, and governments.' }}</p>
+            <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;line-height:1.6">{{ $isFr ? 'Système d\'exploitation de santé intégré pour prestataires, réseaux de santé, institutions de santé publique, assureurs et gouvernements.' : 'Integrated healthcare operating system for providers, health networks, public health institutions, insurers, and governments.' }}</p>
             @foreach($isFr
                 ? [['activity','#00C896','OPES Clinic'],['hospital','#1A6FE8','OPES Hospital'],['layout-grid','#00C896','OPES Specialty Suite'],['share-2','#1A6FE8','OPES Care'],['cpu','#00C896','OPES Clinical Intelligence'],['shield-check','#1A6FE8','OPES Insurance'],['bar-chart-2','#00C896','OPES Public Health'],['truck','#1A6FE8','OPES Supply Chain'],['wrench','#00C896','OPES Biomedical'],['graduation-cap','#1A6FE8','OPES Academy']]
                 : [['activity','#00C896','OPES Clinic'],['hospital','#1A6FE8','OPES Hospital'],['layout-grid','#00C896','OPES Specialty Suite'],['share-2','#1A6FE8','OPES Care'],['cpu','#00C896','OPES Clinical Intelligence'],['shield-check','#1A6FE8','OPES Insurance'],['bar-chart-2','#00C896','OPES Public Health'],['truck','#1A6FE8','OPES Supply Chain'],['wrench','#00C896','OPES Biomedical'],['graduation-cap','#1A6FE8','OPES Academy']]
             as $comp)
             <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:#0F172A;border-radius:7px;border:1px solid #1e293b;margin-bottom:5px">
                 <i data-lucide="{{ $comp[0] }}" style="width:12px;height:12px;color:{{ $comp[1] }};flex-shrink:0"></i>
-                <span style="font-size:12px;color:#94a3b8;font-weight:500">{{ $comp[2] }}</span>
+                <span style="font-size:12px;color:var(--text-muted);font-weight:500">{{ $comp[2] }}</span>
             </div>
             @endforeach
         </div>
@@ -171,7 +171,7 @@
             <div style="display:flex;gap:10px;padding:9px 12px;background:#0F172A;border-radius:7px;border-left:2px solid {{ $layer[0] }};margin-bottom:5px">
                 <div>
                     <div style="font-size:11px;font-weight:700;color:#e2e8f0">{{ $layer[1] }}</div>
-                    <div style="font-size:10px;color:#475569;margin-top:1px">{{ $layer[2] }}</div>
+                    <div style="font-size:10px;color:var(--text-faint);margin-top:1px">{{ $layer[2] }}</div>
                 </div>
             </div>
             @endforeach
@@ -192,7 +192,7 @@
     </div>
     <h2 class="section-title">{{ $isFr ? 'Pourquoi OPES gagne — 10 avantages' : 'Why OPES wins — 10 advantages' }}</h2>
     <div style="background:#0F172A;border:1px solid #1e293b;border-radius:14px;padding:20px 24px;margin-top:20px;margin-bottom:20px">
-        <p style="font-size:13px;color:#64748b;line-height:1.7;margin:0">
+        <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin:0">
             {{ $isFr
                 ? 'La plupart des concurrents fournissent DME · Systèmes labo · Systèmes pharmacie — séparément. OPES fournit une infrastructure de santé, l\'interopérabilité, l\'identité santé, l\'intelligence clinique, l\'intelligence santé publique et le développement des compétences dans un seul écosystème.'
                 : 'Most competitors provide EMR · Laboratory systems · Pharmacy systems — separately. OPES provides healthcare infrastructure, interoperability, health identity, clinical intelligence, public health intelligence, and workforce development within a single ecosystem.' }}
@@ -225,7 +225,7 @@
             <div style="width:22px;height:22px;border-radius:6px;background:{{ $adv[1] }}15;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:9px;font-weight:800;color:{{ $adv[1] }}">{{ $adv[0] }}</div>
             <div>
                 <div style="font-size:12px;font-weight:700;color:#e2e8f0;margin-bottom:2px">{{ $adv[3] }}</div>
-                <div style="font-size:10px;color:#475569">{{ $adv[4] }}</div>
+                <div style="font-size:10px;color:var(--text-faint)">{{ $adv[4] }}</div>
             </div>
         </div>
         @endforeach
@@ -250,7 +250,7 @@
             as $rev)
             <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#0F172A;border-radius:7px;border:1px solid #1e293b;margin-bottom:5px">
                 <div style="width:8px;height:8px;border-radius:50%;background:{{ $rev[0] }};flex-shrink:0"></div>
-                <span style="font-size:12px;color:#94a3b8;font-weight:500">{{ $rev[1] }}</span>
+                <span style="font-size:12px;color:var(--text-muted);font-weight:500">{{ $rev[1] }}</span>
             </div>
             @endforeach
             <div style="margin-top:14px">
@@ -268,12 +268,12 @@
             </div>
             <h3 style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:14px">{{ $isFr ? '5 phases de pénétration' : '5 penetration phases' }}</h3>
             @foreach($isFr
-                ? [['#475569','Phase 1','Cliniques','Premier segment — établissements de soins primaires.'],
+                ? [['var(--text-faint)','Phase 1','Cliniques','Premier segment — établissements de soins primaires.'],
                    ['#1A6FE8','Phase 2','Hôpitaux','Expansion vers les hôpitaux de district et régionaux.'],
                    ['#00A87B','Phase 3','Réseaux hospitaliers','Connecter les groupes multi-sites.'],
                    ['#00C896','Phase 4','Organisations d\'assurance','Integrer les acteurs de la couverture santé.'],
                    ['#FFB020','Phase 5','Gouvernements','Programmes nationaux CSU et plateformes de santé publique.']]
-                : [['#475569','Phase 1','Clinics','First segment — primary care facilities.'],
+                : [['var(--text-faint)','Phase 1','Clinics','First segment — primary care facilities.'],
                    ['#1A6FE8','Phase 2','Hospitals','Expansion to district and regional hospitals.'],
                    ['#00A87B','Phase 3','Hospital networks','Connect multi-site groups.'],
                    ['#00C896','Phase 4','Insurance organisations','Integrate health coverage actors.'],
@@ -286,7 +286,7 @@
                 </div>
                 <div style="padding-top:5px;margin-bottom:{{ $idx < 4 ? '0' : '0' }}">
                     <div style="font-size:12px;font-weight:700;color:#e2e8f0">{{ $phase[2] }}</div>
-                    <div style="font-size:11px;color:#475569;margin-top:1px">{{ $phase[3] }}</div>
+                    <div style="font-size:11px;color:var(--text-faint);margin-top:1px">{{ $phase[3] }}</div>
                 </div>
             </div>
             @endforeach
@@ -307,12 +307,12 @@
         <div style="position:absolute;top:20px;left:20px;right:20px;height:1px;background:linear-gradient(to right,#00C896,#1A6FE8);z-index:0"></div>
         <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;position:relative;z-index:1">
             @foreach($isFr
-                ? [['2026','#475569','Fondation','Premières cliniques et hôpitaux déployés'],
+                ? [['2026','var(--text-faint)','Fondation','Premières cliniques et hôpitaux déployés'],
                    ['2027','#1A6FE8','Expansion','Croissance du réseau de prestataires'],
                    ['2028','#00A87B','Réseau inter.','Connexions HIE actives entre établissements'],
                    ['2029','#00C896','Prog. nationaux','Premiers contrats gouvernementaux'],
                    ['2030–31','#FFB020','Expansion rég.','Déploiement dans la région CEMAC et au-delà']]
-                : [['2026','#475569','Foundation','First clinics and hospitals deployed'],
+                : [['2026','var(--text-faint)','Foundation','First clinics and hospitals deployed'],
                    ['2027','#1A6FE8','Expansion','Growing provider network'],
                    ['2028','#00A87B','Interoperability network','Active HIE connections between facilities'],
                    ['2029','#00C896','National programmes','First government contracts'],
@@ -324,7 +324,7 @@
                 </div>
                 <div style="font-size:11px;font-weight:800;color:{{ $ms[1] }};margin-bottom:4px">{{ $ms[0] }}</div>
                 <div style="font-size:11px;font-weight:700;color:#e2e8f0;margin-bottom:6px">{{ $ms[2] }}</div>
-                <div style="font-size:10px;color:#475569;line-height:1.5">{{ $ms[3] }}</div>
+                <div style="font-size:10px;color:var(--text-faint);line-height:1.5">{{ $ms[3] }}</div>
             </div>
             @endforeach
         </div>
@@ -348,7 +348,7 @@
             as $impact)
             <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#0F172A;border-radius:8px;border:1px solid #1e293b;margin-bottom:6px">
                 <i data-lucide="{{ $impact[1] }}" style="width:13px;height:13px;color:{{ $impact[0] }};flex-shrink:0"></i>
-                <span style="font-size:12px;color:#94a3b8">{{ $impact[2] }}</span>
+                <span style="font-size:12px;color:var(--text-muted)">{{ $impact[2] }}</span>
             </div>
             @endforeach
         </div>
@@ -364,7 +364,7 @@
                 : [['#00C896','Facilities connected'],['#1A6FE8','Active users'],['#00C896','Health IDs issued'],['#1A6FE8','Interoperability transactions'],['#00C896','Revenue growth'],['#1A6FE8','Certification growth']]
             as $metric)
             <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#0F172A;border-radius:8px;border-left:2px solid {{ $metric[0] }};margin-bottom:6px">
-                <span style="font-size:12px;color:#94a3b8;font-weight:500">{{ $metric[1] }}</span>
+                <span style="font-size:12px;color:var(--text-muted);font-weight:500">{{ $metric[1] }}</span>
             </div>
             @endforeach
         </div>
@@ -389,7 +389,7 @@
             as $partner)
             <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#0F172A;border-radius:7px;border:1px solid #1e293b;margin-bottom:5px">
                 <i data-lucide="{{ $partner[0] }}" style="width:12px;height:12px;color:{{ $partner[1] }};flex-shrink:0"></i>
-                <span style="font-size:12px;color:#94a3b8">{{ $partner[2] }}</span>
+                <span style="font-size:12px;color:var(--text-muted)">{{ $partner[2] }}</span>
             </div>
             @endforeach
         </div>
@@ -418,7 +418,7 @@
                 <i data-lucide="{{ $inv[1] }}" style="width:12px;height:12px;color:{{ $inv[0] }};flex-shrink:0;margin-top:1px"></i>
                 <div>
                     <div style="font-size:11px;font-weight:700;color:#e2e8f0">{{ $inv[2] }}</div>
-                    <div style="font-size:10px;color:#475569;margin-top:1px">{{ $inv[3] }}</div>
+                    <div style="font-size:10px;color:var(--text-faint);margin-top:1px">{{ $inv[3] }}</div>
                 </div>
             </div>
             @endforeach
@@ -432,7 +432,7 @@
     <p>{{ $isFr
         ? 'OPES Health Systems crée un écosystème de santé connecté permettant aux prestataires, institutions de santé publique, assureurs et gouvernements de délivrer de meilleurs soins grâce à une infrastructure numérique sécurisée, interopérable et intelligente.'
         : 'OPES Health Systems is creating a connected healthcare ecosystem enabling providers, public health institutions, insurers, and governments to deliver better healthcare through secure, interoperable, and intelligent digital infrastructure.' }}</p>
-    <div style="margin-top:16px;font-size:12px;color:#475569">
+    <div style="margin-top:16px;font-size:12px;color:var(--text-faint)">
         Jude Nshome · Founder & CEO · <a href="mailto:{{ config('company.email') }}" style="color:#00C896;text-decoration:none">{{ config('company.email') }}</a> · {{ config('company.phone') }}
     </div>
     <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:16px">
@@ -442,7 +442,7 @@
         </a>
         <a href="{{ url($locale.'/contact') }}" class="btn-secondary">
             {{ $isFr ? 'Contacter OPES' : 'Contact OPES' }}
-            <i data-lucide="mail" style="width:15px;height:15px;color:#94a3b8"></i>
+            <i data-lucide="mail" style="width:15px;height:15px;color:var(--text-muted)"></i>
         </a>
     </div>
 </div>

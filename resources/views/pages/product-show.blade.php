@@ -38,7 +38,7 @@ $accentBg = $isCore ? 'rgba(0,200,150,0.1)' : ($isDiag ? 'rgba(26,111,232,0.1)' 
                     {{ __('products.cta_book_demo') }}
                 </a>
                 <a href="{{ route('product.brochure', ['locale' => $locale, 'slug' => $product['slug']]) }}" class="btn-secondary">
-                    <i data-lucide="download" style="width:15px;height:15px;color:#94a3b8"></i>
+                    <i data-lucide="download" style="width:15px;height:15px;color:var(--text-muted)"></i>
                     {{ __('products.cta_brochure') }}
                 </a>
             </div>
@@ -161,11 +161,11 @@ $accentBg = $isCore ? 'rgba(0,200,150,0.1)' : ($isDiag ? 'rgba(26,111,232,0.1)' 
     <div class="pd-workflow">
         @foreach($product['workflow'] as $i => $step)
         <div class="pd-wf-step">
-            <div class="pd-wf-node" style="border-color:{{ $color }};{{ $i === 0 ? 'background:'.$color.';' : ($i === count($product['workflow'])-1 ? 'background:#1e293b;border-color:#475569;' : '') }}">
+            <div class="pd-wf-node" style="border-color:{{ $color }};{{ $i === 0 ? 'background:'.$color.';' : ($i === count($product['workflow'])-1 ? 'background:#1e293b;border-color:var(--text-faint);' : '') }}">
                 @if($i === 0)
                 <span style="color:#fff;font-weight:700;font-size:12px">{{ $i+1 }}</span>
                 @else
-                <span style="color:{{ $i === count($product['workflow'])-1 ? '#94a3b8' : $color }};font-weight:700;font-size:12px">{{ $i+1 }}</span>
+                <span style="color:{{ $i === count($product['workflow'])-1 ? 'var(--text-muted)' : $color }};font-weight:700;font-size:12px">{{ $i+1 }}</span>
                 @endif
             </div>
             <div class="pd-wf-label">{{ $step['step'] }}</div>
@@ -231,7 +231,7 @@ foreach($product['integrations'] as $slug) {
                 <div class="pd-int-name">{{ $int['name'] }}</div>
                 <div class="pd-int-sub">{{ $int['subtitle'] }}</div>
             </div>
-            <i data-lucide="arrow-right" style="width:13px;height:13px;color:#475569;margin-left:auto"></i>
+            <i data-lucide="arrow-right" style="width:13px;height:13px;color:var(--text-faint);margin-left:auto"></i>
         </a>
         @endforeach
     </div>

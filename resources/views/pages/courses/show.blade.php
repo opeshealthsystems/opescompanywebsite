@@ -26,7 +26,7 @@
             </div>
             <h1 class="pd-hero-name">{{ $course->getLocalizedTitle($locale) }}</h1>
 
-            <div style="display:flex;gap:20px;margin:16px 0 8px;font-size:13.5px;color:#94a3b8">
+            <div style="display:flex;gap:20px;margin:16px 0 8px;font-size:13.5px;color:var(--text-muted)">
                 @if($course->duration_hours)
                 <span style="display:inline-flex;align-items:center;gap:6px">
                     <i data-lucide="clock" style="width:15px;height:15px"></i>{{ $course->duration_hours }} hours
@@ -96,7 +96,7 @@
     <h2 class="pi-cat-title" style="margin-bottom:14px">What you'll learn</h2>
 
     @if($course->lessons->isEmpty())
-        <p style="color:#94a3b8">Lessons are being prepared for this course.</p>
+        <p style="color:var(--text-muted)">Lessons are being prepared for this course.</p>
     @else
         <div style="display:flex;flex-direction:column;gap:10px;max-width:760px">
             @foreach($course->lessons as $i => $lesson)
@@ -110,16 +110,16 @@
                     </div>
                 </div>
                 @if($lesson->duration_minutes)
-                <div style="flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;color:#94a3b8;font-size:12.5px">
+                <div style="flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;color:var(--text-muted);font-size:12.5px">
                     <i data-lucide="clock" style="width:13px;height:13px"></i>{{ $lesson->duration_minutes }} min
                 </div>
                 @endif
-                <i data-lucide="lock" style="width:14px;height:14px;color:#475569;flex:0 0 auto"></i>
+                <i data-lucide="lock" style="width:14px;height:14px;color:var(--text-faint);flex:0 0 auto"></i>
             </div>
             @endforeach
         </div>
         @guest
-        <p style="margin-top:16px;font-size:13px;color:#94a3b8">
+        <p style="margin-top:16px;font-size:13px;color:var(--text-muted)">
             <i data-lucide="lock" style="width:13px;height:13px;vertical-align:-2px"></i>
             Lesson content unlocks after you sign in and enroll.
         </p>

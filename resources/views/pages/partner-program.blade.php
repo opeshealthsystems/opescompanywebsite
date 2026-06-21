@@ -65,9 +65,9 @@
                 <i data-lucide="{{ $cat[0] }}" style="width:17px;height:17px;color:{{ $cat[1] }}"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:4px">{{ $cat[2] }}</div>
-            <div style="font-size:11px;color:#64748b;margin-bottom:12px">{{ $cat[3] }}</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:12px">{{ $cat[3] }}</div>
             @foreach($cat[4] as $fn)
-            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#94a3b8;padding:3px 0">
+            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);padding:3px 0">
                 <i data-lucide="chevron-right" style="width:10px;height:10px;color:{{ $cat[1] }};flex-shrink:0"></i>{{ $fn }}
             </div>
             @endforeach
@@ -96,15 +96,15 @@
     <h2 class="section-title">{{ $isFr ? 'Quatre niveaux de certification' : 'Four certification levels' }}</h2>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:28px">
         @foreach($isFr
-            ? [['#94a3b8','Silver','Niveau d\'entrée','2 professionnels certifiés','entry'],['#F59E0B','Gold','Intermédiaire','5 professionnels certifiés','intermediate'],['#1A6FE8','Platinum','Avancé','10 professionnels certifiés','advanced'],['#00C896','Strategic','Partenaire national','Approbation du Conseil','top']]
-            : [['#94a3b8','Silver','Entry level','2 certified professionals','entry'],['#F59E0B','Gold','Intermediate','5 certified professionals','intermediate'],['#1A6FE8','Platinum','Advanced','10 certified professionals','advanced'],['#00C896','Strategic','National-level','Board approval required','top']]
+            ? [['var(--text-muted)','Silver','Niveau d\'entrée','2 professionnels certifiés','entry'],['#F59E0B','Gold','Intermédiaire','5 professionnels certifiés','intermediate'],['#1A6FE8','Platinum','Avancé','10 professionnels certifiés','advanced'],['#00C896','Strategic','Partenaire national','Approbation du Conseil','top']]
+            : [['var(--text-muted)','Silver','Entry level','2 certified professionals','entry'],['#F59E0B','Gold','Intermediate','5 certified professionals','intermediate'],['#1A6FE8','Platinum','Advanced','10 certified professionals','advanced'],['#00C896','Strategic','National-level','Board approval required','top']]
         as $level)
         <div style="background:#0F172A;border:2px solid {{ $level[0] }}40;border-radius:14px;padding:20px;text-align:center;{{ $level[4]==='top' ? 'border-color:'.$level[0].';background:#0d1f19;' : '' }}">
             <div style="width:48px;height:48px;border-radius:50%;background:{{ $level[0] }}20;border:2px solid {{ $level[0] }};display:flex;align-items:center;justify-content:center;margin:0 auto 12px">
                 <i data-lucide="award" style="width:20px;height:20px;color:{{ $level[0] }}"></i>
             </div>
             <div style="font-weight:800;color:{{ $level[0] }};font-size:15px;margin-bottom:4px">{{ $level[1] }}</div>
-            <div style="font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px">{{ $level[2] }}</div>
+            <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px">{{ $level[2] }}</div>
             <div style="background:{{ $level[0] }}15;border-radius:8px;padding:8px;font-size:11px;color:#e2e8f0;font-weight:600">{{ $level[3] }}</div>
         </div>
         @endforeach
@@ -131,7 +131,7 @@
                     <i data-lucide="{{ $b[0] }}" style="width:14px;height:14px;color:{{ $b[1] }};flex-shrink:0"></i>
                     <div>
                         <div style="font-weight:700;color:#e2e8f0;font-size:12px">{{ $b[2] }}</div>
-                        <div style="font-size:11px;color:#64748b">{{ $b[3] }}</div>
+                        <div style="font-size:11px;color:var(--text-muted)">{{ $b[3] }}</div>
                     </div>
                 </div>
                 @endforeach
@@ -149,7 +149,7 @@
                     ? ['Revenus générés','Satisfaction client','Taux de succès des déploiements','Taux de complétion de la formation']
                     : ['Revenue generated','Customer satisfaction','Deployment success rate','Training completion rate']
                 as $kpi)
-                <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#94a3b8;padding:5px 0;border-bottom:1px solid #1e293b30">
+                <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);padding:5px 0;border-bottom:1px solid #1e293b30">
                     <i data-lucide="chevron-right" style="width:10px;height:10px;color:#00C896;flex-shrink:0"></i>{{ $kpi }}
                 </div>
                 @endforeach
@@ -160,7 +160,7 @@
                     ? ['Revues de performance','Audits qualité','Revues de certification','Revues de conformité']
                     : ['Performance reviews','Quality audits','Certification reviews','Compliance reviews']
                 as $ev)
-                <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#94a3b8;padding:5px 0;border-bottom:1px solid #1e293b30">
+                <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);padding:5px 0;border-bottom:1px solid #1e293b30">
                     <i data-lucide="chevron-right" style="width:10px;height:10px;color:#1A6FE8;flex-shrink:0"></i>{{ $ev }}
                 </div>
                 @endforeach
@@ -182,7 +182,7 @@
         </a>
         <a href="{{ url($locale.'/partnerships') }}" class="btn-secondary">
             {{ $isFr ? 'Voir nos partenaires' : 'View our partners' }}
-            <i data-lucide="handshake" style="width:15px;height:15px;color:#94a3b8"></i>
+            <i data-lucide="handshake" style="width:15px;height:15px;color:var(--text-muted)"></i>
         </a>
     </div>
 </div>

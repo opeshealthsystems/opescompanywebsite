@@ -57,15 +57,15 @@
                             <div><div class="eco-name" style="color:#1A6FE8">OPES EMR</div><div class="eco-desc">{{ $isFr ? 'Cliniques & petits hôpitaux' : 'Clinics & Small Hospitals' }}</div></div>
                         </div>
                         <div class="eco-item">
-                            <div class="eco-icon-wrap neutral"><i data-lucide="microscope" style="width:15px;height:15px;color:#94a3b8"></i></div>
+                            <div class="eco-icon-wrap neutral"><i data-lucide="microscope" style="width:15px;height:15px;color:var(--text-muted)"></i></div>
                             <div><div class="eco-name">OPES Lab</div><div class="eco-desc">LABIS</div></div>
                         </div>
                         <div class="eco-item">
-                            <div class="eco-icon-wrap neutral"><i data-lucide="pill" style="width:15px;height:15px;color:#94a3b8"></i></div>
+                            <div class="eco-icon-wrap neutral"><i data-lucide="pill" style="width:15px;height:15px;color:var(--text-muted)"></i></div>
                             <div><div class="eco-name">PHARMIS</div><div class="eco-desc">{{ $isFr ? 'Système pharmacie' : 'Pharmacy IS' }}</div></div>
                         </div>
                         <div class="eco-item">
-                            <div class="eco-icon-wrap neutral"><i data-lucide="hospital" style="width:15px;height:15px;color:#94a3b8"></i></div>
+                            <div class="eco-icon-wrap neutral"><i data-lucide="hospital" style="width:15px;height:15px;color:var(--text-muted)"></i></div>
                             <div><div class="eco-name">OPES Hospital</div><div class="eco-desc">{{ $isFr ? 'SIH complet' : 'Full HIS' }}</div></div>
                         </div>
                         <div class="eco-item hl-teal">
@@ -314,16 +314,16 @@
             </div>
         </div>
         <div class="eco-spokes">
-            <div class="eco-spoke"><i data-lucide="stethoscope" style="width:14px;height:14px;color:#64748b;flex-shrink:0"></i><span class="eco-spoke-name">OPES EMR</span></div>
-            <div class="eco-spoke"><i data-lucide="hospital" style="width:14px;height:14px;color:#64748b;flex-shrink:0"></i><span class="eco-spoke-name">Hospital HIS</span></div>
-            <div class="eco-spoke"><i data-lucide="microscope" style="width:14px;height:14px;color:#64748b;flex-shrink:0"></i><span class="eco-spoke-name">OPES Lab</span></div>
-            <div class="eco-spoke"><i data-lucide="pill" style="width:14px;height:14px;color:#64748b;flex-shrink:0"></i><span class="eco-spoke-name">PHARMIS</span></div>
-            <div class="eco-spoke"><i data-lucide="image-up" style="width:14px;height:14px;color:#64748b;flex-shrink:0"></i><span class="eco-spoke-name">RADIS</span></div>
-            <div class="eco-spoke"><i data-lucide="heart-pulse" style="width:14px;height:14px;color:#64748b;flex-shrink:0"></i><span class="eco-spoke-name">CARDIS</span></div>
-            <div class="eco-spoke"><i data-lucide="brain" style="width:14px;height:14px;color:#64748b;flex-shrink:0"></i><span class="eco-spoke-name">MHIS</span></div>
-            <div class="eco-spoke"><i data-lucide="baby" style="width:14px;height:14px;color:#64748b;flex-shrink:0"></i><span class="eco-spoke-name">GYNOBSIS</span></div>
-            <div class="eco-spoke"><i data-lucide="eye" style="width:14px;height:14px;color:#64748b;flex-shrink:0"></i><span class="eco-spoke-name">OPHIS</span></div>
-            <div class="eco-spoke"><i data-lucide="more-horizontal" style="width:14px;height:14px;color:#64748b;flex-shrink:0"></i><span class="eco-spoke-name">+13 {{ $isFr ? 'autres' : 'more' }}</span></div>
+            <div class="eco-spoke"><i data-lucide="stethoscope" style="width:14px;height:14px;color:var(--text-muted);flex-shrink:0"></i><span class="eco-spoke-name">OPES EMR</span></div>
+            <div class="eco-spoke"><i data-lucide="hospital" style="width:14px;height:14px;color:var(--text-muted);flex-shrink:0"></i><span class="eco-spoke-name">Hospital HIS</span></div>
+            <div class="eco-spoke"><i data-lucide="microscope" style="width:14px;height:14px;color:var(--text-muted);flex-shrink:0"></i><span class="eco-spoke-name">OPES Lab</span></div>
+            <div class="eco-spoke"><i data-lucide="pill" style="width:14px;height:14px;color:var(--text-muted);flex-shrink:0"></i><span class="eco-spoke-name">PHARMIS</span></div>
+            <div class="eco-spoke"><i data-lucide="image-up" style="width:14px;height:14px;color:var(--text-muted);flex-shrink:0"></i><span class="eco-spoke-name">RADIS</span></div>
+            <div class="eco-spoke"><i data-lucide="heart-pulse" style="width:14px;height:14px;color:var(--text-muted);flex-shrink:0"></i><span class="eco-spoke-name">CARDIS</span></div>
+            <div class="eco-spoke"><i data-lucide="brain" style="width:14px;height:14px;color:var(--text-muted);flex-shrink:0"></i><span class="eco-spoke-name">MHIS</span></div>
+            <div class="eco-spoke"><i data-lucide="baby" style="width:14px;height:14px;color:var(--text-muted);flex-shrink:0"></i><span class="eco-spoke-name">GYNOBSIS</span></div>
+            <div class="eco-spoke"><i data-lucide="eye" style="width:14px;height:14px;color:var(--text-muted);flex-shrink:0"></i><span class="eco-spoke-name">OPHIS</span></div>
+            <div class="eco-spoke"><i data-lucide="more-horizontal" style="width:14px;height:14px;color:var(--text-muted);flex-shrink:0"></i><span class="eco-spoke-name">+13 {{ $isFr ? 'autres' : 'more' }}</span></div>
         </div>
     </div>
 </div>
@@ -407,7 +407,7 @@
         </a>
         <a href="{{ url($locale.'/products/opes-hospital-his') }}" class="featured-card">
             <div class="featured-icon" style="background:rgba(255,255,255,0.06)">
-                <i data-lucide="hospital" style="width:22px;height:22px;color:#94a3b8"></i>
+                <i data-lucide="hospital" style="width:22px;height:22px;color:var(--text-muted)"></i>
             </div>
             <h3>OPES Hospital HIS</h3>
             <p>{{ $isFr ? 'Un système d\'information hospitalier complet pour les grands établissements — admissions, services, sorties, facturation, rapports et intégration complète avec tous les modules spécialisés OPES.' : 'A complete Hospital Information System for larger facilities — admissions, wards, discharge, billing, reporting, and full integration with all OPES specialist modules.' }}</p>
@@ -467,28 +467,28 @@
         </div>
         <div class="partner-card">
             <div class="partner-icon" style="background:rgba(255,255,255,0.05)">
-                <i data-lucide="landmark" style="width:20px;height:20px;color:#94a3b8"></i>
+                <i data-lucide="landmark" style="width:20px;height:20px;color:var(--text-muted)"></i>
             </div>
             <h4>{{ $isFr ? 'Gouvernement & ONG' : 'Government & NGOs' }}</h4>
             <p>{{ $isFr ? 'Alignez-vous sur les objectifs nationaux de CSU. Intégrez OPES aux rapports de santé publique et aux systèmes de surveillance des maladies.' : 'Align with national UHC goals. Integrate OPES with public health reporting and disease surveillance systems.' }}</p>
         </div>
         <div class="partner-card">
             <div class="partner-icon" style="background:rgba(255,255,255,0.05)">
-                <i data-lucide="flask-conical" style="width:20px;height:20px;color:#94a3b8"></i>
+                <i data-lucide="flask-conical" style="width:20px;height:20px;color:var(--text-muted)"></i>
             </div>
             <h4>{{ $isFr ? 'Pharma & Assurance' : 'Pharma & Insurance' }}</h4>
             <p>{{ $isFr ? 'Accédez à des analyses de santé populationnelle anonymisées et intégrez le financement assurantiel dans les plateformes OPES.' : 'Access anonymised population health analytics and integrate insurance financing into OPES platforms.' }}</p>
         </div>
         <div class="partner-card">
             <div class="partner-icon" style="background:rgba(255,255,255,0.05)">
-                <i data-lucide="graduation-cap" style="width:20px;height:20px;color:#94a3b8"></i>
+                <i data-lucide="graduation-cap" style="width:20px;height:20px;color:var(--text-muted)"></i>
             </div>
             <h4>{{ $isFr ? 'Académique & Recherche' : 'Academic & Research' }}</h4>
             <p>{{ $isFr ? 'Co-publiez des recherches en technologie de la santé et formez la prochaine génération de professionnels africains de l\'informatique de santé.' : 'Co-publish health technology research and train the next generation of African health informatics professionals.' }}</p>
         </div>
         <div class="partner-card">
             <div class="partner-icon" style="background:rgba(255,255,255,0.05)">
-                <i data-lucide="plug-zap" style="width:20px;height:20px;color:#94a3b8"></i>
+                <i data-lucide="plug-zap" style="width:20px;height:20px;color:var(--text-muted)"></i>
             </div>
             <h4>{{ $isFr ? 'Partenaires technologiques' : 'Technology Partners' }}</h4>
             <p>{{ $isFr ? 'Intégrez vos solutions à l\'écosystème OPES via notre couche d\'interopérabilité et les API développeurs.' : 'Integrate your solutions with the OPES ecosystem through our interoperability layer and developer APIs.' }}</p>
@@ -526,7 +526,7 @@
         </a>
         <a href="{{ url($locale.'/blog') }}" class="blog-card">
             <div class="blog-thumb" style="background:linear-gradient(135deg,rgba(0,200,150,0.08),rgba(26,111,232,0.12))">
-                <i data-lucide="network" style="width:36px;height:36px;color:#94a3b8;opacity:.7"></i>
+                <i data-lucide="network" style="width:36px;height:36px;color:var(--text-muted);opacity:.7"></i>
             </div>
             <div class="blog-body">
                 <div class="blog-cat"><i data-lucide="tag" style="width:10px;height:10px"></i> {{ $isFr ? 'Technologie' : 'Technology' }}</div>
@@ -572,7 +572,7 @@
                 · <span>{{ implode(', ', array_filter([$profession, $specialty, $workplace])) }}</span>
                 @endif
                 @if($program)
-                <span style="margin-left:6px;font-size:11px;color:#475569;background:#0f172a;padding:2px 7px;border-radius:8px;border:1px solid #1e293b">{{ $program }}</span>
+                <span style="margin-left:6px;font-size:11px;color:var(--text-faint);background:#0f172a;padding:2px 7px;border-radius:8px;border:1px solid #1e293b">{{ $program }}</span>
                 @endif
             </div>
         </div>

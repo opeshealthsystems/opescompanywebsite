@@ -124,7 +124,7 @@
                     <i data-lucide="{{ $dep['icon'] }}" style="width:18px;height:18px;color:{{ $dep['color'] }}"></i>
                 </div>
                 <div>
-                    <div style="font-size:10px;color:#475569;font-weight:700;text-transform:uppercase;letter-spacing:0.06em">{{ $dep['num'] }}</div>
+                    <div style="font-size:10px;color:var(--text-faint);font-weight:700;text-transform:uppercase;letter-spacing:0.06em">{{ $dep['num'] }}</div>
                     <div style="font-weight:800;color:#e2e8f0;font-size:15px">{{ $dep['title'] }}</div>
                 </div>
             </div>
@@ -133,21 +133,21 @@
             </div>
             <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px">
                 @foreach($dep['for'] as $f)
-                <span style="background:#0F172A;border:1px solid #1e293b;border-radius:12px;padding:3px 9px;font-size:10px;color:#64748b">{{ $f }}</span>
+                <span style="background:#0F172A;border:1px solid #1e293b;border-radius:12px;padding:3px 9px;font-size:10px;color:var(--text-muted)">{{ $f }}</span>
                 @endforeach
             </div>
-            <div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">
+            <div style="font-size:10px;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">
                 {{ $isFr ? 'Avantages' : 'Benefits' }}
             </div>
             <ul style="list-style:none;padding:0;margin:0 0 16px;display:flex;flex-direction:column;gap:6px;flex:1">
                 @foreach($dep['bens'] as $b)
-                <li style="display:flex;align-items:flex-start;gap:7px;font-size:11px;color:#94a3b8">
+                <li style="display:flex;align-items:flex-start;gap:7px;font-size:11px;color:var(--text-muted)">
                     <i data-lucide="check" style="width:11px;height:11px;color:{{ $dep['color'] }};flex-shrink:0;margin-top:1px"></i>{{ $b }}
                 </li>
                 @endforeach
             </ul>
             <div style="border-top:1px solid #1e293b;padding-top:12px">
-                <div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px">{{ $isFr ? 'Modèle de licence' : 'License model' }}</div>
+                <div style="font-size:10px;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px">{{ $isFr ? 'Modèle de licence' : 'License model' }}</div>
                 <div style="font-size:11px;font-weight:600;color:{{ $dep['color'] }}">{{ $dep['model'] }}</div>
             </div>
         </div>
@@ -166,7 +166,7 @@
     <h2 class="section-title" style="font-size:clamp(18px,2.5vw,26px)">
         {{ $isFr ? 'Tarification par produit' : 'Pricing by product' }}
     </h2>
-    <p style="color:#64748b;font-size:14px;line-height:1.75;max-width:660px;margin:12px auto 0">
+    <p style="color:var(--text-muted);font-size:14px;line-height:1.75;max-width:660px;margin:12px auto 0">
         {{ $isFr
             ? 'Tous les prix sont des prix de départ HT. Maintenance annuelle : 15 %–20 % du prix de licence pour les licences perpétuelles.'
             : 'All prices are starting prices excluding tax. Annual maintenance: 15%–20% of licence price for perpetual licences.' }}
@@ -195,12 +195,12 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
     </div>
     <div class="pc-gi" style="display:grid;grid-template-columns:240px 1fr">
         <div style="{{ $inclCol }}">
-            <div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Inclus' : 'Includes' }}</div>
+            <div style="font-size:10px;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Inclus' : 'Includes' }}</div>
             @foreach($isFr
                 ? ['Dossier médical électronique','Rendez-vous','Facturation','Ordonnances','Documentation clinique','Gestion du stock','Rapports']
                 : ['Electronic Medical Records','Appointments','Billing','Prescriptions','Clinical Documentation','Inventory','Reporting']
             as $inc)
-            <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:#94a3b8;margin-bottom:6px">
+            <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text-muted);margin-bottom:6px">
                 <i data-lucide="check" style="width:11px;height:11px;color:#00C896;flex-shrink:0"></i>{{ $inc }}
             </div>
             @endforeach
@@ -209,7 +209,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
             <div class="pc-g2" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
                 <div style="{{ $priceTile }}">
                     <div style="font-size:10px;font-weight:700;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">SaaS</div>
-                    <div style="font-size:11px;color:#475569;margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
+                    <div style="font-size:11px;color:var(--text-faint);margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
                     <div style="font-size:22px;font-weight:800;color:#e2e8f0;line-height:1.1">150 000</div>
                     <div style="font-size:12px;color:#00C896;font-weight:700;margin-bottom:12px">FCFA / {{ $isFr ? 'mois' : 'month' }}</div>
                     <a href="{{ route('contact', ['locale' => $locale]) }}" style="display:inline-flex;align-items:center;gap:5px;background:#1A6FE820;border:1px solid #1A6FE840;border-radius:7px;padding:7px 14px;font-size:11px;font-weight:700;color:#1A6FE8;text-decoration:none">
@@ -218,10 +218,10 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
                 </div>
                 <div style="{{ $priceTile }}">
                     <div style="font-size:10px;font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">{{ $isFr ? 'Licence perpétuelle' : 'Perpetual licence' }}</div>
-                    <div style="font-size:11px;color:#475569;margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
+                    <div style="font-size:11px;color:var(--text-faint);margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
                     <div style="font-size:22px;font-weight:800;color:#e2e8f0;line-height:1.1">2 500 000</div>
                     <div style="font-size:12px;color:#00C896;font-weight:700;margin-bottom:3px">FCFA</div>
-                    <div style="font-size:10px;color:#475569;margin-bottom:12px">{{ $isFr ? '+ maintenance 15–20 %/an' : '+ 15–20% annual maintenance' }}</div>
+                    <div style="font-size:10px;color:var(--text-faint);margin-bottom:12px">{{ $isFr ? '+ maintenance 15–20 %/an' : '+ 15–20% annual maintenance' }}</div>
                     <a href="{{ route('contact', ['locale' => $locale]) }}" style="display:inline-flex;align-items:center;gap:5px;background:#00C89615;border:1px solid #00C89630;border-radius:7px;padding:7px 14px;font-size:11px;font-weight:700;color:#00C896;text-decoration:none">
                         <i data-lucide="file-text" style="width:11px;height:11px"></i>{{ $isFr ? 'Demander un devis' : 'Request a quote' }}
                     </a>
@@ -244,35 +244,35 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
     </div>
     <div class="pc-gi" style="display:grid;grid-template-columns:240px 1fr">
         <div style="{{ $inclCol }}">
-            <div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Inclus' : 'Includes' }}</div>
+            <div style="font-size:10px;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Inclus' : 'Includes' }}</div>
             @foreach($isFr
                 ? ['Système d\'information hospitalier','DME','Admissions','Facturation','Stock','Achats','Documentation clinique','Rapports']
                 : ['Hospital Information System','EMR','Admissions','Billing','Inventory','Procurement','Clinical Documentation','Reporting']
             as $inc)
-            <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:#94a3b8;margin-bottom:6px">
+            <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text-muted);margin-bottom:6px">
                 <i data-lucide="check" style="width:11px;height:11px;color:#1A6FE8;flex-shrink:0"></i>{{ $inc }}
             </div>
             @endforeach
         </div>
         <div style="{{ $priceCol }}">
-            <div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px">{{ $isFr ? 'Licence perpétuelle — par taille d\'hôpital' : 'Perpetual licence — by hospital size' }}</div>
+            <div style="font-size:10px;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px">{{ $isFr ? 'Licence perpétuelle — par taille d\'hôpital' : 'Perpetual licence — by hospital size' }}</div>
             <div class="pc-g2" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
                 <div style="{{ $priceTile }}">
                     <div style="font-size:10px;font-weight:700;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">{{ $isFr ? 'Petit hôpital' : 'Small hospital' }}</div>
-                    <div style="font-size:11px;color:#475569;margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
+                    <div style="font-size:11px;color:var(--text-faint);margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
                     <div style="font-size:22px;font-weight:800;color:#e2e8f0;line-height:1.1">15 000 000</div>
                     <div style="font-size:12px;color:#1A6FE8;font-weight:700;margin-bottom:3px">FCFA</div>
-                    <div style="font-size:10px;color:#475569;margin-bottom:12px">{{ $isFr ? '+ maintenance 15–20 %/an' : '+ 15–20% annual maintenance' }}</div>
+                    <div style="font-size:10px;color:var(--text-faint);margin-bottom:12px">{{ $isFr ? '+ maintenance 15–20 %/an' : '+ 15–20% annual maintenance' }}</div>
                     <a href="{{ route('contact', ['locale' => $locale]) }}" style="display:inline-flex;align-items:center;gap:5px;background:#1A6FE815;border:1px solid #1A6FE830;border-radius:7px;padding:7px 14px;font-size:11px;font-weight:700;color:#1A6FE8;text-decoration:none">
                         <i data-lucide="send" style="width:11px;height:11px"></i>{{ $isFr ? 'Contacter' : 'Contact us' }}
                     </a>
                 </div>
                 <div style="{{ $priceTile }}">
                     <div style="font-size:10px;font-weight:700;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">{{ $isFr ? 'Hôpital moyen & grand' : 'Medium & large hospital' }}</div>
-                    <div style="font-size:11px;color:#475569;margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
+                    <div style="font-size:11px;color:var(--text-faint);margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
                     <div style="font-size:20px;font-weight:800;color:#e2e8f0;line-height:1.1">25 000 000 – 50 000 000</div>
                     <div style="font-size:12px;color:#1A6FE8;font-weight:700;margin-bottom:3px">FCFA</div>
-                    <div style="font-size:10px;color:#475569;margin-bottom:12px">{{ $isFr ? '+ maintenance 15–20 %/an' : '+ 15–20% annual maintenance' }}</div>
+                    <div style="font-size:10px;color:var(--text-faint);margin-bottom:12px">{{ $isFr ? '+ maintenance 15–20 %/an' : '+ 15–20% annual maintenance' }}</div>
                     <a href="{{ route('contact', ['locale' => $locale]) }}" style="display:inline-flex;align-items:center;gap:5px;background:#1A6FE815;border:1px solid #1A6FE830;border-radius:7px;padding:7px 14px;font-size:11px;font-weight:700;color:#1A6FE8;text-decoration:none">
                         <i data-lucide="send" style="width:11px;height:11px"></i>{{ $isFr ? 'Demander un devis' : 'Request a quote' }}
                     </a>
@@ -319,14 +319,14 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
         <div style="background:#080E1A;border:1px solid #1e293b;border-radius:12px;padding:16px;display:flex;flex-direction:column;align-items:center;text-align:center">
             <i data-lucide="{{ $sp[0] }}" style="width:20px;height:20px;color:{{ $sp[1] }};margin-bottom:8px"></i>
             <div style="font-size:11px;font-weight:700;color:#e2e8f0;margin-bottom:6px;line-height:1.4">{{ $sp[2] }}</div>
-            <div style="font-size:10px;color:#475569;margin-bottom:2px">{{ $isFr ? 'À partir de' : 'From' }}</div>
+            <div style="font-size:10px;color:var(--text-faint);margin-bottom:2px">{{ $isFr ? 'À partir de' : 'From' }}</div>
             <div style="font-size:14px;font-weight:800;color:{{ $sp[1] }}">{{ $sp[3] }}</div>
-            <div style="font-size:10px;color:#475569;margin-bottom:12px">FCFA</div>
+            <div style="font-size:10px;color:var(--text-faint);margin-bottom:12px">FCFA</div>
             <a href="{{ route('contact', ['locale' => $locale]) }}" style="font-size:10px;font-weight:700;color:{{ $sp[1] }};text-decoration:none;border:1px solid {{ $sp[1] }}30;border-radius:6px;padding:5px 10px">{{ $isFr ? 'Devis' : 'Quote' }}</a>
         </div>
         @endforeach
     </div>
-    <p style="font-size:11px;color:#475569;margin-top:12px">{{ $isFr ? '* Maintenance annuelle : 15–20 % du prix de licence pour tous les systèmes de spécialité.' : '* Annual maintenance: 15–20% of licence price for all specialty systems.' }}</p>
+    <p style="font-size:11px;color:var(--text-faint);margin-top:12px">{{ $isFr ? '* Maintenance annuelle : 15–20 % du prix de licence pour tous les systèmes de spécialité.' : '* Annual maintenance: 15–20% of licence price for all specialty systems.' }}</p>
 </div>
 
 <div class="divider"></div>
@@ -344,12 +344,12 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
     </div>
     <div class="pc-gi" style="display:grid;grid-template-columns:240px 1fr">
         <div style="{{ $inclCol }}">
-            <div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Inclus' : 'Includes' }}</div>
+            <div style="font-size:10px;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Inclus' : 'Includes' }}</div>
             @foreach($isFr
                 ? ['Health ID','Index Patient Maître','Échange d\'informations de santé','Échange de référencements','Registre des prestataires','Registre des établissements','Portail patient']
                 : ['Health ID','Master Patient Index','Health Information Exchange','Referral Exchange','Provider Registry','Facility Registry','Patient Portal']
             as $inc)
-            <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:#94a3b8;margin-bottom:6px">
+            <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text-muted);margin-bottom:6px">
                 <i data-lucide="check" style="width:11px;height:11px;color:#1A6FE8;flex-shrink:0"></i>{{ $inc }}
             </div>
             @endforeach
@@ -358,14 +358,14 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
             <div class="pc-g3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
                 <div style="{{ $priceTile }}">
                     <div style="font-size:10px;font-weight:700;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">{{ $isFr ? 'Hôpital unique' : 'Single hospital' }}</div>
-                    <div style="font-size:11px;color:#475569;margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
+                    <div style="font-size:11px;color:var(--text-faint);margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
                     <div style="font-size:20px;font-weight:800;color:#e2e8f0;line-height:1.1">25 000 000</div>
                     <div style="font-size:11px;color:#1A6FE8;font-weight:700;margin-bottom:12px">FCFA</div>
                     <a href="{{ route('contact', ['locale' => $locale]) }}" style="font-size:10px;font-weight:700;color:#1A6FE8;text-decoration:none;border:1px solid #1A6FE830;border-radius:6px;padding:6px 12px">{{ $isFr ? 'Contacter' : 'Contact' }}</a>
                 </div>
                 <div style="{{ $priceTile }}">
                     <div style="font-size:10px;font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">{{ $isFr ? 'Réseau multi-hôpitaux' : 'Multi-hospital network' }}</div>
-                    <div style="font-size:11px;color:#475569;margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
+                    <div style="font-size:11px;color:var(--text-faint);margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
                     <div style="font-size:20px;font-weight:800;color:#e2e8f0;line-height:1.1">50 000 000</div>
                     <div style="font-size:11px;color:#00C896;font-weight:700;margin-bottom:12px">FCFA</div>
                     <a href="{{ route('contact', ['locale' => $locale]) }}" style="font-size:10px;font-weight:700;color:#00C896;text-decoration:none;border:1px solid #00C89630;border-radius:6px;padding:6px 12px">{{ $isFr ? 'Contacter' : 'Contact' }}</a>
@@ -394,12 +394,12 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
     </div>
     <div class="pc-gi" style="display:grid;grid-template-columns:240px 1fr">
         <div style="{{ $inclCol }}">
-            <div style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Inclus' : 'Includes' }}</div>
+            <div style="font-size:10px;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">{{ $isFr ? 'Inclus' : 'Includes' }}</div>
             @foreach($isFr
                 ? ['Gestion de l\'identité patient','Identification multi-établissements','Identité QR','Résolution d\'identité']
                 : ['Patient identity management','Cross-facility identification','QR identity','Identity resolution']
             as $inc)
-            <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:#94a3b8;margin-bottom:6px">
+            <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text-muted);margin-bottom:6px">
                 <i data-lucide="check" style="width:11px;height:11px;color:#00C896;flex-shrink:0"></i>{{ $inc }}
             </div>
             @endforeach
@@ -408,7 +408,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
             <div class="pc-g3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
                 <div style="{{ $priceTile }}">
                     <div style="font-size:10px;font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">{{ $isFr ? 'Déploiement établissement' : 'Facility deployment' }}</div>
-                    <div style="font-size:11px;color:#475569;margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
+                    <div style="font-size:11px;color:var(--text-faint);margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
                     <div style="font-size:22px;font-weight:800;color:#e2e8f0;line-height:1.1">5 000 000</div>
                     <div style="font-size:11px;color:#00C896;font-weight:700;margin-bottom:12px">FCFA</div>
                     <a href="{{ route('contact', ['locale' => $locale]) }}" style="font-size:10px;font-weight:700;color:#00C896;text-decoration:none;border:1px solid #00C89630;border-radius:6px;padding:6px 12px">{{ $isFr ? 'Contacter' : 'Contact' }}</a>
@@ -450,7 +450,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
                 @foreach($isFr
                     ? ['Dossiers numériques','Archivage de documents','Gestion des flux','Signatures numériques']
                     : ['Digital records','Document archiving','Workflow management','Digital signatures']
-                as $i)<div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#94a3b8;margin-bottom:5px"><i data-lucide="check" style="width:10px;height:10px;color:#00C896;flex-shrink:0"></i>{{ $i }}</div>@endforeach
+                as $i)<div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);margin-bottom:5px"><i data-lucide="check" style="width:10px;height:10px;color:#00C896;flex-shrink:0"></i>{{ $i }}</div>@endforeach
             </div>
             <div style="padding:0 18px 18px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
                 <div style="background:#0F172A;border:1px solid #1e293b;border-radius:9px;padding:12px;text-align:center">
@@ -476,7 +476,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
                 @foreach($isFr
                     ? ['Priorisation des patients','Classification des urgences','Score de risque','Escalade clinique']
                     : ['Patient prioritisation','Emergency classification','Risk scoring','Clinical escalation']
-                as $i)<div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#94a3b8;margin-bottom:5px"><i data-lucide="check" style="width:10px;height:10px;color:#1A6FE8;flex-shrink:0"></i>{{ $i }}</div>@endforeach
+                as $i)<div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);margin-bottom:5px"><i data-lucide="check" style="width:10px;height:10px;color:#1A6FE8;flex-shrink:0"></i>{{ $i }}</div>@endforeach
             </div>
             <div style="padding:0 18px 18px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
                 <div style="background:#0F172A;border:1px solid #1e293b;border-radius:9px;padding:12px;text-align:center">
@@ -502,15 +502,15 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
                 @foreach($isFr
                     ? ['Règles cliniques','Interactions médicamenteuses','Alertes cliniques','Recommandations de traitement','Aide au diagnostic']
                     : ['Clinical rules','Drug interaction checking','Clinical alerts','Treatment recommendations','Diagnostic assistance']
-                as $i)<div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#94a3b8;margin-bottom:5px"><i data-lucide="check" style="width:10px;height:10px;color:#00C896;flex-shrink:0"></i>{{ $i }}</div>@endforeach
+                as $i)<div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);margin-bottom:5px"><i data-lucide="check" style="width:10px;height:10px;color:#00C896;flex-shrink:0"></i>{{ $i }}</div>@endforeach
             </div>
             <div style="padding:0 18px 18px;display:flex;flex-direction:column;gap:8px">
                 <div style="background:#0F172A;border:1px solid #1e293b;border-radius:9px;padding:10px;display:flex;justify-content:space-between;align-items:center">
-                    <span style="font-size:10px;color:#94a3b8">{{ $isFr ? 'Hôpital' : 'Hospital' }}</span>
+                    <span style="font-size:10px;color:var(--text-muted)">{{ $isFr ? 'Hôpital' : 'Hospital' }}</span>
                     <span style="font-size:13px;font-weight:800;color:#e2e8f0">10 000 000 <span style="font-size:10px;color:#00C896;font-weight:600">FCFA</span></span>
                 </div>
                 <div style="background:#0F172A;border:1px dashed #1e293b;border-radius:9px;padding:10px;display:flex;justify-content:space-between;align-items:center">
-                    <span style="font-size:10px;color:#94a3b8">{{ $isFr ? 'Réseau / National' : 'Network / National' }}</span>
+                    <span style="font-size:10px;color:var(--text-muted)">{{ $isFr ? 'Réseau / National' : 'Network / National' }}</span>
                     <span style="font-size:11px;font-weight:700;color:#F59E0B">{{ $isFr ? 'Sur devis' : 'On request' }}</span>
                 </div>
             </div>
@@ -529,7 +529,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
     <h2 class="section-title" style="font-size:clamp(16px,2vw,22px);margin-bottom:8px">
         {{ $isFr ? 'Programmes nationaux, assurance & santé publique' : 'National programmes, insurance & public health' }}
     </h2>
-    <p style="color:#64748b;font-size:13px;margin-bottom:24px;max-width:680px">
+    <p style="color:var(--text-muted);font-size:13px;margin-bottom:24px;max-width:680px">
         {{ $isFr
             ? 'Ces solutions sont tarifées sur mesure selon la population, le nombre d\'établissements, l\'étendue du déploiement et les exigences de renforcement des capacités. Chaque projet fait l\'objet d\'une proposition commerciale dédiée.'
             : 'These solutions are priced individually based on population size, number of facilities, scope of deployment, and capacity-building requirements. Each project receives a dedicated commercial proposal.' }}
@@ -556,7 +556,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
             </div>
             <div style="padding:14px 18px">
                 @foreach($gp[3] as $inc)
-                <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#94a3b8;margin-bottom:5px">
+                <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);margin-bottom:5px">
                     <i data-lucide="check" style="width:10px;height:10px;color:{{ $gp[1] }};flex-shrink:0"></i>{{ $inc }}
                 </div>
                 @endforeach
@@ -589,7 +589,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
             <i data-lucide="{{ $svc[0] }}" style="width:22px;height:22px;color:{{ $svc[1] }};margin-bottom:10px"></i>
             <div style="font-weight:800;color:#e2e8f0;font-size:13px;margin-bottom:8px">{{ $svc[2] }}</div>
             <div style="font-size:12px;font-weight:700;color:{{ $svc[1] }};margin-bottom:6px">{{ $svc[3] }}</div>
-            <div style="font-size:11px;color:#475569">{{ $svc[4] }}</div>
+            <div style="font-size:11px;color:var(--text-faint)">{{ $svc[4] }}</div>
         </div>
         @endforeach
     </div>
@@ -606,20 +606,20 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
     <h2 class="section-title" style="font-size:clamp(18px,2.5vw,24px)">
         {{ $isFr ? 'Maintien en condition opérationnelle' : 'Keeping you operational' }}
     </h2>
-    <p style="color:#64748b;font-size:14px;line-height:1.75;max-width:660px;margin:12px 0 28px">
+    <p style="color:var(--text-muted);font-size:14px;line-height:1.75;max-width:660px;margin:12px 0 28px">
         {{ $isFr
             ? 'Inclus : mises à jour logicielles, mises à jour de sécurité, support technique, correctifs, accès à la base de connaissances, assistance à distance.'
             : 'Includes: software updates, security updates, technical support, bug fixes, knowledge base access, remote assistance.' }}
     </p>
     <div class="pc-g3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px">
         @foreach($isFr
-            ? [['#475569','Standard','15 % de la valeur de la licence','Mises à jour + support Bronze','Établissements de santé standards'],['#00C896','Premium','20 % de la valeur de la licence','Mises à jour + support Gold','Hôpitaux & groupes de santé'],['#F59E0B','Enterprise','Sur devis','Contrat de service personnalisé','Ministères & programmes nationaux']]
-            : [['#475569','Standard','15% of licence value','Updates + Bronze support','Standard health facilities'],['#00C896','Premium','20% of licence value','Updates + Gold support','Hospitals & health groups'],['#F59E0B','Enterprise','Custom','Custom service contract','Ministries & national programmes']]
+            ? [['var(--text-faint)','Standard','15 % de la valeur de la licence','Mises à jour + support Bronze','Établissements de santé standards'],['#00C896','Premium','20 % de la valeur de la licence','Mises à jour + support Gold','Hôpitaux & groupes de santé'],['#F59E0B','Enterprise','Sur devis','Contrat de service personnalisé','Ministères & programmes nationaux']]
+            : [['var(--text-faint)','Standard','15% of licence value','Updates + Bronze support','Standard health facilities'],['#00C896','Premium','20% of licence value','Updates + Gold support','Hospitals & health groups'],['#F59E0B','Enterprise','Custom','Custom service contract','Ministries & national programmes']]
         as $tier)
         <div style="background:#0F172A;border:1px solid {{ $tier[0] }}30;border-radius:12px;padding:22px;text-align:center">
             <div style="font-size:11px;font-weight:800;color:{{ $tier[0] }};text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">{{ $tier[1] }}</div>
             <div style="font-size:22px;font-weight:800;color:#e2e8f0;margin-bottom:4px">{{ $tier[2] }}</div>
-            <div style="font-size:11px;color:#475569;margin-bottom:8px">{{ $tier[3] }}</div>
+            <div style="font-size:11px;color:var(--text-faint);margin-bottom:8px">{{ $tier[3] }}</div>
             <div style="font-size:11px;font-weight:600;color:{{ $tier[0] }}">{{ $tier[4] }}</div>
         </div>
         @endforeach
@@ -642,17 +642,17 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
                     ? ['Infrastructure managée','Sauvegardes managées','Surveillance de sécurité','Reprise après sinistre','Support technique']
                     : ['Managed infrastructure','Managed backups','Security monitoring','Disaster recovery','Technical support']
                 as $h)
-                <div style="display:flex;align-items:center;gap:7px;font-size:12px;color:#94a3b8">
+                <div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text-muted)">
                     <i data-lucide="check" style="width:11px;height:11px;color:#00C896;flex-shrink:0"></i>{{ $h }}
                 </div>
                 @endforeach
             </div>
         </div>
         <div style="text-align:center;min-width:180px">
-            <div style="font-size:11px;color:#475569;margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
+            <div style="font-size:11px;color:var(--text-faint);margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
             <div style="font-size:32px;font-weight:800;color:#e2e8f0;line-height:1.1">100 000</div>
             <div style="font-size:14px;color:#00C896;font-weight:700;margin-bottom:4px">FCFA / {{ $isFr ? 'mois' : 'month' }}</div>
-            <div style="font-size:11px;color:#475569;margin-bottom:16px">{{ $isFr ? 'Selon la charge de travail & l\'infrastructure' : 'Based on workload & infrastructure' }}</div>
+            <div style="font-size:11px;color:var(--text-faint);margin-bottom:16px">{{ $isFr ? 'Selon la charge de travail & l\'infrastructure' : 'Based on workload & infrastructure' }}</div>
             <a href="{{ route('contact', ['locale' => $locale]) }}" style="display:inline-flex;align-items:center;gap:6px;background:#00C89615;border:1px solid #00C89630;border-radius:8px;padding:9px 16px;font-size:12px;font-weight:700;color:#00C896;text-decoration:none">
                 <i data-lucide="send" style="width:12px;height:12px"></i>{{ $isFr ? 'Demander un devis' : 'Request a quote' }}
             </a>
@@ -671,13 +671,13 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
     <h2 class="section-title" style="font-size:clamp(18px,2.5vw,22px)">{{ $isFr ? 'Payez comme vous le souhaitez' : 'Pay the way that works for you' }}</h2>
     <div class="pc-g5" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;max-width:800px;margin:24px auto 0">
         @foreach($isFr
-            ? [['smartphone','#FFCC00','MTN Mobile Money','Paiements MoMo XAF'],['smartphone','#FF6600','Orange Money','Paiements Orange XAF'],['landmark','#1A6FE8','Virement bancaire','XAF · EUR · USD'],['credit-card','#00C896','Carte bancaire','Visa · Mastercard'],['file-text','#475569','Bon de commande','Marchés publics & PME']]
-            : [['smartphone','#FFCC00','MTN Mobile Money','MoMo XAF payments'],['smartphone','#FF6600','Orange Money','Orange XAF payments'],['landmark','#1A6FE8','Bank transfer','XAF · EUR · USD'],['credit-card','#00C896','Card payment','Visa · Mastercard'],['file-text','#475569','Purchase order','Public procurement & SMEs']]
+            ? [['smartphone','#FFCC00','MTN Mobile Money','Paiements MoMo XAF'],['smartphone','#FF6600','Orange Money','Paiements Orange XAF'],['landmark','#1A6FE8','Virement bancaire','XAF · EUR · USD'],['credit-card','#00C896','Carte bancaire','Visa · Mastercard'],['file-text','var(--text-faint)','Bon de commande','Marchés publics & PME']]
+            : [['smartphone','#FFCC00','MTN Mobile Money','MoMo XAF payments'],['smartphone','#FF6600','Orange Money','Orange XAF payments'],['landmark','#1A6FE8','Bank transfer','XAF · EUR · USD'],['credit-card','#00C896','Card payment','Visa · Mastercard'],['file-text','var(--text-faint)','Purchase order','Public procurement & SMEs']]
         as $pm)
         <div style="background:#0F172A;border:1px solid #1e293b;border-radius:10px;padding:14px;text-align:center">
             <i data-lucide="{{ $pm[0] }}" style="width:20px;height:20px;color:{{ $pm[1] }};margin-bottom:6px"></i>
             <div style="font-weight:700;color:#e2e8f0;font-size:11px;margin-bottom:2px">{{ $pm[2] }}</div>
-            <div style="font-size:10px;color:#64748b">{{ $pm[3] }}</div>
+            <div style="font-size:10px;color:var(--text-muted)">{{ $pm[3] }}</div>
         </div>
         @endforeach
     </div>

@@ -61,7 +61,7 @@
         {{ __('about.platform_eyebrow') }}
     </div>
     <h2 class="section-title">{{ __('about.platform_title') }}</h2>
-    <p style="color:#64748b;max-width:680px;margin:12px auto 0;font-size:15px;line-height:1.75">{{ __('about.platform_desc') }}</p>
+    <p style="color:var(--text-muted);max-width:680px;margin:12px auto 0;font-size:15px;line-height:1.75">{{ __('about.platform_desc') }}</p>
     <div class="platform-cat-grid">
         @foreach([
             ['icon'=>'file-text',    'color'=>'#00C896', 'label'=>__('about.platform_cat_0')],
@@ -95,7 +95,7 @@
             {{ __('about.opescare_eyebrow') }}
         </div>
         <h2 style="font-size:clamp(20px,3vw,26px);font-weight:700;color:#e2e8f0;margin-bottom:14px;line-height:1.3">{{ __('about.opescare_title') }}</h2>
-        <p style="color:#94a3b8;max-width:640px;line-height:1.75;margin-bottom:28px;font-size:15px">{{ __('about.opescare_body') }}</p>
+        <p style="color:var(--text-muted);max-width:640px;line-height:1.75;margin-bottom:28px;font-size:15px">{{ __('about.opescare_body') }}</p>
         <a href="{{ url($locale.'/products/opescare') }}" class="btn-primary" style="display:inline-flex">
             {{ __('about.opescare_cta') }} <i data-lucide="arrow-right" style="width:15px;height:15px"></i>
         </a>
@@ -134,7 +134,7 @@
         OPES Health OS
     </div>
     <h2 class="section-title">{{ $isFr ? 'Une plateforme, six familles de produits' : 'One platform, six product families' }}</h2>
-    <p style="color:#64748b;max-width:700px;margin:12px auto 36px;font-size:15px;line-height:1.75">
+    <p style="color:var(--text-muted);max-width:700px;margin:12px auto 36px;font-size:15px;line-height:1.75">
         {{ $isFr
             ? 'OPES Health OS est notre système d\'exploitation de santé unifié. Il regroupe six familles de produits — du dossier patient à l\'intelligence clinique — toutes interopérables, bilingues, et conçues pour fonctionner ensemble ou indépendamment.'
             : 'OPES Health OS is our unified health operating system. It groups six product families — from patient records to clinical intelligence — all interoperable, bilingual, and designed to work together or independently.' }}
@@ -147,7 +147,7 @@
             </div>
             <div style="font-weight:800;color:#e2e8f0;font-size:15px;margin-bottom:3px">{{ $family['name'] }}</div>
             <div style="font-size:11px;color:{{ $family['color'] }};text-transform:uppercase;letter-spacing:0.07em;font-weight:700;margin-bottom:8px">{{ $family['tagline'] }}</div>
-            <div style="font-size:12px;color:#64748b;line-height:1.6">{{ $family['desc'] }}</div>
+            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">{{ $family['desc'] }}</div>
         </div>
         @endforeach
     </div>
@@ -162,7 +162,7 @@
         {{ $isFr ? 'Gouvernance' : 'Governance' }}
     </div>
     <h2 class="section-title">{{ $isFr ? 'Gouvernance d\'entreprise et modèle opérationnel' : 'Corporate governance and operating model' }}</h2>
-    <p style="color:#64748b;max-width:720px;font-size:15px;line-height:1.75;margin-bottom:36px">
+    <p style="color:var(--text-muted);max-width:720px;font-size:15px;line-height:1.75;margin-bottom:36px">
         {{ $isFr
             ? 'OPES Health Systems opère selon un modèle de gouvernance rigoureux qui aligne nos décisions produit sur les besoins cliniques réels, la conformité réglementaire, et la durabilité de nos clients. Notre architecture de gouvernance comprend des comités techniques, cliniques et éthiques qui supervisent chaque évolution de la plateforme.'
             : 'OPES Health Systems operates under a rigorous governance model that aligns our product decisions with real clinical needs, regulatory compliance, and the sustainability of our clients. Our governance architecture includes technical, clinical, and ethics committees that oversee every evolution of the platform.' }}
@@ -191,7 +191,7 @@
                 <i data-lucide="{{ $g['icon'] }}" style="width:18px;height:18px;color:{{ $g['color'] }}"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:14px;margin-bottom:6px">{{ $g['title'] }}</div>
-            <div style="font-size:13px;color:#64748b;line-height:1.6">{{ $g['desc'] }}</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.6">{{ $g['desc'] }}</div>
         </div>
         @endforeach
     </div>
@@ -214,7 +214,7 @@
                 <i data-lucide="{{ $v['icon'] }}" style="width:18px;height:18px;color:{{ $v['color'] }}"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:14px;margin-bottom:6px">{{ $v['title'] }}</div>
-            <div style="font-size:13px;color:#64748b;line-height:1.6">{{ $v['desc'] }}</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.6">{{ $v['desc'] }}</div>
         </div>
         @endforeach
     </div>
@@ -235,7 +235,7 @@
             {{ __('about.cta_contact') }} <i data-lucide="arrow-right" style="width:15px;height:15px"></i>
         </a>
         <a href="{{ url($locale.'/partnerships') }}" class="btn-secondary">
-            {{ __('about.cta_partnership') }} <i data-lucide="handshake" style="width:15px;height:15px;color:#94a3b8"></i>
+            {{ __('about.cta_partnership') }} <i data-lucide="handshake" style="width:15px;height:15px;color:var(--text-muted)"></i>
         </a>
     </div>
 </div>

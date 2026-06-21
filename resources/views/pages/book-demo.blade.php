@@ -9,19 +9,19 @@ $isFr   = $locale === 'fr';
 <style>
 .demo-page-hero { background: linear-gradient(135deg, #080F1E 0%, #0d1a2e 100%); padding: 72px 48px 56px; text-align: center; border-bottom: 1px solid #1e293b; }
 .demo-page-hero h1 { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 800; color: #f1f5f9; margin-bottom: 14px; }
-.demo-page-hero p  { color: #94a3b8; font-size: 1.05rem; max-width: 560px; margin: 0 auto 28px; line-height: 1.7; }
+.demo-page-hero p  { color: var(--text-muted); font-size: 1.05rem; max-width: 560px; margin: 0 auto 28px; line-height: 1.7; }
 .demo-steps { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-top: 8px; }
-.demo-step  { display: flex; align-items: center; gap: 8px; color: #64748b; font-size: 0.82rem; }
+.demo-step  { display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.82rem; }
 .demo-step-num { width: 22px; height: 22px; border-radius: 50%; background: #00C896; color: #0f172a; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
 .demo-layout  { max-width: 900px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 340px; gap: 40px; align-items: start; }
 .demo-form-card { background: #080e1a; border: 1px solid #1e293b; border-radius: 16px; padding: 36px; }
 .demo-form-card h2 { font-size: 1.15rem; font-weight: 700; color: #f1f5f9; margin-bottom: 28px; display: flex; align-items: center; gap: 9px; }
 .df-section { margin-bottom: 28px; }
-.df-section-label { font-size: 0.72rem; font-weight: 700; color: #64748b; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 14px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; }
+.df-section-label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 14px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; }
 .df-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .df-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
-.df-group label { font-size: 0.78rem; font-weight: 600; color: #94a3b8; }
+.df-group label { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); }
 .df-group input, .df-group select, .df-group textarea {
     background: #0f172a; border: 1px solid #1e293b; border-radius: 8px;
     padding: 10px 14px; color: #e2e8f0; font-size: 0.88rem; font-family: inherit; width: 100%;
@@ -33,7 +33,7 @@ $isFr   = $locale === 'fr';
 
 /* product checkboxes */
 .prod-checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.prod-cb-label { display: flex; align-items: center; gap: 8px; background: #0f172a; border: 1px solid #1e293b; border-radius: 8px; padding: 9px 12px; cursor: pointer; font-size: 0.82rem; color: #94a3b8; transition: all .2s; }
+.prod-cb-label { display: flex; align-items: center; gap: 8px; background: #0f172a; border: 1px solid #1e293b; border-radius: 8px; padding: 9px 12px; cursor: pointer; font-size: 0.82rem; color: var(--text-muted); transition: all .2s; }
 .prod-cb-label:has(input:checked) { border-color: #00C896; color: #e2e8f0; background: #00C89610; }
 .prod-cb-label input[type=checkbox] { accent-color: #00C896; }
 
@@ -44,15 +44,15 @@ $isFr   = $locale === 'fr';
 .demo-sidebar { display: flex; flex-direction: column; gap: 20px; }
 .demo-info-card { background: #080e1a; border: 1px solid #1e293b; border-radius: 14px; padding: 24px; }
 .demo-info-card h3 { font-size: 0.9rem; font-weight: 700; color: #f1f5f9; margin-bottom: 16px; }
-.demo-info-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; font-size: 0.82rem; color: #94a3b8; line-height: 1.5; }
+.demo-info-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
 .demo-info-row svg { flex-shrink: 0; margin-top: 1px; color: #00C896; }
 .demo-testimonial { background: linear-gradient(135deg, #00C89612, #1A6FE808); border: 1px solid #00C89630; border-radius: 14px; padding: 20px; }
-.demo-testimonial blockquote { font-size: 0.82rem; color: #94a3b8; font-style: italic; line-height: 1.65; margin-bottom: 12px; }
-.demo-testimonial cite { font-size: 0.75rem; color: #64748b; font-style: normal; }
+.demo-testimonial blockquote { font-size: 0.82rem; color: var(--text-muted); font-style: italic; line-height: 1.65; margin-bottom: 12px; }
+.demo-testimonial cite { font-size: 0.75rem; color: var(--text-muted); font-style: normal; }
 
 .df-success { background: #00C89614; border: 1px solid #00C89640; border-radius: 10px; padding: 28px; text-align: center; }
 .df-success h3 { color: #00C896; font-size: 1.2rem; margin-bottom: 10px; }
-.df-success p  { color: #94a3b8; font-size: 0.88rem; line-height: 1.6; }
+.df-success p  { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; }
 
 @media (max-width: 768px) {
     .demo-page-hero { padding: 48px 20px 40px; }
@@ -71,9 +71,9 @@ $isFr   = $locale === 'fr';
     <p>{{ $isFr ? 'Obtenez une démonstration personnalisée adaptée à votre établissement. Nos experts vous guideront à travers les systèmes les plus pertinents pour vous.' : 'Get a personalised walkthrough tailored to your facility. Our experts will guide you through the systems most relevant to you.' }}</p>
     <div class="demo-steps">
         <div class="demo-step"><div class="demo-step-num">1</div>{{ $isFr ? 'Remplissez le formulaire' : 'Fill the form' }}</div>
-        <div class="demo-step" style="color:#475569">›</div>
+        <div class="demo-step" style="color:var(--text-faint)">›</div>
         <div class="demo-step"><div class="demo-step-num">2</div>{{ $isFr ? 'Notre équipe vous contacte (24h)' : 'Our team contacts you (24h)' }}</div>
-        <div class="demo-step" style="color:#475569">›</div>
+        <div class="demo-step" style="color:var(--text-faint)">›</div>
         <div class="demo-step"><div class="demo-step-num">3</div>{{ $isFr ? 'Démo en ligne ou sur site' : 'Online or on-site demo' }}</div>
     </div>
 </div>

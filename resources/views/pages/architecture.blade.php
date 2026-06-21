@@ -41,14 +41,14 @@
             ['label'=>'Couche Interopérabilité', 'items'=>'HL7 FHIR R4 · SNOMED CT · ICD-10/11 · DICOM · CDA · API ouverte REST/JSON',               'color'=>'#1A6FE8','icon'=>'share-2'],
             ['label'=>'Couche Identité Santé',   'items'=>'OPESCare Health ID · Master Patient Index · CRVS · Correspondance multi-établissements',   'color'=>'#00C896','icon'=>'fingerprint'],
             ['label'=>'Couche Données & IA',     'items'=>'Entrepôt de données cliniques · Analytique HMIS · IA décision clinique · Rapports MoH',    'color'=>'#1A6FE8','icon'=>'brain'],
-            ['label'=>'Couche Infrastructure',   'items'=>'On-premise · Cloud privé · Déploiement hybride · Datacenter Cameroun',                     'color'=>'#475569','icon'=>'server'],
+            ['label'=>'Couche Infrastructure',   'items'=>'On-premise · Cloud privé · Déploiement hybride · Datacenter Cameroun',                     'color'=>'var(--text-faint)','icon'=>'server'],
         ] : [
             ['label'=>'Presentation Layer',     'items'=>'Web portals · Mobile app · Analytics dashboards · Third-party integrations',               'color'=>'#1A6FE8','icon'=>'monitor'],
             ['label'=>'Business Services Layer','items'=>'Patient record · Hospital HIS · Laboratory · Pharmacy · Radiology · Maternity',            'color'=>'#00C896','icon'=>'layers'],
             ['label'=>'Interoperability Layer', 'items'=>'HL7 FHIR R4 · SNOMED CT · ICD-10/11 · DICOM · CDA · Open REST/JSON API',                  'color'=>'#1A6FE8','icon'=>'share-2'],
             ['label'=>'Health Identity Layer',  'items'=>'OPESCare Health ID · Master Patient Index · CRVS · Cross-facility record matching',        'color'=>'#00C896','icon'=>'fingerprint'],
             ['label'=>'Data & Intelligence Layer','items'=>'Clinical data warehouse · HMIS analytics · AI clinical decision support · MoH reporting','color'=>'#1A6FE8','icon'=>'brain'],
-            ['label'=>'Infrastructure Layer',   'items'=>'On-premise · Private cloud · Hybrid deployment · Cameroon data centres',                   'color'=>'#475569','icon'=>'server'],
+            ['label'=>'Infrastructure Layer',   'items'=>'On-premise · Private cloud · Hybrid deployment · Cameroon data centres',                   'color'=>'var(--text-faint)','icon'=>'server'],
         ];
         @endphp
 
@@ -60,7 +60,7 @@
                 </div>
                 <div style="flex:1;min-width:0">
                     <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:3px">{{ $layer['label'] }}</div>
-                    <div style="color:#64748b;font-size:12px;line-height:1.5">{{ $layer['items'] }}</div>
+                    <div style="color:var(--text-muted);font-size:12px;line-height:1.5">{{ $layer['items'] }}</div>
                 </div>
             </div>
             @endforeach
@@ -77,7 +77,7 @@
         {{ $isFr ? 'Interopérabilité' : 'Interoperability' }}
     </div>
     <h2 class="section-title">{{ $isFr ? 'Connecté aux standards mondiaux' : 'Connected to global standards' }}</h2>
-    <p style="color:#64748b;max-width:680px;font-size:15px;line-height:1.75;margin-bottom:32px">
+    <p style="color:var(--text-muted);max-width:680px;font-size:15px;line-height:1.75;margin-bottom:32px">
         {{ $isFr
             ? 'OPES Health OS implémente les standards internationaux d\'interopérabilité en santé, permettant l\'échange sécurisé de données entre établissements, partenaires et systèmes gouvernementaux.'
             : 'OPES Health OS implements international health interoperability standards, enabling secure data exchange between facilities, partners, and government systems.' }}
@@ -106,7 +106,7 @@
                 <i data-lucide="{{ $s['icon'] }}" style="width:18px;height:18px;color:{{ $s['color'] }}"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:14px;margin-bottom:6px">{{ $s['title'] }}</div>
-            <div style="font-size:13px;color:#64748b;line-height:1.6">{{ $s['desc'] }}</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.6">{{ $s['desc'] }}</div>
         </div>
         @endforeach
     </div>
@@ -124,7 +124,7 @@
         <h2 style="font-size:clamp(20px,3vw,28px);font-weight:700;color:#e2e8f0;margin-bottom:14px;line-height:1.3">
             {{ $isFr ? 'Un identifiant patient universel pour toute l\'Afrique' : 'One universal patient identifier across Africa' }}
         </h2>
-        <p style="color:#94a3b8;max-width:700px;line-height:1.75;margin-bottom:16px;font-size:15px">
+        <p style="color:var(--text-muted);max-width:700px;line-height:1.75;margin-bottom:16px;font-size:15px">
             {{ $isFr
                 ? 'La couche OPESCare assigne à chaque patient un identifiant numérique unique dès son premier contact avec le système de santé. Cet identifiant persiste à travers les consultations, les transferts inter-établissements, et les années — éliminant la duplication des dossiers et les erreurs d\'identification.'
                 : 'The OPESCare layer assigns every patient a unique digital identifier at their first point of contact with the health system. This identifier persists across consultations, inter-facility transfers, and years — eliminating duplicate records and identification errors.' }}
@@ -135,7 +135,7 @@
                 : ['Master Patient Index (MPI)','Cross-facility record matching','CRVS-compliant','Offline ID & degraded mode'] as $f)
             <div style="display:flex;align-items:center;gap:8px">
                 <i data-lucide="check-circle" style="width:15px;height:15px;color:#00C896;flex-shrink:0"></i>
-                <span style="color:#94a3b8;font-size:13px">{{ $f }}</span>
+                <span style="color:var(--text-muted);font-size:13px">{{ $f }}</span>
             </div>
             @endforeach
         </div>
@@ -151,7 +151,7 @@
         {{ $isFr ? 'Sécurité' : 'Security' }}
     </div>
     <h2 class="section-title">{{ $isFr ? 'Sécurité conçue dès la fondation' : 'Security designed from the foundation' }}</h2>
-    <p style="color:#64748b;max-width:660px;margin:12px auto 36px;font-size:15px;line-height:1.75">
+    <p style="color:var(--text-muted);max-width:660px;margin:12px auto 36px;font-size:15px;line-height:1.75">
         {{ $isFr
             ? 'Chaque composant d\'OPES Health OS est conçu selon les principes de sécurité dès la conception (Security by Design), avec chiffrement de bout en bout, contrôle d\'accès granulaire et audit complet.'
             : 'Every component of OPES Health OS is designed on Security by Design principles — end-to-end encryption, granular access control, and full audit trails.' }}
@@ -176,7 +176,7 @@
                 <i data-lucide="{{ $item['icon'] }}" style="width:18px;height:18px;color:#00C896"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:6px">{{ $item['title'] }}</div>
-            <div style="font-size:12px;color:#64748b;line-height:1.6">{{ $item['desc'] }}</div>
+            <div style="font-size:12px;color:var(--text-muted);line-height:1.6">{{ $item['desc'] }}</div>
         </div>
         @endforeach
     </div>
@@ -209,7 +209,7 @@
                 <i data-lucide="{{ $d['icon'] }}" style="width:20px;height:20px;color:{{ $d['color'] }}"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:15px;margin-bottom:8px">{{ $d['title'] }}</div>
-            <div style="font-size:13px;color:#64748b;line-height:1.65">{{ $d['desc'] }}</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.65">{{ $d['desc'] }}</div>
         </div>
         @endforeach
     </div>
@@ -226,7 +226,7 @@
             {{ $isFr ? 'Parler à un architecte' : 'Talk to an architect' }} <i data-lucide="arrow-right" style="width:15px;height:15px"></i>
         </a>
         <a href="{{ url($locale.'/compliance') }}" class="btn-secondary">
-            {{ $isFr ? 'Sécurité & conformité' : 'Security & compliance' }} <i data-lucide="shield" style="width:15px;height:15px;color:#94a3b8"></i>
+            {{ $isFr ? 'Sécurité & conformité' : 'Security & compliance' }} <i data-lucide="shield" style="width:15px;height:15px;color:var(--text-muted)"></i>
         </a>
     </div>
 </div>

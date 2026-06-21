@@ -6,7 +6,7 @@ $catColors = [
     'HMS Solutions'              => '#1A6FE8',
     "Buyer's Guide"              => '#8b5cf6',
     'AI & Technology'            => '#f59e0b',
-    'Insights & Case Studies'    => '#94a3b8',
+    'Insights & Case Studies'    => 'var(--text-muted)',
 ];
 $heroFeatured  = $featured->first();
 $heroHeadlines = $featured->skip(1)->values();
@@ -28,8 +28,8 @@ $heroHeadlines = $featured->skip(1)->values();
                 <span class="blog-hero-eyebrow-sep">·</span>
                 <span class="blog-hero-date">{{ __('blog.eyebrow_region') }}</span>
             </div>
-            <a href="{{ url($locale.'/blog') }}" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:#64748b;text-decoration:none;transition:color 0.15s"
-               onmouseover="this.style.color='#94a3b8'" onmouseout="this.style.color='#64748b'">
+            <a href="{{ url($locale.'/blog') }}" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--text-muted);text-decoration:none;transition:color 0.15s"
+               onmouseover="this.style.color='var(--text-muted)'" onmouseout="this.style.color='var(--text-muted)'">
                 {{ __('blog.all_articles_count', ['count' => $posts->total()]) }}
                 <i data-lucide="arrow-right" style="width:12px;height:12px"></i>
             </a>
@@ -84,7 +84,7 @@ $heroHeadlines = $featured->skip(1)->values();
                 @foreach($heroHeadlines as $i => $headline)
                 <a href="{{ url($locale.'/blog/'.$headline->slug) }}" class="blog-headline-item">
                     <span class="blog-headline-num">0{{ $i + 2 }}</span>
-                    @php $hlColor = $catColors[$headline->category] ?? '#64748b'; @endphp
+                    @php $hlColor = $catColors[$headline->category] ?? 'var(--text-muted)'; @endphp
                     <span class="blog-cat" style="color:{{ $hlColor }};font-size:10px">
                         {{ $headline->category }}
                     </span>
@@ -116,7 +116,7 @@ $heroHeadlines = $featured->skip(1)->values();
         {{-- Search --}}
         <form action="{{ url($locale.'/blog') }}" method="GET" class="blog-sb-search">
             <div class="blog-sb-search-wrap">
-                <i data-lucide="search" style="width:13px;height:13px;color:#475569;flex-shrink:0"></i>
+                <i data-lucide="search" style="width:13px;height:13px;color:var(--text-faint);flex-shrink:0"></i>
                 <input type="text" name="search" value="{{ $search ?? '' }}"
                        placeholder="{{ __('blog.search_placeholder') }}"
                        class="blog-sb-search-input">
@@ -142,7 +142,7 @@ $heroHeadlines = $featured->skip(1)->values();
                 <span class="blog-sb-cat-count">{{ $categories->sum('count') }}</span>
             </a>
             @foreach($categories as $cat)
-            @php $dotColor = $catColors[$cat->category] ?? '#64748b'; @endphp
+            @php $dotColor = $catColors[$cat->category] ?? 'var(--text-muted)'; @endphp
             <a href="{{ url($locale.'/blog') }}?category={{ urlencode($cat->category) }}"
                class="blog-sb-cat {{ ($activeCategory ?? '') === $cat->category ? 'sb-active' : '' }}">
                 <span class="blog-sb-cat-dot" style="background:{{ $dotColor }}"></span>
@@ -221,7 +221,7 @@ $heroHeadlines = $featured->skip(1)->values();
                 <p class="blog-main-count">{{ trans_choice('blog.article_count', $posts->total(), ['count' => $posts->total()]) }}</p>
             </div>
             @if(!empty($search))
-            <a href="{{ url($locale.'/blog') }}" style="font-size:12px;color:#64748b;text-decoration:none;display:inline-flex;align-items:center;gap:4px">
+            <a href="{{ url($locale.'/blog') }}" style="font-size:12px;color:var(--text-muted);text-decoration:none;display:inline-flex;align-items:center;gap:4px">
                 <i data-lucide="x" style="width:11px;height:11px"></i>
                 {{ $locale === 'fr' ? 'Effacer la recherche' : 'Clear search' }}
             </a>
@@ -232,7 +232,7 @@ $heroHeadlines = $featured->skip(1)->values();
         @if($posts->count())
         <div class="blog-grid">
             @foreach($posts as $post)
-            @php $postColor = $catColors[$post->category] ?? '#64748b'; @endphp
+            @php $postColor = $catColors[$post->category] ?? 'var(--text-muted)'; @endphp
             <a href="{{ url($locale.'/blog/'.$post->slug) }}" class="blog-card">
                 @if($post->cover_image)
                 <div class="blog-card-img">
@@ -269,7 +269,7 @@ $heroHeadlines = $featured->skip(1)->values();
                 <i data-lucide="search" style="width:28px;height:28px;color:#00C896"></i>
             </div>
             <h2 style="font-size:22px;font-weight:700;color:#e2e8f0;margin-bottom:10px">{{ __('blog.empty_heading') }}</h2>
-            <p style="color:#64748b;font-size:14px;margin-bottom:24px">{{ __('blog.empty_body') }}</p>
+            <p style="color:var(--text-muted);font-size:14px;margin-bottom:24px">{{ __('blog.empty_body') }}</p>
             <a href="{{ url($locale.'/blog') }}" class="btn-secondary" style="display:inline-flex;gap:6px;align-items:center">
                 <i data-lucide="arrow-left" style="width:14px;height:14px"></i>
                 {{ __('blog.view_all') }}

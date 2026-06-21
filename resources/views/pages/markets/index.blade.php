@@ -27,7 +27,7 @@
         <img src="{{ asset('flags/cm.svg') }}" alt="Cameroon" style="width:42px;height:28px;border-radius:4px;object-fit:cover">
         <div style="flex:1">
             <div style="font-weight:800;color:#00C896;font-size:15px;margin-bottom:3px">{{ $isFr ? 'Cameroun — marché d\'origine' : 'Cameroon — home market' }}</div>
-            <div style="font-size:12.5px;color:#94a3b8;line-height:1.6">{{ $isFr ? 'Conçu et développé au Cameroun : bilingue EN/FR, mobile money (MoMo, Orange Money), facturation CNPS/mutuelles/CSU, et les 22 systèmes OPES.' : 'Designed and built in Cameroon: bilingual EN/FR, mobile money (MoMo, Orange Money), CNPS/mutuelles/CSU billing, and all 22 OPES systems.' }}</div>
+            <div style="font-size:12.5px;color:var(--text-muted);line-height:1.6">{{ $isFr ? 'Conçu et développé au Cameroun : bilingue EN/FR, mobile money (MoMo, Orange Money), facturation CNPS/mutuelles/CSU, et les 22 systèmes OPES.' : 'Designed and built in Cameroon: bilingual EN/FR, mobile money (MoMo, Orange Money), CNPS/mutuelles/CSU billing, and all 22 OPES systems.' }}</div>
         </div>
         <i data-lucide="arrow-right" style="width:18px;height:18px;color:#00C896;flex-shrink:0"></i>
     </a>
@@ -49,10 +49,10 @@
                 <img src="{{ asset('flags/'.$m['code'].'.svg') }}" alt="" style="width:36px;height:24px;border-radius:3px;object-fit:cover">
                 <div>
                     <div style="font-weight:800;color:#e2e8f0;font-size:14px">{{ $m['name'] }}</div>
-                    <div style="font-size:11px;color:#64748b">{{ $m['capital'] }} · {{ $m['currency'] }}</div>
+                    <div style="font-size:11px;color:var(--text-muted)">{{ $m['capital'] }} · {{ $m['currency'] }}</div>
                 </div>
             </div>
-            <p style="font-size:12px;color:#94a3b8;line-height:1.6;margin:0 0 14px">{{ $m['tagline'][$locale] }}</p>
+            <p style="font-size:12px;color:var(--text-muted);line-height:1.6;margin:0 0 14px">{{ $m['tagline'][$locale] }}</p>
             <div style="display:flex;align-items:center;gap:8px">
                 <span style="font-size:10px;font-weight:800;color:{{ $accent }};text-transform:uppercase;letter-spacing:0.05em">{{ $isFr ? $m['driver']['title_fr'] : $m['driver']['title_en'] }}</span>
             </div>
@@ -78,7 +78,7 @@
         </a>
         <a href="{{ url($locale.'/contact') }}" class="btn-secondary">
             {{ $isFr ? 'Contacter notre équipe' : 'Contact our team' }}
-            <i data-lucide="mail" style="width:15px;height:15px;color:#94a3b8"></i>
+            <i data-lucide="mail" style="width:15px;height:15px;color:var(--text-muted)"></i>
         </a>
     </div>
 </div>

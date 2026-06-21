@@ -79,7 +79,7 @@
                 <div style="font-weight:700;color:#e2e8f0;font-size:13px">{{ $c[2] }}</div>
             </div>
             @foreach($c[3] as $item)
-            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#64748b;padding:3px 0">
+            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);padding:3px 0">
                 <i data-lucide="chevron-right" style="width:10px;height:10px;color:{{ $c[1] }};flex-shrink:0"></i>{{ $item }}
             </div>
             @endforeach
@@ -102,7 +102,7 @@
                 ? ['Enregistrement des bénéficiaires','Traitement des demandes','Remboursement des prestataires','Administration des prestations']
                 : ['Beneficiary registration','Claims processing','Provider reimbursement','Benefits administration']
             as $item)
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;font-size:12px;color:#94a3b8;border-left:2px solid #00C896">
+            <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;font-size:12px;color:var(--text-muted);border-left:2px solid #00C896">
                 <i data-lucide="check-circle" style="width:11px;height:11px;color:#00C896;flex-shrink:0"></i>{{ $item }}
             </div>
             @endforeach
@@ -116,7 +116,7 @@
                 ? ['Programme VIH','Programme Tuberculose','Programme Paludisme','Programme de vaccination','Santé maternelle','Programme MNT']
                 : ['HIV programme','TB programme','Malaria programme','Immunization programme','Maternal health programme','NCD programme']
             as $prog)
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;font-size:12px;color:#94a3b8;border-left:2px solid #1A6FE8">
+            <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;font-size:12px;color:var(--text-muted);border-left:2px solid #1A6FE8">
                 <i data-lucide="check-circle" style="width:11px;height:11px;color:#1A6FE8;flex-shrink:0"></i>{{ $prog }}
             </div>
             @endforeach
@@ -130,7 +130,7 @@
                 ? ['Registre de vaccination','Registre maternel','Registre des cancers','Registre des maladies chroniques','Registre des maladies rares']
                 : ['Immunization registry','Maternal registry','Cancer registry','Chronic disease registry','Rare disease registry']
             as $reg)
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;font-size:12px;color:#94a3b8;border-left:2px solid #00C896">
+            <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;font-size:12px;color:var(--text-muted);border-left:2px solid #00C896">
                 <i data-lucide="database" style="width:11px;height:11px;color:#00C896;flex-shrink:0"></i>{{ $reg }}
             </div>
             @endforeach
@@ -157,7 +157,7 @@
                 <i data-lucide="{{ $db[0] }}" style="width:15px;height:15px;color:{{ $db[1] }};flex-shrink:0;margin-top:2px"></i>
                 <div>
                     <div style="font-weight:700;color:#e2e8f0;font-size:12px;margin-bottom:3px">{{ $db[2] }}</div>
-                    <div style="font-size:11px;color:#64748b">{{ $db[3] }}</div>
+                    <div style="font-size:11px;color:var(--text-muted)">{{ $db[3] }}</div>
                 </div>
             </div>
             @endforeach
@@ -175,7 +175,7 @@
             <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;border-left:2px solid {{ $gov[0] }}">
                 <div>
                     <div style="font-weight:700;font-size:11px;color:#e2e8f0">{{ $gov[1] }}</div>
-                    <div style="font-size:10px;color:#64748b">{{ $gov[2] }}</div>
+                    <div style="font-size:10px;color:var(--text-muted)">{{ $gov[2] }}</div>
                 </div>
             </div>
             @endforeach
@@ -194,8 +194,8 @@
     <h2 class="section-title">{{ $isFr ? 'Cinq phases vers une santé numérique nationale' : 'Five phases toward national digital health' }}</h2>
     <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:24px">
         @foreach($isFr
-            ? [['1','#475569','Fondation','Registres & Health ID'],['2','#1A6FE8','Digitalisation','EMR & HIS'],['3','#00A87B','Interopérabilité','HIE & Référencement'],['4','#00C896','Intelligence','Surveillance & Analytique'],['5','#FFB020','Optimisation','Population & IA']]
-            : [['1','#475569','Foundation','Registries & Health ID'],['2','#1A6FE8','Facility digitization','EMR & HIS'],['3','#00A87B','Interoperability','HIE & Referral exchange'],['4','#00C896','Intelligence','Surveillance & Analytics'],['5','#FFB020','Optimisation','Population health & AI']]
+            ? [['1','var(--text-faint)','Fondation','Registres & Health ID'],['2','#1A6FE8','Digitalisation','EMR & HIS'],['3','#00A87B','Interopérabilité','HIE & Référencement'],['4','#00C896','Intelligence','Surveillance & Analytique'],['5','#FFB020','Optimisation','Population & IA']]
+            : [['1','var(--text-faint)','Foundation','Registries & Health ID'],['2','#1A6FE8','Facility digitization','EMR & HIS'],['3','#00A87B','Interoperability','HIE & Referral exchange'],['4','#00C896','Intelligence','Surveillance & Analytics'],['5','#FFB020','Optimisation','Population health & AI']]
         as $idx => $ph)
         <div style="text-align:center;padding:0 6px;position:relative">
             @if($idx < 4)
@@ -203,7 +203,7 @@
             @endif
             <div style="width:44px;height:44px;border-radius:50%;background:{{ $ph[1] }}20;border:2px solid {{ $ph[1] }};display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:14px;font-weight:800;color:{{ $ph[1] }};position:relative;z-index:1">{{ $ph[0] }}</div>
             <div style="font-weight:700;color:#e2e8f0;font-size:11px;margin-bottom:4px">{{ $ph[2] }}</div>
-            <div style="font-size:10px;color:#64748b;line-height:1.4">{{ $ph[3] }}</div>
+            <div style="font-size:10px;color:var(--text-muted);line-height:1.4">{{ $ph[3] }}</div>
         </div>
         @endforeach
     </div>
@@ -225,7 +225,7 @@
         as $out)
         <div style="display:flex;align-items:center;gap:8px;background:#0F172A;border:1px solid #1e293b;border-radius:8px;padding:10px 14px;text-align:left">
             <i data-lucide="check-circle" style="width:12px;height:12px;color:{{ $out[0] }};flex-shrink:0"></i>
-            <span style="font-size:12px;color:#94a3b8;font-weight:600">{{ $out[1] }}</span>
+            <span style="font-size:12px;color:var(--text-muted);font-weight:600">{{ $out[1] }}</span>
         </div>
         @endforeach
     </div>
@@ -244,7 +244,7 @@
         </a>
         <a href="{{ url($locale.'/interoperability') }}" class="btn-secondary">
             {{ $isFr ? 'Interopérabilité & HIE' : 'Interoperability & HIE' }}
-            <i data-lucide="share-2" style="width:15px;height:15px;color:#94a3b8"></i>
+            <i data-lucide="share-2" style="width:15px;height:15px;color:var(--text-muted)"></i>
         </a>
     </div>
 </div>

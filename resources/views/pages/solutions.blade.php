@@ -68,7 +68,7 @@
                 <i data-lucide="{{ $w['icon'] }}" style="width:18px;height:18px;color:{{ $w['color'] }}"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:14px;margin-bottom:6px">{{ $w['title'] }}</div>
-            <div style="font-size:13px;color:#64748b;line-height:1.6">{{ $w['desc'] }}</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.6">{{ $w['desc'] }}</div>
         </div>
         @endforeach
     </div>

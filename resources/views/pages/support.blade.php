@@ -46,7 +46,7 @@
             [
                 'name'       => 'Silver',
                 'tagline'    => 'Standard',
-                'color'      => '#94a3b8',
+                'color'      => 'var(--text-muted)',
                 'icon'       => 'shield',
                 'uptime'     => '99,5 %',
                 'response'   => '24 h',
@@ -108,7 +108,7 @@
             [
                 'name'       => 'Silver',
                 'tagline'    => 'Standard',
-                'color'      => '#94a3b8',
+                'color'      => 'var(--text-muted)',
                 'icon'       => 'shield',
                 'uptime'     => '99.5%',
                 'response'   => '24 h',
@@ -191,8 +191,8 @@
                 @endphp
                 @foreach($attrs as $attr)
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
-                    <span style="color:#475569;font-size:12px">{{ $attr[0] }}</span>
-                    <span style="color:#94a3b8;font-size:12px;font-weight:600;text-align:right">{{ $attr[1] }}</span>
+                    <span style="color:var(--text-faint);font-size:12px">{{ $attr[0] }}</span>
+                    <span style="color:var(--text-muted);font-size:12px;font-weight:600;text-align:right">{{ $attr[1] }}</span>
                 </div>
                 @endforeach
             </div>
@@ -284,20 +284,20 @@
         {{ $isFr ? 'Gestion des incidents' : 'Incident management' }}
     </div>
     <h2 class="section-title">{{ $isFr ? 'Priorité P1 à P4 — nous savons ce qui compte' : 'P1 to P4 priority — we know what matters' }}</h2>
-    <p style="color:#64748b;font-size:14px;line-height:1.75;margin:12px 0 28px">
+    <p style="color:var(--text-muted);font-size:14px;line-height:1.75;margin:12px 0 28px">
         {{ $isFr
             ? 'Tous les tickets sont classifiés par impact sur la continuité des soins. Un système de santé indisponible est P1 — notre équipe est mobilisée immédiatement, quelle que soit l\'heure.'
             : 'All tickets are classified by impact on care continuity. A down health system is P1 — our team mobilises immediately, regardless of the hour.' }}
     </p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px">
         @foreach($isFr
-            ? [['P1','Critique','Système indisponible ou risque patient','#ef4444'],['P2','Élevée','Fonctionnalité majeure bloquée','#f59e0b'],['P3','Moyenne','Dégradation partielle','#1A6FE8'],['P4','Faible','Questions / améliorations','#64748b']]
-            : [['P1','Critical','System down or patient safety risk','#ef4444'],['P2','High','Major feature blocked','#f59e0b'],['P3','Medium','Partial degradation','#1A6FE8'],['P4','Low','Questions / enhancements','#64748b']]
+            ? [['P1','Critique','Système indisponible ou risque patient','#ef4444'],['P2','Élevée','Fonctionnalité majeure bloquée','#f59e0b'],['P3','Moyenne','Dégradation partielle','#1A6FE8'],['P4','Faible','Questions / améliorations','var(--text-muted)']]
+            : [['P1','Critical','System down or patient safety risk','#ef4444'],['P2','High','Major feature blocked','#f59e0b'],['P3','Medium','Partial degradation','#1A6FE8'],['P4','Low','Questions / enhancements','var(--text-muted)']]
         as $p)
         <div style="background:#0F172A;border:1px solid {{ $p[3] }}30;border-radius:10px;padding:14px;text-align:left">
             <div style="font-weight:800;color:{{ $p[3] }};font-size:16px;margin-bottom:2px">{{ $p[0] }}</div>
             <div style="font-weight:700;color:#e2e8f0;font-size:12px;margin-bottom:4px">{{ $p[1] }}</div>
-            <div style="font-size:11px;color:#64748b;line-height:1.5">{{ $p[2] }}</div>
+            <div style="font-size:11px;color:var(--text-muted);line-height:1.5">{{ $p[2] }}</div>
         </div>
         @endforeach
     </div>
@@ -314,7 +314,7 @@
             {{ $isFr ? 'Nous contacter' : 'Contact us' }} <i data-lucide="arrow-right" style="width:15px;height:15px"></i>
         </a>
         <a href="{{ url($locale.'/pricing') }}" class="btn-secondary">
-            {{ $isFr ? 'Voir les tarifs' : 'View pricing' }} <i data-lucide="tag" style="width:15px;height:15px;color:#94a3b8"></i>
+            {{ $isFr ? 'Voir les tarifs' : 'View pricing' }} <i data-lucide="tag" style="width:15px;height:15px;color:var(--text-muted)"></i>
         </a>
     </div>
 </div>

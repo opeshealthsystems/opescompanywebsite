@@ -14,7 +14,7 @@
     <p class="cs-sub">{{ $isFr ? 'Cette section est en cours de construction. Revenez bientôt — ou contactez-nous directement pour en savoir plus sur OPES Health Systems.' : 'This section is under construction. Check back soon — or contact us directly to learn more about OPES Health Systems.' }}</p>
     <div class="cs-actions">
         <a href="{{ url($locale) }}" class="btn-secondary">
-            <i data-lucide="arrow-left" style="width:14px;height:14px;color:#94a3b8"></i>
+            <i data-lucide="arrow-left" style="width:14px;height:14px;color:var(--text-muted)"></i>
             {{ $isFr ? 'Retour à l\'accueil' : 'Back to Home' }}
         </a>
         <a href="{{ url($locale.'/contact') }}" class="btn-primary">

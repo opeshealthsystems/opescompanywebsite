@@ -17,8 +17,8 @@
 {{-- ── COURSE GRID ──────────────────────────────────────────────── --}}
 <div class="section pi-section">
     @if($courses->isEmpty())
-        <div style="text-align:center;padding:64px 16px;color:#94a3b8">
-            <i data-lucide="book-open" style="width:40px;height:40px;color:#475569;margin-bottom:16px"></i>
+        <div style="text-align:center;padding:64px 16px;color:var(--text-muted)">
+            <i data-lucide="book-open" style="width:40px;height:40px;color:var(--text-faint);margin-bottom:16px"></i>
             <p style="font-size:16px">No courses are available right now. Please check back soon.</p>
         </div>
     @else
@@ -50,7 +50,7 @@
                     @endif
 
                     {{-- Meta row --}}
-                    <div style="display:flex;gap:16px;margin-top:14px;font-size:12.5px;color:#94a3b8">
+                    <div style="display:flex;gap:16px;margin-top:14px;font-size:12.5px;color:var(--text-muted)">
                         @if($course->duration_hours)
                         <span style="display:inline-flex;align-items:center;gap:5px">
                             <i data-lucide="clock" style="width:13px;height:13px"></i>{{ $course->duration_hours }}h

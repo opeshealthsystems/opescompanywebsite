@@ -56,4 +56,14 @@ class ReadabilityTokensTest extends TestCase
             $this->assertStringNotContainsString($bad, $css, "Tiny size still in app.css: {$bad}");
         }
     }
+
+    public function test_sp1_views_have_no_faint_text_hexes(): void
+    {
+        foreach ($this->sp1Files() as $file) {
+            $c = file_get_contents($file);
+            foreach (['#475569', '#64748b', '#94a3b8'] as $hex) {
+                $this->assertStringNotContainsString($hex, $c, basename($file)." still uses {$hex}");
+            }
+        }
+    }
 }

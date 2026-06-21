@@ -9,23 +9,23 @@ $isFr   = $locale === 'fr';
 <style>
 .partner-page-hero { background: linear-gradient(135deg, #080F1E 0%, #0a1628 100%); padding: 72px 48px 56px; text-align: center; border-bottom: 1px solid #1e293b; }
 .partner-page-hero h1 { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 800; color: #f1f5f9; margin-bottom: 14px; }
-.partner-page-hero p  { color: #94a3b8; font-size: 1.05rem; max-width: 580px; margin: 0 auto; line-height: 1.7; }
+.partner-page-hero p  { color: var(--text-muted); font-size: 1.05rem; max-width: 580px; margin: 0 auto; line-height: 1.7; }
 
 .partner-type-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; max-width: 900px; margin: 40px auto 0; padding: 0 24px; }
 .ptype-card { background: #080e1a; border: 1px solid #1e293b; border-radius: 12px; padding: 18px; text-align: center; transition: border-color .2s; }
 .ptype-card:hover { border-color: #00C896; }
 .ptype-card svg { margin: 0 auto 10px; color: #00C896; display: block; }
 .ptype-card h4 { font-size: 0.82rem; font-weight: 700; color: #e2e8f0; margin-bottom: 6px; }
-.ptype-card p  { font-size: 0.75rem; color: #64748b; line-height: 1.5; }
+.ptype-card p  { font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; }
 
 .partner-layout { max-width: 900px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 300px; gap: 40px; align-items: start; }
 .partner-form-card { background: #080e1a; border: 1px solid #1e293b; border-radius: 16px; padding: 36px; }
 .partner-form-card h2 { font-size: 1.1rem; font-weight: 700; color: #f1f5f9; margin-bottom: 28px; display: flex; align-items: center; gap: 9px; }
 .pf-section { margin-bottom: 24px; }
-.pf-section-label { font-size: 0.72rem; font-weight: 700; color: #64748b; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 14px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; }
+.pf-section-label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 14px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; }
 .pf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .pf-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
-.pf-group label { font-size: 0.78rem; font-weight: 600; color: #94a3b8; }
+.pf-group label { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); }
 .pf-group input, .pf-group select, .pf-group textarea {
     background: #0f172a; border: 1px solid #1e293b; border-radius: 8px;
     padding: 10px 14px; color: #e2e8f0; font-size: 0.88rem; font-family: inherit; width: 100%;
@@ -37,12 +37,12 @@ $isFr   = $locale === 'fr';
 .pf-submit:hover { background: #1560d0; }
 .pf-success { background: #1A6FE814; border: 1px solid #1A6FE840; border-radius: 10px; padding: 28px; text-align: center; }
 .pf-success h3 { color: #1A6FE8; font-size: 1.2rem; margin-bottom: 10px; }
-.pf-success p  { color: #94a3b8; font-size: 0.88rem; line-height: 1.6; }
+.pf-success p  { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; }
 
 .partner-sidebar { display: flex; flex-direction: column; gap: 18px; }
 .partner-info-card { background: #080e1a; border: 1px solid #1e293b; border-radius: 14px; padding: 22px; }
 .partner-info-card h3 { font-size: 0.88rem; font-weight: 700; color: #f1f5f9; margin-bottom: 14px; }
-.partner-benefit { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size: 0.8rem; color: #94a3b8; line-height: 1.5; }
+.partner-benefit { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
 .partner-benefit svg { flex-shrink: 0; margin-top: 1px; color: #1A6FE8; }
 
 @media (max-width: 768px) {
@@ -226,7 +226,7 @@ $isFr   = $locale === 'fr';
 
         <div class="partner-info-card" style="border-color:#1A6FE820;background:linear-gradient(135deg,#1A6FE808,#080e1a)">
             <h3>{{ $isFr ? 'Déjà partenaire ?' : 'Already a partner?' }}</h3>
-            <p style="font-size:.8rem;color:#64748b;line-height:1.6;margin-bottom:14px">{{ $isFr ? 'Connectez-vous à votre espace partenaire pour accéder aux ressources, statistiques et commissions.' : 'Log in to your partner portal to access resources, analytics and commission reports.' }}</p>
+            <p style="font-size:.8rem;color:var(--text-muted);line-height:1.6;margin-bottom:14px">{{ $isFr ? 'Connectez-vous à votre espace partenaire pour accéder aux ressources, statistiques et commissions.' : 'Log in to your partner portal to access resources, analytics and commission reports.' }}</p>
             <a href="{{ url($locale.'/login') }}" style="display:block;text-align:center;background:#1A6FE820;border:1px solid #1A6FE840;color:#1A6FE8;border-radius:8px;padding:10px;font-size:.82rem;font-weight:600;text-decoration:none">
                 {{ $isFr ? 'Connexion partenaire →' : 'Partner login →' }}
             </a>

@@ -9,20 +9,20 @@ $isFr   = $locale === 'fr';
 <style>
 .testers-hero { background: linear-gradient(135deg, #080F1E 0%, #0c1220 100%); padding: 72px 48px 56px; text-align: center; border-bottom: 1px solid #1e293b; }
 .testers-hero h1 { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 800; color: #f1f5f9; margin-bottom: 14px; }
-.testers-hero p  { color: #94a3b8; font-size: 1.05rem; max-width: 560px; margin: 0 auto; line-height: 1.7; }
+.testers-hero p  { color: var(--text-muted); font-size: 1.05rem; max-width: 560px; margin: 0 auto; line-height: 1.7; }
 
 .tester-perks { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin: 36px auto 0; max-width: 700px; padding: 0 24px; }
-.tester-perk { display: flex; align-items: center; gap: 8px; background: #080e1a; border: 1px solid #1e293b; border-radius: 8px; padding: 10px 16px; font-size: 0.8rem; color: #94a3b8; }
+.tester-perk { display: flex; align-items: center; gap: 8px; background: #080e1a; border: 1px solid #1e293b; border-radius: 8px; padding: 10px 16px; font-size: 0.8rem; color: var(--text-muted); }
 .tester-perk svg { color: #F59E0B; flex-shrink: 0; }
 
 .testers-layout { max-width: 900px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 300px; gap: 40px; align-items: start; }
 .testers-form-card { background: #080e1a; border: 1px solid #1e293b; border-radius: 16px; padding: 36px; }
 .testers-form-card h2 { font-size: 1.1rem; font-weight: 700; color: #f1f5f9; margin-bottom: 28px; display: flex; align-items: center; gap: 9px; }
 .tf-section { margin-bottom: 24px; }
-.tf-section-label { font-size: 0.72rem; font-weight: 700; color: #64748b; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 14px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; }
+.tf-section-label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 14px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; }
 .tf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .tf-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
-.tf-group label { font-size: 0.78rem; font-weight: 600; color: #94a3b8; }
+.tf-group label { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); }
 .tf-group input, .tf-group select, .tf-group textarea {
     background: #0f172a; border: 1px solid #1e293b; border-radius: 8px;
     padding: 10px 14px; color: #e2e8f0; font-size: 0.88rem; font-family: inherit; width: 100%;
@@ -32,7 +32,7 @@ $isFr   = $locale === 'fr';
 .tf-group textarea { min-height: 100px; resize: vertical; }
 
 .tf-checkbox-group { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.tf-cb-label { display: flex; align-items: center; gap: 7px; background: #0f172a; border: 1px solid #1e293b; border-radius: 8px; padding: 8px 10px; cursor: pointer; font-size: 0.78rem; color: #94a3b8; transition: all .2s; }
+.tf-cb-label { display: flex; align-items: center; gap: 7px; background: #0f172a; border: 1px solid #1e293b; border-radius: 8px; padding: 8px 10px; cursor: pointer; font-size: 0.78rem; color: var(--text-muted); transition: all .2s; }
 .tf-cb-label:has(input:checked) { border-color: #F59E0B; color: #e2e8f0; background: #F59E0B10; }
 .tf-cb-label input[type=checkbox] { accent-color: #F59E0B; flex-shrink: 0; }
 
@@ -40,12 +40,12 @@ $isFr   = $locale === 'fr';
 .tf-submit:hover { background: #d97706; }
 .tf-success { background: #F59E0B14; border: 1px solid #F59E0B40; border-radius: 10px; padding: 28px; text-align: center; }
 .tf-success h3 { color: #F59E0B; font-size: 1.2rem; margin-bottom: 10px; }
-.tf-success p  { color: #94a3b8; font-size: 0.88rem; line-height: 1.6; }
+.tf-success p  { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; }
 
 .testers-sidebar { display: flex; flex-direction: column; gap: 18px; }
 .testers-info-card { background: #080e1a; border: 1px solid #1e293b; border-radius: 14px; padding: 22px; }
 .testers-info-card h3 { font-size: 0.88rem; font-weight: 700; color: #f1f5f9; margin-bottom: 14px; }
-.tf-benefit { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size: 0.8rem; color: #94a3b8; line-height: 1.5; }
+.tf-benefit { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
 .tf-benefit svg { flex-shrink: 0; margin-top: 1px; color: #F59E0B; }
 
 @media (max-width: 768px) {
@@ -231,7 +231,7 @@ $isFr   = $locale === 'fr';
 
         <div class="testers-info-card" style="background:linear-gradient(135deg,#F59E0B08,#080e1a);border-color:#F59E0B20">
             <h3>{{ $isFr ? 'Déjà testeur ?' : 'Already a tester?' }}</h3>
-            <p style="font-size:.8rem;color:#64748b;line-height:1.6;margin-bottom:14px">{{ $isFr ? 'Connectez-vous à votre tableau de bord testeur pour voir vos missions et soumettre vos rapports.' : 'Log in to your tester dashboard to view assignments and submit reports.' }}</p>
+            <p style="font-size:.8rem;color:var(--text-muted);line-height:1.6;margin-bottom:14px">{{ $isFr ? 'Connectez-vous à votre tableau de bord testeur pour voir vos missions et soumettre vos rapports.' : 'Log in to your tester dashboard to view assignments and submit reports.' }}</p>
             <a href="{{ url($locale.'/login') }}" style="display:block;text-align:center;background:#F59E0B20;border:1px solid #F59E0B40;color:#F59E0B;border-radius:8px;padding:10px;font-size:.82rem;font-weight:600;text-decoration:none">
                 {{ $isFr ? 'Connexion testeur →' : 'Tester login →' }}
             </a>
@@ -239,7 +239,7 @@ $isFr   = $locale === 'fr';
 
         <div class="testers-info-card">
             <h3>{{ $isFr ? 'Profils recherchés' : 'Profiles we seek' }}</h3>
-            <p style="font-size:.8rem;color:#64748b;line-height:1.6">
+            <p style="font-size:.8rem;color:var(--text-muted);line-height:1.6">
                 {{ $isFr ? 'Médecins, infirmiers, pharmaciens, administrateurs de santé, techniciens de laboratoire, chercheurs en santé, et professionnels IT du secteur santé.' : 'Doctors, nurses, pharmacists, health administrators, lab technicians, health researchers, and health IT professionals.' }}
             </p>
         </div>
