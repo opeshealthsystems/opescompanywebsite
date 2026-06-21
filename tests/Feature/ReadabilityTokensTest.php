@@ -40,4 +40,20 @@ class ReadabilityTokensTest extends TestCase
             $this->assertStringContainsString($token, $css, "Missing token: {$token}");
         }
     }
+
+    public function test_app_css_has_no_faint_text_hexes(): void
+    {
+        $css = $this->appCss();
+        foreach (['#475569', '#64748b', '#94a3b8'] as $hex) {
+            $this->assertStringNotContainsString($hex, $css, "Faint hex still in app.css: {$hex}");
+        }
+    }
+
+    public function test_app_css_has_no_sub_13_font_sizes(): void
+    {
+        $css = $this->appCss();
+        foreach (['font-size: 9px', 'font-size: 9.5px', 'font-size: 10px', 'font-size: 11px', 'font-size: 12px', 'font-size: 12.5px'] as $bad) {
+            $this->assertStringNotContainsString($bad, $css, "Tiny size still in app.css: {$bad}");
+        }
+    }
 }
