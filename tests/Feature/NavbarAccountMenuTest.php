@@ -148,4 +148,22 @@ class NavbarAccountMenuTest extends TestCase
         $this->assertStringContainsString('/en/risk', $page);
         $this->assertStringContainsString('/en/financial-model', $page);
     }
+
+    public function test_blog_is_in_the_footer_not_the_header(): void
+    {
+        $page = $this->pageFor(null);
+        $nav = $this->navFor(null);
+        $this->assertStringNotContainsString('/en/blog', $nav, 'Blog should no longer be a header link');
+        $this->assertStringContainsString('/en/blog', $page, 'Blog should still be reachable from the footer');
+    }
+
+    public function test_language_switcher_is_a_globe_dropdown(): void
+    {
+        $nav = $this->navFor(null);
+        $this->assertStringContainsString('lang-trigger', $nav);
+        $this->assertStringContainsString('lang-menu', $nav);
+        $this->assertStringContainsString('aria-haspopup="menu"', $nav);
+        $this->assertStringContainsString('English', $nav);
+        $this->assertStringContainsString('Français', $nav);
+    }
 }

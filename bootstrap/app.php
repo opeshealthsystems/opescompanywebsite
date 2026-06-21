@@ -17,6 +17,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'role'      => \App\Http\Middleware\RequireRole::class,
         ]);
 
+        // Locale is a non-sensitive UI preference ("en"/"fr") — keep it unencrypted
+        // so the bare-root redirect can read the visitor's remembered choice.
+        $middleware->encryptCookies(except: ['locale']);
+
         \Illuminate\Auth\Middleware\Authenticate::redirectUsing(
             fn ($request) => route('login')
         );

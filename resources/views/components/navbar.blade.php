@@ -288,7 +288,6 @@
         <a href="{{ url($locale.'/about') }}">{{ __('nav.about') }}</a>
         <a href="{{ url($locale.'/partnerships') }}">{{ __('nav.partnerships') }}</a>
         <a href="{{ url($locale.'/pricing') }}">{{ __('nav.pricing') }}</a>
-        <a href="{{ url($locale.'/blog') }}">{{ __('nav.blog') }}</a>
         <a href="{{ url($locale.'/contact') }}">{{ __('nav.contact') }}</a>
     </div>
 
@@ -394,6 +393,26 @@
         });
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') setAccount(false);
+        });
+    }
+
+    // Language switcher — click the globe to open/close the locale dropdown.
+    var lang = nav.querySelector('.lang-switcher');
+    var langTrigger = lang && lang.querySelector('.lang-trigger');
+    if (lang && langTrigger) {
+        var setLang = function (open) {
+            lang.classList.toggle('open', open);
+            langTrigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        };
+        langTrigger.addEventListener('click', function (e) {
+            e.stopPropagation();
+            setLang(!lang.classList.contains('open'));
+        });
+        document.addEventListener('click', function (e) {
+            if (!lang.contains(e.target)) setLang(false);
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') setLang(false);
         });
     }
 

@@ -15,8 +15,16 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
-// Bare root → default locale
-Route::get('/', fn () => redirect('/'.config('locale.default')));
+// Bare root → locale chosen earlier (cookie) → the visitor's device language → default.
+Route::get('/', function (\Illuminate\Http\Request $request) {
+    $supported = config('locale.supported');
+    $remembered = $request->cookie('locale');
+    $locale = in_array($remembered, $supported, true)
+        ? $remembered
+        : $request->getPreferredLanguage($supported); // from the browser's Accept-Language
+
+    return redirect('/'.($locale ?: config('locale.default')));
+});
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
 // ── Auth (non-locale-prefixed so Laravel's Authenticate middleware can redirect to route('login')) ──
