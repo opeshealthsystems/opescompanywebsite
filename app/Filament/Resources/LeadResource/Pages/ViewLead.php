@@ -40,7 +40,7 @@ class ViewLead extends ViewRecord
                         . '<h3 style="color:#00C896;">OPES Health Systems</h3>'
                         . '<p>' . nl2br(e($data['body'])) . '</p>'
                         . '<hr style="border:none;border-top:1px solid #e2e8f0;margin:20px 0;">'
-                        . '<p style="color:#94a3b8;font-size:11px;">OPES Health Systems — automated via admin panel</p>'
+                        . '<p style="color:#9fb0c9;font-size: 13px;">OPES Health Systems — automated via admin panel</p>'
                         . '</body></html>',
                         function ($message) use ($lead, $data) {
                             $message->to($lead->email, $lead->name)->subject($data['subject']);

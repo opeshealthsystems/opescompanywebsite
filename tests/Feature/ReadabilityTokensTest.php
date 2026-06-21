@@ -111,4 +111,50 @@ class ReadabilityTokensTest extends TestCase
             }
         }
     }
+
+    /** SP3 — custom Filament Blade views + app/Filament PHP (inline-HTML styling). */
+    private function filamentFiles(): array
+    {
+        $files = [];
+        foreach ([base_path('resources/views/filament') => '.blade.php', base_path('app/Filament') => '.php'] as $dir => $ext) {
+            if (! is_dir($dir)) {
+                continue;
+            }
+            $it = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir, \FilesystemIterator::SKIP_DOTS));
+            foreach ($it as $f) {
+                if ($f->isFile() && str_ends_with($f->getFilename(), $ext)) {
+                    $files[] = $f->getPathname();
+                }
+            }
+        }
+        return $files;
+    }
+
+    public function test_filament_has_no_faint_text_hexes(): void
+    {
+        foreach ($this->filamentFiles() as $file) {
+            $c = file_get_contents($file);
+            foreach (['#475569', '#64748b', '#94a3b8'] as $hex) {
+                $this->assertStringNotContainsString($hex, $c, basename($file)." still uses {$hex}");
+            }
+        }
+    }
+
+    public function test_filament_views_have_no_sub_12_px_fonts(): void
+    {
+        $base = base_path('resources/views/filament');
+        if (! is_dir($base)) {
+            $this->markTestSkipped('no filament views');
+        }
+        $it = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($base, \FilesystemIterator::SKIP_DOTS));
+        foreach ($it as $f) {
+            if (! ($f->isFile() && str_ends_with($f->getFilename(), '.blade.php'))) {
+                continue;
+            }
+            $c = file_get_contents($f->getPathname());
+            foreach (['font-size: 9px', 'font-size: 10px', 'font-size: 11px', 'font-size:9px', 'font-size:10px', 'font-size:11px'] as $bad) {
+                $this->assertStringNotContainsString($bad, $c, $f->getFilename()." still uses {$bad}");
+            }
+        }
+    }
 }

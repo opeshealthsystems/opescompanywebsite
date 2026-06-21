@@ -227,7 +227,7 @@
         .opes-hero > p {
             margin: 10px 0 0;
             font-size: 13px;
-            color: #64748b;
+            color: #9fb0c9;
             line-height: 1.6;
         }
         .opes-features {
@@ -241,7 +241,7 @@
             align-items: center;
             gap: 10px;
             font-size: 12px;
-            color: #94a3b8;
+            color: #9fb0c9;
         }
         .opes-feat-icon {
             width: 28px; height: 28px;
@@ -254,7 +254,7 @@
             flex-shrink: 0;
         }
         .opes-version {
-            font-size: 10px;
+            font-size: 12px;
             color: #334155;
             position: relative;
         }
@@ -281,7 +281,7 @@
         }
         .opes-form-head p {
             font-size: 13px;
-            color: #64748b;
+            color: #9fb0c9;
             margin: 4px 0 0;
         }
 
@@ -320,7 +320,7 @@
             box-shadow: 0 0 0 1px #00C896 !important;
         }
         .opes-right input::placeholder {
-            color: #475569 !important;
+            color: #8696b4 !important;
         }
         .opes-right .fi-input {
             background: #1e293b !important;
@@ -329,8 +329,8 @@
         }
         .opes-right label,
         .opes-right .fi-label {
-            color: #94a3b8 !important;
-            font-size: 11px !important;
+            color: #9fb0c9 !important;
+            font-size: 13px !important;
             font-weight: 600 !important;
             letter-spacing: .04em !important;
             text-transform: uppercase !important;
@@ -383,7 +383,7 @@
             background: #1e293b;
         }
         .opes-divider span {
-            font-size: 11px;
+            font-size: 13px;
             color: #334155;
             white-space: nowrap;
         }
@@ -398,7 +398,7 @@
             padding: 8px 10px;
             border-radius: 7px;
             border: 1px solid;
-            font-size: 11px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
