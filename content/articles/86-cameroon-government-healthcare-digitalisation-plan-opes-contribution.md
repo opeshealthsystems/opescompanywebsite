@@ -9,11 +9,11 @@
 **Quick answer:** Cameroon's government is digitalising its health system through the **National Digital Health Strategic Plan (Plan Stratégique National de Santé Numérique, PSNSN)**, led by the Ministry of Public Health (MINSANTE), alongside the **Couverture Santé Universelle (CSU)** and a multi-million-dollar health-digitization investment. The strategy's goal is reliable, secure, interoperable systems that support Universal Health Coverage and data-driven decisions across the health pyramid. **OPES Health Systems contributes by building the hospital-level software — records, billing, pharmacy, reporting — that turns that national vision into working reality inside facilities.**
 
 **Key facts**
-- Cameroon's first **National Digital Health Strategic Plan ran 2020–2024**, developed by MINSANTE with partners including I-TECH/University of Washington, the Johns Hopkins Cameroon Program, and CDC-PEPFAR.
+- Cameroon's first **National Digital Health Strategic Plan ran 2020–2024**, reportedly developed by MINSANTE with partners including I-TECH/University of Washington, the Johns Hopkins Cameroon Program, and CDC-PEPFAR.
 - Its vision: by 2024, digital health would contribute to **Universal Health Coverage** through informed decision-making at every level, supported by **reliable, secure, and interoperable** systems.
-- Cameroon launched a roughly **US$51.3 million** plan to accelerate health-system digitization, and a MINSANTE–CAMTEL partnership to put connectivity at the service of health.
+- Cameroon launched what has been reported as a roughly **US$51.3 million** plan to accelerate health-system digitization, and a MINSANTE–CAMTEL partnership to put connectivity at the service of health.
 - A **2025 evaluation** of the 2020–2024 plan noted progress in digital-health governance, a national e-health architecture, deployment of national health information system tools, and workforce capacity-building.
-- The **CSU**, launched in 2023, added digital enrolment (via `csu.minsante.cm` and the *CameroonHealthCoverage* mobile app), with around **5 million** people enrolled.
+- The **CSU**, launched in 2023, added digital enrolment (via `csu.minsante.cm` and the *CameroonHealthCoverage* mobile app), with a reported ~**5 million** people enrolled.
 
 ## What is Cameroon's plan to digitalise healthcare?
 
@@ -32,7 +32,7 @@ The strategy's stated ambition is that, through digital health, the system makes
 
 ## Where does the plan stand?
 
-It is real and progressing, with work still ahead. The 2025 evaluation of the 2020–2024 plan highlighted genuine advances — stronger digital-health governance, a national e-health architecture, the rollout of national HIS tools, and capacity-building. The roughly US$51.3 million digitization investment and the MINSANTE–CAMTEL connectivity partnership signal continued commitment, and the CSU's digital enrolment shows the policy reaching citizens directly. At the same time, the context is demanding: government health spending sits near 4% of GDP, out-of-pocket payment still dominates, and there are significant health-workforce gaps. Digitization is part of how Cameroon intends to do more with constrained resources.
+It is real and progressing, with work still ahead. The 2025 evaluation of the 2020–2024 plan highlighted genuine advances — stronger digital-health governance, a national e-health architecture, the rollout of national HIS tools, and capacity-building. The reported roughly US$51.3 million digitization investment and the MINSANTE–CAMTEL connectivity partnership signal continued commitment, and the CSU's digital enrolment shows the policy reaching citizens directly. At the same time, the context is demanding: government health spending is estimated near 4% of GDP, out-of-pocket payment still dominates, and there are significant health-workforce gaps. Digitization is part of how Cameroon intends to do more with constrained resources.
 
 ## Why does the "last mile" — the hospital — matter most?
 
@@ -57,7 +57,7 @@ In short, the government sets the national direction; OPES helps hospitals trave
 Yes. Cameroon's Ministry of Public Health (MINSANTE) developed the National Digital Health Strategic Plan (Plan Stratégique National de Santé Numérique), with its first edition running 2020–2024, alongside the Health Sector Strategy and the Couverture Santé Universelle. The plan aims for reliable, secure, interoperable systems that support Universal Health Coverage and data-driven decisions.
 
 ### How much is Cameroon investing in health digitization?
-Cameroon launched a plan of roughly US$51.3 million to accelerate the digitization of its health system, complemented by partnerships such as the MINSANTE–CAMTEL collaboration on connectivity. Health digitization is also supported through the CSU reform and development partners.
+Cameroon launched what has been reported as a plan of roughly US$51.3 million to accelerate the digitization of its health system, complemented by partnerships such as the MINSANTE–CAMTEL collaboration on connectivity. Health digitization is also supported through the CSU reform and development partners.
 
 ### How does OPES Health Systems support the government's plan?
 OPES contributes at the facility level — the "last mile" of the national strategy. It provides hospital management software that helps facilities produce reliable structured data for national systems, operationalise CSU billing and claims, exchange data through interoperability standards, and make informed decisions — all adapted to Cameroonian realities like mobile money, mutuelles, and bilingual operation.

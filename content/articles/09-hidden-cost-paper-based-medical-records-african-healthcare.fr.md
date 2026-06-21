@@ -58,7 +58,7 @@ Pour un hôpital comptant 30 membres du personnel clinique gagnant en moyenne 30
 
 Dans un système papier, la facturation prend du temps. Après la visite d'un patient, le personnel de facturation doit examiner la documentation clinique, calculer tous les frais, générer une facture manuellement et traiter le paiement. Pour les cas complexes — des patients ayant passé du temps dans plusieurs services, ou dont les soins ont impliqué plusieurs tests et procédures — ce processus peut prendre des heures, voire des jours.
 
-Il en résulte un allongement des cycles de créances clients : des revenus qui ont été gagnés mais pas encore encaissés. Pour les établissements qui prodiguent des soins à des patients assurés, la soumission des demandes de remboursement dépend également de la documentation papier — et la soumission manuelle des demandes à la CNPS est lente, sujette aux erreurs et entraîne fréquemment des paiements refusés ou retardés.
+Il en résulte un allongement des cycles de créances clients : des revenus qui ont été gagnés mais pas encore encaissés. Pour les établissements qui prodiguent des soins à des patients assurés, la soumission des demandes de remboursement dépend également de la documentation papier — et la soumission manuelle des demandes aux organismes payeurs est lente, sujette aux erreurs et entraîne fréquemment des paiements refusés ou retardés.
 
 Les établissements qui mettent en œuvre une facturation numérique réduisent généralement leur cycle de créances clients de 30 à 50 % la première année, améliorant considérablement la trésorerie avant même de tenir compte de l'augmentation des revenus due à l'élimination des écarts de facturation.
 
@@ -147,7 +147,7 @@ Pour la plupart des établissements de santé camerounais, passer du papier aux 
 
 Le coût de rester sur le papier est plus élevé que le coût de passer au numérique. La seule question est de savoir si ce coût est visible ou caché.
 
-Maintenant, vous pouvez le voir.
+Désormais, ce coût est visible.
 
 ---
 
