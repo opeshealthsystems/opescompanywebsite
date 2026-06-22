@@ -64,16 +64,20 @@ class OpesDashboardStats extends BaseWidget
                 ->color('info'),
         ];
 
-        // Finance + CRM aggregates — restricted away from the support (helpdesk) role.
-        if (auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false) {
+        // Finance aggregate — manage_accounting permission only (accountants + admins).
+        if (auth()->user()?->hasPermissionTo('manage_accounting') ?? false) {
             $outstandingInvoices = Invoice::whereIn('status', ['sent', 'overdue'])->count();
             $overdueInvoices = Invoice::where('status', 'overdue')->count();
-            $newLeads = Lead::where('status', 'new')->count();
 
             $stats[] = Stat::make('Outstanding Invoices', $outstandingInvoices)
                 ->description($overdueInvoices . ' overdue')
                 ->icon('heroicon-o-banknotes')
                 ->color($overdueInvoices > 0 ? 'danger' : ($outstandingInvoices > 0 ? 'warning' : 'success'));
+        }
+
+        // CRM aggregate — admin / super_admin only.
+        if (auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false) {
+            $newLeads = Lead::where('status', 'new')->count();
 
             $stats[] = Stat::make('New Leads', $newLeads)
                 ->description(Lead::where('status', 'qualified')->count() . ' qualified')

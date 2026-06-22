@@ -16,8 +16,8 @@ class RecentInvoicesWidget extends BaseWidget
 
     public static function canView(): bool
     {
-        // Financial data — hidden from support (helpdesk) on the shared dashboard.
-        return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
+        // Financial data — visible to users with the manage_accounting permission only.
+        return auth()->user()?->hasPermissionTo('manage_accounting') ?? false;
     }
 
     public function table(Table $table): Table

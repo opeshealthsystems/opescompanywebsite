@@ -164,7 +164,8 @@ class LeaveRequestResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->visible(fn () => auth()->user()?->hasAnyRole(['super_admin', 'admin', 'hr', 'manager'])),
                 Tables\Actions\Action::make('approve')
                     ->label('Approve')
                     ->icon('heroicon-o-check-circle')
@@ -249,7 +250,8 @@ class LeaveRequestResource extends Resource
                                 ->send();
                         }),
 
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->visible(fn () => auth()->user()?->hasAnyRole(['super_admin', 'admin'])),
                 ]),
             ]);
     }
