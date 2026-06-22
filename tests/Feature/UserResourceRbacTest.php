@@ -9,6 +9,7 @@ use Livewire\Livewire;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 use Tests\TestCase;
+use App\Filament\Resources\UserResource;
 
 class UserResourceRbacTest extends TestCase
 {
@@ -19,6 +20,26 @@ class UserResourceRbacTest extends TestCase
         parent::setUp();
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
         $this->seed(\Database\Seeders\RolePermissionSeeder::class);
+    }
+
+    public function test_admin_does_not_see_super_admin_role_option_in_form(): void
+    {
+        $admin = User::factory()->create();
+        $admin->assignRole('admin');
+
+        $target = User::factory()->create();
+        $target->assignRole('customer');
+
+        $this->actingAs($admin);
+
+        // The roles CheckboxList is hidden entirely for non-super_admins.
+        // Confirm the rendered form does not expose the roles field at all.
+        $component = Livewire::test(EditUser::class, ['record' => $target->getRouteKey()]);
+        $html = $component->html();
+
+        // The roles relationship field (data.roles) must not be present in the rendered HTML
+        // when acted on by a plain admin.
+        $this->assertStringNotContainsString('super_admin', $html);
     }
 
     public function test_admin_cannot_grant_super_admin_via_user_form(): void
