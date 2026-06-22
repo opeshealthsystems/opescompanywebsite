@@ -3,6 +3,8 @@
 .env
 .env.backup
 .env.production
+.env.live
+live.env
 .phpactor.json
 .phpunit.result.cache
 /.claude/
