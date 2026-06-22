@@ -7,6 +7,7 @@ use App\Models\PractitionerBugReport;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -37,6 +38,12 @@ class PractitionerBugReportResource extends Resource
             Textarea::make('description')->disabled()->rows(4),
             Textarea::make('steps_to_reproduce')->label('Steps to Reproduce')->disabled()->rows(4),
             TextInput::make('screenshot_url')->label('Screenshot URL')->disabled(),
+            FileUpload::make('screenshot_path')
+                ->label('Uploaded Screenshot')
+                ->image()
+                ->disk('public')
+                ->disabled()
+                ->dehydrated(false),
             Select::make('status')->options(PractitionerBugReport::statusOptions())->disabled(),
             Textarea::make('admin_response')->rows(3)->label('Admin Response')->disabled(),
         ]);

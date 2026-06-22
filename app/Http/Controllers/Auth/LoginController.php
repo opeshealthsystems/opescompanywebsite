@@ -54,11 +54,12 @@ class LoginController extends Controller
         RateLimiter::clear($throttleKey);
         $request->session()->regenerate();
 
-        if ($user->hasAnyRole(['super_admin', 'admin', 'support'])) {
+        if ($user->hasAnyRole(['super_admin', 'admin'])) {
             return redirect('/admin');
         }
 
         $portalRoutes = [
+            'support'      => 'support.dashboard',
             'practitioner' => 'practitioner.dashboard',
             'tester'       => 'tester.dashboard',
             'manager'      => 'manager.dashboard',

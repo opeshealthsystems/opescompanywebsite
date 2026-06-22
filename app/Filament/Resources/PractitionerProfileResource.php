@@ -48,6 +48,10 @@ class PractitionerProfileResource extends Resource
                         ->label('Professional Reg. Number')
                         ->maxLength(60)
                         ->nullable(),
+                    Forms\Components\TextInput::make('payout_number')
+                        ->label('Mobile Money Payout Number')
+                        ->disabled()
+                        ->dehydrated(false),
                     Forms\Components\TextInput::make('years_of_experience')
                         ->label('Years of Experience')
                         ->numeric()
@@ -158,6 +162,7 @@ class PractitionerProfileResource extends Resource
                         ->badge(),
                     Infolists\Components\TextEntry::make('specialty')->placeholder('—'),
                     Infolists\Components\TextEntry::make('registration_number')->label('Reg. Number')->placeholder('—'),
+                    Infolists\Components\TextEntry::make('payout_number')->label('Mobile Money Payout Number')->placeholder('—'),
                     Infolists\Components\TextEntry::make('years_of_experience')->label('Years Exp.')->placeholder('—'),
                     Infolists\Components\IconEntry::make('is_verified')->label('Verified')->boolean(),
                 ]),

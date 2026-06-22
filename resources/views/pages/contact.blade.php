@@ -34,13 +34,13 @@
                 <div class="cf-field">
                     <label class="cf-label">{{ __('contact.label_name') }}</label>
                     <input class="cf-input @error('name') cf-error @enderror" type="text" name="name"
-                           value="{{ old('name') }}" placeholder="{{ __('contact.placeholder_name') }}">
+                           value="{{ old('name') }}" required maxlength="100" placeholder="{{ __('contact.placeholder_name') }}">
                     @error('name')<span class="cf-err-msg">{{ $message }}</span>@enderror
                 </div>
                 <div class="cf-field">
                     <label class="cf-label">{{ __('contact.label_email') }}</label>
                     <input class="cf-input @error('email') cf-error @enderror" type="email" name="email"
-                           value="{{ old('email') }}" placeholder="{{ __('contact.placeholder_email') }}">
+                           value="{{ old('email') }}" required maxlength="150" placeholder="{{ __('contact.placeholder_email') }}">
                     @error('email')<span class="cf-err-msg">{{ $message }}</span>@enderror
                 </div>
             </div>
@@ -48,7 +48,7 @@
             <div class="cf-row">
                 <div class="cf-field">
                     <label class="cf-label">{{ __('contact.label_phone') }}</label>
-                    <input class="cf-input" type="tel" name="phone" value="{{ old('phone') }}" placeholder="{{ __('contact.placeholder_phone') }}">
+                    <input class="cf-input" type="tel" name="phone" maxlength="30" value="{{ old('phone') }}" placeholder="{{ __('contact.placeholder_phone') }}">
                 </div>
                 <div class="cf-field">
                     <label class="cf-label">{{ __('contact.label_facility') }}</label>
@@ -66,12 +66,12 @@
             <div class="cf-field">
                 <label class="cf-label">{{ __('contact.label_products') }}</label>
                 <input class="cf-input" type="text" name="products"
-                       value="{{ old('products') }}" placeholder="{{ __('contact.placeholder_products') }}">
+                       value="{{ old('products') }}" maxlength="255" placeholder="{{ __('contact.placeholder_products') }}">
             </div>
 
             <div class="cf-field">
                 <label class="cf-label">{{ __('contact.label_message') }}</label>
-                <textarea class="cf-input cf-textarea" name="message" rows="4"
+                <textarea class="cf-input cf-textarea" name="message" rows="4" maxlength="2000"
                           placeholder="{{ __('contact.placeholder_message') }}">{{ old('message') }}</textarea>
             </div>
 

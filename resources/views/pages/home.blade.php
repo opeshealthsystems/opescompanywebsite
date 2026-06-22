@@ -428,8 +428,8 @@
     <p>{{ __('home.demo_text') }}</p>
     <form action="{{ url($locale.'/contact') }}" method="POST" class="demo-form">
         @csrf
-        <input class="demo-input" type="text" name="name" placeholder="{{ __('home.demo_name') }}">
-        <input class="demo-input" type="email" name="email" placeholder="{{ __('home.demo_email') }}">
+        <input class="demo-input" type="text" name="name" required maxlength="100" placeholder="{{ __('home.demo_name') }}">
+        <input class="demo-input" type="email" name="email" required maxlength="150" placeholder="{{ __('home.demo_email') }}">
         <select class="demo-select" name="facility_type">
             <option value="">{{ __('home.demo_facility') }}</option>
             @foreach(config('facility_types') as $value => $labels)

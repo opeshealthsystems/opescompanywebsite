@@ -10,6 +10,7 @@ use App\Models\ValidationModule;
 use App\Models\ValidationProduct;
 use App\Models\ValidationTestCase;
 use App\Models\ValidationWorkflow;
+use Illuminate\Support\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\PermissionRegistrar;
 use Tests\TestCase;
@@ -90,5 +91,29 @@ class DailyTestSessionTest extends TestCase
         $user = User::factory()->create();
         $user->assignRole('practitioner');
         $this->actingAs($user)->get('/en/practitioner/validation/sessions/create')->assertRedirect();
+    }
+
+    public function test_session_date_uses_cameroon_local_day_at_utc_boundary(): void
+    {
+        Carbon::setTestNow('2026-06-21 23:30:00 UTC');
+
+        try {
+            ['user' => $user, 'member' => $member, 'product' => $product, 'module' => $module, 'workflow' => $workflow] = $this->placedPractitionerWithScope();
+
+            $this->actingAs($user)->post('/en/practitioner/validation/sessions', [
+                'validation_product_id'  => $product->id,
+                'validation_module_id'   => $module->id,
+                'validation_workflow_id' => $workflow->id,
+                'date'                   => '2026-06-22',
+                'tasks_completed'        => 1,
+            ])->assertSessionHasNoErrors()->assertRedirect();
+
+            $this->assertDatabaseHas('daily_test_sessions', [
+                'cohort_member_id' => $member->id,
+                'date' => '2026-06-22 00:00:00',
+            ]);
+        } finally {
+            Carbon::setTestNow();
+        }
     }
 }

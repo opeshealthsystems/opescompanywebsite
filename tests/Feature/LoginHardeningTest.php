@@ -48,4 +48,16 @@ class LoginHardeningTest extends TestCase
             $this->post('/logout');
         }
     }
+
+    public function test_support_user_redirects_to_support_portal(): void
+    {
+        $user = User::factory()->create(['password' => Hash::make('password123'), 'is_active' => true]);
+        $user->assignRole('support');
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password123',
+            'locale' => 'en',
+        ])->assertRedirect('/en/support/dashboard');
+    }
 }

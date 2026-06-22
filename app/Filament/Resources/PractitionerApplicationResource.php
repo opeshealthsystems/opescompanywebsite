@@ -237,6 +237,15 @@ class PractitionerApplicationResource extends Resource
                     Infolists\Components\TextEntry::make('motivation')->columnSpanFull()->placeholder('—'),
                     Infolists\Components\TextEntry::make('admin_notes')->label('Admin Notes')->columnSpanFull()->placeholder('—'),
                 ]),
+            Infolists\Components\Section::make('Payout Details')
+                ->columns(2)
+                ->schema([
+                    Infolists\Components\TextEntry::make('payout_reference')->label('Reference')->placeholder('—'),
+                    Infolists\Components\TextEntry::make('payout_provider')->label('Provider')->placeholder('—'),
+                    Infolists\Components\TextEntry::make('payout_initiated_at')->label('Initiated')->dateTime('d M Y H:i')->placeholder('—'),
+                    Infolists\Components\TextEntry::make('paid_at')->label('Paid')->dateTime('d M Y H:i')->placeholder('—'),
+                    Infolists\Components\TextEntry::make('payout_failure_reason')->label('Failure Reason')->columnSpanFull()->placeholder('—'),
+                ]),
         ]);
     }
 

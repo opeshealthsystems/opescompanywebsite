@@ -49,7 +49,7 @@ class SessionController extends Controller
             'validation_module_id'   => 'required|exists:validation_modules,id',
             'validation_workflow_id' => 'required|exists:validation_workflows,id',
             'facility_context'       => 'nullable|string|max:200',
-            'date'                   => 'required|date|before_or_equal:today',
+            'date'                   => 'required|date|before_or_equal:'.now('Africa/Douala')->toDateString(),
             'start_time'             => 'nullable|date_format:H:i',
             'end_time'               => 'nullable|date_format:H:i|after:start_time',
             'tasks_completed'        => 'required|integer|min:0|max:999',
