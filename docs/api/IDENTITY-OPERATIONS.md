@@ -2,7 +2,7 @@
 
 OHS uses Laravel Passport 13.10 and League OAuth2 Server for approved server-to-server clients and administrator-reviewed public OAuth clients. `POST /api/v1/oauth/token` remains the machine-only client-credentials endpoint. Delegated user tokens use authorization code with S256 PKCE and `POST /api/v1/oauth/user-token`. This is OAuth 2.0 authorization, not OpenID Connect authentication. Password/implicit grants, userinfo, organization tenancy and OIDC are not published. Existing web sessions and password resets remain the website sign-in mechanism.
 
-Public developer entry points are `/en/developers` and `/fr/developers`; the versioned contract is `/api/v1/openapi.json`. The `0.24.0` contract documents delegated authorization and the business workflows. Review integration requests before provisioning. There is no automatic public client registration or sandbox.
+Public developer entry points are `/en/developers` and `/fr/developers`; the versioned contract is `/api/v1/openapi.json`. The `0.25.0` contract documents delegated authorization and the business workflows. Review integration requests before provisioning. There is no automatic public client registration or sandbox.
 
 ## Delegate user authorization
 

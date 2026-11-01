@@ -25,6 +25,11 @@ $add = function (string $name, string $method, string $path, array $parameters, 
 $input = ['name' => 'workflowInput', 'kind' => 'input'];
 $model = fn (string $name, string $type) => ['name' => $name, 'kind' => 'model', 'class' => 'App\\Models\\'.$type, 'key' => 'id'];
 
+$add('admin.finance.creditNotes.create', 'createCreditNote', 'finance/credit-notes', [$input], 'CreditNoteResource', 'create');
+$add('admin.finance.creditNotes.update', 'updateCreditNote', 'finance/credit-notes/{creditNote}', [$input, $model('creditNote', 'CreditNote')], 'CreditNoteResource', 'update');
+$definitions['admin.finance.creditNotes.update']['http_methods'] = ['PUT'];
+$add('admin.finance.creditNotes.delete', 'deleteCreditNote', 'finance/credit-notes/{creditNote}', [$input, $model('creditNote', 'CreditNote')], 'CreditNoteResource', 'delete');
+$definitions['admin.finance.creditNotes.delete']['http_methods'] = ['DELETE'];
 $add('admin.finance.expenses.create', 'createExpense', 'finance/expenses', [$input], 'ExpenseResource', 'create');
 $add('admin.finance.expenses.update', 'updateExpense', 'finance/expenses/{expense}', [$input, $model('expense', 'Expense')], 'ExpenseResource', 'update');
 $definitions['admin.finance.expenses.update']['http_methods'] = ['PUT'];

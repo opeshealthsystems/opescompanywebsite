@@ -202,6 +202,44 @@ class BusinessApiTest extends TestCase
         $this->assertDatabaseHas('expenses', ['id' => $id, 'status' => 'pending']);
     }
 
+    public function test_credit_note_lifecycle_is_api_backed_and_only_accepts_server_owned_financial_totals(): void
+    {
+        $admin = $this->user('admin');
+        $token = $this->access($admin, ['finance:write']);
+        $headers = ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'credit-note-create-0001'];
+        $body = [
+            'reason' => 'Fictional test correction', 'currency' => 'XAF', 'tax_amount' => 10,
+            'items' => [['description' => 'Test service adjustment', 'quantity' => 2, 'unit_price' => 50]],
+            'reference' => 'spoofed', 'status' => 'issued', 'total' => 1, 'created_by' => 999,
+        ];
+        $this->postJson('/api/v1/finance/credit-notes', $body, $headers)->assertUnprocessable();
+        unset($body['reference'], $body['status'], $body['total'], $body['created_by']);
+
+        $created = $this->postJson('/api/v1/finance/credit-notes', $body, $headers)->assertCreated()
+            ->assertJsonPath('data.status', 'draft')->assertJsonPath('data.total', '110.00');
+        $this->postJson('/api/v1/finance/credit-notes', $body, $headers)->assertExactJson($created->json());
+        $creditNote = \App\Models\CreditNote::query()->findOrFail($created->json('data.id'));
+        $this->assertSame($admin->id, $creditNote->created_by);
+        $this->assertDatabaseCount('credit_note_items', 1);
+
+        $headers['Idempotency-Key'] = 'credit-note-update-0001';
+        $updated = $this->putJson('/api/v1/finance/credit-notes/'.$creditNote->id, [
+            'reason' => 'Corrected test reason', 'items' => [['description' => 'Replacement adjustment', 'quantity' => 1, 'unit_price' => 80]], 'tax_amount' => 5,
+        ], $headers)->assertOk()->assertJsonPath('data.total', '85.00');
+        $this->putJson('/api/v1/finance/credit-notes/'.$creditNote->id, [
+            'reason' => 'Corrected test reason', 'items' => [['description' => 'Replacement adjustment', 'quantity' => 1, 'unit_price' => 80]], 'tax_amount' => 5,
+        ], $headers)->assertExactJson($updated->json());
+        $this->assertDatabaseCount('credit_note_items', 1);
+
+        $headers['Idempotency-Key'] = 'credit-note-delete-0001';
+        $this->deleteJson('/api/v1/finance/credit-notes/'.$creditNote->id, [], $headers)->assertOk();
+        $this->assertDatabaseMissing('credit_notes', ['id' => $creditNote->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'finance.credit_note_created.v1', 'actor_id' => $admin->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'finance.credit_note_updated.v1', 'actor_id' => $admin->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'finance.credit_note_deleted.v1', 'actor_id' => $admin->id]);
+        $this->postJson('/api/v1/finance/credit-notes', $body, ['Idempotency-Key' => 'credit-note-anonymous-01'])->assertUnauthorized();
+    }
+
     public function test_payroll_generation_completion_and_payment_are_shared_and_idempotent(): void
     {
         $admin = $this->user('admin');

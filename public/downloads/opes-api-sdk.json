@@ -1,9 +1,9 @@
 {
-  "name": "@opes-health/api-client",
-  "version": "0.20.0",
-  "bytes": 12955,
-  "sha256": "34819519a1c74267975079d1b5174313991febedc03530d385d948bf35ef8102",
+  "version": "0.21.0",
   "registryPublished": false,
-  "url": "/downloads/opes-health-api-client-0.20.0.tgz",
-  "runtime": "Node.js >=22"
+  "sha256": "8d8e384f6c918b69d79efb2fc93da4f024517476b0acc3529372fc9b152e4f25",
+  "runtime": "Node.js >=22",
+  "name": "@opes-health/api-client",
+  "url": "/downloads/opes-health-api-client-0.21.0.tgz",
+  "bytes": 13001
 }

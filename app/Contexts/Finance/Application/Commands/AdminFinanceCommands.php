@@ -128,6 +128,116 @@ final class AdminFinanceCommands extends WorkflowHandler
         return $this->outcome('expense', $record->id, $record->status, 'Expense updated.', ['reference' => $record->reference]);
     }
 
+    public function createCreditNote(WorkflowInput $input): WorkflowResult
+    {
+        $actor = $this->adminActor($input);
+        $data = $input->validate([
+            'invoice_id' => 'nullable|integer|exists:invoices,id',
+            'reason' => 'required|string|max:300',
+            'currency' => 'required|in:XAF,USD,EUR',
+            'tax_amount' => 'nullable|numeric|min:0',
+            'notes' => 'nullable|string|max:5000',
+            'items' => 'required|array|min:1|max:100',
+            'items.*.description' => 'required|string|max:500',
+            'items.*.quantity' => 'required|numeric|gt:0|max:1000000',
+            'items.*.unit_price' => 'required|numeric|min:0|max:1000000000',
+            'reference' => 'prohibited', 'status' => 'prohibited', 'issued_at' => 'prohibited',
+            'created_by' => 'prohibited', 'subtotal' => 'prohibited', 'total' => 'prohibited',
+        ]);
+        $items = $data['items'];
+        unset($data['items']);
+
+        $record = DB::transaction(function () use ($data, $items, $actor) {
+            $year = now()->year;
+            $sequenceName = 'credit-note:'.$year;
+            DB::table('business_sequences')->insertOrIgnore(['name' => $sequenceName, 'last_value' => 0]);
+            $sequence = DB::table('business_sequences')->where('name', $sequenceName)->lockForUpdate()->first();
+            $previous = (int) $sequence->last_value;
+            if ($previous === 0) {
+                $prefix = 'CN-'.$year.'-';
+                $previous = CreditNote::query()->where('reference', 'like', $prefix.'%')->pluck('reference')
+                    ->map(fn ($reference) => ctype_digit(substr($reference, strlen($prefix))) ? (int) substr($reference, strlen($prefix)) : 0)->max() ?? 0;
+            }
+            $next = $previous + 1;
+            DB::table('business_sequences')->where('name', $sequenceName)->update(['last_value' => $next]);
+            $record = CreditNote::create($data + [
+                'reference' => 'CN-'.$year.'-'.str_pad((string) $next, 4, '0', STR_PAD_LEFT),
+                'status' => 'draft', 'created_by' => $actor->id, 'tax_amount' => $data['tax_amount'] ?? 0,
+            ]);
+            $this->replaceCreditNoteItems($record, $items);
+            $record->recalculateTotals();
+            DomainOutbox::append('event', 'finance.credit_note_created.v1', [
+                'references' => [['resource' => 'CreditNote', 'id' => $record->id]],
+                'changed_fields' => array_keys($data),
+            ], $actor->id);
+            return $record;
+        }, 3);
+
+        return WorkflowResult::payload(['id' => $record->id, 'reference' => $record->reference, 'status' => $record->status, 'subtotal' => $record->subtotal, 'total' => $record->total], 201)->with('success', 'Credit note created.');
+    }
+
+    public function updateCreditNote(WorkflowInput $input, CreditNote $creditNote): WorkflowResult
+    {
+        $actor = $this->adminActor($input);
+        $data = $input->validate([
+            'invoice_id' => 'sometimes|nullable|integer|exists:invoices,id',
+            'reason' => 'sometimes|required|string|max:300',
+            'currency' => 'sometimes|required|in:XAF,USD,EUR',
+            'tax_amount' => 'sometimes|nullable|numeric|min:0',
+            'notes' => 'sometimes|nullable|string|max:5000',
+            'items' => 'sometimes|required|array|min:1|max:100',
+            'items.*.description' => 'required_with:items|string|max:500',
+            'items.*.quantity' => 'required_with:items|numeric|gt:0|max:1000000',
+            'items.*.unit_price' => 'required_with:items|numeric|min:0|max:1000000000',
+            'reference' => 'prohibited', 'status' => 'prohibited', 'issued_at' => 'prohibited',
+            'created_by' => 'prohibited', 'subtotal' => 'prohibited', 'total' => 'prohibited',
+        ]);
+        if ($data === []) $this->invalid('credit_note', 'Provide at least one credit note field to update.');
+        $items = $data['items'] ?? null;
+        unset($data['items']);
+
+        $record = DB::transaction(function () use ($creditNote, $data, $items, $actor) {
+            $record = CreditNote::query()->lockForUpdate()->findOrFail($creditNote->id);
+            if ($record->status !== 'draft') $this->invalid('status', 'Only draft credit notes can be edited.');
+            $record->fill($data)->save();
+            if ($items !== null) $this->replaceCreditNoteItems($record, $items);
+            $record->recalculateTotals();
+            DomainOutbox::append('event', 'finance.credit_note_updated.v1', [
+                'references' => [['resource' => 'CreditNote', 'id' => $record->id]],
+                'changed_fields' => array_merge(array_keys($data), $items !== null ? ['items'] : []),
+            ], $actor->id);
+            return $record;
+        }, 3);
+
+        return $this->outcome('credit_note', $record->id, $record->status, 'Credit note updated.', ['reference' => $record->reference, 'subtotal' => $record->subtotal, 'total' => $record->total]);
+    }
+
+    public function deleteCreditNote(WorkflowInput $input, CreditNote $creditNote): WorkflowResult
+    {
+        $actor = $this->adminActor($input);
+        DB::transaction(function () use ($creditNote, $actor) {
+            $record = CreditNote::query()->lockForUpdate()->findOrFail($creditNote->id);
+            if ($record->status !== 'draft') $this->invalid('status', 'Only draft credit notes can be deleted.');
+            DomainOutbox::append('event', 'finance.credit_note_deleted.v1', ['references' => [['resource' => 'CreditNote', 'id' => $record->id]]], $actor->id);
+            $record->delete();
+        }, 3);
+
+        return WorkflowResult::payload(['id' => $creditNote->id, 'status' => 'deleted'])->with('success', 'Draft credit note deleted.');
+    }
+
+    private function replaceCreditNoteItems(CreditNote $record, array $items): void
+    {
+        $record->items()->delete();
+        foreach ($items as $item) {
+            $quantity = (float) $item['quantity'];
+            $unitPrice = (float) $item['unit_price'];
+            $record->items()->create([
+                'description' => $item['description'], 'quantity' => $quantity,
+                'unit_price' => $unitPrice, 'total' => round($quantity * $unitPrice, 2),
+            ]);
+        }
+    }
+
     private function validateExpenseReceipt(?string $path): void
     {
         if ($path !== null && $path !== ''

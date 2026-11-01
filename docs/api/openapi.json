@@ -2,7 +2,7 @@
     "openapi": "3.1.1",
     "info": {
         "title": "OHS Platform API",
-        "version": "0.24.0",
+        "version": "0.25.0",
         "description": "Versioned OHS business APIs. Public enquiries and account recovery, machine catalogue access, and delegated business workflows with authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.",
         "contact": {
             "name": "OHS support",
@@ -32771,6 +32771,832 @@
                                                 "operation": {
                                                     "type": "string",
                                                     "const": "administration.licenses.reactivate"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Valid delegated user token required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Role, scope or record access denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Idempotency key used with a different request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Rate limit exceeded",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/finance/credit-notes": {
+            "post": {
+                "operationId": "admin_finance_creditNotes_create",
+                "summary": "Admin Finance Commands createCreditNote",
+                "description": "Shared application operation: admin.finance.creditNotes.create. Existing role and record policies remain authoritative.",
+                "tags": [
+                    "Finance"
+                ],
+                "security": [
+                    {
+                        "UserOAuth2": [
+                            "finance:write"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "Accept-Language",
+                        "description": "Response language; defaults to English.",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "en",
+                                "fr"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Idempotency-Key",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "minLength": 16,
+                            "maxLength": 128,
+                            "pattern": "^[A-Za-z0-9._:-]+$"
+                        },
+                        "description": "A unique command key. Repeat the same body and key within 24 hours to retrieve the first outcome. A changed body returns 409."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.finance.creditNotes.create"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Valid delegated user token required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Role, scope or record access denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Idempotency key used with a different request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Rate limit exceeded",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "invoice_id": {
+                                        "type": [
+                                            "integer",
+                                            "null"
+                                        ],
+                                        "description": "Validation: nullable|integer|exists:invoices,id"
+                                    },
+                                    "reason": {
+                                        "type": "string",
+                                        "description": "Validation: required|string|max:300",
+                                        "maxLength": 300
+                                    },
+                                    "currency": {
+                                        "type": "string",
+                                        "description": "Validation: required|in:XAF,USD,EUR",
+                                        "enum": [
+                                            "XAF",
+                                            "USD",
+                                            "EUR"
+                                        ]
+                                    },
+                                    "tax_amount": {
+                                        "type": [
+                                            "number",
+                                            "null"
+                                        ],
+                                        "description": "Validation: nullable|numeric|min:0",
+                                        "minimum": 0
+                                    },
+                                    "notes": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: nullable|string|max:5000",
+                                        "maxLength": 5000
+                                    },
+                                    "items": {
+                                        "type": "array",
+                                        "description": "Validation: required|array|min:1|max:100",
+                                        "items": [],
+                                        "minItems": 1,
+                                        "maxItems": 100
+                                    },
+                                    "reference": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "issued_at": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "created_by": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "subtotal": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "total": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    }
+                                },
+                                "required": [
+                                    "reason",
+                                    "currency",
+                                    "items"
+                                ]
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "invoice_id": {
+                                        "type": [
+                                            "integer",
+                                            "null"
+                                        ],
+                                        "description": "Validation: nullable|integer|exists:invoices,id"
+                                    },
+                                    "reason": {
+                                        "type": "string",
+                                        "description": "Validation: required|string|max:300",
+                                        "maxLength": 300
+                                    },
+                                    "currency": {
+                                        "type": "string",
+                                        "description": "Validation: required|in:XAF,USD,EUR",
+                                        "enum": [
+                                            "XAF",
+                                            "USD",
+                                            "EUR"
+                                        ]
+                                    },
+                                    "tax_amount": {
+                                        "type": [
+                                            "number",
+                                            "null"
+                                        ],
+                                        "description": "Validation: nullable|numeric|min:0",
+                                        "minimum": 0
+                                    },
+                                    "notes": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: nullable|string|max:5000",
+                                        "maxLength": 5000
+                                    },
+                                    "items": {
+                                        "type": "array",
+                                        "description": "Validation: required|array|min:1|max:100",
+                                        "items": [],
+                                        "minItems": 1,
+                                        "maxItems": 100
+                                    },
+                                    "reference": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "issued_at": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "created_by": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "subtotal": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "total": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    }
+                                },
+                                "required": [
+                                    "reason",
+                                    "currency",
+                                    "items"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/finance/credit-notes/{creditNote}": {
+            "put": {
+                "operationId": "admin_finance_creditNotes_update",
+                "summary": "Admin Finance Commands updateCreditNote",
+                "description": "Shared application operation: admin.finance.creditNotes.update. Existing role and record policies remain authoritative.",
+                "tags": [
+                    "Finance"
+                ],
+                "security": [
+                    {
+                        "UserOAuth2": [
+                            "finance:write"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "creditNote",
+                        "description": "Record identifier or slug from an authorized read response.",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Accept-Language",
+                        "description": "Response language; defaults to English.",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "en",
+                                "fr"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Idempotency-Key",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "minLength": 16,
+                            "maxLength": 128,
+                            "pattern": "^[A-Za-z0-9._:-]+$"
+                        },
+                        "description": "A unique command key. Repeat the same body and key within 24 hours to retrieve the first outcome. A changed body returns 409."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.finance.creditNotes.update"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Valid delegated user token required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Role, scope or record access denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Idempotency key used with a different request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Rate limit exceeded",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "invoice_id": {
+                                        "type": [
+                                            "integer",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|integer|exists:invoices,id"
+                                    },
+                                    "reason": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|required|string|max:300",
+                                        "maxLength": 300
+                                    },
+                                    "currency": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|required|in:XAF,USD,EUR",
+                                        "enum": [
+                                            "XAF",
+                                            "USD",
+                                            "EUR"
+                                        ]
+                                    },
+                                    "tax_amount": {
+                                        "type": [
+                                            "number",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|numeric|min:0",
+                                        "minimum": 0
+                                    },
+                                    "notes": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:5000",
+                                        "maxLength": 5000
+                                    },
+                                    "items": {
+                                        "type": "array",
+                                        "description": "Validation: sometimes|required|array|min:1|max:100",
+                                        "items": [],
+                                        "minItems": 1,
+                                        "maxItems": 100
+                                    },
+                                    "reference": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "issued_at": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "created_by": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "subtotal": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "total": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    }
+                                },
+                                "required": [
+                                    "reason",
+                                    "currency",
+                                    "items"
+                                ]
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "invoice_id": {
+                                        "type": [
+                                            "integer",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|integer|exists:invoices,id"
+                                    },
+                                    "reason": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|required|string|max:300",
+                                        "maxLength": 300
+                                    },
+                                    "currency": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|required|in:XAF,USD,EUR",
+                                        "enum": [
+                                            "XAF",
+                                            "USD",
+                                            "EUR"
+                                        ]
+                                    },
+                                    "tax_amount": {
+                                        "type": [
+                                            "number",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|numeric|min:0",
+                                        "minimum": 0
+                                    },
+                                    "notes": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:5000",
+                                        "maxLength": 5000
+                                    },
+                                    "items": {
+                                        "type": "array",
+                                        "description": "Validation: sometimes|required|array|min:1|max:100",
+                                        "items": [],
+                                        "minItems": 1,
+                                        "maxItems": 100
+                                    },
+                                    "reference": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "issued_at": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "created_by": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "subtotal": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "total": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    }
+                                },
+                                "required": [
+                                    "reason",
+                                    "currency",
+                                    "items"
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "admin_finance_creditNotes_delete",
+                "summary": "Admin Finance Commands deleteCreditNote",
+                "description": "Shared application operation: admin.finance.creditNotes.delete. Existing role and record policies remain authoritative.",
+                "tags": [
+                    "Finance"
+                ],
+                "security": [
+                    {
+                        "UserOAuth2": [
+                            "finance:write"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "creditNote",
+                        "description": "Record identifier or slug from an authorized read response.",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Accept-Language",
+                        "description": "Response language; defaults to English.",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "en",
+                                "fr"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Idempotency-Key",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "minLength": 16,
+                            "maxLength": 128,
+                            "pattern": "^[A-Za-z0-9._:-]+$"
+                        },
+                        "description": "A unique command key. Repeat the same body and key within 24 hours to retrieve the first outcome. A changed body returns 409."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.finance.creditNotes.delete"
                                                 }
                                             }
                                         },

@@ -249,6 +249,33 @@ export const businessOperations = Object.freeze({
             "multipart/form-data"
         ]
     },
+    "admin_finance_creditNotes_create": {
+        "method": "POST",
+        "path": "/finance/credit-notes",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_finance_creditNotes_delete": {
+        "method": "DELETE",
+        "path": "/finance/credit-notes/{creditNote}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "creditNote"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_finance_creditNotes_issue": {
         "method": "POST",
         "path": "/finance/credit-notes/{creditNote}/issue",
@@ -261,6 +288,22 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
+    },
+    "admin_finance_creditNotes_update": {
+        "method": "PUT",
+        "path": "/finance/credit-notes/{creditNote}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "creditNote"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
     },
     "admin_finance_creditNotes_void": {
         "method": "POST",

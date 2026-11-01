@@ -59,6 +59,8 @@ class CreditNoteResource extends Resource
                     ->label('Issued By')
                     ->options(fn () => User::orderBy('name')->pluck('name', 'id'))
                     ->default(fn () => auth()->id())
+                    ->disabled()
+                    ->dehydrated(false)
                     ->searchable()
                     ->required(),
 
@@ -79,7 +81,6 @@ class CreditNoteResource extends Resource
 
             Forms\Components\Section::make('Line Items')->schema([
                 Forms\Components\Repeater::make('items')
-                    ->relationship('items')
                     ->columns(4)
                     ->schema([
                         Forms\Components\TextInput::make('description')
@@ -184,11 +185,19 @@ class CreditNoteResource extends Resource
                     ->requiresConfirmation()
                     ->hidden(fn (CreditNote $record) => ! in_array($record->status, ['draft', 'issued']))
                     ->action(fn (CreditNote $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.creditNotes.void', parameters: ['creditNote' => $record->id])),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->action(fn (CreditNote $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.creditNotes.delete', parameters: ['creditNote' => $record->id])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('deleteDrafts')
+                        ->label('Delete selected drafts')
+                        ->requiresConfirmation()
+                        ->action(function (\Illuminate\Database\Eloquent\Collection $records): void {
+                            foreach ($records as $record) {
+                                \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.creditNotes.delete', parameters: ['creditNote' => $record->id]);
+                            }
+                        }),
                 ]),
             ]);
     }
