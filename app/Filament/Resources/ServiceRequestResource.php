@@ -32,10 +32,12 @@ class ServiceRequestResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            TextInput::make('reference_number')->disabled(),
+            TextInput::make('reference_number')->disabled()->dehydrated(false),
             Select::make('customer_id')
                 ->relationship('customer', 'name')
                 ->searchable()
+                ->disabled()
+                ->dehydrated(false)
                 ->label('Customer'),
             Select::make('type')->options(ServiceRequest::typeOptions()),
             TextInput::make('product_slug')->label('Product'),
@@ -43,13 +45,15 @@ class ServiceRequestResource extends Resource
             DatePicker::make('preferred_date'),
             TextInput::make('preferred_time')->label('Preferred Time (HH:MM)'),
             TextInput::make('location')->maxLength(200),
-            Select::make('status')->options(ServiceRequest::statusOptions()),
+            Select::make('status')->options(ServiceRequest::statusOptions())->disabled()->dehydrated(false),
             Select::make('assigned_technician_id')
-                ->options(fn () => User::whereHas('roles', fn ($q) => $q->whereIn('name', ['admin', 'support']))->pluck('name', 'id'))
+                ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users', ['role' => 'admin_support']))
                 ->label('Assigned Technician')
+                ->disabled()
+                ->dehydrated(false)
                 ->nullable(),
-            DatePicker::make('confirmed_date'),
-            TextInput::make('confirmed_time')->label('Confirmed Time (HH:MM)'),
+            DatePicker::make('confirmed_date')->disabled()->dehydrated(false),
+            TextInput::make('confirmed_time')->label('Confirmed Time (HH:MM)')->disabled()->dehydrated(false),
             Textarea::make('admin_notes')->rows(3),
         ]);
     }
@@ -87,14 +91,23 @@ class ServiceRequestResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (ServiceRequest $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.support.serviceRequests.update', $data, ['serviceRequest' => $record->id])),
+                Tables\Actions\Action::make('cancel')
+                    ->label('Cancel Request')
+                    ->icon('heroicon-o-x-circle')
+                    ->color('danger')
+                    ->visible(fn (ServiceRequest $record) => in_array($record->status, ['pending', 'confirmed'], true))
+                    ->requiresConfirmation()
+                    ->action(fn (ServiceRequest $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run(
+                        'admin.support.serviceRequests.cancel', parameters: ['serviceRequest' => $record],
+                    )),
                 Tables\Actions\Action::make('confirm_assign')
                     ->label('Confirm & Assign')
                     ->icon('heroicon-o-check-circle')
                     ->visible(fn (ServiceRequest $record) => in_array($record->status, ['pending', 'confirmed']))
                     ->form([
                         Select::make('assigned_technician_id')
-                            ->options(fn () => User::whereHas('roles', fn ($q) => $q->whereIn('name', ['admin', 'support']))->pluck('name', 'id'))
+                            ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users', ['role' => 'admin_support']))
                             ->label('Assign Technician')
                             ->required(),
                         DatePicker::make('confirmed_date')->required(),
@@ -130,5 +143,12 @@ class ServiceRequestResource extends Resource
             'view'  => Pages\ViewServiceRequest::route('/{record}'),
             'edit'  => Pages\EditServiceRequest::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Support\Application\Queries\AdminServiceRequestQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

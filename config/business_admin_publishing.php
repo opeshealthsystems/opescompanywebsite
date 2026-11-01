@@ -12,6 +12,9 @@ $add = function (string $name, string $method, string $path, array $params, stri
         'scope' => $scope, 'api_path' => $path, 'http_methods' => ['POST'],
         'source_controller' => $source, 'source_action' => $action];
 };
+$definitions['admin.documents.index'] = ['handler' => 'App\\Contexts\\Documents\\Application\\Queries\\AdminDocumentQueries', 'method' => 'index',
+    'parameters' => [$input], 'command' => false, 'context' => 'Documents', 'roles' => ['super_admin', 'admin'], 'authenticated' => true,
+    'scope' => 'documents:read', 'api_path' => 'documents', 'http_methods' => ['GET'], 'source_controller' => 'DocumentResource', 'source_action' => 'index'];
 $definitions['admin.documents.templates.index'] = ['handler' => 'App\\Contexts\\Documents\\Application\\Queries\\AdminDocumentTemplateQueries',
     'method' => 'index', 'parameters' => [['name' => 'workflowInput', 'kind' => 'input']], 'command' => false,
     'context' => 'Documents', 'roles' => ['super_admin', 'admin'], 'authenticated' => true, 'scope' => 'documents:read',

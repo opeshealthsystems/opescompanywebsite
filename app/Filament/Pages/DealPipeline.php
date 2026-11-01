@@ -2,11 +2,15 @@
 
 namespace App\Filament\Pages;
 
-use App\Models\Deal;
+use App\Contexts\Shared\Application\WorkflowInput;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
+use App\Contexts\Shared\Infrastructure\WorkflowDispatcher;
 use Filament\Pages\Page;
 
 class DealPipeline extends Page
 {
+    private ?array $pipelineData = null;
+
     protected static ?string $navigationIcon = 'heroicon-o-view-columns';
     protected static ?string $navigationLabel = 'Pipeline Board';
     protected static ?string $navigationGroup = 'CRM';
@@ -20,47 +24,43 @@ class DealPipeline extends Page
 
     public function getStages(): array
     {
-        return Deal::stageOptions();
+        return $this->pipeline()['stages'];
     }
 
     public function getDealsByStage(): array
     {
-        $deals = Deal::with(['owner', 'lead'])
-            ->whereNotIn('stage', ['closed_won', 'closed_lost'])
-            ->orderByDesc('value')
-            ->get()
-            ->groupBy('stage');
-
-        return $deals->toArray();
+        return $this->pipeline()['deals_by_stage'];
     }
 
     public function getStageStats(): array
     {
-        return Deal::selectRaw('stage, COUNT(*) as count, SUM(value) as total_value, AVG(probability) as avg_probability')
-            ->whereNotIn('stage', ['closed_won', 'closed_lost'])
-            ->groupBy('stage')
-            ->get()
-            ->keyBy('stage')
-            ->toArray();
+        return $this->pipeline()['stage_stats'];
     }
 
     public function advanceStage(int $dealId): void
     {
         $stages = array_keys($this->getStages());
-        $deal = Deal::find($dealId);
-        if (! $deal) {
-            return;
-        }
+        $deal = collect($this->getDealsByStage())->flatten(1)->firstWhere('id', $dealId);
+        if (! $deal) return;
 
-        $currentIndex = array_search($deal->stage, $stages);
+        $currentIndex = array_search($deal['stage'], $stages);
         if ($currentIndex !== false && $currentIndex < count($stages) - 1) {
             $nextStage = $stages[$currentIndex + 1];
-            $deal->update(['stage' => $nextStage]);
+            AdminWorkflowAdapter::run('admin.crm.deals.update', ['stage' => $nextStage], ['deal' => $dealId]);
+            $this->pipelineData = null;
 
             \Filament\Notifications\Notification::make()
-                ->title('Deal moved to ' . (Deal::stageOptions()[$nextStage] ?? $nextStage))
+                ->title('Deal moved to ' . ($this->getStages()[$nextStage] ?? $nextStage))
                 ->success()
                 ->send();
         }
+    }
+
+    private function pipeline(): array
+    {
+        return $this->pipelineData ??= app(WorkflowDispatcher::class)->execute(
+            'admin.crm.deals.pipeline',
+            new WorkflowInput(actor: auth()->user(), language: app()->getLocale()),
+        )->data;
     }
 }

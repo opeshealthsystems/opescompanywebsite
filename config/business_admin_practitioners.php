@@ -7,6 +7,10 @@ $profile = ['name' => 'profile', 'kind' => 'model', 'class' => 'App\\Models\\Pra
 $finding = ['name' => 'finding', 'kind' => 'model', 'class' => 'App\\Models\\PractitionerFinding', 'key' => 'id'];
 $application = ['name' => 'application', 'kind' => 'model', 'class' => 'App\\Models\\PractitionerApplication', 'key' => 'id'];
 $definitions = [];
+$definitions['admin.practitioners.suggestions.index'] = ['handler' => 'App\\Contexts\\Programmes\\Application\\Queries\\AdminSuggestionQueries', 'method' => 'index',
+    'parameters' => [$input], 'command' => false, 'context' => 'Programmes', 'roles' => ['super_admin', 'admin'], 'authenticated' => true,
+    'scope' => 'practitioners:read', 'api_path' => 'admin/practitioners/suggestions', 'http_methods' => ['GET'],
+    'source_controller' => 'SuggestionResource', 'source_action' => 'index'];
 $add = function (string $name, string $method, string $path, array $parameters, string $source, string $action) use (&$definitions, $class): void {
     $definitions[$name] = ['handler' => $class, 'method' => $method, 'parameters' => $parameters, 'command' => true,
         'context' => 'Programmes', 'roles' => ['super_admin', 'admin'], 'authenticated' => true,

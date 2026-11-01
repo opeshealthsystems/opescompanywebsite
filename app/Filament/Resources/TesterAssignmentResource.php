@@ -23,6 +23,13 @@ class TesterAssignmentResource extends Resource
     protected static ?string $label = 'Tester Assignment';
     protected static ?string $pluralLabel = 'Tester Assignments';
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Testing\Application\Queries\AdminTesterAssignmentQueries::class)->assignmentQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
+    }
+
     public static function canAccess(): bool
     {
         return auth()->user()?->hasPermissionTo('assign_testers') ?? false;
@@ -56,7 +63,7 @@ class TesterAssignmentResource extends Resource
             Forms\Components\Section::make('Assignment Details')->schema([
                 Forms\Components\Select::make('assigned_to')
                     ->label('Tester')
-                    ->options(fn () => User::role('tester')->orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users', ['role' => 'testers']))
                     ->searchable()
                     ->required(),
 
@@ -137,21 +144,23 @@ class TesterAssignmentResource extends Resource
                     ->options(TesterAssignment::statusOptions()),
                 Tables\Filters\SelectFilter::make('assigned_to')
                     ->label('Tester')
-                    ->options(fn () => User::role('tester')->orderBy('name')->pluck('name', 'id')),
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users', ['role' => 'testers'])),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\TesterAssignment $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.testing.assignments.update', $data, ['testerAssignment' => $record->id])),
                 Tables\Actions\DeleteAction::make()
                     ->action(fn (TesterAssignment $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.testing.assignments.delete', parameters: ['testerAssignment' => $record->id]))
-                    ->hidden(fn (TesterAssignment $record) => !in_array($record->status, ['pending', 'cancelled'], true) || $record->bugReports()->exists()),
+                    ->hidden(fn (TesterAssignment $record) => !in_array($record->status, ['pending', 'cancelled'], true)
+                        || (\App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'tester_assignments.has_bug_reports', 'id' => $record->id])['count'] ?? false)),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\BulkAction::make('deleteSafeAssignments')->label('Delete selected safe assignments')->requiresConfirmation()
                         ->action(function (\Illuminate\Database\Eloquent\Collection $records): void {
                             foreach ($records as $record) {
-                                if (in_array($record->status, ['pending', 'cancelled'], true) && !$record->bugReports()->exists()) {
+                                if (in_array($record->status, ['pending', 'cancelled'], true)
+                                    && !(\App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'tester_assignments.has_bug_reports', 'id' => $record->id])['count'] ?? false)) {
                                     \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.testing.assignments.delete', parameters: ['testerAssignment' => $record->id]);
                                 }
                             }
@@ -203,7 +212,7 @@ class TesterAssignmentResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return (string) static::getModel()::where('status', 'pending')->count() ?: null;
+        return (string) (\App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'tester_assignments.pending'])['count'] ?? 0) ?: null;
     }
 
     public static function getNavigationBadgeColor(): ?string

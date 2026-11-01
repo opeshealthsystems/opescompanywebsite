@@ -9,11 +9,21 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class LeaveBalancesRelationManager extends RelationManager
 {
     protected static string $relationship = 'leaveBalances';
     protected static ?string $title = 'Leave Balances';
+
+    protected function getTableQuery(): Builder
+    {
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::query(
+            \App\Contexts\Workforce\Application\Queries\AdminLeaveQueries::class,
+            'leaveBalanceQuery',
+            [$this->getOwnerRecord()],
+        );
+    }
 
     public function form(Form $form): Form
     {
@@ -24,10 +34,14 @@ class LeaveBalancesRelationManager extends RelationManager
                     range(now()->year - 1, now()->year + 2)
                 ))
                 ->default(now()->year)
+                ->disabled(fn (string $operation) => $operation === 'edit')
+                ->dehydrated(fn (string $operation) => $operation === 'create')
                 ->required(),
 
             Forms\Components\Select::make('type')
                 ->options(LeaveRequest::typeOptions())
+                ->disabled(fn (string $operation) => $operation === 'edit')
+                ->dehydrated(fn (string $operation) => $operation === 'create')
                 ->required(),
 
             Forms\Components\TextInput::make('entitled_days')
@@ -38,13 +52,6 @@ class LeaveBalancesRelationManager extends RelationManager
                 ->required()
                 ->helperText('Total days allowed for the year'),
 
-            Forms\Components\TextInput::make('used_days')
-                ->label('Used Days')
-                ->numeric()
-                ->minValue(0)
-                ->default(0)
-                ->required()
-                ->helperText('Days already used (auto-tracked from approved requests)'),
         ]);
     }
 
@@ -81,15 +88,15 @@ class LeaveBalancesRelationManager extends RelationManager
             ])
             ->defaultSort('year', 'desc')
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()->using(fn (array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.workforce.leaveBalances.create', $data, ['employee' => $this->getOwnerRecord()->id])),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (LeaveBalance $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.workforce.leaveBalances.update', $data, ['leaveBalance' => $record->id])),
+                Tables\Actions\DeleteAction::make()->using(function (LeaveBalance $record) { \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.leaveBalances.delete', parameters: ['leaveBalance' => $record->id]); return true; }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->using(function ($records) { foreach ($records as $record) \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.leaveBalances.delete', parameters: ['leaveBalance' => $record->id]); }),
                 ]),
             ]);
     }

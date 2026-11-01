@@ -16,7 +16,7 @@
 
     <div class="nav-collapse" id="site-navigation">
     <div class="nav-links">
-        @foreach(['products' => ['Products','Produits'], 'solutions' => ['Solutions','Solutions'], 'about' => ['Company','Entreprise'], 'blog' => ['Resources','Ressources'], 'compliance' => ['Trust','Confiance'], 'contact' => ['Contact','Contact']] as $path => $labels)
+        @foreach(['products' => ['Products','Produits'], 'solutions' => ['Solutions','Solutions'], 'mobile-app' => ['Mobile app','Application mobile'], 'about' => ['Company','Entreprise'], 'blog' => ['Resources','Ressources'], 'compliance' => ['Trust','Confiance'], 'contact' => ['Contact','Contact']] as $path => $labels)
         <a href="{{ url($locale.'/'.$path) }}">{{ $labels[$locale === 'fr' ? 1 : 0] }}</a>
         @endforeach
     </div>

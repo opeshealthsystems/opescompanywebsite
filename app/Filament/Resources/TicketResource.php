@@ -26,11 +26,16 @@ class TicketResource extends Resource
         return auth()->user()?->hasAnyRole(['super_admin', 'admin', 'support']) ?? false;
     }
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Support\Application\Queries\SupportTicketQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
+    }
+
     public static function staffOptions(): array
     {
-        return User::whereHas('roles', fn ($q) =>
-            $q->whereIn('name', ['super_admin', 'admin', 'support'])
-        )->orderBy('name')->pluck('name', 'id')->toArray();
+        return \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users', ['role' => 'support_staff']);
     }
 
     public static function form(Form $form): Form
@@ -39,7 +44,7 @@ class TicketResource extends Resource
             Forms\Components\Section::make('Ticket Details')->schema([
                 Forms\Components\Select::make('user_id')
                     ->label('Customer')
-                    ->options(fn () => User::role('customer')->orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users', ['role' => 'customers']))
                     ->searchable()
                     ->nullable(),
 
@@ -185,13 +190,9 @@ class TicketResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\Ticket $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.support.tickets.update', $data, ['ticket' => $record->id])),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->bulkActions([]);
     }
 
     public static function infolist(Infolist $infolist): Infolist
@@ -260,7 +261,7 @@ class TicketResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return (string) static::getModel()::whereIn('status', ['open', 'in_progress'])->count() ?: null;
+        return (string) (\App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'tickets.open'])['count'] ?? 0) ?: null;
     }
 
     public static function getNavigationBadgeColor(): ?string

@@ -20,6 +20,13 @@ class FinalEvaluationResource extends Resource
     protected static ?string $navigationGroup = 'Validation Hub';
     protected static ?int    $navigationSort  = 15;
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Validation\Application\Queries\AdminFinalEvaluationQueries::class)->evaluationQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
+    }
+
     public static function canAccess(): bool
     {
         return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
@@ -30,8 +37,8 @@ class FinalEvaluationResource extends Resource
         return $form->schema([
             Forms\Components\Select::make('cohort_member_id')
                 ->label('Cohort member')
-                ->options(fn () => CohortMember::with(['user', 'cohort'])->get()
-                    ->mapWithKeys(fn (CohortMember $m) => [$m->id => ($m->user?->name ?? 'Member #'.$m->id).' — '.($m->cohort?->name ?? '')]))
+                ->options(fn () => collect(\App\Contexts\Shared\Infrastructure\AdminReferenceOptions::items('admin.references.cohortMembers'))
+                    ->mapWithKeys(fn ($member) => [$member['id'] => ($member['name'] ?? 'Member #'.$member['id']).' — '.($member['cohort'] ?? '')]))
                 ->searchable()->required()->disabledOn('edit'),
             Forms\Components\Textarea::make('assessment')->rows(4)->required(),
             Forms\Components\Select::make('rating')->options(FinalEvaluation::ratingOptions())->required(),
@@ -60,7 +67,7 @@ class FinalEvaluationResource extends Resource
                     ->label('Issue Certificate')->icon('heroicon-o-academic-cap')->color('success')
                     ->visible(fn (\App\Models\FinalEvaluation $r) =>
                         app(\App\Support\CertificationScore::class)->for($r)['tier'] !== 'not_certified'
-                        && ! \App\Models\ValidationCertificate::where('cohort_member_id', $r->cohort_member_id)->exists())
+                        && !(\App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'validation_certificates.member_exists', 'id' => $r->cohort_member_id])['count'] ?? false))
                     ->requiresConfirmation()
                     ->action(function (\App\Models\FinalEvaluation $r) {
                         app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
@@ -70,7 +77,7 @@ class FinalEvaluationResource extends Resource
                         \Filament\Notifications\Notification::make()->title('Certificate issued.')->success()->send();
                     }),
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\FinalEvaluation $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.validation.finalEvaluations.update', $data, ['evaluation' => $record->id])),
             ]);
     }
 

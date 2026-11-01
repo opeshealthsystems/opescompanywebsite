@@ -3,6 +3,8 @@
 namespace App\Filament\Widgets;
 
 use App\Filament\Resources\InvoiceResource;
+use App\Contexts\Shared\Application\Queries\AdminDashboardReadQueries;
+use App\Contexts\Shared\Application\WorkflowInput;
 use App\Models\Invoice;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -23,11 +25,7 @@ class RecentInvoicesWidget extends BaseWidget
     public function table(Table $table): Table
     {
         return $table
-            ->query(
-                Invoice::with('customer')
-                    ->whereIn('status', ['sent', 'overdue'])
-                    ->orderByDesc('created_at')
-            )
+            ->query(app(AdminDashboardReadQueries::class)->invoiceQuery(new WorkflowInput(actor: auth()->user(), language: app()->getLocale())))
             ->columns([
                 Tables\Columns\TextColumn::make('invoice_number')
                     ->label('Invoice #')

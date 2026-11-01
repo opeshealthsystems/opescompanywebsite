@@ -7,11 +7,20 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class TrainingRecordsRelationManager extends RelationManager
 {
     protected static string $relationship = 'trainingRecords';
     protected static ?string $title = 'Training Records';
+
+    protected function getTableQuery(): Builder
+    {
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::query(
+            \App\Contexts\Workforce\Application\Queries\AdminTrainingRecordQueries::class,
+            'query',
+        )->where('user_id', $this->getOwnerRecord()->getKey());
+    }
 
     public function form(Form $form): Form
     {
@@ -20,10 +29,7 @@ class TrainingRecordsRelationManager extends RelationManager
             Forms\Components\TextInput::make('provider')->maxLength(150)->nullable(),
             Forms\Components\Select::make('category')
                 ->options(TrainingRecord::categoryOptions())->required(),
-            Forms\Components\Select::make('status')
-                ->options(TrainingRecord::statusOptions())->default('enrolled')->required(),
             Forms\Components\DatePicker::make('start_date')->nullable()->native(false),
-            Forms\Components\DatePicker::make('completed_at')->label('Completed At')->nullable()->native(false),
             Forms\Components\DatePicker::make('expires_at')->label('Expires At')->nullable()->native(false),
             Forms\Components\Textarea::make('notes')->rows(2)->nullable()->columnSpanFull(),
         ]);
@@ -46,16 +52,16 @@ class TrainingRecordsRelationManager extends RelationManager
                     ->color(fn (TrainingRecord $r) => $r->isExpiringSoon() ? 'warning' : null),
             ])
             ->defaultSort('start_date', 'desc')
-            ->headerActions([Tables\Actions\CreateAction::make()])
+            ->headerActions([Tables\Actions\CreateAction::make()->using(fn (array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.workforce.training.create', $data + ['user_id' => $this->getOwnerRecord()->id]))])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (TrainingRecord $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.workforce.training.update', $data, ['trainingRecord' => $record->id])),
                 Tables\Actions\Action::make('mark_complete')
                     ->label('Complete')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
                     ->hidden(fn (TrainingRecord $r) => $r->status === 'completed')
                     ->action(fn (TrainingRecord $r) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.training.complete', parameters: ['trainingRecord' => $r])),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()->using(function (TrainingRecord $record) { \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.training.delete', parameters: ['trainingRecord' => $record->id]); return true; }),
             ]);
     }
 }

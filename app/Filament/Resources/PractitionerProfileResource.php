@@ -38,6 +38,7 @@ class PractitionerProfileResource extends Resource
                         ->label('User')
                         ->relationship('user', 'name')
                         ->searchable()
+                        ->disabledOn('edit')
                         ->required(),
                     Forms\Components\Select::make('profession')
                         ->options(PractitionerProfile::professionOptions())
@@ -131,7 +132,7 @@ class PractitionerProfileResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (PractitionerProfile $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.practitioners.profiles.update', $data, ['profile' => $record->id])),
                 Tables\Actions\Action::make('verify')
                     ->label('Verify')
                     ->icon('heroicon-o-check-badge')
@@ -142,11 +143,6 @@ class PractitionerProfileResource extends Resource
                         AdminWorkflowAdapter::run('admin.practitioners.profiles.verify', parameters: ['profile' => $record]);
                         Notification::make()->title('Practitioner verified')->success()->send();
                     }),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
             ]);
     }
 
@@ -193,6 +189,8 @@ class PractitionerProfileResource extends Resource
 
     public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
     {
-        return parent::getEloquentQuery()->with(['user']);
+        return app(\App\Contexts\Programmes\Application\Queries\AdminPractitionerQueries::class)->profileQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

@@ -4,6 +4,18 @@ $class = 'App\\Contexts\\Publishing\\Application\\Commands\\AdminContractCommand
 $model = ['name' => 'contract', 'kind' => 'model', 'class' => 'App\\Models\\Contract', 'key' => 'id'];
 $input = ['name' => 'workflowInput', 'kind' => 'input'];
 $definitions = [];
+$definitions['admin.contracts.index'] = [
+    'handler' => 'App\\Contexts\\Publishing\\Application\\Queries\\AdminContractQueries', 'method' => 'index', 'parameters' => [$input], 'command' => false,
+    'context' => 'Publishing', 'roles' => ['super_admin', 'admin'], 'authenticated' => true,
+    'scope' => 'contracts:read', 'api_path' => 'contracts', 'http_methods' => ['GET'],
+    'source_controller' => 'ContractResource', 'source_action' => 'index',
+];
+$definitions['admin.contracts.expiringSoon'] = [
+    'handler' => 'App\\Contexts\\Publishing\\Application\\Queries\\AdminContractQueries', 'method' => 'expiringSoon', 'parameters' => [$input], 'command' => false,
+    'context' => 'Publishing', 'roles' => ['super_admin', 'admin'], 'authenticated' => true,
+    'scope' => 'contracts:read', 'api_path' => 'contracts/expiring-soon', 'http_methods' => ['GET'],
+    'source_controller' => 'ContractResource', 'source_action' => 'expiring_soon',
+];
 $definitions['admin.contracts.create'] = [
     'handler' => $class, 'method' => 'create', 'parameters' => [$input], 'command' => true,
     'context' => 'Publishing', 'roles' => ['super_admin', 'admin'], 'authenticated' => true,

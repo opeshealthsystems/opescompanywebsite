@@ -112,10 +112,10 @@ class LeaveTypeResource extends Resource
                     ->label('Active'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\LeaveType $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.workforce.leaveTypes.update', $data, ['leaveType' => $record->id])),
                 Tables\Actions\DeleteAction::make()
                     ->before(function (LeaveType $record, Tables\Actions\DeleteAction $action) {
-                        if ($record->leaveRequests()->exists()) {
+                        if (\App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'leave_types.has_requests', 'id' => $record->id])['count'] ?? false) {
                             \Filament\Notifications\Notification::make()
                                 ->title('Cannot delete: has existing leave requests')
                                 ->danger()
@@ -177,5 +177,12 @@ class LeaveTypeResource extends Resource
             'view'   => Pages\ViewLeaveType::route('/{record}'),
             'edit'   => Pages\EditLeaveType::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Workforce\Application\Queries\AdminOrganizationSetupQueries::class)->leaveTypesQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

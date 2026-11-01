@@ -12,6 +12,6 @@ class ViewProject extends ViewRecord
 
     protected function getHeaderActions(): array
     {
-        return [Actions\EditAction::make(), Actions\DeleteAction::make()];
+        return [Actions\EditAction::make(), Actions\DeleteAction::make()->action(fn () => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('administration.projects.delete', parameters: ['project' => $this->record->id]))];
     }
 }

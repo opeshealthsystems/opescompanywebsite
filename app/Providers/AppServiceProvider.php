@@ -86,6 +86,7 @@ class AppServiceProvider extends ServiceProvider
         \Laravel\Passport\Passport::clientCredentialsTokensExpireIn(\Carbon\CarbonInterval::minutes(15));
         \Illuminate\Support\Facades\RateLimiter::for('oauth-token', fn (\Illuminate\Http\Request $request) => \Illuminate\Cache\RateLimiting\Limit::perMinute(20)->by('oauth:'.$request->ip()));
         \Illuminate\Support\Facades\RateLimiter::for('api-consumer', fn (\Illuminate\Http\Request $request) => \Illuminate\Cache\RateLimiting\Limit::perMinute(60)->by('consumer:'.$request->attributes->get('api_client')->id));
+        \Illuminate\Support\Facades\RateLimiter::for('public-api-read', fn (\Illuminate\Http\Request $request) => \Illuminate\Cache\RateLimiting\Limit::perMinute(60)->by('public-api:'.$request->ip()));
         \Illuminate\Support\Facades\RateLimiter::for('public-enquiries', fn (\Illuminate\Http\Request $request) => [
             \Illuminate\Cache\RateLimiting\Limit::perMinute(5)->by('enquiry-minute:'.$request->ip()),
             \Illuminate\Cache\RateLimiting\Limit::perDay(30)->by('enquiry-day:'.$request->ip()),

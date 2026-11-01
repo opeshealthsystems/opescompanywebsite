@@ -7,11 +7,20 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class PerformanceReviewsRelationManager extends RelationManager
 {
     protected static string $relationship = 'performanceReviews';
     protected static ?string $title = 'Performance Reviews';
+
+    protected function getTableQuery(): Builder
+    {
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::query(
+            \App\Contexts\Workforce\Application\Queries\AdminPerformanceQueries::class,
+            'query',
+        )->where('user_id', $this->getOwnerRecord()->getKey());
+    }
 
     public function form(Form $form): Form
     {

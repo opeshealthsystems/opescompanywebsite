@@ -34,11 +34,11 @@ class DepartmentResource extends Resource
                 Forms\Components\TextInput::make('code')->label('Code (short ID)')->maxLength(20)->nullable()->unique(ignoreRecord: true),
                 Forms\Components\Select::make('head_id')
                     ->label('Department Head')
-                    ->options(fn () => User::orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users'))
                     ->searchable()->nullable(),
                 Forms\Components\Select::make('parent_id')
                     ->label('Parent Department')
-                    ->options(fn () => Department::where('is_active', true)->orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.departments'))
                     ->searchable()->nullable()->placeholder('Top-level department'),
                 Forms\Components\Toggle::make('is_active')->label('Active')->default(true),
                 Forms\Components\Textarea::make('description')->rows(2)->nullable()->columnSpanFull(),
@@ -66,7 +66,7 @@ class DepartmentResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\Department $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.workforce.departments.update', $data, ['department' => $record->id])),
                 Tables\Actions\DeleteAction::make()->using(function (Department $record) { \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.departments.delete', parameters: ['department' => $record->id]); return true; }),
             ])
             ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()->using(function ($records) { foreach ($records as $record) \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.departments.delete', parameters: ['department' => $record->id]); })])]);
@@ -99,5 +99,12 @@ class DepartmentResource extends Resource
             'view'   => Pages\ViewDepartment::route('/{record}'),
             'edit'   => Pages\EditDepartment::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Workforce\Application\Queries\AdminOrganizationSetupQueries::class)->departmentsQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

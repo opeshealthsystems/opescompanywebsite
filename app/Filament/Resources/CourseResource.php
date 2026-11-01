@@ -69,7 +69,7 @@ class CourseResource extends Resource
                     ->badge()
                     ->formatStateUsing(fn ($state) => Course::levelOptions()[$state] ?? $state),
                 TextColumn::make('duration_hours')->label('Hours')->suffix('h'),
-                TextColumn::make('enrollments_count')->counts('enrollments')->label('Enrolled'),
+                TextColumn::make('enrollments_count')->label('Enrolled'),
                 ToggleColumn::make('is_active')->updateStateUsing(fn (Course $record, $state) => AdminWorkflowAdapter::record('admin.learning.courses.update', ['is_active' => $state], ['course' => $record->id])->is_active),
                 TextColumn::make('sort_order')->label('Order')->sortable(),
             ])
@@ -95,5 +95,12 @@ class CourseResource extends Resource
             'create' => Pages\CreateCourse::route('/create'),
             'edit'   => Pages\EditCourse::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Learning\Application\Queries\AdminCourseQueries::class)->courseQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

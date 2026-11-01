@@ -33,7 +33,7 @@ class TimesheetResource extends Resource
             Forms\Components\Section::make('Time Entry')->columns(2)->schema([
                 Forms\Components\Select::make('user_id')
                     ->label('Staff Member')
-                    ->options(fn () => User::orderBy('name')->pluck('name','id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users'))
                     ->default(fn () => auth()->id())
                     ->searchable()->required(),
 
@@ -42,7 +42,7 @@ class TimesheetResource extends Resource
 
                 Forms\Components\Select::make('project_id')
                     ->label('Project')
-                    ->options(fn () => Project::whereIn('status',['active','planning'])->orderBy('title')->pluck('title','id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.projects', [], 'title'))
                     ->searchable()->nullable()->placeholder('No project'),
 
                 Forms\Components\TextInput::make('hours')
@@ -70,14 +70,14 @@ class TimesheetResource extends Resource
             ->defaultSort('date', 'desc')
             ->filters([
                 Tables\Filters\SelectFilter::make('user_id')->label('Staff')
-                    ->options(fn () => User::orderBy('name')->pluck('name','id')),
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users')),
                 Tables\Filters\SelectFilter::make('project_id')->label('Project')
                     ->relationship('project', 'title'),
                 Tables\Filters\TernaryFilter::make('is_billable')->label('Billable'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\Timesheet $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.workforce.timesheets.update', $data, ['timesheet' => $record->id])),
                 Tables\Actions\DeleteAction::make()->using(function (Timesheet $record) {
                     \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.timesheets.delete', parameters: ['timesheet' => $record->id]);
                     return true;
@@ -117,5 +117,12 @@ class TimesheetResource extends Resource
             'view'   => Pages\ViewTimesheet::route('/{record}'),
             'edit'   => Pages\EditTimesheet::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Workforce\Application\Queries\AdminWorkforceRecordQueries::class)->timesheetQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

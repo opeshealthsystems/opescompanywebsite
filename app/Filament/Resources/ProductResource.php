@@ -143,7 +143,7 @@ class ProductResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\Product $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.catalogue.products.update', $data, ['product' => $record->id])),
             ])
             ->bulkActions([]);
     }
@@ -179,7 +179,7 @@ class ProductResource extends Resource
                 Infolists\Components\TextEntry::make('sort_order')->label('Sort Order'),
                 Infolists\Components\TextEntry::make('licenses_count')
                     ->label('Total Licenses')
-                    ->state(fn ($record) => $record->licenses()->count()),
+                    ->state(fn ($record) => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'products.license_count', 'id' => $record->id])['count'] ?? 0),
             ])->columns(6),
         ]);
     }
@@ -191,7 +191,7 @@ class ProductResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return (string) static::getModel()::where('is_active', true)->count() ?: null;
+        return (string) (\App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'products.active'])['count'] ?? 0) ?: null;
     }
 
     public static function getPages(): array
@@ -202,5 +202,12 @@ class ProductResource extends Resource
             'view'   => Pages\ViewProduct::route('/{record}'),
             'edit'   => Pages\EditProduct::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Publishing\Application\Queries\AdminCatalogueProductQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

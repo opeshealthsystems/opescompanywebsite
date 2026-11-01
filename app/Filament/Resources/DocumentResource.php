@@ -22,6 +22,13 @@ class DocumentResource extends Resource
     protected static ?string $navigationGroup = 'Documents';
     protected static ?int $navigationSort = 11;
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Documents\Application\Queries\AdminDocumentQueries::class)->documentQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
+    }
+
     public static function canAccess(): bool
     {
         return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
@@ -33,20 +40,17 @@ class DocumentResource extends Resource
             Forms\Components\Section::make('Document Setup')->schema([
                 Forms\Components\Select::make('document_template_id')
                     ->label('Template')
-                    ->options(
-                        DocumentTemplate::where('is_active', true)
-                            ->get()
-                            ->mapWithKeys(fn ($t) => [$t->id => "[{$t->type}] {$t->name}"])
-                    )
+                    ->options(fn () => collect(\App\Contexts\Shared\Infrastructure\AdminReferenceOptions::items('admin.references.documentTemplates'))
+                        ->mapWithKeys(fn ($template) => [$template['id'] => "[{$template['type']}] {$template['name']}"]))
                     ->required()
                     ->visibleOn('create')
                     ->live()
                     ->afterStateUpdated(function (Set $set, $state) {
                         if (!$state) return;
-                        $template = DocumentTemplate::find($state);
+                        $template = \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::items('admin.references.documentTemplates', ['id' => $state])[0] ?? null;
                         if ($template) {
-                            $set('type', $template->type);
-                            $set('title', $template->name);
+                            $set('type', $template['type']);
+                            $set('title', $template['name']);
                         }
                     }),
 
@@ -68,16 +72,16 @@ class DocumentResource extends Resource
             Forms\Components\Section::make('Recipient')->schema([
                 Forms\Components\Select::make('addressee_user_id')
                     ->label('System User (Customer / Employee)')
-                    ->options(User::orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users'))
                     ->searchable()
                     ->nullable()
                     ->live()
                     ->afterStateUpdated(function (Set $set, $state) {
                         if (!$state) return;
-                        $user = User::find($state);
+                        $user = \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::items('admin.references.users', ['id' => $state, 'include_email' => true])[0] ?? null;
                         if ($user) {
-                            $set('addressee_name', $user->name);
-                            $set('addressee_email', $user->email);
+                            $set('addressee_name', $user['name']);
+                            $set('addressee_email', $user['email'] ?? null);
                         }
                     }),
 
@@ -182,6 +186,7 @@ class DocumentResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make()
+                    ->using(fn (Document $record, array $data) => AdminWorkflowAdapter::record('admin.documents.update', $data, ['document' => $record->id]))
                     ->hidden(fn (Document $record) => $record->status !== 'draft'),
                 Tables\Actions\DeleteAction::make()->hidden(fn (Document $record) => $record->status !== 'draft')->using(function (Document $record) { AdminWorkflowAdapter::run('admin.documents.delete', parameters: ['document' => $record->id]); return true; }),
                 Tables\Actions\Action::make('download_pdf')

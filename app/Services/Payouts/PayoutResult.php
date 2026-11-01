@@ -10,7 +10,7 @@ class PayoutResult
 {
     public function __construct(
         public bool $success,
-        public string $status,            // matches PractitionerApplication payout_status: pending|paid
+        public string $status,            // pending|paid|failed provider outcome
         public ?string $reference = null, // provider/transaction reference
         public ?string $message = null,
     ) {
@@ -28,6 +28,6 @@ class PayoutResult
 
     public static function failed(string $message): self
     {
-        return new self(false, 'pending', null, $message);
+        return new self(false, 'failed', null, $message);
     }
 }

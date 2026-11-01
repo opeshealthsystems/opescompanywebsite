@@ -20,6 +20,13 @@ class AssetResource extends Resource
     protected static ?string $navigationGroup = 'Operations';
     protected static ?int $navigationSort = 3;
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Operations\Application\Queries\AdminAssetQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
+    }
+
     public static function canAccess(): bool
     {
         return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
@@ -44,7 +51,7 @@ class AssetResource extends Resource
                 Forms\Components\TextInput::make('location')->maxLength(150)->nullable(),
                 Forms\Components\Select::make('assigned_to')
                     ->label('Assigned To')
-                    ->options(fn () => User::orderBy('name')->pluck('name','id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users'))
                     ->searchable()->nullable(),
                 Forms\Components\DatePicker::make('warranty_expires')->label('Warranty Expires')->native(false)->nullable(),
             ]),
@@ -81,11 +88,11 @@ class AssetResource extends Resource
                 Tables\Filters\SelectFilter::make('category')->options(Asset::categoryOptions()),
                 Tables\Filters\SelectFilter::make('status')->options(Asset::statusOptions()),
                 Tables\Filters\SelectFilter::make('assigned_to')->label('Assigned To')
-                    ->options(fn () => User::orderBy('name')->pluck('name','id')),
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users')),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\Asset $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.operations.assets.update', $data, ['asset' => $record->id])),
                 Tables\Actions\DeleteAction::make()
                     ->action(fn (Asset $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.operations.assets.delete', parameters: ['asset' => $record->id]))
                     ->hidden(fn (Asset $record) => !in_array($record->status, ['retired', 'disposed'], true)),

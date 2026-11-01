@@ -11,11 +11,21 @@ use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class LessonsRelationManager extends RelationManager
 {
     protected static string $relationship = 'lessons';
     protected static ?string $title = 'Lessons';
+
+    protected function getTableQuery(): Builder
+    {
+        return AdminWorkflowAdapter::query(
+            \App\Contexts\Learning\Application\Queries\AdminCourseQueries::class,
+            'lessonQuery',
+            [$this->getOwnerRecord()],
+        );
+    }
 
     public function form(Form $form): Form
     {

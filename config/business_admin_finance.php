@@ -24,6 +24,17 @@ $add = function (string $name, string $method, string $path, array $parameters, 
 };
 $input = ['name' => 'workflowInput', 'kind' => 'input'];
 $model = fn (string $name, string $type) => ['name' => $name, 'kind' => 'model', 'class' => 'App\\Models\\'.$type, 'key' => 'id'];
+$template = $model('invoiceTemplate', 'InvoiceTemplate');
+$templateQueries = 'App\\Contexts\\Finance\\Application\\Queries\\AdminInvoiceTemplateQueries';
+$definitions['admin.finance.invoiceTemplates.index'] = ['handler' => $templateQueries, 'method' => 'index', 'parameters' => [$input], 'command' => false,
+    'context' => 'Finance', 'roles' => $roles, 'authenticated' => true, 'scope' => 'finance:read', 'api_path' => 'finance/invoice-templates', 'http_methods' => ['GET'],
+    'source_controller' => 'InvoiceTemplateResource', 'source_action' => 'index'];
+$definitions['admin.finance.invoiceTemplates.show'] = ['handler' => $templateQueries, 'method' => 'show', 'parameters' => [$input, $template], 'command' => false,
+    'context' => 'Finance', 'roles' => $roles, 'authenticated' => true, 'scope' => 'finance:read', 'api_path' => 'finance/invoice-templates/{invoiceTemplate}', 'http_methods' => ['GET'],
+    'source_controller' => 'InvoiceTemplateResource', 'source_action' => 'show'];
+$add('admin.finance.invoiceTemplates.create', 'createInvoiceTemplate', 'finance/invoice-templates', [$input], 'InvoiceTemplateResource', 'create');
+$add('admin.finance.invoiceTemplates.update', 'updateInvoiceTemplate', 'finance/invoice-templates/{invoiceTemplate}', [$input, $template], 'InvoiceTemplateResource', 'update');
+$definitions['admin.finance.invoiceTemplates.update']['http_methods'] = ['PUT'];
 
 $add('admin.finance.purchaseOrders.create', 'createPurchaseOrder', 'finance/purchase-orders', [$input], 'PurchaseOrderResource', 'create');
 $add('admin.finance.purchaseOrders.update', 'updatePurchaseOrder', 'finance/purchase-orders/{purchaseOrder}', [$input, $model('purchaseOrder', 'PurchaseOrder')], 'PurchaseOrderResource', 'update');
@@ -65,6 +76,7 @@ $add('admin.finance.quotes.markSent', 'markQuoteSent', 'finance/quotes/{quote}/m
 $add('admin.finance.quotes.accept', 'acceptQuote', 'finance/quotes/{quote}/accept', [$input, $model('quote', 'Quote')], 'QuoteResource', 'accept');
 $add('admin.finance.invoices.markSent', 'markInvoiceSent', 'finance/invoices/{invoice}/mark-sent', [$input, $model('invoice', 'Invoice')], 'InvoiceResource', 'mark_sent');
 $add('admin.finance.invoices.markPaid', 'markInvoicePaid', 'finance/invoices/{invoice}/mark-paid', [$input, $model('invoice', 'Invoice')], 'InvoiceResource', 'mark_paid');
+$add('admin.finance.invoices.recordPayment', 'recordInvoicePayment', 'finance/invoices/{invoice}/payments', [$input, $model('invoice', 'Invoice')], 'InvoiceResource', 'record_payment');
 $add('admin.finance.invoices.markOverdue', 'markInvoiceOverdue', 'finance/invoices/{invoice}/mark-overdue', [$input, $model('invoice', 'Invoice')], 'InvoiceResource', 'mark_overdue');
 $add('admin.finance.payrollRuns.create', 'createPayrollRun', 'finance/payroll-runs', [$input], 'PayrollRunResource', 'create');
 $add('admin.finance.payrollRuns.update', 'updatePayrollRun', 'finance/payroll-runs/{run}', [$input, $model('run', 'PayrollRun')], 'PayrollRunResource', 'update');

@@ -1,4 +1,125 @@
+SDK 0.91.0 aligns with OpenAPI 0.95.0 and adds the documented administrator payout-request operation. Payouts require an approved delegated client, the `practitioners:write` scope, an active administrator, and an `Idempotency-Key`. Accepted requests use the durable outbox and stable provider reference; uncertain provider outcomes are held for reconciliation rather than retried. The unavailable Orange Money driver is not exposed as a supported choice. The archive is 20,899 bytes with SHA-256 `8393b775e36f756c317e1eb2260dd4683b0bd6501bca82ce9bb7e721e8974af5`. The downloadable archive remains a server-side preview and is not published to npm.
+
+SDK 0.90.0 aligns the downloadable client with OpenAPI 0.94.0. All 600 operation identifiers remain available; the contract now gives business operations action-oriented summaries, scope and role requirements, pagination and idempotency behavior, plus request and response-envelope examples. The archive is 20,694 bytes with SHA-256 `6e15234dc948cd1434dc5b1a79f24bc098942e91b60899aa28cf0ca729db0d81`. It remains a server-side preview and is not published to a registry.
+
+SDK 0.89.0 adds four protected Validation dashboard query operations for cohort progress, issue analytics, developer throughput and paginated practitioner leaderboard data. Filament dashboards now use the same role-checked application reads, and the cohort/leaderboard UI reads the first 100 rows while API clients can request bounded pages. These analytics are admin-only under validation:read. The archive contains all 600 API operation IDs, including 594 business operations in OpenAPI 0.93.0. Archive size is 20636 bytes with SHA-256 ``575a2900cf3daf253742da2add1cb98f2e223caf784b558f46c7b23a9289ec07``. It remains a downloadable preview and is not published to a registry.
+
+SDK 0.88.0 adds shared API query projections for all 22 Filament relation-manager tables and six protected collection reads for invoice payments, payroll entries, cohort members, cohort test cases, developer-task retests, and employee profiles. Finance quote lists also expose the lead filter used by the CRM relation table. It contains all 596 API operation IDs, including 590 business operations in OpenAPI 0.92.0. Archive size is 20500 bytes with SHA-256 `3a336724e60bacdecfc83d14c71b742b254a39870ebb322bb3f146db71719f3e`. It remains a downloadable preview, not a registry release.
+
+SDK 0.87.0 adds protected document, support bug-report, suggestion, tester-assignment and validation-certificate reads; it also includes the shared licensing register query contract. Sensitive document signatures, screenshot paths, suggestion bodies and tester notes are omitted from list projections. It carries all 590 API operation IDs, including 584 business operations in OpenAPI 0.91.0. Archive size is 20396 bytes with SHA-256 `a98ce7b9d6960325c6eb274033e72d0da45bd8e8785ff8684c186f003b6ec501`. It remains a downloadable preview, not a registry release.
+
+SDK 0.86.0 adds protected validation issue, developer-task, test-session and weekly-review reads with filters. Responses are paginated and limit relation fields; issue attachments, session screenshots and task resolution notes are excluded. It carries all 585 API operation IDs, including 579 business operations in OpenAPI 0.90.0. Archive size is 20270 bytes with SHA-256 `7245a40288cf091327046d8109aa7187bf8917a28377f69b56dc988664691a33`. It remains a downloadable preview, not a registry release.
+
+SDK 0.85.0 adds admin learning enrollment and certificate list operations with validated filters. The endpoint responses limit student and certificate fields and omit certificate file paths. It carries all 581 API operation IDs, including 575 business operations in OpenAPI 0.89.0. Archive size is 20137 bytes with SHA-256 `964a08a30dfcdd2a7c7d7d64d9e9f8ae73328e693f78e2b3301f56124876ceca`. The package remains a downloadable preview and is not published to a registry.
+
+SDK 0.84.0 adds the validated rating enum for final-evaluation reads and reflects the query now shared by the admin table and API. It carries all 579 API operation IDs, including 573 business operations in OpenAPI 0.88.0. Archive size is 20103 bytes with SHA-256 `6ffc715d7e2cc9e69fb023ebf73edcda789d4ed92ab492966405be46ed19493a`. The package remains a downloadable preview and is not published to a registry.
+
+SDK 0.82.0 adds the protected credit-note register operation with validated status, invoice and text-search filters. It carries all 579 API operation IDs, including 573 business operations in OpenAPI 0.86.0. Archive size is 20100 bytes with SHA-256 `50646a42b25508a7dd8bbfa8c20fc32145b569f718c72e9d1c0727b2023b0024`. The package remains a downloadable preview and is not published to a registry.
 # Node SDK preview and contract release checks
+
+SDK 0.77.0 adds protected detail queries for invoice, quote, supplier-bill, purchase-order and credit-note line items. The five Filament edit forms now load their line items through the same query handlers offered to API clients.
+SDK 0.77.0 archive: 19537 bytes, SHA-256 `c8aad2bd1e6570a947dc9f9f16a45fc8e4087e5acab83533dabf991025f532a2`. It carries all 574 API operation IDs, including 568 business operations in OpenAPI 0.81.0. The package remains a downloadable preview and is not published to a registry.
+
+
+SDK 0.76.0 extends the protected admin summary query with relationship counts and lifecycle checks used by resource views and action controls, and adds a role-permissions reference operation. These checks remain admin-only and accept only whitelisted metric names.
+SDK 0.76.0 archive: 19419 bytes, SHA-256 `acc77b53d919ff83d5285fb65d1ca3c877eddcb76239762e39f540d9fdb33761`. It carries all 569 API operation IDs, including 563 business operations in OpenAPI 0.80.0. The package remains a downloadable preview and is not published to a registry.
+
+
+SDK 0.75.0 adds public sitemap-data pages, customer-country and user-role references, audit-log filter references, and audit/employee summary metrics. The sitemap presenter and reference-data forms now use these shared query operations. Private reference and summary data remains administrator-protected.
+SDK 0.75.0 archive: 19345 bytes, SHA-256 `3cb4ceef4cfa8f16160328230c187294a38764dd46471bb7411e1ba14ff9c174`. It carries all 568 API operation IDs, including 562 business operations in OpenAPI 0.79.0. The package remains a downloadable preview and is not published to a registry.
+
+
+SDK 0.74.0 adds a protected admin resource-summary endpoint with 16 whitelisted metrics shared by Filament navigation badges. Requests require an active administrator and the `reporting:read` scope. The endpoint is included in OpenAPI 0.78.0.
+SDK 0.74.0 archive: 19236 bytes, SHA-256 `6d7ee85eb5ef5d75bb85e764d6a015c2e0a58898b4678ac2f70f3c6f3bfd71e6`. It carries all 564 API operation IDs, including 558 business operations in OpenAPI 0.78.0. The package remains a downloadable preview and is not published to a registry.
+
+
+SDK 0.73.0 adds protected admin reference-data operations used by Filament forms, including users, departments, salary grades, leads, projects, openings, invoices, licenses and validation cohorts. Employee ID suggestions also come from the API query layer. These operations are included in OpenAPI 0.77.0; reference reads require an active admin role and the `reference-data:read` scope.
+
+SDK 0.73.0 archive: 19199 bytes, SHA-256 `cf783fb261355dd61aeb3f197cf200cf207614663f94b8d56615af6e5e5fde3c`. It carries all 563 API operation IDs, including 557 business operations in OpenAPI 0.77.0. The package is available as a downloadable preview; it is not published to a registry.
+SDK 0.72.0 adds paginated finance register reads for invoices, expenses, quotes, supplier bills, purchase orders and payroll runs, plus a summary operation used by finance navigation badges. Filament finance tables and badges now share these application queries. These operations are included in OpenAPI 0.76.0.
+
+SDK 0.72.0 archive: 18812 bytes, SHA-256 `d212d8fc9e97a58ec942ea2f6ab4c87a6e4bbfed5fb934f9e921291ff92a0276`. It carries all 546 API operation IDs, including 540 business operations in OpenAPI 0.76.0. Its live metadata, size and archive hash match. The package remains a downloadable preview and is not published to a registry.
+
+SDK 0.71.0 adds contract list and expiring-contract summary reads, plus asset-register listing. Contract and asset Filament tables now use the same role-protected query handlers as API clients. These operations are included in OpenAPI 0.75.0.
+
+SDK 0.71.0 archive: 18706 bytes, SHA-256 `ab0bf83d28815410e871627af77e7d2a75984c275232e65e2eb90b378d152d62`. It carries all 539 API operation IDs, including 533 business operations in OpenAPI 0.75.0. Its live metadata, size and archive hash match. The package remains a downloadable preview and is not published to a registry.
+
+SDK 0.70.0 adds four protected admin dashboard reads for recent tickets, new leads, outstanding invoices, and audience-filtered announcements. The dashboard table widgets reuse the same query builders as these API operations. Operations are included in OpenAPI 0.74.0; access follows support, CRM, finance, and audience permissions.
+
+SDK 0.70.0 archive: 18644 bytes, SHA-256 `1b0214a8057d75435ac56a980bd7ed06aced04ad9559ccef41c09d6886486650`. It carries all 536 API operation IDs, including 530 business operations in OpenAPI 0.74.0. The package remains a downloadable preview and is not published to a registry.
+
+
+SDK 0.68.0 adds seven protected finance reports: A/P and A/R aging, cash flow, budget vs actual, payroll headcount, profit and loss, and the finance overview. Filament report pages and the overview widget now use the same query handlers. These operations are included in OpenAPI 0.72.0.
+
+SDK 0.68.0 archive: 18428 bytes, SHA-256 `b6d8360f805be8ad471e911736fbd700dc2a9acfae1d806fce3f4ce86eefffdb`. It carries all 527 API operation IDs, including 521 business operations in OpenAPI 0.72.0.
+
+SDK 0.67.0 adds the protected dashboard summary query. Financial measures are omitted without accounting permission, and CRM measures are limited to administrator roles. The main Filament stats widget now reads through this query. These operations are included in OpenAPI 0.71.0.
+
+SDK 0.67.0 archive: 18198 bytes, SHA-256 `80ac92aa58cdd2e593f3b928e0ed56cd44931ef26c8447b96e40f39b63b407f6`. It carries all 520 API operation IDs, including 514 business operations in OpenAPI 0.71.0.
+
+SDK 0.66.0 adds protected risk-register list and detail reads. The admin UI no longer offers direct risk deletion so mitigation history remains auditable. These operations are included in OpenAPI 0.70.0.
+
+SDK 0.66.0 archive: 18165 bytes, SHA-256 `ec5d88646e2612ceb2b70a3c4b61e0cd8a9ca1fe14374efdf66e148bab854343`. It carries all 519 API operation IDs, including 513 business operations in OpenAPI 0.70.0.
+
+SDK 0.65.0 adds protected deal list, detail and pipeline read operations. The Filament kanban now reads the shared Operations query and advances deals through the same command exposed by the API. These operations are included in OpenAPI 0.69.0.
+
+SDK 0.65.0 archive: 18134 bytes, SHA-256 `8e36bdb860001a4e85fb78f7e3a238078c6991d4f5777abc7596e51f97899aec`. It carries all 517 API operation IDs, including 511 business operations in OpenAPI 0.69.0.
+
+
+SDK 0.64.0 adds a protected invoice-payment recording operation. Filament payment entry shares the finance command with API clients, and payment deletion is removed to preserve financial audit history. These operations are included in OpenAPI 0.68.0.
+
+SDK 0.64.0 archive: 18073 bytes, SHA-256 `e029138fcb1f310318e5788272206a14781c696adc61edb8cdb381d3d027df9c`. It carries all 514 API operation IDs, including 508 business operations in OpenAPI 0.68.0.
+
+SDK 0.63.0 adds protected project-scoped milestone list/detail/create/update/delete operations. Writes verify project ownership; completion remains an explicit transition, completed milestones cannot be reopened or deleted, and Filament uses the same commands. These operations are included in OpenAPI 0.67.0.
+
+SDK 0.63.0 archive: 18042 bytes, SHA-256 `988dc58811b0b3bedd2a4fec8fa3ad52e1085b7fa98e9c57deb5c92c7a50a128`. It carries all 513 API operation IDs, including 507 business operations in OpenAPI 0.67.0.
+
+SDK 0.62.0 adds protected employee leave-balance list, detail, create, update and delete operations. Usage cannot be supplied by callers, entitlement changes cannot fall below approved use, and records with leave history are retained. Filament balance actions use the same Workforce commands. These operations are included in OpenAPI 0.66.0.
+
+SDK 0.62.0 archive: 17919 bytes, SHA-256 `032c6829979bbd4f4f385552778b624c7fd74912f32ee3908561abb56bb7574e`. It carries all 508 API operation IDs, including 502 business operations in OpenAPI 0.66.0.
+
+SDK 0.61.0 adds protected validation-module create and delete operations. Module creation is scoped to its product, deletion is rejected while workflows exist, and Filament module actions dispatch the same commands. These operations are included in OpenAPI 0.65.0.
+
+
+SDK 0.60.0 adds eight protected partner-institution and practitioner-programme catalogue operations. The institution create/update calls accept `FormData` for optional image logos or a managed existing logo path; Filament edit/create, featured state and ordering use the same commands. Programme edits validate lifecycle transitions, cohort references, application history and capacity limits; deletion controls were removed.
+
+SDK 0.60.0 archive: 17785 bytes, SHA-256 `f79bddc0189ebdd98a93cb483a876400540842867d19a2dbd36f2a9f4c9fb7cb`. It carries all 501 API operation IDs, including 495 business operations in OpenAPI 0.64.0.
+
+SDK 0.59.0 adds four protected service-request operations for list, detail, pending-request detail edits and cancellation. Assignment and confirmation, completion and cancellation are separate lifecycle commands; general edits cannot set status, customer, assignee or confirmed schedule. These operations are included in OpenAPI 0.63.0.
+
+SDK 0.59.0 archive: 17608 bytes, SHA-256 `8e578bb2d3c8e617c0a5b2318a22961ac64cb30e04fe1e6cf160d52ddd9d6627`. It carries all 493 API operation IDs, including 487 business operations in OpenAPI 0.63.0.
+
+SDK 0.58.0 adds six protected CRM operations to list, inspect and update partner and tester applications. Admin writes are limited to notes and valid status transitions; contact and submission data is immutable through this interface, and the admin create/delete UI was removed because these records represent real public submissions. The public intake API remains the write-only creation path. These operations are included in OpenAPI 0.62.0.
+
+SDK 0.58.0 archive: 17530 bytes, SHA-256 `dd9e08b37a0f6d4d03960a6ef3d3465daab0dce6e1156c2112bdfba217253323`. It carries all 489 API operation IDs, including 483 business operations in OpenAPI 0.62.0.
+
+SDK 0.57.0 adds nine protected practitioner administration operations for profile/finding reads and edits plus application reads and admin notes. Sensitive payout/registration fields are not included in profile reads, identity/status fields are blocked from ordinary edits, and the existing verify/publish/approve/reject actions remain explicit commands. These operations are included in OpenAPI 0.61.0.
+
+SDK 0.57.0 archive: 17371 bytes, SHA-256 `0b69e5e892f606a5e7a274cab8702f884d173f19f404dbde7e215d394977b61c`. It carries all 483 API operation IDs, including 477 business operations in OpenAPI 0.61.0.
+
+SDK 0.56.0 adds 13 protected validation-catalogue operations for modules, workflows and test cases. Filament edits and nested create/edit/delete actions use shared Validation commands with parent-ownership checks and history-safe deletion guards. These operations are included in OpenAPI 0.60.0.
+
+SDK 0.56.0 archive: 17219 bytes, SHA-256 `9cb449906193f0fe14cf3fccf24b7ce10420a74c9d8201de5f6e67b8ee6c4a2d`. It carries all 474 API operation IDs, including 468 business operations in OpenAPI 0.60.0.
+
+SDK 0.55.0 adds protected performance-review read/create/update operations under dedicated review scopes. Filament creates and edits drafts through the same commands; submitted and acknowledged reviews are read-only, and delete controls are removed. Existing submit and acknowledge API scopes remain compatible.
+
+SDK 0.55.0 archive: 16947 bytes, SHA-256 `c195e814b62efb52dcf60a6e94b6f8d206b1303aab528ba3d06fba6805ed84dc`. It carries all 461 API operation IDs, including 455 business operations in OpenAPI 0.59.0.
+
+SDK 0.54.0 adds protected customer facility-profile and admin leave-request read/create/update operations. Filament create/edit uses the same application commands; profiles can only be assigned to customer accounts, pending leave requests alone are editable, and historical profile/leave rows cannot be deleted through the admin screens.
+
+SDK 0.54.0 archive: 16880 bytes, SHA-256 `54941bdbd44b93f6919f292312078d8f1f98b831957b1cee0655454b3fdae25b`. It carries all 457 API operation IDs, including 451 business operations in OpenAPI 0.58.0.
+
+SDK 0.53.0 adds protected invoice-template read/create/update operations. Filament create/edit uses the same Finance commands; deactivation retains the recurring schedule and invoice-generation history.
+
+SDK 0.52.0 adds protected employee and HR read/create/update operations with dedicated `workforce:hr:read` and `workforce:hr:write` scopes. Payroll, bank and tax fields are returned only by the scoped employee endpoints; super-admin assignment is restricted, and employee account deletion is replaced with deactivation.
+
+SDK 0.51.0 adds five protected CRM lead read and CRUD operations. Filament lead creation, edit and delete use the same Enquiries handlers. Leads associated with quotes or deals cannot be deleted.
+
+SDK 0.51.0 archive: 16577 bytes, SHA-256 `2c8c9b4436773ab923d46dab749f5c801ffd4f89d86b7808c40c765ab14b3653`. It carries all 441 API operation IDs, including 435 business operations in OpenAPI 0.55.0.
+
+SDK 0.50.0 adds protected support-ticket create and detail-edit operations. The Filament support desk uses the same commands; ticket replies and status transitions were already shared. Admin ticket deletion is disabled to preserve support history.
+
+SDK 0.50.0 archive: 16485 bytes, SHA-256 `4191224afa748ef8796bdf2712837d96f6cdb2b841f61b403cf79f9e5e3c740d`. It carries all 436 API operation IDs, including 430 business operations in OpenAPI 0.54.0.
 
 SDK 0.49.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations, including blog publishing, CRM demo-request administration, validation-cohort management, recruitment, learning and survey administration. Download `/downloads/opes-health-api-client-0.49.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
 
@@ -168,3 +289,32 @@ OpenAPI 0.47.0 and SDK 0.43.0 add array item length/pattern constraints and expl
 SDK 0.43.0 archive: 15503 bytes, SHA-256 `6f2a9f8dbe4eeea989c8e5b23a339a51e1f477fb80feb4f3e244a76443d61977`. It carries all 384 API operation IDs described by OpenAPI 0.47.0.
 
 SDK 0.42.0 archive: 15502 bytes, SHA-256 `864059425e43cb661a3d71deeac6f3bff15257e6708fcfad9c55277991dcdada`. It carries all 384 API operation IDs described by OpenAPI 0.46.0.
+
+SDK 0.61.0 archive: 17823 bytes, SHA-256 `433a53212857309fe65b026d02334738f904e29db96514d768d1a74a1b480d8e`. It carries all 503 API operation IDs, including 497 business operations in OpenAPI 0.65.0.
+
+SDK 0.64.0 adds a protected invoice-payment recording operation. Filament payment entry shares the finance command with API clients, and payment deletion is removed to preserve financial audit history. These operations are included in OpenAPI 0.68.0.
+
+SDK 0.69.0 adds five protected operational reporting reads for the admin overview, report dashboard, expiring contracts, CRM summary, and people summary. The Filament reports and CRM/people dashboard widgets call the same application query handlers. These operations are included in OpenAPI 0.73.0.
+
+SDK 0.69.0 archive: 18553 bytes, SHA-256 `bccbba9ef05710568d0cf3d9db59093e50add31842edeaaa24f1fc1bbf792ca5`. It carries all 532 API operation IDs, including 526 business operations in OpenAPI 0.73.0. The package remains a downloadable preview and is not published to a registry.
+
+
+
+
+
+
+
+
+
+
+SDK 0.92.0 adds administrator API-client lifecycle operation identifiers: list, create, rotate and revoke. OpenAPI 0.96.0 documents administrator delegation, the two permitted machine-client scopes, safe list projections and one-time no-store secret responses. The archive contains all 605 operation IDs; it remains a server-side preview and is not published to npm.
+
+SDK 0.93.0 adds administrator OAuth client lifecycle operation identifiers for listing, registering and revoking reviewed public authorization-code clients. OpenAPI 0.97.0 requires exact HTTPS redirect URIs, active admin ownership, owner-approved scopes, consent and S256 PKCE; no client secret is issued. The archive contains all 608 operation IDs and remains a downloadable server-side preview, not an npm registry release.
+
+SDK 0.94.0 adds public API status and release changelog operation identifiers. OpenAPI 0.98.0 explicitly limits status claims to the API application responding to the current request; it does not claim dependency health or service-level availability. The archive contains all 610 operation IDs and remains a downloadable server-side preview.
+
+SDK 0.94.0 adds public API status and release changelog operation identifiers. OpenAPI 0.98.0 explicitly limits status claims to the API application responding to the current request; it does not claim dependency health or service-level availability. The archive contains all 610 operation IDs and remains a downloadable server-side preview.
+
+SDK 0.95.0 adds the authenticated self-profile operation for role-aware mobile clients. OpenAPI 0.99.0 documents the reserved OPES native callback and per-user role-derived scopes. The archive contains all 611 operation IDs and remains a downloadable server-side preview.
+
+SDK 0.95.0 adds the authenticated self-profile operation for role-aware mobile clients. OpenAPI 0.99.0 documents the reserved OPES native callback and per-user role-derived scopes. The archive contains all 611 operation IDs and remains a downloadable server-side preview.

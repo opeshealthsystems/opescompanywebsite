@@ -8,11 +8,21 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class PaymentsRelationManager extends RelationManager
 {
     protected static string $relationship = 'payments';
     protected static ?string $title = 'Payment History';
+
+    protected function getTableQuery(): Builder
+    {
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::query(
+            \App\Contexts\Finance\Application\Queries\AdminFinanceRecordQueries::class,
+            'invoicePaymentsQuery',
+            [$this->getOwnerRecord()],
+        );
+    }
 
     public function form(Form $form): Form
     {
@@ -78,11 +88,11 @@ class PaymentsRelationManager extends RelationManager
             ->defaultSort('payment_date', 'desc')
             ->headerActions([
                 Tables\Actions\CreateAction::make()
-                    ->after(fn ($record) => $record->invoice->reconcilePaymentStatus()),
-            ])
-            ->actions([
-                Tables\Actions\DeleteAction::make()
-                    ->after(fn ($record) => $record->invoice->reconcilePaymentStatus()),
+                    ->using(fn (array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record(
+                        'admin.finance.invoices.recordPayment',
+                        $data,
+                        ['invoice' => $this->getOwnerRecord()->id],
+                    )),
             ]);
     }
 }

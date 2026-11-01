@@ -44,9 +44,7 @@ class AnnouncementResource extends Resource
 
                 Forms\Components\Select::make('author_id')
                     ->label('Author')
-                    ->options(fn () => User::whereHas('roles', fn ($q) =>
-                        $q->whereIn('name', ['super_admin', 'admin'])
-                    )->orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users', ['role' => 'administrators']))
                     ->default(fn () => auth()->id())->disabled()->dehydrated(false)
                     ->required(),
 
@@ -95,7 +93,7 @@ class AnnouncementResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\Announcement $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.communications.announcements.update', $data, ['announcement' => $record->id])),
                 Tables\Actions\DeleteAction::make()->using(function (Announcement $record) {
                     \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.communications.announcements.delete', parameters: ['announcement' => $record->id]);
                     return true;
@@ -144,7 +142,7 @@ class AnnouncementResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $active = static::getModel()::where('is_active', true)->count();
+        $active = \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'announcements.active'])['count'] ?? 0;
         return $active > 0 ? (string) $active : null;
     }
 
@@ -161,5 +159,12 @@ class AnnouncementResource extends Resource
             'view'   => Pages\ViewAnnouncement::route('/{record}'),
             'edit'   => Pages\EditAnnouncement::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Communications\Application\Queries\AdminAnnouncementQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

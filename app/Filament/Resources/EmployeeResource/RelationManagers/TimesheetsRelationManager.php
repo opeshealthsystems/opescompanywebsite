@@ -8,10 +8,19 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class TimesheetsRelationManager extends RelationManager
 {
     protected static string $relationship = 'timesheets';
+
+    protected function getTableQuery(): Builder
+    {
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::query(
+            \App\Contexts\Workforce\Application\Queries\AdminWorkforceRecordQueries::class,
+            'timesheetQuery',
+        )->where('user_id', $this->getOwnerRecord()->getKey());
+    }
 
     public function form(Form $form): Form
     {
@@ -19,7 +28,7 @@ class TimesheetsRelationManager extends RelationManager
             Forms\Components\DatePicker::make('date')->required()->default(now())->native(false),
             Forms\Components\Select::make('project_id')
                 ->label('Project')
-                ->options(fn () => Project::whereIn('status',['active','planning'])->orderBy('title')->pluck('title','id'))
+                ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.projects', [], 'title'))
                 ->searchable()->nullable()->placeholder('No project'),
             Forms\Components\TextInput::make('hours')->numeric()->required()->minValue(0.25)->step(0.25)->suffix('hrs'),
             Forms\Components\Toggle::make('is_billable')->label('Billable')->default(false),
@@ -38,8 +47,11 @@ class TimesheetsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('description')->limit(35)->placeholder('—'),
             ])
             ->defaultSort('date','desc')
-            ->headerActions([Tables\Actions\CreateAction::make()])
-            ->actions([Tables\Actions\EditAction::make(), Tables\Actions\DeleteAction::make()])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);
+            ->headerActions([Tables\Actions\CreateAction::make()->using(fn (array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.workforce.timesheets.create', $data + ['user_id' => $this->getOwnerRecord()->id]))])
+            ->actions([
+                Tables\Actions\EditAction::make()->using(fn (Timesheet $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.workforce.timesheets.update', $data + ['user_id' => $this->getOwnerRecord()->id], ['timesheet' => $record->id])),
+                Tables\Actions\DeleteAction::make()->using(function (Timesheet $record) { \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.timesheets.delete', parameters: ['timesheet' => $record->id]); return true; }),
+            ])
+            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()->using(function ($records) { foreach ($records as $record) \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.timesheets.delete', parameters: ['timesheet' => $record->id]); })])]);
     }
 }

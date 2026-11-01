@@ -23,6 +23,13 @@ class SupplierBillResource extends Resource
     protected static ?string $navigationGroup = 'Accounting';
     protected static ?int $navigationSort = 55;
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Finance\Application\Queries\AdminFinanceRecordQueries::class)->supplierBillQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
+    }
+
     public static function canAccess(): bool
     {
         return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
@@ -30,7 +37,8 @@ class SupplierBillResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $count = static::getModel()::where('status', 'received')->count();
+        $count = app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute('admin.finance.records.summary',
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale()))->data['received_supplier_bills'];
         return $count > 0 ? (string) $count : null;
     }
 
@@ -56,7 +64,7 @@ class SupplierBillResource extends Resource
                     ->maxLength(100),
                 Forms\Components\Select::make('created_by')
                     ->label('Recorded By')
-                    ->options(fn () => User::orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users'))
                     ->default(fn () => auth()->id())
                     ->disabled()->dehydrated(false)
                     ->searchable()
@@ -66,7 +74,7 @@ class SupplierBillResource extends Resource
             Forms\Components\Section::make('Vendor')->columns(2)->schema([
                 Forms\Components\Select::make('vendor_id')
                     ->label('Vendor (Registry)')
-                    ->options(fn () => Vendor::where('is_active', true)->orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.vendors'))
                     ->searchable()
                     ->nullable(),
                 Forms\Components\TextInput::make('vendor_name')
@@ -75,10 +83,8 @@ class SupplierBillResource extends Resource
                     ->helperText('Fill if not in registry'),
                 Forms\Components\Select::make('purchase_order_id')
                     ->label('Linked PO')
-                    ->options(fn () => PurchaseOrder::whereIn('status', ['approved', 'received'])
-                        ->orderByDesc('created_at')
-                        ->get()
-                        ->mapWithKeys(fn ($po) => [$po->id => $po->reference . ' — ' . $po->title]))
+                    ->options(fn () => collect(\App\Contexts\Shared\Infrastructure\AdminReferenceOptions::items('admin.references.purchaseOrders'))
+                        ->mapWithKeys(fn ($order) => [$order['id'] => $order['reference'].' — '.$order['title']]))
                     ->searchable()
                     ->nullable()
                     ->placeholder('No PO'),
@@ -188,7 +194,7 @@ class SupplierBillResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\SupplierBill $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.finance.supplierBills.update', $data, ['supplierBill' => $record->id])),
                 Tables\Actions\Action::make('approve')
                     ->label('Approve')
                     ->icon('heroicon-o-check-circle')

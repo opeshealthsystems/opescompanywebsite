@@ -21,11 +21,6 @@ class EditDeal extends EditRecord
 
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
-            'admin.crm.deals.update',
-            new \App\Contexts\Shared\Application\WorkflowInput(values: $data, parameters: ['deal' => $record], actor: auth()->user(), language: app()->getLocale()),
-        );
-
-        return Deal::query()->findOrFail($record->id);
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.crm.deals.update', $data, ['deal' => $record]);
     }
 }

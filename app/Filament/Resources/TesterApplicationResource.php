@@ -27,25 +27,25 @@ class TesterApplicationResource extends Resource
     {
         return $form->schema([
             Forms\Components\Section::make('Applicant')->columns(2)->schema([
-                Forms\Components\TextInput::make('name')->required(),
-                Forms\Components\TextInput::make('email')->email()->required(),
-                Forms\Components\TextInput::make('phone'),
-                Forms\Components\Select::make('profession')->required()->options(collect(TesterApplication::$professions)->map(fn($v) => $v['en'])),
-                Forms\Components\TextInput::make('specialty'),
-                Forms\Components\TextInput::make('institution_name'),
-                Forms\Components\TextInput::make('country')->required(),
-                Forms\Components\TextInput::make('city'),
-                Forms\Components\TextInput::make('years_experience')->numeric()->minValue(0)->maxValue(50),
+                Forms\Components\TextInput::make('name')->disabledOn('edit')->dehydrated(false)->required(),
+                Forms\Components\TextInput::make('email')->email()->disabledOn('edit')->dehydrated(false)->required(),
+                Forms\Components\TextInput::make('phone')->disabledOn('edit')->dehydrated(false),
+                Forms\Components\Select::make('profession')->disabledOn('edit')->dehydrated(false)->required()->options(collect(TesterApplication::$professions)->map(fn($v) => $v['en'])),
+                Forms\Components\TextInput::make('specialty')->disabledOn('edit')->dehydrated(false),
+                Forms\Components\TextInput::make('institution_name')->disabledOn('edit')->dehydrated(false),
+                Forms\Components\TextInput::make('country')->disabledOn('edit')->dehydrated(false)->required(),
+                Forms\Components\TextInput::make('city')->disabledOn('edit')->dehydrated(false),
+                Forms\Components\TextInput::make('years_experience')->disabledOn('edit')->dehydrated(false)->numeric()->minValue(0)->maxValue(50),
             ]),
             Forms\Components\Section::make('Technical Profile')->schema([
-                Forms\Components\CheckboxList::make('devices')->options(['smartphone' => 'Smartphone', 'tablet' => 'Tablet', 'laptop' => 'Laptop', 'desktop' => 'Desktop']),
-                Forms\Components\CheckboxList::make('platforms')->options(['android' => 'Android', 'ios' => 'iOS', 'windows' => 'Windows', 'macos' => 'macOS', 'web' => 'Web Browser']),
-                Forms\Components\Textarea::make('tech_experience')->rows(3),
-                Forms\Components\Textarea::make('motivation')->required()->rows(4),
+                Forms\Components\CheckboxList::make('devices')->disabledOn('edit')->dehydrated(false)->options(['smartphone' => 'Smartphone', 'tablet' => 'Tablet', 'laptop' => 'Laptop', 'desktop' => 'Desktop']),
+                Forms\Components\CheckboxList::make('platforms')->disabledOn('edit')->dehydrated(false)->options(['android' => 'Android', 'ios' => 'iOS', 'windows' => 'Windows', 'macos' => 'macOS', 'web' => 'Web Browser']),
+                Forms\Components\Textarea::make('tech_experience')->disabledOn('edit')->dehydrated(false)->rows(3),
+                Forms\Components\Textarea::make('motivation')->disabledOn('edit')->dehydrated(false)->required()->rows(4),
             ]),
             Forms\Components\Section::make('Admin')->columns(2)->schema([
                 Forms\Components\Select::make('status')->options(array_combine(TesterApplication::$statuses, TesterApplication::$statuses))->required(),
-                Forms\Components\TextInput::make('locale')->disabled(),
+                Forms\Components\TextInput::make('locale')->disabled()->dehydrated(false),
                 Forms\Components\Textarea::make('admin_notes')->columnSpanFull()->rows(3),
             ]),
         ]);
@@ -69,16 +69,21 @@ class TesterApplicationResource extends Resource
                 Tables\Filters\SelectFilter::make('status')->options(array_combine(TesterApplication::$statuses, TesterApplication::$statuses)),
                 Tables\Filters\SelectFilter::make('profession')->options(collect(TesterApplication::$professions)->map(fn($v) => $v['en'])),
             ])
-            ->actions([Tables\Actions\EditAction::make()])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);
+            ->actions([Tables\Actions\EditAction::make()->using(fn (\App\Models\TesterApplication $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.enquiries.testerApplications.update', $data, ['testerApplication' => $record->id]))]);
     }
 
     public static function getPages(): array
     {
         return [
             'index'  => Pages\ListTesterApplications::route('/'),
-            'create' => Pages\CreateTesterApplication::route('/create'),
             'edit'   => Pages\EditTesterApplication::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Enquiries\Application\Queries\AdminExternalApplicationQueries::class)->testerQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

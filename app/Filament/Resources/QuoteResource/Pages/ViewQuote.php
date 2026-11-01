@@ -20,7 +20,7 @@ class ViewQuote extends ViewRecord
                 ->url(fn () => route('quotes.pdf', $this->record))
                 ->openUrlInNewTab(),
             Actions\EditAction::make(),
-            Actions\DeleteAction::make(),
+            Actions\DeleteAction::make()->action(fn () => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.quotes.delete', parameters: ['quote' => $this->record->id])),
         ];
     }
 }

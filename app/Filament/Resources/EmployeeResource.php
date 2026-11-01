@@ -30,9 +30,9 @@ class EmployeeResource extends Resource
 
     public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
     {
-        return parent::getEloquentQuery()
-            ->with(['roles', 'employeeProfile'])
-            ->whereHas('roles', fn ($q) => $q->whereIn('name', ['super_admin', 'admin', 'support', 'tester']));
+        return app(\App\Contexts\Workforce\Application\Commands\AdminEmployeeCommands::class)->employeeQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 
     public static function form(Form $form): Form
@@ -55,19 +55,19 @@ class EmployeeResource extends Resource
                 Forms\Components\TextInput::make('employee_id')->label('Employee ID')
                     ->unique(table: 'users', ignorable: fn (?User $record) => $record)->nullable(),
                 Forms\Components\Select::make('roles')->label('Role')
-                    ->relationship('roles', 'name')
                     ->options([
                         'super_admin' => 'Super Admin',
                         'admin'       => 'Admin',
                         'support'     => 'Support',
                         'tester'      => 'Tester',
                     ])
-                    ->multiple(),
+                    ->multiple()->required()
+                    ->default(fn (?User $record) => $record?->getRoleNames()->all() ?? []),
                 Forms\Components\TextInput::make('department')->maxLength(80)->nullable(),
                 Forms\Components\TextInput::make('position')->maxLength(80)->nullable(),
                 Forms\Components\Select::make('department_id')
                     ->label('Department')
-                    ->options(fn () => \App\Models\Department::where('is_active', true)->orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.departments'))
                     ->searchable()
                     ->nullable()
                     ->placeholder('No department'),
@@ -75,7 +75,8 @@ class EmployeeResource extends Resource
                 Forms\Components\Toggle::make('is_active')->label('Active')->default(true),
                 Forms\Components\Select::make('salary_grade_id')
                     ->label('Salary Grade')
-                    ->options(fn () => \App\Models\SalaryGrade::activeOptions())
+                    ->options(fn () => \Illuminate\Support\Collection::make(\App\Contexts\Shared\Infrastructure\AdminReferenceOptions::items('admin.references.salaryGrades'))
+                        ->mapWithKeys(fn (array $grade) => [$grade['id'] => $grade['label']])->all())
                     ->searchable()->nullable()->columnSpanFull(),
                 Forms\Components\TextInput::make('base_salary')
                     ->label('Base Salary')->numeric()->nullable()->minValue(0),
@@ -156,13 +157,9 @@ class EmployeeResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (User $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.workforce.employees.update', $data, ['employee' => $record->id])),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->bulkActions([]);
     }
 
     public static function infolist(Infolist $infolist): Infolist
@@ -225,7 +222,7 @@ class EmployeeResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return (string) static::getEloquentQuery()->count();
+        return (string) (\App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'employees.staff'])['count'] ?? 0);
     }
 
     public static function getGloballySearchableAttributes(): array

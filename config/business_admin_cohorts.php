@@ -15,6 +15,8 @@ $def = fn (string $handler, string $method, array $parameters, bool $command, st
 return [
     'admin.validation.cohorts.index' => $def($queries, 'index', [$input], false, 'validation/cohorts', 'GET', 'index'),
     'admin.validation.cohorts.show' => $def($queries, 'show', [$input, $cohort], false, 'validation/cohorts/{cohort}', 'GET', 'show'),
+    'admin.validation.cohortMembers.index' => $def($queries, 'members', [$input, $cohort], false, 'validation/cohorts/{cohort}/members', 'GET', 'members.index'),
+    'admin.validation.cohortTestCases.index' => $def($queries, 'testCases', [$input, $cohort], false, 'validation/cohorts/{cohort}/test-cases', 'GET', 'testCases.index'),
     'admin.validation.cohorts.create' => $def($commands, 'create', [$input], true, 'validation/cohorts', 'POST', 'create'),
     'admin.validation.cohorts.update' => $def($commands, 'update', [$input, $cohort], true, 'validation/cohorts/{cohort}', 'PUT', 'update'),
     'admin.validation.cohorts.delete' => $def($commands, 'delete', [$input, $cohort], true, 'validation/cohorts/{cohort}', 'DELETE', 'delete'),

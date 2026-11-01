@@ -2,8 +2,8 @@
 
 namespace App\Filament\Pages;
 
-use App\Models\Contract;
-use Carbon\Carbon;
+use App\Contexts\Shared\Application\WorkflowInput;
+use App\Contexts\Shared\Infrastructure\WorkflowDispatcher;
 use Filament\Pages\Page;
 
 class ContractsExpiry extends Page
@@ -21,39 +21,12 @@ class ContractsExpiry extends Page
 
     public function getContractData(): array
     {
-        $active = Contract::whereIn('status', ['active', 'pending_renewal'])
-            ->whereNotNull('end_date')
-            ->orderBy('end_date')
-            ->get();
-
-        $today = Carbon::today();
-
-        return $active->map(function (Contract $contract) use ($today) {
-            $endDate = Carbon::parse($contract->end_date);
-            $daysLeft = $today->diffInDays($endDate, false);
-
-            return [
-                'reference'  => $contract->reference,
-                'type'       => $contract->type,
-                'status'     => $contract->status,
-                'value'      => (float) $contract->value,
-                'currency'   => $contract->currency ?? 'XAF',
-                'end_date'   => $endDate->format('d M Y'),
-                'days_left'  => (int) $daysLeft,
-                'auto_renew' => (bool) $contract->auto_renew,
-            ];
-        })->toArray();
+        return array_merge(...array_map(fn (array $bucket) => $bucket['rows'], array_values($this->getExpiryBuckets())));
     }
 
     public function getExpiryBuckets(): array
     {
-        $data = $this->getContractData();
-        return [
-            'expired' => ['label' => 'Already Expired',        'rows' => array_values(array_filter($data, fn($r) => $r['days_left'] < 0))],
-            'week'    => ['label' => 'Expiring This Week',     'rows' => array_values(array_filter($data, fn($r) => $r['days_left'] >= 0 && $r['days_left'] <= 7))],
-            'month'   => ['label' => 'Expiring This Month',    'rows' => array_values(array_filter($data, fn($r) => $r['days_left'] > 7 && $r['days_left'] <= 30))],
-            'quarter' => ['label' => 'Expiring in 30–90 Days', 'rows' => array_values(array_filter($data, fn($r) => $r['days_left'] > 30 && $r['days_left'] <= 90))],
-            'later'   => ['label' => 'Beyond 90 Days',         'rows' => array_values(array_filter($data, fn($r) => $r['days_left'] > 90))],
-        ];
+        return app(WorkflowDispatcher::class)->execute('admin.reports.contractsExpiry',
+            new WorkflowInput(actor: auth()->user(), language: app()->getLocale()))->data['buckets'];
     }
 }

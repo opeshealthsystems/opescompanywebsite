@@ -28,7 +28,7 @@ class RiskResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $count = static::getModel()::where('status','open')->where('risk_score','>=',12)->count();
+        $count = \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'risks.high_open'])['count'] ?? 0;
         return $count > 0 ? (string) $count : null;
     }
 
@@ -44,7 +44,7 @@ class RiskResource extends Resource
                 Forms\Components\Select::make('category')->options(Risk::categoryOptions())->required(),
                 Forms\Components\Select::make('owner_id')
                     ->label('Risk Owner')
-                    ->options(fn () => User::orderBy('name')->pluck('name','id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users'))
                     ->default(fn () => auth()->id())
                     ->searchable()->required(),
                 Forms\Components\Select::make('likelihood')
@@ -98,15 +98,14 @@ class RiskResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\Risk $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.workforce.risks.update', $data, ['risk' => $record->id])),
                 Tables\Actions\Action::make('mitigate')
                     ->label('Mark Mitigated')->icon('heroicon-o-shield-check')->color('warning')
                     ->requiresConfirmation()
                     ->hidden(fn (Risk $record) => $record->status !== 'open')
                     ->action(fn (Risk $record) => AdminWorkflowAdapter::run('admin.risk.mitigate', parameters: ['risk' => $record])),
-                Tables\Actions\DeleteAction::make(),
             ])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);
+            ->bulkActions([]);
     }
 
     public static function infolist(Infolist $infolist): Infolist
@@ -156,5 +155,12 @@ class RiskResource extends Resource
             'view'   => Pages\ViewRisk::route('/{record}'),
             'edit'   => Pages\EditRisk::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Workforce\Application\Queries\AdminRiskQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

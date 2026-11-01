@@ -3,9 +3,26 @@
 $class = 'App\\Contexts\\Workforce\\Application\\Commands\\AdminPeopleCommands';
 $input = ['name' => 'workflowInput', 'kind' => 'input'];
 $risk = ['name' => 'risk', 'kind' => 'model', 'class' => 'App\\Models\\Risk', 'key' => 'id'];
+$riskQueries = 'App\\Contexts\\Workforce\\Application\\Queries\\AdminRiskQueries';
 $trainingRecord = ['name' => 'trainingRecord', 'kind' => 'model', 'class' => 'App\\Models\\TrainingRecord', 'key' => 'id'];
 $user = ['name' => 'user', 'kind' => 'model', 'class' => 'App\\Models\\User', 'key' => 'id'];
+$userQueries = 'App\\Contexts\\Workforce\\Application\\Queries\\AdminUserQueries';
 return [
+    'admin.identity.users.index' => ['handler' => $userQueries, 'method' => 'usersIndex', 'parameters' => [$input], 'command' => false,
+        'context' => 'Identity', 'roles' => ['super_admin', 'admin'], 'authenticated' => true, 'scope' => 'administration:read',
+        'api_path' => 'admin/users', 'http_methods' => ['GET'], 'source_controller' => 'UserResource', 'source_action' => 'index'],
+    'admin.identity.users.employeeProfile' => ['handler' => $userQueries, 'method' => 'employeeProfile', 'parameters' => [$input, $user], 'command' => false,
+        'context' => 'Workforce', 'roles' => ['super_admin', 'admin'], 'authenticated' => true, 'scope' => 'workforce:read',
+        'api_path' => 'admin/users/{user}/employee-profile', 'http_methods' => ['GET'], 'source_controller' => 'UserResource', 'source_action' => 'employee_profile'],
+    'admin.identity.roles.index' => ['handler' => $userQueries, 'method' => 'rolesIndex', 'parameters' => [$input], 'command' => false,
+        'context' => 'Identity', 'roles' => ['super_admin'], 'authenticated' => true, 'scope' => 'administration:read',
+        'api_path' => 'admin/roles', 'http_methods' => ['GET'], 'source_controller' => 'RoleResource', 'source_action' => 'index'],
+    'admin.workforce.risks.index' => ['handler' => $riskQueries, 'method' => 'index', 'parameters' => [$input], 'command' => false,
+        'context' => 'Risk', 'roles' => ['super_admin', 'admin'], 'authenticated' => true, 'scope' => 'risk:read',
+        'api_path' => 'risk', 'http_methods' => ['GET'], 'source_controller' => 'RiskResource', 'source_action' => 'index'],
+    'admin.workforce.risks.show' => ['handler' => $riskQueries, 'method' => 'show', 'parameters' => [$input, $risk], 'command' => false,
+        'context' => 'Risk', 'roles' => ['super_admin', 'admin'], 'authenticated' => true, 'scope' => 'risk:read',
+        'api_path' => 'risk/{risk}', 'http_methods' => ['GET'], 'source_controller' => 'RiskResource', 'source_action' => 'show'],
     'admin.identity.users.create' => ['handler' => $class, 'method' => 'createUser', 'parameters' => [$input], 'command' => true,
         'context' => 'Identity', 'roles' => ['super_admin', 'admin'], 'authenticated' => true, 'scope' => 'administration:write',
         'api_path' => 'admin/users', 'http_methods' => ['POST'], 'source_controller' => 'UserResource', 'source_action' => 'create'],

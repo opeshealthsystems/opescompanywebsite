@@ -68,11 +68,9 @@ class RoleResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('permissions_count')
                     ->label('Permissions')
-                    ->counts('permissions')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('users_count')
                     ->label('Users')
-                    ->counts('users')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('guard_name')
                     ->badge()
@@ -102,13 +100,13 @@ class RoleResource extends Resource
                     Infolists\Components\TextEntry::make('guard_name')->label('Guard')->badge()->color('gray'),
                     Infolists\Components\TextEntry::make('permissions_count')
                         ->label('Permission Count')
-                        ->state(fn ($record) => $record->permissions()->count()),
+                        ->state(fn ($record) => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'roles.permission_count', 'id' => $record->id])['count'] ?? 0),
                     Infolists\Components\TextEntry::make('users_count')
                         ->label('Users Assigned')
-                        ->state(fn ($record) => $record->users()->count()),
+                        ->state(fn ($record) => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'roles.user_count', 'id' => $record->id])['count'] ?? 0),
                     Infolists\Components\TextEntry::make('permissions_list')
                         ->label('Permissions')
-                        ->state(fn ($record) => $record->permissions->pluck('name')->sort()->values()->all())
+                        ->state(fn ($record) => array_keys(\App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.rolePermissions', ['id' => $record->id])))
                         ->badge()
                         ->separator(', ')
                         ->placeholder('No permissions assigned')
@@ -123,5 +121,12 @@ class RoleResource extends Resource
             'index' => Pages\ListRoles::route('/'),
             'view'  => Pages\ViewRole::route('/{record}'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Workforce\Application\Queries\AdminUserQueries::class)->rolesQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

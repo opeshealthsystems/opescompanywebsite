@@ -20,6 +20,13 @@ class ValidationCertificateResource extends Resource
     protected static ?string $navigationGroup = 'Validation Hub';
     protected static ?int    $navigationSort  = 16;
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Validation\Application\Queries\AdminValidationCertificateQueries::class)->certificateQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
+    }
+
     public static function canAccess(): bool
     {
         return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
@@ -58,7 +65,7 @@ class ValidationCertificateResource extends Resource
                 Tables\Actions\Action::make('invite_to_council')
                     ->label('Invite to Council')->icon('heroicon-o-user-plus')->color('success')
                     ->visible(fn (ValidationCertificate $r) => $r->tier === 'distinction'
-                        && ! AdvisoryCouncilMember::where('user_id', $r->cohortMember->user_id)->exists())
+                        && !(\App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'advisory_council.user_exists', 'id' => $r->cohortMember->user_id])['count'] ?? false))
                     ->form([
                         Forms\Components\TextInput::make('title')->default('Clinical Validation Advisor')->required(),
                         Forms\Components\DatePicker::make('term_start')->native(false)->default(now())->required(),

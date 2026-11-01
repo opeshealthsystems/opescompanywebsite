@@ -7,9 +7,19 @@ use App\Models\TicketReply;
 use Illuminate\Support\Facades\Auth;
 class SupportTicketQueries extends \App\Contexts\Shared\Application\WorkflowHandler
 {
+    public function query(\App\Contexts\Shared\Application\WorkflowInput $input): \Illuminate\Database\Eloquent\Builder
+    {
+        $actor = $input->user();
+        abort_unless($actor instanceof \App\Models\User && $actor->is_active && $actor->hasAnyRole(['super_admin', 'admin', 'support']), 403);
+
+        return \App\Models\Ticket::query()->with(['customer', 'assignee'])
+            ->orderByRaw("CASE priority WHEN 'urgent' THEN 1 WHEN 'high' THEN 2 WHEN 'medium' THEN 3 ELSE 4 END")
+            ->orderByDesc('created_at');
+    }
+
     public function index(\App\Contexts\Shared\Application\WorkflowInput $request): \App\Contexts\Shared\Application\WorkflowResult
     {
-        $query = \App\Models\Ticket::with('customer')->orderByRaw("CASE priority WHEN 'urgent' THEN 1 WHEN 'high' THEN 2 WHEN 'medium' THEN 3 ELSE 4 END")->orderByDesc('created_at');
+        $query = $this->query($request);
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }

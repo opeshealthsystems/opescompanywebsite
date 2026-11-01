@@ -19,17 +19,12 @@ class EditQuote extends EditRecord
 
     protected function mutateFormDataBeforeFill(array $data): array
     {
-        $data['items'] = $this->record->items()->get(['product_name', 'quantity', 'unit_price'])->toArray();
+        $data['items'] = \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::routeData('admin.finance.quoteItems', ['quote' => $this->record->id])['items'] ?? [];
         return $data;
     }
 
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
-            'admin.finance.quotes.update',
-            new \App\Contexts\Shared\Application\WorkflowInput(values: $data, parameters: ['quote' => $record], actor: auth()->user(), language: app()->getLocale()),
-        );
-
-        return Quote::query()->findOrFail($record->id);
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.finance.quotes.update', $data, ['quote' => $record]);
     }
 }

@@ -28,7 +28,7 @@ class PerformanceReviewResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $count = static::getModel()::where('status','draft')->count();
+        $count = \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'performance.drafts'])['count'] ?? 0;
         return $count > 0 ? (string) $count : null;
     }
 
@@ -40,14 +40,12 @@ class PerformanceReviewResource extends Resource
             Forms\Components\Section::make('Review Details')->columns(2)->schema([
                 Forms\Components\Select::make('user_id')
                     ->label('Employee')
-                    ->options(fn () => User::orderBy('name')->pluck('name','id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users', ['role' => 'workforce_staff']))
                     ->searchable()->required(),
 
                 Forms\Components\Select::make('reviewer_id')
                     ->label('Reviewer')
-                    ->options(fn () => User::whereHas('roles', fn ($q) =>
-                        $q->whereIn('name',['super_admin','admin'])
-                    )->orderBy('name')->pluck('name','id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users', ['role' => 'administrators']))
                     ->default(fn () => auth()->id())
                     ->searchable()->required(),
 
@@ -106,11 +104,11 @@ class PerformanceReviewResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('status')->options(PerformanceReview::statusOptions()),
                 Tables\Filters\SelectFilter::make('user_id')->label('Employee')
-                    ->options(fn () => User::orderBy('name')->pluck('name','id')),
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users')),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (PerformanceReview $record, array $data) => AdminWorkflowAdapter::record('admin.workforce.performanceReviews.update', $data, ['review' => $record->id])),
                 Tables\Actions\Action::make('submit')
                     ->label('Submit')->icon('heroicon-o-paper-airplane')->color('info')
                     ->requiresConfirmation()
@@ -121,9 +119,8 @@ class PerformanceReviewResource extends Resource
                     ->requiresConfirmation()
                     ->hidden(fn (PerformanceReview $record) => $record->status !== 'submitted')
                     ->action(fn (PerformanceReview $record) => AdminWorkflowAdapter::run('admin.workforce.performanceReviews.acknowledge', parameters: ['review' => $record])),
-                Tables\Actions\DeleteAction::make(),
             ])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);
+            ->bulkActions([]);
     }
 
     public static function infolist(Infolist $infolist): Infolist
@@ -175,5 +172,12 @@ class PerformanceReviewResource extends Resource
             'view'   => Pages\ViewPerformanceReview::route('/{record}'),
             'edit'   => Pages\EditPerformanceReview::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Workforce\Application\Queries\AdminPerformanceQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

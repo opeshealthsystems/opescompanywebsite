@@ -8,10 +8,20 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class MilestonesRelationManager extends RelationManager
 {
     protected static string $relationship = 'milestones';
+
+    protected function getTableQuery(): Builder
+    {
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::query(
+            \App\Contexts\Operations\Application\Queries\ProjectQueries::class,
+            'milestoneQuery',
+            [$this->getOwnerRecord()],
+        );
+    }
 
     public function form(Form $form): Form
     {
@@ -20,8 +30,10 @@ class MilestonesRelationManager extends RelationManager
             Forms\Components\Textarea::make('description')->rows(2)->nullable()->columnSpanFull(),
             Forms\Components\DatePicker::make('due_date')->native(false)->nullable(),
             Forms\Components\Select::make('status')
-                ->options(Milestone::statusOptions())
-                ->default('pending')->required(),
+                ->options(fn () => array_diff_key(Milestone::statusOptions(), ['completed' => true]))
+                ->default('pending')->required()
+                ->disabled(fn (?Milestone $record) => $record?->status === 'completed')
+                ->dehydrated(fn (?Milestone $record) => $record?->status !== 'completed'),
         ]);
     }
 
@@ -40,15 +52,15 @@ class MilestonesRelationManager extends RelationManager
                     }),
             ])
             ->defaultSort('due_date')
-            ->headerActions([Tables\Actions\CreateAction::make()])
+            ->headerActions([Tables\Actions\CreateAction::make()->using(fn (array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.operations.milestones.create', $data, ['project' => $this->getOwnerRecord()->id]))])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (Milestone $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.operations.milestones.update', $data, ['project' => $this->getOwnerRecord()->id, 'milestone' => $record->id])),
                 Tables\Actions\Action::make('complete')
                     ->icon('heroicon-o-check-circle')->color('success')
                     ->hidden(fn (Milestone $record) => $record->status === 'completed')
                     ->action(fn (Milestone $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.milestones.complete', parameters: ['milestone' => $record])),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()->using(function (Milestone $record) { \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.operations.milestones.delete', parameters: ['project' => $this->getOwnerRecord()->id, 'milestone' => $record->id]); return true; }),
             ])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);
+            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()->using(function ($records) { foreach ($records as $record) \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.operations.milestones.delete', parameters: ['project' => $this->getOwnerRecord()->id, 'milestone' => $record->id]); })])]);
     }
 }

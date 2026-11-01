@@ -106,9 +106,8 @@ class PayrollDeductionTypeResource extends Resource
                     ->boolean(),
             ])
             ->defaultSort('sort_order')
-            ->reorderable('sort_order')
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\PayrollDeductionType $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.finance.payrollDeductionTypes.update', $data, ['deductionType' => $record->id])),
                 Tables\Actions\DeleteAction::make()->using(function (PayrollDeductionType $record) { \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.payrollDeductionTypes.delete', parameters: ['deductionType' => $record->id]); return true; }),
             ])
             ->bulkActions([
@@ -163,5 +162,12 @@ class PayrollDeductionTypeResource extends Resource
             'view'   => Pages\ViewPayrollDeductionType::route('/{record}'),
             'edit'   => Pages\EditPayrollDeductionType::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Finance\Application\Queries\AdminPayrollConfigurationQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

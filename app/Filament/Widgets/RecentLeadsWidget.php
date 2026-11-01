@@ -3,6 +3,8 @@
 namespace App\Filament\Widgets;
 
 use App\Filament\Resources\LeadResource;
+use App\Contexts\Shared\Application\Queries\AdminDashboardReadQueries;
+use App\Contexts\Shared\Application\WorkflowInput;
 use App\Models\Lead;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -23,10 +25,7 @@ class RecentLeadsWidget extends BaseWidget
     public function table(Table $table): Table
     {
         return $table
-            ->query(
-                Lead::whereIn('status', ['new', 'contacted'])
-                    ->orderByDesc('created_at')
-            )
+            ->query(app(AdminDashboardReadQueries::class)->leadQuery(new WorkflowInput(actor: auth()->user(), language: app()->getLocale())))
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()

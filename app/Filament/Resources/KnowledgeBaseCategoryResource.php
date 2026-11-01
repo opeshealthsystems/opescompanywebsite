@@ -34,7 +34,7 @@ class KnowledgeBaseCategoryResource extends Resource
                 Forms\Components\TextInput::make('slug')->required()->maxLength(150)->unique(ignoreRecord: true),
                 Forms\Components\Select::make('parent_id')
                     ->label('Parent Category')
-                    ->options(fn () => KnowledgeBaseCategory::where('is_active',true)->orderBy('name')->pluck('name','id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.knowledgeCategories'))
                     ->searchable()->nullable()->placeholder('Top-level'),
                 Forms\Components\TextInput::make('sort_order')->numeric()->default(0)->label('Sort Order'),
                 Forms\Components\Toggle::make('is_public')->label('Public (Customer Portal)')->default(true),
@@ -57,7 +57,7 @@ class KnowledgeBaseCategoryResource extends Resource
             ])
             ->defaultSort('sort_order')
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\KnowledgeBaseCategory $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.support.knowledgeCategories.update', $data, ['category' => $record->id])),
                 Tables\Actions\DeleteAction::make()->using(function (KnowledgeBaseCategory $record) {
                     \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.support.knowledgeCategories.delete', parameters: ['category' => $record->id]);
                     return true;
@@ -90,5 +90,12 @@ class KnowledgeBaseCategoryResource extends Resource
             'view'   => Pages\ViewKnowledgeBaseCategory::route('/{record}'),
             'edit'   => Pages\EditKnowledgeBaseCategory::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Support\Application\Queries\AdminKnowledgeBaseQueries::class)->categoryQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

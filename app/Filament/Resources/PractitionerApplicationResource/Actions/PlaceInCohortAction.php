@@ -19,17 +19,15 @@ class PlaceInCohortAction
             ->visible(fn (PractitionerApplication $record): bool =>
                 $record->status === 'approved'
                 && optional($record->program)->program_type === 'validation'
-                && ! $record->practitioner->cohortMembers()
-                    ->whereHas('cohort', fn ($q) => $q->where('practitioner_program_id', $record->program_id))
-                    ->exists())
+                && !(\App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', [
+                    'metric' => 'practitioners.cohort_exists', 'id' => $record->practitioner_id, 'program_id' => $record->program_id,
+                ])['count'] ?? false))
             ->form([
                 Forms\Components\Select::make('cohort_id')
                     ->label('Cohort')
                     ->required()
                     ->options(fn (PractitionerApplication $record) =>
-                        Cohort::where('practitioner_program_id', $record->program_id)
-                            ->where('status', 'active')
-                            ->pluck('name', 'id')),
+                        \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.cohorts', ['program_id' => $record->program_id, 'status' => 'active'])),
             ])
             ->action(function (PractitionerApplication $record, array $data): void {
                 app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(

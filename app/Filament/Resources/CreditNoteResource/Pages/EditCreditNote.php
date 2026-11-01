@@ -19,17 +19,12 @@ class EditCreditNote extends EditRecord
 
     protected function mutateFormDataBeforeFill(array $data): array
     {
-        $data['items'] = $this->record->items()->get(['description', 'quantity', 'unit_price'])->toArray();
+        $data['items'] = \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::routeData('admin.finance.creditNoteItems', ['creditNote' => $this->record->id])['items'] ?? [];
         return $data;
     }
 
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
-            'admin.finance.creditNotes.update',
-            new \App\Contexts\Shared\Application\WorkflowInput(values: $data, parameters: ['creditNote' => $record], actor: auth()->user(), language: app()->getLocale()),
-        );
-
-        return CreditNote::query()->findOrFail($record->id);
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.finance.creditNotes.update', $data, ['creditNote' => $record]);
     }
 }

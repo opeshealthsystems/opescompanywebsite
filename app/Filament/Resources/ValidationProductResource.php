@@ -48,7 +48,7 @@ class ValidationProductResource extends Resource
             ])
             ->defaultSort('name')
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\ValidationProduct $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.validation.products.update', $data, ['validationProduct' => $record->id])),
                 Tables\Actions\DeleteAction::make()->using(function (ValidationProduct $record) {
                     \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.validation.products.delete', parameters: ['validationProduct' => $record->id]);
                     return true;
@@ -79,5 +79,12 @@ class ValidationProductResource extends Resource
             'create' => Pages\CreateValidationProduct::route('/create'),
             'edit'   => Pages\EditValidationProduct::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Validation\Application\Queries\AdminValidationProductQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

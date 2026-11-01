@@ -6,11 +6,21 @@ use App\Models\Retest;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class RetestsRelationManager extends RelationManager
 {
     protected static string $relationship = 'retests';
     protected static ?string $title = 'Retests';
+
+    protected function getTableQuery(): Builder
+    {
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::query(
+            \App\Contexts\Validation\Application\Queries\AdminValidationRegisterQueries::class,
+            'retestQuery',
+            [$this->getOwnerRecord()],
+        );
+    }
 
     public function table(Table $table): Table
     {

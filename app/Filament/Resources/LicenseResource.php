@@ -21,6 +21,13 @@ class LicenseResource extends Resource
     protected static ?string $navigationGroup = 'Licenses';
     protected static ?int $navigationSort = 20;
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Licensing\Application\Queries\LicenseQueries::class)->licenseQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
+    }
+
     public static function canAccess(): bool
     {
         return auth()->user()?->hasAnyRole(['super_admin', 'admin', 'support']) ?? false;
@@ -39,9 +46,7 @@ class LicenseResource extends Resource
             Forms\Components\Section::make('License Details')->schema([
                 Forms\Components\Select::make('user_id')
                     ->label('Customer')
-                    ->options(
-                        User::role('customer')->orderBy('name')->pluck('name', 'id')
-                    )
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users', ['role' => 'customers']))
                     ->searchable()
                     ->required(),
 
@@ -185,7 +190,7 @@ class LicenseResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (License $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('administration.licenses.update', $data, ['license' => $record->id])),
                 Tables\Actions\Action::make('suspend')
                     ->label('Suspend')
                     ->icon('heroicon-o-pause-circle')
@@ -270,10 +275,7 @@ class LicenseResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $expiring = static::getModel()::where('status', 'active')
-            ->where('end_date', '>=', now())
-            ->where('end_date', '<=', now()->addDays(30))
-            ->count();
+        $expiring = \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'licenses.expiring'])['count'] ?? 0;
         return $expiring > 0 ? (string) $expiring : null;
     }
 

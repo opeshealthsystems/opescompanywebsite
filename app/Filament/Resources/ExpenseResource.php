@@ -21,6 +21,13 @@ class ExpenseResource extends Resource
     protected static ?string $navigationGroup = 'Accounting';
     protected static ?int $navigationSort = 50;
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Finance\Application\Queries\AdminFinanceRecordQueries::class)->expenseQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
+    }
+
     public static function canAccess(): bool
     {
         return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
@@ -62,15 +69,13 @@ class ExpenseResource extends Resource
 
                 Forms\Components\Select::make('submitted_by')
                     ->label('Submitted By')
-                    ->options(fn () => User::orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users'))
                     ->default(fn () => auth()->id())
                     ->searchable()->required(),
 
                 Forms\Components\Select::make('approved_by')
                     ->label('Approved By')
-                    ->options(fn () => User::whereHas('roles', fn ($q) =>
-                        $q->whereIn('name', ['super_admin', 'admin'])
-                    )->orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users', ['role' => 'administrators']))
                     ->searchable()->nullable()->disabled()->dehydrated(false),
 
                 Forms\Components\DateTimePicker::make('approved_at')
@@ -129,7 +134,7 @@ class ExpenseResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make()->hidden(fn (Expense $record) => $record->status !== 'pending'),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\Expense $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.finance.expenses.update', $data, ['expense' => $record->id]))->hidden(fn (Expense $record) => $record->status !== 'pending'),
                 Tables\Actions\Action::make('approve')
                     ->label('Approve')
                     ->icon('heroicon-o-check-circle')
@@ -145,11 +150,7 @@ class ExpenseResource extends Resource
                     ->hidden(fn (Expense $record) => $record->status !== 'approved')
                     ->action(fn (Expense $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.expenses.markPaid', parameters: ['expense' => $record->id])),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->bulkActions([]);
     }
 
     public static function infolist(Infolist $infolist): Infolist
@@ -197,7 +198,8 @@ class ExpenseResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $pending = static::getModel()::where('status', 'pending')->count();
+        $pending = app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute('admin.finance.records.summary',
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale()))->data['pending_expenses'];
         return $pending > 0 ? (string) $pending : null;
     }
 

@@ -23,6 +23,13 @@ class DeveloperTaskResource extends Resource
     protected static ?string $navigationGroup = 'Validation Hub';
     protected static ?int    $navigationSort  = 3;
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Validation\Application\Queries\AdminValidationRegisterQueries::class)->developerTaskQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
+    }
+
     public static function canAccess(): bool
     {
         return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
@@ -58,7 +65,7 @@ class DeveloperTaskResource extends Resource
                     ->label('Assign')->icon('heroicon-o-user')->color('gray')
                     ->form([
                         Forms\Components\Select::make('assigned_to')->label('Assignee')
-                            ->options(fn () => User::query()->orderBy('name')->pluck('name', 'id'))
+                            ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users'))
                             ->searchable()->required(),
                     ])
                     ->action(fn (DeveloperTask $record, array $data) => AdminWorkflowAdapter::run('admin.validation.developerTasks.assign', ['assigned_to' => $data['assigned_to']], ['task' => $record])),

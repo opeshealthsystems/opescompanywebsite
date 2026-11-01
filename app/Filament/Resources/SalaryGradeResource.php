@@ -55,7 +55,7 @@ class SalaryGradeResource extends Resource
             ->defaultSort('code')
             ->filters([Tables\Filters\TernaryFilter::make('is_active')->label('Active')])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\SalaryGrade $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.workforce.salaryGrades.update', $data, ['salaryGrade' => $record->id])),
                 Tables\Actions\DeleteAction::make()->using(function (SalaryGrade $record) { \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.salaryGrades.delete', parameters: ['salaryGrade' => $record->id]); return true; }),
             ])
             ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()->using(function ($records) { foreach ($records as $record) \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.salaryGrades.delete', parameters: ['salaryGrade' => $record->id]); })])]);
@@ -92,5 +92,12 @@ class SalaryGradeResource extends Resource
             'view'   => Pages\ViewSalaryGrade::route('/{record}'),
             'edit'   => Pages\EditSalaryGrade::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Workforce\Application\Queries\AdminSalaryGradeQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

@@ -24,6 +24,13 @@ class PractitionerBugReportResource extends Resource
     protected static ?int $navigationSort = 42;
     protected static ?string $navigationLabel = 'Bug Reports';
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Support\Application\Queries\AdminPractitionerBugReportQueries::class)->bugReportQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
+    }
+
     public static function canAccess(): bool
     {
         return auth()->user()?->hasAnyRole(['super_admin', 'admin', 'support']) ?? false;

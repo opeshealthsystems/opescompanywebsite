@@ -21,6 +21,13 @@ class WeeklyReviewResource extends Resource
     protected static ?string $navigationGroup = 'Validation Hub';
     protected static ?int    $navigationSort  = 14;
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Validation\Application\Queries\AdminValidationRegisterQueries::class)->weeklyReviewQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
+    }
+
     public static function canAccess(): bool
     {
         return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
@@ -30,7 +37,7 @@ class WeeklyReviewResource extends Resource
     {
         return $form->schema([
             Forms\Components\Select::make('cohort_id')
-                ->label('Cohort')->options(fn () => Cohort::pluck('name', 'id'))
+                ->label('Cohort')->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.cohorts'))
                 ->searchable()->required()
                 ->disabledOn('edit'),
             Forms\Components\DatePicker::make('week_start')
@@ -55,7 +62,7 @@ class WeeklyReviewResource extends Resource
             ->defaultSort('week_start', 'desc')
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\WeeklyReview $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.validation.weeklyReviews.update', $data, ['weeklyReview' => $record->id])),
             ]);
     }
 

@@ -8,10 +8,19 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class ApplicationsRelationManager extends RelationManager
 {
     protected static string $relationship = 'applications';
+
+    protected function getTableQuery(): Builder
+    {
+        return AdminWorkflowAdapter::query(
+            \App\Contexts\Workforce\Application\Queries\AdminRecruitmentQueries::class,
+            'applicationQuery',
+        )->where('job_opening_id', $this->getOwnerRecord()->getKey());
+    }
 
     public function form(Form $form): Form
     {

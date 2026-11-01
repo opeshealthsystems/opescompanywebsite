@@ -29,9 +29,7 @@ class InvoiceTemplateResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $due = static::getModel()::where('is_active', true)
-            ->where('next_due_date', '<=', now())
-            ->count();
+        $due = \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'invoice_templates.due'])['count'] ?? 0;
 
         return $due > 0 ? (string) $due : null;
     }
@@ -58,7 +56,7 @@ class InvoiceTemplateResource extends Resource
                 // customer_id links to a User with role 'customer' — mirrors InvoiceResource
                 Forms\Components\Select::make('customer_id')
                     ->label('Customer (User Account)')
-                    ->options(fn () => User::role('customer')->orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users', ['role' => 'customers']))
                     ->searchable()
                     ->nullable()
                     ->placeholder('Select a customer account, or fill manually below'),
@@ -116,9 +114,7 @@ class InvoiceTemplateResource extends Resource
                 // issued_by mirrors the Invoice 'issued_by' column
                 Forms\Components\Select::make('issued_by')
                     ->label('Issued By')
-                    ->options(fn () => User::whereHas('roles', fn ($q) =>
-                        $q->whereIn('name', ['super_admin', 'admin'])
-                    )->orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users', ['role' => 'administrators']))
                     ->default(fn () => auth()->id())
                     ->searchable()
                     ->required(),
@@ -211,7 +207,7 @@ class InvoiceTemplateResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (InvoiceTemplate $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.finance.invoiceTemplates.update', $data, ['invoiceTemplate' => $record->id])),
 
                 Tables\Actions\Action::make('generate_invoice')
                     ->label('Generate Now')
@@ -222,13 +218,8 @@ class InvoiceTemplateResource extends Resource
                         \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.invoiceTemplates.generate', parameters: ['invoiceTemplate' => $record->id]);
                     }),
 
-                Tables\Actions\DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->bulkActions([]);
     }
 
     public static function infolist(Infolist $infolist): Infolist
@@ -307,6 +298,13 @@ class InvoiceTemplateResource extends Resource
     public static function getGloballySearchableAttributes(): array
     {
         return ['name', 'client_name'];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Finance\Application\Queries\AdminInvoiceTemplateQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 
     public static function getPages(): array

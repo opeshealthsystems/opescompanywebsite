@@ -70,7 +70,7 @@ class EmailTemplateResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\EmailTemplate $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.communications.emailTemplates.update', $data, ['template' => $record->id])),
                 Tables\Actions\DeleteAction::make()->action(fn (EmailTemplate $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.communications.emailTemplates.delete', parameters: ['template' => $record->id])),
             ])
             ->bulkActions([Tables\Actions\BulkActionGroup::make([
@@ -122,5 +122,12 @@ class EmailTemplateResource extends Resource
             'view'   => Pages\ViewEmailTemplate::route('/{record}'),
             'edit'   => Pages\EditEmailTemplate::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Communications\Application\Queries\AdminEmailTemplateQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

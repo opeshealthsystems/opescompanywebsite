@@ -2,7 +2,7 @@
 
 namespace App\Filament\Pages;
 
-use App\Support\ValidationMetrics;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use Filament\Pages\Page;
 
 class ValidationDeveloperDashboard extends Page
@@ -21,6 +21,6 @@ class ValidationDeveloperDashboard extends Page
 
     public function getThroughput(): array
     {
-        return app(ValidationMetrics::class)->developerThroughput();
+        return AdminWorkflowAdapter::read('admin.validation.metrics.developerThroughput')['throughput'];
     }
 }

@@ -6,6 +6,6 @@ use Filament\Resources\Pages\ViewRecord;
 class ViewRisk extends ViewRecord {
     protected static string $resource = RiskResource::class;
     protected function getHeaderActions(): array {
-        return [Actions\EditAction::make(), Actions\DeleteAction::make()];
+        return [Actions\EditAction::make()];
     }
 }

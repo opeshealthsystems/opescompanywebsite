@@ -107,7 +107,7 @@ class BudgetResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\Budget $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.finance.budgets.update', $data, ['budget' => $record->id])),
                 Tables\Actions\DeleteAction::make()->using(function (Budget $record) {
                     \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.budgets.delete', parameters: ['budget' => $record->id]);
                     return true;
@@ -157,5 +157,12 @@ class BudgetResource extends Resource
             'view'   => Pages\ViewBudget::route('/{record}'),
             'edit'   => Pages\EditBudget::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Finance\Application\Queries\AdminBudgetQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

@@ -9,11 +9,21 @@ use Filament\Notifications\Notification;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class EntriesRelationManager extends RelationManager
 {
     protected static string $relationship = 'entries';
     protected static ?string $title = 'Payroll Entries';
+
+    protected function getTableQuery(): Builder
+    {
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::query(
+            \App\Contexts\Finance\Application\Queries\AdminFinanceRecordQueries::class,
+            'payrollEntriesQuery',
+            [$this->getOwnerRecord()],
+        );
+    }
 
     public function form(Form $form): Form
     {
@@ -21,9 +31,7 @@ class EntriesRelationManager extends RelationManager
             Forms\Components\Section::make('Employee Payroll')->columns(2)->schema([
                 Forms\Components\Select::make('user_id')
                     ->label('Employee')
-                    ->options(fn () => \App\Models\User::whereHas('roles', fn ($q) =>
-                        $q->whereIn('name', ['super_admin', 'admin', 'support', 'tester'])
-                    )->orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users', ['role' => 'payroll_staff']))
                     ->searchable()
                     ->required(),
 
@@ -126,18 +134,8 @@ class EntriesRelationManager extends RelationManager
                         default   => 'gray',
                     }),
             ])
-            ->headerActions([
-                Tables\Actions\CreateAction::make()
-                    ->after(function () {
-                        $this->getOwnerRecord()->recalculateTotals();
-                    }),
-            ])
+            ->headerActions([])
             ->actions([
-                Tables\Actions\EditAction::make()
-                    ->after(function () {
-                        $this->getOwnerRecord()->recalculateTotals();
-                    }),
-
                 Tables\Actions\Action::make('mark_paid')
                     ->label('Mark Paid')
                     ->icon('heroicon-o-banknotes')
@@ -153,10 +151,6 @@ class EntriesRelationManager extends RelationManager
                     ->url(fn (PayrollEntry $record) => route('payroll.payslip', $record))
                     ->openUrlInNewTab(),
 
-                Tables\Actions\DeleteAction::make()
-                    ->after(function () {
-                        $this->getOwnerRecord()->recalculateTotals();
-                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -166,10 +160,6 @@ class EntriesRelationManager extends RelationManager
                         ->color('success')
                         ->requiresConfirmation()
                         ->action(fn ($records) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.payrollEntries.markManyPaid', values: ['ids' => $records->modelKeys()], parameters: ['run' => $this->getOwnerRecord()->id])),
-                    Tables\Actions\DeleteBulkAction::make()
-                        ->after(function () {
-                            $this->getOwnerRecord()->recalculateTotals();
-                        }),
                 ]),
             ]);
     }

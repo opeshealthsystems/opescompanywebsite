@@ -2,6 +2,8 @@
 
 namespace App\Filament\Widgets;
 
+use App\Contexts\Shared\Application\Queries\AdminDashboardReadQueries;
+use App\Contexts\Shared\Application\WorkflowInput;
 use App\Models\Announcement;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -15,18 +17,8 @@ class AnnouncementsWidget extends BaseWidget
 
     public function table(Table $table): Table
     {
-        $userRoles = auth()->user()?->getRoleNames()->toArray() ?? [];
-
         return $table
-            ->query(
-                Announcement::where('is_active', true)
-                    ->where(function ($q) use ($userRoles) {
-                        $q->where('audience', 'all')
-                          ->orWhereIn('audience', $userRoles);
-                    })
-                    ->orderByDesc('is_pinned')
-                    ->orderByDesc('published_at')
-            )
+            ->query(app(AdminDashboardReadQueries::class)->announcementQuery(new WorkflowInput(actor: auth()->user(), language: app()->getLocale())))
             ->columns([
                 Tables\Columns\IconColumn::make('is_pinned')
                     ->label('')->boolean()

@@ -30,7 +30,7 @@ class JobOpeningResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $count = static::getModel()::where('status','open')->count();
+        $count = \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'jobs.open'])['count'] ?? 0;
         return $count > 0 ? (string) $count : null;
     }
     public static function getNavigationBadgeColor(): ?string { return 'success'; }
@@ -42,7 +42,7 @@ class JobOpeningResource extends Resource
                 Forms\Components\TextInput::make('title')->required()->maxLength(200)->columnSpanFull(),
                 Forms\Components\Select::make('department_id')
                     ->label('Department')
-                    ->options(fn () => Department::where('is_active',true)->orderBy('name')->pluck('name','id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.departments'))
                     ->searchable()->nullable(),
                 Forms\Components\Select::make('type')->options(JobOpening::typeOptions())->default('full_time')->required(),
                 Forms\Components\TextInput::make('location')->nullable()->maxLength(150),
@@ -51,7 +51,7 @@ class JobOpeningResource extends Resource
                 Forms\Components\TextInput::make('salary_range')->label('Salary Range')->nullable()->placeholder('e.g. XAF 200,000 – 350,000/month'),
                 Forms\Components\Select::make('created_by')
                     ->label('Posted By')
-                    ->options(fn () => User::orderBy('name')->pluck('name','id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users'))
                     ->default(fn () => auth()->id())->searchable()->disabled()->dehydrated(false),
             ]),
             Forms\Components\Section::make('Dates')->columns(2)->schema([
@@ -79,7 +79,7 @@ class JobOpeningResource extends Resource
                     }),
                 Tables\Columns\TextColumn::make('openings_count')->label('#')->alignCenter(),
                 Tables\Columns\TextColumn::make('applications_count')->label('Applied')
-                    ->counts('applications')->alignCenter(),
+                    ->alignCenter(),
                 Tables\Columns\TextColumn::make('closes_at')->label('Closes')->date('d M Y')->placeholder('—')->sortable(),
             ])
             ->defaultSort('created_at','desc')
@@ -89,7 +89,7 @@ class JobOpeningResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\JobOpening $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.recruitment.openings.update', $data, ['opening' => $record->id])),
                 Tables\Actions\Action::make('close')
                     ->label('Close')->icon('heroicon-o-x-circle')->color('gray')
                     ->requiresConfirmation()
@@ -136,5 +136,12 @@ class JobOpeningResource extends Resource
             'view'   => Pages\ViewJobOpening::route('/{record}'),
             'edit'   => Pages\EditJobOpening::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Workforce\Application\Queries\AdminRecruitmentQueries::class)->openingQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

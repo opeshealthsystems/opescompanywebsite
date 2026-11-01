@@ -6,6 +6,7 @@ use App\Contexts\Shared\Application\WorkflowHandler;
 use App\Contexts\Shared\Application\WorkflowInput;
 use App\Contexts\Shared\Application\WorkflowResult;
 use App\Models\EmailTemplate;
+use Illuminate\Database\Eloquent\Builder;
 
 final class AdminEmailTemplateQueries extends WorkflowHandler
 {
@@ -20,11 +21,18 @@ final class AdminEmailTemplateQueries extends WorkflowHandler
         return $template->only(['id', 'name', 'slug', 'type', 'subject', 'body', 'variables', 'is_active', 'created_at', 'updated_at']);
     }
 
+    public function query(WorkflowInput $input): Builder
+    {
+        $this->admin($input);
+
+        return EmailTemplate::query()->orderBy('type')->orderBy('name');
+    }
+
     public function index(WorkflowInput $input): WorkflowResult
     {
         $this->admin($input);
         $filters = $input->validate(['type' => 'sometimes|nullable|in:'.implode(',', array_keys(EmailTemplate::typeOptions())), 'is_active' => 'sometimes|boolean']);
-        $query = EmailTemplate::query()->orderBy('type')->orderBy('name');
+        $query = $this->query($input);
         if (!empty($filters['type'])) $query->where('type', $filters['type']);
         if (array_key_exists('is_active', $filters)) $query->where('is_active', $filters['is_active']);
         $page = $input->paginate($query);

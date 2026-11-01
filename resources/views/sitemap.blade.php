@@ -37,11 +37,11 @@
     @foreach($posts as $post)
     @foreach($locales as $locale)
     <url>
-        <loc>{{ url($locale.'/blog/'.$post->slug) }}</loc>
+        <loc>{{ url($locale.'/blog/'.$post['slug']) }}</loc>
         @foreach($locales as $alt)
-        <xhtml:link rel="alternate" hreflang="{{ $alt }}" href="{{ url($alt.'/blog/'.$post->slug) }}"/>
+        <xhtml:link rel="alternate" hreflang="{{ $alt }}" href="{{ url($alt.'/blog/'.$post['slug']) }}"/>
         @endforeach
-        <lastmod>{{ $post->updated_at->toAtomString() }}</lastmod>
+        <lastmod>{{ $post['updated_at'] }}</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>

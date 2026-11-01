@@ -2,12 +2,8 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Invoice;
-use App\Models\Lead;
-use App\Models\License;
-use App\Models\TesterAssignment;
-use App\Models\Ticket;
-use App\Models\User;
+use App\Contexts\Shared\Application\WorkflowInput;
+use App\Contexts\Shared\Infrastructure\WorkflowDispatcher;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
@@ -18,56 +14,43 @@ class OpesDashboardStats extends BaseWidget
 
     protected function getStats(): array
     {
-        $now = now();
-        $monthStart = $now->copy()->startOfMonth();
-
-        $totalCustomers = User::role('customer')->count();
-        $newCustomers = User::role('customer')->where('created_at', '>=', $monthStart)->count();
-
-        $openTickets = Ticket::whereIn('status', ['open', 'in_progress', 'pending_customer'])->count();
-        $resolvedThisMonth = Ticket::where('status', 'resolved')->where('resolved_at', '>=', $monthStart)->count();
-
-        $activeLicenses = License::where('status', 'active')->count();
-        $expiringSoon = License::where('status', 'active')
-            ->where('end_date', '>=', $now)
-            ->where('end_date', '<=', $now->copy()->addDays(30))
-            ->count();
-
-        $pendingAssignments = TesterAssignment::where('status', 'pending')->count();
-        $activeAssignments = TesterAssignment::where('status', 'in_progress')->count();
+        $summary = app(WorkflowDispatcher::class)->execute(
+            'admin.dashboard.summary',
+            new WorkflowInput(actor: auth()->user(), language: app()->getLocale()),
+        )->data['summary'];
 
         // Operational stats — visible to all panel users (incl. support).
         $stats = [
-            Stat::make('Customers', $totalCustomers)
-                ->description($newCustomers . ' new this month')
+            Stat::make('Customers', $summary['customers']['total'])
+                ->description($summary['customers']['new_this_month'] . ' new this month')
                 ->icon('heroicon-o-users')
                 ->color('success'),
 
-            Stat::make('Open Tickets', $openTickets)
-                ->description($resolvedThisMonth . ' resolved this month')
+            Stat::make('Open Tickets', $summary['tickets']['open'])
+                ->description($summary['tickets']['resolved_this_month'] . ' resolved this month')
                 ->icon('heroicon-o-ticket')
-                ->color($openTickets > 10 ? 'danger' : ($openTickets > 0 ? 'warning' : 'success')),
+                ->color($summary['tickets']['open'] > 10 ? 'danger' : ($summary['tickets']['open'] > 0 ? 'warning' : 'success')),
 
-            Stat::make('Active Licenses', $activeLicenses)
-                ->description($expiringSoon . ' expiring in 30 days')
+            Stat::make('Active Licenses', $summary['licenses']['active'])
+                ->description($summary['licenses']['expiring_in_30_days'] . ' expiring in 30 days')
                 ->icon('heroicon-o-key')
-                ->color($expiringSoon > 0 ? 'warning' : 'success'),
+                ->color($summary['licenses']['expiring_in_30_days'] > 0 ? 'warning' : 'success'),
 
-            Stat::make('Tester Assignments', $activeAssignments . ' active')
-                ->description($pendingAssignments . ' pending')
+            Stat::make('Tester Assignments', $summary['tester_assignments']['active'] . ' active')
+                ->description($summary['tester_assignments']['pending'] . ' pending')
                 ->icon('heroicon-o-beaker')
                 ->color('info'),
 
-            Stat::make('Support Staff', User::role(['super_admin', 'admin', 'support'])->count())
+            Stat::make('Support Staff', $summary['support_staff'])
                 ->description('super admins + admins + support')
                 ->icon('heroicon-o-shield-check')
                 ->color('info'),
         ];
 
         // Finance aggregate — manage_accounting permission only (accountants + admins).
-        if (auth()->user()?->hasPermissionTo('manage_accounting') ?? false) {
-            $outstandingInvoices = Invoice::whereIn('status', ['sent', 'overdue'])->count();
-            $overdueInvoices = Invoice::where('status', 'overdue')->count();
+        if (isset($summary['finance'])) {
+            $outstandingInvoices = $summary['finance']['outstanding_invoices'];
+            $overdueInvoices = $summary['finance']['overdue_invoices'];
 
             $stats[] = Stat::make('Outstanding Invoices', $outstandingInvoices)
                 ->description($overdueInvoices . ' overdue')
@@ -76,11 +59,11 @@ class OpesDashboardStats extends BaseWidget
         }
 
         // CRM aggregate — admin / super_admin only.
-        if (auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false) {
-            $newLeads = Lead::where('status', 'new')->count();
+        if (isset($summary['crm'])) {
+            $newLeads = $summary['crm']['new_leads'];
 
             $stats[] = Stat::make('New Leads', $newLeads)
-                ->description(Lead::where('status', 'qualified')->count() . ' qualified')
+                ->description($summary['crm']['qualified_leads'] . ' qualified')
                 ->icon('heroicon-o-inbox')
                 ->color($newLeads > 0 ? 'warning' : 'success');
         }

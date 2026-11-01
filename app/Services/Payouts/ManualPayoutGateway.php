@@ -18,14 +18,6 @@ class ManualPayoutGateway implements PayoutGateway
     ): PayoutResult {
         $reference = $options['reference'] ?? null;
 
-        $application->update([
-            'payout_status'    => 'paid',
-            'payout_amount'    => $amount,
-            'payout_currency'  => $currency,
-            'payout_reference' => $reference,
-            'paid_at'          => now(),
-        ]);
-
         return PayoutResult::settled($reference);
     }
 

@@ -7,6 +7,7 @@ use App\Contexts\Shared\Application\WorkflowInput;
 use App\Contexts\Shared\Application\WorkflowResult;
 use App\Models\Course;
 use App\Models\CourseLesson;
+use Illuminate\Database\Eloquent\Builder;
 
 final class AdminCourseQueries extends WorkflowHandler
 {
@@ -28,12 +29,19 @@ final class AdminCourseQueries extends WorkflowHandler
             'sort_order', 'created_at', 'updated_at']);
     }
 
+    public function courseQuery(WorkflowInput $input): Builder
+    {
+        $this->admin($input);
+
+        return Course::query()->withCount('enrollments')->orderBy('sort_order')->orderBy('id');
+    }
+
     public function courses(WorkflowInput $input): WorkflowResult
     {
         $this->admin($input);
         $filters = $input->validate(['level' => 'sometimes|in:'.implode(',', array_keys(Course::levelOptions())),
             'is_active' => 'sometimes|boolean', 'search' => 'sometimes|nullable|string|max:150']);
-        $query = Course::query()->withCount('enrollments')->orderBy('sort_order')->orderBy('id');
+        $query = $this->courseQuery($input);
         if (isset($filters['level'])) $query->where('level', $filters['level']);
         if (array_key_exists('is_active', $filters)) $query->where('is_active', filter_var($filters['is_active'], FILTER_VALIDATE_BOOLEAN));
         if (!empty($filters['search'])) { $search = trim($filters['search']); $query->where(fn ($q) => $q->where('title', 'like', '%'.$search.'%')->orWhere('slug', 'like', '%'.$search.'%')); }
@@ -51,9 +59,16 @@ final class AdminCourseQueries extends WorkflowHandler
     public function lessons(WorkflowInput $input, Course $course): WorkflowResult
     {
         $this->admin($input);
-        $page = $input->paginate($course->lessons());
+        $page = $input->paginate($this->lessonQuery($input, $course));
         return WorkflowResult::payload(['items' => $page->getCollection()->map(fn (CourseLesson $lesson) => $this->lessonItem($lesson))->all(),
             'pagination' => ['current_page' => $page->currentPage(), 'per_page' => $page->perPage(), 'total' => $page->total(), 'last_page' => $page->lastPage()]]);
+    }
+
+    public function lessonQuery(WorkflowInput $input, Course $course): Builder
+    {
+        $this->admin($input);
+
+        return $course->lessons()->orderBy('sort_order')->orderBy('id');
     }
 
     public function lesson(WorkflowInput $input, Course $course, CourseLesson $lesson): WorkflowResult

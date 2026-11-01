@@ -13,11 +13,6 @@ class EditWeeklyReview extends EditRecord
 
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
-            'admin.validation.weeklyReviews.update',
-            new \App\Contexts\Shared\Application\WorkflowInput(values: $data, parameters: ['weeklyReview' => $record], actor: auth()->user(), language: app()->getLocale()),
-        );
-
-        return WeeklyReview::query()->findOrFail($record->id);
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.validation.weeklyReviews.update', $data, ['weeklyReview' => $record]);
     }
 }

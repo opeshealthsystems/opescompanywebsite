@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\Route;
 $operations = config('business_workflows.definitions', []);
 uasort($operations, fn ($a, $b) => substr_count($a['api_path'], '{') <=> substr_count($b['api_path'], '{'));
 foreach ($operations as $operation => $definition) {
+    $limiter = $definition['rate_limiter'] ?? ($definition['authenticated'] ? 'api-consumer' : 'public-enquiries');
     Route::match($definition['http_methods'], $definition['api_path'], BusinessWorkflowController::class)
         ->defaults('business_operation', $operation)
-        ->middleware($definition['authenticated'] ? [AuthenticateBusinessUser::class, 'throttle:api-consumer'] : ['throttle:public-enquiries'])
+        ->middleware($definition['authenticated'] ? [AuthenticateBusinessUser::class, 'throttle:'.$limiter] : ['throttle:'.$limiter])
         ->name('api.v1.business.'.$operation);
 }

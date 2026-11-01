@@ -2,7 +2,7 @@
 
 namespace App\Filament\Pages;
 
-use App\Support\ValidationMetrics;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use Filament\Pages\Page;
 
 class ValidationCohortDashboard extends Page
@@ -21,7 +21,7 @@ class ValidationCohortDashboard extends Page
 
     public function getRows(): array
     {
-        return app(ValidationMetrics::class)->cohortProgress();
+        return AdminWorkflowAdapter::read('admin.validation.metrics.cohortProgress', ['per_page' => 100])['items'];
     }
 
     protected function getHeaderActions(): array

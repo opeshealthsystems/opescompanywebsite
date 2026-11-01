@@ -31,7 +31,7 @@ class JobApplicationResource extends Resource
             Forms\Components\Section::make('Application Details')->columns(2)->schema([
                 Forms\Components\Select::make('job_opening_id')
                     ->label('Job Opening')
-                    ->options(JobOpening::where('status', 'open')->pluck('title', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.jobOpenings', [], 'title'))
                     ->searchable()
                     ->required()
                     ->columnSpanFull(),
@@ -130,7 +130,7 @@ class JobApplicationResource extends Resource
 
                 Tables\Filters\SelectFilter::make('job_opening_id')
                     ->label('Position')
-                    ->options(JobOpening::pluck('title', 'id')),
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.jobOpenings', ['status' => 'all'], 'title')),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -192,5 +192,12 @@ class JobApplicationResource extends Resource
             'view'   => Pages\ViewJobApplication::route('/{record}'),
             'edit'   => Pages\EditJobApplication::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Workforce\Application\Queries\AdminRecruitmentQueries::class)->applicationQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

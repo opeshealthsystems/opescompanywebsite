@@ -15,6 +15,13 @@ class CourseCertificateResource extends Resource
     protected static ?string $navigationGroup = 'Learning';
     protected static ?int $navigationSort = 4;
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Learning\Application\Queries\AdminLearningRecordQueries::class)->certificateQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
+    }
+
     public static function canAccess(): bool
     {
         return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;

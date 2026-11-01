@@ -1,0 +1,44 @@
+{
+  "expo": {
+    "name": "OPES Health",
+    "slug": "opes-health",
+    "owner": "opesware",
+    "scheme": "opeshealth",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      "expo-web-browser"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "android": {
+      "package": "com.opeshealthsystems.mobile",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#082D55"
+      }
+    },
+    "ios": {
+      "bundleIdentifier": "com.opeshealthsystems.mobile",
+      "supportsTablet": true
+    },
+    "userInterfaceStyle": "light",
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "router": {
+        "asyncRoutes": {
+          "web": true
+        }
+      },
+      "eas": {
+        "projectId": "fe0233dc-7a40-44f4-9007-383477435ba0"
+      }
+    }
+  }
+}

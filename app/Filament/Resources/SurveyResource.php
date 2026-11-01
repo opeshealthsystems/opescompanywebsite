@@ -71,8 +71,7 @@ class SurveyResource extends Resource
                         default  => 'gray',
                     }),
                 Tables\Columns\TextColumn::make('responses_count')
-                    ->label('Responses')
-                    ->counts('responses'),
+                    ->label('Responses'),
                 Tables\Columns\TextColumn::make('starts_at')->dateTime('d M Y')->placeholder('—'),
                 Tables\Columns\TextColumn::make('ends_at')->dateTime('d M Y')->placeholder('—'),
             ])
@@ -91,7 +90,8 @@ class SurveyResource extends Resource
                 Tables\Actions\Action::make('close')->label('Close')->color('gray')->requiresConfirmation()
                     ->visible(fn (Survey $record) => $record->status === 'active')
                     ->action(fn (Survey $record) => AdminWorkflowAdapter::run('admin.programmes.surveys.close', parameters: ['survey' => $record->id])),
-                Tables\Actions\DeleteAction::make()->hidden(fn (Survey $record) => $record->status !== 'draft' || $record->responses()->exists())
+                Tables\Actions\DeleteAction::make()->hidden(fn (Survey $record) => $record->status !== 'draft'
+                    || (\App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'surveys.has_responses', 'id' => $record->id])['count'] ?? false))
                     ->using(function (Survey $record) { AdminWorkflowAdapter::run('admin.programmes.surveys.delete', parameters: ['survey' => $record->id]); return true; }),
             ]);
     }
@@ -127,5 +127,12 @@ class SurveyResource extends Resource
             'view'   => Pages\ViewSurvey::route('/{record}'),
             'edit'   => Pages\EditSurvey::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Programmes\Application\Queries\AdminSurveyQueries::class)->surveyQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

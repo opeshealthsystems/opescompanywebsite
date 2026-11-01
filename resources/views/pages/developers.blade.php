@@ -1,13 +1,22 @@
-@php $fr = app()->getLocale() === 'fr'; @endphp
+@php
+    $fr = app()->getLocale() === 'fr';
+    $apiContract = json_decode(file_get_contents(base_path('docs/api/openapi.json')), true) ?: [];
+    $apiVersion = data_get($apiContract, 'info.version', '');
+    $sdkMetadata = json_decode(file_get_contents(public_path('downloads/opes-api-sdk.json')), true) ?: [];
+    $sdkVersion = $sdkMetadata['version'] ?? '';
+    $sdkUrl = $sdkMetadata['url'] ?? '/downloads/opes-health-api-client.tgz';
+@endphp
 <x-layouts.app :title="$fr ? 'API et développeurs' : 'APIs and developers'" :description="$fr ? 'Documentation et accès aux API OPES Health Systems.' : 'Documentation and access for OPES Health Systems APIs.'">
 <div class="developer-docs">
     <header>
-        <p class="dev-label">OPES API · {{ $fr ? 'Version préliminaire' : 'Preview' }} 0.23.0</p>
+        <p class="dev-label">OPES API · OpenAPI {{ $apiVersion }} · {{ $fr ? 'Aperçu du SDK' : 'SDK preview' }} {{ $sdkVersion }}</p>
         <h1>{{ $fr ? 'Intégrez les API OPES' : 'Build with OPES APIs' }}</h1>
         <p>{{ $fr ? 'Consultez notre catalogue logiciel et transmettez des demandes grâce à des interfaces documentées et versionnées.' : 'Discover our software catalogue and submit enquiries through documented, versioned interfaces.' }}</p>
         <div class="dev-actions">
+            <a class="dev-secondary" href="{{ url('/api/v1/status') }}">{{ $fr ? 'Statut API' : 'API application status' }}</a>
+            <a class="dev-secondary" href="{{ url('/api/v1/changelog') }}">{{ $fr ? 'Journal des versions API' : 'API changelog' }}</a>
             <a href="{{ url('/api/v1/openapi.json') }}">{{ $fr ? 'Référence OpenAPI' : 'OpenAPI reference' }}</a>
-            <a class="dev-secondary" href="{{ url(app()->getLocale().'/contact') }}">{{ $fr ? 'Demander un accès' : 'Request integration access' }}</a>
+            <a class="dev-secondary" href="#integration-request">{{ $fr ? 'Demander un accès API' : 'Request API access' }}</a>
         </div>
     </header>
     <div class="dev-grid">
@@ -32,17 +41,42 @@ GET /api/v1/customer/tickets
 GET /api/v1/me/activity</code></pre>
         <p>{{ $fr ? 'Les commandes métiers nécessitent une clé Idempotency-Key de 16 à 128 caractères. Réutilisez la même clé et le même contenu pendant 24 heures en cas de réponse perdue. Les erreurs utilisent application/problem+json.' : 'Business commands require an Idempotency-Key of 16–128 characters. Reuse the same key and body within 24 hours if a response is lost. Errors use application/problem+json.' }}</p>
     </section>
+    <section><h2>{{ $fr ? 'Gestion des integrations administrateur' : 'Administrator integration management' }}</h2>
+        <p>{{ $fr ? 'Les administrateurs actifs peuvent consulter et gerer les clients API machine apres examen de la demande : GET et POST /api/v1/admin/api-clients, POST /api/v1/admin/api-clients/{client}/rotate, et DELETE /api/v1/admin/api-clients/{client}. Ces operations exigent un jeton utilisateur OAuth delegue avec la portee api-clients:manage et le role administrateur.' : 'Active administrators can review and manage approved machine API clients through GET and POST /api/v1/admin/api-clients, POST /api/v1/admin/api-clients/{client}/rotate, and DELETE /api/v1/admin/api-clients/{client}. These operations require a delegated user OAuth token with the api-clients:manage scope and an administrator role.' }}</p>
+        <p>{{ $fr ? 'Les secrets sont retournes dans une reponse Cache-Control: no-store lors de la creation ou de la rotation; les clients machine restent limites aux portees catalogue:read et integration:read. La documentation OpenAPI contient les schemas et les reponses.' : 'Secrets are returned in a Cache-Control: no-store response when created or rotated; machine clients remain limited to catalogue:read and integration:read. OpenAPI documents the request and response schemas.' }}</p>
+        <p><a href="{{ url('/api/v1/openapi.json') }}">{{ $fr ? 'Voir les operations dans OpenAPI' : 'View operations in OpenAPI' }}</a></p>
+        <p>{{ $fr ? 'Les applications deleguees examinees peuvent aussi etre listees, enregistrees et revoquees par GET et POST /api/v1/admin/oauth-clients et DELETE /api/v1/admin/oauth-clients/{client}. Elles exigent oauth-clients:manage, un role administrateur, des URI HTTPS exactes ou callback natif OPES et OAuth avec consentement et PKCE S256; aucun secret client n�est emis.' : 'Reviewed delegated applications can also be listed, registered and revoked through GET and POST /api/v1/admin/oauth-clients and DELETE /api/v1/admin/oauth-clients/{client}. They require oauth-clients:manage, an administrator role, exact HTTPS URIs or the reserved OPES Health native callback, user consent and S256 PKCE; no client secret is issued.' }}</p>
+    </section>
     <section><h2>{{ $fr ? 'SDK Node.js côté serveur' : 'Server-side Node.js SDK' }}</h2>
-        <p>{{ $fr ? 'Le SDK 0.49.0 couvre le catalogue, l’identité machine, les demandes publiques, la publication des articles, le CRM, les cohortes, le recrutement, les cours et les enquêtes définis dans le contrat OpenAPI.' : 'SDK 0.49.0 covers the catalogue, machine identity, public enquiries, blog publishing, CRM, validation cohorts, recruitment, learning courses and survey administration described by the OpenAPI contract.' }}</p>
+        <p>{{ $fr ? 'Le SDK '.$sdkVersion.' fournit les identifiants générés et les métadonnées de toutes les opérations décrites dans le contrat OpenAPI.' : 'SDK '.$sdkVersion.' provides generated operation identifiers and metadata for every operation described by the OpenAPI contract.' }}</p>
         <p>{{ $fr ? 'Client préliminaire côté serveur pour Node.js 22 ou ultérieur, avec identifiants TypeScript générés, gestion des clés d’idempotence et diagnostics des limites.' : 'Preview server-side client for Node.js 22 or newer, with generated TypeScript operation IDs, idempotency-key handling and quota diagnostics.' }}</p>
-        <pre><code>npm install https://opeshealthsystems.com/downloads/opes-health-api-client-0.49.0.tgz</code></pre>
+        <pre><code>npm install https://opeshealthsystems.com{{ $sdkUrl }}</code></pre>
         <div class="dev-actions">
-            <a download href="{{ url('/downloads/opes-health-api-client-0.49.0.tgz') }}">{{ $fr ? 'Télécharger le SDK (.tgz)' : 'Download SDK (.tgz)' }}</a>
-            <a class="dev-secondary" href="{{ url('/downloads/opes-health-api-client-0.49.0.tgz.sha256') }}">{{ $fr ? 'Empreinte SHA-256' : 'SHA-256 checksum' }}</a>
+            <a download href="{{ url($sdkUrl) }}">{{ $fr ? 'Télécharger le SDK (.tgz)' : 'Download SDK (.tgz)' }}</a>
+            <a class="dev-secondary" href="{{ url($sdkUrl.'.sha256') }}">{{ $fr ? 'Empreinte SHA-256' : 'SHA-256 checksum' }}</a>
         </div>
     </section>
-    <section><h2>{{ $fr ? '1. Demandez vos identifiants' : '1. Request credentials' }}</h2>
-        <p>{{ $fr ? 'Indiquez à notre équipe le nom de votre application, son usage et les portées souhaitées. Les accès sont accordés après examen. Conservez le secret côté serveur ; ne l’intégrez jamais dans une application navigateur ou mobile.' : 'Tell our team your application name, intended use and required scopes. Access is issued after review. Keep the client secret on your server; never embed it in browser or mobile applications.' }}</p>
+    <section id="integration-request"><h2>{{ $fr ? 'Demander un accès développeur' : 'Request developer access' }}</h2>
+        <p>{{ $fr ? 'Chaque intégration est examinée avant la création des identifiants. N’envoyez jamais de mot de passe, de secret client ni de donnée patient.' : 'Each integration is reviewed before credentials are created. Never submit a password, client secret, or patient information.' }}</p>
+        <form id="integration-request-form" class="dev-request-form" data-success="{{ $fr ? 'Votre demande a été enregistrée pour examen.' : 'Your request has been recorded for review.' }}" data-error="{{ $fr ? 'La demande n’a pas pu être envoyée. Réessayez ou contactez notre équipe.' : 'The request could not be submitted. Try again or contact our team.' }}">
+            <div class="dev-form-grid">
+                <label>{{ $fr ? 'Votre nom' : 'Your name' }}<input name="name" autocomplete="name" maxlength="100" required></label>
+                <label>{{ $fr ? 'E-mail professionnel' : 'Work email' }}<input name="email" type="email" autocomplete="email" maxlength="150" required></label>
+                <label>{{ $fr ? 'Nom de l’application' : 'Application name' }}<input name="application_name" maxlength="100" required></label>
+                <label>{{ $fr ? 'Type d’accès demandé' : 'Requested access type' }}
+                    <select name="access_type" required>
+                        <option value="machine">{{ $fr ? 'Accès machine' : 'Machine API access' }}</option>
+                        <option value="delegated">{{ $fr ? 'API métier déléguée (PKCE)' : 'Delegated business APIs (PKCE)' }}</option>
+                        <option value="both">{{ $fr ? 'Les deux accès' : 'Both access types' }}</option>
+                    </select>
+                </label>
+            </div>
+            <label>{{ $fr ? 'URI de redirection (HTTPS ou callback OPES) (si accès délégué)' : 'Redirect URI (HTTPS or OPES app callback)' }}<input name="redirect_uri" type="text" maxlength="255" placeholder="https://example.com/callback or opeshealth://oauth/callback"></label>
+            <label>{{ $fr ? 'Usage prévu et portées nécessaires' : 'Intended use and scopes needed' }}<textarea name="use_case" rows="4" maxlength="1200" required></textarea></label>
+            <button type="submit" class="dev-submit">{{ $fr ? 'Envoyer la demande' : 'Submit access request' }}</button>
+            <p id="integration-request-status" class="dev-form-status" role="status" aria-live="polite"></p>
+            <noscript><p>Enable JavaScript or email <a href="mailto:contact@opeshealthsystems.com">contact@opeshealthsystems.com</a> to request access.</p></noscript>
+        </form>
     </section>
     <section><h2>{{ $fr ? '2. Obtenez un jeton' : '2. Obtain a token' }}</h2>
         <p>{{ $fr ? 'Les intégrations serveur utilisent le flux client_credentials. Les jetons expirent après 15 minutes. Remplacez les valeurs ci-dessous par vos identifiants privés.' : 'Server integrations use the client_credentials grant. Tokens expire after 15 minutes. Replace the placeholders below with your private credentials.' }}</p>
@@ -58,7 +92,7 @@ Accept: application/json</code></pre>
         <p>{{ $fr ? 'Limite : 60 appels authentifiés par minute et par client. Respectez Retry-After en cas de réponse 429. Fournissez le X-Request-ID à notre support pour une investigation.' : 'Limit: 60 authenticated calls per minute per client. Respect Retry-After on a 429 response. Share X-Request-ID with support when investigating a request.' }}</p>
     </section>
     <section><h2>{{ $fr ? 'Disponibilité et assistance' : 'Availability and support' }}</h2>
-        <p>{{ $fr ? 'Ces API sont en version préliminaire. Aucun environnement sandbox public ni engagement de disponibilité n’est annoncé. OpenID Connect, l’inscription autonome des intégrations et la migration de toutes les actions administratives restent à réaliser. Ces interfaces ne représentent pas une API de dossier médical.' : 'These APIs are in preview. A public sandbox and service availability commitment are not yet offered. OpenID Connect, self-service application registration and migration of all administrative actions remain outstanding. These interfaces do not constitute an electronic medical record API.' }}</p>
+        <p>{{ $fr ? 'Ces API sont en version préliminaire. Aucun environnement sandbox public ni engagement de disponibilité n’est annoncé. Les demandes d’accès sont examinées avant la création des identifiants. Les API métier utilisent l’autorisation OAuth déléguée et PKCE ; les identifiants client_credentials restent limités au catalogue et à l’identité de l’intégration. Ces interfaces ne représentent pas une API de dossier médical.' : 'These APIs are in preview. A public sandbox and service availability commitment are not yet offered. Access requests are reviewed before credentials are issued. Business APIs use delegated OAuth authorization with PKCE; client_credentials access remains limited to the catalogue and integration identity. These interfaces do not constitute an electronic medical record API.' }}</p>
         <p><a href="mailto:contact@opeshealthsystems.com">contact@opeshealthsystems.com</a> · <a href="{{ url('/api/v1/openapi.json') }}">{{ $fr ? 'Contrat et réponses détaillées' : 'Contract and detailed responses' }}</a></p>
     </section>
 </div>
@@ -66,7 +100,59 @@ Accept: application/json</code></pre>
 .developer-docs{max-width:1080px;margin:0 auto;padding:64px 24px;color:var(--text);line-height:1.7}
 .developer-docs header{margin-bottom:40px}.developer-docs h1{font-size:clamp(32px,5vw,48px);line-height:1.15;margin:12px 0 20px}.developer-docs h2{font-size:24px;line-height:1.3;margin:0 0 16px}.developer-docs p{margin:0 0 16px;font-size:17px;color:var(--text-2)}
 .developer-docs .dev-label{color:var(--brand-accent);font-size:14px}.developer-docs section{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:28px;margin-bottom:24px;min-width:0}.dev-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}.developer-docs code{font-size:14px;overflow-wrap:anywhere}.developer-docs pre{padding:20px;border:1px solid var(--border);border-radius:4px;background:var(--bg);white-space:pre-wrap;overflow-wrap:anywhere;margin-bottom:20px}.developer-docs a{color:var(--brand-link);text-decoration:underline}.dev-actions{display:flex;gap:16px;flex-wrap:wrap;margin-top:24px}.developer-docs .dev-actions a{display:inline-flex;align-items:center;min-height:44px;padding:10px 20px;border-radius:4px;background:var(--brand-action);color:#fff;text-decoration:none;border:1px solid var(--brand-action)}.developer-docs .dev-actions .dev-secondary{background:var(--surface);border-color:var(--control-border);color:var(--text)}.developer-docs a:focus-visible{outline:2px solid var(--focus-ring);outline-offset:4px}
-@media(max-width:720px){.dev-grid{grid-template-columns:1fr;gap:0}.developer-docs{padding:40px 16px}.developer-docs section{padding:20px}}
+.dev-request-form{display:grid;gap:16px}.dev-request-form label{display:grid;gap:6px;font-size:15px;font-weight:600;color:var(--text)}.dev-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.dev-request-form input,.dev-request-form select,.dev-request-form textarea{width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--control-border);border-radius:4px;background:var(--bg);color:var(--text);font:inherit}.dev-request-form textarea{min-height:120px;resize:vertical}.dev-request-form input:focus-visible,.dev-request-form select:focus-visible,.dev-request-form textarea:focus-visible,.dev-submit:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}.dev-submit{justify-self:start;min-height:44px;padding:10px 20px;border:1px solid var(--brand-action);border-radius:4px;background:var(--brand-action);color:#fff;font:inherit;font-weight:600;cursor:pointer}.dev-submit:disabled{opacity:.65;cursor:wait}.developer-docs .dev-form-status{min-height:1.5em;margin:0;font-size:15px}
+@media(max-width:560px){.dev-form-grid{grid-template-columns:1fr}}@media(max-width:720px){.dev-grid,.dev-form-grid{grid-template-columns:1fr}.dev-grid{gap:0}.developer-docs{padding:40px 16px}.developer-docs section{padding:20px}}
 </style>
-</x-layouts.app>
+<script>
+(() => {
+    const form = document.getElementById('integration-request-form');
+    const status = document.getElementById('integration-request-status');
+    if (!form || !status) return;
+    const createKey = () => Array.from(crypto.getRandomValues(new Uint8Array(16)), byte => byte.toString(16).padStart(2, '0')).join('');
+    let idempotencyKey = createKey();
+    form.addEventListener('input', () => { idempotencyKey = createKey(); });
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const button = form.querySelector('button[type="submit"]');
+        const fields = new FormData(form);
+        const accessTypes = { machine: 'Server-to-server catalogue and integration identity', delegated: 'Delegated business API access with OAuth PKCE', both: 'Server-to-server and delegated business API access' };
+        const access = accessTypes[String(fields.get('access_type'))] || accessTypes.machine;
+        const callback = String(fields.get('redirect_uri') || '').trim();
+        const message = [
+            `Application: ${String(fields.get('application_name')).trim()}`,
+            `Requested access: ${access}`,
+            `Redirect URI: ${callback || 'Not supplied'}`,
+            '',
+            'Intended use and requested scopes:',
+            String(fields.get('use_case')).trim(),
+        ].join('\n');
+        const payload = {
+            name: String(fields.get('name')).trim(),
+            email: String(fields.get('email')).trim(),
+            facility_type: 'API integration',
+            products: access,
+            message,
+            locale: @json(app()->getLocale()),
+        };
+        button.disabled = true;
+        status.textContent = '';
+        try {
+            const response = await fetch('/api/v1/enquiries', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'Idempotency-Key': idempotencyKey },
+                body: JSON.stringify(payload),
+                credentials: 'omit',
+            });
+            if (!response.ok) throw new Error('request-rejected');
+            status.textContent = form.dataset.success;
+            form.reset();
+            idempotencyKey = createKey();
+        } catch {
+            status.textContent = form.dataset.error;
+        } finally {
+            button.disabled = false;
+        }
+    });
+})();
+</script></x-layouts.app>
 

@@ -890,6 +890,24 @@ final class AdminFinanceCommands extends WorkflowHandler
         return $this->outcome('invoice', $record->id, $record->status, 'Invoice marked as paid.');
     }
 
+    public function recordInvoicePayment(WorkflowInput $input, Invoice $invoice): WorkflowResult
+    {
+        $actor = $this->adminActor($input);
+        $record = app(\App\Contexts\Finance\Application\RecordInvoicePayment::class)->record(
+            $actor,
+            $invoice->id,
+            $input->validate([
+                'amount' => 'required|numeric|gt:0|decimal:0,2',
+                'payment_method' => 'required|in:'.implode(',', array_keys(\App\Models\InvoicePayment::methodOptions())),
+                'payment_date' => 'required|date|before_or_equal:today',
+                'reference_number' => 'nullable|string|max:255',
+                'notes' => 'nullable|string|max:5000',
+            ]),
+        );
+
+        return $this->outcome('invoice', $record->id, $record->status, 'Invoice payment recorded.');
+    }
+
     public function markInvoiceOverdue(WorkflowInput $input, Invoice $invoice): WorkflowResult
     {
         $actor = $this->adminActor($input);
@@ -939,6 +957,56 @@ final class AdminFinanceCommands extends WorkflowHandler
             return $invoice;
         }, 3);
         return WorkflowResult::payload(['id' => $invoice->id, 'invoice_number' => $invoice->invoice_number, 'status' => $invoice->status], 201)->with('success', 'Invoice generated.');
+    }
+
+    private function invoiceTemplateValues(WorkflowInput $input, bool $update = false): array
+    {
+        $p = $update ? 'sometimes|' : '';
+        $data = $input->validate([
+            'name' => $p.'required|string|max:200', 'customer_id' => $p.'nullable|integer|exists:users,id',
+            'client_name' => $p.'nullable|string|max:200', 'client_email' => $p.'nullable|email|max:200',
+            'frequency' => $p.'required|in:'.implode(',', array_keys(InvoiceTemplate::frequencyOptions())),
+            'next_due_date' => $p.'required|date', 'end_date' => $p.'nullable|date|after_or_equal:next_due_date',
+            'payment_terms_days' => $p.'required|integer|min:0|max:3650', 'currency' => $p.'required|in:XAF,USD,EUR',
+            'tax_rate' => $p.'required|numeric|min:0|max:100', 'is_active' => $p.'boolean',
+            'issued_by' => $p.'required|integer|exists:users,id',
+            'line_items' => $p.'required|array|min:1|max:100',
+            'line_items.*.description' => 'required|string|max:255', 'line_items.*.quantity' => 'required|numeric|min:1|max:1000000',
+            'line_items.*.unit_price' => 'required|numeric|min:0|max:9999999999.99', 'notes' => $p.'nullable|string|max:10000',
+        ]);
+        if (!empty($data['customer_id']) && !User::query()->whereKey($data['customer_id'])->whereHas('roles', fn ($query) => $query->where('name', 'customer'))->exists()) {
+            $this->invalid('customer_id', 'Select a customer account.');
+        }
+        if (isset($data['issued_by']) && !User::query()->whereKey($data['issued_by'])->where('is_active', true)->whereHas('roles', fn ($query) => $query->whereIn('name', ['super_admin', 'admin']))->exists()) {
+            $this->invalid('issued_by', 'Select an active finance administrator.');
+        }
+        return $data;
+    }
+
+    public function createInvoiceTemplate(WorkflowInput $input): WorkflowResult
+    {
+        $actor = $this->adminActor($input);
+        $data = $this->invoiceTemplateValues($input);
+        $record = DB::transaction(function () use ($data, $actor) {
+            $record = InvoiceTemplate::create($data + ['is_active' => true]);
+            DomainOutbox::append('event', 'finance.invoice_template_created.v1', ['references' => [['resource' => 'InvoiceTemplate', 'id' => $record->id]]], $actor->id);
+            return $record;
+        }, 3);
+        return WorkflowResult::payload(['id' => $record->id, 'name' => $record->name, 'is_active' => $record->is_active], 201)->with('success', 'Invoice template created.');
+    }
+
+    public function updateInvoiceTemplate(WorkflowInput $input, InvoiceTemplate $invoiceTemplate): WorkflowResult
+    {
+        $actor = $this->adminActor($input);
+        $data = $this->invoiceTemplateValues($input, true);
+        if ($data === []) $this->invalid('invoice_template', 'Provide at least one template field to update.');
+        $record = DB::transaction(function () use ($invoiceTemplate, $data, $actor) {
+            $record = InvoiceTemplate::query()->lockForUpdate()->findOrFail($invoiceTemplate->id);
+            $record->update($data);
+            DomainOutbox::append('event', 'finance.invoice_template_updated.v1', ['references' => [['resource' => 'InvoiceTemplate', 'id' => $record->id]], 'changed_fields' => array_keys($data)], $actor->id);
+            return $record;
+        }, 3);
+        return WorkflowResult::payload(['id' => $record->id, 'name' => $record->name, 'is_active' => $record->is_active])->with('success', 'Invoice template updated.');
     }
 
     public function generatePayrollEntries(WorkflowInput $input, PayrollRun $run): WorkflowResult

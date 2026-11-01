@@ -34,12 +34,12 @@ class LeaveRequestResource extends Resource
 
     public static function canDelete(\Illuminate\Database\Eloquent\Model $record): bool
     {
-        return static::canAccess() && $record->status === 'pending';
+        return false;
     }
 
     public static function getNavigationBadge(): ?string
     {
-        $pending = static::getModel()::where('status', 'pending')->count();
+        $pending = \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'leave.pending'])['count'] ?? 0;
         return $pending > 0 ? (string) $pending : null;
     }
 
@@ -54,9 +54,7 @@ class LeaveRequestResource extends Resource
             Forms\Components\Section::make('Leave Request')->columns(2)->schema([
                 Forms\Components\Select::make('user_id')
                     ->label('Employee')
-                    ->options(fn () => User::whereHas('roles', fn ($q) =>
-                        $q->whereIn('name', ['super_admin', 'admin', 'support', 'staff', 'employee'])
-                    )->orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users', ['role' => 'leave_staff']))
                     ->default(fn () => auth()->id())
                     ->searchable()
                     ->required(),
@@ -105,9 +103,7 @@ class LeaveRequestResource extends Resource
                     Forms\Components\Select::make('approved_by')
                         ->disabled()->dehydrated(false)
                         ->label('Approved By')
-                        ->options(fn () => User::whereHas('roles', fn ($q) =>
-                            $q->whereIn('name', ['super_admin', 'admin'])
-                        )->orderBy('name')->pluck('name', 'id'))
+                        ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users', ['role' => 'administrators']))
                         ->searchable()
                         ->nullable(),
 
@@ -179,6 +175,7 @@ class LeaveRequestResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make()
+                    ->using(fn (LeaveRequest $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.workforce.leaves.update', $data, ['leave' => $record->id]))
                     ->visible(fn () => auth()->user()?->hasAnyRole(['super_admin', 'admin', 'hr', 'manager'])),
                 Tables\Actions\Action::make('approve')
                     ->label('Approve')
@@ -239,11 +236,6 @@ class LeaveRequestResource extends Resource
                                 ->send();
                         }),
 
-                    Tables\Actions\DeleteBulkAction::make()
-                        ->before(function ($records) {
-                            abort_unless($records->every(fn ($record) => $record->status === 'pending'), 422, 'Decided leave requests must be retained.');
-                        })
-                        ->visible(fn () => auth()->user()?->hasAnyRole(['super_admin', 'admin'])),
                 ]),
             ]);
     }
@@ -313,5 +305,12 @@ class LeaveRequestResource extends Resource
             'view'   => Pages\ViewLeaveRequest::route('/{record}'),
             'edit'   => Pages\EditLeaveRequest::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Workforce\Application\Queries\AdminLeaveQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

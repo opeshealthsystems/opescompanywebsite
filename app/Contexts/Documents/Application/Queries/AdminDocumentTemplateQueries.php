@@ -7,6 +7,7 @@ use App\Contexts\Shared\Application\WorkflowInput;
 use App\Contexts\Shared\Application\WorkflowResult;
 use App\Models\DocumentTemplate;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 
 /** Admin-only, paginated template catalogue exposed to API clients. */
 final class AdminDocumentTemplateQueries extends WorkflowHandler
@@ -25,10 +26,17 @@ final class AdminDocumentTemplateQueries extends WorkflowHandler
             'updated_at' => $template->updated_at?->toISOString()];
     }
 
+    public function query(WorkflowInput $input): Builder
+    {
+        $this->admin($input);
+
+        return DocumentTemplate::query()->orderBy('name');
+    }
+
     public function index(WorkflowInput $input): WorkflowResult
     {
         $this->admin($input);
-        $page = $input->paginate(DocumentTemplate::query()->orderBy('name'));
+        $page = $input->paginate($this->query($input));
         return WorkflowResult::payload(['items' => $page->getCollection()->map(fn (DocumentTemplate $item) => $this->item($item))->all(),
             'pagination' => ['current_page' => $page->currentPage(), 'per_page' => $page->perPage(), 'total' => $page->total(), 'last_page' => $page->lastPage()]]);
     }

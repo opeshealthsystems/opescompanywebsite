@@ -7,10 +7,19 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class QuotesRelationManager extends RelationManager
 {
     protected static string $relationship = 'quotes';
+
+    protected function getTableQuery(): Builder
+    {
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::query(
+            \App\Contexts\Finance\Application\Queries\AdminFinanceRecordQueries::class,
+            'quoteQuery',
+        )->where('lead_id', $this->getOwnerRecord()->getKey());
+    }
 
     public function form(Form $form): Form
     {

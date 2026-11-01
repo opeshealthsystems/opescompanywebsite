@@ -67,7 +67,7 @@ class DemoRequestResource extends Resource
                 Tables\Filters\SelectFilter::make('status')->options(array_combine(DemoRequest::$statuses, DemoRequest::$statuses)),
                 Tables\Filters\SelectFilter::make('institution_type')->options(collect(DemoRequest::$institutionTypes)->map(fn($v) => $v['en'])),
             ])
-            ->actions([Tables\Actions\EditAction::make()])
+            ->actions([Tables\Actions\EditAction::make()->using(fn (\App\Models\DemoRequest $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.crm.demoRequests.update', $data, ['demoRequest' => $record->id]))])
             ->bulkActions([Tables\Actions\BulkActionGroup::make([
                 Tables\Actions\DeleteBulkAction::make()->action(function (\Illuminate\Support\Collection $records): void {
                     \Illuminate\Support\Facades\DB::transaction(function () use ($records): void {
@@ -86,5 +86,12 @@ class DemoRequestResource extends Resource
             'create' => Pages\CreateDemoRequest::route('/create'),
             'edit'   => Pages\EditDemoRequest::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Enquiries\Application\Queries\AdminDemoRequestQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

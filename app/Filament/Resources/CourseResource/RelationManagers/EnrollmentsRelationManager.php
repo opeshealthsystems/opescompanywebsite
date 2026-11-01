@@ -6,11 +6,20 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class EnrollmentsRelationManager extends RelationManager
 {
     protected static string $relationship = 'enrollments';
     protected static ?string $title = 'Enrollments';
+
+    protected function getTableQuery(): Builder
+    {
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::query(
+            \App\Contexts\Learning\Application\Queries\AdminLearningRecordQueries::class,
+            'enrollmentQuery',
+        )->where('course_id', $this->getOwnerRecord()->getKey());
+    }
 
     public function table(Table $table): Table
     {

@@ -35,17 +35,21 @@ class PractitionerApplicationResource extends Resource
                         ->label('Practitioner')
                         ->relationship('practitioner', 'name')
                         ->searchable()
+                        ->disabledOn('edit')
                         ->required(),
                     Forms\Components\Select::make('program_id')
                         ->label('Programme')
                         ->relationship('program', 'title')
                         ->searchable()
+                        ->disabledOn('edit')
                         ->required(),
                     Forms\Components\Select::make('status')
                         ->options(PractitionerApplication::statusOptions())
                         ->default('pending')
+                        ->disabled()
+                        ->dehydrated(false)
                         ->required(),
-                    Forms\Components\Textarea::make('motivation')->nullable()->columnSpanFull(),
+                    Forms\Components\Textarea::make('motivation')->disabled()->dehydrated(false)->nullable()->columnSpanFull(),
                     Forms\Components\Textarea::make('admin_notes')->nullable()->columnSpanFull(),
                 ]),
         ]);
@@ -156,47 +160,29 @@ class PractitionerApplicationResource extends Resource
                             ->required(),
                         Forms\Components\Select::make('network_override')
                             ->label('Network')
-                            ->options(['mtn' => 'MTN MoMo', 'orange' => 'Orange Money', 'manual' => 'Manual / offline'])
-                            ->helperText('Leave blank to auto-detect from the practitioner\'s number.'),
+                            ->options(['mtn' => 'MTN MoMo', 'manual' => 'Manual / offline'])
+                            ->helperText('Leave blank to use the supported detected network; otherwise choose manual settlement.'),
                     ])
                     ->action(function (PractitionerApplication $record, array $data) {
-                        if (! $record->isPayable()) {
-                            Notification::make()->title('Not payable')->danger()->send();
+                        app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+                            'admin.practitioners.applications.pay',
+                            new \App\Contexts\Shared\Application\WorkflowInput($data, ['application' => $record], auth()->user(), app()->getLocale()),
+                        );
+                        $record->refresh();
 
-                            return;
+                        $notification = Notification::make();
+                        if ($record->payout_status === 'paid') {
+                            $notification->title('Payout settled')->success();
+                        } elseif ($record->payout_status === 'failed') {
+                            $notification->title('Payout failed')->body('The provider rejected the payout request.')->danger();
+                        } elseif ($record->payout_failure_reason) {
+                            $notification->title('Payout status needs reconciliation')->body('Do not retry until the provider outcome has been reconciled.')->warning();
+                        } else {
+                            $notification->title('Payout initiated')->body('The payout is pending provider confirmation.')->success();
                         }
-
-                        $manager = app(\App\Services\Payouts\PayoutGatewayManager::class);
-                        $network = $manager->resolveNetwork($record, $data['network_override'] ?? null);
-
-                        try {
-                            $result = $manager->driverFor($network)->disburse(
-                                $record,
-                                (float) $data['payout_amount'],
-                                $data['payout_currency'] ?? config('payouts.currency', 'XAF'),
-                            );
-                        } catch (\Throwable $e) {
-                            Notification::make()
-                                ->title('Payout failed')
-                                ->body($e->getMessage())
-                                ->danger()
-                                ->send();
-
-                            return;
-                        }
-
-                        Notification::make()
-                            ->title($result->status === 'paid' ? 'Payout settled' : ($result->success ? 'Payout initiated' : 'Payout failed'))
-                            ->body($result->message)
-                            ->{$result->success ? 'success' : 'danger'}()
-                            ->send();
+                        $notification->send();
                     }),
                 \App\Filament\Resources\PractitionerApplicationResource\Actions\PlaceInCohortAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
             ]);
     }
 
@@ -236,6 +222,8 @@ class PractitionerApplicationResource extends Resource
 
     public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
     {
-        return parent::getEloquentQuery()->with(['practitioner', 'program']);
+        return app(\App\Contexts\Programmes\Application\Queries\AdminPractitionerQueries::class)->applicationQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

@@ -35,9 +35,16 @@ class AuditLogResource extends Resource
         return false;
     }
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Shared\Application\Queries\AdminAuditLogQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
+    }
+
     public static function getNavigationBadge(): ?string
     {
-        $count = static::getModel()::count();
+        $count = \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'audit_logs.total'])['count'] ?? 0;
         return $count > 0 ? number_format($count) : null;
     }
 
@@ -102,24 +109,17 @@ class AuditLogResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->filters([
                 Tables\Filters\SelectFilter::make('action')
-                    ->options(fn () => AuditLog::distinct()
-                        ->orderBy('action')
-                        ->pluck('action', 'action')
-                        ->mapWithKeys(fn ($v) => [$v => ucfirst(str_replace('_', ' ', $v))])
-                        ->toArray()
-                    ),
+                    ->options(fn () => collect(\App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.references.auditLogFilters')['actions'] ?? [])
+                        ->mapWithKeys(fn ($action) => [$action => ucfirst(str_replace('_', ' ', $action))])->all()),
 
                 Tables\Filters\SelectFilter::make('model_type')
                     ->label('Resource Type')
-                    ->options(fn () => AuditLog::distinct()
-                        ->orderBy('model_type')
-                        ->pluck('model_type', 'model_type')
-                        ->toArray()
-                    ),
+                    ->options(fn () => collect(\App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.references.auditLogFilters')['model_types'] ?? [])
+                        ->mapWithKeys(fn ($type) => [$type => $type])->all()),
 
                 Tables\Filters\SelectFilter::make('user_id')
                     ->label('User')
-                    ->relationship('user', 'name')
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users'))
                     ->searchable()
                     ->preload(),
 

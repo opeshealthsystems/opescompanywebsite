@@ -16,6 +16,13 @@ class CourseEnrollmentResource extends Resource
     protected static ?string $navigationGroup = 'Learning';
     protected static ?int $navigationSort = 3;
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Learning\Application\Queries\AdminLearningRecordQueries::class)->enrollmentQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
+    }
+
     public static function canAccess(): bool
     {
         return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;

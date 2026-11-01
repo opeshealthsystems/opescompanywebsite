@@ -22,6 +22,13 @@ class QuoteResource extends Resource
     protected static ?string $navigationGroup = 'CRM';
     protected static ?int $navigationSort = 10;
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Finance\Application\Queries\AdminFinanceRecordQueries::class)->quoteQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
+    }
+
     public static function canAccess(): bool
     {
         return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
@@ -29,7 +36,8 @@ class QuoteResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $count = static::getModel()::whereIn('status', ['draft', 'sent'])->count();
+        $count = app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute('admin.finance.records.summary',
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale()))->data['open_quotes'];
         return $count > 0 ? (string) $count : null;
     }
 
@@ -48,12 +56,12 @@ class QuoteResource extends Resource
 
                 Forms\Components\Select::make('lead_id')
                     ->label('Lead')
-                    ->options(fn () => Lead::orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.leads'))
                     ->searchable()->nullable()->placeholder('No lead linked'),
 
                 Forms\Components\Select::make('created_by')
                     ->label('Created By')
-                    ->options(fn () => User::orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users'))
                     ->default(fn () => auth()->id())
                     ->disabled()->dehydrated(false)
                     ->searchable()->required(),
@@ -113,7 +121,7 @@ class QuoteResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\Quote $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.finance.quotes.update', $data, ['quote' => $record->id])),
                 Tables\Actions\Action::make('mark_sent')
                     ->label('Mark Sent')->icon('heroicon-o-paper-airplane')->color('info')
                     ->requiresConfirmation()

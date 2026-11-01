@@ -12,6 +12,6 @@ class ViewAsset extends ViewRecord
 
     protected function getHeaderActions(): array
     {
-        return [Actions\EditAction::make(), Actions\DeleteAction::make()];
+        return [Actions\EditAction::make(), Actions\DeleteAction::make()->action(fn () => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.operations.assets.delete', parameters: ['asset' => $this->record->id]))];
     }
 }

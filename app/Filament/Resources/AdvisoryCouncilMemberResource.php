@@ -54,7 +54,7 @@ class AdvisoryCouncilMemberResource extends Resource
                 Tables\Columns\TextColumn::make('invitedBy.name')->label('Invited by')->placeholder('—'),
             ])
             ->defaultSort('invited_at', 'desc')
-            ->actions([Tables\Actions\ViewAction::make(), Tables\Actions\EditAction::make()]);
+            ->actions([Tables\Actions\ViewAction::make(), Tables\Actions\EditAction::make()->using(fn (\App\Models\AdvisoryCouncilMember $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.validation.councilMembers.update', $data, ['member' => $record->id]))]);
     }
 
     public static function infolist(Infolist $infolist): Infolist
@@ -78,5 +78,12 @@ class AdvisoryCouncilMemberResource extends Resource
             'view'  => Pages\ViewAdvisoryCouncilMember::route('/{record}'),
             'edit'  => Pages\EditAdvisoryCouncilMember::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Validation\Application\Queries\AdminCouncilMemberQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

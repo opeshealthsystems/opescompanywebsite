@@ -54,14 +54,7 @@ class UserResource extends Resource
                 ->schema([
                     Forms\Components\TextInput::make('employee_id')
                         ->label('Employee ID')
-                        ->default(function () {
-                            $year = date('Y');
-                            $last = User::whereNotNull('employee_id')
-                                ->where('employee_id', 'like', "EMP-{$year}-%")
-                                ->max('employee_id');
-                            $next = $last ? ((int) substr($last, -4)) + 1 : 1;
-                            return 'EMP-' . $year . '-' . str_pad($next, 4, '0', STR_PAD_LEFT);
-                        })
+                        ->default(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.references.nextEmployeeId')['employee_id'] ?? null)
                         ->unique(ignorable: fn (?User $record) => $record)
                         ->nullable()
                         ->helperText('Auto-filled for staff. Leave blank for customer accounts.'),
@@ -90,7 +83,7 @@ class UserResource extends Resource
                         ->label('Active')
                         ->default(true),
                     Forms\Components\CheckboxList::make('roles')
-                        ->options(fn () => \Spatie\Permission\Models\Role::query()->orderBy('name')->pluck('name', 'name'))
+                        ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.userRoles'))
                         ->columns(2)
                         ->columnSpanFull()
                         ->searchable()
@@ -150,7 +143,7 @@ class UserResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\User $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.identity.users.update', $data, ['user' => $record->id])),
                 Tables\Actions\Action::make('send_welcome')
                     ->label('Send Welcome')
                     ->icon('heroicon-o-envelope')
@@ -243,6 +236,8 @@ class UserResource extends Resource
 
     public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
     {
-        return parent::getEloquentQuery()->with('roles');
+        return app(\App\Contexts\Workforce\Application\Queries\AdminUserQueries::class)->usersQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

@@ -6,7 +6,7 @@ use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
 class EditEmailTemplate extends EditRecord {
     protected static string $resource = EmailTemplateResource::class;
-    protected function getHeaderActions(): array { return [Actions\DeleteAction::make()]; }
+    protected function getHeaderActions(): array { return [Actions\DeleteAction::make()->action(fn () => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.communications.emailTemplates.delete', parameters: ['template' => $this->record->id]))]; }
 
     protected function handleRecordUpdate(Model $record, array $data): Model
     {

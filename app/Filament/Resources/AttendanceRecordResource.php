@@ -27,7 +27,7 @@ class AttendanceRecordResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $absentToday = static::getModel()::whereDate('date', today())->where('status','absent')->count();
+        $absentToday = \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'attendance.absent_today'])['count'] ?? 0;
         return $absentToday > 0 ? (string) $absentToday : null;
     }
     public static function getNavigationBadgeColor(): ?string { return 'danger'; }
@@ -39,7 +39,7 @@ class AttendanceRecordResource extends Resource
             Forms\Components\Section::make('Attendance')->columns(2)->schema([
                 Forms\Components\Select::make('user_id')
                     ->label('Employee')
-                    ->options(fn () => User::orderBy('name')->pluck('name','id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users'))
                     ->searchable()->required(),
                 Forms\Components\DatePicker::make('date')->required()->default(today())->native(false),
                 Forms\Components\Select::make('status')
@@ -84,7 +84,7 @@ class AttendanceRecordResource extends Resource
                     ->toggle(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\AttendanceRecord $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.workforce.attendance.update', $data, ['attendanceRecord' => $record->id])),
                 Tables\Actions\DeleteAction::make()->using(function (AttendanceRecord $record) {
                     \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.attendance.delete', parameters: ['attendanceRecord' => $record->id]);
                     return true;
@@ -154,5 +154,12 @@ class AttendanceRecordResource extends Resource
             'view'   => Pages\ViewAttendanceRecord::route('/{record}'),
             'edit'   => Pages\EditAttendanceRecord::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Workforce\Application\Queries\AdminWorkforceRecordQueries::class)->attendanceQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

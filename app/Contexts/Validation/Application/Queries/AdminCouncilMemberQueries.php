@@ -6,6 +6,7 @@ use App\Contexts\Shared\Application\WorkflowHandler;
 use App\Contexts\Shared\Application\WorkflowInput;
 use App\Contexts\Shared\Application\WorkflowResult;
 use App\Models\AdvisoryCouncilMember;
+use Illuminate\Database\Eloquent\Builder;
 
 final class AdminCouncilMemberQueries extends WorkflowHandler
 {
@@ -26,10 +27,17 @@ final class AdminCouncilMemberQueries extends WorkflowHandler
         ];
     }
 
+    public function query(WorkflowInput $input): Builder
+    {
+        $this->admin($input);
+
+        return AdvisoryCouncilMember::query()->with(['user:id,name', 'invitedBy:id,name'])->orderByDesc('invited_at');
+    }
+
     public function index(WorkflowInput $input): WorkflowResult
     {
         $this->admin($input);
-        $page = $input->paginate(AdvisoryCouncilMember::query()->with(['user:id,name', 'invitedBy:id,name'])->orderByDesc('invited_at'));
+        $page = $input->paginate($this->query($input));
         return WorkflowResult::payload(['items' => $page->getCollection()->map(fn (AdvisoryCouncilMember $member) => $this->item($member))->all(), 'pagination' => ['current_page' => $page->currentPage(), 'per_page' => $page->perPage(), 'total' => $page->total(), 'last_page' => $page->lastPage()]]);
     }
 

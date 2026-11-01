@@ -14,19 +14,13 @@ class EditExpense extends EditRecord
 
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
-            'admin.finance.expenses.update',
-            new \App\Contexts\Shared\Application\WorkflowInput(values: $data, parameters: ['expense' => $record], actor: auth()->user(), language: app()->getLocale()),
-        );
-
-        return Expense::query()->findOrFail($record->id);
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.finance.expenses.update', $data, ['expense' => $record]);
     }
 
     protected function getHeaderActions(): array
     {
         return [
             Actions\ViewAction::make(),
-            Actions\DeleteAction::make(),
         ];
     }
 

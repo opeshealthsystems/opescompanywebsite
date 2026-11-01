@@ -14,7 +14,7 @@ class EditInvoice extends EditRecord
 
     protected function mutateFormDataBeforeFill(array $data): array
     {
-        $data['items'] = $this->record->items()->get(['description', 'quantity', 'unit_price'])->toArray();
+        $data['items'] = \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::routeData('admin.finance.invoiceItems', ['invoice' => $this->record->id])['items'] ?? [];
         return $data;
     }
 
@@ -25,12 +25,7 @@ class EditInvoice extends EditRecord
 
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
-            'admin.finance.invoices.update',
-            new \App\Contexts\Shared\Application\WorkflowInput(values: $data, parameters: ['invoice' => $record], actor: auth()->user(), language: app()->getLocale()),
-        );
-
-        return Invoice::query()->findOrFail($record->id);
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.finance.invoices.update', $data, ['invoice' => $record]);
     }
 
     protected function getRedirectUrl(): string

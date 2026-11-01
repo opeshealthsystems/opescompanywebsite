@@ -80,7 +80,7 @@ class VendorResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\Vendor $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.finance.vendors.update', $data, ['vendor' => $record->id])),
                 Tables\Actions\DeleteAction::make()->using(function (Vendor $record) {
                     \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.vendors.delete', parameters: ['vendor' => $record->id]);
                     return true;
@@ -148,5 +148,12 @@ class VendorResource extends Resource
             'view'   => Pages\ViewVendor::route('/{record}'),
             'edit'   => Pages\EditVendor::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Finance\Application\Queries\AdminVendorQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

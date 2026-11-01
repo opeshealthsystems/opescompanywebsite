@@ -29,6 +29,46 @@ final class AdminSupportCommands extends WorkflowHandler
         throw ValidationException::withMessages([$field => $message]);
     }
 
+    public function createTicket(WorkflowInput $input): WorkflowResult
+    {
+        $actor = $this->admin($input);
+        $data = $input->validate([
+            'user_id' => 'nullable|integer|exists:users,id',
+            'subject' => 'required|string|max:255', 'description' => 'required|string|max:10000',
+            'type' => 'required|in:support,billing,technical,bug_report,other',
+            'priority' => 'required|in:low,medium,high,urgent',
+        ]);
+        if (!empty($data['user_id']) && !User::query()->whereKey($data['user_id'])->whereHas('roles', fn ($query) => $query->where('name', 'customer'))->exists()) {
+            $this->invalid('user_id', 'Select a customer account.');
+        }
+        $record = DB::transaction(function () use ($data, $actor) {
+            $ticket = Ticket::create([...$data, 'status' => 'open']);
+            DomainOutbox::append('event', 'support.ticket_created.v1', ['references' => [['resource' => 'Ticket', 'id' => $ticket->id]]], $actor->id);
+            return $ticket;
+        }, 3);
+        return WorkflowResult::payload(['id' => $record->id, 'reference_number' => $record->reference_number, 'status' => $record->status], 201)->with('success', 'Ticket created.');
+    }
+
+    public function updateTicket(WorkflowInput $input, Ticket $ticket): WorkflowResult
+    {
+        $actor = $this->admin($input);
+        $data = $input->validate([
+            'user_id' => 'nullable|integer|exists:users,id', 'subject' => 'required|string|max:255',
+            'description' => 'required|string|max:10000', 'type' => 'required|in:support,billing,technical,bug_report,other',
+            'priority' => 'required|in:low,medium,high,urgent', 'resolution' => 'nullable|string|max:10000',
+        ]);
+        if (!empty($data['user_id']) && !User::query()->whereKey($data['user_id'])->whereHas('roles', fn ($query) => $query->where('name', 'customer'))->exists()) {
+            $this->invalid('user_id', 'Select a customer account.');
+        }
+        $record = DB::transaction(function () use ($ticket, $data, $actor) {
+            $record = Ticket::query()->lockForUpdate()->findOrFail($ticket->id);
+            $record->update($data);
+            DomainOutbox::append('event', 'support.ticket_details_updated.v1', ['references' => [['resource' => 'Ticket', 'id' => $record->id]]], $actor->id);
+            return $record;
+        }, 3);
+        return WorkflowResult::payload(['id' => $record->id, 'reference_number' => $record->reference_number])->with('success', 'Ticket details updated.');
+    }
+
     public function respondToBugReport(WorkflowInput $input, PractitionerBugReport $bugReport): WorkflowResult
     {
         $actor = $this->admin($input);
@@ -75,6 +115,42 @@ final class AdminSupportCommands extends WorkflowHandler
             return $record;
         }, 3);
         return WorkflowResult::payload(['id' => $record->id, 'status' => $record->status])->with('success', 'Service request completed.');
+    }
+
+    public function updateServiceRequest(WorkflowInput $input, ServiceRequest $serviceRequest): WorkflowResult
+    {
+        $actor = $this->admin($input);
+        $data = $input->validate([
+            'type' => 'sometimes|in:installation,maintenance,training,other', 'product_slug' => 'sometimes|nullable|string|max:120',
+            'description' => 'sometimes|string|max:5000', 'preferred_date' => 'sometimes|nullable|date',
+            'preferred_time' => 'sometimes|nullable|date_format:H:i', 'location' => 'sometimes|nullable|string|max:200',
+            'admin_notes' => 'sometimes|nullable|string|max:5000',
+            'customer_id' => 'prohibited', 'reference_number' => 'prohibited', 'status' => 'prohibited',
+            'assigned_technician_id' => 'prohibited', 'confirmed_date' => 'prohibited', 'confirmed_time' => 'prohibited', 'id' => 'prohibited',
+        ]);
+        if ($data === []) $this->invalid('service_request', 'Provide at least one request detail or admin note.');
+        $record = DB::transaction(function () use ($serviceRequest, $data, $actor) {
+            $record = ServiceRequest::query()->lockForUpdate()->findOrFail($serviceRequest->id);
+            $requestFields = array_diff(array_keys($data), ['admin_notes']);
+            if ($requestFields && $record->status !== 'pending') $this->invalid('status', 'Request details can only be changed while the service request is pending.');
+            $record->update($data);
+            DomainOutbox::append('event', 'support.service_request_updated.v1', ['references' => [['resource' => 'ServiceRequest', 'id' => $record->id]], 'changed_fields' => array_keys($data)], $actor->id);
+            return $record;
+        }, 3);
+        return WorkflowResult::payload(['record' => $record, 'id' => $record->id, 'status' => $record->status]);
+    }
+
+    public function cancelServiceRequest(WorkflowInput $input, ServiceRequest $serviceRequest): WorkflowResult
+    {
+        $actor = $this->admin($input);
+        $record = DB::transaction(function () use ($serviceRequest, $actor) {
+            $record = ServiceRequest::query()->lockForUpdate()->findOrFail($serviceRequest->id);
+            if (!in_array($record->status, ['pending', 'confirmed'], true)) $this->invalid('status', 'Only pending or confirmed service requests can be cancelled.');
+            $record->update(['status' => 'cancelled']);
+            DomainOutbox::append('event', 'support.service_request_cancelled.v1', ['references' => [['resource' => 'ServiceRequest', 'id' => $record->id]]], $actor->id);
+            return $record;
+        }, 3);
+        return WorkflowResult::payload(['id' => $record->id, 'status' => $record->status])->with('success', 'Service request cancelled.');
     }
 
     public function replyToTicket(WorkflowInput $input, Ticket $ticket): WorkflowResult

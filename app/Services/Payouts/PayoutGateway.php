@@ -14,8 +14,8 @@ use App\Models\PractitionerApplication;
 interface PayoutGateway
 {
     /**
-     * Disburse a payout for the given approved application and persist the
-     * outcome onto it (payout_status, amount, currency, reference, paid_at).
+     * Submit a payout request to the provider and return its outcome. Application
+     * state changes only through the shared Programme lifecycle commands.
      *
      * @param  array{reference?: string|null}  $options
      */
@@ -27,7 +27,7 @@ interface PayoutGateway
     ): PayoutResult;
 
     /**
-     * Current payout status for the application (e.g. after polling a provider).
+     * Current payout status reported by the provider (e.g. during reconciliation).
      */
     public function status(PractitionerApplication $application): string;
 }

@@ -23,6 +23,13 @@ class PayrollRunResource extends Resource
     protected static ?string $navigationGroup = 'Accounting';
     protected static ?int $navigationSort = 55;
 
+    public static function getEloquentQuery(): Builder
+    {
+        return app(\App\Contexts\Finance\Application\Queries\AdminFinanceRecordQueries::class)->payrollRunQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
+    }
+
     public static function canAccess(): bool
     {
         return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
@@ -30,7 +37,8 @@ class PayrollRunResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $count = static::getModel()::where('status', 'draft')->count();
+        $count = app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute('admin.finance.records.summary',
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale()))->data['draft_payroll_runs'];
         return $count > 0 ? (string) $count : null;
     }
 
@@ -69,7 +77,7 @@ class PayrollRunResource extends Resource
 
                 Forms\Components\Select::make('processed_by')
                     ->label('Processed By')
-                    ->options(fn () => User::orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users'))
                     ->default(fn () => auth()->id())
                     ->searchable()
                     ->required()->disabled()->dehydrated(false),
@@ -127,7 +135,7 @@ class PayrollRunResource extends Resource
             ->defaultSort('period_start', 'desc')
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make()
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\PayrollRun $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.finance.payrollRuns.update', $data, ['run' => $record->id]))
                     ->hidden(fn (PayrollRun $record) => $record->status === 'completed'),
                 Tables\Actions\DeleteAction::make()->using(function (PayrollRun $record) { \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.payrollRuns.delete', parameters: ['run' => $record->id]); return true; }),
                 Tables\Actions\Action::make('complete')

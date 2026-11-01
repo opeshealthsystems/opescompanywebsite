@@ -33,7 +33,7 @@ class CustomerProfileResource extends Resource
             Forms\Components\Section::make('Account')->schema([
                 Forms\Components\Select::make('user_id')
                     ->label('Customer Account')
-                    ->options(fn () => User::role('customer')->orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users', ['role' => 'customers']))
                     ->searchable()
                     ->required()
                     ->unique(ignoreRecord: true),
@@ -118,20 +118,13 @@ class CustomerProfileResource extends Resource
                     ]),
 
                 Tables\Filters\SelectFilter::make('country')
-                    ->options(fn () => CustomerProfile::whereNotNull('country')
-                        ->distinct()
-                        ->pluck('country', 'country')
-                        ->toArray()),
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.customerCountries')),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (CustomerProfile $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.customerProfiles.update', $data, ['customerProfile' => $record->id])),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->bulkActions([]);
     }
 
     public static function infolist(Infolist $infolist): Infolist
@@ -168,5 +161,12 @@ class CustomerProfileResource extends Resource
             'view'   => Pages\ViewCustomerProfile::route('/{record}'),
             'edit'   => Pages\EditCustomerProfile::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\CustomerServices\Application\Queries\AdminCustomerProfileQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

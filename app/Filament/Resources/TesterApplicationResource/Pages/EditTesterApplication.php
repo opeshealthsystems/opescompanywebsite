@@ -3,15 +3,15 @@
 namespace App\Filament\Resources\TesterApplicationResource\Pages;
 
 use App\Filament\Resources\TesterApplicationResource;
-use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
 class EditTesterApplication extends EditRecord
 {
     protected static string $resource = TesterApplicationResource::class;
 
-    protected function getHeaderActions(): array
+    protected function handleRecordUpdate(\Illuminate\Database\Eloquent\Model $record, array $data): \Illuminate\Database\Eloquent\Model
     {
-        return [Actions\DeleteAction::make()];
+        \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.enquiries.testerApplications.update', $data, ['testerApplication' => $record]);
+        return $record->fresh();
     }
 }

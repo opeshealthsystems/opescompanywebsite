@@ -15,10 +15,68 @@ use Illuminate\Validation\ValidationException;
 /** Reviewed admin follow-up messages for website enquiries. */
 final class AdminLeadCommands extends WorkflowHandler
 {
-    public function sendFollowUp(WorkflowInput $input, Lead $lead): WorkflowResult
+    private function admin(WorkflowInput $input): User
     {
         $actor = $input->user();
         abort_unless($actor instanceof User && $actor->is_active && $actor->hasAnyRole(['super_admin', 'admin']), 403);
+        return $actor;
+    }
+
+    public function create(WorkflowInput $input): WorkflowResult
+    {
+        $actor = $this->admin($input);
+        $data = $input->validate([
+            'name' => 'required|string|max:100', 'email' => 'required|email|max:150', 'phone' => 'nullable|string|max:30',
+            'facility_type' => 'nullable|in:clinic,hospital,laboratory,pharmacy,government,ngo,other',
+            'products' => 'nullable|string|max:255', 'message' => 'nullable|string|max:10000',
+            'source' => 'nullable|in:contact,product-page,demo', 'product_slug' => 'nullable|string|max:255',
+            'locale' => 'nullable|string|max:10', 'status' => 'sometimes|in:new,contacted,qualified,closed',
+        ]);
+        $record = DB::transaction(function () use ($data, $actor) {
+            $lead = Lead::create($data + ['status' => 'new']);
+            DomainOutbox::append('event', 'enquiries.lead_created.v1', ['references' => [['resource' => 'Lead', 'id' => $lead->id]]], $actor->id);
+            return $lead;
+        }, 3);
+        return WorkflowResult::payload(['id' => $record->id, 'status' => $record->status], 201)->with('success', 'Enquiry created.');
+    }
+
+    public function update(WorkflowInput $input, Lead $lead): WorkflowResult
+    {
+        $actor = $this->admin($input);
+        $data = $input->validate([
+            'name' => 'required|string|max:100', 'email' => 'required|email|max:150', 'phone' => 'nullable|string|max:30',
+            'facility_type' => 'nullable|in:clinic,hospital,laboratory,pharmacy,government,ngo,other',
+            'products' => 'nullable|string|max:255', 'message' => 'nullable|string|max:10000',
+            'source' => 'nullable|in:contact,product-page,demo', 'product_slug' => 'nullable|string|max:255',
+            'locale' => 'nullable|string|max:10', 'status' => 'required|in:new,contacted,qualified,closed',
+        ]);
+        $record = DB::transaction(function () use ($lead, $data, $actor) {
+            $record = Lead::query()->lockForUpdate()->findOrFail($lead->id);
+            $record->update($data);
+            DomainOutbox::append('event', 'enquiries.lead_updated.v1', ['references' => [['resource' => 'Lead', 'id' => $record->id]]], $actor->id);
+            return $record;
+        }, 3);
+        return WorkflowResult::payload(['id' => $record->id, 'status' => $record->status])->with('success', 'Enquiry updated.');
+    }
+
+    public function delete(WorkflowInput $input, Lead $lead): WorkflowResult
+    {
+        $actor = $this->admin($input);
+        DB::transaction(function () use ($lead, $actor) {
+            $record = Lead::query()->lockForUpdate()->findOrFail($lead->id);
+            if ($record->deals()->exists() || $record->quotes()->exists()) {
+                throw ValidationException::withMessages(['lead' => 'Enquiries linked to a deal or quote must be retained.']);
+            }
+            $id = $record->id;
+            $record->delete();
+            DomainOutbox::append('event', 'enquiries.lead_deleted.v1', ['references' => [['resource' => 'Lead', 'id' => $id]]], $actor->id);
+        }, 3);
+        return WorkflowResult::empty();
+    }
+
+    public function sendFollowUp(WorkflowInput $input, Lead $lead): WorkflowResult
+    {
+        $actor = $this->admin($input);
         $data = $input->validate(['subject' => 'required|string|max:200', 'body' => 'required|string|max:10000']);
 
         $record = DB::transaction(function () use ($lead, $data, $actor) {

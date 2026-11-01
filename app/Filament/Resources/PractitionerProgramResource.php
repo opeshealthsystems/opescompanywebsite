@@ -37,6 +37,11 @@ class PractitionerProgramResource extends Resource
                         ->default('volunteer')
                         ->required()
                         ->live(),
+                    Forms\Components\Select::make('program_type')
+                        ->label('Programme Category')
+                        ->options(PractitionerProgram::programTypeOptions())
+                        ->default('general')
+                        ->required(),
                     Forms\Components\Select::make('status')
                         ->options(PractitionerProgram::statusOptions())
                         ->default('draft')
@@ -78,8 +83,7 @@ class PractitionerProgramResource extends Resource
                         default    => 'gray',
                     }),
                 Tables\Columns\TextColumn::make('applications_count')
-                    ->label('Applications')
-                    ->counts('applications'),
+                    ->label('Applications'),
                 Tables\Columns\TextColumn::make('starts_at')->date('d M Y')->placeholder('—'),
                 Tables\Columns\TextColumn::make('ends_at')->date('d M Y')->placeholder('—'),
             ])
@@ -90,12 +94,7 @@ class PractitionerProgramResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\EditAction::make()->using(fn (PractitionerProgram $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.practitioners.programs.update', $data, ['program' => $record->id])),
             ]);
     }
 
@@ -127,5 +126,12 @@ class PractitionerProgramResource extends Resource
             'view'   => Pages\ViewPractitionerProgram::route('/{record}'),
             'edit'   => Pages\EditPractitionerProgram::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Programmes\Application\Queries\AdminPractitionerProgramQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

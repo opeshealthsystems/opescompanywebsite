@@ -28,11 +28,7 @@ class TrainingRecordResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $expiring = static::getModel()::where('status','completed')
-            ->whereNotNull('expires_at')
-            ->whereDate('expires_at','<=', now()->addDays(30))
-            ->whereDate('expires_at','>=', now())
-            ->count();
+        $expiring = \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'training.expiring'])['count'] ?? 0;
         return $expiring > 0 ? (string) $expiring : null;
     }
     public static function getNavigationBadgeColor(): ?string { return 'warning'; }
@@ -45,7 +41,7 @@ class TrainingRecordResource extends Resource
                 Forms\Components\TextInput::make('title')->required()->maxLength(200)->columnSpanFull(),
                 Forms\Components\Select::make('user_id')
                     ->label('Employee')
-                    ->options(fn () => User::orderBy('name')->pluck('name','id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users'))
                     ->searchable()->required(),
                 Forms\Components\TextInput::make('provider')->label('Training Provider')->nullable()->maxLength(150),
                 Forms\Components\Select::make('category')->options(TrainingRecord::categoryOptions())->default('other')->required(),
@@ -84,7 +80,7 @@ class TrainingRecordResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\TrainingRecord $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.workforce.training.update', $data, ['trainingRecord' => $record->id])),
                 Tables\Actions\Action::make('complete')
                     ->label('Mark Complete')->icon('heroicon-o-check-circle')->color('success')
                     ->hidden(fn (TrainingRecord $r) => $r->status === 'completed')
@@ -130,5 +126,12 @@ class TrainingRecordResource extends Resource
             'view'   => Pages\ViewTrainingRecord::route('/{record}'),
             'edit'   => Pages\EditTrainingRecord::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Workforce\Application\Queries\AdminTrainingRecordQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

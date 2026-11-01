@@ -29,7 +29,7 @@ class ProjectResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $count = static::getModel()::whereIn('status', ['planning','active'])->count();
+        $count = \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'projects.active'])['count'] ?? 0;
         return $count > 0 ? (string) $count : null;
     }
 
@@ -53,7 +53,7 @@ class ProjectResource extends Resource
 
                 Forms\Components\Select::make('owner_id')
                     ->label('Project Owner')
-                    ->options(fn () => User::orderBy('name')->pluck('name','id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users'))
                     ->default(fn () => auth()->id())
                     ->searchable()->required(),
 
@@ -90,7 +90,7 @@ class ProjectResource extends Resource
                 Tables\Columns\TextColumn::make('owner.name')->label('Owner')->sortable(),
                 Tables\Columns\TextColumn::make('end_date')->label('Deadline')->date('d M Y')->placeholder('—')->sortable(),
                 Tables\Columns\TextColumn::make('milestones_count')
-                    ->label('Milestones')->counts('milestones')->alignCenter()->toggleable(),
+                    ->label('Milestones')->alignCenter()->toggleable(),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
@@ -99,7 +99,7 @@ class ProjectResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (Project $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('administration.projects.update', $data, ['project' => $record->id])),
                 Tables\Actions\DeleteAction::make()->using(function ($record) {
                     \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('administration.projects.delete', parameters: ['project' => $record->id]);
                     return true;
@@ -162,5 +162,12 @@ class ProjectResource extends Resource
             'view'   => Pages\ViewProject::route('/{record}'),
             'edit'   => Pages\EditProject::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Operations\Application\Queries\ProjectQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

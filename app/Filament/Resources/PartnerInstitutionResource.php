@@ -15,7 +15,6 @@ use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 
 class PartnerInstitutionResource extends Resource
@@ -62,13 +61,12 @@ class PartnerInstitutionResource extends Resource
                     ->badge()
                     ->formatStateUsing(fn ($state) => PartnerInstitution::typeOptions()[$state] ?? $state),
                 TextColumn::make('country')->sortable(),
-                ToggleColumn::make('is_featured')->label('Featured'),
+                IconColumn::make('is_featured')->label('Featured')->boolean(),
                 TextColumn::make('sort_order')->label('Order')->sortable(),
             ])
-            ->reorderable('sort_order')
             ->filters([])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\PartnerInstitution $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.publishing.partnerInstitutions.update', $data, ['institution' => $record->id])),
             ])
             ->defaultSort('sort_order');
     }
@@ -80,5 +78,12 @@ class PartnerInstitutionResource extends Resource
             'create' => Pages\CreatePartnerInstitution::route('/create'),
             'edit'   => Pages\EditPartnerInstitution::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Publishing\Application\Queries\AdminPartnerInstitutionQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

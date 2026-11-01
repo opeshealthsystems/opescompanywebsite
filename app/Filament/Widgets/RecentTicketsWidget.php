@@ -3,6 +3,8 @@
 namespace App\Filament\Widgets;
 
 use App\Filament\Resources\TicketResource;
+use App\Contexts\Shared\Application\Queries\AdminDashboardReadQueries;
+use App\Contexts\Shared\Application\WorkflowInput;
 use App\Models\Ticket;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -17,11 +19,7 @@ class RecentTicketsWidget extends BaseWidget
     public function table(Table $table): Table
     {
         return $table
-            ->query(
-                Ticket::with('customer')
-                    ->whereIn('status', ['open', 'in_progress', 'pending_customer'])
-                    ->orderByDesc('created_at')
-            )
+            ->query(app(AdminDashboardReadQueries::class)->ticketQuery(new WorkflowInput(actor: auth()->user(), language: app()->getLocale())))
             ->columns([
                 Tables\Columns\TextColumn::make('subject')
                     ->searchable()

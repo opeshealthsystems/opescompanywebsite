@@ -6,6 +6,7 @@ return [
     // confidential application routes are deliberately absent.
     'pages' => [
         'developers' => ['APIs and developer documentation', 'API et documentation développeur'],
+        'mobile-app' => ['OPES Health mobile app and updates', 'Application mobile OPES Health et mises à jour'],
         '' => ['Healthcare software designed in Cameroon', 'Logiciels de santé conçus au Cameroun'],
         'products' => ['Healthcare software catalogue', 'Catalogue de logiciels de santé'],
         'solutions' => ['Software for hospitals, clinics and care teams', 'Logiciels pour hôpitaux, cliniques et équipes de soins'],

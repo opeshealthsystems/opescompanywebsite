@@ -6,6 +6,7 @@ use App\Contexts\Shared\Application\WorkflowHandler;
 use App\Contexts\Shared\Application\WorkflowInput;
 use App\Contexts\Shared\Application\WorkflowResult;
 use App\Models\BlogPost;
+use Illuminate\Database\Eloquent\Builder;
 
 final class AdminBlogPostQueries extends WorkflowHandler
 {
@@ -21,11 +22,18 @@ final class AdminBlogPostQueries extends WorkflowHandler
             'reading_time', 'category', 'author', 'published', 'published_at', 'created_at', 'updated_at']);
     }
 
+    public function query(WorkflowInput $input): Builder
+    {
+        $this->authorize($input);
+
+        return BlogPost::query()->orderByDesc('created_at');
+    }
+
     public function index(WorkflowInput $input): WorkflowResult
     {
         $this->authorize($input);
         $filters = $input->validate(['published' => 'sometimes|boolean', 'category' => 'sometimes|nullable|string|max:100']);
-        $query = BlogPost::query()->orderByDesc('created_at');
+        $query = $this->query($input);
         if (array_key_exists('published', $filters)) $query->where('published', $filters['published']);
         if (!empty($filters['category'])) $query->where('category', $filters['category']);
         $page = $input->paginate($query);

@@ -11,9 +11,9 @@ final class DomainOutbox
 {
     public static bool $delivering = false;
 
-    public static function append(string $kind, string $type, array $payload, ?int $actorId = null): string
+    public static function append(string $kind, string $type, array $payload, ?int $actorId = null, ?string $id = null): string
     {
-        $id = (string) Str::uuid();
+        $id ??= (string) Str::uuid();
         DB::table('business_outbox')->insert(['id' => $id, 'kind' => $kind, 'type' => $type,
             'actor_id' => $actorId ?? CurrentWorkflow::id(), 'payload' => Crypt::encryptString(json_encode($payload, JSON_THROW_ON_ERROR)),
             'status' => 'pending', 'attempts' => 0, 'created_at' => now(), 'updated_at' => now()]);
@@ -36,6 +36,7 @@ final class DomainOutbox
         if (!DB::table('business_outbox')->where('id', $id)->whereIn('status', ['pending', 'failed'])
             ->where(fn ($q) => $q->whereNull('available_at')->orWhere('available_at', '<=', now()))
             ->update(['status' => 'processing', 'claim_token' => $claim, 'locked_at' => now(), 'attempts' => DB::raw('attempts + 1'), 'updated_at' => now()])) return 'deferred';
+        $payload = [];
         try {
             $payload = json_decode(Crypt::decryptString($row->payload), true, 512, JSON_THROW_ON_ERROR);
             if ($row->kind === 'event') {
@@ -46,6 +47,22 @@ final class DomainOutbox
                     DB::table('business_event_inbox')->insert(['event_id' => $id, 'consumer' => 'activity.v1', 'processed_at' => now()]);
                     event(new \App\Contexts\Shared\Domain\BusinessEvent($id, $row->type, $row->actor_id, $payload));
                 });
+            } elseif ($row->kind === 'payout') {
+                $application = \App\Models\PractitionerApplication::query()
+                    ->with(['program', 'practitioner.practitionerProfile'])
+                    ->findOrFail($payload['application_id']);
+                $driver = ($payload['force_manual'] ?? false)
+                    ? app(\App\Services\Payouts\ManualPayoutGateway::class)
+                    : app(\App\Services\Payouts\PayoutGatewayManager::class)->driverFor($payload['network']);
+                $result = $driver
+                    ->disburse($application, (float) $payload['amount'], $payload['currency'], ['reference' => $id]);
+                if (! $result->success) {
+                    app(\App\Contexts\Programmes\Application\Commands\PayoutLifecycleCommands::class)
+                        ->markFailed($application->id, 'The payout provider rejected the request.');
+                } elseif ($result->status === 'paid') {
+                    app(\App\Contexts\Programmes\Application\Commands\PayoutLifecycleCommands::class)
+                        ->markPaid($application->id);
+                }
             } else {
                 self::$delivering = true;
                 try {
@@ -64,6 +81,10 @@ final class DomainOutbox
             return 'completed';
         } catch (\Throwable $error) {
             $status = $row->kind === 'event' ? 'failed' : 'uncertain';
+            if ($row->kind === 'payout' && isset($payload['application_id'])) {
+                app(\App\Contexts\Programmes\Application\Commands\PayoutLifecycleCommands::class)
+                    ->markUncertain((int) $payload['application_id'], $id);
+            }
             DB::table('business_outbox')->where('id', $id)->where('claim_token', $claim)->update(['status' => $status,
                 'error_type' => get_class($error), 'available_at' => now()->addMinute(), 'updated_at' => now()]);
             \Illuminate\Support\Facades\Log::warning('Business outbox requires recovery', ['id' => $id, 'kind' => $row->kind, 'error_type' => get_class($error)]);

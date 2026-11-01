@@ -114,7 +114,7 @@ class DocumentTemplateResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (DocumentTemplate $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.documents.templates.update', $data, ['template' => $record->id])),
                 Tables\Actions\DeleteAction::make()
                     ->hidden(fn (DocumentTemplate $record) => $record->loadCount('documents')->documents_count > 0)
                     ->using(function (DocumentTemplate $record) { \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.documents.templates.delete', parameters: ['template' => $record->id]); return true; }),
@@ -152,7 +152,7 @@ class DocumentTemplateResource extends Resource
                         ->placeholder('No variables defined'),
                     Infolists\Components\TextEntry::make('documents_count')
                         ->label('Times Used')
-                        ->state(fn ($record) => $record->documents()->count()),
+                        ->state(fn ($record) => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'document_templates.document_count', 'id' => $record->id])['count'] ?? 0),
                     Infolists\Components\TextEntry::make('updated_at')->label('Last Updated')->dateTime('d M Y H:i'),
                 ]),
 
@@ -180,5 +180,12 @@ class DocumentTemplateResource extends Resource
             'view'   => Pages\ViewDocumentTemplate::route('/{record}'),
             'edit'   => Pages\EditDocumentTemplate::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Documents\Application\Queries\AdminDocumentTemplateQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

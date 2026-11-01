@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Contexts\Programmes\Application\Commands\PayoutLifecycleCommands;
 use App\Mail\PayoutSettled;
 use App\Models\PractitionerApplication;
 use App\Services\Payouts\PayoutGatewayManager;
@@ -15,7 +16,7 @@ class PollPayouts extends Command
 
     protected $description = 'Poll pending mobile-money payouts and update their status.';
 
-    public function handle(PayoutGatewayManager $manager): int
+    public function handle(PayoutGatewayManager $manager, PayoutLifecycleCommands $lifecycle): int
     {
         $pending = PractitionerApplication::query()
             ->where('payout_status', 'pending')
@@ -32,8 +33,9 @@ class PollPayouts extends Command
             }
 
             if ($status === 'paid') {
-                $application->update(['payout_status' => 'paid', 'paid_at' => now()]);
-                Mail::to($application->practitioner->email)->queue(new PayoutSettled($application));
+                if (! $lifecycle->markPaid($application->id)) continue;
+                $application->refresh();
+                if ($application->practitioner?->email) Mail::to($application->practitioner->email)->queue(new PayoutSettled($application));
                 $application->practitioner?->notify(new \App\Notifications\FeedEntry(
                     'practitioner.payout_settled',
                     'Payout settled',
@@ -47,10 +49,7 @@ class PollPayouts extends Command
                     null,
                 );
             } elseif ($status === 'failed') {
-                $application->update([
-                    'payout_status'         => 'failed',
-                    'payout_failure_reason' => $application->payout_failure_reason ?: 'Provider reported FAILED',
-                ]);
+                if (! $lifecycle->markFailed($application->id, $application->payout_failure_reason ?: 'Provider reported FAILED')) continue;
                 AdminNotifier::notify(
                     'Payout failed',
                     'Payout for '.$application->practitioner->name.' failed.',

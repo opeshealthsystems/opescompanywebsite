@@ -43,7 +43,7 @@ class ValidationWorkflowResource extends Resource
                 Tables\Columns\TextColumn::make('module.name')->label('Module'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\ValidationWorkflow $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.validation.workflows.update', $data, ['module' => $record->module_id, 'workflow' => $record->id])),
             ]);
     }
 
@@ -60,5 +60,12 @@ class ValidationWorkflowResource extends Resource
             'index' => Pages\ListValidationWorkflows::route('/'),
             'edit'  => Pages\EditValidationWorkflow::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Validation\Application\Queries\AdminValidationCatalogQueries::class)->workflowQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

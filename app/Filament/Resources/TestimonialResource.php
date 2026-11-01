@@ -109,10 +109,9 @@ class TestimonialResource extends Resource
                     ->sortable(),
             ])
             ->defaultSort('sort_order')
-            ->reorderable('sort_order')
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\Testimonial $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.communications.testimonials.update', $data, ['testimonial' => $record->id])),
                 Tables\Actions\DeleteAction::make()->using(function (Testimonial $record) {
                     \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.communications.testimonials.delete', parameters: ['testimonial' => $record->id]);
                     return true;
@@ -166,5 +165,12 @@ class TestimonialResource extends Resource
             'view'   => Pages\ViewTestimonial::route('/{record}'),
             'edit'   => Pages\EditTestimonial::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Communications\Application\Queries\AdminTestimonialQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

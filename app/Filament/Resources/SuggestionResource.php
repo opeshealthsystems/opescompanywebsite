@@ -23,6 +23,13 @@ class SuggestionResource extends Resource
     protected static ?string $navigationGroup = 'Support';
     protected static ?int $navigationSort = 40;
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Programmes\Application\Queries\AdminSuggestionQueries::class)->suggestionQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
+    }
+
     public static function canAccess(): bool
     {
         return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;

@@ -7,10 +7,19 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class DealsRelationManager extends RelationManager
 {
     protected static string $relationship = 'deals';
+
+    protected function getTableQuery(): Builder
+    {
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::query(
+            \App\Contexts\Operations\Application\Queries\AdminDealQueries::class,
+            'dealQuery',
+        )->where('lead_id', $this->getOwnerRecord()->getKey());
+    }
 
     public function form(Form $form): Form
     {

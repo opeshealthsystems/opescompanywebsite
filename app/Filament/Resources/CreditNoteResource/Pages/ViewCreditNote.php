@@ -14,7 +14,7 @@ class ViewCreditNote extends ViewRecord
     {
         return [
             Actions\EditAction::make(),
-            Actions\DeleteAction::make(),
+            Actions\DeleteAction::make()->action(fn () => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.creditNotes.delete', parameters: ['creditNote' => $this->record->id])),
         ];
     }
 }

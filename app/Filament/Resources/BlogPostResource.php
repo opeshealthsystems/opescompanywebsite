@@ -110,7 +110,7 @@ class BlogPostResource extends Resource
             ->filters([
                 Tables\Filters\TernaryFilter::make('published'),
             ])
-            ->actions([Tables\Actions\ViewAction::make(), Tables\Actions\EditAction::make()])
+            ->actions([Tables\Actions\ViewAction::make(), Tables\Actions\EditAction::make()->using(fn (\App\Models\BlogPost $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.publishing.blogPosts.update', $data, ['blogPost' => $record->id]))])
             ->bulkActions([Tables\Actions\BulkActionGroup::make([
                 Tables\Actions\DeleteBulkAction::make()->action(function (\Illuminate\Support\Collection $records): void {
                     foreach ($records as $record) {
@@ -133,5 +133,12 @@ class BlogPostResource extends Resource
             'view'   => Pages\ViewBlogPost::route('/{record}'),
             'edit'   => Pages\EditBlogPost::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Publishing\Application\Queries\AdminBlogPostQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

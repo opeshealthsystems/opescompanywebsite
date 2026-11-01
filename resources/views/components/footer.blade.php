@@ -46,6 +46,7 @@ $current = $locale;
             <h2>{{ $isFr ? 'Plateforme' : 'Platform' }}</h2>
             <a href="{{ url($locale.'/markets') }}">{{ $isFr ? 'Marchés CEMAC' : 'CEMAC Markets' }}</a>
             <a href="{{ url($locale.'/developers') }}">{{ $isFr ? 'API et développeurs' : 'APIs and developers' }}</a>
+            <a href="{{ url($locale.'/mobile-app') }}">{{ $isFr ? 'Application mobile OPES' : 'OPES mobile app' }}</a>
             <a href="{{ url($locale.'/architecture') }}">
                 <i data-lucide="cpu" style="width:12px;height:12px"></i>{{ $isFr ? 'Architecture' : 'Architecture' }}
             </a>

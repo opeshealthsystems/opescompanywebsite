@@ -168,6 +168,96 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_apiClients_create": {
+        "method": "POST",
+        "path": "/admin/api-clients",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_apiClients_index": {
+        "method": "GET",
+        "path": "/admin/api-clients",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_apiClients_revoke": {
+        "method": "DELETE",
+        "path": "/admin/api-clients/{client}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "client"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_apiClients_rotate": {
+        "method": "POST",
+        "path": "/admin/api-clients/{client}/rotate",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "client"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_auditLogs_index": {
+        "method": "GET",
+        "path": "/admin/audit-logs",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "action",
+            "model_type",
+            "user_id",
+            "from",
+            "until",
+            "search"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_auditLogs_show": {
+        "method": "GET",
+        "path": "/admin/audit-logs/{auditLog}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "auditLog"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_catalogue_products_archive": {
         "method": "POST",
         "path": "/admin/products/{product}/archive",
@@ -349,7 +439,8 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [
             "page",
-            "per_page"
+            "per_page",
+            "is_active"
         ],
         "acceptLanguage": true,
         "requestBodyRequired": false,
@@ -513,6 +604,35 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_contracts_expiringSoon": {
+        "method": "GET",
+        "path": "/contracts/expiring-soon",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_contracts_index": {
+        "method": "GET",
+        "path": "/contracts",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "auto_renew"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_contracts_terminate": {
         "method": "POST",
         "path": "/contracts/{contract}/terminate",
@@ -569,6 +689,52 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_crm_deals_index": {
+        "method": "GET",
+        "path": "/crm/deals",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "owner_id",
+            "search"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_crm_deals_pipeline": {
+        "method": "GET",
+        "path": "/crm/deals/pipeline",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_crm_deals_show": {
+        "method": "GET",
+        "path": "/crm/deals/{deal}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "deal"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_crm_deals_update": {
         "method": "PUT",
         "path": "/crm/deals/{deal}",
@@ -620,7 +786,8 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [
             "page",
-            "per_page"
+            "per_page",
+            "search"
         ],
         "acceptLanguage": true,
         "requestBodyRequired": false,
@@ -658,6 +825,132 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "admin_customerProfiles_create": {
+        "method": "POST",
+        "path": "/admin/customer-profiles",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_customerProfiles_index": {
+        "method": "GET",
+        "path": "/admin/customer-profiles",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "search",
+            "country"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_customerProfiles_show": {
+        "method": "GET",
+        "path": "/admin/customer-profiles/{customerProfile}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "customerProfile"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_customerProfiles_update": {
+        "method": "PUT",
+        "path": "/admin/customer-profiles/{customerProfile}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "customerProfile"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_dashboard_announcements": {
+        "method": "GET",
+        "path": "/admin/dashboard/announcements",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_dashboard_outstandingInvoices": {
+        "method": "GET",
+        "path": "/admin/dashboard/outstanding-invoices",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_dashboard_recentLeads": {
+        "method": "GET",
+        "path": "/admin/dashboard/recent-leads",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_dashboard_recentTickets": {
+        "method": "GET",
+        "path": "/admin/dashboard/recent-tickets",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_dashboard_summary": {
+        "method": "GET",
+        "path": "/admin/dashboard/summary",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_documents_create": {
         "method": "POST",
         "path": "/documents",
@@ -681,6 +974,23 @@ export const businessOperations = Object.freeze({
             "document"
         ],
         "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_documents_index": {
+        "method": "GET",
+        "path": "/documents",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "type",
+            "status",
+            "search"
+        ],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -800,6 +1110,50 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_enquiries_leads_create": {
+        "method": "POST",
+        "path": "/admin/enquiries/leads",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_enquiries_leads_delete": {
+        "method": "DELETE",
+        "path": "/admin/enquiries/leads/{lead}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "lead"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_enquiries_leads_index": {
+        "method": "GET",
+        "path": "/admin/enquiries/leads",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "status",
+            "facility_type",
+            "search"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_enquiries_leads_sendFollowUp": {
         "method": "POST",
         "path": "/admin/enquiries/leads/{lead}/follow-up",
@@ -807,6 +1161,136 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [
             "lead"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_enquiries_leads_show": {
+        "method": "GET",
+        "path": "/admin/enquiries/leads/{lead}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "lead"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_enquiries_leads_update": {
+        "method": "PUT",
+        "path": "/admin/enquiries/leads/{lead}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "lead"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_enquiries_partnerApplications_index": {
+        "method": "GET",
+        "path": "/crm/partner-applications",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "status",
+            "partner_type",
+            "search"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_enquiries_partnerApplications_show": {
+        "method": "GET",
+        "path": "/crm/partner-applications/{partnerApplication}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "partnerApplication"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_enquiries_partnerApplications_update": {
+        "method": "PATCH",
+        "path": "/crm/partner-applications/{partnerApplication}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "partnerApplication"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_enquiries_testerApplications_index": {
+        "method": "GET",
+        "path": "/crm/tester-applications",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "status",
+            "profession",
+            "search"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_enquiries_testerApplications_show": {
+        "method": "GET",
+        "path": "/crm/tester-applications/{testerApplication}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "testerApplication"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_enquiries_testerApplications_update": {
+        "method": "PATCH",
+        "path": "/crm/tester-applications/{testerApplication}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "testerApplication"
         ],
         "queryParameters": [],
         "acceptLanguage": true,
@@ -889,6 +1373,22 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "admin_finance_creditNoteItems": {
+        "method": "GET",
+        "path": "/admin/finance/credit-notes/{creditNote}/items",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "creditNote"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_finance_creditNotes_create": {
         "method": "POST",
         "path": "/finance/credit-notes",
@@ -912,6 +1412,23 @@ export const businessOperations = Object.freeze({
             "creditNote"
         ],
         "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_creditNotes_index": {
+        "method": "GET",
+        "path": "/finance/credit-notes",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "status",
+            "invoice_id",
+            "search"
+        ],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -985,6 +1502,20 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "admin_finance_expenses_index": {
+        "method": "GET",
+        "path": "/finance/expenses",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_finance_expenses_markPaid": {
         "method": "POST",
         "path": "/finance/expenses/{expense}/mark-paid",
@@ -1014,6 +1545,52 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "admin_finance_invoiceItems": {
+        "method": "GET",
+        "path": "/admin/finance/invoices/{invoice}/items",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "invoice"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_invoicePayments_index": {
+        "method": "GET",
+        "path": "/finance/invoices/{invoice}/payments",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "invoice"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_invoiceTemplates_create": {
+        "method": "POST",
+        "path": "/finance/invoice-templates",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
     "admin_finance_invoiceTemplates_generate": {
         "method": "POST",
         "path": "/finance/invoice-templates/{invoiceTemplate}/generate-invoice",
@@ -1026,6 +1603,54 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
+    },
+    "admin_finance_invoiceTemplates_index": {
+        "method": "GET",
+        "path": "/finance/invoice-templates",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "active",
+            "search"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_invoiceTemplates_show": {
+        "method": "GET",
+        "path": "/finance/invoice-templates/{invoiceTemplate}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "invoiceTemplate"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_invoiceTemplates_update": {
+        "method": "PUT",
+        "path": "/finance/invoice-templates/{invoiceTemplate}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "invoiceTemplate"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_finance_invoices_create": {
         "method": "POST",
@@ -1050,6 +1675,22 @@ export const businessOperations = Object.freeze({
             "invoice"
         ],
         "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_invoices_index": {
+        "method": "GET",
+        "path": "/finance/invoices",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "status",
+            "customer_id"
+        ],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1106,6 +1747,22 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
+    },
+    "admin_finance_invoices_recordPayment": {
+        "method": "POST",
+        "path": "/finance/invoices/{invoice}/payments",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "invoice"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_finance_invoices_update": {
         "method": "PUT",
@@ -1196,6 +1853,22 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "admin_finance_payrollEntries_index": {
+        "method": "GET",
+        "path": "/finance/payroll-runs/{run}/entries",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "run"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_finance_payrollEntries_markManyPaid": {
         "method": "POST",
         "path": "/finance/payroll-runs/{run}/entries/mark-paid",
@@ -1279,6 +1952,21 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_finance_payrollRuns_index": {
+        "method": "GET",
+        "path": "/finance/payroll-runs",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "year"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_finance_payrollRuns_update": {
         "method": "PUT",
         "path": "/finance/payroll-runs/{run}",
@@ -1294,6 +1982,22 @@ export const businessOperations = Object.freeze({
             "multipart/form-data",
             "application/json"
         ]
+    },
+    "admin_finance_purchaseOrderItems": {
+        "method": "GET",
+        "path": "/admin/finance/purchase-orders/{purchaseOrder}/items",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "purchaseOrder"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
     },
     "admin_finance_purchaseOrders_approve": {
         "method": "POST",
@@ -1335,6 +2039,21 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_finance_purchaseOrders_index": {
+        "method": "GET",
+        "path": "/finance/purchase-orders",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "vendor_id"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_finance_purchaseOrders_receive": {
         "method": "POST",
         "path": "/finance/purchase-orders/{purchaseOrder}/receive",
@@ -1363,6 +2082,22 @@ export const businessOperations = Object.freeze({
             "multipart/form-data",
             "application/json"
         ]
+    },
+    "admin_finance_quoteItems": {
+        "method": "GET",
+        "path": "/admin/finance/quotes/{quote}/items",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "quote"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
     },
     "admin_finance_quotes_accept": {
         "method": "POST",
@@ -1404,6 +2139,21 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_finance_quotes_index": {
+        "method": "GET",
+        "path": "/finance/quotes",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "lead_id"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_finance_quotes_markSent": {
         "method": "POST",
         "path": "/finance/quotes/{quote}/mark-sent",
@@ -1432,6 +2182,138 @@ export const businessOperations = Object.freeze({
             "multipart/form-data",
             "application/json"
         ]
+    },
+    "admin_finance_records_summary": {
+        "method": "GET",
+        "path": "/finance/records/summary",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_reports_accountsPayableAging": {
+        "method": "GET",
+        "path": "/finance/reports/accounts-payable-aging",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_reports_accountsReceivableAging": {
+        "method": "GET",
+        "path": "/finance/reports/accounts-receivable-aging",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_reports_budgetVsActual": {
+        "method": "GET",
+        "path": "/finance/reports/budget-vs-actual",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "year"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_reports_cashFlow": {
+        "method": "GET",
+        "path": "/finance/reports/cash-flow",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "year"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_reports_overview": {
+        "method": "GET",
+        "path": "/finance/reports/overview",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_reports_payrollHeadcount": {
+        "method": "GET",
+        "path": "/finance/reports/payroll-headcount",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "year"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_reports_profitAndLoss": {
+        "method": "GET",
+        "path": "/finance/reports/profit-and-loss",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "year"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_supplierBillItems": {
+        "method": "GET",
+        "path": "/admin/finance/supplier-bills/{supplierBill}/items",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "supplierBill"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
     },
     "admin_finance_supplierBills_approve": {
         "method": "POST",
@@ -1469,6 +2351,21 @@ export const businessOperations = Object.freeze({
             "supplierBill"
         ],
         "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_supplierBills_index": {
+        "method": "GET",
+        "path": "/finance/supplier-bills",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "vendor_id"
+        ],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1575,6 +2472,20 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "admin_identity_roles_index": {
+        "method": "GET",
+        "path": "/admin/roles",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_identity_users_create": {
         "method": "POST",
         "path": "/admin/users",
@@ -1598,6 +2509,39 @@ export const businessOperations = Object.freeze({
             "user"
         ],
         "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_identity_users_employeeProfile": {
+        "method": "GET",
+        "path": "/admin/users/{user}/employee-profile",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "user"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_identity_users_index": {
+        "method": "GET",
+        "path": "/admin/users",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "search",
+            "role",
+            "is_active"
+        ],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1630,6 +2574,22 @@ export const businessOperations = Object.freeze({
             "multipart/form-data",
             "application/json"
         ]
+    },
+    "admin_learning_certificates_index": {
+        "method": "GET",
+        "path": "/learning/certificates",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "course_id",
+            "search"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
     },
     "admin_learning_courseLessons_create": {
         "method": "POST",
@@ -1745,7 +2705,9 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [
             "page",
-            "per_page"
+            "per_page",
+            "is_active",
+            "search"
         ],
         "acceptLanguage": true,
         "requestBodyRequired": false,
@@ -1795,6 +2757,64 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_learning_enrollments_index": {
+        "method": "GET",
+        "path": "/learning/enrollments",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "status",
+            "course_id",
+            "search"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_oauthClients_create": {
+        "method": "POST",
+        "path": "/admin/oauth-clients",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_oauthClients_index": {
+        "method": "GET",
+        "path": "/admin/oauth-clients",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_oauthClients_revoke": {
+        "method": "DELETE",
+        "path": "/admin/oauth-clients/{client}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "client"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_operations_assets_create": {
         "method": "POST",
         "path": "/operations/assets",
@@ -1822,6 +2842,21 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_operations_assets_index": {
+        "method": "GET",
+        "path": "/operations/assets",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "assigned_to"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_operations_assets_update": {
         "method": "PUT",
         "path": "/operations/assets/{asset}",
@@ -1829,6 +2864,86 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [
             "asset"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_operations_milestones_create": {
+        "method": "POST",
+        "path": "/operations/projects/{project}/milestones",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "project"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_operations_milestones_delete": {
+        "method": "DELETE",
+        "path": "/operations/projects/{project}/milestones/{milestone}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "project",
+            "milestone"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_operations_milestones_index": {
+        "method": "GET",
+        "path": "/operations/projects/{project}/milestones",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "project"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_operations_milestones_show": {
+        "method": "GET",
+        "path": "/operations/projects/{project}/milestones/{milestone}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "project",
+            "milestone"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_operations_milestones_update": {
+        "method": "PUT",
+        "path": "/operations/projects/{project}/milestones/{milestone}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "project",
+            "milestone"
         ],
         "queryParameters": [],
         "acceptLanguage": true,
@@ -1850,6 +2965,38 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
+    },
+    "admin_practitioners_applications_index": {
+        "method": "GET",
+        "path": "/practitioners/applications",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "status",
+            "program_id"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_practitioners_applications_pay": {
+        "method": "POST",
+        "path": "/practitioners/applications/{application}/payout",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "application"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_practitioners_applications_placeInCohort": {
         "method": "POST",
@@ -1883,6 +3030,54 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "admin_practitioners_applications_show": {
+        "method": "GET",
+        "path": "/practitioners/applications/{application}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "application"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_practitioners_applications_updateNotes": {
+        "method": "PUT",
+        "path": "/practitioners/applications/{application}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "application"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_practitioners_findings_index": {
+        "method": "GET",
+        "path": "/practitioners/findings",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "published",
+            "application_id"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_practitioners_findings_publish": {
         "method": "POST",
         "path": "/practitioners/findings/{finding}/publish",
@@ -1892,6 +3087,22 @@ export const businessOperations = Object.freeze({
             "finding"
         ],
         "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_practitioners_findings_show": {
+        "method": "GET",
+        "path": "/practitioners/findings/{finding}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "finding"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1909,6 +3120,71 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_practitioners_findings_update": {
+        "method": "PUT",
+        "path": "/practitioners/findings/{finding}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "finding"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_practitioners_profiles_index": {
+        "method": "GET",
+        "path": "/practitioners/profiles",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "profession",
+            "verified",
+            "search"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_practitioners_profiles_show": {
+        "method": "GET",
+        "path": "/practitioners/profiles/{profile}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "profile"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_practitioners_profiles_update": {
+        "method": "PUT",
+        "path": "/practitioners/profiles/{profile}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "profile"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
     "admin_practitioners_profiles_verify": {
         "method": "POST",
         "path": "/practitioners/profiles/{profile}/verify",
@@ -1918,6 +3194,87 @@ export const businessOperations = Object.freeze({
             "profile"
         ],
         "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_practitioners_programs_create": {
+        "method": "POST",
+        "path": "/practitioners/programs",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_practitioners_programs_index": {
+        "method": "GET",
+        "path": "/practitioners/programs",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "type",
+            "program_type",
+            "status",
+            "search"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_practitioners_programs_show": {
+        "method": "GET",
+        "path": "/practitioners/programs/{program}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "program"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_practitioners_programs_update": {
+        "method": "PUT",
+        "path": "/practitioners/programs/{program}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "program"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_practitioners_suggestions_index": {
+        "method": "GET",
+        "path": "/admin/practitioners/suggestions",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "status",
+            "category",
+            "search"
+        ],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2079,7 +3436,8 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [
             "page",
-            "per_page"
+            "per_page",
+            "search"
         ],
         "acceptLanguage": true,
         "requestBodyRequired": false,
@@ -2152,7 +3510,9 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [
             "page",
-            "per_page"
+            "per_page",
+            "published",
+            "category"
         ],
         "acceptLanguage": true,
         "requestBodyRequired": false,
@@ -2188,6 +3548,68 @@ export const businessOperations = Object.freeze({
         "contentTypes": [
             "multipart/form-data",
             "application/json"
+        ]
+    },
+    "admin_publishing_partnerInstitutions_create": {
+        "method": "POST",
+        "path": "/partnerships/institutions",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data"
+        ]
+    },
+    "admin_publishing_partnerInstitutions_index": {
+        "method": "GET",
+        "path": "/partnerships/institutions",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "type",
+            "active",
+            "featured",
+            "search"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_publishing_partnerInstitutions_show": {
+        "method": "GET",
+        "path": "/partnerships/institutions/{institution}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "institution"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_publishing_partnerInstitutions_update": {
+        "method": "PUT",
+        "path": "/partnerships/institutions/{institution}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "institution"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data"
         ]
     },
     "admin_recruitment_applications_create": {
@@ -2240,7 +3662,9 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [
             "page",
-            "per_page"
+            "per_page",
+            "job_opening_id",
+            "search"
         ],
         "acceptLanguage": true,
         "requestBodyRequired": false,
@@ -2389,7 +3813,8 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [
             "page",
-            "per_page"
+            "per_page",
+            "search"
         ],
         "acceptLanguage": true,
         "requestBodyRequired": false,
@@ -2427,6 +3852,378 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "admin_references_auditLogFilters": {
+        "method": "GET",
+        "path": "/admin/references/audit-log-filters",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_references_cohortMembers": {
+        "method": "GET",
+        "path": "/admin/references/cohort-members",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_references_cohorts": {
+        "method": "GET",
+        "path": "/admin/references/cohorts",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "program_id",
+            "status"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_references_customerCountries": {
+        "method": "GET",
+        "path": "/admin/references/customer-countries",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_references_departments": {
+        "method": "GET",
+        "path": "/admin/references/departments",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_references_documentTemplates": {
+        "method": "GET",
+        "path": "/admin/references/document-templates",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_references_invoices": {
+        "method": "GET",
+        "path": "/admin/references/invoices",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "id"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_references_jobOpenings": {
+        "method": "GET",
+        "path": "/admin/references/open-jobs",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "status"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_references_knowledgeCategories": {
+        "method": "GET",
+        "path": "/admin/references/knowledge-categories",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_references_leads": {
+        "method": "GET",
+        "path": "/admin/references/leads",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_references_licenses": {
+        "method": "GET",
+        "path": "/admin/references/licenses",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_references_nextEmployeeId": {
+        "method": "GET",
+        "path": "/admin/references/next-employee-id",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_references_projects": {
+        "method": "GET",
+        "path": "/admin/references/projects",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_references_purchaseOrders": {
+        "method": "GET",
+        "path": "/admin/references/purchase-orders",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_references_rolePermissions": {
+        "method": "GET",
+        "path": "/admin/references/role-permissions",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "id"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_references_salaryGrades": {
+        "method": "GET",
+        "path": "/admin/references/salary-grades",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_references_testCases": {
+        "method": "GET",
+        "path": "/admin/references/test-cases",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_references_userRoles": {
+        "method": "GET",
+        "path": "/admin/references/user-roles",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_references_users": {
+        "method": "GET",
+        "path": "/admin/references/users",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "role",
+            "id",
+            "include_email"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_references_validationPrograms": {
+        "method": "GET",
+        "path": "/admin/references/validation-programs",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_references_vendors": {
+        "method": "GET",
+        "path": "/admin/references/vendors",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_reports_contractsExpiry": {
+        "method": "GET",
+        "path": "/admin/reports/contracts-expiry",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_reports_crmSummary": {
+        "method": "GET",
+        "path": "/admin/reports/crm-summary",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_reports_dashboard": {
+        "method": "GET",
+        "path": "/admin/reports/dashboard",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_reports_operational_overview": {
+        "method": "GET",
+        "path": "/admin/reports/operational-overview",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_reports_peopleSummary": {
+        "method": "GET",
+        "path": "/admin/reports/people-summary",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_reports_workforce_summary": {
         "method": "GET",
         "path": "/admin/reports/workforce-summary",
@@ -2436,6 +4233,23 @@ export const businessOperations = Object.freeze({
         "queryParameters": [
             "page",
             "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_resourceSummaries_metric": {
+        "method": "GET",
+        "path": "/admin/resource-summaries",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "metric",
+            "id",
+            "program_id"
         ],
         "acceptLanguage": true,
         "requestBodyRequired": false,
@@ -2475,6 +4289,23 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_support_bugReports_index": {
+        "method": "GET",
+        "path": "/admin/support/practitioner-bug-reports",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "status",
+            "severity",
+            "search"
+        ],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2654,6 +4485,19 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "admin_support_serviceRequests_cancel": {
+        "method": "POST",
+        "path": "/support/service-requests/{serviceRequest}/cancel",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "serviceRequest"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_support_serviceRequests_complete": {
         "method": "POST",
         "path": "/support/service-requests/{serviceRequest}/complete",
@@ -2670,6 +4514,55 @@ export const businessOperations = Object.freeze({
     "admin_support_serviceRequests_confirm": {
         "method": "POST",
         "path": "/support/service-requests/{serviceRequest}/confirm-assign",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "serviceRequest"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_support_serviceRequests_index": {
+        "method": "GET",
+        "path": "/support/service-requests",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "status",
+            "type",
+            "customer_id"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_support_serviceRequests_show": {
+        "method": "GET",
+        "path": "/support/service-requests/{serviceRequest}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "serviceRequest"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_support_serviceRequests_update": {
+        "method": "PATCH",
+        "path": "/support/service-requests/{serviceRequest}",
         "authenticated": true,
         "idempotencyRequired": true,
         "pathParameters": [
@@ -2756,6 +4649,20 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "admin_support_tickets_create": {
+        "method": "POST",
+        "path": "/admin/support/tickets",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
     "admin_support_tickets_reply": {
         "method": "POST",
         "path": "/admin/support/tickets/{ticket}/reply",
@@ -2775,6 +4682,22 @@ export const businessOperations = Object.freeze({
     "admin_support_tickets_status": {
         "method": "POST",
         "path": "/admin/support/tickets/{ticket}/status",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "ticket"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_support_tickets_update": {
+        "method": "PUT",
+        "path": "/admin/support/tickets/{ticket}",
         "authenticated": true,
         "idempotencyRequired": true,
         "pathParameters": [
@@ -2815,6 +4738,24 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_testing_assignments_index": {
+        "method": "GET",
+        "path": "/admin/testing/assignments",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "status",
+            "assigned_to",
+            "product_slug",
+            "search"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_testing_assignments_update": {
         "method": "PUT",
         "path": "/admin/testing/assignments/{testerAssignment}",
@@ -2831,6 +4772,23 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "admin_validation_certificates_index": {
+        "method": "GET",
+        "path": "/validation/certificates",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "tier",
+            "cohort_id",
+            "search"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_validation_certificates_inviteToCouncil": {
         "method": "POST",
         "path": "/validation/certificates/{certificate}/invite-to-council",
@@ -2846,6 +4804,22 @@ export const businessOperations = Object.freeze({
             "multipart/form-data",
             "application/json"
         ]
+    },
+    "admin_validation_cohortMembers_index": {
+        "method": "GET",
+        "path": "/validation/cohorts/{cohort}/members",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "cohort"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
     },
     "admin_validation_cohortMembers_update": {
         "method": "PUT",
@@ -2894,6 +4868,22 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_validation_cohortTestCases_index": {
+        "method": "GET",
+        "path": "/validation/cohorts/{cohort}/test-cases",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "cohort"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_validation_cohorts_create": {
         "method": "POST",
         "path": "/validation/cohorts",
@@ -2929,7 +4919,9 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [
             "page",
-            "per_page"
+            "per_page",
+            "status",
+            "practitioner_program_id"
         ],
         "acceptLanguage": true,
         "requestBodyRequired": false,
@@ -3013,6 +5005,24 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "admin_validation_dailyTestSessions_index": {
+        "method": "GET",
+        "path": "/validation/test-sessions",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "product_id",
+            "cohort_member_id",
+            "date_from",
+            "date_to"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_validation_developerTasks_assign": {
         "method": "POST",
         "path": "/validation/developer-tasks/{task}/assign",
@@ -3028,6 +5038,24 @@ export const businessOperations = Object.freeze({
             "multipart/form-data",
             "application/json"
         ]
+    },
+    "admin_validation_developerTasks_index": {
+        "method": "GET",
+        "path": "/validation/developer-tasks",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "status",
+            "priority",
+            "assigned_to",
+            "search"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
     },
     "admin_validation_developerTasks_markFixed": {
         "method": "POST",
@@ -3054,6 +5082,22 @@ export const businessOperations = Object.freeze({
             "task"
         ],
         "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_developerTasks_retests": {
+        "method": "GET",
+        "path": "/validation/developer-tasks/{task}/retests",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "task"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3122,7 +5166,9 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [
             "page",
-            "per_page"
+            "per_page",
+            "cohort_member_id",
+            "rating"
         ],
         "acceptLanguage": true,
         "requestBodyRequired": false,
@@ -3173,6 +5219,24 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_validation_issues_index": {
+        "method": "GET",
+        "path": "/validation/issues",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "status",
+            "severity",
+            "issue_type",
+            "search"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_validation_issues_productDecision": {
         "method": "POST",
         "path": "/validation/issues/{issue}/product-decision",
@@ -3201,6 +5265,142 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
+    },
+    "admin_validation_metrics_cohortProgress": {
+        "method": "GET",
+        "path": "/validation/metrics/cohort-progress",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_metrics_developerThroughput": {
+        "method": "GET",
+        "path": "/validation/metrics/developer-throughput",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_metrics_issueAnalytics": {
+        "method": "GET",
+        "path": "/validation/metrics/issues",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "cohort_id"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_metrics_practitionerLeaderboard": {
+        "method": "GET",
+        "path": "/validation/metrics/practitioner-leaderboard",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "cohort_id"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_modules_create": {
+        "method": "POST",
+        "path": "/validation/products/{product}/modules",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "product"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_validation_modules_delete": {
+        "method": "DELETE",
+        "path": "/validation/modules/{module}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "module"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_modules_index": {
+        "method": "GET",
+        "path": "/validation/modules",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "validation_product_id",
+            "active",
+            "search"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_modules_show": {
+        "method": "GET",
+        "path": "/validation/modules/{module}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "module"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_modules_update": {
+        "method": "PUT",
+        "path": "/validation/modules/{module}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "module"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_validation_products_create": {
         "method": "POST",
@@ -3275,6 +5475,88 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "admin_validation_testCases_create": {
+        "method": "POST",
+        "path": "/validation/workflows/{workflow}/test-cases",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "workflow"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_validation_testCases_delete": {
+        "method": "DELETE",
+        "path": "/validation/workflows/{workflow}/test-cases/{testCase}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "workflow",
+            "testCase"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_testCases_index": {
+        "method": "GET",
+        "path": "/validation/workflows/{workflow}/test-cases",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "workflow"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "active",
+            "search"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_testCases_show": {
+        "method": "GET",
+        "path": "/validation/workflows/{workflow}/test-cases/{testCase}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "workflow",
+            "testCase"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_testCases_update": {
+        "method": "PUT",
+        "path": "/validation/workflows/{workflow}/test-cases/{testCase}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "workflow",
+            "testCase"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
     "admin_validation_weeklyReviews_create": {
         "method": "POST",
         "path": "/validation/weekly-reviews",
@@ -3289,6 +5571,23 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "admin_validation_weeklyReviews_index": {
+        "method": "GET",
+        "path": "/validation/weekly-reviews",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "cohort_id",
+            "week_from",
+            "week_to"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_validation_weeklyReviews_update": {
         "method": "PUT",
         "path": "/validation/weekly-reviews/{weeklyReview}",
@@ -3296,6 +5595,88 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [
             "weeklyReview"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_validation_workflows_create": {
+        "method": "POST",
+        "path": "/validation/modules/{module}/workflows",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "module"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_validation_workflows_delete": {
+        "method": "DELETE",
+        "path": "/validation/modules/{module}/workflows/{workflow}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "module",
+            "workflow"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_workflows_index": {
+        "method": "GET",
+        "path": "/validation/modules/{module}/workflows",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "module"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "active",
+            "search"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_workflows_show": {
+        "method": "GET",
+        "path": "/validation/modules/{module}/workflows/{workflow}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "module",
+            "workflow"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_workflows_update": {
+        "method": "PUT",
+        "path": "/validation/modules/{module}/workflows/{workflow}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "module",
+            "workflow"
         ],
         "queryParameters": [],
         "acceptLanguage": true,
@@ -3451,6 +5832,139 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "admin_workforce_employees_create": {
+        "method": "POST",
+        "path": "/admin/workforce/employees",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_employees_index": {
+        "method": "GET",
+        "path": "/admin/workforce/employees",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "search",
+            "active"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_employees_show": {
+        "method": "GET",
+        "path": "/admin/workforce/employees/{employee}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "employee"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_employees_update": {
+        "method": "PUT",
+        "path": "/admin/workforce/employees/{employee}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "employee"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_leaveBalances_create": {
+        "method": "POST",
+        "path": "/admin/workforce/employees/{employee}/leave-balances",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "employee"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_workforce_leaveBalances_delete": {
+        "method": "DELETE",
+        "path": "/admin/workforce/leave-balances/{leaveBalance}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "leaveBalance"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_leaveBalances_index": {
+        "method": "GET",
+        "path": "/admin/workforce/employees/{employee}/leave-balances",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "employee"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_leaveBalances_show": {
+        "method": "GET",
+        "path": "/admin/workforce/leave-balances/{leaveBalance}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "leaveBalance"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_leaveBalances_update": {
+        "method": "PUT",
+        "path": "/admin/workforce/leave-balances/{leaveBalance}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "leaveBalance"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
     "admin_workforce_leaveTypes_create": {
         "method": "POST",
         "path": "/leave-types",
@@ -3565,6 +6079,38 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "admin_workforce_leaves_create": {
+        "method": "POST",
+        "path": "/admin/leaves",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_workforce_leaves_index": {
+        "method": "GET",
+        "path": "/admin/leaves",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "status",
+            "user_id",
+            "from",
+            "to"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_workforce_leaves_reject": {
         "method": "POST",
         "path": "/admin/leaves/{leave}/reject",
@@ -3577,6 +6123,38 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
+    },
+    "admin_workforce_leaves_show": {
+        "method": "GET",
+        "path": "/admin/leaves/{leave}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "leave"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_leaves_update": {
+        "method": "PUT",
+        "path": "/admin/leaves/{leave}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "leave"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_workforce_milestones_complete": {
         "method": "POST",
@@ -3604,6 +6182,53 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_workforce_performanceReviews_create": {
+        "method": "POST",
+        "path": "/admin/performance-reviews",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_workforce_performanceReviews_index": {
+        "method": "GET",
+        "path": "/admin/performance-reviews",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "status",
+            "user_id",
+            "search"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_performanceReviews_show": {
+        "method": "GET",
+        "path": "/admin/performance-reviews/{review}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "review"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_workforce_performanceReviews_submit": {
         "method": "POST",
         "path": "/admin/performance-reviews/{review}/submit",
@@ -3616,6 +6241,22 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
+    },
+    "admin_workforce_performanceReviews_update": {
+        "method": "PUT",
+        "path": "/admin/performance-reviews/{review}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "review"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_workforce_risks_create": {
         "method": "POST",
@@ -3630,6 +6271,37 @@ export const businessOperations = Object.freeze({
             "multipart/form-data",
             "application/json"
         ]
+    },
+    "admin_workforce_risks_index": {
+        "method": "GET",
+        "path": "/risk",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "search"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_risks_show": {
+        "method": "GET",
+        "path": "/risk/{risk}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "risk"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
     },
     "admin_workforce_risks_update": {
         "method": "PUT",
@@ -3912,7 +6584,8 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [
             "page",
-            "per_page"
+            "per_page",
+            "status"
         ],
         "acceptLanguage": true,
         "requestBodyRequired": false,
@@ -4011,7 +6684,10 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [
             "page",
-            "per_page"
+            "per_page",
+            "status",
+            "priority",
+            "search"
         ],
         "acceptLanguage": true,
         "requestBodyRequired": false,
@@ -4048,6 +6724,34 @@ export const businessOperations = Object.freeze({
             "multipart/form-data",
             "application/json"
         ]
+    },
+    "api_product_changelog": {
+        "method": "GET",
+        "path": "/changelog",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "api_product_status": {
+        "method": "GET",
+        "path": "/status",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
     },
     "blogcontroller_comment": {
         "method": "POST",
@@ -5912,6 +8616,20 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "public_sitemap_data": {
+        "method": "GET",
+        "path": "/public/sitemap-data",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "publiccoursecontroller_index": {
         "method": "GET",
         "path": "/public/courses",
@@ -5984,6 +8702,17 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "acceptLanguage": false,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "readOwnProfile": {
+        "method": "GET",
+        "path": "/me",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [],
         "acceptLanguage": false,
         "requestBodyRequired": false,
         "contentTypes": []

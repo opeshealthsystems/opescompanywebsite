@@ -28,7 +28,7 @@ class CohortResource extends Resource
         return $form->schema([
             Forms\Components\Select::make('practitioner_program_id')
                 ->label('Validation Program')
-                ->options(fn () => \App\Models\PractitionerProgram::validation()->pluck('title', 'id'))
+                ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.validationPrograms', [], 'title'))
                 ->searchable()
                 ->required(),
             Forms\Components\TextInput::make('name')->required()->maxLength(255),
@@ -53,7 +53,7 @@ class CohortResource extends Resource
                 Tables\Columns\TextColumn::make('practitionerProgram.title')->label('Program')->limit(40),
                 Tables\Columns\TextColumn::make('start_date')->date(),
                 Tables\Columns\TextColumn::make('end_date')->date(),
-                Tables\Columns\TextColumn::make('members_count')->counts('members')->label('Members'),
+                Tables\Columns\TextColumn::make('members_count')->label('Members'),
                 Tables\Columns\TextColumn::make('status')->badge()
                     ->color(fn ($state) => match ($state) {
                         'draft'     => 'gray',
@@ -64,7 +64,7 @@ class CohortResource extends Resource
             ])
             ->defaultSort('start_date', 'desc')
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\Cohort $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.validation.cohorts.update', $data, ['cohort' => $record->id])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -94,5 +94,12 @@ class CohortResource extends Resource
             'create' => Pages\CreateCohort::route('/create'),
             'edit'   => Pages\EditCohort::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Validation\Application\Queries\AdminCohortQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

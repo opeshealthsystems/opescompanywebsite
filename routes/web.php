@@ -10,7 +10,6 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Customer\DashboardController;
 use App\Http\Controllers\Customer\ProfileController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PractitionerLandingController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
@@ -82,6 +81,7 @@ Route::prefix('{locale}')
         Route::get('/',               [HomeController::class,    'index'])->name('home');
         Route::get('/products',       [ProductController::class, 'index'])->name('products.index');
         Route::view('/developers', 'pages.developers')->name('developers');
+        Route::view('/mobile-app', 'pages.mobile-app')->name('mobile-app');
         Route::get('/products/{slug}',[ProductController::class, 'show'])->name('product.show');
         Route::get('/products/{slug}/brochure', [\App\Http\Controllers\BrochureController::class, 'download'])->name('product.brochure');
         Route::get('/contact',        [ContactController::class, 'show'])->name('contact');

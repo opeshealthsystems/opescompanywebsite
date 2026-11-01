@@ -7,10 +7,19 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class ModulesRelationManager extends RelationManager
 {
     protected static string $relationship = 'modules';
+
+    protected function getTableQuery(): Builder
+    {
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::query(
+            \App\Contexts\Validation\Application\Queries\AdminValidationCatalogQueries::class,
+            'moduleQuery',
+        )->where('validation_product_id', $this->getOwnerRecord()->getKey());
+    }
 
     public function form(Form $form): Form
     {
@@ -31,10 +40,10 @@ class ModulesRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('workflows_count')->counts('workflows')->label('Workflows'),
                 Tables\Columns\IconColumn::make('is_active')->label('Active')->boolean(),
             ])
-            ->headerActions([Tables\Actions\CreateAction::make()])
+            ->headerActions([Tables\Actions\CreateAction::make()->using(fn (array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.validation.modules.create', $data, ['product' => $this->getOwnerRecord()->id]))])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\ValidationModule $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.validation.modules.update', $data, ['module' => $record->id])),
+                Tables\Actions\DeleteAction::make()->using(function (\App\Models\ValidationModule $record) { \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.validation.modules.delete', parameters: ['module' => $record->id]); return true; }),
                 Tables\Actions\Action::make('manage_workflows')
                     ->label('Workflows')
                     ->icon('heroicon-o-arrow-right-circle')

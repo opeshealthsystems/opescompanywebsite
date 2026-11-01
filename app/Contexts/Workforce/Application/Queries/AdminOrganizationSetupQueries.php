@@ -8,6 +8,7 @@ use App\Contexts\Shared\Application\WorkflowResult;
 use App\Models\Department;
 use App\Models\LeaveType;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 
 /** Admin-scoped reference-data queries for workforce API consumers. */
 final class AdminOrganizationSetupQueries extends WorkflowHandler
@@ -19,10 +20,24 @@ final class AdminOrganizationSetupQueries extends WorkflowHandler
         return $actor;
     }
 
+    public function departmentsQuery(WorkflowInput $input): Builder
+    {
+        $this->admin($input);
+
+        return Department::query()->with('parent:id,name')->orderBy('name');
+    }
+
+    public function leaveTypesQuery(WorkflowInput $input): Builder
+    {
+        $this->admin($input);
+
+        return LeaveType::query()->orderBy('name');
+    }
+
     public function departments(WorkflowInput $input): WorkflowResult
     {
         $this->admin($input);
-        $page = $input->paginate(Department::query()->with('parent:id,name')->orderBy('name'));
+        $page = $input->paginate($this->departmentsQuery($input));
         $items = $page->getCollection()->map(fn (Department $record) => ['id' => $record->id, 'name' => $record->name, 'code' => $record->code,
             'head_id' => $record->head_id, 'parent_id' => $record->parent_id, 'parent_name' => $record->parent?->name,
             'is_active' => (bool) $record->is_active, 'description' => $record->description])->all();
@@ -41,7 +56,7 @@ final class AdminOrganizationSetupQueries extends WorkflowHandler
     public function leaveTypes(WorkflowInput $input): WorkflowResult
     {
         $this->admin($input);
-        $page = $input->paginate(LeaveType::query()->orderBy('name'));
+        $page = $input->paginate($this->leaveTypesQuery($input));
         $items = $page->getCollection()->map(fn (LeaveType $record) => ['id' => $record->id, 'name' => $record->name, 'code' => $record->code,
             'days_per_year' => $record->days_per_year, 'max_carry_forward' => $record->max_carry_forward, 'color' => $record->color,
             'is_paid' => (bool) $record->is_paid, 'requires_approval' => (bool) $record->requires_approval, 'is_active' => (bool) $record->is_active])->all();

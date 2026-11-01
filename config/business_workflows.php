@@ -5181,7 +5181,7 @@ $registry = array (
       ),
       'source_controller' => 'shared-identity-adapter',
       'source_action' => 'register',
-      'web_route' => NULL,
+      'web_route' => 'register.post',
     ),
     'identity.password_request' => 
     array (
@@ -5209,7 +5209,7 @@ $registry = array (
       ),
       'source_controller' => 'shared-identity-adapter',
       'source_action' => 'request',
-      'web_route' => NULL,
+      'web_route' => 'password.email',
     ),
     'identity.password_reset' => 
     array (
@@ -5237,7 +5237,7 @@ $registry = array (
       ),
       'source_controller' => 'shared-identity-adapter',
       'source_action' => 'reset',
-      'web_route' => NULL,
+      'web_route' => 'password.reset',
     ),
     'administration.projects.index' => 
     array (
@@ -5440,7 +5440,7 @@ $registry = array (
       array (
         0 => 'GET',
       ),
-      'source_controller' => 'Filament shared adapter',
+      'source_controller' => 'LicenseResource',
       'source_action' => 'index',
       'web_route' => NULL,
     ),
@@ -6522,4 +6522,23 @@ $registry['definitions'] += require __DIR__.'/business_admin_email_templates.php
 $registry['definitions'] += require __DIR__.'/business_admin_blog_posts.php';
 $registry['definitions'] += require __DIR__.'/business_admin_demo_requests.php';
 $registry['definitions'] += require __DIR__.'/business_admin_cohorts.php';
+$registry['definitions'] += require __DIR__.'/business_admin_employees.php';
+$registry['definitions'] += require __DIR__.'/business_admin_customer_profiles.php';
+$registry['definitions'] += require __DIR__.'/business_admin_validation_catalog.php';
+$registry['definitions'] += require __DIR__.'/business_admin_practitioner_records.php';
+$registry['definitions'] += require __DIR__.'/business_admin_external_applications.php';
+$registry['definitions'] += require __DIR__.'/business_admin_service_requests.php';
+$registry['definitions'] += require __DIR__.'/business_admin_partner_institutions.php';
+$registry['definitions'] += require __DIR__.'/business_admin_practitioner_programs.php';
+$registry['definitions'] += require __DIR__.'/business_admin_references.php';
+$registry['definitions'] += require __DIR__.'/business_public_content.php';
+$registry['definitions'] += require __DIR__.'/business_admin_finance_details.php';
+$registry['definitions'] += require __DIR__.'/business_admin_audit_logs.php';
+$registry['definitions'] += require __DIR__.'/business_admin_payouts.php';
+$registry['definitions'] += require __DIR__.'/business_admin_api_clients.php';
+$registry['definitions'] += require __DIR__.'/business_admin_oauth_clients.php';
+$registry['definitions'] += require __DIR__.'/business_api_product.php';
+$registry['definitions'] += require __DIR__.'/business_admin_oauth_clients.php';
+$registry['definitions'] += require __DIR__.'/business_identity_profile.php';
+$registry['web_adapters'] = require __DIR__.'/business_web_adapters.php';
 return $registry;

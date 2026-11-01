@@ -37,6 +37,7 @@ class PractitionerFindingResource extends Resource
                         ->label('Application')
                         ->relationship('application', 'id')
                         ->searchable()
+                        ->disabledOn('edit')
                         ->required(),
                     Forms\Components\Toggle::make('is_published')->label('Published')->disabled()->dehydrated(false),
                     Forms\Components\Select::make('overall_rating')->options($ratingOptions)->nullable(),
@@ -82,7 +83,7 @@ class PractitionerFindingResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (PractitionerFinding $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.practitioners.findings.update', $data, ['finding' => $record->id])),
                 Tables\Actions\Action::make('toggle_publish')
                     ->label(fn (PractitionerFinding $record) => $record->is_published ? 'Unpublish' : 'Publish')
                     ->icon('heroicon-o-eye')
@@ -93,11 +94,6 @@ class PractitionerFindingResource extends Resource
                             ->title($record->is_published ? 'Finding published' : 'Finding unpublished')
                             ->success()->send();
                     }),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
             ]);
     }
 
@@ -134,6 +130,8 @@ class PractitionerFindingResource extends Resource
 
     public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
     {
-        return parent::getEloquentQuery()->with(['practitioner', 'application.program']);
+        return app(\App\Contexts\Programmes\Application\Queries\AdminPractitionerQueries::class)->findingQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

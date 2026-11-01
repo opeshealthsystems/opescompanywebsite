@@ -29,7 +29,7 @@ class KnowledgeBaseArticleResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $count = static::getModel()::where('status','draft')->count();
+        $count = \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'knowledge.drafts'])['count'] ?? 0;
         return $count > 0 ? (string) $count : null;
     }
     public static function getNavigationBadgeColor(): ?string { return 'warning'; }
@@ -51,7 +51,7 @@ class KnowledgeBaseArticleResource extends Resource
                     ->searchable()->nullable(),
                 Forms\Components\Select::make('author_id')
                     ->label('Author')
-                    ->options(fn () => User::orderBy('name')->pluck('name','id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users'))
                     ->default(fn () => auth()->id())->searchable()->disabled()->dehydrated(false),
                 Forms\Components\Select::make('status')
                     ->options(KnowledgeBaseArticle::statusOptions())->default('draft')->disabled()->dehydrated(false)->required()
@@ -98,7 +98,7 @@ class KnowledgeBaseArticleResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\KnowledgeBaseArticle $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.support.knowledgeArticles.update', $data, ['article' => $record->id])),
                 Tables\Actions\Action::make('publish')
                     ->label('Publish')->icon('heroicon-o-check-circle')->color('success')
                     ->requiresConfirmation()
@@ -152,5 +152,12 @@ class KnowledgeBaseArticleResource extends Resource
             'view'   => Pages\ViewKnowledgeBaseArticle::route('/{record}'),
             'edit'   => Pages\EditKnowledgeBaseArticle::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Support\Application\Queries\AdminKnowledgeBaseQueries::class)->articleQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

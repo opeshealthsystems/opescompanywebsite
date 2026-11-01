@@ -1,9 +1,8 @@
 <?php
 namespace App\Filament\Widgets;
 
-use App\Models\Contract;
-use App\Models\Deal;
-use App\Models\Lead;
+use App\Contexts\Shared\Application\WorkflowInput;
+use App\Contexts\Shared\Infrastructure\WorkflowDispatcher;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
@@ -20,35 +19,25 @@ class CrmPipelineWidget extends BaseWidget
 
     protected function getStats(): array
     {
-        $openLeads = Lead::whereNotIn('status', ['converted', 'lost', 'disqualified'])->count();
-
-        $pipelineValue = Deal::whereNotIn('stage', ['closed_won', 'closed_lost'])->sum('value');
-
-        $wonThisMonth = Deal::where('stage', 'closed_won')
-            ->where('updated_at', '>=', now()->startOfMonth())
-            ->sum('value');
-
-        $expiringContracts = Contract::whereIn('status', ['active'])
-            ->whereNotNull('end_date')
-            ->whereDate('end_date', '<=', now()->addDays(30))
-            ->count();
+        $metrics = app(WorkflowDispatcher::class)->execute('admin.reports.crmSummary',
+            new WorkflowInput(actor: auth()->user(), language: app()->getLocale()))->data;
 
         return [
-            Stat::make('Open Leads', (string) $openLeads)
+            Stat::make('Open Leads', (string) $metrics['open_leads'])
                 ->description('Active in pipeline')
                 ->color('info')
                 ->icon('heroicon-o-user-plus'),
-            Stat::make('Pipeline Value', 'XAF '.number_format((float) $pipelineValue, 0))
+            Stat::make('Pipeline Value', 'XAF '.number_format((float) $metrics['pipeline_value'], 0))
                 ->description('Open deals total')
                 ->color('primary')
                 ->icon('heroicon-o-funnel'),
-            Stat::make('Won This Month', 'XAF '.number_format((float) $wonThisMonth, 0))
+            Stat::make('Won This Month', 'XAF '.number_format((float) $metrics['won_this_month'], 0))
                 ->description('Closed-won deals')
                 ->color('success')
                 ->icon('heroicon-o-trophy'),
-            Stat::make('Contracts Expiring', (string) $expiringContracts)
+            Stat::make('Contracts Expiring', (string) $metrics['contracts_expiring'])
                 ->description('Within 30 days')
-                ->color($expiringContracts > 0 ? 'warning' : 'success')
+                ->color($metrics['contracts_expiring'] > 0 ? 'warning' : 'success')
                 ->icon('heroicon-o-document-check'),
         ];
     }

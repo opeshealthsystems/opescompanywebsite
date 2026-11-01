@@ -8,11 +8,21 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class EmployeeProfileRelationManager extends RelationManager
 {
     protected static string $relationship = 'employeeProfile';
     protected static ?string $title = 'Employee Profile';
+
+    protected function getTableQuery(): Builder
+    {
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::query(
+            \App\Contexts\Workforce\Application\Queries\AdminUserQueries::class,
+            'employeeProfileQuery',
+            [$this->getOwnerRecord()],
+        );
+    }
 
     public function form(Form $form): Form
     {
@@ -66,10 +76,6 @@ class EmployeeProfileRelationManager extends RelationManager
                     ->nullable(),
             ]),
 
-            Forms\Components\Textarea::make('notes')
-                ->rows(2)
-                ->nullable()
-                ->columnSpanFull(),
         ]);
     }
 
@@ -98,11 +104,10 @@ class EmployeeProfileRelationManager extends RelationManager
                     ->placeholder('—'),
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()->action(fn (array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.employees.update', ['employeeProfile' => $data], ['employee' => $this->getOwnerRecord()->id])),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()->action(fn (EmployeeProfile $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.employees.update', ['employeeProfile' => $data], ['employee' => $this->getOwnerRecord()->id])),
             ]);
     }
 }

@@ -6,21 +6,29 @@ use App\Contexts\Shared\Application\WorkflowInput;
 use App\Contexts\Shared\Application\WorkflowResult;
 use App\Models\FinalEvaluation;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 
 final class AdminFinalEvaluationQueries
 {
-    public function index(WorkflowInput $input): WorkflowResult
+    public function evaluationQuery(WorkflowInput $input): Builder
     {
         $actor = $input->user();
         abort_unless($actor?->is_active && $actor->hasAnyRole(['super_admin', 'admin']), 403);
         $filters = $input->validate([
             'cohort_member_id' => 'sometimes|integer|min:1',
-            'rating' => 'sometimes|string|in:'.implode(',', array_keys(FinalEvaluation::ratingOptions())),
+            'rating' => 'sometimes|string|in:outstanding,strong,satisfactory,needs_improvement',
         ]);
-        $page = $input->validate(['page' => 'sometimes|integer|min:1|max:10000', 'per_page' => 'sometimes|integer|min:1|max:100']);
-        $query = FinalEvaluation::query()->with(['cohortMember.user', 'cohortMember.cohort'])->latest('evaluated_at');
+        $query = FinalEvaluation::query()->with(['cohortMember.user', 'cohortMember.cohort', 'evaluator'])->latest('evaluated_at');
         if (isset($filters['cohort_member_id'])) $query->where('cohort_member_id', $filters['cohort_member_id']);
         if (isset($filters['rating'])) $query->where('rating', $filters['rating']);
+
+        return $query;
+    }
+
+    public function index(WorkflowInput $input): WorkflowResult
+    {
+        $query = $this->evaluationQuery($input);
+        $page = $input->validate(['page' => 'sometimes|integer|min:1|max:10000', 'per_page' => 'sometimes|integer|min:1|max:100']);
         $items = $query->paginate((int) ($page['per_page'] ?? 25), ['*'], 'page', (int) ($page['page'] ?? 1));
         return WorkflowResult::payload([
             'items' => $items->getCollection()->map(fn (FinalEvaluation $record) => [

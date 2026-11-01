@@ -21,6 +21,56 @@ final class AdminPerformanceCommands extends WorkflowHandler
         return $actor;
     }
 
+    private function reviewValues(WorkflowInput $input, bool $update = false): array
+    {
+        $p = $update ? 'sometimes|' : '';
+        $data = $input->validate([
+            'user_id' => $p.'required|integer|exists:users,id', 'reviewer_id' => $p.'required|integer|exists:users,id',
+            'review_period' => $p.'required|string|max:50', 'review_date' => $p.'required|date',
+            'overall_rating' => $p.'required|integer|between:1,5', 'goals_rating' => $p.'required|integer|between:1,5',
+            'teamwork_rating' => $p.'required|integer|between:1,5', 'technical_rating' => $p.'required|integer|between:1,5',
+            'communication_rating' => $p.'required|integer|between:1,5', 'strengths' => $p.'nullable|string|max:10000',
+            'areas_for_improvement' => $p.'nullable|string|max:10000', 'goals_for_next_period' => $p.'nullable|string|max:10000',
+            'employee_comments' => $p.'nullable|string|max:10000', 'status' => 'prohibited', 'acknowledged_at' => 'prohibited', 'id' => 'prohibited',
+        ]);
+        if (isset($data['user_id']) && !User::query()->whereKey($data['user_id'])->where('is_active', true)
+            ->whereHas('roles', fn ($roles) => $roles->whereIn('name', ['super_admin', 'admin', 'support', 'staff', 'employee', 'tester']))->exists()) {
+            throw ValidationException::withMessages(['user_id' => 'Select an active employee account.']);
+        }
+        if (isset($data['reviewer_id']) && !User::query()->whereKey($data['reviewer_id'])->where('is_active', true)
+            ->whereHas('roles', fn ($roles) => $roles->whereIn('name', ['super_admin', 'admin']))->exists()) {
+            throw ValidationException::withMessages(['reviewer_id' => 'Select an active administrator as reviewer.']);
+        }
+        return $data;
+    }
+
+    public function create(WorkflowInput $input): WorkflowResult
+    {
+        $actor = $this->admin($input);
+        $data = $this->reviewValues($input);
+        $record = DB::transaction(function () use ($data, $actor) {
+            $review = PerformanceReview::create($data + ['status' => 'draft']);
+            DomainOutbox::append('event', 'workforce.performance_review_created.v1', ['references' => [['resource' => 'PerformanceReview', 'id' => $review->id]]], $actor->id);
+            return $review;
+        }, 3);
+        return WorkflowResult::payload(['id' => $record->id, 'status' => $record->status], 201)->with('success', 'Performance review created.');
+    }
+
+    public function update(WorkflowInput $input, PerformanceReview $review): WorkflowResult
+    {
+        $actor = $this->admin($input);
+        $data = $this->reviewValues($input, true);
+        if ($data === []) throw ValidationException::withMessages(['review' => 'Provide at least one review field to update.']);
+        $record = DB::transaction(function () use ($review, $data, $actor) {
+            $record = PerformanceReview::query()->lockForUpdate()->findOrFail($review->id);
+            if ($record->status !== 'draft') throw ValidationException::withMessages(['status' => 'Submitted or acknowledged reviews cannot be edited.']);
+            $record->update($data);
+            DomainOutbox::append('event', 'workforce.performance_review_updated.v1', ['references' => [['resource' => 'PerformanceReview', 'id' => $record->id]], 'changed_fields' => array_keys($data)], $actor->id);
+            return $record;
+        }, 3);
+        return WorkflowResult::payload(['id' => $record->id, 'status' => $record->status])->with('success', 'Performance review updated.');
+    }
+
     public function submit(WorkflowInput $input, PerformanceReview $review): WorkflowResult
     {
         return $this->transition($input, $review, 'draft', 'submitted', null, 'workforce.performance_review_submitted.v1');

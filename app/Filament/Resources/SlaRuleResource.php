@@ -86,7 +86,7 @@ class SlaRuleResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\SlaRule $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.support.slaRules.update', $data, ['slaRule' => $record->id])),
                 Tables\Actions\DeleteAction::make()->using(function (SlaRule $record) {
                     \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.support.slaRules.delete', parameters: ['slaRule' => $record->id]);
                     return true;
@@ -131,5 +131,12 @@ class SlaRuleResource extends Resource
             'view'   => Pages\ViewSlaRule::route('/{record}'),
             'edit'   => Pages\EditSlaRule::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Support\Application\Queries\AdminSlaRuleQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

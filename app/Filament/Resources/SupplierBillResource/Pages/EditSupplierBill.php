@@ -21,17 +21,12 @@ class EditSupplierBill extends EditRecord
 
     protected function mutateFormDataBeforeFill(array $data): array
     {
-        $data['items'] = $this->record->items()->get(['description', 'quantity', 'unit_price'])->toArray();
+        $data['items'] = \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::routeData('admin.finance.supplierBillItems', ['supplierBill' => $this->record->id])['items'] ?? [];
         return $data;
     }
 
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
-            'admin.finance.supplierBills.update',
-            new \App\Contexts\Shared\Application\WorkflowInput(values: $data, parameters: ['supplierBill' => $record], actor: auth()->user(), language: app()->getLocale()),
-        );
-
-        return SupplierBill::query()->findOrFail($record->id);
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.finance.supplierBills.update', $data, ['supplierBill' => $record]);
     }
 }

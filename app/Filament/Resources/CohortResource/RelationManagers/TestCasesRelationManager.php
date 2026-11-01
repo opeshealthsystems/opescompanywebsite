@@ -6,10 +6,20 @@ use Filament\Forms;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class TestCasesRelationManager extends RelationManager
 {
     protected static string $relationship = 'testCases';
+
+    protected function getTableQuery(): Builder
+    {
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::query(
+            \App\Contexts\Validation\Application\Queries\AdminCohortQueries::class,
+            'testCaseQuery',
+            [$this->getOwnerRecord()],
+        );
+    }
 
     public function table(Table $table): Table
     {
@@ -28,7 +38,7 @@ class TestCasesRelationManager extends RelationManager
                     ->icon('heroicon-o-link')
                     ->form(fn () => [
                         Forms\Components\Select::make('validation_test_case_id')->label('Test case')
-                            ->options(\App\Models\ValidationTestCase::query()->orderBy('title')->pluck('title', 'id'))->searchable()->required(),
+                            ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.testCases', [], 'title'))->searchable()->required(),
                         Forms\Components\DatePicker::make('due_date')->native(false),
                     ])
                     ->action(function (RelationManager $livewire, array $data): void {

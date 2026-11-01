@@ -22,6 +22,13 @@ class CreditNoteResource extends Resource
     protected static ?string $navigationGroup = 'Accounting';
     protected static ?int $navigationSort = 52;
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Finance\Application\Queries\AdminFinanceRecordQueries::class)->creditNoteQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
+    }
+
     public static function canAccess(): bool
     {
         return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
@@ -42,22 +49,15 @@ class CreditNoteResource extends Resource
 
                 Forms\Components\Select::make('invoice_id')
                     ->label('Original Invoice')
-                    ->options(fn () => Invoice::orderByDesc('created_at')->get()->mapWithKeys(
-                        fn ($inv) => [
-                            $inv->id => ($inv->invoice_number ?? $inv->id)
-                                . ' — '
-                                . ($inv->currency ?? 'XAF')
-                                . ' '
-                                . number_format((float) $inv->grand_total, 0),
-                        ]
-                    ))
+                    ->options(fn () => collect(\App\Contexts\Shared\Infrastructure\AdminReferenceOptions::items('admin.references.invoices'))
+                        ->mapWithKeys(fn ($invoice) => [$invoice['id'] => ($invoice['invoice_number'] ?? $invoice['id']).' — '.($invoice['currency'] ?? 'XAF').' '.number_format($invoice['grand_total'], 0)]))
                     ->searchable()
                     ->nullable()
                     ->placeholder('No invoice linked'),
 
                 Forms\Components\Select::make('created_by')
                     ->label('Issued By')
-                    ->options(fn () => User::orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users'))
                     ->default(fn () => auth()->id())
                     ->disabled()
                     ->dehydrated(false)
@@ -170,7 +170,7 @@ class CreditNoteResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\CreditNote $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.finance.creditNotes.update', $data, ['creditNote' => $record->id])),
                 Tables\Actions\Action::make('issue')
                     ->label('Issue')
                     ->icon('heroicon-o-check-circle')

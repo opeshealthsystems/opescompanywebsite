@@ -43,7 +43,7 @@ class ValidationModuleResource extends Resource
                 Tables\Columns\TextColumn::make('product.name')->label('Product'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\ValidationModule $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.validation.modules.update', $data, ['module' => $record->id])),
             ]);
     }
 
@@ -60,5 +60,12 @@ class ValidationModuleResource extends Resource
             'index' => Pages\ListValidationModules::route('/'),
             'edit'  => Pages\EditValidationModule::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Validation\Application\Queries\AdminValidationCatalogQueries::class)->moduleQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 }

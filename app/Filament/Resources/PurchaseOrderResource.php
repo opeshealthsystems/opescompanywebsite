@@ -22,6 +22,13 @@ class PurchaseOrderResource extends Resource
     protected static ?string $navigationGroup = 'Accounting';
     protected static ?int $navigationSort = 61;
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Finance\Application\Queries\AdminFinanceRecordQueries::class)->purchaseOrderQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
+    }
+
     public static function canAccess(): bool
     {
         return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
@@ -29,7 +36,8 @@ class PurchaseOrderResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $count = static::getModel()::whereIn('status', ['draft', 'submitted'])->count();
+        $count = app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute('admin.finance.records.summary',
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale()))->data['purchase_orders_needing_action'];
         return $count > 0 ? (string) $count : null;
     }
 
@@ -54,7 +62,7 @@ class PurchaseOrderResource extends Resource
 
                 Forms\Components\Select::make('vendor_id')
                     ->label('Vendor (Registry)')
-                    ->options(fn () => Vendor::activeOptions())
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.vendors'))
                     ->searchable()->nullable()->placeholder('Select or type below'),
 
                 Forms\Components\TextInput::make('vendor_name')
@@ -71,7 +79,7 @@ class PurchaseOrderResource extends Resource
 
                 Forms\Components\Select::make('requested_by')
                     ->label('Requested By')
-                    ->options(fn () => User::orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users'))
                     ->default(fn () => auth()->id())
                     ->disabled()->dehydrated(false)
                     ->searchable()->required(),
@@ -161,7 +169,7 @@ class PurchaseOrderResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\PurchaseOrder $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.finance.purchaseOrders.update', $data, ['purchaseOrder' => $record->id])),
                 Tables\Actions\Action::make('approve')
                     ->label('Approve')
                     ->icon('heroicon-o-check-circle')

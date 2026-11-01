@@ -22,6 +22,13 @@ class InvoiceResource extends Resource
     protected static ?string $navigationGroup = 'Accounting';
     protected static ?int $navigationSort = 40;
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Finance\Application\Queries\AdminFinanceRecordQueries::class)->invoiceRegisterQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
+    }
+
     public static function canAccess(): bool
     {
         return auth()->user()?->hasPermissionTo('manage_accounting') ?? false;
@@ -37,15 +44,13 @@ class InvoiceResource extends Resource
             Forms\Components\Section::make('Invoice Details')->schema([
                 Forms\Components\Select::make('customer_id')
                     ->label('Customer')
-                    ->options(fn () => User::role('customer')->orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users', ['role' => 'customers']))
                     ->searchable()
                     ->required(),
 
                 Forms\Components\Select::make('issued_by')
                     ->label('Issued By')
-                    ->options(fn () => User::whereHas('roles', fn ($q) =>
-                        $q->whereIn('name', ['super_admin', 'admin'])
-                    )->orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users', ['role' => 'administrators']))
                     ->searchable()
                     ->nullable()->disabled()->dehydrated(false),
 
@@ -56,11 +61,8 @@ class InvoiceResource extends Resource
 
                 Forms\Components\Select::make('license_id')
                     ->label('Linked License (optional)')
-                    ->options(fn () => License::with('customer')
-                        ->orderByDesc('created_at')
-                        ->get()
-                        ->mapWithKeys(fn ($l) => [$l->id => $l->license_key . ' — ' . $l->product_name])
-                    )
+                    ->options(fn () => collect(\App\Contexts\Shared\Infrastructure\AdminReferenceOptions::items('admin.references.licenses'))
+                        ->mapWithKeys(fn ($license) => [$license['id'] => $license['license_key'].' — '.$license['product_name']]))
                     ->searchable()
                     ->nullable(),
 
@@ -159,7 +161,7 @@ class InvoiceResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\Invoice $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.finance.invoices.update', $data, ['invoice' => $record->id])),
                 Tables\Actions\Action::make('record_payment')
                     ->label('Record Payment')
                     ->icon('heroicon-o-banknotes')
@@ -177,7 +179,11 @@ class InvoiceResource extends Resource
                             ->label('Reference / Transaction ID')->nullable(),
                     ])
                     ->action(function (Invoice $record, array $data) {
-                        app(\App\Contexts\Finance\Application\RecordInvoicePayment::class)->record(auth()->user(), $record->id, $data);
+                        \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run(
+                            'admin.finance.invoices.recordPayment',
+                            values: $data,
+                            parameters: ['invoice' => $record->id],
+                        );
                         Notification::make()->title('Payment recorded')->success()->send();
                     }),
                 Tables\Actions\Action::make('credit_note')
@@ -338,7 +344,8 @@ class InvoiceResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $overdue = static::getModel()::where('status', 'overdue')->count();
+        $overdue = app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute('admin.finance.records.summary',
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale()))->data['overdue_invoices'];
         return $overdue > 0 ? (string) $overdue : null;
     }
 

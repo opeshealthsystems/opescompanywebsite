@@ -7,6 +7,7 @@ use App\Contexts\Shared\Application\WorkflowInput;
 use App\Contexts\Shared\Application\WorkflowResult;
 use App\Models\JobApplication;
 use App\Models\JobOpening;
+use Illuminate\Database\Eloquent\Builder;
 
 final class AdminRecruitmentQueries extends WorkflowHandler
 {
@@ -28,12 +29,26 @@ final class AdminRecruitmentQueries extends WorkflowHandler
             'applied_at', 'interview_date', 'notes', 'created_at', 'updated_at']);
     }
 
+    public function openingQuery(WorkflowInput $input): Builder
+    {
+        $this->admin($input);
+
+        return JobOpening::query()->with('department')->withCount('applications')->orderByDesc('created_at');
+    }
+
+    public function applicationQuery(WorkflowInput $input): Builder
+    {
+        $this->admin($input);
+
+        return JobApplication::query()->with('jobOpening')->orderByDesc('applied_at')->orderByDesc('created_at');
+    }
+
     public function openings(WorkflowInput $input): WorkflowResult
     {
         $this->admin($input);
         $filters = $input->validate(['status' => 'sometimes|in:'.implode(',', array_keys(JobOpening::statusOptions())),
             'type' => 'sometimes|in:'.implode(',', array_keys(JobOpening::typeOptions())), 'search' => 'sometimes|nullable|string|max:150']);
-        $query = JobOpening::query()->orderByDesc('created_at');
+        $query = $this->openingQuery($input);
         if (isset($filters['status'])) $query->where('status', $filters['status']);
         if (isset($filters['type'])) $query->where('type', $filters['type']);
         if (!empty($filters['search'])) { $search = trim($filters['search']); $query->where(fn ($q) => $q->where('title', 'like', '%'.$search.'%')->orWhere('location', 'like', '%'.$search.'%')); }
@@ -53,7 +68,7 @@ final class AdminRecruitmentQueries extends WorkflowHandler
         $this->admin($input);
         $filters = $input->validate(['status' => 'sometimes|in:'.implode(',', array_keys(JobApplication::statusOptions())),
             'job_opening_id' => 'sometimes|integer|exists:job_openings,id', 'search' => 'sometimes|nullable|string|max:150']);
-        $query = JobApplication::query()->orderByDesc('applied_at')->orderByDesc('created_at');
+        $query = $this->applicationQuery($input);
         if (isset($filters['status'])) $query->where('status', $filters['status']);
         if (isset($filters['job_opening_id'])) $query->where('job_opening_id', $filters['job_opening_id']);
         if (!empty($filters['search'])) { $search = trim($filters['search']); $query->where(fn ($q) => $q->where('applicant_name', 'like', '%'.$search.'%')->orWhere('email', 'like', '%'.$search.'%')); }

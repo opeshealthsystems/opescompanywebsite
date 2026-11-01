@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Contexts\Shared\Application\WorkflowInput;
+use App\Contexts\Publishing\Application\Queries\MachineCatalogueQueries;
 
 class CatalogueController
 {
-    public function __invoke(Request $request)
+    public function __invoke(Request $request, MachineCatalogueQueries $query)
     {
-        $input = $request->validate(['page' => 'sometimes|integer|min:1|max:10000', 'per_page' => 'sometimes|integer|min:1|max:50', 'locale' => 'sometimes|in:en,fr']);
-        $page = (int) ($input['page'] ?? 1); $size = (int) ($input['per_page'] ?? 20); $locale = $input['locale'] ?? 'en';
-        $products = Product::publicCatalogue()->sortBy('slug')->values();
-        return response()->json(['data' => $products->forPage($page, $size)->map(fn ($product) => [
-            'slug' => $product->slug, 'name' => $locale === 'fr' ? ($product->name_fr ?: $product->name) : $product->name,
-            'category' => $product->category, 'url' => url('/'.$locale.'/products/'.$product->slug),
-        ])->values(), 'meta' => ['page' => $page, 'per_page' => $size, 'total' => $products->count()]]);
+        $result = $query->products(new WorkflowInput(values: $request->query(), actor: $request->attributes->get('api_client')?->owner,
+            language: $request->query('locale', 'en'), api: true, scopes: $request->attributes->get('api_scopes', []),
+            consumerId: $request->attributes->get('api_client')?->id));
+        return response()->json(['data' => $result->data['items'], 'meta' => $result->data['meta']]);
     }
 }

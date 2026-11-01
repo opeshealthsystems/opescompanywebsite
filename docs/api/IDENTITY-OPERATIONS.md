@@ -2,21 +2,21 @@
 
 OHS uses Laravel Passport 13.10 and League OAuth2 Server for approved server-to-server clients and administrator-reviewed public OAuth clients. `POST /api/v1/oauth/token` remains the machine-only client-credentials endpoint. Delegated user tokens use authorization code with S256 PKCE and `POST /api/v1/oauth/user-token`. This is OAuth 2.0 authorization, not OpenID Connect authentication. Password/implicit grants, userinfo, organization tenancy and OIDC are not published. Existing web sessions and password resets remain the website sign-in mechanism.
 
-Public developer entry points are `/en/developers` and `/fr/developers`; the versioned contract is `/api/v1/openapi.json`. The `0.31.0` contract documents delegated authorization and the business workflows. Review integration requests before provisioning. There is no automatic public client registration or sandbox.
+Public developer entry points are `/en/developers` and `/fr/developers`; the versioned contract is `/api/v1/openapi.json`. The `0.99.0` contract documents delegated authorization, business workflows and administrator client lifecycle operations. Review integration requests before provisioning. There is no automatic public client registration or sandbox.
 
 ## Delegate user authorization
 
-Create a public client only after reviewing the application owner and callback. Supply the exact HTTPS callback and explicit registered scopes; the command returns the public client ID and endpoints, never a client secret:
+Create a public client only after reviewing the application owner and callback. Supply an exact HTTPS callback or the reserved OPES Health native callback and explicit registered scopes; the command returns the public client ID and endpoints, never a client secret:
 
 ```sh
 php artisan api:user-client --owner="admin@opeshealthsystems.com" --name="Approved browser integration" --redirect="https://consumer.example/callback" --scope="identity:read"
 ```
 
-The authorization request must include `response_type=code`, the client ID, an exact registered `redirect_uri`, a unique `state` of at least 32 characters, `code_challenge_method=S256`, and a valid S256 `code_challenge`. The signed-in user sees a branded consent screen and may allow or deny. Authorization codes are single-use and bound to the client, callback, user and PKCE verifier. Exchange them at `/api/v1/oauth/user-token`; authorization-code and refresh-token grants are supported there only. Access tokens expire after 15 minutes and refresh tokens after seven days.
+The authorization request must include `response_type=code`, the client ID, an exact registered `redirect_uri`, a unique `state` of at least 32 characters, `code_challenge_method=S256`, and a valid S256 `code_challenge`. The signed-in user sees a branded consent screen and may allow or deny. Authorization codes are single-use and bound to the client, callback, user and PKCE verifier. Exchange them at `/api/v1/oauth/user-token`; authorization-code and refresh-token grants are supported there only. Access tokens expire after 15 minutes and refresh tokens after seven days. Registered scopes are the reviewed app ceiling; each user's active roles are checked independently on issuance and each API request.
 
 Current user status, role-derived approved scopes, client owner status and token/client/user association are checked again on token refresh and every private API request. A session cookie alone is not API authorization, and a machine token cannot call user business operations. Do not put access or refresh tokens in URLs or logs. Revoke the client with `php artisan api:client revoke --client=CLIENT_UUID`; this revokes its existing tokens. The machine-client `rotate` action deliberately rejects public PKCE clients because they have no client secret to rotate.
 
-Business operations use the context paths listed in the OpenAPI contract, such as `/api/v1/customer/profile` and `/api/v1/administration/projects`, with role-derived OAuth scopes. Their results use explicit resource field allowlists; command requests require an `Idempotency-Key`. `GET /api/v1/me/activity` returns only the authenticated user's activity projection. OpenAPI role/scope requirements supplement the application's existing policy and record-level checks; they do not replace them.
+Business operations use the context paths listed in the OpenAPI contract, such as `/api/v1/customer/profile` and `/api/v1/administration/projects`, with role-derived OAuth scopes. Their results use explicit resource field allowlists; command requests require an `Idempotency-Key`. `GET /api/v1/me` returns only the authenticated user's own name, email, role names and currently effective scopes for role-aware client navigation. `GET /api/v1/me/activity` returns only the authenticated user's activity projection. OpenAPI role/scope requirements supplement the application's existing policy and record-level checks; they do not replace them.
 
 ## Provision a reviewed client
 
@@ -63,3 +63,13 @@ OIDC, MFA for a future developer control panel, customer-managed application reg
 References: [Laravel Passport](https://laravel.com/framework/docs/13.x/passport), [OAuth security best current practice](https://www.rfc-editor.org/rfc/rfc9700.html).
 
 
+
+
+## Manage machine clients through the API
+
+Active administrators can use `GET /api/v1/admin/api-clients`, `POST /api/v1/admin/api-clients`, `POST /api/v1/admin/api-clients/{client}/rotate`, and `DELETE /api/v1/admin/api-clients/{client}` with a delegated user token carrying `api-clients:manage`. Mutations require an `Idempotency-Key`. Create and rotate return the plaintext secret in the protected `Cache-Control: no-store` response; replaying the same idempotency key and payload within 24 hours can return the same response. Store it securely. Lists, events, and logs do not include the secret. These APIs enforce the same active administrator ownership and allowed machine scopes as CLI provisioning.
+
+
+## Manage reviewed public OAuth clients through the API
+
+An active administrator can list, register, and revoke public authorization-code clients through `GET /api/v1/admin/oauth-clients`, `POST /api/v1/admin/oauth-clients`, and `DELETE /api/v1/admin/oauth-clients/{client}`. Use a delegated user token carrying `oauth-clients:manage`; mutations require an `Idempotency-Key`. New clients are administrator-owned, non-confidential OAuth clients using user consent and S256 PKCE. Register exact HTTPS redirect URIs and only scopes allowed for the owner. No client secret is issued. Revocation disables the client and its existing tokens.

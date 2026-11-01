@@ -38,7 +38,7 @@ class DealResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $count = static::getModel()::whereIn('stage', ['prospecting', 'qualification', 'proposal', 'negotiation'])->count();
+        $count = \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'deals.open'])['count'] ?? 0;
         return $count > 0 ? (string) $count : null;
     }
 
@@ -60,12 +60,12 @@ class DealResource extends Resource
 
                 Forms\Components\Select::make('lead_id')
                     ->label('Lead')
-                    ->options(fn () => \App\Models\Lead::orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.leads'))
                     ->searchable()->nullable()->placeholder('No lead linked'),
 
                 Forms\Components\Select::make('owner_id')
                     ->label('Deal Owner')
-                    ->options(fn () => User::orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users'))
                     ->default(fn () => auth()->id())
                     ->searchable()->required(),
 
@@ -117,11 +117,11 @@ class DealResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('stage')->options(Deal::stageOptions()),
                 Tables\Filters\SelectFilter::make('owner_id')->label('Owner')
-                    ->options(fn () => User::orderBy('name')->pluck('name', 'id')),
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users')),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\Deal $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.crm.deals.update', $data, ['deal' => $record->id])),
                 Tables\Actions\DeleteAction::make()
                     ->action(fn (Deal $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.crm.deals.delete', parameters: ['deal' => $record->id]))
                     ->hidden(fn (Deal $record) => in_array($record->stage, ['closed_won', 'closed_lost'], true)),
@@ -173,6 +173,13 @@ class DealResource extends Resource
     public static function getGloballySearchableAttributes(): array
     {
         return ['reference', 'title'];
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Operations\Application\Queries\AdminDealQueries::class)->dealQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
     }
 
     public static function getPages(): array

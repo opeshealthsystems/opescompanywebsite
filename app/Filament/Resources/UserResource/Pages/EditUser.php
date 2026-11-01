@@ -34,11 +34,6 @@ class EditUser extends EditRecord
 
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
-            'admin.identity.users.update',
-            new \App\Contexts\Shared\Application\WorkflowInput(values: $data, parameters: ['user' => $record], actor: auth()->user(), language: app()->getLocale()),
-        );
-
-        return User::query()->findOrFail($record->id);
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.identity.users.update', $data, ['user' => $record]);
     }
 }

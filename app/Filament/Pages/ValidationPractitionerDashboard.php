@@ -2,7 +2,7 @@
 
 namespace App\Filament\Pages;
 
-use App\Support\ValidationMetrics;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use Filament\Pages\Page;
 
 class ValidationPractitionerDashboard extends Page
@@ -21,7 +21,7 @@ class ValidationPractitionerDashboard extends Page
 
     public function getLeaderboard(): array
     {
-        return app(ValidationMetrics::class)->practitionerLeaderboard();
+        return AdminWorkflowAdapter::read('admin.validation.metrics.practitionerLeaderboard', ['per_page' => 100])['items'];
     }
 
     protected function getHeaderActions(): array

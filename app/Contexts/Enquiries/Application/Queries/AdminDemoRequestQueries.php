@@ -6,6 +6,7 @@ use App\Contexts\Shared\Application\WorkflowHandler;
 use App\Contexts\Shared\Application\WorkflowInput;
 use App\Contexts\Shared\Application\WorkflowResult;
 use App\Models\DemoRequest;
+use Illuminate\Database\Eloquent\Builder;
 
 final class AdminDemoRequestQueries extends WorkflowHandler
 {
@@ -21,6 +22,13 @@ final class AdminDemoRequestQueries extends WorkflowHandler
             'products', 'message', 'preferred_date', 'locale', 'status', 'admin_notes', 'created_at', 'updated_at']);
     }
 
+    public function query(WorkflowInput $input): Builder
+    {
+        $this->admin($input);
+
+        return DemoRequest::query()->orderByDesc('created_at');
+    }
+
     public function index(WorkflowInput $input): WorkflowResult
     {
         $this->admin($input);
@@ -29,7 +37,7 @@ final class AdminDemoRequestQueries extends WorkflowHandler
             'institution_type' => 'sometimes|in:'.implode(',', array_keys(DemoRequest::$institutionTypes)),
             'search' => 'sometimes|nullable|string|max:150',
         ]);
-        $query = DemoRequest::query()->orderByDesc('created_at');
+        $query = $this->query($input);
         if (isset($filters['status'])) $query->where('status', $filters['status']);
         if (isset($filters['institution_type'])) $query->where('institution_type', $filters['institution_type']);
         if (!empty($filters['search'])) {

@@ -22,8 +22,10 @@ final class CreateUserApiClient extends Command
         }
         foreach ($redirects as $redirect) {
             $url = parse_url($redirect);
-            if (!filter_var($redirect, FILTER_VALIDATE_URL) || ($url['scheme'] ?? '') !== 'https' || isset($url['fragment']) || isset($url['user']) || isset($url['pass'])) {
-                $this->error('Redirects must be exact HTTPS URLs without credentials or fragments.'); return self::FAILURE;
+            $isHttps = filter_var($redirect, FILTER_VALIDATE_URL) && ($url['scheme'] ?? '') === 'https'
+                && !empty($url['host']) && !isset($url['fragment']) && !isset($url['user']) && !isset($url['pass']);
+            if (!$isHttps && $redirect !== 'opeshealth://oauth/callback') {
+                $this->error('Use an exact HTTPS URL or the reserved OPES Health app callback opeshealth://oauth/callback.'); return self::FAILURE;
             }
         }
         $client = $clients->createAuthorizationCodeGrantClient($name, $redirects, false, $owner);

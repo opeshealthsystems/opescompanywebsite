@@ -20,7 +20,7 @@ class ViewSupplierBill extends ViewRecord
                 ->url(fn () => route('supplier-bills.pdf', $this->record))
                 ->openUrlInNewTab(),
             Actions\EditAction::make(),
-            Actions\DeleteAction::make(),
+            Actions\DeleteAction::make()->action(fn () => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.supplierBills.delete', parameters: ['supplierBill' => $this->record->id])),
         ];
     }
 }

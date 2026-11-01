@@ -12,9 +12,19 @@ $add = function (string $name, string $method, string $path, array $parameters, 
         'scope' => 'support:write', 'api_path' => $path, 'http_methods' => ['POST'],
         'source_controller' => $source, 'source_action' => $action];
 };
+$definitions['admin.support.bugReports.index'] = ['handler' => 'App\\Contexts\\Support\\Application\\Queries\\AdminPractitionerBugReportQueries', 'method' => 'index',
+    'parameters' => [$input], 'command' => false, 'context' => 'Support', 'roles' => ['super_admin', 'admin', 'support'], 'authenticated' => true,
+    'scope' => 'support:read', 'api_path' => 'admin/support/practitioner-bug-reports', 'http_methods' => ['GET'],
+    'source_controller' => 'PractitionerBugReportResource', 'source_action' => 'index'];
 $add('admin.support.bugReports.respond', 'respondToBugReport', 'practitioners/bug-reports/{bugReport}/respond', [$input, $bugReport], 'PractitionerBugReportResource', 'respond');
 $add('admin.support.serviceRequests.confirm', 'confirmServiceRequest', 'support/service-requests/{serviceRequest}/confirm-assign', [$input, $serviceRequest], 'ServiceRequestResource', 'confirm_assign');
 $add('admin.support.serviceRequests.complete', 'completeServiceRequest', 'support/service-requests/{serviceRequest}/complete', [$input, $serviceRequest], 'ServiceRequestResource', 'complete');
 $add('admin.support.tickets.reply', 'replyToTicket', 'admin/support/tickets/{ticket}/reply', [$input, $ticket], 'TicketResource', 'reply');
 $add('admin.support.tickets.status', 'changeTicketStatus', 'admin/support/tickets/{ticket}/status', [$input, $ticket], 'TicketResource', 'change_status');
+$definitions['admin.support.tickets.create'] = ['handler' => 'App\\Contexts\\Support\\Application\\Commands\\AdminSupportCommands', 'method' => 'createTicket',
+    'parameters' => [$input], 'command' => true, 'context' => 'Support', 'roles' => ['super_admin', 'admin', 'support'], 'authenticated' => true,
+    'scope' => 'support:write', 'api_path' => 'admin/support/tickets', 'http_methods' => ['POST'], 'source_controller' => 'TicketResource', 'source_action' => 'create'];
+$definitions['admin.support.tickets.update'] = ['handler' => 'App\\Contexts\\Support\\Application\\Commands\\AdminSupportCommands', 'method' => 'updateTicket',
+    'parameters' => [$input, $ticket], 'command' => true, 'context' => 'Support', 'roles' => ['super_admin', 'admin', 'support'], 'authenticated' => true,
+    'scope' => 'support:write', 'api_path' => 'admin/support/tickets/{ticket}', 'http_methods' => ['PUT'], 'source_controller' => 'TicketResource', 'source_action' => 'update'];
 return $definitions;

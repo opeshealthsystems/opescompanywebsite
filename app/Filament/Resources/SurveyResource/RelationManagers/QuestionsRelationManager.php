@@ -8,10 +8,20 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class QuestionsRelationManager extends RelationManager
 {
     protected static string $relationship = 'questions';
+
+    protected function getTableQuery(): Builder
+    {
+        return AdminWorkflowAdapter::query(
+            \App\Contexts\Programmes\Application\Queries\AdminSurveyQueries::class,
+            'questionQuery',
+            [$this->getOwnerRecord()],
+        );
+    }
 
     public function form(Form $form): Form
     {

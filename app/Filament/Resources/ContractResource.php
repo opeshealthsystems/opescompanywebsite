@@ -22,6 +22,13 @@ class ContractResource extends Resource
     protected static ?string $navigationGroup = 'CRM';
     protected static ?int $navigationSort = 12;
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Publishing\Application\Queries\AdminContractQueries::class)->query(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
+    }
+
     public static function canAccess(): bool
     {
         return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
@@ -29,10 +36,10 @@ class ContractResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        $count = static::getModel()::where('status', 'active')
-            ->whereNotNull('end_date')
-            ->whereDate('end_date', '<=', now()->addDays(30))
-            ->count();
+        $count = app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+            'admin.contracts.expiringSoon',
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        )->data['count'];
         return $count > 0 ? (string) $count : null;
     }
 
@@ -68,13 +75,13 @@ class ContractResource extends Resource
                     ->required(),
                 Forms\Components\Select::make('lead_id')
                     ->label('Lead / Client')
-                    ->options(fn () => \App\Models\Lead::orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.leads'))
                     ->searchable()
                     ->nullable()
                     ->placeholder('No lead linked'),
                 Forms\Components\Select::make('created_by')
                     ->label('Managed By')
-                    ->options(fn () => User::orderBy('name')->pluck('name', 'id'))
+                    ->options(fn () => \App\Contexts\Shared\Infrastructure\AdminReferenceOptions::options('admin.references.users'))
                     ->default(fn () => auth()->id())
                     ->searchable()
                     ->required()->disabled()->dehydrated(false),
@@ -165,7 +172,7 @@ class ContractResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (\App\Models\Contract $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.contracts.update', $data, ['contract' => $record->id])),
                 Tables\Actions\Action::make('activate')
                     ->label('Activate')
                     ->icon('heroicon-o-check-circle')

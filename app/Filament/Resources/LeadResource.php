@@ -168,10 +168,14 @@ class LeadResource extends Resource
                     'ngo'        => 'NGO',
                 ]),
             ])
-            ->actions([Tables\Actions\ViewAction::make(), Tables\Actions\EditAction::make()])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([
-                Tables\Actions\DeleteBulkAction::make(),
-            ])]);
+            ->actions([
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (Lead $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.enquiries.leads.update', $data, ['lead' => $record->id])),
+                Tables\Actions\DeleteAction::make()->action(fn (Lead $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run(
+                    'admin.enquiries.leads.delete', parameters: ['lead' => $record],
+                )),
+            ])
+            ->bulkActions([]);
     }
 
     public static function getGloballySearchableAttributes(): array
@@ -179,9 +183,16 @@ class LeadResource extends Resource
         return ['name', 'email'];
     }
 
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return app(\App\Contexts\Enquiries\Application\Queries\AdminLeadQueries::class)->leadQuery(
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
+        );
+    }
+
     public static function getNavigationBadge(): ?string
     {
-        return (string) static::getModel()::where('status', 'new')->count() ?: null;
+        return (string) (\App\Contexts\Shared\Infrastructure\AdminReferenceOptions::data('admin.resourceSummaries.metric', ['metric' => 'leads.new'])['count'] ?? 0) ?: null;
     }
 
     public static function getNavigationBadgeColor(): ?string

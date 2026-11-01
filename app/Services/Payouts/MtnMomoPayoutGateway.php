@@ -4,7 +4,6 @@ namespace App\Services\Payouts;
 
 use App\Models\PractitionerApplication;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Str;
 
 /**
  * MTN Mobile Money (MoMo) Disbursements driver.
@@ -45,16 +44,9 @@ class MtnMomoPayoutGateway implements PayoutGateway
             return PayoutResult::failed('Practitioner has no mobile-money number on file.');
         }
 
-        // Reuse an existing reference so retries are idempotent and never double-pay.
-        $reference = $application->payout_reference ?: (string) Str::uuid();
-
-        $application->update([
-            'payout_reference'    => $reference,
-            'payout_provider'     => 'mtn',
-            'payout_amount'       => $amount,
-            'payout_currency'     => $currency,
-            'payout_initiated_at' => now(),
-        ]);
+        // Use the stable reference already recorded by the API command.
+        $reference = $options['reference'] ?? $application->payout_reference;
+        if (! $reference) return PayoutResult::failed('A stable payout reference is required.');
 
         // MoMo Cameroon expects the full international MSISDN (country code, no +).
         $partyId = '237'.MobileMoneyNetwork::normalise($number);
@@ -75,15 +67,8 @@ class MtnMomoPayoutGateway implements PayoutGateway
             ]);
 
         if ($response->status() !== 202) {
-            $application->update([
-                'payout_status'         => 'failed',
-                'payout_failure_reason' => 'MoMo transfer rejected ('.$response->status().')',
-            ]);
-
             return PayoutResult::failed('MoMo transfer rejected ('.$response->status().').');
         }
-
-        $application->update(['payout_status' => 'pending']);
 
         return PayoutResult::pending($reference, 'MoMo transfer queued.');
     }
