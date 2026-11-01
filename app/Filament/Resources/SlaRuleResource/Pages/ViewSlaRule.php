@@ -6,6 +6,9 @@ use Filament\Resources\Pages\ViewRecord;
 class ViewSlaRule extends ViewRecord {
     protected static string $resource = SlaRuleResource::class;
     protected function getHeaderActions(): array {
-        return [Actions\EditAction::make(), Actions\DeleteAction::make()];
+        return [Actions\EditAction::make(), Actions\DeleteAction::make()->using(function ($record) {
+            \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.support.slaRules.delete', parameters: ['slaRule' => $record->id]);
+            return true;
+        })];
     }
 }

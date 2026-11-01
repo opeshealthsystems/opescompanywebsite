@@ -14,6 +14,10 @@ class ViewVendor extends ViewRecord
     {
         return [
             Actions\EditAction::make(),
+            Actions\DeleteAction::make()->using(function ($record) {
+                \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.vendors.delete', parameters: ['vendor' => $record->id]);
+                return true;
+            }),
         ];
     }
 }

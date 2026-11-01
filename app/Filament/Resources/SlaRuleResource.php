@@ -87,9 +87,16 @@ class SlaRuleResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()->using(function (SlaRule $record) {
+                    \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.support.slaRules.delete', parameters: ['slaRule' => $record->id]);
+                    return true;
+                }),
             ])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);
+            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()->using(function ($records) {
+                foreach ($records as $record) {
+                    \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.support.slaRules.delete', parameters: ['slaRule' => $record->id]);
+                }
+            })])]);
     }
 
     public static function infolist(Infolist $infolist): Infolist

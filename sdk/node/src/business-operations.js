@@ -1058,6 +1058,73 @@ export const businessOperations = Object.freeze({
             "multipart/form-data"
         ]
     },
+    "admin_finance_vendors_create": {
+        "method": "POST",
+        "path": "/finance/vendors",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_vendors_delete": {
+        "method": "DELETE",
+        "path": "/finance/vendors/{vendor}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "vendor"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_vendors_index": {
+        "method": "GET",
+        "path": "/finance/vendors",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_vendors_show": {
+        "method": "GET",
+        "path": "/finance/vendors/{vendor}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "vendor"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_vendors_update": {
+        "method": "PUT",
+        "path": "/finance/vendors/{vendor}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "vendor"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_identity_users_create": {
         "method": "POST",
         "path": "/admin/users",
@@ -1445,6 +1512,73 @@ export const businessOperations = Object.freeze({
             "multipart/form-data"
         ]
     },
+    "admin_support_slaRules_create": {
+        "method": "POST",
+        "path": "/support/sla-rules",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_support_slaRules_delete": {
+        "method": "DELETE",
+        "path": "/support/sla-rules/{slaRule}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "slaRule"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_support_slaRules_index": {
+        "method": "GET",
+        "path": "/support/sla-rules",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_support_slaRules_show": {
+        "method": "GET",
+        "path": "/support/sla-rules/{slaRule}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "slaRule"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_support_slaRules_update": {
+        "method": "PUT",
+        "path": "/support/sla-rules/{slaRule}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "slaRule"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_support_tickets_reply": {
         "method": "POST",
         "path": "/admin/support/tickets/{ticket}/reply",
@@ -1719,6 +1853,73 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [
             "issue"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_products_create": {
+        "method": "POST",
+        "path": "/validation/products",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_products_delete": {
+        "method": "DELETE",
+        "path": "/validation/products/{validationProduct}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "validationProduct"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_products_index": {
+        "method": "GET",
+        "path": "/validation/products",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_products_show": {
+        "method": "GET",
+        "path": "/validation/products/{validationProduct}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "validationProduct"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_products_update": {
+        "method": "PUT",
+        "path": "/validation/products/{validationProduct}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "validationProduct"
         ],
         "queryParameters": [],
         "acceptLanguage": true,

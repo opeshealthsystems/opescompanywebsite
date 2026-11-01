@@ -81,21 +81,18 @@ class VendorResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()
-                    ->before(function (Tables\Actions\DeleteAction $action, Vendor $record) {
-                        if ($record->purchaseOrders()->exists()) {
-                            $action->cancel();
-                            \Filament\Notifications\Notification::make()
-                                ->danger()
-                                ->title('Cannot delete vendor')
-                                ->body('This vendor has purchase orders attached.')
-                                ->send();
-                        }
-                    }),
+                Tables\Actions\DeleteAction::make()->using(function (Vendor $record) {
+                    \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.vendors.delete', parameters: ['vendor' => $record->id]);
+                    return true;
+                }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->using(function ($records) {
+                        foreach ($records as $record) {
+                            \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.vendors.delete', parameters: ['vendor' => $record->id]);
+                        }
+                    }),
                 ]),
             ]);
     }

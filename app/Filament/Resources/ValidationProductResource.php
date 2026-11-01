@@ -49,10 +49,18 @@ class ValidationProductResource extends Resource
             ->defaultSort('name')
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()->using(function (ValidationProduct $record) {
+                    \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.validation.products.delete', parameters: ['validationProduct' => $record->id]);
+                    return true;
+                }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->using(function ($records) {
+                        foreach ($records as $record) {
+                            \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.validation.products.delete', parameters: ['validationProduct' => $record->id]);
+                        }
+                    }),
                 ]),
             ]);
     }
