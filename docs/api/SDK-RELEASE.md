@@ -1,6 +1,6 @@
 # Node SDK preview and contract release checks
 
-SDK 0.31.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations. Download `/downloads/opes-health-api-client-0.31.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
+SDK 0.32.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations. Download `/downloads/opes-health-api-client-0.32.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
 
 The archive contains only package metadata, client sources, the generated business operation registry, type definitions, README and an executable read-only catalogue example. It contains no credentials, test fixtures, environment files or runtime dependencies. Install from the archive URL or a reviewed local download; the README includes machine and delegated business usage.
 
@@ -108,3 +108,7 @@ SDK 0.30.0 archive: 13684 bytes, SHA-256 `d7a1930c90e447426af55a06a89b8d67a3278d
 SDK 0.31.0 adds paginated department and leave-type administration APIs. Department hierarchy cycles are rejected; departments with members or child departments cannot be deleted. Leave types with request history cannot be deleted. Filament and the API use the same workforce commands.
 
 SDK 0.31.0 archive: 13890 bytes, SHA-256 `53d898bc79270d6d9a17c71594ea1135f5b9103e497e46aebe24f5787ab9dfb0`. It carries all 305 API operation IDs, including the 299 business operations in OpenAPI 0.35.0.
+
+SDK 0.32.0 adds salary-grade and payroll-deduction administration APIs. Salary ranges are validated and employee-assigned grades cannot be deleted. Percentage deductions are capped at 100%; active/default deductions must be disabled before deletion.
+
+SDK 0.32.0 archive: 14103 bytes, SHA-256 `455721097aaf58a13b7fede6abdb532b60c0b1090960d68aff604da034261010`. It carries all 315 API operation IDs, including the 309 business operations in OpenAPI 0.36.0.

@@ -109,11 +109,11 @@ class PayrollDeductionTypeResource extends Resource
             ->reorderable('sort_order')
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()->using(function (PayrollDeductionType $record) { \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.payrollDeductionTypes.delete', parameters: ['deductionType' => $record->id]); return true; }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->using(function ($records) { foreach ($records as $record) \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.payrollDeductionTypes.delete', parameters: ['deductionType' => $record->id]); }),
                 ]),
             ]);
     }

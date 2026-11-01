@@ -959,4 +959,33 @@ class BusinessApiTest extends TestCase
         $this->assertDatabaseHas('business_outbox', ['type' => 'workforce.department_created.v1', 'actor_id' => $admin->id]);
         $this->assertDatabaseHas('business_outbox', ['type' => 'workforce.leave_type_created.v1', 'actor_id' => $admin->id]);
     }
+
+    public function test_salary_grade_and_payroll_deduction_apis_validate_ranges_and_usage(): void
+    {
+        $admin = $this->user('admin');
+        $headers = ['Authorization' => 'Bearer '.$this->access($admin, ['workforce:read', 'workforce:write', 'finance:read', 'finance:write']), 'Idempotency-Key' => 'salary-grade-create-0001'];
+        $grade = $this->postJson('/api/v1/salary-grades', ['name' => 'Fictional Grade One', 'code' => 'FG1', 'min_salary' => 200000, 'max_salary' => 400000, 'currency' => 'XAF', 'is_active' => true], $headers)->assertCreated();
+        $gradeId = $grade->json('data.id');
+        $this->getJson('/api/v1/salary-grades?per_page=5', $headers)->assertOk()->assertJsonPath('data.items.0.code', 'FG1');
+        $headers['Idempotency-Key'] = 'salary-grade-range-0001';
+        $this->putJson('/api/v1/salary-grades/'.$gradeId, ['max_salary' => 100000], $headers)->assertUnprocessable();
+        $employee = $this->user('support');
+        $employee->update(['salary_grade_id' => $gradeId]);
+        $headers['Idempotency-Key'] = 'salary-grade-delete-0001';
+        $this->deleteJson('/api/v1/salary-grades/'.$gradeId, [], $headers)->assertUnprocessable();
+
+        $headers['Idempotency-Key'] = 'deduction-create-000001';
+        $bad = ['name' => 'Fictional pension', 'code' => 'FPEN', 'calculation_type' => 'percentage', 'rate' => 150, 'apply_by_default' => true, 'is_active' => true, 'sort_order' => 1];
+        $this->postJson('/api/v1/finance/payroll-deduction-types', $bad, $headers)->assertUnprocessable();
+        $bad['rate'] = 5;
+        $deduction = $this->postJson('/api/v1/finance/payroll-deduction-types', $bad, $headers)->assertCreated();
+        $deductionId = $deduction->json('data.id');
+        $this->getJson('/api/v1/finance/payroll-deduction-types?per_page=10', $headers)->assertOk()->assertJsonPath('data.items.0.code', 'FPEN');
+        $headers['Idempotency-Key'] = 'deduction-deactivate-01';
+        $this->putJson('/api/v1/finance/payroll-deduction-types/'.$deductionId, ['is_active' => false, 'apply_by_default' => false], $headers)->assertOk();
+        $headers['Idempotency-Key'] = 'deduction-delete-00001';
+        $this->deleteJson('/api/v1/finance/payroll-deduction-types/'.$deductionId, [], $headers)->assertOk();
+        $this->assertDatabaseHas('business_outbox', ['type' => 'workforce.salary_grade_created.v1', 'actor_id' => $admin->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'finance.payroll_deduction_type_created.v1', 'actor_id' => $admin->id]);
+    }
 }

@@ -56,18 +56,9 @@ class SalaryGradeResource extends Resource
             ->filters([Tables\Filters\TernaryFilter::make('is_active')->label('Active')])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()
-                    ->before(function (SalaryGrade $record, Tables\Actions\DeleteAction $action) {
-                        if ($record->employees()->exists()) {
-                            \Filament\Notifications\Notification::make()
-                                ->title('Cannot delete: employees assigned to this grade')
-                                ->danger()
-                                ->send();
-                            $action->cancel();
-                        }
-                    }),
+                Tables\Actions\DeleteAction::make()->using(function (SalaryGrade $record) { \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.salaryGrades.delete', parameters: ['salaryGrade' => $record->id]); return true; }),
             ])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);
+            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()->using(function ($records) { foreach ($records as $record) \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.salaryGrades.delete', parameters: ['salaryGrade' => $record->id]); })])]);
     }
 
     public static function infolist(Infolist $infolist): Infolist

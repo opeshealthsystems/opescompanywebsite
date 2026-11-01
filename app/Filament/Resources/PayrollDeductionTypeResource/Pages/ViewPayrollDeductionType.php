@@ -14,7 +14,10 @@ class ViewPayrollDeductionType extends ViewRecord
     {
         return [
             Actions\EditAction::make(),
-            Actions\DeleteAction::make(),
+            Actions\DeleteAction::make()->using(function ($record) {
+                \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.payrollDeductionTypes.delete', parameters: ['deductionType' => $record->id]);
+                return true;
+            }),
         ];
     }
 }

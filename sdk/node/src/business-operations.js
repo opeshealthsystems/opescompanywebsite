@@ -685,6 +685,73 @@ export const businessOperations = Object.freeze({
             "multipart/form-data"
         ]
     },
+    "admin_finance_payrollDeductionTypes_create": {
+        "method": "POST",
+        "path": "/finance/payroll-deduction-types",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_payrollDeductionTypes_delete": {
+        "method": "DELETE",
+        "path": "/finance/payroll-deduction-types/{deductionType}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "deductionType"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_payrollDeductionTypes_index": {
+        "method": "GET",
+        "path": "/finance/payroll-deduction-types",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_payrollDeductionTypes_show": {
+        "method": "GET",
+        "path": "/finance/payroll-deduction-types/{deductionType}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "deductionType"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_payrollDeductionTypes_update": {
+        "method": "PUT",
+        "path": "/finance/payroll-deduction-types/{deductionType}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "deductionType"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_finance_payrollEntries_markManyPaid": {
         "method": "POST",
         "path": "/finance/payroll-runs/{run}/entries/mark-paid",
@@ -1938,6 +2005,73 @@ export const businessOperations = Object.freeze({
             "application/json",
             "multipart/form-data"
         ]
+    },
+    "admin_workforce_salaryGrades_create": {
+        "method": "POST",
+        "path": "/salary-grades",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_salaryGrades_delete": {
+        "method": "DELETE",
+        "path": "/salary-grades/{salaryGrade}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "salaryGrade"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_salaryGrades_index": {
+        "method": "GET",
+        "path": "/salary-grades",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_salaryGrades_show": {
+        "method": "GET",
+        "path": "/salary-grades/{salaryGrade}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "salaryGrade"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_salaryGrades_update": {
+        "method": "PUT",
+        "path": "/salary-grades/{salaryGrade}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "salaryGrade"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
     },
     "admin_workforce_training_complete": {
         "method": "POST",
