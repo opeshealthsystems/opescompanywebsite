@@ -1,12 +1,16 @@
 # Node SDK preview and contract release checks
 
-SDK 0.46.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations, including blog publishing, CRM demo-request administration and validation-cohort management. Download `/downloads/opes-health-api-client-0.46.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
+SDK 0.47.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations, including blog publishing, CRM demo-request administration, validation-cohort management and recruitment administration. Download `/downloads/opes-health-api-client-0.47.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
+
+SDK 0.47.0 adds ten protected recruitment operations for paginated opening/application reads and CRUD. Filament create, edit and delete actions share Workforce commands with the API. Opening deletion is blocked when applications exist, hired applications are retained, initial status and creator are server-controlled, and resume uploads are restricted to PDF files in the managed resume directory.
 
 SDK 0.44.0 adds the five delegated blog-administration operations. Filament and API writes share the same Publishing commands; rich text is sanitized, reading time is calculated by the server, published articles cannot be deleted, and each lifecycle change emits a domain event. The existing anonymous public blog read operations continue to expose only articles visible under the publishing schedule.
 
 SDK 0.45.0 adds the five delegated CRM demo-request operations. Search and filtered reads remain role-protected; administration creates do not send customer mail, writes use the same handlers as Filament, and deletion is blocked until the contact-mail delivery ledger is safely resolved.
 
 SDK 0.46.0 adds eight validation-cohort operations for cohort administration, member status and test-case assignment. Cohort and assignment rules are enforced by shared application commands used by API and Filament. Members remain visible only to authorized administrators, and assignments with recorded sessions cannot be detached.
+
+SDK 0.47.0 archive: 16052 bytes, SHA-256 `9f4b04d09d3791ca6967db817108ad84f83ef39a0262c2a7b2a77d221221132b`. It carries all 412 API operation IDs, including 406 business operations in OpenAPI 0.51.0.
 
 The archive contains only package metadata, client sources, the generated business operation registry, type definitions, README and an executable read-only catalogue example. It contains no credentials, test fixtures, environment files or runtime dependencies. Install from the archive URL or a reviewed local download; the README includes machine and delegated business usage.
 

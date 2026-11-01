@@ -792,6 +792,46 @@ class BusinessApiTest extends TestCase
         $this->assertDatabaseHas('business_outbox', ['type' => 'workforce.recruitment_application_hired.v1']);
     }
 
+    public function test_recruitment_api_owns_admin_crud_and_publishes_domain_events(): void
+    {
+        $admin = $this->user('admin');
+        $token = $this->access($admin, ['recruitment:read', 'recruitment:write']);
+        $headers = ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'recruitment-opening-0001'];
+        $body = ['title' => 'Fictional API role', 'type' => 'full_time', 'location' => 'Test location', 'openings_count' => 2];
+
+        $createdOpening = $this->postJson('/api/v1/recruitment/openings', $body, $headers)->assertCreated();
+        $openingId = $createdOpening->json('data.record.id');
+        $this->postJson('/api/v1/recruitment/openings', $body, $headers)->assertCreated()->assertJsonPath('data.record.id', $openingId);
+        $headers['Idempotency-Key'] = 'recruitment-opening-0002';
+        $this->putJson('/api/v1/recruitment/openings/'.$openingId, ['title' => 'Updated fictional API role'], $headers)->assertOk();
+        $this->getJson('/api/v1/recruitment/openings?search=Updated', ['Authorization' => 'Bearer '.$token])->assertOk()
+            ->assertJsonPath('data.items.0.title', 'Updated fictional API role');
+
+        $headers['Idempotency-Key'] = 'recruitment-app-create-001';
+        $application = $this->postJson('/api/v1/recruitment/applications', [
+            'job_opening_id' => $openingId, 'applicant_name' => 'Fictional Candidate', 'email' => 'candidate@example.test', 'status' => 'hired',
+        ], $headers)->assertUnprocessable();
+        $this->assertArrayHasKey('status', $application->json('errors'));
+        $headers['Idempotency-Key'] = 'recruitment-app-create-002';
+        $applicationId = $this->postJson('/api/v1/recruitment/applications', [
+            'job_opening_id' => $openingId, 'applicant_name' => 'Fictional Candidate', 'email' => 'candidate@example.test',
+        ], $headers)->assertCreated()->json('data.record.id');
+        $headers['Idempotency-Key'] = 'recruitment-app-update-01';
+        $this->putJson('/api/v1/recruitment/applications/'.$applicationId, ['phone' => '+237 600 000 000'], $headers)->assertOk();
+        $this->getJson('/api/v1/recruitment/applications?job_opening_id='.$openingId, ['Authorization' => 'Bearer '.$token])->assertOk()
+            ->assertJsonPath('data.items.0.phone', '+237 600 000 000');
+
+        $headers['Idempotency-Key'] = 'recruitment-app-delete-01';
+        $this->deleteJson('/api/v1/recruitment/applications/'.$applicationId, [], $headers)->assertOk();
+        $this->assertDatabaseMissing('job_applications', ['id' => $applicationId]);
+        $headers['Idempotency-Key'] = 'recruitment-opening-delete-01';
+        $this->deleteJson('/api/v1/recruitment/openings/'.$openingId, [], $headers)->assertOk();
+        $this->assertDatabaseMissing('job_openings', ['id' => $openingId]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'workforce.recruitment_opening_created.v1']);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'workforce.recruitment_application_recorded.v1']);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'workforce.recruitment_application_deleted.v1']);
+    }
+
     public function test_document_and_knowledge_article_publishing_are_shared_transitions(): void
     {
         $admin = $this->user('admin');

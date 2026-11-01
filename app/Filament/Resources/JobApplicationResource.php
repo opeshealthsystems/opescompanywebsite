@@ -135,7 +135,8 @@ class JobApplicationResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make()
-                    ->hidden(fn (JobApplication $r) => in_array($r->status, ['hired', 'rejected'])),
+                    ->hidden(fn (JobApplication $r) => in_array($r->status, ['hired', 'rejected']))
+                    ->using(fn (JobApplication $record, array $data) => AdminWorkflowAdapter::record('admin.recruitment.applications.update', $data, ['application' => $record->id])),
                 Tables\Actions\Action::make('shortlist')
                     ->label('Shortlist')
                     ->icon('heroicon-o-star')
@@ -178,7 +179,7 @@ class JobApplicationResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\DeleteBulkAction::make()->using(function ($records) { foreach ($records as $record) AdminWorkflowAdapter::run('admin.recruitment.applications.delete', parameters: ['application' => $record->id]); }),
                 ]),
             ]);
     }

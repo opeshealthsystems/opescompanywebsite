@@ -16,6 +16,7 @@ class ApplicationsRelationManager extends RelationManager
     public function form(Form $form): Form
     {
         return $form->schema([
+            Forms\Components\Hidden::make('job_opening_id')->default(fn () => $this->getOwnerRecord()->id)->required(),
             Forms\Components\TextInput::make('applicant_name')->required()->maxLength(200),
             Forms\Components\TextInput::make('email')->email()->required()->maxLength(150),
             Forms\Components\TextInput::make('phone')->nullable()->maxLength(50),
@@ -42,9 +43,9 @@ class ApplicationsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('interview_date')->label('Interview')->date('d M Y')->placeholder('—'),
             ])
             ->defaultSort('applied_at','desc')
-            ->headerActions([Tables\Actions\CreateAction::make()])
+            ->headerActions([Tables\Actions\CreateAction::make()->using(fn (array $data) => AdminWorkflowAdapter::record('admin.recruitment.applications.create', array_merge($data, ['job_opening_id' => $this->getOwnerRecord()->id])))])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (JobApplication $record, array $data) => AdminWorkflowAdapter::record('admin.recruitment.applications.update', array_merge($data, ['job_opening_id' => $this->getOwnerRecord()->id]), ['application' => $record->id])),
                 Tables\Actions\Action::make('shortlist')
                     ->label('Shortlist')->icon('heroicon-o-star')->color('info')
                     ->hidden(fn (JobApplication $r) => !in_array($r->status, ['received','reviewing']))
@@ -59,8 +60,8 @@ class ApplicationsRelationManager extends RelationManager
                     ->requiresConfirmation()
                     ->hidden(fn (JobApplication $r) => in_array($r->status, ['hired','rejected']))
                     ->action(fn (JobApplication $r) => AdminWorkflowAdapter::run('admin.recruitment.applications.reject', parameters: ['application' => $r])),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()->using(function (JobApplication $record) { AdminWorkflowAdapter::run('admin.recruitment.applications.delete', parameters: ['application' => $record->id]); return true; }),
             ])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);
+            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()->using(function ($records) { foreach ($records as $record) AdminWorkflowAdapter::run('admin.recruitment.applications.delete', parameters: ['application' => $record->id]); })])]);
     }
 }

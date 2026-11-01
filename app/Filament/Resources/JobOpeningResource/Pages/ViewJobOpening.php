@@ -5,5 +5,5 @@ use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 class ViewJobOpening extends ViewRecord {
     protected static string $resource = JobOpeningResource::class;
-    protected function getHeaderActions(): array { return [Actions\EditAction::make(), Actions\DeleteAction::make()]; }
+    protected function getHeaderActions(): array { return [Actions\EditAction::make(), Actions\DeleteAction::make()->action(fn () => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.recruitment.openings.delete', parameters: ['opening' => $this->record->id]))]; }
 }

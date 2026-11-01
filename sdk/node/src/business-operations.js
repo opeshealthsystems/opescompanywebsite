@@ -1860,6 +1860,32 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "admin_recruitment_applications_create": {
+        "method": "POST",
+        "path": "/recruitment/applications",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data"
+        ]
+    },
+    "admin_recruitment_applications_delete": {
+        "method": "DELETE",
+        "path": "/recruitment/applications/{application}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "application"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_recruitment_applications_hire": {
         "method": "POST",
         "path": "/recruitment/applications/{application}/hire",
@@ -1875,6 +1901,20 @@ export const businessOperations = Object.freeze({
             "multipart/form-data",
             "application/json"
         ]
+    },
+    "admin_recruitment_applications_index": {
+        "method": "GET",
+        "path": "/recruitment/applications",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
     },
     "admin_recruitment_applications_makeOffer": {
         "method": "POST",
@@ -1940,6 +1980,37 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "admin_recruitment_applications_show": {
+        "method": "GET",
+        "path": "/recruitment/applications/{application}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "application"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_recruitment_applications_update": {
+        "method": "PUT",
+        "path": "/recruitment/applications/{application}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "application"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data"
+        ]
+    },
     "admin_recruitment_openings_close": {
         "method": "POST",
         "path": "/recruitment/openings/{opening}/close",
@@ -1952,6 +2023,79 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
+    },
+    "admin_recruitment_openings_create": {
+        "method": "POST",
+        "path": "/recruitment/openings",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_recruitment_openings_delete": {
+        "method": "DELETE",
+        "path": "/recruitment/openings/{opening}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "opening"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_recruitment_openings_index": {
+        "method": "GET",
+        "path": "/recruitment/openings",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_recruitment_openings_show": {
+        "method": "GET",
+        "path": "/recruitment/openings/{opening}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "opening"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_recruitment_openings_update": {
+        "method": "PUT",
+        "path": "/recruitment/openings/{opening}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "opening"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_reports_workforce_summary": {
         "method": "GET",

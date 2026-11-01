@@ -52,7 +52,7 @@ class JobOpeningResource extends Resource
                 Forms\Components\Select::make('created_by')
                     ->label('Posted By')
                     ->options(fn () => User::orderBy('name')->pluck('name','id'))
-                    ->default(fn () => auth()->id())->searchable()->required(),
+                    ->default(fn () => auth()->id())->searchable()->disabled()->dehydrated(false),
             ]),
             Forms\Components\Section::make('Dates')->columns(2)->schema([
                 Forms\Components\DatePicker::make('posted_at')->default(now())->native(false),
@@ -95,9 +95,9 @@ class JobOpeningResource extends Resource
                     ->requiresConfirmation()
                     ->hidden(fn (JobOpening $r) => !in_array($r->status, ['open','paused']))
                     ->action(fn (JobOpening $r) => AdminWorkflowAdapter::run('admin.recruitment.openings.close', parameters: ['opening' => $r])),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()->using(function (JobOpening $record) { AdminWorkflowAdapter::run('admin.recruitment.openings.delete', parameters: ['opening' => $record->id]); return true; }),
             ])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);
+            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()->using(function ($records) { foreach ($records as $record) AdminWorkflowAdapter::run('admin.recruitment.openings.delete', parameters: ['opening' => $record->id]); })])]);
     }
 
     public static function infolist(Infolist $infolist): Infolist
