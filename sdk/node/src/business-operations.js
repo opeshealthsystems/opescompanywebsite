@@ -207,6 +207,49 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_crm_deals_create": {
+        "method": "POST",
+        "path": "/crm/deals",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_crm_deals_delete": {
+        "method": "DELETE",
+        "path": "/crm/deals/{deal}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "deal"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_crm_deals_update": {
+        "method": "PUT",
+        "path": "/crm/deals/{deal}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "deal"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
     "admin_documents_markSent": {
         "method": "POST",
         "path": "/documents/{document}/mark-sent",
@@ -814,6 +857,49 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
+    },
+    "admin_operations_assets_create": {
+        "method": "POST",
+        "path": "/operations/assets",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_operations_assets_delete": {
+        "method": "DELETE",
+        "path": "/operations/assets/{asset}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "asset"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_operations_assets_update": {
+        "method": "PUT",
+        "path": "/operations/assets/{asset}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "asset"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
     },
     "admin_practitioners_applications_approve": {
         "method": "POST",

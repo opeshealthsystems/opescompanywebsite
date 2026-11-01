@@ -26,6 +26,16 @@ class DealResource extends Resource
         return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
     }
 
+    public static function canEdit(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return static::canAccess() && !in_array($record->stage, ['closed_won', 'closed_lost'], true);
+    }
+
+    public static function canDelete(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return static::canEdit($record);
+    }
+
     public static function getNavigationBadge(): ?string
     {
         $count = static::getModel()::whereIn('stage', ['prospecting', 'qualification', 'proposal', 'negotiation'])->count();
@@ -112,9 +122,20 @@ class DealResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->action(fn (Deal $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.crm.deals.delete', parameters: ['deal' => $record->id]))
+                    ->hidden(fn (Deal $record) => in_array($record->stage, ['closed_won', 'closed_lost'], true)),
             ])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);
+            ->bulkActions([Tables\Actions\BulkActionGroup::make([
+                Tables\Actions\BulkAction::make('deleteOpenDeals')->label('Delete open deals')->requiresConfirmation()
+                    ->action(function (\Illuminate\Database\Eloquent\Collection $records): void {
+                        foreach ($records as $record) {
+                            if (!in_array($record->stage, ['closed_won', 'closed_lost'], true)) {
+                                \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.crm.deals.delete', parameters: ['deal' => $record->id]);
+                            }
+                        }
+                    }),
+            ])]);
     }
 
     public static function infolist(Infolist $infolist): Infolist

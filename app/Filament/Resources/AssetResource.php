@@ -25,6 +25,11 @@ class AssetResource extends Resource
         return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
     }
 
+    public static function canDelete(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return static::canAccess() && in_array($record->status, ['retired', 'disposed'], true);
+    }
+
     public static function form(Form $form): Form
     {
         return $form->schema([
@@ -81,9 +86,20 @@ class AssetResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->action(fn (Asset $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.operations.assets.delete', parameters: ['asset' => $record->id]))
+                    ->hidden(fn (Asset $record) => !in_array($record->status, ['retired', 'disposed'], true)),
             ])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);
+            ->bulkActions([Tables\Actions\BulkActionGroup::make([
+                Tables\Actions\BulkAction::make('deleteRetired')->label('Delete retired/disposed assets')->requiresConfirmation()
+                    ->action(function (\Illuminate\Database\Eloquent\Collection $records): void {
+                        foreach ($records as $record) {
+                            if (in_array($record->status, ['retired', 'disposed'], true)) {
+                                \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.operations.assets.delete', parameters: ['asset' => $record->id]);
+                            }
+                        }
+                    }),
+            ])]);
     }
 
     public static function infolist(Infolist $infolist): Infolist

@@ -404,6 +404,54 @@ class BusinessApiTest extends TestCase
         $this->postJson('/api/v1/admin/users', $body, ['Idempotency-Key' => 'identity-user-anon-001'])->assertUnauthorized();
     }
 
+    public function test_asset_lifecycle_is_api_backed_and_server_generates_references(): void
+    {
+        $admin = $this->user('admin');
+        $token = $this->access($admin, ['operations:write']);
+        $headers = ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'asset-create-00000001'];
+        $body = ['name' => 'Fictional test laptop', 'category' => 'laptop', 'currency' => 'XAF', 'purchase_price' => 1000, 'current_value' => 900, 'reference' => 'spoofed'];
+        $this->postJson('/api/v1/operations/assets', $body, $headers)->assertUnprocessable();
+        unset($body['reference']);
+        $created = $this->postJson('/api/v1/operations/assets', $body, $headers)->assertCreated()->assertJsonPath('data.status', 'active');
+        $this->postJson('/api/v1/operations/assets', $body, $headers)->assertExactJson($created->json());
+        $asset = \App\Models\Asset::query()->findOrFail($created->json('data.id'));
+        $this->assertStringStartsWith('AST-'.now()->year.'-', $asset->reference);
+
+        $headers['Idempotency-Key'] = 'asset-update-00000001';
+        $this->putJson('/api/v1/operations/assets/'.$asset->id, ['current_value' => 700, 'status' => 'retired'], $headers)->assertOk()->assertJsonPath('data.status', 'retired');
+        $headers['Idempotency-Key'] = 'asset-delete-00000001';
+        $this->deleteJson('/api/v1/operations/assets/'.$asset->id, [], $headers)->assertOk();
+        $this->assertDatabaseMissing('assets', ['id' => $asset->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'operations.asset_created.v1', 'actor_id' => $admin->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'operations.asset_updated.v1', 'actor_id' => $admin->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'operations.asset_deleted.v1', 'actor_id' => $admin->id]);
+        $this->postJson('/api/v1/operations/assets', $body, ['Idempotency-Key' => 'asset-anonymous-000001'])->assertUnauthorized();
+    }
+
+    public function test_deal_lifecycle_is_api_backed_and_closed_deals_are_immutable(): void
+    {
+        $admin = $this->user('admin');
+        $token = $this->access($admin, ['crm:write']);
+        $headers = ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'deal-create-00000001'];
+        $body = ['title' => 'Fictional test opportunity', 'stage' => 'prospecting', 'value' => 1000, 'currency' => 'XAF', 'probability' => 50, 'owner_id' => $admin->id];
+        $created = $this->postJson('/api/v1/crm/deals', $body, $headers)->assertCreated()->assertJsonPath('data.stage', 'prospecting');
+        $this->postJson('/api/v1/crm/deals', $body, $headers)->assertExactJson($created->json());
+        $deal = \App\Models\Deal::query()->findOrFail($created->json('data.id'));
+        $this->assertStringStartsWith('DEAL-'.now()->year.'-', $deal->reference);
+
+        $headers['Idempotency-Key'] = 'deal-update-000000001';
+        $this->putJson('/api/v1/crm/deals/'.$deal->id, ['stage' => 'negotiation', 'probability' => 75], $headers)->assertOk()->assertJsonPath('data.stage', 'negotiation');
+        $headers['Idempotency-Key'] = 'deal-close-0000000001';
+        $this->putJson('/api/v1/crm/deals/'.$deal->id, ['stage' => 'closed_won'], $headers)->assertOk();
+        $headers['Idempotency-Key'] = 'deal-edit-closed-0001';
+        $this->putJson('/api/v1/crm/deals/'.$deal->id, ['title' => 'Cannot edit closed'], $headers)->assertUnprocessable();
+        $headers['Idempotency-Key'] = 'deal-delete-closed-0001';
+        $this->deleteJson('/api/v1/crm/deals/'.$deal->id, [], $headers)->assertUnprocessable();
+        $this->assertDatabaseHas('business_outbox', ['type' => 'crm.deal_created.v1', 'actor_id' => $admin->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'crm.deal_updated.v1', 'actor_id' => $admin->id]);
+        $this->postJson('/api/v1/crm/deals', $body, ['Idempotency-Key' => 'deal-anonymous-000001'])->assertUnauthorized();
+    }
+
     public function test_payroll_generation_completion_and_payment_are_shared_and_idempotent(): void
     {
         $admin = $this->user('admin');
