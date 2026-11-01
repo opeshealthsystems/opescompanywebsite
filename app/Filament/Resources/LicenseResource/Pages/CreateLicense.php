@@ -17,20 +17,9 @@ class CreateLicense extends CreateRecord
         return $data;
     }
 
-    protected function afterCreate(): void
+    protected function handleRecordCreation(array $data): \Illuminate\Database\Eloquent\Model
     {
-        $license = $this->record->load('customer');
-        $email   = $license->customer?->email;
-        if ($email) {
-            Mail::to($email)->queue(new LicenseIssued($license));
-            $license->customer?->notify(new \App\Notifications\FeedEntry(
-                'licensing.issued',
-                'License issued',
-                'A license for ' . $license->product_name . ' was issued to your account.',
-                'key',
-                route('customer.licenses.show', ['locale' => 'en', 'id' => $license->id]),
-            ));
-        }
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('administration.licenses.create', $data);
     }
 
     protected function getRedirectUrl(): string

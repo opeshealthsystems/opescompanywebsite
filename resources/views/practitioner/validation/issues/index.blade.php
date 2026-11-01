@@ -30,7 +30,7 @@
 @if($issues->isEmpty())
     <div class="bg-slate-900 border border-slate-800 rounded-xl p-10 text-center">
         <div class="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4" style="background:rgba(0,200,150,0.1)">
-            <i data-lucide="bug" style="width:28px;height:28px;color:#00C896"></i>
+            <i data-lucide="bug" style="width:28px;height:28px;color:var(--brand-accent)"></i>
         </div>
         <h2 class="text-lg font-semibold text-white mb-2">No issues reported yet</h2>
         <p class="text-sm text-slate-400">Found a problem? Report a new issue so the team can triage it.</p>

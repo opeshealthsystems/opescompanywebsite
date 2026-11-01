@@ -1,32 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\Customer;
 
-use App\Http\Controllers\Controller;
-use App\Models\License;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-
-class LicenseController extends Controller
+/** Web presentation adapter; business queries and commands live in application contexts. */
+class LicenseController extends \App\Http\Controllers\Controller
 {
-    public function index()
-    {
-        $user = Auth::user();
-        $licenses = License::where('user_id', $user->id)
-            ->orderByDesc('created_at')
-            ->paginate(15);
-
-        return view('customer.licenses.index', compact('licenses'));
-    }
-
-    public function show(Request $request)
-    {
-        $id      = (int) $request->route('id');
-        $user    = Auth::user();
-        $license = License::findOrFail($id);
-
-        abort_if((int) $license->user_id !== $user->id, 403);
-
-        return view('customer.licenses.show', compact('license'));
-    }
+    public function index(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('customer.licensecontroller.index', $request); }
+    public function show(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('customer.licensecontroller.show', $request); }
 }

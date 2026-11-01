@@ -20,12 +20,12 @@
             : 'A comprehensive framework for national healthcare digitization, interoperability, universal health coverage support, public health intelligence, and health system strengthening — designed for governments and public health institutions.' }}
     </p>
     {{-- National Vision --}}
-    <div style="margin-top:28px;background:linear-gradient(135deg,#0f1f2e,#0d1a14);border:1px solid rgba(0,200,150,0.2);border-radius:16px;padding:24px 32px;display:inline-block;text-align:center">
+    <div style="margin-top:28px;background:var(--surface);border:1px solid rgba(0,200,150,0.2);border-radius:16px;padding:24px 32px;display:inline-block;text-align:center">
         @foreach($isFr
             ? ['Un citoyen.','Une identité de santé.','Un écosystème de santé connecté.']
             : ['One Citizen.','One Health Identity.','One Connected Health Ecosystem.']
         as $line)
-        <div style="font-size:15px;font-weight:700;color:#00C896;line-height:2">{{ $line }}</div>
+        <div style="font-size:15px;font-weight:700;color:var(--brand-accent);line-height:2">{{ $line }}</div>
         @endforeach
     </div>
 </div>
@@ -56,19 +56,19 @@
     <h2 class="section-title">{{ $isFr ? 'Six piliers de l\'infrastructure nationale' : 'Six pillars of national infrastructure' }}</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:28px">
         @php $comps = $isFr ? [
-            ['fingerprint','#00C896','Identifiant national de santé',['Identification unique du patient','Dossiers de santé longitudinaux','Reconnaissance inter-établissements','Profils de santé citoyens']],
-            ['git-merge','#1A6FE8','Index national des patients (MPI)',['Rapprochement de patients','Résolution des doublons','Gouvernance de l\'identité']],
-            ['arrow-left-right','#00C896','Échange national d\'informations (HIE)',['Échange d\'informations cliniques','Échange de références','Échange de résultats de labo','Échange d\'imagerie']],
-            ['stethoscope','#1A6FE8','Registre national des prestataires',['Médecins','Infirmiers','Pharmaciens','Spécialistes']],
-            ['hospital','#00C896','Registre national des établissements',['Cliniques','Hôpitaux','Laboratoires','Pharmacies']],
-            ['activity','#1A6FE8','Plateforme nationale d\'intelligence de santé publique',['Surveillance des maladies','Analytique de santé publique','Tableaux de bord nationaux']],
+            ['fingerprint','#69D5F5','Identifiant national de santé',['Identification unique du patient','Dossiers de santé longitudinaux','Reconnaissance inter-établissements','Profils de santé citoyens']],
+            ['git-merge','#8AC5ED','Index national des patients (MPI)',['Rapprochement de patients','Résolution des doublons','Gouvernance de l\'identité']],
+            ['arrow-left-right','#69D5F5','Échange national d\'informations (HIE)',['Échange d\'informations cliniques','Échange de références','Échange de résultats de labo','Échange d\'imagerie']],
+            ['stethoscope','#8AC5ED','Registre national des prestataires',['Médecins','Infirmiers','Pharmaciens','Spécialistes']],
+            ['hospital','#69D5F5','Registre national des établissements',['Cliniques','Hôpitaux','Laboratoires','Pharmacies']],
+            ['activity','#8AC5ED','Plateforme nationale d\'intelligence de santé publique',['Surveillance des maladies','Analytique de santé publique','Tableaux de bord nationaux']],
         ] : [
-            ['fingerprint','#00C896','National Health ID',['Unique patient identification','Longitudinal health records','Cross-facility recognition','Citizen health profiles']],
-            ['git-merge','#1A6FE8','National Master Patient Index',['Patient matching','Duplicate resolution','Identity governance']],
-            ['arrow-left-right','#00C896','National Health Information Exchange',['Clinical information exchange','Referral exchange','Laboratory exchange','Imaging exchange']],
-            ['stethoscope','#1A6FE8','National Provider Registry',['Physicians','Nurses','Pharmacists','Specialists']],
-            ['hospital','#00C896','National Facility Registry',['Clinics','Hospitals','Laboratories','Pharmacies']],
-            ['activity','#1A6FE8','National Public Health Intelligence Platform',['Disease surveillance','Public health analytics','National dashboards']],
+            ['fingerprint','#69D5F5','National Health ID',['Unique patient identification','Longitudinal health records','Cross-facility recognition','Citizen health profiles']],
+            ['git-merge','#8AC5ED','National Master Patient Index',['Patient matching','Duplicate resolution','Identity governance']],
+            ['arrow-left-right','#69D5F5','National Health Information Exchange',['Clinical information exchange','Referral exchange','Laboratory exchange','Imaging exchange']],
+            ['stethoscope','#8AC5ED','National Provider Registry',['Physicians','Nurses','Pharmacists','Specialists']],
+            ['hospital','#69D5F5','National Facility Registry',['Clinics','Hospitals','Laboratories','Pharmacies']],
+            ['activity','#8AC5ED','National Public Health Intelligence Platform',['Disease surveillance','Public health analytics','National dashboards']],
         ]; @endphp
         @foreach($comps as $c)
         <div style="background:#0F172A;border:1px solid #1e293b;border-radius:12px;padding:18px">
@@ -95,43 +95,43 @@
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px">
         {{-- UHC --}}
         <div>
-            <div style="font-size:var(--fs-2xs);font-weight:800;color:#00C896;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px">
+            <div style="font-size:var(--fs-2xs);font-weight:800;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px">
                 {{ $isFr ? 'Couche CSU / UHC' : 'UHC layer' }}
             </div>
             @foreach($isFr
                 ? ['Enregistrement des bénéficiaires','Traitement des demandes','Remboursement des prestataires','Administration des prestations']
                 : ['Beneficiary registration','Claims processing','Provider reimbursement','Benefits administration']
             as $item)
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;font-size:var(--fs-xs);color:var(--text-muted);border-left:2px solid #00C896">
-                <i data-lucide="check-circle" style="width:11px;height:11px;color:#00C896;flex-shrink:0"></i>{{ $item }}
+            <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;font-size:var(--fs-xs);color:var(--text-muted);border-left:2px solid #69D5F5">
+                <i data-lucide="check-circle" style="width:11px;height:11px;color:var(--brand-accent);flex-shrink:0"></i>{{ $item }}
             </div>
             @endforeach
         </div>
         {{-- Public health programs --}}
         <div>
-            <div style="font-size:var(--fs-2xs);font-weight:800;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px">
+            <div style="font-size:var(--fs-2xs);font-weight:800;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px">
                 {{ $isFr ? 'Programmes de santé publique' : 'Public health programs' }}
             </div>
             @foreach($isFr
                 ? ['Programme VIH','Programme Tuberculose','Programme Paludisme','Programme de vaccination','Santé maternelle','Programme MNT']
                 : ['HIV programme','TB programme','Malaria programme','Immunization programme','Maternal health programme','NCD programme']
             as $prog)
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;font-size:var(--fs-xs);color:var(--text-muted);border-left:2px solid #1A6FE8">
-                <i data-lucide="check-circle" style="width:11px;height:11px;color:#1A6FE8;flex-shrink:0"></i>{{ $prog }}
+            <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;font-size:var(--fs-xs);color:var(--text-muted);border-left:2px solid #8AC5ED">
+                <i data-lucide="check-circle" style="width:11px;height:11px;color:var(--brand-accent);flex-shrink:0"></i>{{ $prog }}
             </div>
             @endforeach
         </div>
         {{-- National registries --}}
         <div>
-            <div style="font-size:var(--fs-2xs);font-weight:800;color:#00C896;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px">
+            <div style="font-size:var(--fs-2xs);font-weight:800;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px">
                 {{ $isFr ? 'Registres nationaux' : 'National registries' }}
             </div>
             @foreach($isFr
                 ? ['Registre de vaccination','Registre maternel','Registre des cancers','Registre des maladies chroniques','Registre des maladies rares']
                 : ['Immunization registry','Maternal registry','Cancer registry','Chronic disease registry','Rare disease registry']
             as $reg)
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;font-size:var(--fs-xs);color:var(--text-muted);border-left:2px solid #00C896">
-                <i data-lucide="database" style="width:11px;height:11px;color:#00C896;flex-shrink:0"></i>{{ $reg }}
+            <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;font-size:var(--fs-xs);color:var(--text-muted);border-left:2px solid #69D5F5">
+                <i data-lucide="database" style="width:11px;height:11px;color:var(--brand-accent);flex-shrink:0"></i>{{ $reg }}
             </div>
             @endforeach
         </div>
@@ -150,8 +150,8 @@
                 {{ $isFr ? 'Tableaux de bord gouvernementaux' : 'Government dashboards' }}
             </div>
             @foreach($isFr
-                ? [['bar-chart-2','#00C896','Tableau de bord exécutif','Pour les ministres — vision nationale de haut niveau.'],['map-pin','#1A6FE8','Tableau de bord régional','Pour les autorités régionales — suivi des zones.'],['hospital','#00C896','Tableau de bord établissement','Pour la direction des établissements de soins.']]
-                : [['bar-chart-2','#00C896','Executive dashboard','For ministers — national high-level view.'],['map-pin','#1A6FE8','Regional dashboard','For regional authorities — zone-level monitoring.'],['hospital','#00C896','Facility dashboard','For healthcare facility management.']]
+                ? [['bar-chart-2','#69D5F5','Tableau de bord exécutif','Pour les ministres — vision nationale de haut niveau.'],['map-pin','#8AC5ED','Tableau de bord régional','Pour les autorités régionales — suivi des zones.'],['hospital','#69D5F5','Tableau de bord établissement','Pour la direction des établissements de soins.']]
+                : [['bar-chart-2','#69D5F5','Executive dashboard','For ministers — national high-level view.'],['map-pin','#8AC5ED','Regional dashboard','For regional authorities — zone-level monitoring.'],['hospital','#69D5F5','Facility dashboard','For healthcare facility management.']]
             as $db)
             <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:#0F172A;border-radius:10px;margin-bottom:8px;border-left:3px solid {{ $db[1] }}">
                 <i data-lucide="{{ $db[0] }}" style="width:15px;height:15px;color:{{ $db[1] }};flex-shrink:0;margin-top:2px"></i>
@@ -169,8 +169,8 @@
                 {{ $isFr ? 'Modèle de gouvernance nationale' : 'National governance model' }}
             </div>
             @foreach($isFr
-                ? [['#00C896','Comité de pilotage national','Supervision stratégique'],['#1A6FE8','Conseil de gouvernance technique','Supervision technologique'],['#00C896','Conseil de gouvernance clinique','Supervision clinique'],['#1A6FE8','Conseil de gouvernance des données','Gouvernance de l\'information'],['#00C896','Conseil consultatif de santé publique','Supervision santé publique']]
-                : [['#00C896','National Steering Committee','Strategic oversight'],['#1A6FE8','Technical Governance Board','Technology oversight'],['#00C896','Clinical Governance Board','Clinical oversight'],['#1A6FE8','Data Governance Board','Information governance'],['#00C896','Public Health Advisory Board','Public health oversight']]
+                ? [['#69D5F5','Comité de pilotage national','Supervision stratégique'],['#8AC5ED','Conseil de gouvernance technique','Supervision technologique'],['#69D5F5','Conseil de gouvernance clinique','Supervision clinique'],['#8AC5ED','Conseil de gouvernance des données','Gouvernance de l\'information'],['#69D5F5','Conseil consultatif de santé publique','Supervision santé publique']]
+                : [['#69D5F5','National Steering Committee','Strategic oversight'],['#8AC5ED','Technical Governance Board','Technology oversight'],['#69D5F5','Clinical Governance Board','Clinical oversight'],['#8AC5ED','Data Governance Board','Information governance'],['#69D5F5','Public Health Advisory Board','Public health oversight']]
             as $gov)
             <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;border-left:2px solid {{ $gov[0] }}">
                 <div>
@@ -194,8 +194,8 @@
     <h2 class="section-title">{{ $isFr ? 'Cinq phases vers une santé numérique nationale' : 'Five phases toward national digital health' }}</h2>
     <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:24px">
         @foreach($isFr
-            ? [['1','var(--text-faint)','Fondation','Registres & Health ID'],['2','#1A6FE8','Digitalisation','EMR & HIS'],['3','#00A87B','Interopérabilité','HIE & Référencement'],['4','#00C896','Intelligence','Surveillance & Analytique'],['5','#FFB020','Optimisation','Population & IA']]
-            : [['1','var(--text-faint)','Foundation','Registries & Health ID'],['2','#1A6FE8','Facility digitization','EMR & HIS'],['3','#00A87B','Interoperability','HIE & Referral exchange'],['4','#00C896','Intelligence','Surveillance & Analytics'],['5','#FFB020','Optimisation','Population health & AI']]
+            ? [['1','var(--text-faint)','Fondation','Registres & Health ID'],['2','#8AC5ED','Digitalisation','EMR & HIS'],['3','#00A87B','Interopérabilité','HIE & Référencement'],['4','#69D5F5','Intelligence','Surveillance & Analytique'],['5','#FFB020','Optimisation','Population & IA']]
+            : [['1','var(--text-faint)','Foundation','Registries & Health ID'],['2','#8AC5ED','Facility digitization','EMR & HIS'],['3','#00A87B','Interoperability','HIE & Referral exchange'],['4','#69D5F5','Intelligence','Surveillance & Analytics'],['5','#FFB020','Optimisation','Population health & AI']]
         as $idx => $ph)
         <div style="text-align:center;padding:0 6px;position:relative">
             @if($idx < 4)
@@ -220,8 +220,8 @@
     <h2 class="section-title">{{ $isFr ? 'Ce que la plateforme rend possible' : 'What the platform makes possible' }}</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:20px">
         @foreach($isFr
-            ? [['#00C896','Meilleur accès aux soins'],['#1A6FE8','Continuité améliorée des soins'],['#00C896','Intelligence de santé publique renforcée'],['#1A6FE8','Gouvernance du système de santé plus forte'],['#00C896','Meilleure planification sanitaire'],['#1A6FE8','Gestion UHC améliorée'],['#00C896','Meilleurs résultats de santé']]
-            : [['#00C896','Improved access to care'],['#1A6FE8','Improved continuity of care'],['#00C896','Better public health intelligence'],['#1A6FE8','Stronger health system governance'],['#00C896','Improved healthcare planning'],['#1A6FE8','Improved UHC management'],['#00C896','Improved health outcomes']]
+            ? [['#69D5F5','Meilleur accès aux soins'],['#8AC5ED','Continuité améliorée des soins'],['#69D5F5','Intelligence de santé publique renforcée'],['#8AC5ED','Gouvernance du système de santé plus forte'],['#69D5F5','Meilleure planification sanitaire'],['#8AC5ED','Gestion UHC améliorée'],['#69D5F5','Meilleurs résultats de santé']]
+            : [['#69D5F5','Improved access to care'],['#8AC5ED','Improved continuity of care'],['#69D5F5','Better public health intelligence'],['#8AC5ED','Stronger health system governance'],['#69D5F5','Improved healthcare planning'],['#8AC5ED','Improved UHC management'],['#69D5F5','Improved health outcomes']]
         as $out)
         <div style="display:flex;align-items:center;gap:8px;background:#0F172A;border:1px solid #1e293b;border-radius:8px;padding:10px 14px;text-align:left">
             <i data-lucide="check-circle" style="width:12px;height:12px;color:{{ $out[0] }};flex-shrink:0"></i>

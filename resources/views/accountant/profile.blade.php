@@ -14,7 +14,7 @@
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 flex flex-col items-center text-center">
         <div class="w-20 h-20 rounded-full flex items-center justify-center mb-4 text-2xl font-bold text-white"
-             style="background:linear-gradient(135deg,#d97706,#92400e)">
+             style="background:var(--surface)">
             {{ strtoupper(substr($user->name, 0, 1)) }}
         </div>
         <p class="text-lg font-semibold text-white">{{ $user->name }}</p>
@@ -61,7 +61,7 @@
             </div>
             <div class="mt-6 flex justify-end">
                 <button type="submit" class="px-5 py-2.5 rounded-lg text-sm font-semibold text-white"
-                        style="background:linear-gradient(135deg,#d97706,#92400e)">
+                        style="background:var(--surface)">
                     Save Changes
                 </button>
             </div>

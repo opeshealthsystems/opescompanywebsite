@@ -71,7 +71,7 @@ class SurveyTest extends TestCase
 
     // ── Show ──────────────────────────────────────────────────────────────
 
-    public function test_show_creates_a_draft_response_and_renders_questions(): void
+    public function test_show_renders_questions_without_creating_a_response(): void
     {
         $practitioner = $this->practitioner();
 
@@ -86,7 +86,7 @@ class SurveyTest extends TestCase
             ->assertOk()
             ->assertSee('How would you rate the platform?');
 
-        $this->assertDatabaseHas('survey_responses', [
+        $this->assertDatabaseMissing('survey_responses', [
             'survey_id'    => $survey->id,
             'user_id'      => $practitioner->id,
             'submitted_at' => null,
@@ -169,7 +169,7 @@ class SurveyTest extends TestCase
         $response = SurveyResponse::where('survey_id', $survey->id)
             ->where('user_id', $practitioner->id)
             ->first();
-        $this->assertNull($response->submitted_at);
+        $this->assertNull($response?->submitted_at);
         $this->assertDatabaseCount('survey_answers', 0);
     }
 

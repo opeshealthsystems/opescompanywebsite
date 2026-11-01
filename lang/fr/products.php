@@ -2,18 +2,18 @@
 
 return [
     // ── Méta ───────────────────────────────────────────────────────────
-    'meta_title'            => 'OPES Health Systems — 22 Systèmes Logiciels de Santé Intégrés pour le Cameroun',
-    'meta_desc'             => 'Découvrez 22 systèmes logiciels de santé intégrés pour les hôpitaux, cliniques, laboratoires et pharmacies du Cameroun et de la région CEMAC.',
+    'meta_title'            => 'OPES Health Systems — Catalogue de logiciels de santé',
+    'meta_desc'             => 'Découvrez le catalogue de logiciels de santé pour les hôpitaux, cliniques, laboratoires et pharmacies du Cameroun et de la région CEMAC.',
 
     // ── Index Produits — en-tête de page ───────────────────────────────
     'index_eyebrow'         => 'Tous les produits',
-    'index_title'           => '22 Systèmes Logiciels de Santé',
+    'index_title'           => 'Catalogue de logiciels de santé',
     'index_sub'             => 'Conçus spécifiquement pour le secteur de la santé au Cameroun et dans la région CEMAC. Déployez un seul système ou l\'écosystème complet — tous connectés via OPESCare Health ID.',
 
     // Bandeau de confiance
     'trust_fhir'            => 'Interopérabilité HL7 FHIR',
     'trust_bilingual'       => 'Bilingue EN / FR',
-    'trust_moh'             => 'Aligné MoH 2026–2030',
+    'trust_moh'             => 'Conçu au Cameroun',
     'trust_deploy'          => 'Cloud et sur site',
 
     // Sections de catégories

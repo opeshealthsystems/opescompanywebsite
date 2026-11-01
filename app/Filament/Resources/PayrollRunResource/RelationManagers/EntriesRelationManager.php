@@ -144,10 +144,7 @@ class EntriesRelationManager extends RelationManager
                     ->color('success')
                     ->requiresConfirmation()
                     ->hidden(fn (PayrollEntry $record) => $record->status === 'paid')
-                    ->action(function (PayrollEntry $record) {
-                        $record->update(['status' => 'paid']);
-                        Notification::make()->title('Marked as paid')->success()->send();
-                    }),
+                    ->action(fn (PayrollEntry $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.payrollEntries.markPaid', parameters: ['run' => $this->getOwnerRecord()->id, 'entry' => $record->id])),
 
                 Tables\Actions\Action::make('download_payslip')
                     ->label('Payslip')
@@ -168,10 +165,7 @@ class EntriesRelationManager extends RelationManager
                         ->icon('heroicon-o-banknotes')
                         ->color('success')
                         ->requiresConfirmation()
-                        ->action(function ($records) {
-                            $records->each->update(['status' => 'paid']);
-                            Notification::make()->title('All entries marked as paid')->success()->send();
-                        }),
+                        ->action(fn ($records) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.payrollEntries.markManyPaid', values: ['ids' => $records->modelKeys()], parameters: ['run' => $this->getOwnerRecord()->id])),
                     Tables\Actions\DeleteBulkAction::make()
                         ->after(function () {
                             $this->getOwnerRecord()->recalculateTotals();

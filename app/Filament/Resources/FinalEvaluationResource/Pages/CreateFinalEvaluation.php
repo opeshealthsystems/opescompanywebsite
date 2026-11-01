@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\FinalEvaluationResource\Pages;
 
 use App\Filament\Resources\FinalEvaluationResource;
-use App\Models\CohortMember;
 use App\Models\FinalEvaluation;
 use Filament\Resources\Pages\CreateRecord;
 
@@ -11,9 +10,12 @@ class CreateFinalEvaluation extends CreateRecord
 {
     protected static string $resource = FinalEvaluationResource::class;
 
-    protected function mutateFormDataBeforeCreate(array $data): array
+    protected function handleRecordCreation(array $data): \Illuminate\Database\Eloquent\Model
     {
-        $member = CohortMember::findOrFail($data['cohort_member_id']);
-        return array_merge($data, FinalEvaluation::snapshotData($member, auth()->id()));
+        $result = app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+            'admin.validation.finalEvaluations.create',
+            new \App\Contexts\Shared\Application\WorkflowInput($data, [], auth()->user(), app()->getLocale()),
+        );
+        return FinalEvaluation::findOrFail($result->data['id']);
     }
 }

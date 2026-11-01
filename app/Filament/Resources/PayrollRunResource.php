@@ -50,7 +50,7 @@ class PayrollRunResource extends Resource
                 Forms\Components\Select::make('status')
                     ->options(PayrollRun::statusOptions())
                     ->default('draft')
-                    ->required(),
+                    ->required()->disabled()->dehydrated(false),
 
                 Forms\Components\DatePicker::make('period_start')
                     ->label('Period Start')
@@ -135,10 +135,7 @@ class PayrollRunResource extends Resource
                     ->color('success')
                     ->requiresConfirmation()
                     ->hidden(fn (PayrollRun $record) => $record->status !== 'processing')
-                    ->action(fn (PayrollRun $record) => $record->update([
-                        'status'       => 'completed',
-                        'completed_at' => now(),
-                    ])),
+                    ->action(fn (PayrollRun $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.payrollRuns.complete', parameters: ['run' => $record->id])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

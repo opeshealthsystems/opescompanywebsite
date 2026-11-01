@@ -47,19 +47,19 @@
     <h2 class="section-title">{{ $isFr ? 'Six sources de revenus diversifiées' : 'Six diversified revenue streams' }}</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:28px">
         @php $pillars = $isFr ? [
-            ['code','#00C896','Licences logicielles','Licences perpétuelles et par abonnement pour toute la gamme OPES.',['OPES Clinic','OPES Hospital','OPES Specialty Suite','OPES Care','OPES Clinical Intelligence'],null],
-            ['wrench','#1A6FE8','Maintenance annuelle','Mises à jour, support et maintenance de sécurité.',['Mises à jour','Support','Maintenance sécurité'],'20–25% des revenus annuels'],
-            ['map','#00C896','Services d\'implémentation','Déploiement, configuration et support go-live.',['Déploiement','Configuration','Support go-live'],'15–20% des revenus annuels'],
-            ['graduation-cap','#1A6FE8','Formation & certification','Formations et certifications dispensées via OPES Academy.',['OPES Academy'],'5–10% des revenus annuels'],
-            ['share-2','#00C896','Services d\'interopérabilité','Accès API, services HIE et Health ID.',['Accès API','Services HIE','Services Health ID'],'15–20% des revenus annuels'],
-            ['building-2','#1A6FE8','Programmes gouvernementaux','Plateformes nationales, registres et infrastructure UHC.',['Plateformes nationales','Registres','Infrastructure UHC'],'20–30% des revenus annuels'],
+            ['code','#69D5F5','Licences logicielles','Licences perpétuelles et par abonnement pour toute la gamme OPES.',['OPES Clinic','OPES Hospital','OPES Specialty Suite','OPES Care','OPES Clinical Intelligence'],null],
+            ['wrench','#8AC5ED','Maintenance annuelle','Mises à jour, support et maintenance de sécurité.',['Mises à jour','Support','Maintenance sécurité'],'20–25% des revenus annuels'],
+            ['map','#69D5F5','Services d\'implémentation','Déploiement, configuration et support go-live.',['Déploiement','Configuration','Support go-live'],'15–20% des revenus annuels'],
+            ['graduation-cap','#8AC5ED','Formation & certification','Formations et certifications dispensées via OPES Academy.',['OPES Academy'],'5–10% des revenus annuels'],
+            ['share-2','#69D5F5','Services d\'interopérabilité','Accès API, services HIE et Health ID.',['Accès API','Services HIE','Services Health ID'],'15–20% des revenus annuels'],
+            ['building-2','#8AC5ED','Programmes gouvernementaux','Plateformes nationales, registres et infrastructure UHC.',['Plateformes nationales','Registres','Infrastructure UHC'],'20–30% des revenus annuels'],
         ] : [
-            ['code','#00C896','Software licensing','Perpetual and subscription licences across the full OPES product range.',['OPES Clinic','OPES Hospital','OPES Specialty Suite','OPES Care','OPES Clinical Intelligence'],null],
-            ['wrench','#1A6FE8','Annual maintenance','Updates, support, and security maintenance.',['Updates','Support','Security maintenance'],'20–25% of annual revenue'],
-            ['map','#00C896','Implementation services','Deployment, configuration, and go-live support.',['Deployment','Configuration','Go-live support'],'15–20% of annual revenue'],
-            ['graduation-cap','#1A6FE8','Training & certification','Training and certifications delivered via OPES Academy.',['OPES Academy'],'5–10% of annual revenue'],
-            ['share-2','#00C896','Interoperability services','API access, HIE services, and Health ID services.',['API access','HIE services','Health ID services'],'15–20% of annual revenue'],
-            ['building-2','#1A6FE8','Government programmes','National platforms, registries, and UHC infrastructure.',['National platforms','Registries','UHC infrastructure'],'20–30% of annual revenue'],
+            ['code','#69D5F5','Software licensing','Perpetual and subscription licences across the full OPES product range.',['OPES Clinic','OPES Hospital','OPES Specialty Suite','OPES Care','OPES Clinical Intelligence'],null],
+            ['wrench','#8AC5ED','Annual maintenance','Updates, support, and security maintenance.',['Updates','Support','Security maintenance'],'20–25% of annual revenue'],
+            ['map','#69D5F5','Implementation services','Deployment, configuration, and go-live support.',['Deployment','Configuration','Go-live support'],'15–20% of annual revenue'],
+            ['graduation-cap','#8AC5ED','Training & certification','Training and certifications delivered via OPES Academy.',['OPES Academy'],'5–10% of annual revenue'],
+            ['share-2','#69D5F5','Interoperability services','API access, HIE services, and Health ID services.',['API access','HIE services','Health ID services'],'15–20% of annual revenue'],
+            ['building-2','#8AC5ED','Government programmes','National platforms, registries, and UHC infrastructure.',['National platforms','Registries','UHC infrastructure'],'20–30% of annual revenue'],
         ]; @endphp
         @foreach($pillars as $p)
         <div style="background:#0F172A;border:1px solid #1e293b;border-radius:14px;padding:20px">
@@ -98,8 +98,8 @@
             </div>
             <h3 style="font-size:16px;font-weight:700;color:#e2e8f0;margin-bottom:20px">{{ $isFr ? 'Vers une infrastructure récurrente' : 'Toward recurring infrastructure' }}</h3>
             @foreach($isFr
-                ? [['1','var(--text-faint)','Ventes de logiciels'],['2','#1A6FE8','Maintenance récurrente'],['3','#00A87B','Revenus d\'interopérabilité'],['4','#00C896','Revenus d\'infrastructure nationale'],['5','#FFB020','Revenus d\'écosystème régional']]
-                : [['1','var(--text-faint)','Software sales'],['2','#1A6FE8','Recurring maintenance'],['3','#00A87B','Interoperability revenue'],['4','#00C896','National infrastructure revenue'],['5','#FFB020','Regional ecosystem revenue']]
+                ? [['1','var(--text-faint)','Ventes de logiciels'],['2','#8AC5ED','Maintenance récurrente'],['3','#00A87B','Revenus d\'interopérabilité'],['4','#69D5F5','Revenus d\'infrastructure nationale'],['5','#FFB020','Revenus d\'écosystème régional']]
+                : [['1','var(--text-faint)','Software sales'],['2','#8AC5ED','Recurring maintenance'],['3','#00A87B','Interoperability revenue'],['4','#69D5F5','National infrastructure revenue'],['5','#FFB020','Regional ecosystem revenue']]
             as $idx => $ph)
             <div style="display:flex;gap:12px">
                 <div style="display:flex;flex-direction:column;align-items:center">
@@ -120,8 +120,8 @@
             </div>
             <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
                 @foreach($isFr
-                    ? [['#00C896','Revenus récurrents annuels (ARR)'],['#1A6FE8','Valeur vie client (CLV)'],['#00C896','Marge brute'],['#1A6FE8','Taux de renouvellement'],['#00C896','Revenu par établissement'],['#1A6FE8','Revenu par utilisateur'],['#00C896','Coût d\'acquisition client (CAC)']]
-                    : [['#00C896','Annual recurring revenue (ARR)'],['#1A6FE8','Customer lifetime value (CLV)'],['#00C896','Gross margin'],['#1A6FE8','Renewal rate'],['#00C896','Revenue per facility'],['#1A6FE8','Revenue per user'],['#00C896','Cost of customer acquisition (CAC)']]
+                    ? [['#69D5F5','Revenus récurrents annuels (ARR)'],['#8AC5ED','Valeur vie client (CLV)'],['#69D5F5','Marge brute'],['#8AC5ED','Taux de renouvellement'],['#69D5F5','Revenu par établissement'],['#8AC5ED','Revenu par utilisateur'],['#69D5F5','Coût d\'acquisition client (CAC)']]
+                    : [['#69D5F5','Annual recurring revenue (ARR)'],['#8AC5ED','Customer lifetime value (CLV)'],['#69D5F5','Gross margin'],['#8AC5ED','Renewal rate'],['#69D5F5','Revenue per facility'],['#8AC5ED','Revenue per user'],['#69D5F5','Cost of customer acquisition (CAC)']]
                 as $kpi)
                 <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#0F172A;border-radius:8px;border-left:2px solid {{ $kpi[0] }}">
                     <i data-lucide="chevron-right" style="width:11px;height:11px;color:{{ $kpi[0] }};flex-shrink:0"></i>
@@ -144,8 +144,8 @@
     <h2 class="section-title">{{ $isFr ? 'Jalons annuels' : 'Annual milestones' }}</h2>
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px">
         @foreach($isFr
-            ? [['2026','10','établissements','var(--text-faint)'],['2027','50','établissements','#1A6FE8'],['2028','150','établissements','#00A87B'],['2029','Programmes','gouvernementaux','#00C896'],['2031','Expansion','régionale','#FFB020']]
-            : [['2026','10','facilities','var(--text-faint)'],['2027','50','facilities','#1A6FE8'],['2028','150','facilities','#00A87B'],['2029','Government','programmes','#00C896'],['2031','Regional','expansion','#FFB020']]
+            ? [['2026','10','établissements','var(--text-faint)'],['2027','50','établissements','#8AC5ED'],['2028','150','établissements','#00A87B'],['2029','Programmes','gouvernementaux','#69D5F5'],['2031','Expansion','régionale','#FFB020']]
+            : [['2026','10','facilities','var(--text-faint)'],['2027','50','facilities','#8AC5ED'],['2028','150','facilities','#00A87B'],['2029','Government','programmes','#69D5F5'],['2031','Regional','expansion','#FFB020']]
         as $t)
         <div style="background:#0F172A;border:2px solid {{ $t[3] }}40;border-radius:12px;padding:16px 20px;text-align:center;min-width:110px">
             <div style="font-size:var(--fs-2xs);font-weight:800;color:{{ $t[3] }};text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">{{ $t[0] }}</div>

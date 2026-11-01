@@ -6,6 +6,7 @@ use App\Filament\Resources\DocumentResource\Pages;
 use App\Models\Document;
 use App\Models\DocumentTemplate;
 use App\Models\User;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
@@ -191,7 +192,7 @@ class DocumentResource extends Resource
                     ->color('danger')
                     ->requiresConfirmation()
                     ->hidden(fn (Document $record) => in_array($record->status, ['signed', 'voided']))
-                    ->action(fn (Document $record) => $record->update(['status' => 'voided'])),
+                    ->action(fn (Document $record) => AdminWorkflowAdapter::run('admin.documents.void', parameters: ['document' => $record])),
             ]);
     }
 

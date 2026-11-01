@@ -1,0 +1,114 @@
+[
+  {
+    "name": "Action label",
+    "fg": "#FFFFFF",
+    "bg": "#1664D4",
+    "ratio": 5.52,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "name": "Hover label",
+    "fg": "#FFFFFF",
+    "bg": "#104784",
+    "ratio": 9.31,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "name": "Dark body",
+    "fg": "#F1F5F9",
+    "bg": "#102A43",
+    "ratio": 13.37,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "name": "Dark secondary",
+    "fg": "#CBD5E1",
+    "bg": "#16354F",
+    "ratio": 8.54,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "name": "Dark muted",
+    "fg": "#A7B8CC",
+    "bg": "#16354F",
+    "ratio": 6.26,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "name": "Dark caption",
+    "fg": "#9DB1C7",
+    "bg": "#16354F",
+    "ratio": 5.76,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "name": "Accent",
+    "fg": "#69D5F5",
+    "bg": "#16354F",
+    "ratio": 7.51,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "name": "Control boundary",
+    "fg": "#7890AA",
+    "bg": "#16354F",
+    "ratio": 3.85,
+    "required": 3,
+    "pass": true
+  },
+  {
+    "name": "Light body",
+    "fg": "#102A43",
+    "bg": "#FFFFFF",
+    "ratio": 14.64,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "name": "Light muted",
+    "fg": "#425A70",
+    "bg": "#F3F6FA",
+    "ratio": 6.62,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "name": "Light accent",
+    "fg": "#075985",
+    "bg": "#FFFFFF",
+    "ratio": 7.56,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "name": "Success",
+    "fg": "#86D9B3",
+    "bg": "#16354F",
+    "ratio": 7.6,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "name": "Warning",
+    "fg": "#F5D08A",
+    "bg": "#16354F",
+    "ratio": 8.62,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "name": "Danger",
+    "fg": "#FFB4AB",
+    "bg": "#16354F",
+    "ratio": 7.47,
+    "required": 4.5,
+    "pass": true
+  }
+]

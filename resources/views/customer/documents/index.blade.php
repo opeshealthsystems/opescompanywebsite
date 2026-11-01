@@ -30,7 +30,7 @@
                 <tbody>
                     @foreach($documents as $doc)
                     <tr style="border-bottom:1px solid #1e293b;">
-                        <td style="padding:0.75rem;color:#00C896;font-size:0.8125rem;font-family:monospace;">{{ $doc->reference_number }}</td>
+                        <td style="padding:0.75rem;color:var(--brand-accent);font-size:0.8125rem;font-family:monospace;">{{ $doc->reference_number }}</td>
                         <td style="padding:0.75rem;color:#e2e8f0;font-size:0.875rem;">{{ $doc->title }}</td>
                         <td style="padding:0.75rem;">
                             <span style="background:rgba(100,116,139,0.15);color:var(--text-muted);font-size:0.7rem;font-weight:600;padding:0.2rem 0.5rem;border-radius:20px;text-transform:uppercase;letter-spacing:0.04em;">

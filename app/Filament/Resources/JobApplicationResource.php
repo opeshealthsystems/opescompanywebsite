@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\JobApplicationResource\Pages;
 use App\Models\JobApplication;
 use App\Models\JobOpening;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -51,6 +52,8 @@ class JobApplicationResource extends Resource
                 Forms\Components\Select::make('status')
                     ->options(JobApplication::statusOptions())
                     ->default('received')
+                    ->disabled()
+                    ->dehydrated(false)
                     ->required(),
 
                 Forms\Components\DatePicker::make('applied_at')
@@ -138,7 +141,7 @@ class JobApplicationResource extends Resource
                     ->icon('heroicon-o-star')
                     ->color('info')
                     ->hidden(fn (JobApplication $r) => !in_array($r->status, ['received', 'reviewing']))
-                    ->action(fn (JobApplication $r) => $r->update(['status' => 'shortlisted'])),
+                    ->action(fn (JobApplication $r) => AdminWorkflowAdapter::run('admin.recruitment.applications.shortlist', parameters: ['application' => $r])),
                 Tables\Actions\Action::make('schedule_interview')
                     ->label('Schedule Interview')
                     ->icon('heroicon-o-calendar')
@@ -150,30 +153,28 @@ class JobApplicationResource extends Resource
                             ->required()
                             ->native(false),
                     ])
-                    ->action(function (JobApplication $r, array $data) {
-                        $r->update(['status' => 'interviewed', 'interview_date' => $data['interview_date']]);
-                    }),
+                    ->action(fn (JobApplication $r, array $data) => AdminWorkflowAdapter::run('admin.recruitment.applications.scheduleInterview', $data, ['application' => $r])),
                 Tables\Actions\Action::make('make_offer')
                     ->label('Make Offer')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
                     ->hidden(fn (JobApplication $r) => $r->status !== 'interviewed')
                     ->requiresConfirmation()
-                    ->action(fn (JobApplication $r) => $r->update(['status' => 'offered'])),
+                    ->action(fn (JobApplication $r) => AdminWorkflowAdapter::run('admin.recruitment.applications.makeOffer', parameters: ['application' => $r])),
                 Tables\Actions\Action::make('hire')
                     ->label('Hire')
                     ->icon('heroicon-o-check-badge')
                     ->color('success')
                     ->requiresConfirmation()
                     ->hidden(fn (JobApplication $r) => $r->status !== 'offered')
-                    ->action(fn (JobApplication $r) => $r->update(['status' => 'hired'])),
+                    ->action(fn (JobApplication $r) => AdminWorkflowAdapter::run('admin.recruitment.applications.hire', parameters: ['application' => $r])),
                 Tables\Actions\Action::make('reject')
                     ->label('Reject')
                     ->icon('heroicon-o-x-mark')
                     ->color('danger')
                     ->requiresConfirmation()
                     ->hidden(fn (JobApplication $r) => in_array($r->status, ['hired', 'rejected']))
-                    ->action(fn (JobApplication $r) => $r->update(['status' => 'rejected'])),
+                    ->action(fn (JobApplication $r) => AdminWorkflowAdapter::run('admin.recruitment.applications.reject', parameters: ['application' => $r])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

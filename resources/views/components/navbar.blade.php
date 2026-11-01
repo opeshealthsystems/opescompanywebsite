@@ -2,293 +2,23 @@
 
 <nav class="site-nav" id="siteNav">
     <a href="{{ url($locale) }}" class="nav-logo">
-        <div class="nav-logo-mark"><i data-lucide="circle-dashed" style="width:20px;height:20px"></i></div>
+        <img class="site-seal" src="{{ asset('images/opes-seal.png') }}" alt="" width="44" height="44" style="object-fit:contain;flex-shrink:0">
         <div class="nav-logo-text">
-            <div class="nav-logo-name">Opes <span>Health</span> Systems</div>
+            <div class="nav-logo-name">OPES <span>Health</span> Systems</div>
             <div class="nav-logo-tagline">{{ $locale === 'fr' ? 'Infrastructure de santé numérique pour l\'Afrique' : 'Digital Health Infrastructure for Africa' }}</div>
         </div>
     </a>
 
-    <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+    <button class="nav-toggle" type="button" aria-label="{{ $locale === 'fr' ? 'Afficher le menu' : 'Toggle menu' }}" aria-controls="site-navigation" aria-expanded="false">
         <i data-lucide="menu" class="nav-toggle-open" style="width:22px;height:22px"></i>
         <i data-lucide="x" class="nav-toggle-close" style="width:22px;height:22px"></i>
     </button>
 
-    <div class="nav-collapse">
+    <div class="nav-collapse" id="site-navigation">
     <div class="nav-links">
-
-        <a href="{{ url($locale) }}">{{ $locale === 'fr' ? 'Accueil' : 'Home' }}</a>
-
-        {{-- Products dropdown --}}
-        <div class="nav-dropdown-wrap">
-            <a href="{{ url($locale.'/products') }}" class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
-                {{ __('nav.products') }}
-                <i data-lucide="chevron-down" aria-hidden="true" style="width:13px;height:13px;opacity:.5;transition:transform 0.2s"></i>
-            </a>
-            <div class="nav-dropdown">
-                <div class="nav-dd-section">
-                    <div class="nav-dd-section-label">{{ $locale === 'fr' ? 'Vue d\'ensemble' : 'Platform Overview' }}</div>
-                    <a href="{{ url($locale.'/health-os') }}" class="nav-dd-item">
-                        <i data-lucide="layers" style="width:14px;height:14px;color:#00C896"></i>
-                        <div>
-                            <div class="nav-dd-name">OPES Health OS</div>
-                            <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Catalogue produits & matrice' : 'Product catalog & capability matrix' }}</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="nav-dd-section">
-                    <div class="nav-dd-section-label">{{ $locale === 'fr' ? 'Plateforme principale' : 'Core Platform' }}</div>
-                    <a href="{{ url($locale.'/products/opescare') }}" class="nav-dd-item">
-                        <i data-lucide="fingerprint" style="width:14px;height:14px;color:#00C896"></i>
-                        <div>
-                            <div class="nav-dd-name">OPESCare</div>
-                            <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Identifiant de santé universel' : 'Universal Health ID' }}</div>
-                        </div>
-                    </a>
-                    <a href="{{ url($locale.'/products/opes-emr') }}" class="nav-dd-item">
-                        <i data-lucide="stethoscope" style="width:14px;height:14px;color:#00C896"></i>
-                        <div>
-                            <div class="nav-dd-name">OPES EMR</div>
-                            <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Dossiers médicaux électroniques' : 'Electronic Medical Records' }}</div>
-                        </div>
-                    </a>
-                    <a href="{{ url($locale.'/products/opes-hospital-his') }}" class="nav-dd-item">
-                        <i data-lucide="hospital" style="width:14px;height:14px;color:#00C896"></i>
-                        <div>
-                            <div class="nav-dd-name">OPES Hospital HIS</div>
-                            <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Système d\'information hospitalier' : 'Hospital Information System' }}</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="nav-dd-section">
-                    <div class="nav-dd-section-label">Diagnostics</div>
-                    <a href="{{ url($locale.'/products/opes-lab') }}" class="nav-dd-item">
-                        <i data-lucide="microscope" style="width:14px;height:14px;color:#1A6FE8"></i>
-                        <div>
-                            <div class="nav-dd-name">OPES Lab</div>
-                            <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Système d\'information de laboratoire' : 'Laboratory Information System' }}</div>
-                        </div>
-                    </a>
-                    <a href="{{ url($locale.'/products/pharmis') }}" class="nav-dd-item">
-                        <i data-lucide="pill" style="width:14px;height:14px;color:#1A6FE8"></i>
-                        <div>
-                            <div class="nav-dd-name">PHARMIS</div>
-                            <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Gestion pharmacie' : 'Pharmacy Management' }}</div>
-                        </div>
-                    </a>
-                    <a href="{{ url($locale.'/products/radis') }}" class="nav-dd-item">
-                        <i data-lucide="scan" style="width:14px;height:14px;color:#1A6FE8"></i>
-                        <div>
-                            <div class="nav-dd-name">RADIS</div>
-                            <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Système d\'information de radiologie' : 'Radiology Information System' }}</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="nav-dd-footer">
-                    <a href="{{ url($locale.'/products') }}">
-                        {{ $locale === 'fr' ? 'Voir les 22 systèmes' : 'View all 22 systems' }}
-                        <i data-lucide="arrow-right" style="width:11px;height:11px"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        {{-- Solutions dropdown --}}
-        <div class="nav-dropdown-wrap">
-            <a href="{{ url($locale.'/solutions') }}" class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
-                {{ __('nav.solutions') }}
-                <i data-lucide="chevron-down" aria-hidden="true" style="width:13px;height:13px;opacity:.5;transition:transform 0.2s"></i>
-            </a>
-            <div class="nav-dropdown nav-dropdown--narrow">
-                <a href="{{ url($locale.'/solutions').'#hospitals' }}" class="nav-dd-item">
-                    <i data-lucide="hospital" style="width:14px;height:14px;color:#00C896"></i>
-                    <div>
-                        <div class="nav-dd-name">{{ $locale === 'fr' ? 'Hôpitaux' : 'Hospitals' }}</div>
-                        <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Transformation numérique complète' : 'Full-suite digital transformation' }}</div>
-                    </div>
-                </a>
-                <a href="{{ url($locale.'/solutions').'#clinics' }}" class="nav-dd-item">
-                    <i data-lucide="stethoscope" style="width:14px;height:14px;color:#1A6FE8"></i>
-                    <div>
-                        <div class="nav-dd-name">{{ $locale === 'fr' ? 'Cliniques' : 'Clinics' }}</div>
-                        <div class="nav-dd-sub">{{ $locale === 'fr' ? 'DME & triage pour petits établissements' : 'EMR & triage for smaller facilities' }}</div>
-                    </div>
-                </a>
-                <a href="{{ url($locale.'/solutions').'#laboratories' }}" class="nav-dd-item">
-                    <i data-lucide="microscope" style="width:14px;height:14px;color:#00C896"></i>
-                    <div>
-                        <div class="nav-dd-name">{{ $locale === 'fr' ? 'Laboratoires' : 'Laboratories' }}</div>
-                        <div class="nav-dd-sub">OPES Lab + OPESCare</div>
-                    </div>
-                </a>
-                <a href="{{ url($locale.'/solutions').'#government' }}" class="nav-dd-item">
-                    <i data-lucide="shield-check" style="width:14px;height:14px;color:#1A6FE8"></i>
-                    <div>
-                        <div class="nav-dd-name">{{ $locale === 'fr' ? 'Gouvernement & ONG' : 'Government & NGOs' }}</div>
-                        <div class="nav-dd-sub">{{ $locale === 'fr' ? 'SIS UHC + santé populationnelle' : 'UHC IS + population health' }}</div>
-                    </div>
-                </a>
-                <a href="{{ url($locale.'/national-platform') }}" class="nav-dd-item">
-                    <i data-lucide="building-2" style="width:14px;height:14px;color:#00C896"></i>
-                    <div>
-                        <div class="nav-dd-name">{{ $locale === 'fr' ? 'Plateforme nationale' : 'National Platform' }}</div>
-                        <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Plan gouvernemental & HIE' : 'Government blueprint & HIE' }}</div>
-                    </div>
-                </a>
-                <div class="nav-dd-footer">
-                    <a href="{{ url($locale.'/solutions') }}">
-                        {{ $locale === 'fr' ? 'Voir toutes les solutions' : 'View all solutions' }}
-                        <i data-lucide="arrow-right" style="width:11px;height:11px"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        {{-- Markets dropdown (CEMAC country landing pages — data-driven from config/markets.php) --}}
-        <div class="nav-dropdown-wrap">
-            <a href="{{ url($locale.'/markets') }}" class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
-                {{ $locale === 'fr' ? 'Marchés' : 'Markets' }}
-                <i data-lucide="chevron-down" aria-hidden="true" style="width:13px;height:13px;opacity:.5;transition:transform 0.2s"></i>
-            </a>
-            <div class="nav-dropdown nav-dropdown--narrow">
-                <div class="nav-dd-section">
-                    <div class="nav-dd-section-label">{{ $locale === 'fr' ? 'Marché d\'origine' : 'Home market' }}</div>
-                    <a href="{{ url($locale.'/products') }}" class="nav-dd-item">
-                        <img src="{{ asset('flags/cm.svg') }}" alt="" style="width:18px;height:12px;border-radius:2px;object-fit:cover;flex-shrink:0">
-                        <div>
-                            <div class="nav-dd-name">{{ $locale === 'fr' ? 'Cameroun' : 'Cameroon' }}</div>
-                            <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Marché principal — 22 systèmes' : 'Home market — 22 systems' }}</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="nav-dd-section">
-                    <div class="nav-dd-section-label">{{ $locale === 'fr' ? 'Zone CEMAC' : 'CEMAC region' }}</div>
-                    @foreach(config('markets') as $m)
-                    <a href="{{ url($locale.'/markets/'.$m['slug']) }}" class="nav-dd-item">
-                        <img src="{{ asset('flags/'.$m['code'].'.svg') }}" alt="" style="width:18px;height:12px;border-radius:2px;object-fit:cover;flex-shrink:0">
-                        <div>
-                            <div class="nav-dd-name">{{ $m['name'] }}</div>
-                            <div class="nav-dd-sub">{{ $m['capital'] }}</div>
-                        </div>
-                    </a>
-                    @endforeach
-                </div>
-                <div class="nav-dd-footer">
-                    <a href="{{ url($locale.'/markets') }}">
-                        {{ $locale === 'fr' ? 'Tous les marchés CEMAC' : 'All CEMAC markets' }}
-                        <i data-lucide="arrow-right" style="width:11px;height:11px"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        {{-- Platform dropdown --}}
-        <div class="nav-dropdown-wrap">
-            <a href="{{ url($locale.'/architecture') }}" class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
-                {{ $locale === 'fr' ? 'Plateforme' : 'Platform' }}
-                <i data-lucide="chevron-down" aria-hidden="true" style="width:13px;height:13px;opacity:.5;transition:transform 0.2s"></i>
-            </a>
-            <div class="nav-dropdown nav-dropdown--narrow">
-                <a href="{{ url($locale.'/architecture') }}" class="nav-dd-item">
-                    <i data-lucide="cpu" style="width:14px;height:14px;color:#00C896"></i>
-                    <div>
-                        <div class="nav-dd-name">Architecture</div>
-                        <div class="nav-dd-sub">{{ $locale === 'fr' ? 'HL7 FHIR, identifiant de santé, sécurité' : 'HL7 FHIR, Health ID, security' }}</div>
-                    </div>
-                </a>
-                <a href="{{ url($locale.'/architecture-diagrams') }}" class="nav-dd-item">
-                    <i data-lucide="git-branch" style="width:14px;height:14px;color:#1A6FE8"></i>
-                    <div>
-                        <div class="nav-dd-name">{{ $locale === 'fr' ? 'Diagrammes architecture' : 'Architecture diagrams' }}</div>
-                        <div class="nav-dd-sub">{{ $locale === 'fr' ? '12 diagrammes visuels' : '12 visual system diagrams' }}</div>
-                    </div>
-                </a>
-                <a href="{{ url($locale.'/implementation') }}" class="nav-dd-item">
-                    <i data-lucide="map" style="width:14px;height:14px;color:#1A6FE8"></i>
-                    <div>
-                        <div class="nav-dd-name">{{ $locale === 'fr' ? 'Implémentation' : 'Implementation' }}</div>
-                        <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Cadre de déploiement en 90 jours' : '90-day deployment framework' }}</div>
-                    </div>
-                </a>
-                <a href="{{ url($locale.'/support') }}" class="nav-dd-item">
-                    <i data-lucide="headphones" style="width:14px;height:14px;color:#00C896"></i>
-                    <div>
-                        <div class="nav-dd-name">Support & SLA</div>
-                        <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Niveaux Bronze à Platine' : 'Bronze to Platinum tiers' }}</div>
-                    </div>
-                </a>
-                <a href="{{ url($locale.'/academy') }}" class="nav-dd-item">
-                    <i data-lucide="graduation-cap" style="width:14px;height:14px;color:#1A6FE8"></i>
-                    <div>
-                        <div class="nav-dd-name">OPES Academy</div>
-                        <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Certification et formation' : 'Certification & training' }}</div>
-                    </div>
-                </a>
-                <a href="{{ url($locale.'/courses') }}" class="nav-dd-item">
-                    <i data-lucide="book-open" style="width:14px;height:14px;color:#1A6FE8"></i>
-                    <div>
-                        <div class="nav-dd-name">{{ $locale === 'fr' ? 'Cours' : 'Courses' }}</div>
-                        <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Catalogue de formation public' : 'Public training catalog' }}</div>
-                    </div>
-                </a>
-                <a href="{{ url($locale.'/practitioners') }}" class="nav-dd-item">
-                    <i data-lucide="users" style="width:14px;height:14px;color:#00C896"></i>
-                    <div>
-                        <div class="nav-dd-name">{{ $locale === 'fr' ? 'Annuaire des praticiens' : 'Practitioner Directory' }}</div>
-                        <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Praticiens vérifiés' : 'Verified practitioners' }}</div>
-                    </div>
-                </a>
-                <a href="{{ url($locale.'/compliance') }}" class="nav-dd-item">
-                    <i data-lucide="shield-check" style="width:14px;height:14px;color:#00C896"></i>
-                    <div>
-                        <div class="nav-dd-name">{{ $locale === 'fr' ? 'Conformité & confiance' : 'Compliance & Trust' }}</div>
-                        <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Sécurité, OHADA, souveraineté des données' : 'Security, OHADA, data sovereignty' }}</div>
-                    </div>
-                </a>
-                <a href="{{ url($locale.'/clinical-governance') }}" class="nav-dd-item">
-                    <i data-lucide="heart-pulse" style="width:14px;height:14px;color:#1A6FE8"></i>
-                    <div>
-                        <div class="nav-dd-name">{{ $locale === 'fr' ? 'Gouvernance clinique' : 'Clinical Governance' }}</div>
-                        <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Sécurité patients & supervision CDSS' : 'Patient safety & CDSS oversight' }}</div>
-                    </div>
-                </a>
-                <a href="{{ url($locale.'/interoperability') }}" class="nav-dd-item">
-                    <i data-lucide="share-2" style="width:14px;height:14px;color:#00C896"></i>
-                    <div>
-                        <div class="nav-dd-name">{{ $locale === 'fr' ? 'Interopérabilité' : 'Interoperability' }}</div>
-                        <div class="nav-dd-sub">HIE, FHIR, Health ID exchange</div>
-                    </div>
-                </a>
-                <a href="{{ url($locale.'/quality') }}" class="nav-dd-item">
-                    <i data-lucide="badge-check" style="width:14px;height:14px;color:#1A6FE8"></i>
-                    <div>
-                        <div class="nav-dd-name">{{ $locale === 'fr' ? 'Qualité (SGQ)' : 'Quality (QMS)' }}</div>
-                        <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Cadre de gestion de la qualité' : 'Quality management framework' }}</div>
-                    </div>
-                </a>
-                @auth
-                @if(auth()->user()->hasAnyRole(['admin','super_admin']))
-                <a href="{{ url($locale.'/risk') }}" class="nav-dd-item">
-                    <i data-lucide="shield-alert" style="width:14px;height:14px;color:#A855F7"></i>
-                    <div>
-                        <div class="nav-dd-name">{{ $locale === 'fr' ? 'Gestion des risques' : 'Risk Management' }}</div>
-                        <div class="nav-dd-sub">{{ $locale === 'fr' ? 'Cadre ERM & contrôles' : 'ERM framework & controls' }}</div>
-                    </div>
-                </a>
-                @endif
-                @endauth
-            </div>
-        </div>
-
-        @auth
-            @if(auth()->user()->hasAnyRole(['admin','super_admin']))
-            <a href="{{ url($locale.'/strategy') }}">{{ $locale === 'fr' ? 'Stratégie' : 'Strategy' }}</a>
-            @endif
-        @endauth
-        <a href="{{ url($locale.'/about') }}">{{ __('nav.about') }}</a>
-        <a href="{{ url($locale.'/partnerships') }}">{{ __('nav.partnerships') }}</a>
-        <a href="{{ url($locale.'/pricing') }}">{{ __('nav.pricing') }}</a>
-        <a href="{{ url($locale.'/contact') }}">{{ __('nav.contact') }}</a>
+        @foreach(['products' => ['Products','Produits'], 'solutions' => ['Solutions','Solutions'], 'about' => ['Company','Entreprise'], 'blog' => ['Resources','Ressources'], 'compliance' => ['Trust','Confiance'], 'contact' => ['Contact','Contact']] as $path => $labels)
+        <a href="{{ url($locale.'/'.$path) }}">{{ $labels[$locale === 'fr' ? 1 : 0] }}</a>
+        @endforeach
     </div>
 
     <div class="nav-right">
@@ -359,6 +89,14 @@
 (function () {
     var nav = document.getElementById('siteNav');
     if (!nav) return;
+    nav.addEventListener('keydown', function (event) {
+        if (event.key !== 'Escape') return;
+        nav.classList.remove('nav-open');
+        nav.querySelector('.nav-toggle').setAttribute('aria-expanded', 'false');
+        nav.querySelectorAll('.open').forEach(function (el) { el.classList.remove('open'); });
+        nav.querySelectorAll('[aria-expanded]').forEach(function (el) { el.setAttribute('aria-expanded', 'false'); });
+        nav.querySelector('.nav-logo').focus();
+    });
 
     // Mobile drawer (hamburger).
     var toggle = nav.querySelector('.nav-toggle');

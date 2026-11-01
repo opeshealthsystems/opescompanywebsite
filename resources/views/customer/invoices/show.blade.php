@@ -40,12 +40,12 @@
         </div>
         <div class="cp-section-card">
             <p style="color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem;">Total</p>
-            <p style="color:#00C896;font-weight:700;font-size:1.125rem;">{{ number_format($invoice->grandTotal) }} {{ $invoice->currency }}</p>
+            <p style="color:var(--brand-accent);font-weight:700;font-size:1.125rem;">{{ number_format($invoice->grandTotal) }} {{ $invoice->currency }}</p>
         </div>
         @if($invoice->paid_at)
         <div class="cp-section-card">
             <p style="color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem;">Paid On</p>
-            <p style="color:#00C896;font-weight:600;">{{ $invoice->paid_at->format('d M Y') }}</p>
+            <p style="color:var(--brand-accent);font-weight:600;">{{ $invoice->paid_at->format('d M Y') }}</p>
         </div>
         @endif
     </div>
@@ -84,7 +84,7 @@
                 @endif
                 <tr style="border-top:2px solid #334155;">
                     <td colspan="3" style="padding:0.75rem;color:#e2e8f0;font-size:0.9375rem;font-weight:700;text-align:right;">Total</td>
-                    <td style="padding:0.75rem;color:#00C896;font-size:0.9375rem;font-weight:700;text-align:right;">{{ number_format($invoice->grandTotal) }} {{ $invoice->currency }}</td>
+                    <td style="padding:0.75rem;color:var(--brand-accent);font-size:0.9375rem;font-weight:700;text-align:right;">{{ number_format($invoice->grandTotal) }} {{ $invoice->currency }}</td>
                 </tr>
             </tfoot>
         </table>

@@ -47,7 +47,7 @@ class PurchaseOrderResource extends Resource
 
                 Forms\Components\Select::make('status')
                     ->options(PurchaseOrder::statusOptions())
-                    ->default('draft')->required(),
+                    ->default('draft')->required()->disabled()->dehydrated(false),
 
                 Forms\Components\TextInput::make('title')
                     ->required()->maxLength(250)->columnSpanFull(),
@@ -168,21 +168,14 @@ class PurchaseOrderResource extends Resource
                     ->color('success')
                     ->requiresConfirmation()
                     ->hidden(fn (PurchaseOrder $record) => $record->status !== 'submitted')
-                    ->action(fn (PurchaseOrder $record) => $record->update([
-                        'status'      => 'approved',
-                        'approved_by' => auth()->id(),
-                        'approved_at' => now(),
-                    ])),
+                    ->action(fn (PurchaseOrder $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.purchaseOrders.approve', parameters: ['purchaseOrder' => $record->id])),
                 Tables\Actions\Action::make('mark_received')
                     ->label('Mark Received')
                     ->icon('heroicon-o-inbox-arrow-down')
                     ->color('info')
                     ->requiresConfirmation()
                     ->hidden(fn (PurchaseOrder $record) => $record->status !== 'approved')
-                    ->action(fn (PurchaseOrder $record) => $record->update([
-                        'status'        => 'received',
-                        'received_date' => now(),
-                    ])),
+                    ->action(fn (PurchaseOrder $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.purchaseOrders.receive', parameters: ['purchaseOrder' => $record->id])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

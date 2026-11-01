@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\DocumentResource\Pages;
 
 use App\Filament\Resources\DocumentResource;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
@@ -24,7 +25,7 @@ class EditDocument extends EditRecord
                 ->icon('heroicon-o-paper-airplane')
                 ->color('primary')
                 ->hidden(fn () => $this->record->status !== 'draft')
-                ->action(fn () => $this->record->update(['status' => 'sent']))
+                ->action(fn () => AdminWorkflowAdapter::run('admin.documents.markSent', parameters: ['document' => $this->record]))
                 ->after(fn () => $this->refreshFormData(['status'])),
             Actions\Action::make('void')
                 ->label('Void Document')
@@ -32,7 +33,7 @@ class EditDocument extends EditRecord
                 ->color('danger')
                 ->requiresConfirmation()
                 ->hidden(fn () => in_array($this->record->status, ['signed', 'voided']))
-                ->action(fn () => $this->record->update(['status' => 'voided']))
+                ->action(fn () => AdminWorkflowAdapter::run('admin.documents.void', parameters: ['document' => $this->record]))
                 ->after(fn () => $this->refreshFormData(['status'])),
             Actions\DeleteAction::make(),
         ];

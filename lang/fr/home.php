@@ -3,17 +3,17 @@
 return [
     // Héros
     'hero_eyebrow'       => 'Infrastructure de santé numérique · Cameroun · CEMAC · Afrique',
-    'hero_title_1'       => "L'écosystème de santé",
-    'hero_title_gradient'=> "le plus complet d'Afrique",
-    'hero_tagline'       => "22 systèmes logiciels intégrés — des dossiers médicaux aux cliniques spécialisées, laboratoire, pharmacie, radiologie et une couche d'identité santé unifiée. Conçu bilingue pour le Cameroun et toute la région CEMAC.",
+    'hero_title_1'       => "Des logiciels de santé",
+    'hero_title_gradient'=> "conçus pour les soignants",
+    'hero_tagline'       => "Découvrez notre catalogue — des dossiers médicaux aux cliniques spécialisées, laboratoire, pharmacie, radiologie et une couche d'identité santé unifiée. Conçu bilingue pour le Cameroun et toute la région CEMAC.",
     'cta_explore'        => 'Découvrir nos produits',
-    'cta_watch_demo'     => 'Voir une démo',
+    'cta_watch_demo'     => 'Demander une démo',
 
     // Bandeau de confiance
     'trust_22'           => 'Systèmes logiciels',
     'trust_bilingual'    => 'Entièrement bilingue',
-    'trust_cemac'        => 'Couverture régionale',
-    'trust_moh'          => 'Aligné MoH 2026–2030',
+    'trust_cemac'        => 'Ancrage régional',
+    'trust_moh'          => 'Conçu au Cameroun',
 
     // Diapositive 2 — Présentation de l'entreprise
     's2_eyebrow'       => "Présentation de l'entreprise",
@@ -35,7 +35,7 @@ return [
     // Diapositive 4 — OPES Care
     's4_eyebrow'       => 'OPES Care · Interopérabilité',
     's4_title'         => 'Connecter les soins de santé',
-    's4_title_grad'    => 'via OPES Care',
+    's4_title_grad'    => 'via OPESCare',
     's4_sub'           => "Identité patient sécurisée, interopérabilité et échange d'informations de santé pour des soins connectés.",
     's4_support'       => "OPES Care fournit l'identifiant santé, l'index maître des patients, l'échange d'informations de santé, la gestion des références et des services d'interopérabilité permettant aux établissements d'échanger des informations en toute sécurité.",
     's4_cta'           => 'Découvrir OPES Care',

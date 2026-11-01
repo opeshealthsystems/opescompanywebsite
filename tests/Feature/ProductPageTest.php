@@ -6,6 +6,7 @@ use Tests\TestCase;
 
 class ProductPageTest extends TestCase
 {
+    use \Illuminate\Foundation\Testing\RefreshDatabase;
     protected function setUp(): void
     {
         parent::setUp();

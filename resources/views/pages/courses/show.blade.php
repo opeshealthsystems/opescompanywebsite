@@ -63,7 +63,7 @@
 
             @auth
                 @if($enrollment)
-                    <p style="margin-top:14px;display:inline-flex;align-items:center;gap:7px;font-size:13.5px;color:#00C896">
+                    <p style="margin-top:14px;display:inline-flex;align-items:center;gap:7px;font-size:13.5px;color:var(--brand-accent)">
                         <i data-lucide="check-circle" style="width:15px;height:15px"></i>
                         You're enrolled in this course.
                     </p>
@@ -101,7 +101,7 @@
         <div style="display:flex;flex-direction:column;gap:10px;max-width:760px">
             @foreach($course->lessons as $i => $lesson)
             <div style="display:flex;align-items:center;gap:16px;padding:14px 18px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px">
-                <div style="flex:0 0 32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:rgba(0,200,150,0.1);color:#00C896;font-weight:700;font-size:13px">
+                <div style="flex:0 0 32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:rgba(0,200,150,0.1);color:var(--brand-accent);font-weight:700;font-size:13px">
                     {{ $i + 1 }}
                 </div>
                 <div style="flex:1 1 auto;min-width:0">

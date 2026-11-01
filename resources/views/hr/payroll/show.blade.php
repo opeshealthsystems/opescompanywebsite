@@ -61,7 +61,7 @@
                 <td style="font-weight:500;color:#f1f5f9">{{ $entry->employee->name ?? '—' }}</td>
                 <td>{{ number_format($entry->gross_salary ?? 0, 2) }}</td>
                 <td style="color:#ef4444">{{ number_format($entry->total_deductions ?? 0, 2) }}</td>
-                <td style="font-weight:600;color:#00C896">{{ number_format($entry->net_salary ?? 0, 2) }}</td>
+                <td style="font-weight:600;color:var(--brand-accent)">{{ number_format($entry->net_salary ?? 0, 2) }}</td>
                 <td><span class="portal-badge {{ $badge }}">{{ ucfirst($entry->status) }}</span></td>
             </tr>
             @empty

@@ -1,0 +1,225 @@
+{
+  "results": [
+    {
+      "route": "/en",
+      "width": 320,
+      "status": 200,
+      "title": "Healthcare software designed in Cameroon — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 5
+    },
+    {
+      "route": "/fr",
+      "width": 320,
+      "status": 200,
+      "title": "Logiciels de santé conçus au Cameroun — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 5
+    },
+    {
+      "route": "/en/products",
+      "width": 320,
+      "status": 200,
+      "title": "OPES Health Systems — Healthcare Software Catalogue — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 1
+    },
+    {
+      "route": "/fr/products",
+      "width": 320,
+      "status": 200,
+      "title": "OPES Health Systems — Catalogue de logiciels de santé — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 1
+    },
+    {
+      "route": "/en/contact",
+      "width": 320,
+      "status": 200,
+      "title": "Contact OPES Health Systems — Book a Free HMS Demo in Cameroon — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 1
+    },
+    {
+      "route": "/fr/contact",
+      "width": 320,
+      "status": 200,
+      "title": "Contacter OPES Health Systems — Réserver une démo HMS gratuite au Cameroun — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 1
+    },
+    {
+      "route": "/en",
+      "width": 360,
+      "status": 200,
+      "title": "Healthcare software designed in Cameroon — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 5
+    },
+    {
+      "route": "/fr",
+      "width": 360,
+      "status": 200,
+      "title": "Logiciels de santé conçus au Cameroun — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 5
+    },
+    {
+      "route": "/en/products",
+      "width": 360,
+      "status": 200,
+      "title": "OPES Health Systems — Healthcare Software Catalogue — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 1
+    },
+    {
+      "route": "/fr/products",
+      "width": 360,
+      "status": 200,
+      "title": "OPES Health Systems — Catalogue de logiciels de santé — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 1
+    },
+    {
+      "route": "/en/contact",
+      "width": 360,
+      "status": 200,
+      "title": "Contact OPES Health Systems — Book a Free HMS Demo in Cameroon — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 1
+    },
+    {
+      "route": "/fr/contact",
+      "width": 360,
+      "status": 200,
+      "title": "Contacter OPES Health Systems — Réserver une démo HMS gratuite au Cameroun — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 1
+    },
+    {
+      "route": "/en",
+      "width": 768,
+      "status": 200,
+      "title": "Healthcare software designed in Cameroon — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 5
+    },
+    {
+      "route": "/fr",
+      "width": 768,
+      "status": 200,
+      "title": "Logiciels de santé conçus au Cameroun — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 5
+    },
+    {
+      "route": "/en/products",
+      "width": 768,
+      "status": 200,
+      "title": "OPES Health Systems — Healthcare Software Catalogue — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 1
+    },
+    {
+      "route": "/fr/products",
+      "width": 768,
+      "status": 200,
+      "title": "OPES Health Systems — Catalogue de logiciels de santé — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 1
+    },
+    {
+      "route": "/en/contact",
+      "width": 768,
+      "status": 200,
+      "title": "Contact OPES Health Systems — Book a Free HMS Demo in Cameroon — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 1
+    },
+    {
+      "route": "/fr/contact",
+      "width": 768,
+      "status": 200,
+      "title": "Contacter OPES Health Systems — Réserver une démo HMS gratuite au Cameroun — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 1
+    },
+    {
+      "route": "/en",
+      "width": 1440,
+      "status": 200,
+      "title": "Healthcare software designed in Cameroon — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 5
+    },
+    {
+      "route": "/fr",
+      "width": 1440,
+      "status": 200,
+      "title": "Logiciels de santé conçus au Cameroun — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 5
+    },
+    {
+      "route": "/en/products",
+      "width": 1440,
+      "status": 200,
+      "title": "OPES Health Systems — Healthcare Software Catalogue — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 1
+    },
+    {
+      "route": "/fr/products",
+      "width": 1440,
+      "status": 200,
+      "title": "OPES Health Systems — Catalogue de logiciels de santé — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 1
+    },
+    {
+      "route": "/en/contact",
+      "width": 1440,
+      "status": 200,
+      "title": "Contact OPES Health Systems — Book a Free HMS Demo in Cameroon — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 1
+    },
+    {
+      "route": "/fr/contact",
+      "width": 1440,
+      "status": 200,
+      "title": "Contacter OPES Health Systems — Réserver une démo HMS gratuite au Cameroun — OPES Health Systems",
+      "overflow": false,
+      "unlabelled": [],
+      "h1": 1
+    }
+  ],
+  "keyboard": {
+    "skip": "Skip to content",
+    "mainFocused": true
+  },
+  "mobileExpanded": "true"
+}

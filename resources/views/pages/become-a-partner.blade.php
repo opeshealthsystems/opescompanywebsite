@@ -7,14 +7,14 @@ $isFr   = $locale === 'fr';
                :description="$isFr ? 'Rejoignez l\'écosystème OPES et contribuez à la transformation de la santé numérique en Afrique.' : 'Join the OPES ecosystem and help transform digital health across Africa.'">
 
 <style>
-.partner-page-hero { background: linear-gradient(135deg, #080F1E 0%, #0a1628 100%); padding: 72px 48px 56px; text-align: center; border-bottom: 1px solid #1e293b; }
+.partner-page-hero { background: var(--surface); padding: 72px 48px 56px; text-align: center; border-bottom: 1px solid #1e293b; }
 .partner-page-hero h1 { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 800; color: #f1f5f9; margin-bottom: 14px; }
 .partner-page-hero p  { color: var(--text-muted); font-size: 1.05rem; max-width: 580px; margin: 0 auto; line-height: 1.7; }
 
 .partner-type-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; max-width: 900px; margin: 40px auto 0; padding: 0 24px; }
 .ptype-card { background: #080e1a; border: 1px solid #1e293b; border-radius: 12px; padding: 18px; text-align: center; transition: border-color .2s; }
-.ptype-card:hover { border-color: #00C896; }
-.ptype-card svg { margin: 0 auto 10px; color: #00C896; display: block; }
+.ptype-card:hover { border-color: #69D5F5; }
+.ptype-card svg { margin: 0 auto 10px; color: var(--brand-accent); display: block; }
 .ptype-card h4 { font-size: 0.82rem; font-weight: 700; color: #e2e8f0; margin-bottom: 6px; }
 .ptype-card p  { font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; }
 
@@ -31,19 +31,19 @@ $isFr   = $locale === 'fr';
     padding: 10px 14px; color: #e2e8f0; font-size: 0.88rem; font-family: inherit; width: 100%;
     transition: border-color .2s;
 }
-.pf-group input:focus, .pf-group select:focus, .pf-group textarea:focus { outline: none; border-color: #1A6FE8; }
+.pf-group input:focus, .pf-group select:focus, .pf-group textarea:focus { outline: none; border-color: #8AC5ED; }
 .pf-group textarea { min-height: 110px; resize: vertical; }
-.pf-submit { background: #1A6FE8; color: #fff; border: none; border-radius: 9px; padding: 13px 32px; font-size: 0.92rem; font-weight: 700; cursor: pointer; width: 100%; transition: background .2s; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; }
+.pf-submit { background: #8AC5ED; color: #fff; border: none; border-radius: 9px; padding: 13px 32px; font-size: 0.92rem; font-weight: 700; cursor: pointer; width: 100%; transition: background .2s; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; }
 .pf-submit:hover { background: #1560d0; }
-.pf-success { background: #1A6FE814; border: 1px solid #1A6FE840; border-radius: 10px; padding: 28px; text-align: center; }
-.pf-success h3 { color: #1A6FE8; font-size: 1.2rem; margin-bottom: 10px; }
+.pf-success { background: #8AC5ED14; border: 1px solid #8AC5ED40; border-radius: 10px; padding: 28px; text-align: center; }
+.pf-success h3 { color:var(--brand-accent); font-size: 1.2rem; margin-bottom: 10px; }
 .pf-success p  { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; }
 
 .partner-sidebar { display: flex; flex-direction: column; gap: 18px; }
 .partner-info-card { background: #080e1a; border: 1px solid #1e293b; border-radius: 14px; padding: 22px; }
 .partner-info-card h3 { font-size: 0.88rem; font-weight: 700; color: #f1f5f9; margin-bottom: 14px; }
 .partner-benefit { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
-.partner-benefit svg { flex-shrink: 0; margin-top: 1px; color: #1A6FE8; }
+.partner-benefit svg { flex-shrink: 0; margin-top: 1px; color:var(--brand-accent); }
 
 @media (max-width: 768px) {
     .partner-page-hero { padding: 48px 20px 40px; }
@@ -54,8 +54,8 @@ $isFr   = $locale === 'fr';
 </style>
 
 <div class="partner-page-hero">
-    <div class="section-label" style="justify-content:center;margin-bottom:16px;color:#1A6FE8">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1A6FE8" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    <div class="section-label" style="justify-content:center;margin-bottom:16px;color:var(--brand-accent)">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8AC5ED" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         {{ $isFr ? 'Programme Partenaires' : 'Partner Programme' }}
     </div>
     <h1>{{ $isFr ? 'Construisons l\'avenir de la santé africaine ensemble' : 'Let\'s build Africa\'s health future together' }}</h1>
@@ -83,13 +83,13 @@ $isFr   = $locale === 'fr';
 
     <div class="partner-form-card">
         <h2>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A6FE8" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8AC5ED" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             {{ $isFr ? 'Formulaire de candidature' : 'Partnership Application' }}
         </h2>
 
         @if(session('success'))
         <div class="pf-success">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#1A6FE8" stroke-width="2" style="margin:0 auto 14px;display:block"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8AC5ED" stroke-width="2" style="margin:0 auto 14px;display:block"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
             <h3>{{ $isFr ? 'Candidature reçue !' : 'Application received!' }}</h3>
             <p>{{ $isFr ? 'Merci pour votre intérêt. Notre équipe partenariats examinera votre candidature et vous contactera dans les 3–5 jours ouvrés.' : 'Thank you for your interest. Our partnerships team will review your application and contact you within 3–5 business days.' }}</p>
         </div>
@@ -224,10 +224,10 @@ $isFr   = $locale === 'fr';
             @endforeach
         </div>
 
-        <div class="partner-info-card" style="border-color:#1A6FE820;background:linear-gradient(135deg,#1A6FE808,#080e1a)">
+        <div class="partner-info-card" style="border-color:#8AC5ED20;background:var(--surface)">
             <h3>{{ $isFr ? 'Déjà partenaire ?' : 'Already a partner?' }}</h3>
             <p style="font-size:.8rem;color:var(--text-muted);line-height:1.6;margin-bottom:14px">{{ $isFr ? 'Connectez-vous à votre espace partenaire pour accéder aux ressources, statistiques et commissions.' : 'Log in to your partner portal to access resources, analytics and commission reports.' }}</p>
-            <a href="{{ url($locale.'/login') }}" style="display:block;text-align:center;background:#1A6FE820;border:1px solid #1A6FE840;color:#1A6FE8;border-radius:8px;padding:10px;font-size:.82rem;font-weight:600;text-decoration:none">
+            <a href="{{ url($locale.'/login') }}" style="display:block;text-align:center;background:#8AC5ED20;border:1px solid #8AC5ED40;color:var(--brand-accent);border-radius:8px;padding:10px;font-size:.82rem;font-weight:600;text-decoration:none">
                 {{ $isFr ? 'Connexion partenaire →' : 'Partner login →' }}
             </a>
         </div>

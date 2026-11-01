@@ -48,17 +48,17 @@
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:32px">
         @foreach($isFr
             ? [
-                ['heart','#00C896','Sécurité en premier','La sécurité du patient prime sur toute considération opérationnelle, technique ou commerciale.'],
-                ['user-check','#1A6FE8','Responsabilité clinique','Les décisions cliniques restent la responsabilité des professionnels de santé agréés. OPES ne remplace pas le jugement clinique.'],
-                ['book-open','#00C896','Pratique fondée sur les preuves','Le contenu clinique est basé sur des recommandations, des preuves publiées et des normes professionnelles reconnues.'],
-                ['eye','#1A6FE8','Transparence','Les règles et recommandations cliniques sont traçables et révisables par les comités compétents.'],
-                ['refresh-cw','#00C896','Amélioration continue','Le contenu clinique fait l\'objet d\'une revue et d\'un affinement permanents.'],
+                ['heart','#69D5F5','Sécurité en premier','La sécurité du patient prime sur toute considération opérationnelle, technique ou commerciale.'],
+                ['user-check','#8AC5ED','Responsabilité clinique','Les décisions cliniques restent la responsabilité des professionnels de santé agréés. OPES ne remplace pas le jugement clinique.'],
+                ['book-open','#69D5F5','Pratique fondée sur les preuves','Le contenu clinique est basé sur des recommandations, des preuves publiées et des normes professionnelles reconnues.'],
+                ['eye','#8AC5ED','Transparence','Les règles et recommandations cliniques sont traçables et révisables par les comités compétents.'],
+                ['refresh-cw','#69D5F5','Amélioration continue','Le contenu clinique fait l\'objet d\'une revue et d\'un affinement permanents.'],
             ] : [
-                ['heart','#00C896','Patient safety first','Patient welfare takes priority over operational, technical, or commercial considerations.'],
-                ['user-check','#1A6FE8','Clinical accountability','Clinical decisions remain the responsibility of licensed healthcare professionals. OPES does not replace clinical judgment.'],
-                ['book-open','#00C896','Evidence-based practice','Clinical content is based on guidelines, published evidence, and accepted professional standards.'],
-                ['eye','#1A6FE8','Transparency','Clinical rules and recommendations are traceable and reviewable by the appropriate committees.'],
-                ['refresh-cw','#00C896','Continuous improvement','Clinical content undergoes ongoing review and refinement throughout the platform lifecycle.'],
+                ['heart','#69D5F5','Patient safety first','Patient welfare takes priority over operational, technical, or commercial considerations.'],
+                ['user-check','#8AC5ED','Clinical accountability','Clinical decisions remain the responsibility of licensed healthcare professionals. OPES does not replace clinical judgment.'],
+                ['book-open','#69D5F5','Evidence-based practice','Clinical content is based on guidelines, published evidence, and accepted professional standards.'],
+                ['eye','#8AC5ED','Transparency','Clinical rules and recommendations are traceable and reviewable by the appropriate committees.'],
+                ['refresh-cw','#69D5F5','Continuous improvement','Clinical content undergoes ongoing review and refinement throughout the platform lifecycle.'],
             ]
         as $p)
         <div style="background:#0F172A;border:1px solid #1e293b;border-radius:12px;padding:18px 16px">
@@ -89,35 +89,35 @@
     <div class="pi-grid" style="max-width:960px">
         @php
         $committees = $isFr ? [
-            ['icon'=>'shield-check','color'=>'#00C896','title'=>'Conseil de gouvernance clinique',
+            ['icon'=>'shield-check','color'=>'#69D5F5','title'=>'Conseil de gouvernance clinique',
              'role' => 'Supervision clinique générale',
              'resp' => ['Stratégie clinique','Supervision de la sécurité','Approbation des politiques cliniques','Supervision des risques cliniques']],
-            ['icon'=>'alert-triangle','color'=>'#1A6FE8','title'=>'Comité de sécurité clinique',
+            ['icon'=>'alert-triangle','color'=>'#8AC5ED','title'=>'Comité de sécurité clinique',
              'role' => 'Sécurité & incidents',
              'resp' => ['Revues des risques cliniques','Évaluations de sécurité','Revues d\'incidents','Recommandations de sécurité']],
-            ['icon'=>'file-text','color'=>'#00C896','title'=>'Comité de contenu clinique',
+            ['icon'=>'file-text','color'=>'#69D5F5','title'=>'Comité de contenu clinique',
              'role' => 'Contenu & protocoles',
              'resp' => ['Modèles cliniques','Protocoles cliniques','Règles cliniques','Terminologies cliniques']],
-            ['icon'=>'cpu','color'=>'#1A6FE8','title'=>'Comité de revue CDSS',
+            ['icon'=>'cpu','color'=>'#8AC5ED','title'=>'Comité de revue CDSS',
              'role' => 'Aide à la décision',
              'resp' => ['Validation des règles de décision','Revue des alertes','Gouvernance des règles cliniques','Contrôle de la fatigue d\'alerte']],
-            ['icon'=>'users','color'=>'#00C896','title'=>'Panels consultatifs de spécialité',
+            ['icon'=>'users','color'=>'#69D5F5','title'=>'Panels consultatifs de spécialité',
              'role' => 'Cardiologie · Labo · Pharma · Radio · Obstétrique · Pédiatrie',
              'resp' => ['Validation spécialisée des protocoles','Revue des cas d\'usage spécifiques','Recommandations par discipline','Support aux déploiements nationaux']],
         ] : [
-            ['icon'=>'shield-check','color'=>'#00C896','title'=>'Clinical Governance Board',
+            ['icon'=>'shield-check','color'=>'#69D5F5','title'=>'Clinical Governance Board',
              'role' => 'Overall clinical oversight',
              'resp' => ['Clinical strategy','Patient safety oversight','Clinical policy approval','Clinical risk oversight']],
-            ['icon'=>'alert-triangle','color'=>'#1A6FE8','title'=>'Clinical Safety Committee',
+            ['icon'=>'alert-triangle','color'=>'#8AC5ED','title'=>'Clinical Safety Committee',
              'role' => 'Safety & incidents',
              'resp' => ['Clinical risk reviews','Safety assessments','Incident reviews','Safety recommendations']],
-            ['icon'=>'file-text','color'=>'#00C896','title'=>'Clinical Content Committee',
+            ['icon'=>'file-text','color'=>'#69D5F5','title'=>'Clinical Content Committee',
              'role' => 'Content & protocols',
              'resp' => ['Clinical templates','Clinical protocols','Clinical rules','Clinical terminologies']],
-            ['icon'=>'cpu','color'=>'#1A6FE8','title'=>'CDSS Review Committee',
+            ['icon'=>'cpu','color'=>'#8AC5ED','title'=>'CDSS Review Committee',
              'role' => 'Decision support',
              'resp' => ['Decision support validation','Alert reviews','Clinical rule governance','Alert fatigue control']],
-            ['icon'=>'users','color'=>'#00C896','title'=>'Specialty Advisory Panels',
+            ['icon'=>'users','color'=>'#69D5F5','title'=>'Specialty Advisory Panels',
              'role' => 'Cardiology · Lab · Pharmacy · Radiology · Obstetrics · Paediatrics',
              'resp' => ['Specialty protocol validation','Specific use-case review','Discipline-level recommendations','National deployment advisory']],
         ];
@@ -157,29 +157,29 @@
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:32px">
         @php
         $risks = $isFr ? [
-            ['icon'=>'fingerprint','color'=>'#1A6FE8','cat'=>'Identification des patients',
+            ['icon'=>'fingerprint','color'=>'#8AC5ED','cat'=>'Identification des patients',
              'examples'=>['Patients en doublon','Mauvaise correspondance de dossiers'],
              'controls'=>['Identifiant de santé OPESCare','Annuaire des patients (MPI)','Processus de vérification']],
-            ['icon'=>'pill','color'=>'#00C896','cat'=>'Médicaments',
+            ['icon'=>'pill','color'=>'#69D5F5','cat'=>'Médicaments',
              'examples'=>['Interactions médicamenteuses','Allergies','Médicaments en double'],
              'controls'=>['Aide à la décision clinique','Vérification des allergies','Règles d\'interaction médicamenteuse']],
-            ['icon'=>'microscope','color'=>'#1A6FE8','cat'=>'Diagnostics',
+            ['icon'=>'microscope','color'=>'#8AC5ED','cat'=>'Diagnostics',
              'examples'=>['Résultats manquants','Résultats retardés','Mapping de résultats incorrect'],
              'controls'=>['Validation des workflows','Pistes d\'audit','Systèmes de notification']],
-            ['icon'=>'clipboard','color'=>'#00C896','cat'=>'Documentation',
+            ['icon'=>'clipboard','color'=>'#69D5F5','cat'=>'Documentation',
              'examples'=>['Dossiers incomplets','Informations manquantes'],
              'controls'=>['Champs obligatoires','Règles de validation','Audits qualité']],
         ] : [
-            ['icon'=>'fingerprint','color'=>'#1A6FE8','cat'=>'Patient identification',
+            ['icon'=>'fingerprint','color'=>'#8AC5ED','cat'=>'Patient identification',
              'examples'=>['Duplicate patients','Incorrect patient matching'],
              'controls'=>['OPESCare Health ID','Master Patient Index (MPI)','Verification processes']],
-            ['icon'=>'pill','color'=>'#00C896','cat'=>'Medication',
+            ['icon'=>'pill','color'=>'#69D5F5','cat'=>'Medication',
              'examples'=>['Drug interactions','Allergies','Duplicate medications'],
              'controls'=>['Clinical Decision Support','Allergy checks','Drug interaction rules']],
-            ['icon'=>'microscope','color'=>'#1A6FE8','cat'=>'Diagnostics',
+            ['icon'=>'microscope','color'=>'#8AC5ED','cat'=>'Diagnostics',
              'examples'=>['Missing results','Delayed results','Incorrect result mapping'],
              'controls'=>['Workflow validation','Audit trails','Notification systems']],
-            ['icon'=>'clipboard','color'=>'#00C896','cat'=>'Documentation',
+            ['icon'=>'clipboard','color'=>'#69D5F5','cat'=>'Documentation',
              'examples'=>['Incomplete records','Missing information'],
              'controls'=>['Mandatory fields','Validation rules','Quality audits']],
         ];
@@ -228,8 +228,8 @@
                 {{ $isFr ? 'Processus d\'approbation des règles' : 'Rule approval process' }}
             </div>
             @foreach($isFr
-                ? [['pen-line','var(--text-faint)','Auteur','Rédaction de la règle clinique'],['search','#00C896','Revue clinique','Examen par le comité de contenu'],['check-circle','#1A6FE8','Validation','Tests fonctionnels et cliniques'],['badge-check','#00C896','Approbation','Signature du comité CDSS'],['rocket','#1A6FE8','Déploiement','Mise en production versionnée']]
-                : [['pen-line','var(--text-faint)','Author','Clinical rule authored'],['search','#00C896','Clinical review','Content committee examination'],['check-circle','#1A6FE8','Validation','Functional and clinical testing'],['badge-check','#00C896','Approval','CDSS committee sign-off'],['rocket','#1A6FE8','Deployment','Versioned production release']]
+                ? [['pen-line','var(--text-faint)','Auteur','Rédaction de la règle clinique'],['search','#69D5F5','Revue clinique','Examen par le comité de contenu'],['check-circle','#8AC5ED','Validation','Tests fonctionnels et cliniques'],['badge-check','#69D5F5','Approbation','Signature du comité CDSS'],['rocket','#8AC5ED','Déploiement','Mise en production versionnée']]
+                : [['pen-line','var(--text-faint)','Author','Clinical rule authored'],['search','#69D5F5','Clinical review','Content committee examination'],['check-circle','#8AC5ED','Validation','Functional and clinical testing'],['badge-check','#69D5F5','Approval','CDSS committee sign-off'],['rocket','#8AC5ED','Deployment','Versioned production release']]
             as $idx => $step)
             <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:{{ $idx < 4 ? '0' : '0' }}">
                 <div style="display:flex;flex-direction:column;align-items:center">
@@ -271,7 +271,7 @@
             @endforeach
             <div style="margin-top:14px;padding:12px;background:#0f1a2e;border:1px solid rgba(0,200,150,0.15);border-radius:8px">
                 <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.6">
-                    <i data-lucide="info" style="width:11px;height:11px;color:#00C896;margin-right:4px;vertical-align:middle"></i>
+                    <i data-lucide="info" style="width:11px;height:11px;color:var(--brand-accent);margin-right:4px;vertical-align:middle"></i>
                     {{ $isFr
                         ? 'Toutes les règles cliniques maintiennent un numéro de version, un auteur, une date d\'approbation et un historique complet des modifications.'
                         : 'All clinical rules maintain a version number, author, approval date, and complete change history.' }}
@@ -292,8 +292,8 @@
     <h2 class="section-title">{{ $isFr ? 'Validation en 4 étapes avant tout déploiement' : '4-stage validation before every deployment' }}</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:32px">
         @foreach($isFr
-            ? [['1','#00C896','Validation fonctionnelle','Les fonctions se comportent comme spécifié. Tests automatisés et manuels sur tous les modules cliniques.'],['2','#1A6FE8','Validation clinique','Les praticiens valident que le comportement clinique est correct, sûr et conforme aux bonnes pratiques.'],['3','#00C896','Validation des workflows','Les flux de travail cliniques complets sont examinés pour la sécurité, l\'efficacité et l\'utilisabilité.'],['4','#1A6FE8','Recette utilisateur (UAT)','Les utilisateurs finaux confirment que le système répond à leurs besoins opérationnels réels.']]
-            : [['1','#00C896','Functional validation','Features behave as specified. Automated and manual testing across all clinical modules.'],['2','#1A6FE8','Clinical validation','Practitioners confirm that clinical behaviour is correct, safe, and compliant with best practice.'],['3','#00C896','Workflow validation','Full clinical workflows are reviewed for safety, efficiency, and usability.'],['4','#1A6FE8','User acceptance testing','End users confirm the system meets their real operational needs.']]
+            ? [['1','#69D5F5','Validation fonctionnelle','Les fonctions se comportent comme spécifié. Tests automatisés et manuels sur tous les modules cliniques.'],['2','#8AC5ED','Validation clinique','Les praticiens valident que le comportement clinique est correct, sûr et conforme aux bonnes pratiques.'],['3','#69D5F5','Validation des workflows','Les flux de travail cliniques complets sont examinés pour la sécurité, l\'efficacité et l\'utilisabilité.'],['4','#8AC5ED','Recette utilisateur (UAT)','Les utilisateurs finaux confirment que le système répond à leurs besoins opérationnels réels.']]
+            : [['1','#69D5F5','Functional validation','Features behave as specified. Automated and manual testing across all clinical modules.'],['2','#8AC5ED','Clinical validation','Practitioners confirm that clinical behaviour is correct, safe, and compliant with best practice.'],['3','#69D5F5','Workflow validation','Full clinical workflows are reviewed for safety, efficiency, and usability.'],['4','#8AC5ED','User acceptance testing','End users confirm the system meets their real operational needs.']]
         as $v)
         <div style="background:#0F172A;border:1px solid {{ $v[1] }}30;border-radius:12px;padding:20px 16px;position:relative">
             <div style="font-size:28px;font-weight:900;color:{{ $v[1] }}18;position:absolute;top:12px;right:16px;line-height:1">{{ $v[0] }}</div>
@@ -322,8 +322,8 @@
                     : 'Every clinical incident — missing alert, incorrect calculation, workflow failure, documentation error — is subject to a five-step formal review process.' }}
             </p>
             @foreach($isFr
-                ? [['search','#00C896','Détection','Identification de l\'incident par les utilisateurs, les audits ou les systèmes automatisés.'],['file-search','#1A6FE8','Investigation','Analyse détaillée par le Comité de sécurité clinique.'],['git-branch','#00C896','Analyse des causes','Identification de la cause profonde et des facteurs contributifs.'],['wrench','#1A6FE8','Action corrective','Mise en œuvre des corrections et améliorations.'],['activity','#00C896','Surveillance','Suivi de l\'efficacité des actions correctives.']]
-                : [['search','#00C896','Detection','Incident identified by users, audits, or automated systems.'],['file-search','#1A6FE8','Investigation','Detailed analysis by the Clinical Safety Committee.'],['git-branch','#00C896','Root cause analysis','Identification of root cause and contributing factors.'],['wrench','#1A6FE8','Corrective action','Implementation of fixes and improvements.'],['activity','#00C896','Monitoring','Tracking the effectiveness of corrective actions.']]
+                ? [['search','#69D5F5','Détection','Identification de l\'incident par les utilisateurs, les audits ou les systèmes automatisés.'],['file-search','#8AC5ED','Investigation','Analyse détaillée par le Comité de sécurité clinique.'],['git-branch','#69D5F5','Analyse des causes','Identification de la cause profonde et des facteurs contributifs.'],['wrench','#8AC5ED','Action corrective','Mise en œuvre des corrections et améliorations.'],['activity','#69D5F5','Surveillance','Suivi de l\'efficacité des actions correctives.']]
+                : [['search','#69D5F5','Detection','Incident identified by users, audits, or automated systems.'],['file-search','#8AC5ED','Investigation','Detailed analysis by the Clinical Safety Committee.'],['git-branch','#69D5F5','Root cause analysis','Identification of root cause and contributing factors.'],['wrench','#8AC5ED','Corrective action','Implementation of fixes and improvements.'],['activity','#69D5F5','Monitoring','Tracking the effectiveness of corrective actions.']]
             as $idx => $step)
             <div style="display:flex;gap:12px;margin-bottom:{{ $idx < 4 ? '0' : '0' }}">
                 <div style="display:flex;flex-direction:column;align-items:center">
@@ -345,8 +345,8 @@
                     {{ $isFr ? 'KPIs cliniques suivis' : 'Clinical KPIs tracked' }}
                 </div>
                 @foreach($isFr
-                    ? [['Taux d\'erreur de médication','#00C896'],['Complétude de la documentation','#1A6FE8'],['Conformité aux alertes d\'allergie','#00C896'],['Taux de doublons de patients','#1A6FE8'],['Taux d\'acceptation des alertes','#00C896'],['Taux de complétion des workflows','#1A6FE8']]
-                    : [['Medication error rate','#00C896'],['Documentation completeness','#1A6FE8'],['Allergy alert compliance','#00C896'],['Duplicate patient rate','#1A6FE8'],['Clinical alert acceptance rate','#00C896'],['Clinical workflow completion rate','#1A6FE8']]
+                    ? [['Taux d\'erreur de médication','#69D5F5'],['Complétude de la documentation','#8AC5ED'],['Conformité aux alertes d\'allergie','#69D5F5'],['Taux de doublons de patients','#8AC5ED'],['Taux d\'acceptation des alertes','#69D5F5'],['Taux de complétion des workflows','#8AC5ED']]
+                    : [['Medication error rate','#69D5F5'],['Documentation completeness','#8AC5ED'],['Allergy alert compliance','#69D5F5'],['Duplicate patient rate','#8AC5ED'],['Clinical alert acceptance rate','#69D5F5'],['Clinical workflow completion rate','#8AC5ED']]
                 as $kpi)
                 <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #1e293b">
                     <div style="width:6px;height:6px;border-radius:50%;background:{{ $kpi[1] }};flex-shrink:0"></div>
@@ -355,7 +355,7 @@
                 @endforeach
             </div>
             <div style="background:#0f1a2e;border:1px solid rgba(0,200,150,0.15);border-radius:12px;padding:16px 18px">
-                <div style="font-weight:700;color:#00C896;font-size:var(--fs-xs);margin-bottom:8px">
+                <div style="font-weight:700;color:var(--brand-accent);font-size:var(--fs-xs);margin-bottom:8px">
                     {{ $isFr ? 'Terminologies cliniques supportées' : 'Supported clinical terminologies' }}
                 </div>
                 @foreach([['ICD-11','WHO International Classification of Diseases'],['SNOMED CT','Systematized Nomenclature of Medicine'],['LOINC','Logical Observation Identifiers Names and Codes']] as $term)
@@ -381,7 +381,7 @@
     <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:24px;max-width:700px;margin-left:auto;margin-right:auto">
         @foreach(['OPES Health OS','OPES Clinic','OPES Hospital','OPES Specialty Suite','OPES Care','OPES Clinical Intelligence','OPES Academy','Customer Deployments'] as $scope)
         <div style="background:#0F172A;border:1px solid #1e293b;border-radius:20px;padding:6px 14px;font-size:var(--fs-xs);color:var(--text-muted);display:flex;align-items:center;gap:5px">
-            <i data-lucide="check" style="width:10px;height:10px;color:#00C896"></i>{{ $scope }}
+            <i data-lucide="check" style="width:10px;height:10px;color:var(--brand-accent)"></i>{{ $scope }}
         </div>
         @endforeach
     </div>

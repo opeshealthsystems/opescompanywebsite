@@ -4,10 +4,10 @@
 
 {{-- ── MINISTRY BANNER ─────────────────────────────────────────── --}}
 <div class="ministry-banner">
-    <i data-lucide="landmark" style="width:15px;height:15px;color:#00C896;flex-shrink:0"></i>
+    <i data-lucide="landmark" style="width:15px;height:15px;color:var(--brand-accent);flex-shrink:0"></i>
     <p>
-        <strong>{{ $isFr ? 'Aligné avec la Stratégie nationale de santé numérique 2026–2030 du Ministère de la Santé du Cameroun' : 'Aligned with the Cameroon Ministry of Health Digital Health Strategy 2026–2030' }}</strong>
-        &nbsp;·&nbsp; Conçu pour le Cameroun, la CEMAC et toute l'Afrique
+        <strong>{{ $isFr ? 'Des logiciels de santé conçus au Cameroun' : 'Healthcare software designed in Cameroon' }}</strong>
+        &nbsp;·&nbsp; {{ $isFr ? 'Pour les équipes de soins en Afrique' : 'For healthcare teams across Africa' }}
     </p>
 </div>
 
@@ -33,28 +33,28 @@
                             <i data-lucide="layout-grid" style="width:15px;height:15px"></i>
                             {{ __('home.cta_explore') }}
                         </a>
-                        <a href="{{ url($locale.'/contact') }}" class="btn-secondary">
-                            <i data-lucide="play-circle" style="width:15px;height:15px;color:#00C896"></i>
+                        <a href="{{ url($locale.'/book-demo') }}" class="btn-secondary">
+                            <i data-lucide="play-circle" style="width:15px;height:15px;color:var(--brand-accent)"></i>
                             {{ __('home.cta_watch_demo') }}
                         </a>
                     </div>
                     <div class="hero-trust">
-                        <div class="trust-item"><div class="num">22</div><div class="label">{{ __('home.trust_22') }}</div></div>
+                        <div class="trust-item"><div class="num">{{ $products->count() }}</div><div class="label">{{ __('home.trust_22') }}</div></div>
                         <div class="trust-item"><div class="num">EN/FR</div><div class="label">{{ __('home.trust_bilingual') }}</div></div>
                         <div class="trust-item"><div class="num">CEMAC</div><div class="label">{{ __('home.trust_cemac') }}</div></div>
-                        <div class="trust-item"><div class="num">MoH</div><div class="label">{{ __('home.trust_moh') }}</div></div>
+                        <div class="trust-item"><div class="num">OPES</div><div class="label">{{ __('home.trust_moh') }}</div></div>
                     </div>
                 </div>
                 <div class="hero-visual">
                     <div class="hero-visual-title">OPES Software Ecosystem</div>
                     <div class="ecosystem-grid">
                         <div class="eco-item hl-teal">
-                            <div class="eco-icon-wrap teal"><i data-lucide="fingerprint" style="width:15px;height:15px;color:#00C896"></i></div>
-                            <div><div class="eco-name" style="color:#00C896">OPESCare</div><div class="eco-desc">{{ $isFr ? 'Identifiant santé · Interopérabilité' : 'Health ID · Interoperability' }}</div></div>
+                            <div class="eco-icon-wrap teal"><i data-lucide="fingerprint" style="width:15px;height:15px;color:var(--brand-accent)"></i></div>
+                            <div><div class="eco-name" style="color:var(--brand-accent)">OPESCare</div><div class="eco-desc">{{ $isFr ? 'Identifiant santé · Interopérabilité' : 'Health ID · Interoperability' }}</div></div>
                         </div>
                         <div class="eco-item hl-blue">
-                            <div class="eco-icon-wrap blue"><i data-lucide="stethoscope" style="width:15px;height:15px;color:#1A6FE8"></i></div>
-                            <div><div class="eco-name" style="color:#1A6FE8">OPES EMR</div><div class="eco-desc">{{ $isFr ? 'Cliniques & petits hôpitaux' : 'Clinics & Small Hospitals' }}</div></div>
+                            <div class="eco-icon-wrap blue"><i data-lucide="stethoscope" style="width:15px;height:15px;color:var(--brand-accent)"></i></div>
+                            <div><div class="eco-name" style="color:var(--brand-accent)">OPES EMR</div><div class="eco-desc">{{ $isFr ? 'Cliniques & petits hôpitaux' : 'Clinics & Small Hospitals' }}</div></div>
                         </div>
                         <div class="eco-item">
                             <div class="eco-icon-wrap neutral"><i data-lucide="microscope" style="width:15px;height:15px;color:var(--text-muted)"></i></div>
@@ -69,8 +69,8 @@
                             <div><div class="eco-name">OPES Hospital</div><div class="eco-desc">{{ $isFr ? 'SIH complet' : 'Full HIS' }}</div></div>
                         </div>
                         <div class="eco-item hl-teal">
-                            <div class="eco-icon-wrap teal"><i data-lucide="timer" style="width:15px;height:15px;color:#00C896"></i></div>
-                            <div><div class="eco-name" style="color:#00C896">Opes Triage</div><div class="eco-desc">{{ $isFr ? 'Autonome · Tout hôpital' : 'Standalone · Any Hospital' }}</div></div>
+                            <div class="eco-icon-wrap teal"><i data-lucide="timer" style="width:15px;height:15px;color:var(--brand-accent)"></i></div>
+                            <div><div class="eco-name" style="color:var(--brand-accent)">Opes Triage</div><div class="eco-desc">{{ $isFr ? 'Autonome · Tout hôpital' : 'Standalone · Any Hospital' }}</div></div>
                         </div>
                         <div class="eco-more">{{ $isFr ? '+16 systèmes spécialisés — Cardiologie, Dentisterie, Gynécologie, Pédiatrie & plus →' : '+16 specialist systems — Cardiology, Dental, OB/GYN, Paediatrics & more →' }}</div>
                     </div>
@@ -93,8 +93,8 @@
                             <i data-lucide="layout-grid" style="width:15px;height:15px"></i>
                             {{ __('home.s2_cta1') }}
                         </a>
-                        <a href="{{ url($locale.'/contact') }}" class="btn-secondary">
-                            <i data-lucide="play-circle" style="width:15px;height:15px;color:#00C896"></i>
+                        <a href="{{ url($locale.'/book-demo') }}" class="btn-secondary">
+                            <i data-lucide="play-circle" style="width:15px;height:15px;color:var(--brand-accent)"></i>
                             {{ __('home.s2_cta2') }}
                         </a>
                     </div>
@@ -104,22 +104,22 @@
                     <div class="hero-visual-title">{{ $isFr ? 'Familles de plateformes' : 'Platform Families' }}</div>
                     <div class="slide-pillars-grid">
                         <div class="slide-pillar">
-                            <i data-lucide="heart-pulse" style="width:18px;height:18px;color:#00C896"></i>
+                            <i data-lucide="heart-pulse" style="width:18px;height:18px;color:var(--brand-accent)"></i>
                             <div class="slide-pillar-name">{{ $isFr ? 'Clinique' : 'Clinical' }}</div>
                             <div class="slide-pillar-desc">{{ $isFr ? 'DME, SIH, soins spécialisés' : 'EMR, HIS, Specialty Care' }}</div>
                         </div>
                         <div class="slide-pillar">
-                            <i data-lucide="microscope" style="width:18px;height:18px;color:#1A6FE8"></i>
+                            <i data-lucide="microscope" style="width:18px;height:18px;color:var(--brand-accent)"></i>
                             <div class="slide-pillar-name">Diagnostics</div>
                             <div class="slide-pillar-desc">{{ $isFr ? 'Laboratoire, Radiologie, Imagerie' : 'Lab, Radiology, Imaging' }}</div>
                         </div>
                         <div class="slide-pillar">
-                            <i data-lucide="share-2" style="width:18px;height:18px;color:#00C896"></i>
+                            <i data-lucide="share-2" style="width:18px;height:18px;color:var(--brand-accent)"></i>
                             <div class="slide-pillar-name">{{ $isFr ? 'Interopérabilité' : 'Interoperability' }}</div>
                             <div class="slide-pillar-desc">Health ID, HIE, MPI</div>
                         </div>
                         <div class="slide-pillar">
-                            <i data-lucide="brain-circuit" style="width:18px;height:18px;color:#1A6FE8"></i>
+                            <i data-lucide="brain-circuit" style="width:18px;height:18px;color:var(--brand-accent)"></i>
                             <div class="slide-pillar-name">Intelligence</div>
                             <div class="slide-pillar-desc">{{ $isFr ? 'CDSS, Analytique, Surveillance' : 'CDSS, Analytics, Surveillance' }}</div>
                         </div>
@@ -152,7 +152,7 @@
                     <div class="slide-feature-list">
                         @foreach($isFr ? ['Dossiers médicaux électroniques','Système d\'information hospitalier','Système d\'information de laboratoire','Système d\'information de pharmacie','Système d\'information de radiologie','Facturation & gestion du cycle de revenus','Inventaire & approvisionnement','Modules de soins spécialisés'] : ['Electronic Medical Records','Hospital Information System','Laboratory Information System','Pharmacy Information System','Radiology Information System','Billing & Revenue Cycle Management','Inventory & Procurement','Specialty Care Modules'] as $f)
                         <div class="slide-feature-item">
-                            <i data-lucide="check-circle" style="width:13px;height:13px;color:#00C896;flex-shrink:0"></i>
+                            <i data-lucide="check-circle" style="width:13px;height:13px;color:var(--brand-accent);flex-shrink:0"></i>
                             <span>{{ $f }}</span>
                         </div>
                         @endforeach
@@ -184,7 +184,7 @@
                     <div class="slide-feature-list">
                         @foreach($isFr ? ['OPES Health ID','Index principal des patients (MPI)','Échange d\'informations de santé (HIE)','Échange de références','Portail patient','Accès aux dossiers inter-établissements','Services d\'interopérabilité'] : ['OPES Health ID','Master Patient Index (MPI)','Health Information Exchange (HIE)','Referral Exchange','Patient Portal','Cross-Facility Record Access','Interoperability Services'] as $f)
                         <div class="slide-feature-item">
-                            <i data-lucide="check-circle" style="width:13px;height:13px;color:#1A6FE8;flex-shrink:0"></i>
+                            <i data-lucide="check-circle" style="width:13px;height:13px;color:var(--brand-accent);flex-shrink:0"></i>
                             <span>{{ $f }}</span>
                         </div>
                         @endforeach
@@ -216,7 +216,7 @@
                     <div class="slide-feature-list">
                         @foreach($isFr ? ['Aide à la décision clinique (CDSS)','Triage numérique','Analytique de santé populationnelle','Surveillance des maladies','Tableaux de bord exécutifs','Suivi de la qualité','Perspectives de santé prédictives'] : ['Clinical Decision Support (CDSS)','Digital Triage','Population Health Analytics','Disease Surveillance','Executive Dashboards','Quality Monitoring','Predictive Healthcare Insights'] as $f)
                         <div class="slide-feature-item">
-                            <i data-lucide="check-circle" style="width:13px;height:13px;color:#00C896;flex-shrink:0"></i>
+                            <i data-lucide="check-circle" style="width:13px;height:13px;color:var(--brand-accent);flex-shrink:0"></i>
                             <span>{{ $f }}</span>
                         </div>
                         @endforeach
@@ -240,16 +240,16 @@
 {{-- ── CATEGORY TABS ───────────────────────────────────────────── --}}
 <div class="category-strip">
     <div class="cat-inner">
-        <div class="cat-tab active">{{ $isFr ? 'Tous les systèmes' : 'All Systems' }}</div>
-        <div class="cat-tab inactive">{{ $isFr ? 'Plateforme principale' : 'Core Platform' }}</div>
-        <div class="cat-tab inactive">Diagnostics</div>
-        <div class="cat-tab inactive">{{ $isFr ? 'Systèmes spécialisés' : 'Specialist Systems' }}</div>
-        <div class="cat-tab inactive">Administration &amp; Finance</div>
+        <a href="#software-catalogue" class="cat-tab active">{{ $isFr ? 'Tous les systèmes' : 'All Systems' }}</a>
+        <a href="{{ url($locale.'/products') }}#core-platform" class="cat-tab inactive">{{ $isFr ? 'Plateforme principale' : 'Core Platform' }}</a>
+        <a href="{{ url($locale.'/products') }}#diagnostics" class="cat-tab inactive">Diagnostics</a>
+        <a href="{{ url($locale.'/products') }}#specialist-systems" class="cat-tab inactive">{{ $isFr ? 'Systèmes spécialisés' : 'Specialist Systems' }}</a>
+        <a href="{{ url($locale.'/products') }}" class="cat-tab inactive">Administration &amp; Finance</a>
     </div>
 </div>
 
-{{-- ── PRODUCT GRID (22 systems) ──────────────────────────────── --}}
-<div class="section">
+{{-- ── PRODUCT CATALOGUE ──────────────────────────────── --}}
+<div class="section" id="software-catalogue">
     <div class="section-label">
         <i data-lucide="grid-3x3" style="width:12px;height:12px"></i> {{ $isFr ? 'Nos logiciels' : 'Our Software' }}
     </div>
@@ -260,7 +260,7 @@
         @foreach($products as $p)
         <a href="{{ url($locale.'/products/'.$p->slug) }}" class="product-card {{ $p->category === 'core' ? 'core' : ($p->category === 'diagnostics' ? 'diag' : '') }}">
             <div class="p-icon"><i data-lucide="{{ $p->icon }}" style="width:24px;height:24px;color:{{ $p->color }}"></i></div>
-            <div class="p-name">{{ $p->name }}</div><div class="p-cat">{{ $p->subtitle }}</div>
+            <div class="p-name">{{ $p->name }}</div><div class="p-cat">{{ $isFr ? (config('product_copy_fr.'.$p->slug)[0] ?? $p->subtitle_fr ?? $p->subtitle) : $p->subtitle }}</div>
         </a>
         @endforeach
     </div>
@@ -273,21 +273,21 @@
     <div class="pillars">
         <div class="pillar">
             <div class="pillar-icon-wrap" style="background:rgba(0,200,150,0.1)">
-                <i data-lucide="globe-2" style="width:26px;height:26px;color:#00C896"></i>
+                <i data-lucide="globe-2" style="width:26px;height:26px;color:var(--brand-accent)"></i>
             </div>
             <h3>{{ $isFr ? 'Conçu pour l\'Afrique' : 'Built for Africa' }}</h3>
             <p>{{ $isFr ? 'Conçu depuis le début pour le Cameroun, la région CEMAC et toute l\'Afrique. Entièrement bilingue en anglais et en français. Comprend les flux de travail locaux, les réglementations et les réalités des soins de santé.' : 'Designed from the ground up for Cameroon, the CEMAC region and all of Africa. Fully bilingual in English and French. Understands local workflows, regulations, and healthcare realities.' }}</p>
         </div>
         <div class="pillar">
             <div class="pillar-icon-wrap" style="background:rgba(26,111,232,0.1)">
-                <i data-lucide="network" style="width:26px;height:26px;color:#1A6FE8"></i>
+                <i data-lucide="network" style="width:26px;height:26px;color:var(--brand-accent)"></i>
             </div>
             <h3>{{ $isFr ? 'Entièrement interopérable' : 'Fully Interoperable' }}</h3>
-            <p>{{ $isFr ? 'OPESCare attribue à chaque patient un identifiant de santé unique qui fonctionne sur les 22 systèmes. Votre laboratoire, pharmacie, DME et hôpital parlent tous le même langage — automatiquement.' : 'OPESCare gives every patient a single Health ID that works across all 22 systems. Your lab, pharmacy, EMR, and hospital all speak the same language — automatically.' }}</p>
+            <p>{{ $isFr ? 'Définissez les échanges de données utiles à votre établissement. Confirmez les systèmes participants, les interfaces, les autorisations et les tests nécessaires dans le périmètre du projet.' : 'Define the data exchanges your facility needs. Confirm participating systems, interfaces, permissions and acceptance tests in your project scope.' }}</p>
         </div>
         <div class="pillar">
             <div class="pillar-icon-wrap" style="background:rgba(0,200,150,0.1)">
-                <i data-lucide="layout-grid" style="width:26px;height:26px;color:#00C896"></i>
+                <i data-lucide="layout-grid" style="width:26px;height:26px;color:var(--brand-accent)"></i>
             </div>
             <h3>{{ $isFr ? 'Chaque établissement, chaque spécialité' : 'Every Facility, Every Specialty' }}</h3>
             <p>{{ $isFr ? 'D\'une petite clinique à un hôpital multi-départements. De la médecine générale à la cardiologie, dentisterie, santé mentale, pédiatrie et 12 autres spécialités. Un seul fournisseur, une couverture complète.' : 'From a single-room clinic to a multi-department hospital. From general practice to cardiology, dentistry, mental health, paediatrics and 12 more specialties. One vendor, complete coverage.' }}</p>
@@ -307,7 +307,7 @@
 
     <div class="eco-diagram">
         <div class="eco-center-box">
-            <i data-lucide="fingerprint" style="width:28px;height:28px;color:#00C896"></i>
+            <i data-lucide="fingerprint" style="width:28px;height:28px;color:var(--brand-accent)"></i>
             <div>
                 <div class="eco-center-title">OPESCare · Health ID Layer</div>
                 <div class="eco-center-sub">{{ $isFr ? 'Interopérabilité · Identité patient · Échange de données' : 'Interoperability · Patient Identity · Data Exchange' }}</div>
@@ -334,24 +334,24 @@
 <div class="stats-section">
     <div class="stats-inner">
         <div class="stat-item">
-            <div class="stat-icon-wrap"><i data-lucide="layout-grid" style="width:22px;height:22px;color:#00C896"></i></div>
-            <div class="stat-num">22</div>
+            <div class="stat-icon-wrap"><i data-lucide="layout-grid" style="width:22px;height:22px;color:var(--brand-accent)"></i></div>
+            <div class="stat-num">{{ $products->count() }}</div>
             <div class="stat-label">{{ $isFr ? 'Systèmes logiciels intégrés' : 'Integrated Software Systems' }}</div>
         </div>
         <div class="stat-item">
-            <div class="stat-icon-wrap"><i data-lucide="languages" style="width:22px;height:22px;color:#1A6FE8"></i></div>
+            <div class="stat-icon-wrap"><i data-lucide="languages" style="width:22px;height:22px;color:var(--brand-accent)"></i></div>
             <div class="stat-num">EN/FR</div>
             <div class="stat-label">{{ $isFr ? 'Plateforme entièrement bilingue' : 'Fully Bilingual Platform' }}</div>
         </div>
         <div class="stat-item">
-            <div class="stat-icon-wrap"><i data-lucide="map" style="width:22px;height:22px;color:#00C896"></i></div>
+            <div class="stat-icon-wrap"><i data-lucide="map" style="width:22px;height:22px;color:var(--brand-accent)"></i></div>
             <div class="stat-num">CEMAC</div>
-            <div class="stat-label">{{ $isFr ? 'Couverture régionale 6 pays' : '6-Country Regional Coverage' }}</div>
+            <div class="stat-label">{{ $isFr ? 'Destiné à la région CEMAC' : 'Designed for the CEMAC region' }}</div>
         </div>
         <div class="stat-item">
-            <div class="stat-icon-wrap"><i data-lucide="landmark" style="width:22px;height:22px;color:#1A6FE8"></i></div>
-            <div class="stat-num">MoH</div>
-            <div class="stat-label">{{ $isFr ? 'Aligné Ministère de la Santé' : 'Ministry of Health Aligned' }}</div>
+            <div class="stat-icon-wrap"><i data-lucide="landmark" style="width:22px;height:22px;color:var(--brand-accent)"></i></div>
+            <div class="stat-num">OPES</div>
+            <div class="stat-label">{{ $isFr ? 'Conçu au Cameroun' : 'Designed in Cameroon' }}</div>
         </div>
     </div>
 </div>
@@ -374,7 +374,7 @@
             </a>
         </div>
         <div class="triage-stat">
-            <i data-lucide="timer" style="width:32px;height:32px;color:#00C896"></i>
+            <i data-lucide="timer" style="width:32px;height:32px;color:var(--brand-accent)"></i>
             <div class="triage-stat-num">{{ $isFr ? '↓ Temps d\'attente' : '↓ Wait Times' }}</div>
             <div class="triage-stat-label">{{ $isFr ? 'Tout hôpital · Toute taille' : 'Any hospital · Any size' }}</div>
         </div>
@@ -387,11 +387,11 @@
 <div class="section">
     <div class="section-label"><i data-lucide="star" style="width:12px;height:12px"></i> {{ $isFr ? 'Sélection' : 'Spotlight' }}</div>
     <h2 class="section-title">{{ $isFr ? 'Commencez par l\'essentiel' : 'Start with the Essentials' }}</h2>
-    <p class="section-sub">{{ $isFr ? 'Nos systèmes les plus adoptés — déployez-en un ou déployez l\'écosystème complet.' : 'Our most adopted systems — deploy one or deploy the full ecosystem.' }}</p>
+    <p class="section-sub">{{ $isFr ? 'Découvrez une sélection de produits et confirmez le périmètre adapté à votre établissement.' : 'Explore selected products and confirm the right scope for your facility.' }}</p>
     <div class="featured-grid">
         <a href="{{ url($locale.'/products/opescare') }}" class="featured-card" style="border-color:rgba(0,200,150,0.2)">
             <div class="featured-icon" style="background:rgba(0,200,150,0.1)">
-                <i data-lucide="fingerprint" style="width:22px;height:22px;color:#00C896"></i>
+                <i data-lucide="fingerprint" style="width:22px;height:22px;color:var(--brand-accent)"></i>
             </div>
             <h3>OPESCare — Health ID</h3>
             <p>{{ $isFr ? 'L\'épine dorsale de l\'écosystème OPES. Attribue à chaque patient un identifiant de santé universel et permet un échange de données fluide entre tous vos systèmes et établissements partenaires.' : 'The backbone of the OPES ecosystem. Assigns every patient a universal Health ID and enables seamless data exchange across all your systems and partner facilities.' }}</p>
@@ -399,7 +399,7 @@
         </a>
         <a href="{{ url($locale.'/products/opes-emr') }}" class="featured-card" style="border-color:rgba(26,111,232,0.2)">
             <div class="featured-icon" style="background:rgba(26,111,232,0.1)">
-                <i data-lucide="stethoscope" style="width:22px;height:22px;color:#1A6FE8"></i>
+                <i data-lucide="stethoscope" style="width:22px;height:22px;color:var(--brand-accent)"></i>
             </div>
             <h3>OPES EMR</h3>
             <p>{{ $isFr ? 'Dossiers médicaux électroniques conçus pour les cliniques et les petits hôpitaux au Cameroun. Bilingue, intuitif et conçu pour le rythme de la pratique clinique africaine.' : 'Electronic Medical Records designed for clinics and small hospitals in Cameroon. Bilingual, intuitive, and built to handle the pace of African clinical practice.' }}</p>
@@ -420,7 +420,7 @@
 
 {{-- ── DEMO CTA ─────────────────────────────────────────────────── --}}
 <div class="demo-section">
-    <div class="section-label" style="justify-content:center;color:#1A6FE8;margin-bottom:12px">
+    <div class="section-label" style="justify-content:center;color:var(--brand-accent);margin-bottom:12px">
         <i data-lucide="calendar-check" style="width:13px;height:13px"></i>
         {{ $isFr ? 'Commencer' : 'Get Started' }}
     </div>
@@ -428,9 +428,11 @@
     <p>{{ __('home.demo_text') }}</p>
     <form action="{{ url($locale.'/contact') }}" method="POST" class="demo-form">
         @csrf
-        <input class="demo-input" type="text" name="name" required maxlength="100" placeholder="{{ __('home.demo_name') }}">
-        <input class="demo-input" type="email" name="email" required maxlength="150" placeholder="{{ __('home.demo_email') }}">
-        <select class="demo-select" name="facility_type">
+        @if(session('success'))<p role="status">{{ session('success') }}</p>@endif
+        @if($errors->any())<div role="alert">@foreach($errors->all() as $error)<p>{{ $error }}</p>@endforeach</div>@endif
+        <input aria-label="{{ __('home.demo_name') }}" autocomplete="name" class="demo-input" type="text" name="name" required maxlength="100" placeholder="{{ __('home.demo_name') }}">
+        <input aria-label="{{ __('home.demo_email') }}" autocomplete="email" class="demo-input" type="email" name="email" required maxlength="150" placeholder="{{ __('home.demo_email') }}">
+        <select aria-label="{{ __('home.demo_facility') }}" class="demo-select" name="facility_type">
             <option value="">{{ __('home.demo_facility') }}</option>
             @foreach(config('facility_types') as $value => $labels)
             <option value="{{ $value }}">{{ $labels[app()->getLocale()] ?? $labels['en'] }}</option>
@@ -453,44 +455,44 @@
     <div class="partner-grid">
         <div class="partner-card" style="border-color:rgba(0,200,150,0.18)">
             <div class="partner-icon" style="background:rgba(0,200,150,0.08)">
-                <i data-lucide="hospital" style="width:20px;height:20px;color:#00C896"></i>
+                <i data-lucide="hospital" style="width:20px;height:20px;color:var(--brand-accent)"></i>
             </div>
-            <h4>{{ $isFr ? 'Hôpitaux & cliniques' : 'Hospitals & Clinics' }}</h4>
+            <h3>{{ $isFr ? 'Hôpitaux & cliniques' : 'Hospitals & Clinics' }}</h3>
             <p>{{ $isFr ? 'Pilotez nos systèmes, fournissez une validation clinique et façonnez l\'avenir de la santé numérique africaine.' : 'Pilot our systems, provide clinical validation, and shape the future of African digital health.' }}</p>
         </div>
         <div class="partner-card" style="border-color:rgba(26,111,232,0.18)">
             <div class="partner-icon" style="background:rgba(26,111,232,0.08)">
-                <i data-lucide="trending-up" style="width:20px;height:20px;color:#1A6FE8"></i>
+                <i data-lucide="trending-up" style="width:20px;height:20px;color:var(--brand-accent)"></i>
             </div>
-            <h4>{{ $isFr ? 'Investisseurs' : 'Investors' }}</h4>
+            <h3>{{ $isFr ? 'Investisseurs' : 'Investors' }}</h3>
             <p>{{ $isFr ? 'Rejoignez une entreprise qui construit une infrastructure de santé évolutive pour plus de 500 millions de personnes en CEMAC et en Afrique.' : 'Join a venture building scalable health infrastructure for 500M+ people across CEMAC and Africa.' }}</p>
         </div>
         <div class="partner-card">
             <div class="partner-icon" style="background:rgba(255,255,255,0.05)">
                 <i data-lucide="landmark" style="width:20px;height:20px;color:var(--text-muted)"></i>
             </div>
-            <h4>{{ $isFr ? 'Gouvernement & ONG' : 'Government & NGOs' }}</h4>
+            <h3>{{ $isFr ? 'Gouvernement & ONG' : 'Government & NGOs' }}</h3>
             <p>{{ $isFr ? 'Alignez-vous sur les objectifs nationaux de CSU. Intégrez OPES aux rapports de santé publique et aux systèmes de surveillance des maladies.' : 'Align with national UHC goals. Integrate OPES with public health reporting and disease surveillance systems.' }}</p>
         </div>
         <div class="partner-card">
             <div class="partner-icon" style="background:rgba(255,255,255,0.05)">
                 <i data-lucide="flask-conical" style="width:20px;height:20px;color:var(--text-muted)"></i>
             </div>
-            <h4>{{ $isFr ? 'Pharma & Assurance' : 'Pharma & Insurance' }}</h4>
+            <h3>{{ $isFr ? 'Pharma & Assurance' : 'Pharma & Insurance' }}</h3>
             <p>{{ $isFr ? 'Accédez à des analyses de santé populationnelle anonymisées et intégrez le financement assurantiel dans les plateformes OPES.' : 'Access anonymised population health analytics and integrate insurance financing into OPES platforms.' }}</p>
         </div>
         <div class="partner-card">
             <div class="partner-icon" style="background:rgba(255,255,255,0.05)">
                 <i data-lucide="graduation-cap" style="width:20px;height:20px;color:var(--text-muted)"></i>
             </div>
-            <h4>{{ $isFr ? 'Académique & Recherche' : 'Academic & Research' }}</h4>
+            <h3>{{ $isFr ? 'Académique & Recherche' : 'Academic & Research' }}</h3>
             <p>{{ $isFr ? 'Co-publiez des recherches en technologie de la santé et formez la prochaine génération de professionnels africains de l\'informatique de santé.' : 'Co-publish health technology research and train the next generation of African health informatics professionals.' }}</p>
         </div>
         <div class="partner-card">
             <div class="partner-icon" style="background:rgba(255,255,255,0.05)">
                 <i data-lucide="plug-zap" style="width:20px;height:20px;color:var(--text-muted)"></i>
             </div>
-            <h4>{{ $isFr ? 'Partenaires technologiques' : 'Technology Partners' }}</h4>
+            <h3>{{ $isFr ? 'Partenaires technologiques' : 'Technology Partners' }}</h3>
             <p>{{ $isFr ? 'Intégrez vos solutions à l\'écosystème OPES via notre couche d\'interopérabilité et les API développeurs.' : 'Integrate your solutions with the OPES ecosystem through our interoperability layer and developer APIs.' }}</p>
         </div>
     </div>
@@ -498,46 +500,17 @@
 
 <div class="divider"></div>
 
-{{-- ── BLOG ─────────────────────────────────────────────────────── --}}
-<div class="section">
-    <div class="section-label"><i data-lucide="rss" style="width:12px;height:12px"></i> {{ $isFr ? 'Analyses' : 'Insights' }}</div>
-    <h2 class="section-title">{{ $isFr ? 'Santé numérique en Afrique' : 'Digital Health in Africa' }}</h2>
-    <p class="section-sub">{{ $isFr ? 'Actualités, analyses produits et perspectives en technologie de la santé pour la région CEMAC.' : 'News, product deep-dives, and health technology insights for the CEMAC region.' }}</p>
-    <div class="blog-grid">
-        <a href="{{ url($locale.'/blog') }}" class="blog-card">
-            <div class="blog-thumb" style="background:linear-gradient(135deg,rgba(0,200,150,0.12),rgba(26,111,232,0.12))">
-                <i data-lucide="fingerprint" style="width:36px;height:36px;color:#00C896;opacity:.7"></i>
-            </div>
-            <div class="blog-body">
-                <div class="blog-cat"><i data-lucide="tag" style="width:10px;height:10px"></i> {{ $isFr ? 'Produit' : 'Product' }}</div>
-                <h4>{{ $isFr ? 'Comment l\'identifiant santé OPESCare transforme les dossiers patients au Cameroun' : 'How OPESCare\'s Health ID is Transforming Patient Records in Cameroon' }}</h4>
-                <div class="blog-meta"><i data-lucide="clock" style="width:10px;height:10px"></i> {{ $isFr ? 'Juin 2026 · 5 min de lecture' : 'June 2026 · 5 min read' }}</div>
-            </div>
-        </a>
-        <a href="{{ url($locale.'/blog') }}" class="blog-card">
-            <div class="blog-thumb" style="background:linear-gradient(135deg,rgba(26,111,232,0.12),rgba(0,200,150,0.08))">
-                <i data-lucide="landmark" style="width:36px;height:36px;color:#1A6FE8;opacity:.7"></i>
-            </div>
-            <div class="blog-body">
-                <div class="blog-cat"><i data-lucide="tag" style="width:10px;height:10px"></i> {{ $isFr ? 'Politique' : 'Policy' }}</div>
-                <h4>{{ $isFr ? 'Stratégie nationale de santé numérique 2026–2030 du Cameroun : ce que cela signifie pour les hôpitaux' : 'Cameroon MoH 2026–2030 Digital Health Strategy: What It Means for Hospitals' }}</h4>
-                <div class="blog-meta"><i data-lucide="clock" style="width:10px;height:10px"></i> {{ $isFr ? 'Juin 2026 · 8 min de lecture' : 'June 2026 · 8 min read' }}</div>
-            </div>
-        </a>
-        <a href="{{ url($locale.'/blog') }}" class="blog-card">
-            <div class="blog-thumb" style="background:linear-gradient(135deg,rgba(0,200,150,0.08),rgba(26,111,232,0.12))">
-                <i data-lucide="network" style="width:36px;height:36px;color:var(--text-muted);opacity:.7"></i>
-            </div>
-            <div class="blog-body">
-                <div class="blog-cat"><i data-lucide="tag" style="width:10px;height:10px"></i> {{ $isFr ? 'Technologie' : 'Technology' }}</div>
-                <h4>{{ $isFr ? 'Pourquoi l\'interopérabilité est le mot le plus important dans la santé africaine aujourd\'hui' : 'Why Interoperability is the Most Important Word in African Healthcare Today' }}</h4>
-                <div class="blog-meta"><i data-lucide="clock" style="width:10px;height:10px"></i> {{ $isFr ? 'Mai 2026 · 6 min de lecture' : 'May 2026 · 6 min read' }}</div>
-            </div>
-        </a>
-    </div>
-</div>
-
-<div class="divider"></div>
+{{-- Published editorial resources only; each card opens the article it describes. --}}
+@if($articles->isNotEmpty())
+<section class="section">
+    <div class="section-label">{{ $isFr ? 'Ressources' : 'Resources' }}</div>
+    <h2 class="section-title">{{ $isFr ? 'Préparer votre projet de santé numérique' : 'Plan your digital health project' }}</h2>
+    <div class="blog-grid">@foreach($articles as $article)
+        <a href="{{ url($locale.'/blog/'.$article->slug) }}" class="blog-card"><div class="blog-body"><h3>{{ $article->getLocalizedTitle($locale) }}</h3><p>{{ $article->getLocalizedExcerpt($locale) }}</p><div class="blog-meta">{{ $article->published_at?->format('d M Y') }} · {{ $article->reading_time }} min</div></div></a>
+    @endforeach</div>
+</section>
+@endif
+<section class="section" style="padding-top:16px"><div class="section-label">{{ $isFr ? 'Sécurité du médicament' : 'Medicine safety' }}</div><h2 class="section-title">OPES DrugTrace</h2><p class="section-sub">{{ $isFr ? 'Disponible pour la sécurité du médicament et la traçabilité pharmaceutique. Demandez une démonstration adaptée à vos processus.' : 'Released and available for medicine safety and pharmaceutical traceability. Request a demonstration scoped to your workflows.' }}</p><a class="btn-primary" href="{{ url($locale.'/products/opes-drugtrace') }}">{{ $isFr ? 'Découvrir DrugTrace' : 'Explore DrugTrace' }}</a></section>
 
 {{-- ── TESTIMONIALS — only shown when real practitioner reviews exist ── --}}
 @if($testimonials->isNotEmpty())
@@ -563,10 +536,10 @@
                 <i data-lucide="star" style="width:13px;height:13px;{{ $s <= $avg ? 'color:#f59e0b;fill:#f59e0b' : 'color:#334155' }}"></i>
                 @endfor
             </div>
-            <i data-lucide="quote" style="width:20px;height:20px;color:#00C896;opacity:.5"></i>
+            <i data-lucide="quote" style="width:20px;height:20px;color:var(--brand-accent);opacity:.5"></i>
             <blockquote>"{{ $t->findings_text }}"</blockquote>
             <div class="testimonial-author">
-                <i data-lucide="user-circle" style="width:14px;height:14px;color:#00C896"></i>
+                <i data-lucide="user-circle" style="width:14px;height:14px;color:var(--brand-accent)"></i>
                 {{ $name }}
                 @if($profession || $specialty || $workplace)
                 · <span>{{ implode(', ', array_filter([$profession, $specialty, $workplace])) }}</span>
@@ -591,6 +564,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!slides.length) return;
     var current = 0, timer, barAnim;
     var INTERVAL = 5000;
+    var paused = true; // Slides change only on request, avoiding moving content during reading.
 
     function goTo(n) {
         slides[current].classList.remove('active');
@@ -603,7 +577,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function startBar() {
-        if (!bar) return;
+        if (!bar || paused) return;
         bar.style.transition = 'none';
         bar.style.width = '0%';
         requestAnimationFrame(function () {
@@ -616,6 +590,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function resetTimer() {
         clearInterval(timer);
+        if (paused) return;
         timer = setInterval(function () { goTo(current + 1); }, INTERVAL);
     }
 

@@ -1,0 +1,44 @@
+[
+  {
+    "path": "/openapi.json",
+    "method": "GET",
+    "status": 200,
+    "contentType": "application/json",
+    "requestId": "15b2a388-71b4-4a4d-b74d-f547b4eb0400"
+  },
+  {
+    "path": "/enquiries",
+    "method": "POST",
+    "status": 201,
+    "contentType": "application/json",
+    "requestId": "18e5bf2a-3052-453b-9c9d-38af791516ee"
+  },
+  {
+    "path": "/enquiries",
+    "method": "POST",
+    "status": 422,
+    "contentType": "application/problem+json",
+    "requestId": "eb0acbc4-ca30-4c91-94b6-257cd977d4ec"
+  },
+  {
+    "path": "/enquiries",
+    "method": "GET",
+    "status": 405,
+    "contentType": "application/problem+json",
+    "requestId": "b06876cd-d197-497a-a5f2-ccc29147426a"
+  },
+  {
+    "path": "/enquiries/1",
+    "method": "GET",
+    "status": 404,
+    "contentType": "application/problem+json",
+    "requestId": "2867d417-99f7-4386-8a4c-2da89cf7a541"
+  },
+  {
+    "path": "/enquiries",
+    "method": "POST",
+    "status": 415,
+    "contentType": "application/problem+json",
+    "requestId": "e6c95a9b-5c8e-42cf-b499-260dd831e7ff"
+  }
+]

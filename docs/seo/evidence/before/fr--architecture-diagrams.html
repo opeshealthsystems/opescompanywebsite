@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<title>Pack de diagrammes d&amp;#039;architecture enterprise — OPES Health Systems — OPES Health Systems</title>
+<meta name="description" content="12 diagrammes d&amp;#039;architecture visuels OPES Health OS : écosystème, Health ID, HIE, hôpital, intelligence clinique, santé nationale, sécurité et gouvernance.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://opeshealthsystems.com/fr/architecture-diagrams">
+<link rel="alternate" hreflang="en" href="https://opeshealthsystems.com/en/architecture-diagrams">
+<link rel="alternate" hreflang="fr" href="https://opeshealthsystems.com/fr/architecture-diagrams">
+<link rel="alternate" hreflang="x-default" href="https://opeshealthsystems.com/en/architecture-diagrams">
+
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OPES Health Systems">
+<meta property="og:title" content="Pack de diagrammes d&amp;#039;architecture enterprise — OPES Health Systems — OPES Health Systems">
+<meta property="og:description" content="12 diagrammes d&amp;#039;architecture visuels OPES Health OS : écosystème, Health ID, HIE, hôpital, intelligence clinique, santé nationale, sécurité et gouvernance.">
+<meta property="og:url" content="https://opeshealthsystems.com/fr/architecture-diagrams">
+<meta property="og:image" content="https://opeshealthsystems.com/og-image.svg">
+<meta property="og:locale" content="fr_CM">
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pack de diagrammes d&amp;#039;architecture enterprise — OPES Health Systems — OPES Health Systems">
+<meta name="twitter:description" content="12 diagrammes d&amp;#039;architecture visuels OPES Health OS : écosystème, Health ID, HIE, hôpital, intelligence clinique, santé nationale, sécurité et gouvernance.">
+<meta name="twitter:image" content="https://opeshealthsystems.com/og-image.svg">
+    <link rel="preload" as="style" href="https://opeshealthsystems.com/build/assets/app-B8QaNT14.css" /><link rel="modulepreload" as="script" href="https://opeshealthsystems.com/build/assets/app-BqopCnbu.js" /><link rel="stylesheet" href="https://opeshealthsystems.com/build/assets/app-B8QaNT14.css" data-navigate-track="reload" /><script type="module" src="https://opeshealthsystems.com/build/assets/app-BqopCnbu.js" data-navigate-track="reload"></script></head>
+<body>
+    <a class="skip-link" href="#main-content">Aller au contenu</a>
+    <nav class="site-nav" id="siteNav">
+    <a href="https://opeshealthsystems.com/fr" class="nav-logo">
+        <div class="nav-logo-mark"><i data-lucide="circle-dashed" style="width:20px;height:20px"></i></div>
+        <div class="nav-logo-text">
+            <div class="nav-logo-name">OPES <span>Health</span> Systems</div>
+            <div class="nav-logo-tagline">Infrastructure de santé numérique pour l&#039;Afrique</div>
+        </div>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-label="Afficher le menu" aria-controls="site-navigation" aria-expanded="false">
+        <i data-lucide="menu" class="nav-toggle-open" style="width:22px;height:22px"></i>
+        <i data-lucide="x" class="nav-toggle-close" style="width:22px;height:22px"></i>
+    </button>
+
+    <div class="nav-collapse" id="site-navigation">
+    <div class="nav-links">
+
+        <a href="https://opeshealthsystems.com/fr">Accueil</a>
+
+        
+        <div class="nav-dropdown-wrap">
+            <a href="https://opeshealthsystems.com/fr/products" class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+                Produits
+                <i data-lucide="chevron-down" aria-hidden="true" style="width:13px;height:13px;opacity:.5;transition:transform 0.2s"></i>
+            </a>
+            <div class="nav-dropdown">
+                <div class="nav-dd-section">
+                    <div class="nav-dd-section-label">Vue d&#039;ensemble</div>
+                    <a href="https://opeshealthsystems.com/fr/health-os" class="nav-dd-item">
+                        <i data-lucide="layers" style="width:14px;height:14px;color:#00C896"></i>
+                        <div>
+                            <div class="nav-dd-name">OPES Health OS</div>
+                            <div class="nav-dd-sub">Catalogue produits &amp; matrice</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="nav-dd-section">
+                    <div class="nav-dd-section-label">Plateforme principale</div>
+                    <a href="https://opeshealthsystems.com/fr/products/opescare" class="nav-dd-item">
+                        <i data-lucide="fingerprint" style="width:14px;height:14px;color:#00C896"></i>
+                        <div>
+                            <div class="nav-dd-name">OPESCare</div>
+                            <div class="nav-dd-sub">Identifiant de santé universel</div>
+                        </div>
+                    </a>
+                    <a href="https://opeshealthsystems.com/fr/products/opes-emr" class="nav-dd-item">
+                        <i data-lucide="stethoscope" style="width:14px;height:14px;color:#00C896"></i>
+                        <div>
+                            <div class="nav-dd-name">OPES EMR</div>
+                            <div class="nav-dd-sub">Dossiers médicaux électroniques</div>
+                        </div>
+                    </a>
+                    <a href="https://opeshealthsystems.com/fr/products/opes-hospital-his" class="nav-dd-item">
+                        <i data-lucide="hospital" style="width:14px;height:14px;color:#00C896"></i>
+                        <div>
+                            <div class="nav-dd-name">OPES Hospital HIS</div>
+                            <div class="nav-dd-sub">Système d&#039;information hospitalier</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="nav-dd-section">
+                    <div class="nav-dd-section-label">Diagnostics</div>
+                    <a href="https://opeshealthsystems.com/fr/products/opes-lab" class="nav-dd-item">
+                        <i data-lucide="microscope" style="width:14px;height:14px;color:#87baff"></i>
+                        <div>
+                            <div class="nav-dd-name">OPES Lab</div>
+                            <div class="nav-dd-sub">Système d&#039;information de laboratoire</div>
+                        </div>
+                    </a>
+                    <a href="https://opeshealthsystems.com/fr/products/pharmis" class="nav-dd-item">
+                        <i data-lucide="pill" style="width:14px;height:14px;color:#87baff"></i>
+                        <div>
+                            <div class="nav-dd-name">PHARMIS</div>
+                            <div class="nav-dd-sub">Gestion pharmacie</div>
+                        </div>
+                    </a>
+                    <a href="https://opeshealthsystems.com/fr/products/radis" class="nav-dd-item">
+                        <i data-lucide="scan" style="width:14px;height:14px;color:#87baff"></i>
+                        <div>
+                            <div class="nav-dd-name">RADIS</div>
+                            <div class="nav-dd-sub">Système d&#039;information de radiologie</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="nav-dd-footer">
+                    <a href="https://opeshealthsystems.com/fr/products">
+                        Voir les 22 systèmes
+                        <i data-lucide="arrow-right" style="width:11px;height:11px"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="nav-dropdown-wrap">
+            <a href="https://opeshealthsystems.com/fr/solutions" class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+                Solutions
+                <i data-lucide="chevron-down" aria-hidden="true" style="width:13px;height:13px;opacity:.5;transition:transform 0.2s"></i>
+            </a>
+            <div class="nav-dropdown nav-dropdown--narrow">
+                <a href="https://opeshealthsystems.com/fr/solutions#hospitals" class="nav-dd-item">
+                    <i data-lucide="hospital" style="width:14px;height:14px;color:#00C896"></i>
+                    <div>
+                        <div class="nav-dd-name">Hôpitaux</div>
+                        <div class="nav-dd-sub">Transformation numérique complète</div>
+                    </div>
+                </a>
+                <a href="https://opeshealthsystems.com/fr/solutions#clinics" class="nav-dd-item">
+                    <i data-lucide="stethoscope" style="width:14px;height:14px;color:#87baff"></i>
+                    <div>
+                        <div class="nav-dd-name">Cliniques</div>
+                        <div class="nav-dd-sub">DME &amp; triage pour petits établissements</div>
+                    </div>
+                </a>
+                <a href="https://opeshealthsystems.com/fr/solutions#laboratories" class="nav-dd-item">
+                    <i data-lucide="microscope" style="width:14px;height:14px;color:#00C896"></i>
+                    <div>
+                        <div class="nav-dd-name">Laboratoires</div>
+                        <div class="nav-dd-sub">OPES Lab + OPESCare</div>
+                    </div>
+                </a>
+                <a href="https://opeshealthsystems.com/fr/solutions#government" class="nav-dd-item">
+                    <i data-lucide="shield-check" style="width:14px;height:14px;color:#87baff"></i>
+                    <div>
+                        <div class="nav-dd-name">Gouvernement &amp; ONG</div>
+                        <div class="nav-dd-sub">SIS UHC + santé populationnelle</div>
+                    </div>
+                </a>
+                <a href="https://opeshealthsystems.com/fr/national-platform" class="nav-dd-item">
+                    <i data-lucide="building-2" style="width:14px;height:14px;color:#00C896"></i>
+                    <div>
+                        <div class="nav-dd-name">Plateforme nationale</div>
+                        <div class="nav-dd-sub">Plan gouvernemental &amp; HIE</div>
+                    </div>
+                </a>
+                <div class="nav-dd-footer">
+                    <a href="https://opeshealthsystems.com/fr/solutions">
+                        Voir toutes les solutions
+                        <i data-lucide="arrow-right" style="width:11px;height:11px"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="nav-dropdown-wrap">
+            <a href="https://opeshealthsystems.com/fr/markets" class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+                Marchés
+                <i data-lucide="chevron-down" aria-hidden="true" style="width:13px;height:13px;opacity:.5;transition:transform 0.2s"></i>
+            </a>
+            <div class="nav-dropdown nav-dropdown--narrow">
+                <div class="nav-dd-section">
+                    <div class="nav-dd-section-label">Marché d&#039;origine</div>
+                    <a href="https://opeshealthsystems.com/fr/products" class="nav-dd-item">
+                        <img src="https://opeshealthsystems.com/flags/cm.svg" alt="" style="width:18px;height:12px;border-radius:2px;object-fit:cover;flex-shrink:0">
+                        <div>
+                            <div class="nav-dd-name">Cameroun</div>
+                            <div class="nav-dd-sub">Marché principal — 22 systèmes</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="nav-dd-section">
+                    <div class="nav-dd-section-label">Zone CEMAC</div>
+                                        <a href="https://opeshealthsystems.com/fr/markets/gabon" class="nav-dd-item">
+                        <img src="https://opeshealthsystems.com/flags/ga.svg" alt="" style="width:18px;height:12px;border-radius:2px;object-fit:cover;flex-shrink:0">
+                        <div>
+                            <div class="nav-dd-name">Gabon</div>
+                            <div class="nav-dd-sub">Libreville</div>
+                        </div>
+                    </a>
+                                        <a href="https://opeshealthsystems.com/fr/markets/congo-brazzaville" class="nav-dd-item">
+                        <img src="https://opeshealthsystems.com/flags/cg.svg" alt="" style="width:18px;height:12px;border-radius:2px;object-fit:cover;flex-shrink:0">
+                        <div>
+                            <div class="nav-dd-name">Republic of Congo</div>
+                            <div class="nav-dd-sub">Brazzaville</div>
+                        </div>
+                    </a>
+                                        <a href="https://opeshealthsystems.com/fr/markets/chad" class="nav-dd-item">
+                        <img src="https://opeshealthsystems.com/flags/td.svg" alt="" style="width:18px;height:12px;border-radius:2px;object-fit:cover;flex-shrink:0">
+                        <div>
+                            <div class="nav-dd-name">Chad</div>
+                            <div class="nav-dd-sub">N&#039;Djamena</div>
+                        </div>
+                    </a>
+                                        <a href="https://opeshealthsystems.com/fr/markets/central-african-republic" class="nav-dd-item">
+                        <img src="https://opeshealthsystems.com/flags/cf.svg" alt="" style="width:18px;height:12px;border-radius:2px;object-fit:cover;flex-shrink:0">
+                        <div>
+                            <div class="nav-dd-name">Central African Republic</div>
+                            <div class="nav-dd-sub">Bangui</div>
+                        </div>
+                    </a>
+                                        <a href="https://opeshealthsystems.com/fr/markets/equatorial-guinea" class="nav-dd-item">
+                        <img src="https://opeshealthsystems.com/flags/gq.svg" alt="" style="width:18px;height:12px;border-radius:2px;object-fit:cover;flex-shrink:0">
+                        <div>
+                            <div class="nav-dd-name">Equatorial Guinea</div>
+                            <div class="nav-dd-sub">Malabo</div>
+                        </div>
+                    </a>
+                                    </div>
+                <div class="nav-dd-footer">
+                    <a href="https://opeshealthsystems.com/fr/markets">
+                        Tous les marchés CEMAC
+                        <i data-lucide="arrow-right" style="width:11px;height:11px"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="nav-dropdown-wrap">
+            <a href="https://opeshealthsystems.com/fr/architecture" class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+                Plateforme
+                <i data-lucide="chevron-down" aria-hidden="true" style="width:13px;height:13px;opacity:.5;transition:transform 0.2s"></i>
+            </a>
+            <div class="nav-dropdown nav-dropdown--narrow">
+                <a href="https://opeshealthsystems.com/fr/architecture" class="nav-dd-item">
+                    <i data-lucide="cpu" style="width:14px;height:14px;color:#00C896"></i>
+                    <div>
+                        <div class="nav-dd-name">Architecture</div>
+                        <div class="nav-dd-sub">HL7 FHIR, identifiant de santé, sécurité</div>
+                    </div>
+                </a>
+                <a href="https://opeshealthsystems.com/fr/architecture-diagrams" class="nav-dd-item">
+                    <i data-lucide="git-branch" style="width:14px;height:14px;color:#87baff"></i>
+                    <div>
+                        <div class="nav-dd-name">Diagrammes architecture</div>
+                        <div class="nav-dd-sub">12 diagrammes visuels</div>
+                    </div>
+                </a>
+                <a href="https://opeshealthsystems.com/fr/implementation" class="nav-dd-item">
+                    <i data-lucide="map" style="width:14px;height:14px;color:#87baff"></i>
+                    <div>
+                        <div class="nav-dd-name">Implémentation</div>
+                        <div class="nav-dd-sub">Cadre de déploiement en 90 jours</div>
+                    </div>
+                </a>
+                <a href="https://opeshealthsystems.com/fr/support" class="nav-dd-item">
+                    <i data-lucide="headphones" style="width:14px;height:14px;color:#00C896"></i>
+                    <div>
+                        <div class="nav-dd-name">Support & SLA</div>
+                        <div class="nav-dd-sub">Niveaux Bronze à Platine</div>
+                    </div>
+                </a>
+                <a href="https://opeshealthsystems.com/fr/academy" class="nav-dd-item">
+                    <i data-lucide="graduation-cap" style="width:14px;height:14px;color:#87baff"></i>
+                    <div>
+                        <div class="nav-dd-name">OPES Academy</div>
+                        <div class="nav-dd-sub">Certification et formation</div>
+                    </div>
+                </a>
+                <a href="https://opeshealthsystems.com/fr/courses" class="nav-dd-item">
+                    <i data-lucide="book-open" style="width:14px;height:14px;color:#87baff"></i>
+                    <div>
+                        <div class="nav-dd-name">Cours</div>
+                        <div class="nav-dd-sub">Catalogue de formation public</div>
+                    </div>
+                </a>
+                <a href="https://opeshealthsystems.com/fr/practitioners" class="nav-dd-item">
+                    <i data-lucide="users" style="width:14px;height:14px;color:#00C896"></i>
+                    <div>
+                        <div class="nav-dd-name">Annuaire des praticiens</div>
+                        <div class="nav-dd-sub">Praticiens vérifiés</div>
+                    </div>
+                </a>
+                <a href="https://opeshealthsystems.com/fr/compliance" class="nav-dd-item">
+                    <i data-lucide="shield-check" style="width:14px;height:14px;color:#00C896"></i>
+                    <div>
+                        <div class="nav-dd-name">Conformité &amp; confiance</div>
+                        <div class="nav-dd-sub">Sécurité, OHADA, souveraineté des données</div>
+                    </div>
+                </a>
+                <a href="https://opeshealthsystems.com/fr/clinical-governance" class="nav-dd-item">
+                    <i data-lucide="heart-pulse" style="width:14px;height:14px;color:#87baff"></i>
+                    <div>
+                        <div class="nav-dd-name">Gouvernance clinique</div>
+                        <div class="nav-dd-sub">Sécurité patients &amp; supervision CDSS</div>
+                    </div>
+                </a>
+                <a href="https://opeshealthsystems.com/fr/interoperability" class="nav-dd-item">
+                    <i data-lucide="share-2" style="width:14px;height:14px;color:#00C896"></i>
+                    <div>
+                        <div class="nav-dd-name">Interopérabilité</div>
+                        <div class="nav-dd-sub">HIE, FHIR, Health ID exchange</div>
+                    </div>
+                </a>
+                <a href="https://opeshealthsystems.com/fr/quality" class="nav-dd-item">
+                    <i data-lucide="badge-check" style="width:14px;height:14px;color:#87baff"></i>
+                    <div>
+                        <div class="nav-dd-name">Qualité (SGQ)</div>
+                        <div class="nav-dd-sub">Cadre de gestion de la qualité</div>
+                    </div>
+                </a>
+                            </div>
+        </div>
+
+                <a href="https://opeshealthsystems.com/fr/about">À propos</a>
+        <a href="https://opeshealthsystems.com/fr/partnerships">Partenariats</a>
+        <a href="https://opeshealthsystems.com/fr/pricing">Tarifs</a>
+        <a href="https://opeshealthsystems.com/fr/contact">Contact</a>
+    </div>
+
+    <div class="nav-right">
+        <div class="lang-switcher">
+    <button type="button" class="lang-trigger" aria-controls="language-options" aria-expanded="false"
+            aria-label="Choisir la langue">
+        <i data-lucide="globe" style="width:15px;height:15px"></i>
+        <span class="lang-current">FR</span>
+        <i data-lucide="chevron-down" aria-hidden="true" class="lang-caret" style="width:12px;height:12px"></i>
+    </button>
+    <div class="lang-menu" id="language-options">
+                <a href="https://opeshealthsystems.com/en/architecture-diagrams" lang="en" hreflang="en"
+           class="lang-option"
+           >
+            <span class="lang-option-code">EN</span>
+            <span class="lang-option-label">English</span>
+        </a>
+                <a href="https://opeshealthsystems.com/fr/architecture-diagrams" lang="fr" hreflang="fr"
+           class="lang-option is-active"
+            aria-current="true" >
+            <span class="lang-option-code">FR</span>
+            <span class="lang-option-label">Français</span>
+        </a>
+            </div>
+</div>
+
+                
+        <a href="https://opeshealthsystems.com/login" class="nav-account-login" title="Connexion">
+            <i data-lucide="user-circle" style="width:20px;height:20px"></i>
+        </a>
+        
+        <a href="https://opeshealthsystems.com/fr/book-demo" class="btn-cta">
+            Demander une démo
+        </a>
+    </div>
+    </div>
+</nav>
+
+<script>
+(function () {
+    var nav = document.getElementById('siteNav');
+    if (!nav) return;
+    nav.addEventListener('keydown', function (event) {
+        if (event.key !== 'Escape') return;
+        nav.classList.remove('nav-open');
+        nav.querySelector('.nav-toggle').setAttribute('aria-expanded', 'false');
+        nav.querySelectorAll('.open').forEach(function (el) { el.classList.remove('open'); });
+        nav.querySelectorAll('[aria-expanded]').forEach(function (el) { el.setAttribute('aria-expanded', 'false'); });
+        nav.querySelector('.nav-logo').focus();
+    });
+
+    // Mobile drawer (hamburger).
+    var toggle = nav.querySelector('.nav-toggle');
+    if (toggle) {
+        toggle.addEventListener('click', function () {
+            var open = nav.classList.toggle('nav-open');
+            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+        // Close the drawer after tapping a link.
+        nav.querySelectorAll('.nav-collapse a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                nav.classList.remove('nav-open');
+                toggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+    }
+
+    // Account menu — tap/click operable (touch has no hover) + state announced.
+    var account = nav.querySelector('.nav-account');
+    var avatar = account && account.querySelector('.nav-account-avatar');
+    if (account && avatar) {
+        var setAccount = function (open) {
+            account.classList.toggle('open', open);
+            avatar.setAttribute('aria-expanded', open ? 'true' : 'false');
+        };
+        avatar.addEventListener('click', function (e) {
+            e.stopPropagation();
+            setAccount(!account.classList.contains('open'));
+        });
+        document.addEventListener('click', function (e) {
+            if (!account.contains(e.target)) setAccount(false);
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') setAccount(false);
+        });
+    }
+
+    // Language switcher — click the globe to open/close the locale dropdown.
+    var lang = nav.querySelector('.lang-switcher');
+    var langTrigger = lang && lang.querySelector('.lang-trigger');
+    if (lang && langTrigger) {
+        var setLang = function (open) {
+            lang.classList.toggle('open', open);
+            langTrigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        };
+        langTrigger.addEventListener('click', function (e) {
+            e.stopPropagation();
+            setLang(!lang.classList.contains('open'));
+        });
+        document.addEventListener('click', function (e) {
+            if (!lang.contains(e.target)) setLang(false);
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') setLang(false);
+        });
+    }
+
+    // Mega-menu triggers: keep aria-expanded in sync with the hover/focus reveal.
+    nav.querySelectorAll('.nav-dropdown-wrap').forEach(function (wrap) {
+        var trigger = wrap.querySelector('.nav-dropdown-trigger');
+        if (!trigger) return;
+        var setState = function (open) { trigger.setAttribute('aria-expanded', open ? 'true' : 'false'); };
+        wrap.addEventListener('mouseenter', function () { setState(true); });
+        wrap.addEventListener('mouseleave', function () { setState(false); });
+        wrap.addEventListener('focusin', function () { setState(true); });
+        wrap.addEventListener('focusout', function () {
+            if (!wrap.contains(document.activeElement)) setState(false);
+        });
+    });
+})();
+</script>
+
+    <main id="main-content" tabindex="-1">
+        <div class="about-hero">
+    <div class="section-label" style="justify-content:center;margin-bottom:16px">
+        <i data-lucide="git-branch" style="width:12px;height:12px"></i>
+        Standards d&#039;architecture officielle v1.0
+    </div>
+    <h1 class="about-title">
+        Pack de diagrammes
+        <span class="gradient-text">d&#039;architecture enterprise</span>
+    </h1>
+    <p class="about-sub" style="max-width:720px">
+        Les diagrammes d&#039;architecture communiquent plus en 30 secondes que 20 pages de texte — la référence visuelle officielle pour OPES Health OS, conçue pour les ministères, conseils d&#039;administration, investisseurs, comités techniques et équipes d&#039;appels d&#039;offres.
+    </p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px">
+                <span style="background:#0F172A;border:1px solid #1e293b;border-radius:20px;padding:5px 12px;font-size:var(--fs-xs);color:var(--text-muted)">Ministères de la Santé</span>
+                <span style="background:#0F172A;border:1px solid #1e293b;border-radius:20px;padding:5px 12px;font-size:var(--fs-xs);color:var(--text-muted)">Conseils d&#039;administration</span>
+                <span style="background:#0F172A;border:1px solid #1e293b;border-radius:20px;padding:5px 12px;font-size:var(--fs-xs);color:var(--text-muted)">Investisseurs</span>
+                <span style="background:#0F172A;border:1px solid #1e293b;border-radius:20px;padding:5px 12px;font-size:var(--fs-xs);color:var(--text-muted)">Bailleurs de fonds</span>
+                <span style="background:#0F172A;border:1px solid #1e293b;border-radius:20px;padding:5px 12px;font-size:var(--fs-xs);color:var(--text-muted)">Comités techniques</span>
+                <span style="background:#0F172A;border:1px solid #1e293b;border-radius:20px;padding:5px 12px;font-size:var(--fs-xs);color:var(--text-muted)">Équipes d&#039;appels d&#039;offres</span>
+            </div>
+</div>
+
+
+<div class="section" style="text-align:center">
+    <div class="stats-bar" style="max-width:960px;margin:0 auto">
+                <div class="stat-item">
+            <div class="stat-value">12</div>
+            <div class="stat-label">Diagrammes</div>
+        </div>
+                <div class="stat-item">
+            <div class="stat-value">6</div>
+            <div class="stat-label">Couches d&#039;architecture</div>
+        </div>
+                <div class="stat-item">
+            <div class="stat-value">5</div>
+            <div class="stat-label">Domaines systèmes</div>
+        </div>
+                <div class="stat-item">
+            <div class="stat-value">1</div>
+            <div class="stat-label">Écosystème unifié</div>
+        </div>
+            </div>
+</div>
+
+<div class="divider"></div>
+
+
+
+
+
+<div class="section" style="max-width:960px;margin:0 auto">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+        <div style="width:32px;height:32px;border-radius:8px;background:#00C89615;border:1px solid #00C89630;display:flex;align-items:center;justify-content:center;font-size:var(--fs-xs);font-weight:800;color:#00C896;flex-shrink:0">1</div>
+        <div>
+            <div class="section-label" style="margin-bottom:4px"><i data-lucide="layers" style="width:12px;height:12px"></i> Diagramme 1</div>
+            <h2 style="font-size:18px;font-weight:700;color:#e2e8f0;margin:0">Architecture écosystème OPES Health OS</h2>
+        </div>
+    </div>
+    <div style="background:#080E1A;border:1px solid #1e293b;border-radius:16px;padding:28px 24px;">
+        
+        <div style="max-width:360px;margin:0 auto">
+            <div style="background:#1A6FE810;border:1px solid #1A6FE840;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#87baff;font-size:13px;letter-spacing:0.05em;padding:12px 20px">OPES HEALTH SYSTEMS</div>
+        </div>
+        <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+        <div style="max-width:360px;margin:0 auto">
+            <div style="background:#00C89610;border:1px solid #00C89640;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#00C896;font-size:13px;padding:12px 20px">OPES HEALTH OS</div>
+        </div>
+        
+        <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+        <div style="height:1px;background:linear-gradient(to right,transparent,#1e293b,transparent);margin:0 16%;"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-top:0">
+                        <div style="display:flex;flex-direction:column;align-items:center">
+                <div style="width:1px;height:16px;background:#1e293b"></div>
+                <div style="background:#00C89610;border:1px solid #00C89640;border-radius:8px;padding:8px 10px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#00C896;width:100%">OPES Clinic</div>
+            </div>
+                        <div style="display:flex;flex-direction:column;align-items:center">
+                <div style="width:1px;height:16px;background:#1e293b"></div>
+                <div style="background:#1A6FE810;border:1px solid #1A6FE840;border-radius:8px;padding:8px 10px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#1A6FE8;width:100%">OPES Hospital</div>
+            </div>
+                        <div style="display:flex;flex-direction:column;align-items:center">
+                <div style="width:1px;height:16px;background:#1e293b"></div>
+                <div style="background:#00C89610;border:1px solid #00C89640;border-radius:8px;padding:8px 10px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#00C896;width:100%">OPES Care</div>
+            </div>
+                        <div style="display:flex;flex-direction:column;align-items:center">
+                <div style="width:1px;height:16px;background:#1e293b"></div>
+                <div style="background:#1A6FE810;border:1px solid #1A6FE840;border-radius:8px;padding:8px 10px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#1A6FE8;width:100%">OPES Clinical Intelligence</div>
+            </div>
+                    </div>
+        
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-top:6px">
+                        <div style="display:flex;flex-direction:column;align-items:center">
+                <div style="width:1px;height:14px;background:#1e293b"></div>
+                <div style="background:#0F172A;border:1px dashed #1e293b;border-radius:8px;padding:7px 8px;text-align:center;font-size:var(--fs-2xs);color:var(--text-faint);width:100%">Systèmes spécialisés</div>
+            </div>
+                        <div style="display:flex;flex-direction:column;align-items:center">
+                <div style="width:1px;height:14px;background:#1e293b"></div>
+                <div style="background:#0F172A;border:1px dashed #1e293b;border-radius:8px;padding:7px 8px;text-align:center;font-size:var(--fs-2xs);color:var(--text-faint);width:100%">Opérations hôpital</div>
+            </div>
+                        <div style="display:flex;flex-direction:column;align-items:center">
+                <div style="width:1px;height:14px;background:#1e293b"></div>
+                <div style="background:#0F172A;border:1px dashed #1e293b;border-radius:8px;padding:7px 8px;text-align:center;font-size:var(--fs-2xs);color:var(--text-faint);width:100%">Health ID · MPI · HIE</div>
+            </div>
+                        <div style="display:flex;flex-direction:column;align-items:center">
+                <div style="width:1px;height:14px;background:#1e293b"></div>
+                <div style="background:#0F172A;border:1px dashed #1e293b;border-radius:8px;padding:7px 8px;text-align:center;font-size:var(--fs-2xs);color:var(--text-faint);width:100%">CDSS · Triage · Analytics</div>
+            </div>
+                    </div>
+        
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-top:6px">
+            <div style="display:flex;justify-content:center"><div style="width:1px;height:14px;background:#1e293b"></div></div><div style="display:flex;justify-content:center"><div style="width:1px;height:14px;background:#1e293b"></div></div><div style="display:flex;justify-content:center"><div style="width:1px;height:14px;background:#1e293b"></div></div><div style="display:flex;justify-content:center"><div style="width:1px;height:14px;background:#1e293b"></div></div>        </div>
+        <div style="height:1px;background:linear-gradient(to right,transparent,#1e293b,transparent);margin:0 16%;"></div>
+        <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+        <div style="max-width:400px;margin:0 auto">
+            <div style="background:#F59E0B10;border:1px solid #F59E0B40;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#F59E0B;padding:11px 20px">OPES SANTÉ PUBLIQUE</div>
+        </div>
+        <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+        <div style="max-width:400px;margin:0 auto">
+            <div style="background:#F59E0B10;border:1px solid #F59E0B40;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#F59E0B;padding:11px 20px">GOUVERNEMENTS &amp; PROGRAMMES NATIONAUX</div>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+
+
+
+<div class="section" style="max-width:960px;margin:0 auto">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px">
+
+        
+        <div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+                <div style="width:28px;height:28px;border-radius:7px;background:#00C89615;border:1px solid #00C89630;display:flex;align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:800;color:#00C896;flex-shrink:0">2</div>
+                <div>
+                    <div style="font-size:var(--fs-2xs);color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Diagramme 2</div>
+                    <div style="font-size:14px;font-weight:700;color:#e2e8f0">OPES Health ID</div>
+                </div>
+            </div>
+            <div style="background:#080E1A;border:1px solid #1e293b;border-radius:16px;padding:28px 24px;">
+                <div style="background:#0F172A;border:1px solid #1e293b;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;">Patient</div>
+                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+                <div style="background:#00C89610;border:1px solid #00C89640;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#00C896;">OPES Health ID</div>
+                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+                <div style="background:#1A6FE810;border:1px solid #1A6FE840;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#87baff;">Index Patient Maître (MPI)</div>
+                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+                <div style="height:1px;background:linear-gradient(to right,transparent,#1e293b,transparent);margin:0 16%;"></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                                        <div style="display:flex;flex-direction:column;align-items:center">
+                        <div style="width:1px;height:14px;background:#1e293b"></div>
+                        <div style="background:#00C89610;border:1px solid #00C89630;border-radius:7px;padding:7px 10px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#00C896;width:100%">Clinique</div>
+                    </div>
+                                        <div style="display:flex;flex-direction:column;align-items:center">
+                        <div style="width:1px;height:14px;background:#1e293b"></div>
+                        <div style="background:#1A6FE810;border:1px solid #1A6FE830;border-radius:7px;padding:7px 10px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#1A6FE8;width:100%">Hôpital</div>
+                    </div>
+                                        <div style="display:flex;flex-direction:column;align-items:center">
+                        <div style="width:1px;height:14px;background:#1e293b"></div>
+                        <div style="background:#00C89610;border:1px solid #00C89630;border-radius:7px;padding:7px 10px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#00C896;width:100%">Laboratoire</div>
+                    </div>
+                                        <div style="display:flex;flex-direction:column;align-items:center">
+                        <div style="width:1px;height:14px;background:#1e293b"></div>
+                        <div style="background:#1A6FE810;border:1px solid #1A6FE830;border-radius:7px;padding:7px 10px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#1A6FE8;width:100%">Pharmacie</div>
+                    </div>
+                                    </div>
+                <div style="height:1px;background:linear-gradient(to right,transparent,#1e293b,transparent);margin:0 16%;margin-top:14px"></div>
+                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+                <div style="background:#00C89610;border:1px solid #00C89630;border-radius:8px;padding:12px;text-align:center">
+                    <div style="font-size:var(--fs-xs);font-weight:700;color:#00C896">Dossier longitudinal</div>
+                    <div style="font-size:var(--fs-2xs);color:var(--text-faint);margin-top:4px">Un patient · Une identité · Un dossier</div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+                <div style="width:28px;height:28px;border-radius:7px;background:#1A6FE815;border:1px solid #1A6FE830;display:flex;align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:800;color:#87baff;flex-shrink:0">3</div>
+                <div>
+                    <div style="font-size:var(--fs-2xs);color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Diagramme 3</div>
+                    <div style="font-size:14px;font-weight:700;color:#e2e8f0">Échange d&#039;informations de santé (HIE)</div>
+                </div>
+            </div>
+            <div style="background:#080E1A;border:1px solid #1e293b;border-radius:16px;padding:28px 24px;">
+                <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center">
+                    
+                    <div style="display:flex;flex-direction:column;gap:6px">
+                                                <div style="background:#0F172A;border:1px solid #1e293b;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;font-size:var(--fs-2xs);padding:7px 10px">Hôpital A</div>
+                                                <div style="background:#0F172A;border:1px solid #1e293b;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;font-size:var(--fs-2xs);padding:7px 10px">Hôpital B</div>
+                                                <div style="background:#0F172A;border:1px solid #1e293b;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;font-size:var(--fs-2xs);padding:7px 10px">Laboratoire</div>
+                                                <div style="background:#0F172A;border:1px solid #1e293b;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;font-size:var(--fs-2xs);padding:7px 10px">Pharmacie</div>
+                                                <div style="background:#0F172A;border:1px solid #1e293b;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;font-size:var(--fs-2xs);padding:7px 10px">Assurance</div>
+                                                <div style="background:#0F172A;border:1px solid #1e293b;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;font-size:var(--fs-2xs);padding:7px 10px">Santé publique</div>
+                                            </div>
+                    
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:0 8px">
+                        <div style="font-size:18px;color:#87baff">⇄</div>
+                        <div style="background:#1A6FE810;border:2px solid #1A6FE840;border-radius:10px;padding:16px 12px;text-align:center">
+                            <i data-lucide="share-2" style="width:20px;height:20px;color:#87baff;display:block;margin:0 auto 6px"></i>
+                            <div style="font-size:var(--fs-2xs);font-weight:800;color:#87baff;letter-spacing:0.06em">OPES HIE</div>
+                            <div style="font-size:var(--fs-2xs);color:var(--text-faint);margin-top:2px">PLATEFORME</div>
+                        </div>
+                        <div style="font-size:18px;color:#87baff">⇄</div>
+                    </div>
+                    
+                    <div style="display:flex;flex-direction:column;gap:6px">
+                                                <div style="background:#00C89610;border:1px solid #00C89630;border-radius:7px;padding:7px 10px;text-align:center;font-size:var(--fs-2xs);font-weight:600;color:#00C896">Référencements</div>
+                                                <div style="background:#1A6FE810;border:1px solid #1A6FE830;border-radius:7px;padding:7px 10px;text-align:center;font-size:var(--fs-2xs);font-weight:600;color:#1A6FE8">Résultats</div>
+                                                <div style="background:#00C89610;border:1px solid #00C89630;border-radius:7px;padding:7px 10px;text-align:center;font-size:var(--fs-2xs);font-weight:600;color:#00C896">Dossiers cliniques</div>
+                                                <div style="background:#1A6FE810;border:1px solid #1A6FE830;border-radius:7px;padding:7px 10px;text-align:center;font-size:var(--fs-2xs);font-weight:600;color:#1A6FE8">Sinistres</div>
+                                                <div style="background:#00C89610;border:1px solid #00C89630;border-radius:7px;padding:7px 10px;text-align:center;font-size:var(--fs-2xs);font-weight:600;color:#00C896">Notifications</div>
+                                            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+
+
+
+<div class="section" style="max-width:960px;margin:0 auto">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <div style="width:28px;height:28px;border-radius:7px;background:#00C89615;border:1px solid #00C89630;display:flex;align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:800;color:#00C896;flex-shrink:0">4</div>
+        <div>
+            <div style="font-size:var(--fs-2xs);color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Diagramme 4</div>
+            <div style="font-size:18px;font-weight:700;color:#e2e8f0">Architecture OPES Hospital</div>
+        </div>
+    </div>
+    <div style="background:#080E1A;border:1px solid #1e293b;border-radius:16px;padding:28px 24px;">
+        <div style="display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:start">
+            
+            <div>
+                <div style="background:#0F172A;border:1px solid #1e293b;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;">Patient</div>
+                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+                <div style="background:#00C89610;border:1px solid #00C89640;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#00C896;">Enregistrement</div>
+                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+                <div style="background:#1A6FE810;border:1px solid #1A6FE840;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#87baff;">Dossier médical électronique (DME)</div>
+                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+                <div style="background:#00C89610;border:1px solid #00C89640;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#00C896;font-size:var(--fs-2xs)">Documentation clinique</div>
+                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+                <div style="background:#F59E0B10;border:1px solid #F59E0B40;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#F59E0B">Tableau de bord exécutif</div>
+            </div>
+            
+            <div>
+                <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:14px;padding-left:16px">Départements connectés via EMR</div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                                        <div style="display:flex;align-items:center;gap:10px;padding:9px 14px;background:#0F172A;border:1px solid #1e293b;border-radius:8px;border-left:2px solid #00C896">
+                        <i data-lucide="microscope" style="width:13px;height:13px;color:#00C896;flex-shrink:0"></i>
+                        <span style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0">Laboratoire</span>
+                        <div style="margin-left:auto">
+                            <i data-lucide="arrow-left" style="width:10px;height:10px;color:#1e293b"></i>
+                        </div>
+                    </div>
+                                        <div style="display:flex;align-items:center;gap:10px;padding:9px 14px;background:#0F172A;border:1px solid #1e293b;border-radius:8px;border-left:2px solid #1A6FE8">
+                        <i data-lucide="scan" style="width:13px;height:13px;color:#1A6FE8;flex-shrink:0"></i>
+                        <span style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0">Radiologie</span>
+                        <div style="margin-left:auto">
+                            <i data-lucide="arrow-left" style="width:10px;height:10px;color:#1e293b"></i>
+                        </div>
+                    </div>
+                                        <div style="display:flex;align-items:center;gap:10px;padding:9px 14px;background:#0F172A;border:1px solid #1e293b;border-radius:8px;border-left:2px solid #00C896">
+                        <i data-lucide="pill" style="width:13px;height:13px;color:#00C896;flex-shrink:0"></i>
+                        <span style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0">Pharmacie</span>
+                        <div style="margin-left:auto">
+                            <i data-lucide="arrow-left" style="width:10px;height:10px;color:#1e293b"></i>
+                        </div>
+                    </div>
+                                        <div style="display:flex;align-items:center;gap:10px;padding:9px 14px;background:#0F172A;border:1px solid #1e293b;border-radius:8px;border-left:2px solid #1A6FE8">
+                        <i data-lucide="dollar-sign" style="width:13px;height:13px;color:#1A6FE8;flex-shrink:0"></i>
+                        <span style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0">Facturation</span>
+                        <div style="margin-left:auto">
+                            <i data-lucide="arrow-left" style="width:10px;height:10px;color:#1e293b"></i>
+                        </div>
+                    </div>
+                                        <div style="display:flex;align-items:center;gap:10px;padding:9px 14px;background:#0F172A;border:1px solid #1e293b;border-radius:8px;border-left:2px solid #00C896">
+                        <i data-lucide="bed" style="width:13px;height:13px;color:#00C896;flex-shrink:0"></i>
+                        <span style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0">Admissions &amp; Lits</span>
+                        <div style="margin-left:auto">
+                            <i data-lucide="arrow-left" style="width:10px;height:10px;color:#1e293b"></i>
+                        </div>
+                    </div>
+                                        <div style="display:flex;align-items:center;gap:10px;padding:9px 14px;background:#0F172A;border:1px solid #1e293b;border-radius:8px;border-left:2px solid #1A6FE8">
+                        <i data-lucide="heart-pulse" style="width:13px;height:13px;color:#1A6FE8;flex-shrink:0"></i>
+                        <span style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0">Chirurgie &amp; Soins infirmiers</span>
+                        <div style="margin-left:auto">
+                            <i data-lucide="arrow-left" style="width:10px;height:10px;color:#1e293b"></i>
+                        </div>
+                    </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+
+
+
+<div class="section" style="max-width:960px;margin:0 auto">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px">
+
+        
+        <div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+                <div style="width:28px;height:28px;border-radius:7px;background:#00C89615;border:1px solid #00C89630;display:flex;align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:800;color:#00C896;flex-shrink:0">5</div>
+                <div>
+                    <div style="font-size:var(--fs-2xs);color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Diagramme 5</div>
+                    <div style="font-size:14px;font-weight:700;color:#e2e8f0">OPES Intelligence Clinique</div>
+                </div>
+            </div>
+            <div style="background:#080E1A;border:1px solid #1e293b;border-radius:16px;padding:28px 24px;">
+                <div style="background:#0F172A;border:1px solid #1e293b;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;">Données cliniques</div>
+                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+                <div style="background:#1A6FE810;border:1px solid #1A6FE840;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#87baff;font-size:13px;padding:11px 14px">OPES Clinical Intelligence</div>
+                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+                <div style="height:1px;background:linear-gradient(to right,transparent,#1e293b,transparent);margin:0 16%;"></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
+                                        <div style="display:flex;flex-direction:column;align-items:center">
+                        <div style="width:1px;height:14px;background:#1e293b"></div>
+                        <div style="background:#00C89610;border:1px solid #00C89630;border-radius:8px;padding:10px;text-align:center;width:100%">
+                            <i data-lucide="cpu" style="width:16px;height:16px;color:#00C896;margin:0 auto 5px;display:block"></i>
+                            <div style="font-size:var(--fs-xs);font-weight:700;color:#00C896">CDSS</div>
+                        </div>
+                    </div>
+                                        <div style="display:flex;flex-direction:column;align-items:center">
+                        <div style="width:1px;height:14px;background:#1e293b"></div>
+                        <div style="background:#1A6FE810;border:1px solid #1A6FE830;border-radius:8px;padding:10px;text-align:center;width:100%">
+                            <i data-lucide="zap" style="width:16px;height:16px;color:#1A6FE8;margin:0 auto 5px;display:block"></i>
+                            <div style="font-size:var(--fs-xs);font-weight:700;color:#1A6FE8">Triage</div>
+                        </div>
+                    </div>
+                                        <div style="display:flex;flex-direction:column;align-items:center">
+                        <div style="width:1px;height:14px;background:#1e293b"></div>
+                        <div style="background:#00C89610;border:1px solid #00C89630;border-radius:8px;padding:10px;text-align:center;width:100%">
+                            <i data-lucide="bar-chart-2" style="width:16px;height:16px;color:#00C896;margin:0 auto 5px;display:block"></i>
+                            <div style="font-size:var(--fs-xs);font-weight:700;color:#00C896">Analytique</div>
+                        </div>
+                    </div>
+                                        <div style="display:flex;flex-direction:column;align-items:center">
+                        <div style="width:1px;height:14px;background:#1e293b"></div>
+                        <div style="background:#1A6FE810;border:1px solid #1A6FE830;border-radius:8px;padding:10px;text-align:center;width:100%">
+                            <i data-lucide="activity" style="width:16px;height:16px;color:#1A6FE8;margin:0 auto 5px;display:block"></i>
+                            <div style="font-size:var(--fs-xs);font-weight:700;color:#1A6FE8">Surveillance</div>
+                        </div>
+                    </div>
+                                    </div>
+                <div style="height:1px;background:linear-gradient(to right,transparent,#1e293b,transparent);margin:0 16%;margin-top:14px"></div>
+                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+                <div style="background:#0F172A;border:1px solid #1e293b;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;">Professionnels de santé</div>
+                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+                <div style="background:#00C89610;border:1px solid #00C89630;border-radius:8px;padding:10px;text-align:center">
+                    <div style="font-size:var(--fs-xs);font-weight:700;color:#00C896">Meilleures décisions</div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+                <div style="width:28px;height:28px;border-radius:7px;background:#1A6FE815;border:1px solid #1A6FE830;display:flex;align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:800;color:#87baff;flex-shrink:0">6</div>
+                <div>
+                    <div style="font-size:var(--fs-2xs);color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Diagramme 6</div>
+                    <div style="font-size:14px;font-weight:700;color:#e2e8f0">Santé numérique nationale</div>
+                </div>
+            </div>
+            <div style="background:#080E1A;border:1px solid #1e293b;border-radius:16px;padding:28px 24px;">
+                <div style="background:#F59E0B10;border:1px solid #F59E0B40;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#F59E0B;font-size:var(--fs-xs);padding:11px">Ministère de la Santé</div>
+                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+                <div style="background:#1A6FE810;border:1px solid #1A6FE840;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#87baff;font-size:var(--fs-xs);padding:11px">Plateforme nationale de santé numérique</div>
+                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+                <div style="height:1px;background:linear-gradient(to right,transparent,#1e293b,transparent);margin:0 16%;"></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
+                                        <div style="display:flex;flex-direction:column;align-items:center">
+                        <div style="width:1px;height:14px;background:#1e293b"></div>
+                        <div style="background:#00C89610;border:1px solid #00C89630;border-radius:8px;padding:9px;text-align:center;width:100%">
+                            <i data-lucide="fingerprint" style="width:14px;height:14px;color:#00C896;margin:0 auto 4px;display:block"></i>
+                            <div style="font-size:var(--fs-xs);font-weight:700;color:#00C896">Health ID</div>
+                        </div>
+                    </div>
+                                        <div style="display:flex;flex-direction:column;align-items:center">
+                        <div style="width:1px;height:14px;background:#1e293b"></div>
+                        <div style="background:#1A6FE810;border:1px solid #1A6FE830;border-radius:8px;padding:9px;text-align:center;width:100%">
+                            <i data-lucide="share-2" style="width:14px;height:14px;color:#1A6FE8;margin:0 auto 4px;display:block"></i>
+                            <div style="font-size:var(--fs-xs);font-weight:700;color:#1A6FE8">HIE</div>
+                        </div>
+                    </div>
+                                        <div style="display:flex;flex-direction:column;align-items:center">
+                        <div style="width:1px;height:14px;background:#1e293b"></div>
+                        <div style="background:#00C89610;border:1px solid #00C89630;border-radius:8px;padding:9px;text-align:center;width:100%">
+                            <i data-lucide="database" style="width:14px;height:14px;color:#00C896;margin:0 auto 4px;display:block"></i>
+                            <div style="font-size:var(--fs-xs);font-weight:700;color:#00C896">Registres</div>
+                        </div>
+                    </div>
+                                        <div style="display:flex;flex-direction:column;align-items:center">
+                        <div style="width:1px;height:14px;background:#1e293b"></div>
+                        <div style="background:#1A6FE810;border:1px solid #1A6FE830;border-radius:8px;padding:9px;text-align:center;width:100%">
+                            <i data-lucide="bar-chart-2" style="width:14px;height:14px;color:#1A6FE8;margin:0 auto 4px;display:block"></i>
+                            <div style="font-size:var(--fs-xs);font-weight:700;color:#1A6FE8">Analytique</div>
+                        </div>
+                    </div>
+                                    </div>
+                <div style="height:1px;background:linear-gradient(to right,transparent,#1e293b,transparent);margin:0 16%;margin-top:14px"></div>
+                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+                <div style="background:#0F172A;border:1px solid #1e293b;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;">Établissements de santé</div>
+                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+                <div style="background:#00C89610;border:1px solid #00C89640;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#00C896;">Patients</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+
+
+
+<div class="section" style="max-width:960px;margin:0 auto">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px">
+
+        
+        <div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+                <div style="width:28px;height:28px;border-radius:7px;background:#00C89615;border:1px solid #00C89630;display:flex;align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:800;color:#00C896;flex-shrink:0">7</div>
+                <div>
+                    <div style="font-size:var(--fs-2xs);color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Diagramme 7</div>
+                    <div style="font-size:14px;font-weight:700;color:#e2e8f0">Architecture santé publique</div>
+                </div>
+            </div>
+            <div style="background:#080E1A;border:1px solid #1e293b;border-radius:16px;padding:28px 24px;">
+                                                <div style="background:var(--text-muted)10;border:1px solid var(--text-muted)30;border-radius:8px;padding:10px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:var(--text-muted)">Établissements de santé</div>
+                                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>                <div style="background:#1A6FE810;border:1px solid #1A6FE830;border-radius:8px;padding:10px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#1A6FE8">Rapports de santé publique</div>
+                                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>                <div style="background:#00C89610;border:1px solid #00C89630;border-radius:8px;padding:10px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#00C896">Moteur de surveillance des maladies</div>
+                                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>                <div style="background:#1A6FE810;border:1px solid #1A6FE830;border-radius:8px;padding:10px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#1A6FE8">Plateforme d&#039;analytique nationale</div>
+                                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>                <div style="background:#F59E0B10;border:1px solid #F59E0B30;border-radius:8px;padding:10px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#F59E0B">Tableaux de bord gouvernementaux</div>
+                                <div style="margin-top:16px;padding-top:14px;border-top:1px solid #1e293b">
+                    <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Programmes soutenus</div>
+                    <div style="display:flex;flex-wrap:wrap;gap:5px">
+                                                <span style="background:#00C89610;border:1px solid #00C89625;border-radius:12px;padding:2px 9px;font-size:var(--fs-2xs);font-weight:600;color:#00C896">HIV</span>
+                                                <span style="background:#00C89610;border:1px solid #00C89625;border-radius:12px;padding:2px 9px;font-size:var(--fs-2xs);font-weight:600;color:#00C896">TB</span>
+                                                <span style="background:#00C89610;border:1px solid #00C89625;border-radius:12px;padding:2px 9px;font-size:var(--fs-2xs);font-weight:600;color:#00C896">Malaria</span>
+                                                <span style="background:#00C89610;border:1px solid #00C89625;border-radius:12px;padding:2px 9px;font-size:var(--fs-2xs);font-weight:600;color:#00C896">Maternal Health</span>
+                                                <span style="background:#00C89610;border:1px solid #00C89625;border-radius:12px;padding:2px 9px;font-size:var(--fs-2xs);font-weight:600;color:#00C896">Immunisation</span>
+                                                <span style="background:#00C89610;border:1px solid #00C89625;border-radius:12px;padding:2px 9px;font-size:var(--fs-2xs);font-weight:600;color:#00C896">NCDs</span>
+                                            </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+                <div style="width:28px;height:28px;border-radius:7px;background:#8B5CF615;border:1px solid #8B5CF630;display:flex;align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:800;color:#8B5CF6;flex-shrink:0">8</div>
+                <div>
+                    <div style="font-size:var(--fs-2xs);color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Diagramme 8</div>
+                    <div style="font-size:14px;font-weight:700;color:#e2e8f0">Architecture de sécurité</div>
+                </div>
+            </div>
+            <div style="background:#080E1A;border:1px solid #1e293b;border-radius:16px;padding:28px 24px;">
+                                                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--text-muted)08;border:1px solid var(--text-muted)25;border-radius:8px">
+                    <i data-lucide="user" style="width:13px;height:13px;color:var(--text-muted);flex-shrink:0"></i>
+                    <span style="font-size:var(--fs-xs);font-weight:700;color:var(--text-muted)">Utilisateurs</span>
+                </div>
+                                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:14px;background:#8B5CF640;margin:0 auto;"></div></div>                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#8B5CF608;border:1px solid #8B5CF625;border-radius:8px">
+                    <i data-lucide="key" style="width:13px;height:13px;color:#8B5CF6;flex-shrink:0"></i>
+                    <span style="font-size:var(--fs-xs);font-weight:700;color:#8B5CF6">Authentification &amp; MFA</span>
+                </div>
+                                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:14px;background:#8B5CF640;margin:0 auto;"></div></div>                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#8B5CF608;border:1px solid #8B5CF625;border-radius:8px">
+                    <i data-lucide="shield" style="width:13px;height:13px;color:#8B5CF6;flex-shrink:0"></i>
+                    <span style="font-size:var(--fs-xs);font-weight:700;color:#8B5CF6">Contrôle d&#039;accès basé sur les rôles</span>
+                </div>
+                                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:14px;background:#1A6FE840;margin:0 auto;"></div></div>                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#1A6FE808;border:1px solid #1A6FE825;border-radius:8px">
+                    <i data-lucide="layout-dashboard" style="width:13px;height:13px;color:#1A6FE8;flex-shrink:0"></i>
+                    <span style="font-size:var(--fs-xs);font-weight:700;color:#1A6FE8">Applications</span>
+                </div>
+                                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:14px;background:#00C89640;margin:0 auto;"></div></div>                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#00C89608;border:1px solid #00C89625;border-radius:8px">
+                    <i data-lucide="lock" style="width:13px;height:13px;color:#00C896;flex-shrink:0"></i>
+                    <span style="font-size:var(--fs-xs);font-weight:700;color:#00C896">Couche de chiffrement</span>
+                </div>
+                                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:14px;background:#1A6FE840;margin:0 auto;"></div></div>                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#1A6FE808;border:1px solid #1A6FE825;border-radius:8px">
+                    <i data-lucide="database" style="width:13px;height:13px;color:#1A6FE8;flex-shrink:0"></i>
+                    <span style="font-size:var(--fs-xs);font-weight:700;color:#1A6FE8">Bases de données</span>
+                </div>
+                                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:14px;background:#F59E0B40;margin:0 auto;"></div></div>                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#F59E0B08;border:1px solid #F59E0B25;border-radius:8px">
+                    <i data-lucide="file-text" style="width:13px;height:13px;color:#F59E0B;flex-shrink:0"></i>
+                    <span style="font-size:var(--fs-xs);font-weight:700;color:#F59E0B">Journaux d&#039;audit</span>
+                </div>
+                                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:14px;background:#EF444440;margin:0 auto;"></div></div>                <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#EF444408;border:1px solid #EF444425;border-radius:8px">
+                    <i data-lucide="activity" style="width:13px;height:13px;color:#EF4444;flex-shrink:0"></i>
+                    <span style="font-size:var(--fs-xs);font-weight:700;color:#EF4444">Surveillance de sécurité</span>
+                </div>
+                            </div>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+
+
+
+<div class="section" style="max-width:960px;margin:0 auto">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px">
+
+        
+        <div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+                <div style="width:28px;height:28px;border-radius:7px;background:#1A6FE815;border:1px solid #1A6FE830;display:flex;align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:800;color:#87baff;flex-shrink:0">9</div>
+                <div>
+                    <div style="font-size:var(--fs-2xs);color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Diagramme 9</div>
+                    <div style="font-size:14px;font-weight:700;color:#e2e8f0">Architecture de reprise après sinistre</div>
+                </div>
+            </div>
+            <div style="background:#080E1A;border:1px solid #1e293b;border-radius:16px;padding:28px 24px;">
+                <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center">
+                    
+                    <div>
+                        <div style="text-align:center;font-size:var(--fs-2xs);font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">Site principal</div>
+                                                                        <div style="background:#00C89610;border:1px solid #00C89630;border-radius:7px;padding:9px;text-align:center">
+                            <i data-lucide="server" style="width:14px;height:14px;color:#00C896;display:block;margin:0 auto 4px"></i>
+                            <div style="font-size:var(--fs-2xs);font-weight:700;color:#00C896">Serveurs applicatifs</div>
+                        </div>
+                                                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:12px;background:#1e293b;margin:0 auto"></div></div>                        <div style="background:#1A6FE810;border:1px solid #1A6FE830;border-radius:7px;padding:9px;text-align:center">
+                            <i data-lucide="database" style="width:14px;height:14px;color:#1A6FE8;display:block;margin:0 auto 4px"></i>
+                            <div style="font-size:var(--fs-2xs);font-weight:700;color:#1A6FE8">Base de données principale</div>
+                        </div>
+                                            </div>
+                    
+                    <div style="text-align:center;padding:0 4px">
+                        <div style="font-size:var(--fs-2xs);color:var(--text-faint);margin-bottom:6px">Réplication</div>
+                        <div style="font-size:20px;color:#00C896">⇄</div>
+                        <div style="font-size:var(--fs-2xs);color:var(--text-faint);margin-top:4px">RPO · RTO</div>
+                    </div>
+                    
+                    <div>
+                        <div style="text-align:center;font-size:var(--fs-2xs);font-weight:700;color:#87baff;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">Site secondaire</div>
+                                                                        <div style="background:#1A6FE810;border:1px solid #1A6FE830;border-radius:7px;padding:9px;text-align:center">
+                            <i data-lucide="cloud" style="width:14px;height:14px;color:#1A6FE8;display:block;margin:0 auto 4px"></i>
+                            <div style="font-size:var(--fs-2xs);font-weight:700;color:#1A6FE8">Site de reprise</div>
+                        </div>
+                                                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:12px;background:#1e293b;margin:0 auto"></div></div>                        <div style="background:#F59E0B10;border:1px solid #F59E0B30;border-radius:7px;padding:9px;text-align:center">
+                            <i data-lucide="hard-drive" style="width:14px;height:14px;color:#F59E0B;display:block;margin:0 auto 4px"></i>
+                            <div style="font-size:var(--fs-2xs);font-weight:700;color:#F59E0B">Systèmes de sauvegarde</div>
+                        </div>
+                                                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:12px;background:#1e293b;margin:0 auto"></div></div>                        <div style="background:#00C89610;border:1px solid #00C89630;border-radius:7px;padding:9px;text-align:center">
+                            <i data-lucide="refresh-cw" style="width:14px;height:14px;color:#00C896;display:block;margin:0 auto 4px"></i>
+                            <div style="font-size:var(--fs-2xs);font-weight:700;color:#00C896">Services de récupération</div>
+                        </div>
+                                            </div>
+                </div>
+                <div style="margin-top:16px;padding-top:14px;border-top:1px solid #1e293b;display:flex;gap:10px;justify-content:center">
+                                        <span style="background:#00C89610;border:1px solid #00C89625;border-radius:12px;padding:3px 10px;font-size:var(--fs-2xs);font-weight:700;color:#00C896">RPO</span>
+                                        <span style="background:#00C89610;border:1px solid #00C89625;border-radius:12px;padding:3px 10px;font-size:var(--fs-2xs);font-weight:700;color:#00C896">RTO</span>
+                                        <span style="background:#00C89610;border:1px solid #00C89625;border-radius:12px;padding:3px 10px;font-size:var(--fs-2xs);font-weight:700;color:#00C896">High Availability</span>
+                                    </div>
+            </div>
+        </div>
+
+        
+        <div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+                <div style="width:28px;height:28px;border-radius:7px;background:#F59E0B15;border:1px solid #F59E0B30;display:flex;align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:800;color:#F59E0B;flex-shrink:0">10</div>
+                <div>
+                    <div style="font-size:var(--fs-2xs);color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Diagramme 10</div>
+                    <div style="font-size:14px;font-weight:700;color:#e2e8f0">Architecture de gouvernance</div>
+                </div>
+            </div>
+            <div style="background:#080E1A;border:1px solid #1e293b;border-radius:16px;padding:28px 24px;">
+                <div style="background:#F59E0B10;border:1px solid #F59E0B40;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#F59E0B;font-size:var(--fs-xs);padding:11px">Conseil d&#039;administration</div>
+                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+                <div style="background:#1A6FE810;border:1px solid #1A6FE840;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#87baff;font-size:var(--fs-xs);padding:11px">Directeur Général (CEO)</div>
+                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+                <div style="height:1px;background:linear-gradient(to right,transparent,#1e293b,transparent);margin:0 16%;"></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
+                                        <div style="display:flex;flex-direction:column;align-items:center">
+                        <div style="width:1px;height:14px;background:#1e293b"></div>
+                        <div style="background:#00C89610;border:1px solid #00C89630;border-radius:7px;padding:8px;text-align:center;width:100%;font-size:var(--fs-2xs);font-weight:700;color:#00C896">Gouvernance clinique</div>
+                    </div>
+                                        <div style="display:flex;flex-direction:column;align-items:center">
+                        <div style="width:1px;height:14px;background:#1e293b"></div>
+                        <div style="background:#8B5CF610;border:1px solid #8B5CF630;border-radius:7px;padding:8px;text-align:center;width:100%;font-size:var(--fs-2xs);font-weight:700;color:#8B5CF6">Gouvernance sécurité</div>
+                    </div>
+                                        <div style="display:flex;flex-direction:column;align-items:center">
+                        <div style="width:1px;height:14px;background:#1e293b"></div>
+                        <div style="background:#1A6FE810;border:1px solid #1A6FE830;border-radius:7px;padding:8px;text-align:center;width:100%;font-size:var(--fs-2xs);font-weight:700;color:#1A6FE8">Conformité</div>
+                    </div>
+                                        <div style="display:flex;flex-direction:column;align-items:center">
+                        <div style="width:1px;height:14px;background:#1e293b"></div>
+                        <div style="background:#F59E0B10;border:1px solid #F59E0B30;border-radius:7px;padding:8px;text-align:center;width:100%;font-size:var(--fs-2xs);font-weight:700;color:#F59E0B">Qualité</div>
+                    </div>
+                                        <div style="display:flex;flex-direction:column;align-items:center">
+                        <div style="width:1px;height:14px;background:#1e293b"></div>
+                        <div style="background:#EF444410;border:1px solid #EF444430;border-radius:7px;padding:8px;text-align:center;width:100%;font-size:var(--fs-2xs);font-weight:700;color:#EF4444">Risque</div>
+                    </div>
+                                    </div>
+                <div style="height:1px;background:linear-gradient(to right,transparent,#1e293b,transparent);margin:0 16%;margin-top:14px"></div>
+                <div style="display:flex;justify-content:center;padding:5px 0;"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+                <div style="background:#00C89610;border:1px solid #00C89640;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#00C896;font-size:var(--fs-xs)">Produits &amp; Services</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+
+
+
+<div class="section" style="max-width:760px;margin:0 auto">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <div style="width:28px;height:28px;border-radius:7px;background:#1A6FE815;border:1px solid #1A6FE830;display:flex;align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:800;color:#87baff;flex-shrink:0">11</div>
+        <div>
+            <div style="font-size:var(--fs-2xs);color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Diagramme 11</div>
+            <div style="font-size:18px;font-weight:700;color:#e2e8f0">Écosystème OPES Academy</div>
+        </div>
+    </div>
+    <div style="background:#080E1A;border:1px solid #1e293b;border-radius:16px;padding:28px 24px;">
+        <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:center">
+            
+            <div>
+                <div style="text-align:center;font-size:var(--fs-2xs);font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">Institutions partenaires</div>
+                                <div style="background:#0F172A;border:1px solid #1e293b;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;font-size:var(--fs-2xs);padding:7px 10px;margin-bottom:6px">Universités</div>
+                                <div style="background:#0F172A;border:1px solid #1e293b;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;font-size:var(--fs-2xs);padding:7px 10px;margin-bottom:6px">Écoles de soins infirmiers</div>
+                                <div style="background:#0F172A;border:1px solid #1e293b;border-radius:8px;padding:9px 14px;text-align:center;font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;font-size:var(--fs-2xs);padding:7px 10px;margin-bottom:6px">Facultés de médecine</div>
+                            </div>
+            
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+                <div style="font-size:18px;color:#87baff">→</div>
+                <div style="background:#1A6FE810;border:2px solid #1A6FE840;border-radius:12px;padding:18px 14px;text-align:center">
+                    <i data-lucide="graduation-cap" style="width:22px;height:22px;color:#87baff;display:block;margin:0 auto 8px"></i>
+                    <div style="font-size:var(--fs-xs);font-weight:800;color:#87baff">OPES</div>
+                    <div style="font-size:var(--fs-xs);font-weight:800;color:#87baff">ACADEMY</div>
+                </div>
+                <div style="font-size:18px;color:#87baff">→</div>
+            </div>
+            
+            <div>
+                <div style="text-align:center;font-size:var(--fs-2xs);font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">Rôles certifiés</div>
+                                <div style="background:#00C89610;border:1px solid #00C89630;border-radius:7px;padding:7px 10px;text-align:center;font-size:var(--fs-2xs);font-weight:700;color:#00C896;margin-bottom:6px">Utilisateurs certifiés</div>
+                                <div style="background:#1A6FE810;border:1px solid #1A6FE830;border-radius:7px;padding:7px 10px;text-align:center;font-size:var(--fs-2xs);font-weight:700;color:#1A6FE8;margin-bottom:6px">Administrateurs certifiés</div>
+                                <div style="background:#00C89610;border:1px solid #00C89630;border-radius:7px;padding:7px 10px;text-align:center;font-size:var(--fs-2xs);font-weight:700;color:#00C896;margin-bottom:6px">Implémenteurs certifiés</div>
+                                <div style="background:#1A6FE810;border:1px solid #1A6FE830;border-radius:7px;padding:7px 10px;text-align:center;font-size:var(--fs-2xs);font-weight:700;color:#1A6FE8;margin-bottom:6px">Formateurs certifiés</div>
+                            </div>
+        </div>
+        <div style="display:flex;justify-content:center;padding:5px 0;margin-top:12px"><div style="width:1px;height:20px;background:linear-gradient(to bottom,#00C89650,#1A6FE850);margin:0 auto;"></div></div>
+        <div style="background:#00C89610;border:1px solid #00C89630;border-radius:10px;padding:14px;text-align:center">
+            <div style="font-size:13px;font-weight:700;color:#00C896">Effectifs de santé numériques</div>
+            <div style="font-size:var(--fs-2xs);color:var(--text-faint);margin-top:4px">Adoption · Capacité · Durabilité</div>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+
+
+
+<div class="section" style="max-width:960px;margin:0 auto">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <div style="width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#00C896,#1A6FE8);display:flex;align-items:center;justify-content:center;font-size:var(--fs-2xs);font-weight:800;color:#fff;flex-shrink:0">12</div>
+        <div>
+            <div style="font-size:var(--fs-2xs);color:var(--text-faint);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Diagramme 12</div>
+            <div style="font-size:18px;font-weight:700;color:#e2e8f0">Vue enterprise complète OPES Health OS</div>
+        </div>
+    </div>
+    <div style="background:#080E1A;border:1px solid #1e293b;border-radius:16px;padding:28px 24px;padding:0;overflow:hidden">
+        <div style="background:linear-gradient(135deg,#00C89615,#1A6FE815);padding:16px 24px;border-bottom:1px solid #1e293b;text-align:center">
+            <div style="font-size:16px;font-weight:800;color:#e2e8f0;letter-spacing:0.05em">OPES HEALTH OS</div>
+        </div>
+                <div style="padding:16px 24px;border-bottom:1px solid #0f172a;display:flex;align-items:center;gap:20px">
+            <div style="display:flex;align-items:center;gap:8px;min-width:200px">
+                <i data-lucide="activity" style="width:14px;height:14px;color:#00C896;flex-shrink:0"></i>
+                <span style="font-size:var(--fs-xs);font-weight:700;color:#00C896">Couche clinique</span>
+            </div>
+            <div style="flex:1;display:flex;flex-wrap:wrap;gap:6px">
+                                <span style="background:#00C89610;border:1px solid #00C89625;border-radius:12px;padding:3px 10px;font-size:var(--fs-xs);font-weight:600;color:#00C896">Clinic</span>
+                                <span style="background:#00C89610;border:1px solid #00C89625;border-radius:12px;padding:3px 10px;font-size:var(--fs-xs);font-weight:600;color:#00C896">Hospital</span>
+                                <span style="background:#00C89610;border:1px solid #00C89625;border-radius:12px;padding:3px 10px;font-size:var(--fs-xs);font-weight:600;color:#00C896">Specialty Suite</span>
+                            </div>
+        </div>
+                <div style="padding:16px 24px;border-bottom:1px solid #0f172a;display:flex;align-items:center;gap:20px">
+            <div style="display:flex;align-items:center;gap:8px;min-width:200px">
+                <i data-lucide="share-2" style="width:14px;height:14px;color:#1A6FE8;flex-shrink:0"></i>
+                <span style="font-size:var(--fs-xs);font-weight:700;color:#1A6FE8">Couche interopérabilité</span>
+            </div>
+            <div style="flex:1;display:flex;flex-wrap:wrap;gap:6px">
+                                <span style="background:#1A6FE810;border:1px solid #1A6FE825;border-radius:12px;padding:3px 10px;font-size:var(--fs-xs);font-weight:600;color:#1A6FE8">Health ID</span>
+                                <span style="background:#1A6FE810;border:1px solid #1A6FE825;border-radius:12px;padding:3px 10px;font-size:var(--fs-xs);font-weight:600;color:#1A6FE8">Index Patient Maître (MPI)</span>
+                                <span style="background:#1A6FE810;border:1px solid #1A6FE825;border-radius:12px;padding:3px 10px;font-size:var(--fs-xs);font-weight:600;color:#1A6FE8">HIE</span>
+                                <span style="background:#1A6FE810;border:1px solid #1A6FE825;border-radius:12px;padding:3px 10px;font-size:var(--fs-xs);font-weight:600;color:#1A6FE8">Registres</span>
+                            </div>
+        </div>
+                <div style="padding:16px 24px;border-bottom:1px solid #0f172a;display:flex;align-items:center;gap:20px">
+            <div style="display:flex;align-items:center;gap:8px;min-width:200px">
+                <i data-lucide="cpu" style="width:14px;height:14px;color:#8B5CF6;flex-shrink:0"></i>
+                <span style="font-size:var(--fs-xs);font-weight:700;color:#8B5CF6">Couche intelligence</span>
+            </div>
+            <div style="flex:1;display:flex;flex-wrap:wrap;gap:6px">
+                                <span style="background:#8B5CF610;border:1px solid #8B5CF625;border-radius:12px;padding:3px 10px;font-size:var(--fs-xs);font-weight:600;color:#8B5CF6">CDSS</span>
+                                <span style="background:#8B5CF610;border:1px solid #8B5CF625;border-radius:12px;padding:3px 10px;font-size:var(--fs-xs);font-weight:600;color:#8B5CF6">Triage</span>
+                                <span style="background:#8B5CF610;border:1px solid #8B5CF625;border-radius:12px;padding:3px 10px;font-size:var(--fs-xs);font-weight:600;color:#8B5CF6">Analytique</span>
+                                <span style="background:#8B5CF610;border:1px solid #8B5CF625;border-radius:12px;padding:3px 10px;font-size:var(--fs-xs);font-weight:600;color:#8B5CF6">Surveillance</span>
+                            </div>
+        </div>
+                <div style="padding:16px 24px;border-bottom:1px solid #0f172a;display:flex;align-items:center;gap:20px">
+            <div style="display:flex;align-items:center;gap:8px;min-width:200px">
+                <i data-lucide="building-2" style="width:14px;height:14px;color:#F59E0B;flex-shrink:0"></i>
+                <span style="font-size:var(--fs-xs);font-weight:700;color:#F59E0B">Couche santé publique</span>
+            </div>
+            <div style="flex:1;display:flex;flex-wrap:wrap;gap:6px">
+                                <span style="background:#F59E0B10;border:1px solid #F59E0B25;border-radius:12px;padding:3px 10px;font-size:var(--fs-xs);font-weight:600;color:#F59E0B">Rapports nationaux</span>
+                                <span style="background:#F59E0B10;border:1px solid #F59E0B25;border-radius:12px;padding:3px 10px;font-size:var(--fs-xs);font-weight:600;color:#F59E0B">Registres nationaux</span>
+                                <span style="background:#F59E0B10;border:1px solid #F59E0B25;border-radius:12px;padding:3px 10px;font-size:var(--fs-xs);font-weight:600;color:#F59E0B">Tableaux de bord</span>
+                            </div>
+        </div>
+                <div style="padding:16px 24px;border-bottom:1px solid #0f172a;display:flex;align-items:center;gap:20px">
+            <div style="display:flex;align-items:center;gap:8px;min-width:200px">
+                <i data-lucide="shield" style="width:14px;height:14px;color:var(--text-muted);flex-shrink:0"></i>
+                <span style="font-size:var(--fs-xs);font-weight:700;color:var(--text-muted)">Couche support</span>
+            </div>
+            <div style="flex:1;display:flex;flex-wrap:wrap;gap:6px">
+                                <span style="background:var(--text-muted)10;border:1px solid var(--text-muted)25;border-radius:12px;padding:3px 10px;font-size:var(--fs-xs);font-weight:600;color:var(--text-muted)">Academy</span>
+                                <span style="background:var(--text-muted)10;border:1px solid var(--text-muted)25;border-radius:12px;padding:3px 10px;font-size:var(--fs-xs);font-weight:600;color:var(--text-muted)">Sécurité</span>
+                                <span style="background:var(--text-muted)10;border:1px solid var(--text-muted)25;border-radius:12px;padding:3px 10px;font-size:var(--fs-xs);font-weight:600;color:var(--text-muted)">Conformité</span>
+                                <span style="background:var(--text-muted)10;border:1px solid var(--text-muted)25;border-radius:12px;padding:3px 10px;font-size:var(--fs-xs);font-weight:600;color:var(--text-muted)">Qualité</span>
+                                <span style="background:var(--text-muted)10;border:1px solid var(--text-muted)25;border-radius:12px;padding:3px 10px;font-size:var(--fs-xs);font-weight:600;color:var(--text-muted)">Gouvernance</span>
+                            </div>
+        </div>
+                <div style="padding:16px 24px;background:linear-gradient(135deg,#00C89610,#1A6FE810);text-align:center">
+            <div style="font-size:13px;font-weight:700;background:linear-gradient(135deg,#00C896,#1A6FE8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">
+                → Écosystème national de santé
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="demo-section">
+    <h2>Prêt à explorer l&#039;architecture en profondeur ?</h2>
+    <p>Ces diagrammes représentent l&#039;architecture réelle de la plateforme OPES Health OS. Notre équipe technique peut vous présenter des détails d&#039;implémentation adaptés à votre contexte.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:12px">
+        <a href="https://opeshealthsystems.com/fr/architecture" class="btn-primary">
+            Documentation architecture
+            <i data-lucide="arrow-right" style="width:15px;height:15px"></i>
+        </a>
+        <a href="https://opeshealthsystems.com/fr/contact" class="btn-secondary">
+            Parler à notre équipe technique
+            <i data-lucide="mail" style="width:15px;height:15px;color:var(--text-muted)"></i>
+        </a>
+    </div>
+</div>
+    </main>
+
+    <footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <a href="https://opeshealthsystems.com/fr" class="nav-logo" style="text-decoration:none;margin-bottom:10px">
+                <div class="nav-logo-mark"><i data-lucide="circle-dashed" style="width:20px;height:20px"></i></div>
+                <div class="nav-logo-text">
+                    <div class="nav-logo-name">OPES <span>Health</span> Systems</div>
+                </div>
+            </a>
+            <p>Des logiciels de santé conçus au Cameroun pour les équipes de soins en Afrique. Consultez le catalogue et contactez notre équipe pour connaître les disponibilités.</p>
+        </div>
+
+        <div class="footer-col">
+            <h2>Produits</h2>
+            <a href="https://opeshealthsystems.com/fr/health-os" class="footer-highlight">
+                <i data-lucide="layers" style="width:12px;height:12px"></i>OPES Health OS →
+            </a>
+            <a href="https://opeshealthsystems.com/fr/products/opescare">
+                <i data-lucide="fingerprint" style="width:12px;height:12px"></i>OPESCare · Health ID
+            </a>
+            <a href="https://opeshealthsystems.com/fr/products/opes-emr">
+                <i data-lucide="stethoscope" style="width:12px;height:12px"></i>OPES EMR
+            </a>
+            <a href="https://opeshealthsystems.com/fr/products/opes-hospital-his">
+                <i data-lucide="hospital" style="width:12px;height:12px"></i>OPES Hospital HIS
+            </a>
+            <a href="https://opeshealthsystems.com/fr/products/opes-triage">
+                <i data-lucide="timer" style="width:12px;height:12px"></i>Opes Triage
+            </a>
+            <a href="https://opeshealthsystems.com/fr/products" class="footer-highlight">
+                <i data-lucide="layout-grid" style="width:12px;height:12px"></i>Voir les 22 →
+            </a>
+        </div>
+
+        <div class="footer-col">
+            <h2>Plateforme</h2>
+            <a href="https://opeshealthsystems.com/fr/architecture">
+                <i data-lucide="cpu" style="width:12px;height:12px"></i>Architecture
+            </a>
+            <a href="https://opeshealthsystems.com/fr/architecture-diagrams">
+                <i data-lucide="git-branch" style="width:12px;height:12px"></i>Diagrammes architecture
+            </a>
+            <a href="https://opeshealthsystems.com/fr/implementation">
+                <i data-lucide="map" style="width:12px;height:12px"></i>Implémentation
+            </a>
+            <a href="https://opeshealthsystems.com/fr/support">
+                <i data-lucide="headphones" style="width:12px;height:12px"></i>Support & SLA
+            </a>
+            <a href="https://opeshealthsystems.com/fr/academy">
+                <i data-lucide="graduation-cap" style="width:12px;height:12px"></i>OPES Academy
+            </a>
+            <a href="https://opeshealthsystems.com/fr/clinical-governance">
+                <i data-lucide="heart-pulse" style="width:12px;height:12px"></i>Gouvernance clinique
+            </a>
+            <a href="https://opeshealthsystems.com/fr/interoperability">
+                <i data-lucide="share-2" style="width:12px;height:12px"></i>Interopérabilité
+            </a>
+            <a href="https://opeshealthsystems.com/fr/quality">
+                <i data-lucide="badge-check" style="width:12px;height:12px"></i>Qualité (SGQ)
+            </a>
+                        <a href="https://opeshealthsystems.com/fr/national-platform">
+                <i data-lucide="building-2" style="width:12px;height:12px"></i>Plateforme nationale
+            </a>
+        </div>
+
+        <div class="footer-col">
+            <h2>Entreprise</h2>
+            <a href="https://opeshealthsystems.com/fr/about">
+                <i data-lucide="info" style="width:12px;height:12px"></i>À propos d&#039;OPES
+            </a>
+                        <a href="https://opeshealthsystems.com/fr/partner-program">
+                <i data-lucide="handshake" style="width:12px;height:12px"></i>Programme partenaires
+            </a>
+            <a href="https://opeshealthsystems.com/fr/partnerships">
+                <i data-lucide="handshake" style="width:12px;height:12px"></i>Partenariat
+            </a>
+            <a href="https://opeshealthsystems.com/fr/become-a-partner">
+                <i data-lucide="user-plus" style="width:12px;height:12px"></i>Devenir partenaire
+            </a>
+            <a href="https://opeshealthsystems.com/fr/join-testers">
+                <i data-lucide="flask-conical" style="width:12px;height:12px"></i>Rejoindre les testeurs
+            </a>
+            <a href="https://opeshealthsystems.com/fr/mobile-clinic">
+                <i data-lucide="heart" style="width:12px;height:12px"></i>Cliniques mobiles
+            </a>
+            <a href="https://opeshealthsystems.com/fr/book-demo" style="color:#00C896;font-weight:600">
+                <i data-lucide="calendar" style="width:12px;height:12px"></i>Réserver une démo
+            </a>
+            <a href="https://opeshealthsystems.com/fr/pricing">
+                <i data-lucide="tag" style="width:12px;height:12px"></i>Tarification
+            </a>
+            <a href="https://opeshealthsystems.com/fr/blog">
+                <i data-lucide="rss" style="width:12px;height:12px"></i>Blog
+            </a>
+            <a href="https://opeshealthsystems.com/fr/faq">
+                <i data-lucide="help-circle" style="width:12px;height:12px"></i>FAQ
+            </a>
+            <a href="https://opeshealthsystems.com/fr/contact">
+                <i data-lucide="mail" style="width:12px;height:12px"></i>Contact
+            </a>
+        </div>
+
+        <div class="footer-col">
+            <h2>Juridique</h2>
+            <a href="https://opeshealthsystems.com/fr/privacy">
+                <i data-lucide="shield" style="width:12px;height:12px"></i>Politique de confidentialité
+            </a>
+            <a href="https://opeshealthsystems.com/fr/terms">
+                <i data-lucide="file-text" style="width:12px;height:12px"></i>Conditions d&#039;utilisation
+            </a>
+            <a href="https://opeshealthsystems.com/fr/compliance">
+                <i data-lucide="scale" style="width:12px;height:12px"></i>Conformité &amp; confiance
+            </a>
+            <a href="mailto:contact@opeshealthsystems.com">
+                <i data-lucide="mail" style="width:12px;height:12px"></i>contact@opeshealthsystems.com
+            </a>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 OPES Health Systems SARL · Bonamousadi, Douala, Cameroon · OHADA Law</p>
+        <div class="footer-lang">
+            <a href="https://opeshealthsystems.com/en/architecture-diagrams" class="">EN</a>
+            <a href="https://opeshealthsystems.com/fr/architecture-diagrams" class="active">FR</a>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://opeshealthsystems.com/vendor/lucide.min.js"></script>
+    <script>lucide.createIcons();</script>
+        <script type="application/ld+json">{
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "OPES Health Systems",
+    "legalName": "OPES Health Systems SARL",
+    "url": "https://opeshealthsystems.com",
+    "logo": "https://opeshealthsystems.com/favicon.ico",
+    "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Bonamousadi, Douala",
+        "addressCountry": "CM"
+    },
+    "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "sales",
+        "email": "contact@opeshealthsystems.com",
+        "availableLanguage": [
+            "French",
+            "English"
+        ]
+    },
+    "sameAs": []
+}</script>
+</body>
+</html>

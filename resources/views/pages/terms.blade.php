@@ -18,7 +18,7 @@
             {{ $isFr ? 'Juridique' : 'Legal' }}
         </div>
         <h1 class="section-title">{{ $isFr ? 'Conditions d\'utilisation' : 'Terms of Use' }}</h1>
-        <p class="section-sub">{{ $isFr ? 'Date d\'effet : 1er janvier 2025 &nbsp;·&nbsp; OPES Health Systems SARL' : 'Effective date: 1 January 2025 &nbsp;·&nbsp; OPES Health Systems SARL' }}</p>
+        <p class="section-sub">{{ $isFr ? 'Informations du site mises à jour : 30 octobre 2026 &nbsp;·&nbsp; OPES Health Systems SARL' : 'Website information updated: 30 October 2026 &nbsp;·&nbsp; OPES Health Systems SARL' }}</p>
     </div>
 
     <div class="blog-art-body prose">
@@ -37,7 +37,7 @@
         <p>Votre établissement est le responsable du traitement de toutes les informations de santé des patients traitées via la Plateforme. Vous êtes tenu d'obtenir tous les consentements nécessaires des patients et de vous conformer à la réglementation camerounaise en matière de données de santé. OPES traite ces données uniquement en tant que sous-traitant, sur vos instructions.</p>
 
         <h2>5. Disponibilité et assistance</h2>
-        <p>Les déploiements hébergés dans le cloud visent une disponibilité mensuelle de 99,5 %. Le support est assuré pendant les heures ouvrables camerounaises (lundi–vendredi, 08h00–18h00 WAT). Les déploiements sur site sont maintenus dans le cadre d'un contrat de support distinct.</p>
+        <p>Les objectifs de disponibilité, les horaires de support, les délais de réponse et les exclusions doivent être définis dans votre contrat de service signé. Les descriptions du site ne constituent pas une garantie de disponibilité.</p>
 
         <h2>6. Propriété intellectuelle</h2>
         <p>Tous les droits de propriété intellectuelle relatifs à la Plateforme (logiciels, designs, documentation) demeurent la propriété exclusive d'OPES Health Systems SARL. Votre licence ne vous transfère aucun droit de propriété.</p>
@@ -51,7 +51,7 @@
         <h2>9. Contact</h2>
         <p>OPES Health Systems SARL<br>
         Bonamousadi, Douala, Cameroun<br>
-        E-mail : <a href="mailto:legal@opeshealthsystems.com" style="color:#00C896">legal@opeshealthsystems.com</a></p>
+        E-mail : <a href="mailto:legal@opeshealthsystems.com" style="color:var(--brand-accent)">legal@opeshealthsystems.com</a></p>
 
         @else
         <h2>1. Acceptance</h2>
@@ -67,7 +67,7 @@
         <p>Your facility is the data controller for all patient health information processed through the Platform. You are responsible for obtaining all necessary consents from patients and for complying with Cameroonian health data regulations. OPES processes such data solely as a processor on your instructions.</p>
 
         <h2>5. Uptime and Support</h2>
-        <p>Cloud-hosted deployments are targeted at 99.5% monthly uptime. Support is provided during Cameroon business hours (Monday–Friday 08:00–18:00 WAT). On-premise deployments are maintained under a separate support agreement.</p>
+        <p>Availability targets, support hours, response times and exclusions must be specified in your signed service agreement. Website descriptions do not create an uptime guarantee.</p>
 
         <h2>6. Intellectual Property</h2>
         <p>All intellectual property in the Platform (software, designs, documentation) remains the exclusive property of OPES Health Systems SARL. Your licence does not transfer any ownership rights.</p>
@@ -81,7 +81,7 @@
         <h2>9. Contact</h2>
         <p>OPES Health Systems SARL<br>
         Bonamousadi, Douala, Cameroon<br>
-        Email: <a href="mailto:legal@opeshealthsystems.com" style="color:#00C896">legal@opeshealthsystems.com</a></p>
+        Email: <a href="mailto:legal@opeshealthsystems.com" style="color:var(--brand-accent)">legal@opeshealthsystems.com</a></p>
         @endif
 
     </div>

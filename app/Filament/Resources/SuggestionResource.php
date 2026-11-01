@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SuggestionResource\Pages;
 use App\Models\Suggestion;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -33,8 +34,8 @@ class SuggestionResource extends Resource
             TextInput::make('title')->disabled(),
             Select::make('category')->options(Suggestion::categoryOptions())->disabled(),
             Textarea::make('body')->disabled()->rows(4),
-            Select::make('status')->options(Suggestion::statusOptions()),
-            Textarea::make('admin_response')->rows(3)->label('Admin Response'),
+            Select::make('status')->options(Suggestion::statusOptions())->disabled()->dehydrated(false),
+            Textarea::make('admin_response')->rows(3)->label('Admin Response')->disabled()->dehydrated(false),
         ]);
     }
 
@@ -82,25 +83,7 @@ class SuggestionResource extends Resource
                         Textarea::make('admin_response')->required()->rows(4)->label('Response'),
                     ])
                     ->action(function (Suggestion $record, array $data) {
-                        $record->update([
-                            'status'         => $data['status'],
-                            'admin_response' => $data['admin_response'],
-                            'responded_by'   => auth()->id(),
-                            'responded_at'   => now(),
-                        ]);
-
-                        if (class_exists(\App\Mail\SuggestionResponded::class)) {
-                            \Illuminate\Support\Facades\Mail::to($record->user->email)
-                                ->queue(new \App\Mail\SuggestionResponded($record));
-                        }
-                        $record->user?->notify(new \App\Notifications\FeedEntry(
-                            'practitioner.suggestion_responded',
-                            'Response to your suggestion',
-                            'Your suggestion received a response.',
-                            'light-bulb',
-                            route('practitioner.suggestions', ['locale' => 'en']),
-                        ));
-
+                        AdminWorkflowAdapter::run('admin.practitioners.suggestions.respond', $data, ['suggestion' => $record]);
                         Notification::make()->title('Response sent.')->success()->send();
                     }),
             ])

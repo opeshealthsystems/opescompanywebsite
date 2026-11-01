@@ -1,13 +1,11 @@
 <?php
 namespace App\Filament\Resources\CourseResource\RelationManagers;
 
-use App\Models\CourseCertificate;
 use App\Models\CourseEnrollment;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Filament\Notifications\Notification;
 
 class EnrollmentsRelationManager extends RelationManager
 {
@@ -39,32 +37,7 @@ class EnrollmentsRelationManager extends RelationManager
                     ->color('success')
                     ->visible(fn (CourseEnrollment $record) => $record->status !== 'completed')
                     ->requiresConfirmation()
-                    ->action(function (CourseEnrollment $record) {
-                        $record->update(['status' => 'completed', 'completed_at' => now()]);
-
-                        $cert = $record->certificate;
-                        if (!$cert) {
-                            $cert = CourseCertificate::create([
-                                'enrollment_id' => $record->id,
-                                'user_id'       => $record->user_id,
-                                'course_id'     => $record->course_id,
-                            ]);
-                        }
-
-                        if (class_exists(\App\Mail\CourseCertificateIssued::class)) {
-                            \Illuminate\Support\Facades\Mail::to($record->user->email)
-                                ->queue(new \App\Mail\CourseCertificateIssued($cert));
-                        }
-                        $record->user?->notify(new \App\Notifications\FeedEntry(
-                            'learning.certificate',
-                            'Course certificate issued',
-                            'Your course certificate is ready.',
-                            'academic-cap',
-                            null,
-                        ));
-
-                        Notification::make()->title('Enrollment completed, certificate issued.')->success()->send();
-                    }),
+                    ->action(fn (CourseEnrollment $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.learning.enrollments.complete', parameters: ['enrollment' => $record])),
             ]);
     }
 }

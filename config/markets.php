@@ -20,7 +20,7 @@ return [
         'plan' => 'Plan Stratégique Gabon Émergent (PSGE)',
         'facilities' => 'CHU de Libreville (CHUL), Hôpital d\'Instruction des Armées, Port-Gentil',
         'related_blog' => '68-gabon-health-information-system-digital-transformation',
-        'accent' => '#00C896',
+        'accent' => '#69D5F5',
         'tagline' => [
             'en' => 'Hospital software built for Gabon — CNAM-ready billing, bilingual, and fit for Libreville\'s clinics.',
             'fr' => 'Un logiciel hospitalier conçu pour le Gabon — facturation prête pour la CNAM, bilingue, adapté aux cliniques de Libreville.',
@@ -76,7 +76,7 @@ return [
         'plan' => 'Plan National de Développement Sanitaire (PNDS)',
         'facilities' => 'CHU de Brazzaville, Hôpital de Base de Talangaï, Pointe-Noire',
         'related_blog' => '67-healthcare-digitization-republic-of-congo-brazzaville',
-        'accent' => '#1A6FE8',
+        'accent' => '#69D5F5',
         'tagline' => [
             'en' => 'Hospital software for the Republic of Congo — CNSS-ready billing, bilingual, built for Brazzaville and Pointe-Noire.',
             'fr' => 'Un logiciel hospitalier pour la République du Congo — facturation prête pour la CNSS, bilingue, conçu pour Brazzaville et Pointe-Noire.',
@@ -132,7 +132,7 @@ return [
         'plan' => 'Plan Quinquennal de Développement Sanitaire (PQDS)',
         'facilities' => "Hôpital Général de Référence Nationale (HGRN), Hôpital de la Mère et de l'Enfant",
         'related_blog' => '66-digital-health-chad-hospital-management-system',
-        'accent' => '#1A6FE8',
+        'accent' => '#69D5F5',
         'tagline' => [
             'en' => 'Hospital software that works in Chad — offline-first, mobile-money-ready, and aligned to the PQDS.',
             'fr' => 'Un logiciel hospitalier qui fonctionne au Tchad — hors-ligne d\'abord, prêt pour le mobile money, aligné sur le PQDS.',
@@ -188,7 +188,7 @@ return [
         'plan' => 'National health strategy (MoH, WHO-supported)',
         'facilities' => "Hôpital de l'Amitié (Bangui), Hôpital de Pédiatrie de Bangui",
         'related_blog' => '69-central-african-republic-health-technology-challenges',
-        'accent' => '#00C896',
+        'accent' => '#69D5F5',
         'tagline' => [
             'en' => 'Resilient hospital software for the Central African Republic — offline-first, interoperable, and realistic about fragile settings.',
             'fr' => 'Un logiciel hospitalier résilient pour la République centrafricaine — hors-ligne d\'abord, interopérable et réaliste face aux contextes fragiles.',
@@ -244,7 +244,7 @@ return [
         'plan' => 'Ministry of Health & Social Welfare strategy',
         'facilities' => 'Hospital Regional de Malabo, Hospital Regional de Bata',
         'related_blog' => '70-equatorial-guinea-digital-health-hospital-management',
-        'accent' => '#1A6FE8',
+        'accent' => '#69D5F5',
         'tagline' => [
             'en' => 'Hospital software for Equatorial Guinea — INSESO-ready records for Malabo and Bata\'s clinics, with CEMAC interoperability.',
             'fr' => 'Un logiciel hospitalier pour la Guinée équatoriale — des dossiers prêts pour l\'INSESO pour les cliniques de Malabo et Bata, avec l\'interopérabilité CEMAC.',

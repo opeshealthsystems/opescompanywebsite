@@ -23,8 +23,8 @@ class HomePageTest extends TestCase
     {
         $this->get('/en')
             ->assertOk()
-            ->assertSee('Healthcare Ecosystem')
-            ->assertSee('22 integrated software systems')
+            ->assertSee('Healthcare Software')
+            ->assertSee('Engineered for Care Teams')
             ->assertSee('Explore Our Products')
             ->assertSee(url('/en/products'), false)
             ->assertSee('Products'); // nav in English
@@ -34,7 +34,8 @@ class HomePageTest extends TestCase
     {
         $this->get('/fr')
             ->assertOk()
-            ->assertSee('22 systèmes logiciels', false)
+            ->assertSee('Des logiciels de santé', false)
+            ->assertSee('conçus pour les soignants', false)
             ->assertSee('Découvrir nos produits', false)
             ->assertSee(url('/fr/products'), false)
             ->assertSee('Produits'); // nav in French

@@ -11,15 +11,15 @@
 @endphp
 
 <div class="lang-switcher">
-    <button type="button" class="lang-trigger" aria-haspopup="menu" aria-expanded="false"
+    <button type="button" class="lang-trigger" aria-controls="language-options" aria-expanded="false"
             aria-label="{{ $current === 'fr' ? 'Choisir la langue' : 'Select language' }}">
         <i data-lucide="globe" style="width:15px;height:15px"></i>
         <span class="lang-current">{{ strtoupper($current) }}</span>
         <i data-lucide="chevron-down" aria-hidden="true" class="lang-caret" style="width:12px;height:12px"></i>
     </button>
-    <div class="lang-menu" role="menu">
+    <div class="lang-menu" id="language-options">
         @foreach($langs as $code => $lang)
-        <a href="{{ $lang['url'] }}" role="menuitem"
+        <a href="{{ $lang['url'] }}" lang="{{ $code }}" hreflang="{{ $code }}"
            class="lang-option{{ $current === $code ? ' is-active' : '' }}"
            @if($current === $code) aria-current="true" @endif>
             <span class="lang-option-code">{{ strtoupper($code) }}</span>

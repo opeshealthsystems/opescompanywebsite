@@ -7,7 +7,7 @@ return [
 
     'cardis' => [
         'slug' => 'cardis', 'name' => 'CARDIS', 'subtitle' => 'Cardiology Information System',
-        'category' => 'Specialist Systems', 'icon' => 'heart-pulse', 'color' => '#94a3b8',
+        'category' => 'Specialist Systems', 'icon' => 'heart-pulse', 'color' => '#8AC5ED',
         'tagline' => 'Dedicated cardiology workflows — ECG, echo reports, cardiac catheterisation, and long-term cardiovascular risk management.',
         'description' => 'CARDIS is a specialist system for cardiology units and cardiac centres. It provides structured clinical workflows for ECG interpretation, echocardiography reporting, cardiac catheterisation records, and long-term cardiovascular risk factor tracking — integrated with OPES EMR so the cardiologist always sees the full patient history.',
         'description2' => 'Every CARDIS record is linked to the patient\'s OPESCare Health ID, enabling cardiologists to see medications from PHARMIS, lab results from OPES Lab (lipids, troponins, BNP), and referral history from OPES EMR in a single screen.',
@@ -25,10 +25,10 @@ return [
         ],
         'workflow' => [['step' => 'Referral', 'desc' => 'From OPES EMR to CARDIS'], ['step' => 'Assessment', 'desc' => 'ECG, echo, history review'], ['step' => 'Report', 'desc' => 'Structured report validated'], ['step' => 'Plan', 'desc' => 'Medications & follow-up'], ['step' => 'Back to EMR', 'desc' => 'Report visible in OPES EMR']],
         'benefits' => [
-            ['icon' => 'heart-pulse', 'color' => '#94a3b8', 'title' => 'Structured cardiac documentation', 'desc' => 'ECG and echo reports follow international standards — every field captured consistently.'],
-            ['icon' => 'trending-up', 'color' => '#94a3b8', 'title' => 'Risk factor longitudinal view', 'desc' => 'Track every cardiovascular risk factor from first visit to current — in one dashboard.'],
-            ['icon' => 'link', 'color' => '#94a3b8', 'title' => 'Full EMR integration', 'desc' => 'Cardiac results and plans visible to every clinician via OPES EMR and OPESCare Health ID.'],
-            ['icon' => 'languages', 'color' => '#94a3b8', 'title' => 'Bilingual by design', 'desc' => 'All reports and interfaces in English and French — suitable for bilingual cardiology teams.'],
+            ['icon' => 'heart-pulse', 'color' => '#8AC5ED', 'title' => 'Structured cardiac documentation', 'desc' => 'ECG and echo reports follow international standards — every field captured consistently.'],
+            ['icon' => 'trending-up', 'color' => '#8AC5ED', 'title' => 'Risk factor longitudinal view', 'desc' => 'Track every cardiovascular risk factor from first visit to current — in one dashboard.'],
+            ['icon' => 'link', 'color' => '#8AC5ED', 'title' => 'Full EMR integration', 'desc' => 'Cardiac results and plans visible to every clinician via OPES EMR and OPESCare Health ID.'],
+            ['icon' => 'languages', 'color' => '#8AC5ED', 'title' => 'Bilingual by design', 'desc' => 'All reports and interfaces in English and French — suitable for bilingual cardiology teams.'],
         ],
         'integrations' => ['opescare', 'opes-emr', 'opes-lab', 'pharmis', 'radis'],
         'specs' => [
@@ -40,7 +40,7 @@ return [
 
     'dentis' => [
         'slug' => 'dentis', 'name' => 'DENTIS', 'subtitle' => 'Dental Information System',
-        'category' => 'Specialist Systems', 'icon' => 'scan-face', 'color' => '#94a3b8',
+        'category' => 'Specialist Systems', 'icon' => 'scan-face', 'color' => '#8AC5ED',
         'tagline' => 'Complete dental practice management — charting, treatment planning, imaging, and billing for clinics of any size.',
         'description' => 'DENTIS provides a complete dental information system covering patient registration, dental charting (FDI notation), treatment planning, procedure records, dental X-ray image management, and integrated billing through RCMIS. It serves standalone dental clinics, polyclinic dental units, and hospital dental departments.',
         'description2' => 'Patient records are linked to OPESCare Health ID, so dental clinicians can see the patient\'s systemic medications (relevant to anaesthesia and antibiotic prescribing), medical history, and allergies from OPES EMR before any procedure.',
@@ -58,10 +58,10 @@ return [
         ],
         'workflow' => [['step' => 'Registration', 'desc' => 'Patient & medical history'], ['step' => 'Examination', 'desc' => 'Chart updated, X-rays taken'], ['step' => 'Diagnosis', 'desc' => 'Conditions coded on chart'], ['step' => 'Treatment Plan', 'desc' => 'Plan created & consented'], ['step' => 'Procedure', 'desc' => 'Recorded & billed to RCMIS']],
         'benefits' => [
-            ['icon' => 'scan-face', 'color' => '#94a3b8', 'title' => 'Digital charting', 'desc' => 'FDI tooth chart eliminates paper charts — always accurate, always available.'],
-            ['icon' => 'link', 'color' => '#94a3b8', 'title' => 'Medical history at the chair', 'desc' => 'Systemic conditions and allergies from OPES EMR visible before any procedure.'],
-            ['icon' => 'receipt', 'color' => '#94a3b8', 'title' => 'Automated billing', 'desc' => 'Dental procedures auto-posted to RCMIS with correct dental tariff codes.'],
-            ['icon' => 'calendar', 'color' => '#94a3b8', 'title' => 'Multi-visit planning', 'desc' => 'Complex treatment plans tracked across multiple appointments with consent recorded.'],
+            ['icon' => 'scan-face', 'color' => '#8AC5ED', 'title' => 'Digital charting', 'desc' => 'FDI tooth chart eliminates paper charts — always accurate, always available.'],
+            ['icon' => 'link', 'color' => '#8AC5ED', 'title' => 'Medical history at the chair', 'desc' => 'Systemic conditions and allergies from OPES EMR visible before any procedure.'],
+            ['icon' => 'receipt', 'color' => '#8AC5ED', 'title' => 'Automated billing', 'desc' => 'Dental procedures auto-posted to RCMIS with correct dental tariff codes.'],
+            ['icon' => 'calendar', 'color' => '#8AC5ED', 'title' => 'Multi-visit planning', 'desc' => 'Complex treatment plans tracked across multiple appointments with consent recorded.'],
         ],
         'integrations' => ['opescare', 'opes-emr', 'rcmis', 'pharmis'],
         'specs' => [
@@ -73,7 +73,7 @@ return [
 
     'dermis' => [
         'slug' => 'dermis', 'name' => 'DERMIS', 'subtitle' => 'Dermatology Information System',
-        'category' => 'Specialist Systems', 'icon' => 'layers', 'color' => '#94a3b8',
+        'category' => 'Specialist Systems', 'icon' => 'layers', 'color' => '#8AC5ED',
         'tagline' => 'Dermatology clinical records with lesion photography, dermoscopy image management, and structured diagnosis coding.',
         'description' => 'DERMIS provides specialist clinical tools for dermatology departments: structured skin condition documentation, lesion photography with size and location mapping on a body diagram, dermoscopy image management, and ICD-10 coded diagnoses for common dermatological conditions prevalent in CEMAC populations.',
         'description2' => 'Connected to PHARMIS for topical and systemic prescription management, and to OPES Lab for dermatological investigations (skin biopsies, cultures, allergy patch tests), DERMIS gives dermatologists a complete specialist workflow.',
@@ -89,10 +89,10 @@ return [
         ],
         'workflow' => [['step' => 'Referral', 'desc' => 'From OPES EMR or walk-in'], ['step' => 'Examination', 'desc' => 'Skin assessment & photography'], ['step' => 'Diagnosis', 'desc' => 'ICD-10 coded'], ['step' => 'Treatment', 'desc' => 'Prescription via PHARMIS'], ['step' => 'Follow-up', 'desc' => 'Lesion comparison over time']],
         'benefits' => [
-            ['icon' => 'layers', 'color' => '#94a3b8', 'title' => 'Visual lesion tracking', 'desc' => 'Standardised photography and body mapping track lesion changes objectively over time.'],
-            ['icon' => 'link', 'color' => '#94a3b8', 'title' => 'Full ecosystem integration', 'desc' => 'Lab, pharmacy, and patient history all accessible in the same dermatology consultation screen.'],
-            ['icon' => 'bar-chart-2', 'color' => '#94a3b8', 'title' => 'Disease surveillance ready', 'desc' => 'ICD-10 coded diagnoses feed directly into MoH HMIS skin disease reporting.'],
-            ['icon' => 'languages', 'color' => '#94a3b8', 'title' => 'Bilingual', 'desc' => 'Full English and French interface for CEMAC dermatology teams.'],
+            ['icon' => 'layers', 'color' => '#8AC5ED', 'title' => 'Visual lesion tracking', 'desc' => 'Standardised photography and body mapping track lesion changes objectively over time.'],
+            ['icon' => 'link', 'color' => '#8AC5ED', 'title' => 'Full ecosystem integration', 'desc' => 'Lab, pharmacy, and patient history all accessible in the same dermatology consultation screen.'],
+            ['icon' => 'bar-chart-2', 'color' => '#8AC5ED', 'title' => 'Disease surveillance ready', 'desc' => 'ICD-10 coded diagnoses feed directly into MoH HMIS skin disease reporting.'],
+            ['icon' => 'languages', 'color' => '#8AC5ED', 'title' => 'Bilingual', 'desc' => 'Full English and French interface for CEMAC dermatology teams.'],
         ],
         'integrations' => ['opescare', 'opes-emr', 'opes-lab', 'pharmis'],
         'specs' => [['group' => 'Deployment', 'rows' => [['key' => 'Options', 'val' => 'On-premise · Cloud'], ['key' => 'Imaging', 'val' => 'JPEG / PNG / DICOM'], ['key' => 'Languages', 'val' => 'English · French']]]],
@@ -101,7 +101,7 @@ return [
 
     'endois' => [
         'slug' => 'endois', 'name' => 'ENDOIS', 'subtitle' => 'Endocrinology & Diabetes Information System',
-        'category' => 'Specialist Systems', 'icon' => 'gauge', 'color' => '#94a3b8',
+        'category' => 'Specialist Systems', 'icon' => 'gauge', 'color' => '#8AC5ED',
         'tagline' => 'Specialist management of diabetes, thyroid disease, and endocrine disorders — with longitudinal metabolic tracking and patient education tools.',
         'description' => 'ENDOIS is designed for endocrinology departments and diabetes clinics managing patients with chronic metabolic conditions. It provides structured workflows for diabetes management (Type 1, Type 2, gestational), thyroid disease, adrenal disorders, and other endocrine conditions — all with longitudinal tracking dashboards critical for chronic disease management.',
         'description2' => 'Deep integration with OPES Lab enables automatic import of HbA1c, fasting glucose, lipids, thyroid function tests, and other endocrine markers directly into the patient\'s longitudinal trend dashboard — giving clinicians an instant view of disease control over time.',
@@ -118,10 +118,10 @@ return [
         ],
         'workflow' => [['step' => 'Diagnosis', 'desc' => 'Type & condition confirmed'], ['step' => 'Baseline Labs', 'desc' => 'HbA1c, lipids, kidney function'], ['step' => 'Treatment Plan', 'desc' => 'Medications & lifestyle plan'], ['step' => 'Review', 'desc' => 'Lab trends assessed'], ['step' => 'Complication Screen', 'desc' => 'Annual checklist completed']],
         'benefits' => [
-            ['icon' => 'gauge', 'color' => '#94a3b8', 'title' => 'Longitudinal metabolic tracking', 'desc' => 'Every HbA1c, lipid panel, and kidney function test plotted over time — instantly.'],
-            ['icon' => 'shield-check', 'color' => '#94a3b8', 'title' => 'Complication prevention', 'desc' => 'Structured screening checklists ensure no diabetic complication assessment is missed.'],
-            ['icon' => 'link', 'color' => '#94a3b8', 'title' => 'Lab integration', 'desc' => 'OPES Lab results populate the ENDOIS dashboard automatically — no manual entry.'],
-            ['icon' => 'landmark', 'color' => '#94a3b8', 'title' => 'NCD programme reporting', 'desc' => 'WHO and MoH NCD programme data exports built in.'],
+            ['icon' => 'gauge', 'color' => '#8AC5ED', 'title' => 'Longitudinal metabolic tracking', 'desc' => 'Every HbA1c, lipid panel, and kidney function test plotted over time — instantly.'],
+            ['icon' => 'shield-check', 'color' => '#8AC5ED', 'title' => 'Complication prevention', 'desc' => 'Structured screening checklists ensure no diabetic complication assessment is missed.'],
+            ['icon' => 'link', 'color' => '#8AC5ED', 'title' => 'Lab integration', 'desc' => 'OPES Lab results populate the ENDOIS dashboard automatically — no manual entry.'],
+            ['icon' => 'landmark', 'color' => '#8AC5ED', 'title' => 'NCD programme reporting', 'desc' => 'WHO and MoH NCD programme data exports built in.'],
         ],
         'integrations' => ['opescare', 'opes-emr', 'opes-lab', 'pharmis', 'cardis'],
         'specs' => [['group' => 'Deployment', 'rows' => [['key' => 'Options', 'val' => 'On-premise · Cloud'], ['key' => 'Device import', 'val' => 'Glucometer & CGM data'], ['key' => 'Languages', 'val' => 'English · French']]]],
@@ -130,7 +130,7 @@ return [
 
     'gynobsis' => [
         'slug' => 'gynobsis', 'name' => 'GYNOBSIS', 'subtitle' => 'Obstetrics & Gynaecology Information System',
-        'category' => 'Specialist Systems', 'icon' => 'baby', 'color' => '#94a3b8',
+        'category' => 'Specialist Systems', 'icon' => 'baby', 'color' => '#8AC5ED',
         'tagline' => 'Complete OB/GYN system — antenatal care, labour & delivery records, postnatal follow-up, and gynaecology clinics.',
         'description' => 'GYNOBSIS manages the complete obstetrics and gynaecology workflow: antenatal booking and visit records following WHO ANC guidelines, partogram for labour monitoring, delivery records (including mode, outcome, APGAR scores), newborn registration linked to OPESCare Health ID, and postnatal follow-up scheduling.',
         'description2' => 'The gynaecology module provides structured clinical records for menstrual disorders, pelvic pathology, colposcopy reports, and surgical procedure documentation — all connected to OPES EMR and PHARMIS for prescriptions.',
@@ -148,10 +148,10 @@ return [
         ],
         'workflow' => [['step' => 'Booking', 'desc' => 'Pregnancy registered, EDD calculated'], ['step' => 'ANC Visits', 'desc' => 'WHO schedule tracked'], ['step' => 'Labour', 'desc' => 'Partogram recorded'], ['step' => 'Delivery', 'desc' => 'Outcome & newborn registered'], ['step' => 'Postnatal', 'desc' => 'Mother & baby follow-up']],
         'benefits' => [
-            ['icon' => 'baby', 'color' => '#94a3b8', 'title' => 'WHO ANC compliance', 'desc' => 'Structured ANC schedule ensures every recommended visit and investigation is tracked.'],
-            ['icon' => 'activity', 'color' => '#94a3b8', 'title' => 'Digital partogram', 'desc' => 'Labour progress tracked digitally with automatic alerts on prolonged labour patterns.'],
-            ['icon' => 'fingerprint', 'color' => '#94a3b8', 'title' => 'Newborn Health ID at birth', 'desc' => 'Every newborn gets an OPESCare Health ID at delivery — starting life with a digital record.'],
-            ['icon' => 'shield-check', 'color' => '#94a3b8', 'title' => 'Maternal health reporting', 'desc' => 'Maternal mortality, caesarean rate, and ANC coverage reports for MoH HMIS.'],
+            ['icon' => 'baby', 'color' => '#8AC5ED', 'title' => 'WHO ANC compliance', 'desc' => 'Structured ANC schedule ensures every recommended visit and investigation is tracked.'],
+            ['icon' => 'activity', 'color' => '#8AC5ED', 'title' => 'Digital partogram', 'desc' => 'Labour progress tracked digitally with automatic alerts on prolonged labour patterns.'],
+            ['icon' => 'fingerprint', 'color' => '#8AC5ED', 'title' => 'Newborn Health ID at birth', 'desc' => 'Every newborn gets an OPESCare Health ID at delivery — starting life with a digital record.'],
+            ['icon' => 'shield-check', 'color' => '#8AC5ED', 'title' => 'Maternal health reporting', 'desc' => 'Maternal mortality, caesarean rate, and ANC coverage reports for MoH HMIS.'],
         ],
         'integrations' => ['opescare', 'opes-emr', 'opes-lab', 'pharmis', 'paedis'],
         'specs' => [['group' => 'Deployment', 'rows' => [['key' => 'Options', 'val' => 'On-premise · Cloud'], ['key' => 'Newborn registration', 'val' => 'Auto OPESCare Health ID'], ['key' => 'Languages', 'val' => 'English · French']]]],
@@ -160,7 +160,7 @@ return [
 
     'mhis' => [
         'slug' => 'mhis', 'name' => 'MHIS', 'subtitle' => 'Mental Health Information System',
-        'category' => 'Specialist Systems', 'icon' => 'brain', 'color' => '#94a3b8',
+        'category' => 'Specialist Systems', 'icon' => 'brain', 'color' => '#8AC5ED',
         'tagline' => 'Sensitive, structured mental health records — assessments, therapy notes, medication management, and crisis care protocols.',
         'description' => 'MHIS provides structured clinical records for mental health facilities — psychiatric inpatient units, community mental health centres, addiction treatment programmes, and outpatient psychiatry clinics. It implements privacy-first data architecture, ensuring mental health records are accessible only to authorised mental health professionals.',
         'description2' => 'MHIS includes validated assessment tools (PHQ-9, GAD-7, AUDIT, CAGE, PANSS, YMRS) embedded in the clinical workflow, alongside structured therapy session notes, medication management (including depot injection scheduling), and crisis care protocols.',
@@ -178,10 +178,10 @@ return [
         ],
         'workflow' => [['step' => 'Referral', 'desc' => 'From GP or self-referral'], ['step' => 'Assessment', 'desc' => 'Psychiatric & risk assessment'], ['step' => 'Diagnosis', 'desc' => 'ICD-10 coded'], ['step' => 'Treatment', 'desc' => 'Medication & therapy plan'], ['step' => 'Review', 'desc' => 'Outcome scales tracked over time']],
         'benefits' => [
-            ['icon' => 'shield', 'color' => '#94a3b8', 'title' => 'Privacy-protected records', 'desc' => 'Mental health records isolated from general clinical access — only authorised MH professionals.'],
-            ['icon' => 'brain', 'color' => '#94a3b8', 'title' => 'Validated assessment tools', 'desc' => 'PHQ-9, GAD-7, PANSS and more embedded — no paper forms, consistent application.'],
-            ['icon' => 'clock', 'color' => '#94a3b8', 'title' => 'Depot injection alerts', 'desc' => 'Never miss a depot injection — automatic alerts for every due administration.'],
-            ['icon' => 'link', 'color' => '#94a3b8', 'title' => 'Pharmacy integration', 'desc' => 'Psychiatric medications prescribed directly to PHARMIS including controlled substances.'],
+            ['icon' => 'shield', 'color' => '#8AC5ED', 'title' => 'Privacy-protected records', 'desc' => 'Mental health records isolated from general clinical access — only authorised MH professionals.'],
+            ['icon' => 'brain', 'color' => '#8AC5ED', 'title' => 'Validated assessment tools', 'desc' => 'PHQ-9, GAD-7, PANSS and more embedded — no paper forms, consistent application.'],
+            ['icon' => 'clock', 'color' => '#8AC5ED', 'title' => 'Depot injection alerts', 'desc' => 'Never miss a depot injection — automatic alerts for every due administration.'],
+            ['icon' => 'link', 'color' => '#8AC5ED', 'title' => 'Pharmacy integration', 'desc' => 'Psychiatric medications prescribed directly to PHARMIS including controlled substances.'],
         ],
         'integrations' => ['opescare', 'opes-emr', 'pharmis', 'rehabis'],
         'specs' => [['group' => 'Privacy', 'rows' => [['key' => 'Record isolation', 'val' => 'Separate access control from OPES EMR'], ['key' => 'Encryption', 'val' => 'AES-256 at rest · TLS 1.3'], ['key' => 'Access', 'val' => 'Mental health professionals only'], ['key' => 'Languages', 'val' => 'English · French']]]],
@@ -190,7 +190,7 @@ return [
 
     'ndis' => [
         'slug' => 'ndis', 'name' => 'NDIS', 'subtitle' => 'Nutrition & Dietetics Information System',
-        'category' => 'Specialist Systems', 'icon' => 'apple', 'color' => '#94a3b8',
+        'category' => 'Specialist Systems', 'icon' => 'apple', 'color' => '#8AC5ED',
         'tagline' => 'Nutritional assessment, dietary counselling records, malnutrition screening, and therapeutic feeding programme management.',
         'description' => 'NDIS supports dietitians and nutritionists in hospital and community settings. It provides structured nutritional assessment (using MUST, NRS-2002, and STAMP tools), dietary counselling records, therapeutic feeding programme management (SAM/MAM protocols), and integration with OPES Lab for nutritional biomarker tracking.',
         'description2' => 'Particularly relevant for Cameroon\'s malnutrition burden, NDIS tracks SAM and MAM cases across community feeding programmes with MUAC measurements, weight-for-height z-scores, and therapeutic food dispensing records.',
@@ -206,10 +206,10 @@ return [
         ],
         'workflow' => [['step' => 'Screening', 'desc' => 'Malnutrition risk scored at admission'], ['step' => 'Assessment', 'desc' => 'Full nutritional assessment'], ['step' => 'Plan', 'desc' => 'Dietary plan & goals set'], ['step' => 'Review', 'desc' => 'Progress tracked'], ['step' => 'Discharge', 'desc' => 'Community follow-up plan']],
         'benefits' => [
-            ['icon' => 'apple', 'color' => '#94a3b8', 'title' => 'Malnutrition screening built in', 'desc' => 'MUST and NRS-2002 screening at every admission — no patient at risk goes undetected.'],
-            ['icon' => 'trending-up', 'color' => '#94a3b8', 'title' => 'Anthropometric tracking', 'desc' => 'Weight, MUAC, and z-scores tracked over time — progress visible at every review.'],
-            ['icon' => 'link', 'color' => '#94a3b8', 'title' => 'Lab integration', 'desc' => 'Nutritional biomarkers (albumin, pre-albumin, Hb) imported from OPES Lab automatically.'],
-            ['icon' => 'landmark', 'color' => '#94a3b8', 'title' => 'Programme reporting', 'desc' => 'SAM/MAM programme outcomes exported for MoH, UNICEF, and WFP reporting.'],
+            ['icon' => 'apple', 'color' => '#8AC5ED', 'title' => 'Malnutrition screening built in', 'desc' => 'MUST and NRS-2002 screening at every admission — no patient at risk goes undetected.'],
+            ['icon' => 'trending-up', 'color' => '#8AC5ED', 'title' => 'Anthropometric tracking', 'desc' => 'Weight, MUAC, and z-scores tracked over time — progress visible at every review.'],
+            ['icon' => 'link', 'color' => '#8AC5ED', 'title' => 'Lab integration', 'desc' => 'Nutritional biomarkers (albumin, pre-albumin, Hb) imported from OPES Lab automatically.'],
+            ['icon' => 'landmark', 'color' => '#8AC5ED', 'title' => 'Programme reporting', 'desc' => 'SAM/MAM programme outcomes exported for MoH, UNICEF, and WFP reporting.'],
         ],
         'integrations' => ['opescare', 'opes-emr', 'opes-lab', 'paedis'],
         'specs' => [['group' => 'Deployment', 'rows' => [['key' => 'Options', 'val' => 'On-premise · Cloud'], ['key' => 'Mobile', 'val' => 'Tablet-optimised for community use'], ['key' => 'Languages', 'val' => 'English · French']]]],
@@ -218,7 +218,7 @@ return [
 
     'ophis' => [
         'slug' => 'ophis', 'name' => 'OPHIS', 'subtitle' => 'Ophthalmology Information System',
-        'category' => 'Specialist Systems', 'icon' => 'eye', 'color' => '#94a3b8',
+        'category' => 'Specialist Systems', 'icon' => 'eye', 'color' => '#8AC5ED',
         'tagline' => 'Structured ophthalmology records — visual acuity, slit-lamp findings, fundus photography, surgical records, and spectacle prescriptions.',
         'description' => 'OPHIS provides a complete ophthalmology information system for eye clinics and hospital eye departments. It supports structured anterior and posterior segment examination records, refraction and spectacle prescription management, fundus photography filing, and surgical records for cataracts, glaucoma surgery, and other ophthalmic procedures.',
         'description2' => 'A particular strength for CEMAC facilities: OPHIS includes structured workflows for trachoma, cataract, glaucoma, and diabetic retinopathy screening programmes — conditions with high prevalence in the region.',
@@ -235,10 +235,10 @@ return [
         ],
         'workflow' => [['step' => 'Registration', 'desc' => 'Patient & presenting complaint'], ['step' => 'Visual Acuity', 'desc' => 'VA measured & recorded'], ['step' => 'Examination', 'desc' => 'Slit-lamp & fundus assessed'], ['step' => 'Diagnosis', 'desc' => 'ICD-10 eye diagnosis'], ['step' => 'Plan', 'desc' => 'Rx · surgery · referral']],
         'benefits' => [
-            ['icon' => 'eye', 'color' => '#94a3b8', 'title' => 'Structured eye examination', 'desc' => 'Every examination field documented consistently — anterior, posterior, IOP, and acuity.'],
-            ['icon' => 'image-up', 'color' => '#94a3b8', 'title' => 'Fundus photo archive', 'desc' => 'Every fundus photograph stored and retrievable — track retinopathy progression objectively.'],
-            ['icon' => 'link', 'color' => '#94a3b8', 'title' => 'Diabetic retinopathy link', 'desc' => 'DR grading connects to ENDOIS diabetes record — both teams see the same patient.'],
-            ['icon' => 'shield-check', 'color' => '#94a3b8', 'title' => 'Blindness prevention ready', 'desc' => 'Trachoma and cataract programme workflows built in for regional prevention programmes.'],
+            ['icon' => 'eye', 'color' => '#8AC5ED', 'title' => 'Structured eye examination', 'desc' => 'Every examination field documented consistently — anterior, posterior, IOP, and acuity.'],
+            ['icon' => 'image-up', 'color' => '#8AC5ED', 'title' => 'Fundus photo archive', 'desc' => 'Every fundus photograph stored and retrievable — track retinopathy progression objectively.'],
+            ['icon' => 'link', 'color' => '#8AC5ED', 'title' => 'Diabetic retinopathy link', 'desc' => 'DR grading connects to ENDOIS diabetes record — both teams see the same patient.'],
+            ['icon' => 'shield-check', 'color' => '#8AC5ED', 'title' => 'Blindness prevention ready', 'desc' => 'Trachoma and cataract programme workflows built in for regional prevention programmes.'],
         ],
         'integrations' => ['opescare', 'opes-emr', 'endois', 'pharmis'],
         'specs' => [['group' => 'Deployment', 'rows' => [['key' => 'Options', 'val' => 'On-premise · Cloud'], ['key' => 'Device interface', 'val' => 'Auto-refractor · OCT · Fundus camera'], ['key' => 'Languages', 'val' => 'English · French']]]],
@@ -247,7 +247,7 @@ return [
 
     'orthois' => [
         'slug' => 'orthois', 'name' => 'ORTHOIS', 'subtitle' => 'Orthotics & Prosthetics Information System',
-        'category' => 'Specialist Systems', 'icon' => 'accessibility', 'color' => '#94a3b8',
+        'category' => 'Specialist Systems', 'icon' => 'accessibility', 'color' => '#8AC5ED',
         'tagline' => 'Manage orthotics and prosthetics assessments, device fabrication records, fitting, and long-term follow-up.',
         'description' => 'ORTHOIS supports orthotics and prosthetics (O&P) centres with structured clinical records for assessment, device prescription, fabrication tracking, fitting records, and long-term outcome monitoring. Connected to OPES EMR and REHABIS for multidisciplinary rehabilitation team coordination.',
         'target_users' => ['Orthotics & prosthetics centres', 'Hospital rehabilitation departments with O&P services', 'Disability rehabilitation programmes', 'War amputee and trauma rehabilitation centres', 'Paediatric orthotics services'],
@@ -262,10 +262,10 @@ return [
         ],
         'workflow' => [['step' => 'Referral', 'desc' => 'From OPES EMR or REHABIS'], ['step' => 'Assessment', 'desc' => 'O&P assessment completed'], ['step' => 'Prescription', 'desc' => 'Device prescribed & ordered'], ['step' => 'Fabrication', 'desc' => 'Workshop tracking'], ['step' => 'Fitting & Follow-up', 'desc' => 'Outcome measured']],
         'benefits' => [
-            ['icon' => 'accessibility', 'color' => '#94a3b8', 'title' => 'End-to-end device tracking', 'desc' => 'Every device tracked from prescription through workshop fabrication to patient fitting.'],
-            ['icon' => 'link', 'color' => '#94a3b8', 'title' => 'Rehab team integration', 'desc' => 'Coordinates with REHABIS and OPES EMR for multidisciplinary rehabilitation planning.'],
-            ['icon' => 'trending-up', 'color' => '#94a3b8', 'title' => 'Outcome measurement', 'desc' => 'Functional outcomes tracked over time — evidence of device effectiveness documented.'],
-            ['icon' => 'package', 'color' => '#94a3b8', 'title' => 'Component inventory', 'desc' => 'Workshop component stock tracked — no fabrication delays from missing materials.'],
+            ['icon' => 'accessibility', 'color' => '#8AC5ED', 'title' => 'End-to-end device tracking', 'desc' => 'Every device tracked from prescription through workshop fabrication to patient fitting.'],
+            ['icon' => 'link', 'color' => '#8AC5ED', 'title' => 'Rehab team integration', 'desc' => 'Coordinates with REHABIS and OPES EMR for multidisciplinary rehabilitation planning.'],
+            ['icon' => 'trending-up', 'color' => '#8AC5ED', 'title' => 'Outcome measurement', 'desc' => 'Functional outcomes tracked over time — evidence of device effectiveness documented.'],
+            ['icon' => 'package', 'color' => '#8AC5ED', 'title' => 'Component inventory', 'desc' => 'Workshop component stock tracked — no fabrication delays from missing materials.'],
         ],
         'integrations' => ['opescare', 'opes-emr', 'rehabis'],
         'specs' => [['group' => 'Deployment', 'rows' => [['key' => 'Options', 'val' => 'On-premise · Cloud'], ['key' => 'Languages', 'val' => 'English · French']]]],
@@ -274,7 +274,7 @@ return [
 
     'paedis' => [
         'slug' => 'paedis', 'name' => 'PAEDIS', 'subtitle' => 'Paediatrics Information System',
-        'category' => 'Specialist Systems', 'icon' => 'shield-heart', 'color' => '#94a3b8',
+        'category' => 'Specialist Systems', 'icon' => 'shield-heart', 'color' => '#8AC5ED',
         'tagline' => 'Complete paediatric records — growth charts, immunisation schedules, IMCI protocols, and neonatal intensive care.',
         'description' => 'PAEDIS provides structured paediatric clinical records from birth through adolescence. It includes WHO growth chart tracking (weight-for-age, height-for-age, weight-for-height, head circumference), vaccination schedule management per the Cameroon EPI programme, IMCI clinical decision support for under-5 illness management, and neonatal intensive care (NICU) records.',
         'description2' => 'Linked to GYNOBSIS for newborn registration at delivery and to OPES Lab for paediatric investigation ordering, PAEDIS gives paediatricians a complete longitudinal view of every child\'s health from birth.',
@@ -292,10 +292,10 @@ return [
         ],
         'workflow' => [['step' => 'Birth Registration', 'desc' => 'OPESCare Health ID from GYNOBSIS'], ['step' => 'Newborn Check', 'desc' => 'NICU or well-baby assessment'], ['step' => 'Growth Monitoring', 'desc' => 'WHO charts updated every visit'], ['step' => 'Vaccinations', 'desc' => 'EPI schedule tracked'], ['step' => 'IMCI', 'desc' => 'Under-5 illness management']],
         'benefits' => [
-            ['icon' => 'shield-heart', 'color' => '#94a3b8', 'title' => 'Complete child health record', 'desc' => 'Growth, vaccinations, illnesses, and development from birth through adolescence in one record.'],
-            ['icon' => 'trending-up', 'color' => '#94a3b8', 'title' => 'Early growth faltering detection', 'desc' => 'WHO z-score alerts flag children falling behind growth curves before it becomes critical.'],
-            ['icon' => 'shield-check', 'color' => '#94a3b8', 'title' => 'EPI compliance', 'desc' => 'No child falls behind on vaccinations — automatic alerts for every due dose.'],
-            ['icon' => 'stethoscope', 'color' => '#94a3b8', 'title' => 'IMCI at every consultation', 'desc' => 'Evidence-based IMCI protocols guide under-5 illness management for all clinicians.'],
+            ['icon' => 'shield-heart', 'color' => '#8AC5ED', 'title' => 'Complete child health record', 'desc' => 'Growth, vaccinations, illnesses, and development from birth through adolescence in one record.'],
+            ['icon' => 'trending-up', 'color' => '#8AC5ED', 'title' => 'Early growth faltering detection', 'desc' => 'WHO z-score alerts flag children falling behind growth curves before it becomes critical.'],
+            ['icon' => 'shield-check', 'color' => '#8AC5ED', 'title' => 'EPI compliance', 'desc' => 'No child falls behind on vaccinations — automatic alerts for every due dose.'],
+            ['icon' => 'stethoscope', 'color' => '#8AC5ED', 'title' => 'IMCI at every consultation', 'desc' => 'Evidence-based IMCI protocols guide under-5 illness management for all clinicians.'],
         ],
         'integrations' => ['opescare', 'gynobsis', 'opes-emr', 'opes-lab', 'ndis'],
         'specs' => [['group' => 'Deployment', 'rows' => [['key' => 'Options', 'val' => 'On-premise · Cloud'], ['key' => 'Growth standards', 'val' => 'WHO 2006 Child Growth Standards'], ['key' => 'Vaccines', 'val' => 'Cameroon EPI + supplementary'], ['key' => 'Languages', 'val' => 'English · French']]]],
@@ -304,7 +304,7 @@ return [
 
     'rehabis' => [
         'slug' => 'rehabis', 'name' => 'REHABIS', 'subtitle' => 'Physical Medicine & Rehabilitation Information System',
-        'category' => 'Specialist Systems', 'icon' => 'dumbbell', 'color' => '#94a3b8',
+        'category' => 'Specialist Systems', 'icon' => 'dumbbell', 'color' => '#8AC5ED',
         'tagline' => 'Structured rehabilitation records — physiotherapy, occupational therapy, speech therapy, and multidisciplinary team coordination.',
         'description' => 'REHABIS provides a complete rehabilitation information system for physiotherapy, occupational therapy, and multidisciplinary rehabilitation teams. It includes structured functional assessment tools (Barthel Index, FIM, Berg Balance Scale), goal-setting with outcome tracking, session records for individual and group therapy, and integration with ORTHOIS for prosthetics and orthotics coordination.',
         'description2' => 'REHABIS supports rehabilitation pathways for stroke, traumatic brain injury, orthopaedic surgery, spinal cord injury, and chronic musculoskeletal conditions — tracking patient progress from acute rehabilitation through community reintegration.',
@@ -321,10 +321,10 @@ return [
         ],
         'workflow' => [['step' => 'Referral', 'desc' => 'From OPES EMR or hospital'], ['step' => 'Assessment', 'desc' => 'Barthel / FIM scored'], ['step' => 'Goals Set', 'desc' => 'MDT SMART goal plan'], ['step' => 'Therapy', 'desc' => 'Sessions recorded'], ['step' => 'Review', 'desc' => 'Outcomes measured & goals updated']],
         'benefits' => [
-            ['icon' => 'dumbbell', 'color' => '#94a3b8', 'title' => 'Validated outcome measures', 'desc' => 'Barthel, FIM, and Berg Balance tracked — objective evidence of rehabilitation progress.'],
-            ['icon' => 'users', 'color' => '#94a3b8', 'title' => 'True MDT working', 'desc' => 'Shared goal board and notes — every team member sees the same patient goals and progress.'],
-            ['icon' => 'link', 'color' => '#94a3b8', 'title' => 'O&P integration', 'desc' => 'ORTHOIS device fabrication coordinated directly from the REHABIS rehabilitation plan.'],
-            ['icon' => 'home', 'color' => '#94a3b8', 'title' => 'Community discharge planning', 'desc' => 'Home exercise programmes and community referrals built into the discharge workflow.'],
+            ['icon' => 'dumbbell', 'color' => '#8AC5ED', 'title' => 'Validated outcome measures', 'desc' => 'Barthel, FIM, and Berg Balance tracked — objective evidence of rehabilitation progress.'],
+            ['icon' => 'users', 'color' => '#8AC5ED', 'title' => 'True MDT working', 'desc' => 'Shared goal board and notes — every team member sees the same patient goals and progress.'],
+            ['icon' => 'link', 'color' => '#8AC5ED', 'title' => 'O&P integration', 'desc' => 'ORTHOIS device fabrication coordinated directly from the REHABIS rehabilitation plan.'],
+            ['icon' => 'home', 'color' => '#8AC5ED', 'title' => 'Community discharge planning', 'desc' => 'Home exercise programmes and community referrals built into the discharge workflow.'],
         ],
         'integrations' => ['opescare', 'opes-emr', 'orthois', 'mhis', 'sltis'],
         'specs' => [['group' => 'Deployment', 'rows' => [['key' => 'Options', 'val' => 'On-premise · Cloud'], ['key' => 'Mobile', 'val' => 'Tablet-optimised for therapy sessions'], ['key' => 'Languages', 'val' => 'English · French']]]],
@@ -333,7 +333,7 @@ return [
 
     'sltis' => [
         'slug' => 'sltis', 'name' => 'SLTIS', 'subtitle' => 'Speech & Language Therapy Information System',
-        'category' => 'Specialist Systems', 'icon' => 'waves', 'color' => '#94a3b8',
+        'category' => 'Specialist Systems', 'icon' => 'waves', 'color' => '#8AC5ED',
         'tagline' => 'Structured speech and language therapy records — assessment, therapy plans, session records, and outcome measurement.',
         'description' => 'SLTIS provides structured clinical records for speech and language therapists working with adults and children. It supports communication disorder assessment (aphasia, dysarthria, dysphagia, language delay, stuttering), structured therapy planning with evidence-based approaches, session records, and outcome measurement using validated tools.',
         'description2' => 'Particularly relevant in the bilingual CEMAC context, SLTIS is designed for therapists working in both English and French — with assessment tools and therapy resources available in both languages for monolingual and bilingual patients.',
@@ -350,10 +350,10 @@ return [
         ],
         'workflow' => [['step' => 'Referral', 'desc' => 'From OPES EMR / paeds / rehab'], ['step' => 'Assessment', 'desc' => 'Validated tools applied'], ['step' => 'Therapy Plan', 'desc' => 'Evidence-based goals set'], ['step' => 'Sessions', 'desc' => 'Progress recorded'], ['step' => 'Review', 'desc' => 'Outcome measures updated']],
         'benefits' => [
-            ['icon' => 'waves', 'color' => '#94a3b8', 'title' => 'Standardised assessments', 'desc' => 'Validated SLT tools built in — consistent, evidence-based assessments every time.'],
-            ['icon' => 'shield-check', 'color' => '#94a3b8', 'title' => 'Dysphagia safety', 'desc' => 'IDDSI-based dysphagia assessment protects patients with swallowing disorders from aspiration.'],
-            ['icon' => 'languages', 'color' => '#94a3b8', 'title' => 'Bilingual (English & French)', 'desc' => 'Rare in SLT software globally — essential for CEMAC\'s bilingual population.'],
-            ['icon' => 'users', 'color' => '#94a3b8', 'title' => 'MDT integration', 'desc' => 'Connects to REHABIS for shared rehabilitation team goal boards and MDT meeting records.'],
+            ['icon' => 'waves', 'color' => '#8AC5ED', 'title' => 'Standardised assessments', 'desc' => 'Validated SLT tools built in — consistent, evidence-based assessments every time.'],
+            ['icon' => 'shield-check', 'color' => '#8AC5ED', 'title' => 'Dysphagia safety', 'desc' => 'IDDSI-based dysphagia assessment protects patients with swallowing disorders from aspiration.'],
+            ['icon' => 'languages', 'color' => '#8AC5ED', 'title' => 'Bilingual (English & French)', 'desc' => 'Rare in SLT software globally — essential for CEMAC\'s bilingual population.'],
+            ['icon' => 'users', 'color' => '#8AC5ED', 'title' => 'MDT integration', 'desc' => 'Connects to REHABIS for shared rehabilitation team goal boards and MDT meeting records.'],
         ],
         'integrations' => ['opescare', 'opes-emr', 'rehabis', 'paedis'],
         'specs' => [['group' => 'Deployment', 'rows' => [['key' => 'Options', 'val' => 'On-premise · Cloud'], ['key' => 'Languages', 'val' => 'English · French (interface & assessment tools)'], ['key' => 'Mobile', 'val' => 'Tablet-optimised']]]],

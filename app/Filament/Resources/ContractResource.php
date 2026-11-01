@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ContractResource\Pages;
 use App\Models\Contract;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -55,6 +56,8 @@ class ContractResource extends Resource
                 Forms\Components\Select::make('status')
                     ->options(Contract::statusOptions())
                     ->default('draft')
+                    ->disabled()
+                    ->dehydrated(false)
                     ->required(),
                 Forms\Components\TextInput::make('title')
                     ->required()
@@ -169,17 +172,14 @@ class ContractResource extends Resource
                     ->color('success')
                     ->requiresConfirmation()
                     ->hidden(fn (Contract $record) => ! in_array($record->status, ['draft', 'sent']))
-                    ->action(fn (Contract $record) => $record->update([
-                        'status'    => 'active',
-                        'signed_at' => $record->signed_at ?? now(),
-                    ])),
+                    ->action(fn (Contract $record) => AdminWorkflowAdapter::run('admin.contracts.activate', parameters: ['contract' => $record])),
                 Tables\Actions\Action::make('terminate')
                     ->label('Terminate')
                     ->icon('heroicon-o-x-circle')
                     ->color('danger')
                     ->requiresConfirmation()
                     ->hidden(fn (Contract $record) => $record->status !== 'active')
-                    ->action(fn (Contract $record) => $record->update(['status' => 'terminated'])),
+                    ->action(fn (Contract $record) => AdminWorkflowAdapter::run('admin.contracts.terminate', parameters: ['contract' => $record])),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

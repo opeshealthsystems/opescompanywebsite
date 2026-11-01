@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="https://opeshealthsystems.com/images/opes-seal.png" type="image/png">
+<title>Reference Architecture — OPES Health Systems</title>
+<meta name="description" content="OPES Health OS enterprise architecture: HL7 FHIR interoperability, patient identity, security, and analytics layers.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://opeshealthsystems.com/en/architecture">
+<link rel="alternate" hreflang="en" href="https://opeshealthsystems.com/en/architecture">
+<link rel="alternate" hreflang="fr" href="https://opeshealthsystems.com/fr/architecture">
+<link rel="alternate" hreflang="x-default" href="https://opeshealthsystems.com/en/architecture">
+
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OPES Health Systems">
+<meta property="og:title" content="Reference Architecture — OPES Health Systems">
+<meta property="og:description" content="OPES Health OS enterprise architecture: HL7 FHIR interoperability, patient identity, security, and analytics layers.">
+<meta property="og:url" content="https://opeshealthsystems.com/en/architecture">
+<meta property="og:image" content="https://opeshealthsystems.com/images/opes-seal.png">
+<meta property="og:locale" content="en_CM">
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Reference Architecture — OPES Health Systems">
+<meta name="twitter:description" content="OPES Health OS enterprise architecture: HL7 FHIR interoperability, patient identity, security, and analytics layers.">
+<meta name="twitter:image" content="https://opeshealthsystems.com/images/opes-seal.png">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://opeshealthsystems.com/en/architecture#webpage","url":"https://opeshealthsystems.com/en/architecture","name":"Reference Architecture — OPES Health Systems","description":"OPES Health OS enterprise architecture: HL7 FHIR interoperability, patient identity, security, and analytics layers.","inLanguage":"en","isPartOf":{"@id":"https://opeshealthsystems.com#website"},"about":{"@id":"https://opeshealthsystems.com#organization"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://opeshealthsystems.com#website","url":"https://opeshealthsystems.com","name":"OPES Health Systems","inLanguage":["en","fr"],"publisher":{"@id":"https://opeshealthsystems.com#organization"}}</script>
+    <link rel="preload" as="style" href="https://opeshealthsystems.com/build/assets/app-BSF3cz3-.css" /><link rel="modulepreload" as="script" href="https://opeshealthsystems.com/build/assets/app-BqopCnbu.js" /><link rel="stylesheet" href="https://opeshealthsystems.com/build/assets/app-BSF3cz3-.css" data-navigate-track="reload" /><script type="module" src="https://opeshealthsystems.com/build/assets/app-BqopCnbu.js" data-navigate-track="reload"></script></head>
+<body class="public-site">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <nav class="site-nav" id="siteNav">
+    <a href="https://opeshealthsystems.com/en" class="nav-logo">
+        <img class="site-seal" src="https://opeshealthsystems.com/images/opes-seal.png" alt="" width="44" height="44" style="object-fit:contain;flex-shrink:0">
+        <div class="nav-logo-text">
+            <div class="nav-logo-name">OPES <span>Health</span> Systems</div>
+            <div class="nav-logo-tagline">Digital Health Infrastructure for Africa</div>
+        </div>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-controls="site-navigation" aria-expanded="false">
+        <i data-lucide="menu" class="nav-toggle-open" style="width:22px;height:22px"></i>
+        <i data-lucide="x" class="nav-toggle-close" style="width:22px;height:22px"></i>
+    </button>
+
+    <div class="nav-collapse" id="site-navigation">
+    <div class="nav-links">
+                <a href="https://opeshealthsystems.com/en/products">Products</a>
+                <a href="https://opeshealthsystems.com/en/solutions">Solutions</a>
+                <a href="https://opeshealthsystems.com/en/about">Company</a>
+                <a href="https://opeshealthsystems.com/en/blog">Resources</a>
+                <a href="https://opeshealthsystems.com/en/compliance">Trust</a>
+                <a href="https://opeshealthsystems.com/en/contact">Contact</a>
+            </div>
+
+    <div class="nav-right">
+        <div class="lang-switcher">
+    <button type="button" class="lang-trigger" aria-controls="language-options" aria-expanded="false"
+            aria-label="Select language">
+        <i data-lucide="globe" style="width:15px;height:15px"></i>
+        <span class="lang-current">EN</span>
+        <i data-lucide="chevron-down" aria-hidden="true" class="lang-caret" style="width:12px;height:12px"></i>
+    </button>
+    <div class="lang-menu" id="language-options">
+                <a href="https://opeshealthsystems.com/en/architecture" lang="en" hreflang="en"
+           class="lang-option is-active"
+            aria-current="true" >
+            <span class="lang-option-code">EN</span>
+            <span class="lang-option-label">English</span>
+        </a>
+                <a href="https://opeshealthsystems.com/fr/architecture" lang="fr" hreflang="fr"
+           class="lang-option"
+           >
+            <span class="lang-option-code">FR</span>
+            <span class="lang-option-label">Français</span>
+        </a>
+            </div>
+</div>
+
+                
+        <a href="https://opeshealthsystems.com/login" class="nav-account-login" title="Sign in">
+            <i data-lucide="user-circle" style="width:20px;height:20px"></i>
+        </a>
+        
+        <a href="https://opeshealthsystems.com/en/book-demo" class="btn-cta">
+            Book a Demo
+        </a>
+    </div>
+    </div>
+</nav>
+
+<script>
+(function () {
+    var nav = document.getElementById('siteNav');
+    if (!nav) return;
+    nav.addEventListener('keydown', function (event) {
+        if (event.key !== 'Escape') return;
+        nav.classList.remove('nav-open');
+        nav.querySelector('.nav-toggle').setAttribute('aria-expanded', 'false');
+        nav.querySelectorAll('.open').forEach(function (el) { el.classList.remove('open'); });
+        nav.querySelectorAll('[aria-expanded]').forEach(function (el) { el.setAttribute('aria-expanded', 'false'); });
+        nav.querySelector('.nav-logo').focus();
+    });
+
+    // Mobile drawer (hamburger).
+    var toggle = nav.querySelector('.nav-toggle');
+    if (toggle) {
+        toggle.addEventListener('click', function () {
+            var open = nav.classList.toggle('nav-open');
+            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+        // Close the drawer after tapping a link.
+        nav.querySelectorAll('.nav-collapse a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                nav.classList.remove('nav-open');
+                toggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+    }
+
+    // Account menu — tap/click operable (touch has no hover) + state announced.
+    var account = nav.querySelector('.nav-account');
+    var avatar = account && account.querySelector('.nav-account-avatar');
+    if (account && avatar) {
+        var setAccount = function (open) {
+            account.classList.toggle('open', open);
+            avatar.setAttribute('aria-expanded', open ? 'true' : 'false');
+        };
+        avatar.addEventListener('click', function (e) {
+            e.stopPropagation();
+            setAccount(!account.classList.contains('open'));
+        });
+        document.addEventListener('click', function (e) {
+            if (!account.contains(e.target)) setAccount(false);
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') setAccount(false);
+        });
+    }
+
+    // Language switcher — click the globe to open/close the locale dropdown.
+    var lang = nav.querySelector('.lang-switcher');
+    var langTrigger = lang && lang.querySelector('.lang-trigger');
+    if (lang && langTrigger) {
+        var setLang = function (open) {
+            lang.classList.toggle('open', open);
+            langTrigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        };
+        langTrigger.addEventListener('click', function (e) {
+            e.stopPropagation();
+            setLang(!lang.classList.contains('open'));
+        });
+        document.addEventListener('click', function (e) {
+            if (!lang.contains(e.target)) setLang(false);
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') setLang(false);
+        });
+    }
+
+    // Mega-menu triggers: keep aria-expanded in sync with the hover/focus reveal.
+    nav.querySelectorAll('.nav-dropdown-wrap').forEach(function (wrap) {
+        var trigger = wrap.querySelector('.nav-dropdown-trigger');
+        if (!trigger) return;
+        var setState = function (open) { trigger.setAttribute('aria-expanded', open ? 'true' : 'false'); };
+        wrap.addEventListener('mouseenter', function () { setState(true); });
+        wrap.addEventListener('mouseleave', function () { setState(false); });
+        wrap.addEventListener('focusin', function () { setState(true); });
+        wrap.addEventListener('focusout', function () {
+            if (!wrap.contains(document.activeElement)) setState(false);
+        });
+    });
+})();
+</script>
+
+    <main id="main-content" tabindex="-1">
+        <div class="pricing-hero">
+    <div class="section-label" style="justify-content:center;margin-bottom:16px">
+        <i data-lucide="cpu" style="width:12px;height:12px"></i>
+        Reference Architecture
+    </div>
+    <h1>
+        Built for
+        <span class="gradient-text">scale and interoperability</span>
+    </h1>
+    <p>
+        OPES Health OS is built on a layered architecture combining security, global interoperability, and local data sovereignty — engineered for African health facilities.
+    </p>
+</div>
+
+
+<div class="section" style="max-width:960px;margin:0 auto">
+    <div style="background:#0f1a2e;border:1px solid #1e293b;border-radius:16px;padding:40px 32px">
+        <div style="text-align:center;margin-bottom:32px">
+            <div class="section-label" style="justify-content:center;margin-bottom:12px">
+                <i data-lucide="layers" style="width:12px;height:12px"></i>
+                Layered model
+            </div>
+            <h2 class="section-title" style="font-size:clamp(18px,2.5vw,24px)">OPES Health OS</h2>
+        </div>
+
+        
+        <div style="display:flex;flex-direction:column;gap:12px">
+                        <div style="background:#0F172A;border:1px solid #1A6FE830;border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:16px">
+                <div style="width:36px;height:36px;border-radius:8px;background:#1A6FE815;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                    <i data-lucide="monitor" style="width:16px;height:16px;color:#1A6FE8"></i>
+                </div>
+                <div style="flex:1;min-width:0">
+                    <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:3px">Presentation Layer</div>
+                    <div style="color:var(--text-muted);font-size:var(--fs-xs);line-height:1.5">Web portals · Mobile app · Analytics dashboards · Third-party integrations</div>
+                </div>
+            </div>
+                        <div style="background:#0F172A;border:1px solid #00C89630;border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:16px">
+                <div style="width:36px;height:36px;border-radius:8px;background:#00C89615;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                    <i data-lucide="layers" style="width:16px;height:16px;color:#00C896"></i>
+                </div>
+                <div style="flex:1;min-width:0">
+                    <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:3px">Business Services Layer</div>
+                    <div style="color:var(--text-muted);font-size:var(--fs-xs);line-height:1.5">Patient record · Hospital HIS · Laboratory · Pharmacy · Radiology · Maternity</div>
+                </div>
+            </div>
+                        <div style="background:#0F172A;border:1px solid #1A6FE830;border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:16px">
+                <div style="width:36px;height:36px;border-radius:8px;background:#1A6FE815;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                    <i data-lucide="share-2" style="width:16px;height:16px;color:#1A6FE8"></i>
+                </div>
+                <div style="flex:1;min-width:0">
+                    <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:3px">Interoperability Layer</div>
+                    <div style="color:var(--text-muted);font-size:var(--fs-xs);line-height:1.5">HL7 FHIR R4 · SNOMED CT · ICD-10/11 · DICOM · CDA · Open REST/JSON API</div>
+                </div>
+            </div>
+                        <div style="background:#0F172A;border:1px solid #00C89630;border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:16px">
+                <div style="width:36px;height:36px;border-radius:8px;background:#00C89615;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                    <i data-lucide="fingerprint" style="width:16px;height:16px;color:#00C896"></i>
+                </div>
+                <div style="flex:1;min-width:0">
+                    <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:3px">Health Identity Layer</div>
+                    <div style="color:var(--text-muted);font-size:var(--fs-xs);line-height:1.5">OPESCare Health ID · Master Patient Index · CRVS · Cross-facility record matching</div>
+                </div>
+            </div>
+                        <div style="background:#0F172A;border:1px solid #1A6FE830;border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:16px">
+                <div style="width:36px;height:36px;border-radius:8px;background:#1A6FE815;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                    <i data-lucide="brain" style="width:16px;height:16px;color:#1A6FE8"></i>
+                </div>
+                <div style="flex:1;min-width:0">
+                    <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:3px">Data &amp; Intelligence Layer</div>
+                    <div style="color:var(--text-muted);font-size:var(--fs-xs);line-height:1.5">Clinical data warehouse · HMIS analytics · AI clinical decision support · MoH reporting</div>
+                </div>
+            </div>
+                        <div style="background:#0F172A;border:1px solid var(--text-faint)30;border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:16px">
+                <div style="width:36px;height:36px;border-radius:8px;background:var(--text-faint)15;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                    <i data-lucide="server" style="width:16px;height:16px;color:var(--text-faint)"></i>
+                </div>
+                <div style="flex:1;min-width:0">
+                    <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:3px">Infrastructure Layer</div>
+                    <div style="color:var(--text-muted);font-size:var(--fs-xs);line-height:1.5">On-premise · Private cloud · Hybrid deployment · Cameroon data centres</div>
+                </div>
+            </div>
+                    </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+
+<div class="section" style="max-width:960px;margin:0 auto">
+    <div class="section-label" style="margin-bottom:16px">
+        <i data-lucide="share-2" style="width:12px;height:12px"></i>
+        Interoperability
+    </div>
+    <h2 class="section-title">Connected to global standards</h2>
+    <p style="color:var(--text-muted);max-width:680px;font-size:15px;line-height:1.75;margin-bottom:32px">
+        OPES Health OS implements international health interoperability standards, enabling secure data exchange between facilities, partners, and government systems.
+    </p>
+    <div class="pi-grid" style="max-width:960px">
+                        <div class="pi-card" style="flex-direction:column;align-items:flex-start">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;margin-bottom:12px">
+                <i data-lucide="share-2" style="width:18px;height:18px;color:#00C896"></i>
+            </div>
+            <div style="font-weight:700;color:#e2e8f0;font-size:14px;margin-bottom:6px">HL7 FHIR R4</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.6">Native FHIR API for clinical resource exchange — patients, observations, prescriptions, and reports.</div>
+        </div>
+                <div class="pi-card" style="flex-direction:column;align-items:flex-start">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;margin-bottom:12px">
+                <i data-lucide="file-text" style="width:18px;height:18px;color:#1A6FE8"></i>
+            </div>
+            <div style="font-weight:700;color:#e2e8f0;font-size:14px;margin-bottom:6px">ICD-10 / ICD-11</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.6">WHO-compliant diagnostic coding with automated ICD-11 transition pathways built in.</div>
+        </div>
+                <div class="pi-card" style="flex-direction:column;align-items:flex-start">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;margin-bottom:12px">
+                <i data-lucide="image" style="width:18px;height:18px;color:#00C896"></i>
+            </div>
+            <div style="font-weight:700;color:#e2e8f0;font-size:14px;margin-bottom:6px">DICOM</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.6">Medical imaging management (radiology, ultrasound, CT) with integrated PACS-compatible storage.</div>
+        </div>
+                <div class="pi-card" style="flex-direction:column;align-items:flex-start">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;margin-bottom:12px">
+                <i data-lucide="code-2" style="width:18px;height:18px;color:#1A6FE8"></i>
+            </div>
+            <div style="font-weight:700;color:#e2e8f0;font-size:14px;margin-bottom:6px">Open REST API</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.6">Documented API (OpenAPI 3.0) for connecting third-party systems, government portals, and telemedicine apps.</div>
+        </div>
+                <div class="pi-card" style="flex-direction:column;align-items:flex-start">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;margin-bottom:12px">
+                <i data-lucide="database" style="width:18px;height:18px;color:#00C896"></i>
+            </div>
+            <div style="font-weight:700;color:#e2e8f0;font-size:14px;margin-bottom:6px">SNOMED CT</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.6">Standardised clinical terminology for diagnoses, procedures, and observations.</div>
+        </div>
+                <div class="pi-card" style="flex-direction:column;align-items:flex-start">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;margin-bottom:12px">
+                <i data-lucide="building" style="width:18px;height:18px;color:#1A6FE8"></i>
+            </div>
+            <div style="font-weight:700;color:#e2e8f0;font-size:14px;margin-bottom:6px">HMIS / DHIS2</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.6">DHIS2-compatible exports for reporting to the Ministry of Health and development partners.</div>
+        </div>
+            </div>
+</div>
+
+<div class="divider"></div>
+
+
+<div class="section" style="max-width:960px;margin:0 auto">
+    <div class="opescare-spotlight">
+        <div class="section-label" style="margin-bottom:14px">
+            <i data-lucide="fingerprint" style="width:12px;height:12px"></i>
+            Health identity
+        </div>
+        <h2 style="font-size:clamp(20px,3vw,28px);font-weight:700;color:#e2e8f0;margin-bottom:14px;line-height:1.3">
+            One universal patient identifier across Africa
+        </h2>
+        <p style="color:var(--text-muted);max-width:700px;line-height:1.75;margin-bottom:16px;font-size:15px">
+            The OPESCare layer assigns every patient a unique digital identifier at their first point of contact with the health system. This identifier persists across consultations, inter-facility transfers, and years — eliminating duplicate records and identification errors.
+        </p>
+        <div style="display:flex;gap:24px;flex-wrap:wrap;margin-top:24px">
+                        <div style="display:flex;align-items:center;gap:8px">
+                <i data-lucide="check-circle" style="width:15px;height:15px;color:#00C896;flex-shrink:0"></i>
+                <span style="color:var(--text-muted);font-size:13px">Master Patient Index (MPI)</span>
+            </div>
+                        <div style="display:flex;align-items:center;gap:8px">
+                <i data-lucide="check-circle" style="width:15px;height:15px;color:#00C896;flex-shrink:0"></i>
+                <span style="color:var(--text-muted);font-size:13px">Cross-facility record matching</span>
+            </div>
+                        <div style="display:flex;align-items:center;gap:8px">
+                <i data-lucide="check-circle" style="width:15px;height:15px;color:#00C896;flex-shrink:0"></i>
+                <span style="color:var(--text-muted);font-size:13px">CRVS-compliant</span>
+            </div>
+                        <div style="display:flex;align-items:center;gap:8px">
+                <i data-lucide="check-circle" style="width:15px;height:15px;color:#00C896;flex-shrink:0"></i>
+                <span style="color:var(--text-muted);font-size:13px">Offline ID &amp; degraded mode</span>
+            </div>
+                    </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+
+<div class="section" style="max-width:960px;margin:0 auto;text-align:center">
+    <div class="section-label" style="justify-content:center;margin-bottom:16px">
+        <i data-lucide="shield-check" style="width:12px;height:12px"></i>
+        Security
+    </div>
+    <h2 class="section-title">Security designed from the foundation</h2>
+    <p style="color:var(--text-muted);max-width:660px;margin:12px auto 36px;font-size:15px;line-height:1.75">
+        Every component of OPES Health OS is designed on Security by Design principles — end-to-end encryption, granular access control, and full audit trails.
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+                        <div class="pi-card" style="flex-direction:column;align-items:flex-start;text-align:left">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(0,200,150,0.08);display:flex;align-items:center;justify-content:center;margin-bottom:12px">
+                <i data-lucide="lock" style="width:18px;height:18px;color:#00C896"></i>
+            </div>
+            <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:6px">AES-256 Encryption</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.6">Data at rest and in transit encrypted with AES-256 and TLS 1.3.</div>
+        </div>
+                <div class="pi-card" style="flex-direction:column;align-items:flex-start;text-align:left">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(0,200,150,0.08);display:flex;align-items:center;justify-content:center;margin-bottom:12px">
+                <i data-lucide="users" style="width:18px;height:18px;color:#00C896"></i>
+            </div>
+            <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:6px">RBAC Access Control</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.6">Granular role-based permissions: clinician, admin, nurse, technician, auditor.</div>
+        </div>
+                <div class="pi-card" style="flex-direction:column;align-items:flex-start;text-align:left">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(0,200,150,0.08);display:flex;align-items:center;justify-content:center;margin-bottom:12px">
+                <i data-lucide="file-clock" style="width:18px;height:18px;color:#00C896"></i>
+            </div>
+            <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:6px">Full Audit Trail</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.6">Immutable logging of every action — who accessed what and when.</div>
+        </div>
+                <div class="pi-card" style="flex-direction:column;align-items:flex-start;text-align:left">
+            <div style="width:40px;height:40px;border-radius:10px;background:rgba(0,200,150,0.08);display:flex;align-items:center;justify-content:center;margin-bottom:12px">
+                <i data-lucide="shield" style="width:18px;height:18px;color:#00C896"></i>
+            </div>
+            <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:6px">HIPAA/GDPR-aligned</div>
+            <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.6">Architecture aligned with HIPAA, GDPR, and Cameroonian health data law.</div>
+        </div>
+            </div>
+</div>
+
+<div class="divider"></div>
+
+
+<div class="section" style="max-width:960px;margin:0 auto">
+    <div class="section-label" style="margin-bottom:16px">
+        <i data-lucide="server" style="width:12px;height:12px"></i>
+        Deployment options
+    </div>
+    <h2 class="section-title">Deploy where your data must stay</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:32px">
+                        <div class="pi-card" style="flex-direction:column;align-items:flex-start">
+            <div style="width:44px;height:44px;border-radius:12px;background:#00C89615;display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+                <i data-lucide="server" style="width:20px;height:20px;color:#00C896"></i>
+            </div>
+            <div style="font-weight:700;color:#e2e8f0;font-size:15px;margin-bottom:8px">On-Premise</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.65">Hosted on your own servers, within your facility or data centre. Full data control — ideal for general hospitals and public health networks.</div>
+        </div>
+                <div class="pi-card" style="flex-direction:column;align-items:flex-start">
+            <div style="width:44px;height:44px;border-radius:12px;background:#1A6FE815;display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+                <i data-lucide="cloud" style="width:20px;height:20px;color:#1A6FE8"></i>
+            </div>
+            <div style="font-weight:700;color:#e2e8f0;font-size:15px;margin-bottom:8px">Private Cloud Cameroon</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.65">Managed hosting in our Cameroon data centres. Data remains in-country, compliant with Ministry of Health requirements.</div>
+        </div>
+                <div class="pi-card" style="flex-direction:column;align-items:flex-start">
+            <div style="width:44px;height:44px;border-radius:12px;background:#00C89615;display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+                <i data-lucide="git-merge" style="width:20px;height:20px;color:#00C896"></i>
+            </div>
+            <div style="font-weight:700;color:#e2e8f0;font-size:15px;margin-bottom:8px">Hybrid</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.65">Combination of on-premise and cloud for multi-site networks — sensitive data stays local, analytics aggregated in the cloud.</div>
+        </div>
+            </div>
+</div>
+
+
+<div class="demo-section">
+    <h2>Need a detailed technical overview?</h2>
+    <p>Our solutions architects can walk you through the full OPES Health OS architecture and answer your technical questions.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:12px">
+        <a href="https://opeshealthsystems.com/en/contact" class="btn-primary">
+            Talk to an architect <i data-lucide="arrow-right" style="width:15px;height:15px"></i>
+        </a>
+        <a href="https://opeshealthsystems.com/en/compliance" class="btn-secondary">
+            Security &amp; compliance <i data-lucide="shield" style="width:15px;height:15px;color:var(--text-muted)"></i>
+        </a>
+    </div>
+</div>
+    </main>
+
+    <footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <a href="https://opeshealthsystems.com/en" class="nav-logo" style="text-decoration:none;margin-bottom:10px">
+                <img class="site-seal" src="https://opeshealthsystems.com/images/opes-seal.png" alt="" width="44" height="44" style="object-fit:contain;flex-shrink:0">
+                <div class="nav-logo-text">
+                    <div class="nav-logo-name">OPES <span>Health</span> Systems</div>
+                </div>
+            </a>
+            <p>Healthcare software designed in Cameroon for healthcare teams across Africa. Explore the catalogue and discuss availability with our team.</p>
+        </div>
+
+        <div class="footer-col">
+            <h2>Products</h2>
+            <a href="https://opeshealthsystems.com/en/health-os" class="footer-highlight">
+                <i data-lucide="layers" style="width:12px;height:12px"></i>OPES Health OS →
+            </a>
+            <a href="https://opeshealthsystems.com/en/products/opescare">
+                <i data-lucide="fingerprint" style="width:12px;height:12px"></i>OPESCare · Health ID
+            </a>
+            <a href="https://opeshealthsystems.com/en/products/opes-emr">
+                <i data-lucide="stethoscope" style="width:12px;height:12px"></i>OPES EMR
+            </a>
+            <a href="https://opeshealthsystems.com/en/products/opes-hospital-his">
+                <i data-lucide="hospital" style="width:12px;height:12px"></i>OPES Hospital HIS
+            </a>
+            <a href="https://opeshealthsystems.com/en/products/opes-triage">
+                <i data-lucide="timer" style="width:12px;height:12px"></i>Opes Triage
+            </a>
+            <a href="https://opeshealthsystems.com/en/products" class="footer-highlight">
+                <i data-lucide="layout-grid" style="width:12px;height:12px"></i>View catalogue →
+            </a>
+        </div>
+
+        <div class="footer-col">
+            <h2>Platform</h2>
+            <a href="https://opeshealthsystems.com/en/markets">CEMAC Markets</a>
+            <a href="https://opeshealthsystems.com/en/architecture">
+                <i data-lucide="cpu" style="width:12px;height:12px"></i>Architecture
+            </a>
+            <a href="https://opeshealthsystems.com/en/architecture-diagrams">
+                <i data-lucide="git-branch" style="width:12px;height:12px"></i>Architecture diagrams
+            </a>
+            <a href="https://opeshealthsystems.com/en/implementation">
+                <i data-lucide="map" style="width:12px;height:12px"></i>Implementation
+            </a>
+            <a href="https://opeshealthsystems.com/en/support">
+                <i data-lucide="headphones" style="width:12px;height:12px"></i>Support & SLA
+            </a>
+            <a href="https://opeshealthsystems.com/en/academy">
+                <i data-lucide="graduation-cap" style="width:12px;height:12px"></i>OPES Academy
+            </a>
+            <a href="https://opeshealthsystems.com/en/clinical-governance">
+                <i data-lucide="heart-pulse" style="width:12px;height:12px"></i>Clinical Governance
+            </a>
+            <a href="https://opeshealthsystems.com/en/interoperability">
+                <i data-lucide="share-2" style="width:12px;height:12px"></i>Interoperability
+            </a>
+            <a href="https://opeshealthsystems.com/en/quality">
+                <i data-lucide="badge-check" style="width:12px;height:12px"></i>Quality (QMS)
+            </a>
+                        <a href="https://opeshealthsystems.com/en/national-platform">
+                <i data-lucide="building-2" style="width:12px;height:12px"></i>National Platform
+            </a>
+        </div>
+
+        <div class="footer-col">
+            <h2>Company</h2>
+            <a href="https://opeshealthsystems.com/en/about">
+                <i data-lucide="info" style="width:12px;height:12px"></i>About OPES
+            </a>
+                        <a href="https://opeshealthsystems.com/en/partner-program">
+                <i data-lucide="handshake" style="width:12px;height:12px"></i>Partner Programme
+            </a>
+            <a href="https://opeshealthsystems.com/en/partnerships">
+                <i data-lucide="handshake" style="width:12px;height:12px"></i>Partnership
+            </a>
+            <a href="https://opeshealthsystems.com/en/become-a-partner">
+                <i data-lucide="user-plus" style="width:12px;height:12px"></i>Become a Partner
+            </a>
+            <a href="https://opeshealthsystems.com/en/join-testers">
+                <i data-lucide="flask-conical" style="width:12px;height:12px"></i>Join Beta Testers
+            </a>
+            <a href="https://opeshealthsystems.com/en/mobile-clinic">
+                <i data-lucide="heart" style="width:12px;height:12px"></i>Mobile Clinics
+            </a>
+            <a href="https://opeshealthsystems.com/en/book-demo" style="color:#00C896;font-weight:600">
+                <i data-lucide="calendar" style="width:12px;height:12px"></i>Book a Demo
+            </a>
+            <a href="https://opeshealthsystems.com/en/pricing">
+                <i data-lucide="tag" style="width:12px;height:12px"></i>Pricing
+            </a>
+            <a href="https://opeshealthsystems.com/en/blog">
+                <i data-lucide="rss" style="width:12px;height:12px"></i>Blog
+            </a>
+            <a href="https://opeshealthsystems.com/en/faq">
+                <i data-lucide="help-circle" style="width:12px;height:12px"></i>FAQ
+            </a>
+            <a href="https://opeshealthsystems.com/en/contact">
+                <i data-lucide="mail" style="width:12px;height:12px"></i>Contact
+            </a>
+        </div>
+
+        <div class="footer-col">
+            <h2>Legal</h2>
+            <a href="https://opeshealthsystems.com/en/privacy">
+                <i data-lucide="shield" style="width:12px;height:12px"></i>Privacy Policy
+            </a>
+            <a href="https://opeshealthsystems.com/en/terms">
+                <i data-lucide="file-text" style="width:12px;height:12px"></i>Terms of Use
+            </a>
+            <a href="https://opeshealthsystems.com/en/compliance">
+                <i data-lucide="scale" style="width:12px;height:12px"></i>Compliance &amp; Trust
+            </a>
+            <a href="mailto:contact@opeshealthsystems.com">
+                <i data-lucide="mail" style="width:12px;height:12px"></i>contact@opeshealthsystems.com
+            </a>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 OPES Health Systems SARL · Bonamousadi, Douala, Cameroon · OHADA Law</p>
+        <div class="footer-lang">
+            <a href="https://opeshealthsystems.com/en/architecture" class="active">EN</a>
+            <a href="https://opeshealthsystems.com/fr/architecture" class="">FR</a>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://opeshealthsystems.com/vendor/lucide.min.js"></script>
+    <script>lucide.createIcons();</script>
+        <script type="application/ld+json">{
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://opeshealthsystems.com#organization",
+    "name": "OPES Health Systems",
+    "legalName": "OPES Health Systems SARL",
+    "url": "https://opeshealthsystems.com",
+    "logo": "https://opeshealthsystems.com/images/opes-seal.png",
+    "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Bonamousadi, Douala",
+        "addressCountry": "CM"
+    },
+    "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "sales",
+        "email": "contact@opeshealthsystems.com",
+        "availableLanguage": [
+            "French",
+            "English"
+        ]
+    },
+    "sameAs": []
+}</script>
+</body>
+</html>

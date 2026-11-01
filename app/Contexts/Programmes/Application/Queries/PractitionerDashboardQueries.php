@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Contexts\Programmes\Application\Queries;
+
+use App\Models\PractitionerApplication;
+use App\Models\PractitionerFinding;
+use App\Models\PractitionerProgram;
+class PractitionerDashboardQueries extends \App\Contexts\Shared\Application\WorkflowHandler
+{
+    public function index(\App\Contexts\Shared\Application\WorkflowInput $request): \App\Contexts\Shared\Application\WorkflowResult
+    {
+        $user = $request->user()->load('practitionerProfile');
+        $profile = $user->practitionerProfile;
+        $activeApplications = \App\Models\PractitionerApplication::where('practitioner_id', $user->id)->whereIn('status', ['pending', 'approved'])->count();
+        $totalFindings = \App\Models\PractitionerFinding::where('practitioner_id', $user->id)->count();
+        $avgRating = \App\Models\PractitionerFinding::where('practitioner_id', $user->id)->whereNotNull('overall')->avg('overall');
+        $recentFindings = $request->collect(\App\Models\PractitionerFinding::where('practitioner_id', $user->id)->with('application.program')->latest()->take(3));
+        $payoutApps = $request->collect(\App\Models\PractitionerApplication::where('practitioner_id', $user->id)->where(fn($q) => $q->where('payout_status', '!=', 'not_applicable')->orWhere('status', 'approved'))->with('program')->latest()->take(5));
+        $openPrograms = $request->collect(\App\Models\PractitionerProgram::where('status', 'open')->where(fn($q) => $q->whereNull('end_date')->orWhere('end_date', '>=', now()))->latest()->take(3));
+        return \App\Contexts\Shared\Application\WorkflowResult::read('practitioner_dashboardcontroller_index_1', compact('user', 'profile', 'activeApplications', 'totalFindings', 'avgRating', 'recentFindings', 'payoutApps', 'openPrograms'));
+    }
+}

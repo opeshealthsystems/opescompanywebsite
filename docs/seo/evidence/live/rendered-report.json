@@ -1,0 +1,366 @@
+{
+  "results": [
+    {
+      "route": "/en",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "34px",
+      "bodySize": "16px",
+      "topLinks": 6
+    },
+    {
+      "route": "/fr",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "34px",
+      "bodySize": "16px",
+      "topLinks": 6
+    },
+    {
+      "route": "/en/products",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "26px",
+      "bodySize": "16px",
+      "topLinks": 6
+    },
+    {
+      "route": "/en/products/opes-drugtrace",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "24px",
+      "bodySize": "16px",
+      "topLinks": 6
+    },
+    {
+      "route": "/en/faq",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "24px",
+      "bodySize": "16px",
+      "topLinks": 6
+    },
+    {
+      "route": "/login",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "\"Plus Jakarta Sans\", sans-serif",
+      "h1Size": "24px",
+      "bodySize": null,
+      "topLinks": 0
+    },
+    {
+      "route": "/en",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "34px",
+      "bodySize": "16px",
+      "topLinks": 6
+    },
+    {
+      "route": "/fr",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "34px",
+      "bodySize": "16px",
+      "topLinks": 6
+    },
+    {
+      "route": "/en/products",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "26px",
+      "bodySize": "16px",
+      "topLinks": 6
+    },
+    {
+      "route": "/en/products/opes-drugtrace",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "24px",
+      "bodySize": "16px",
+      "topLinks": 6
+    },
+    {
+      "route": "/en/faq",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "24px",
+      "bodySize": "16px",
+      "topLinks": 6
+    },
+    {
+      "route": "/login",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "\"Plus Jakarta Sans\", sans-serif",
+      "h1Size": "24px",
+      "bodySize": null,
+      "topLinks": 0
+    },
+    {
+      "route": "/en",
+      "width": 768,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "34px",
+      "bodySize": "16px",
+      "topLinks": 6
+    },
+    {
+      "route": "/fr",
+      "width": 768,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "34px",
+      "bodySize": "16px",
+      "topLinks": 6
+    },
+    {
+      "route": "/en/products",
+      "width": 768,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "26px",
+      "bodySize": "16px",
+      "topLinks": 6
+    },
+    {
+      "route": "/en/products/opes-drugtrace",
+      "width": 768,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "24px",
+      "bodySize": "16px",
+      "topLinks": 6
+    },
+    {
+      "route": "/en/faq",
+      "width": 768,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "24px",
+      "bodySize": "16px",
+      "topLinks": 6
+    },
+    {
+      "route": "/login",
+      "width": 768,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "\"Plus Jakarta Sans\", sans-serif",
+      "h1Size": "24px",
+      "bodySize": null,
+      "topLinks": 0
+    },
+    {
+      "route": "/en",
+      "width": 1024,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "56px",
+      "bodySize": "18px",
+      "topLinks": 6
+    },
+    {
+      "route": "/fr",
+      "width": 1024,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "56px",
+      "bodySize": "18px",
+      "topLinks": 6
+    },
+    {
+      "route": "/en/products",
+      "width": 1024,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "36px",
+      "bodySize": "18px",
+      "topLinks": 6
+    },
+    {
+      "route": "/en/products/opes-drugtrace",
+      "width": 1024,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "30px",
+      "bodySize": "18px",
+      "topLinks": 6
+    },
+    {
+      "route": "/en/faq",
+      "width": 1024,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "30px",
+      "bodySize": "18px",
+      "topLinks": 6
+    },
+    {
+      "route": "/login",
+      "width": 1024,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "\"Plus Jakarta Sans\", sans-serif",
+      "h1Size": "24px",
+      "bodySize": null,
+      "topLinks": 0
+    },
+    {
+      "route": "/en",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "56px",
+      "bodySize": "18px",
+      "topLinks": 6
+    },
+    {
+      "route": "/fr",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "56px",
+      "bodySize": "18px",
+      "topLinks": 6
+    },
+    {
+      "route": "/en/products",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "36px",
+      "bodySize": "18px",
+      "topLinks": 6
+    },
+    {
+      "route": "/en/products/opes-drugtrace",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "30px",
+      "bodySize": "18px",
+      "topLinks": 6
+    },
+    {
+      "route": "/en/faq",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "Inter, sans-serif",
+      "h1Size": "30px",
+      "bodySize": "18px",
+      "topLinks": 6
+    },
+    {
+      "route": "/login",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "h1Font": "\"Plus Jakarta Sans\", sans-serif",
+      "h1Size": "24px",
+      "bodySize": null,
+      "topLinks": 0
+    }
+  ],
+  "axe": [
+    {
+      "route": "/en",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/fr",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/en/products",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/en/products/opes-drugtrace",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/en/faq",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/login",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/en",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "/fr",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "/en/products",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "/en/products/opes-drugtrace",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "/en/faq",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "/login",
+      "width": 1440,
+      "violations": []
+    }
+  ]
+}

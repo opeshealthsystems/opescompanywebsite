@@ -1,0 +1,199 @@
+{
+  "results": [
+    {
+      "route": "/fr",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "smallTargets": 0,
+      "navBg": "rgb(7, 54, 86)",
+      "buttonBg": "rgb(22, 100, 212)",
+      "heroSize": "34px",
+      "mainFont": "Inter, sans-serif",
+      "englishCardText": false,
+      "effects": false
+    },
+    {
+      "route": "/fr/products",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "smallTargets": 0,
+      "navBg": "rgb(7, 54, 86)",
+      "buttonBg": "rgb(22, 100, 212)",
+      "heroSize": null,
+      "mainFont": "Inter, sans-serif",
+      "englishCardText": false,
+      "effects": false
+    },
+    {
+      "route": "/fr",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "smallTargets": 0,
+      "navBg": "rgb(7, 54, 86)",
+      "buttonBg": "rgb(22, 100, 212)",
+      "heroSize": "34px",
+      "mainFont": "Inter, sans-serif",
+      "englishCardText": false,
+      "effects": false
+    },
+    {
+      "route": "/fr/products",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "smallTargets": 0,
+      "navBg": "rgb(7, 54, 86)",
+      "buttonBg": "rgb(22, 100, 212)",
+      "heroSize": null,
+      "mainFont": "Inter, sans-serif",
+      "englishCardText": false,
+      "effects": false
+    },
+    {
+      "route": "/fr",
+      "width": 430,
+      "status": 200,
+      "overflow": false,
+      "smallTargets": 0,
+      "navBg": "rgb(7, 54, 86)",
+      "buttonBg": "rgb(22, 100, 212)",
+      "heroSize": "34px",
+      "mainFont": "Inter, sans-serif",
+      "englishCardText": false,
+      "effects": false
+    },
+    {
+      "route": "/fr/products",
+      "width": 430,
+      "status": 200,
+      "overflow": false,
+      "smallTargets": 0,
+      "navBg": "rgb(7, 54, 86)",
+      "buttonBg": "rgb(22, 100, 212)",
+      "heroSize": null,
+      "mainFont": "Inter, sans-serif",
+      "englishCardText": false,
+      "effects": false
+    },
+    {
+      "route": "/fr",
+      "width": 768,
+      "status": 200,
+      "overflow": false,
+      "smallTargets": 0,
+      "navBg": "rgb(7, 54, 86)",
+      "buttonBg": "rgb(22, 100, 212)",
+      "heroSize": "34px",
+      "mainFont": "Inter, sans-serif",
+      "englishCardText": false,
+      "effects": false
+    },
+    {
+      "route": "/fr/products",
+      "width": 768,
+      "status": 200,
+      "overflow": false,
+      "smallTargets": 0,
+      "navBg": "rgb(7, 54, 86)",
+      "buttonBg": "rgb(22, 100, 212)",
+      "heroSize": null,
+      "mainFont": "Inter, sans-serif",
+      "englishCardText": false,
+      "effects": false
+    },
+    {
+      "route": "/fr",
+      "width": 1024,
+      "status": 200,
+      "overflow": false,
+      "smallTargets": 0,
+      "navBg": "rgb(7, 54, 86)",
+      "buttonBg": "rgb(22, 100, 212)",
+      "heroSize": "56px",
+      "mainFont": "Inter, sans-serif",
+      "englishCardText": false,
+      "effects": false
+    },
+    {
+      "route": "/fr/products",
+      "width": 1024,
+      "status": 200,
+      "overflow": false,
+      "smallTargets": 0,
+      "navBg": "rgb(7, 54, 86)",
+      "buttonBg": "rgb(22, 100, 212)",
+      "heroSize": null,
+      "mainFont": "Inter, sans-serif",
+      "englishCardText": false,
+      "effects": false
+    },
+    {
+      "route": "/fr",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "smallTargets": 0,
+      "navBg": "rgb(7, 54, 86)",
+      "buttonBg": "rgb(22, 100, 212)",
+      "heroSize": "56px",
+      "mainFont": "Inter, sans-serif",
+      "englishCardText": false,
+      "effects": false
+    },
+    {
+      "route": "/fr/products",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "smallTargets": 0,
+      "navBg": "rgb(7, 54, 86)",
+      "buttonBg": "rgb(22, 100, 212)",
+      "heroSize": null,
+      "mainFont": "Inter, sans-serif",
+      "englishCardText": false,
+      "effects": false
+    },
+    {
+      "route": "/fr/blog",
+      "legacyClaims": false,
+      "frenchArticles": 3
+    },
+    {
+      "route": "/fr/compliance",
+      "legacyClaims": false
+    },
+    {
+      "route": "/en/products/opescare",
+      "legacyClaims": false
+    },
+    {
+      "route": "/en",
+      "legacyClaims": false
+    }
+  ],
+  "axe": [
+    {
+      "route": "/fr",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/fr/products",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/fr",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "/fr/products",
+      "width": 1440,
+      "violations": []
+    }
+  ]
+}

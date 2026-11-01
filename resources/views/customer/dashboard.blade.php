@@ -16,7 +16,7 @@
     <div class="cp-stats-row">
         <a href="{{ route('customer.licenses', ['locale' => app()->getLocale()]) }}" class="cp-stat-card" style="text-decoration:none">
             <div class="cp-stat-icon" style="background:rgba(0,200,150,0.1)">
-                <i data-lucide="key" style="width:20px;height:20px;color:#00C896"></i>
+                <i data-lucide="key" style="width:20px;height:20px;color:var(--brand-accent)"></i>
             </div>
             <div>
                 <p class="cp-stat-value">{{ $activeLicenses }}</p>
@@ -25,7 +25,7 @@
         </a>
         <a href="{{ route('customer.tickets', ['locale' => app()->getLocale()]) }}" class="cp-stat-card" style="text-decoration:none">
             <div class="cp-stat-icon" style="background:rgba(26,111,232,0.1)">
-                <i data-lucide="ticket" style="width:20px;height:20px;color:#1A6FE8"></i>
+                <i data-lucide="ticket" style="width:20px;height:20px;color:var(--brand-accent)"></i>
             </div>
             <div>
                 <p class="cp-stat-value">{{ $openTickets }}</p>
@@ -47,7 +47,7 @@
         <div class="cp-section-card">
             <div class="cp-section-header">
                 <h2 class="cp-section-title">
-                    <i data-lucide="key" style="width:18px;height:18px;color:#00C896"></i> My Licenses
+                    <i data-lucide="key" style="width:18px;height:18px;color:var(--brand-accent)"></i> My Licenses
                 </h2>
                 <a href="{{ route('contact', ['locale' => app()->getLocale()]) }}" class="cp-btn-primary">
                     Request License
@@ -63,7 +63,7 @@
         <div class="cp-section-card">
             <div class="cp-section-header">
                 <h2 class="cp-section-title">
-                    <i data-lucide="ticket" style="width:18px;height:18px;color:#1A6FE8"></i> Support Tickets
+                    <i data-lucide="ticket" style="width:18px;height:18px;color:var(--brand-accent)"></i> Support Tickets
                 </h2>
                 <a href="{{ route('customer.tickets.create', ['locale' => app()->getLocale()]) }}" class="cp-btn-primary">
                     New Ticket
@@ -100,7 +100,7 @@
     <div class="cp-section-card" style="margin-top:24px">
         <div class="cp-section-header">
             <h2 class="cp-section-title">
-                <i data-lucide="file-text" style="width:18px;height:18px;color:#00C896"></i> Product Brochures
+                <i data-lucide="file-text" style="width:18px;height:18px;color:var(--brand-accent)"></i> Product Brochures
             </h2>
             <span style="font-size:0.8125rem;color:var(--text-muted)">{{ count($allProducts) }} products</span>
         </div>
@@ -123,7 +123,7 @@
     </div>
 
     <div class="cp-help-card">
-        <i data-lucide="life-buoy" style="width:24px;height:24px;color:#00C896"></i>
+        <i data-lucide="life-buoy" style="width:24px;height:24px;color:var(--brand-accent)"></i>
         <div>
             <p class="cp-help-title">Need help?</p>
             <p class="cp-help-text">Our team is available Mon–Fri 8 am – 6 pm (WAT). Email

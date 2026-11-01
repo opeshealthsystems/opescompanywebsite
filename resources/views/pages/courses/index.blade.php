@@ -1,8 +1,9 @@
 @php $locale = app()->getLocale(); @endphp
 
 <x-layouts.app
-    title="OPES Training &amp; Certification"
-    description="Learn to get the most out of OPES products with structured courses and certification paths.">
+    title="{{ $locale === 'fr' ? 'Catalogue des formations OPES' : 'OPES training course catalogue' }}"
+    description="{{ $locale === 'fr' ? 'Consultez les formations OPES publiées et contactez notre équipe pour connaître les programmes disponibles.' : 'Browse published OPES courses and contact our team about available training programmes.' }}"
+    :indexable="$courses->isNotEmpty()">
 
 {{-- ── PAGE HEADER ───────────────────────────────────────────────── --}}
 <div class="pi-header">
@@ -32,14 +33,14 @@
                     <img src="{{ Storage::url($course->cover_image) }}" alt="{{ $course->getLocalizedTitle($locale) }}"
                          style="width:100%;height:150px;object-fit:cover;display:block">
                 @else
-                    <div style="width:100%;height:150px;background:linear-gradient(135deg,rgba(0,200,150,0.18),rgba(26,111,232,0.18));display:flex;align-items:center;justify-content:center">
-                        <i data-lucide="graduation-cap" style="width:36px;height:36px;color:#00C896"></i>
+                    <div style="width:100%;height:150px;background:var(--surface);display:flex;align-items:center;justify-content:center">
+                        <i data-lucide="graduation-cap" style="width:36px;height:36px;color:var(--brand-accent)"></i>
                     </div>
                 @endif
 
                 <div class="pi-card-body" style="padding:18px">
                     {{-- Level badge --}}
-                    <div style="display:inline-flex;align-items:center;gap:6px;font-size:var(--fs-xs);font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#00C896;background:rgba(0,200,150,0.1);border:1px solid rgba(0,200,150,0.2);border-radius:999px;padding:4px 10px;margin-bottom:10px">
+                    <div style="display:inline-flex;align-items:center;gap:6px;font-size:var(--fs-xs);font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--brand-accent);background:rgba(0,200,150,0.1);border:1px solid rgba(0,200,150,0.2);border-radius:999px;padding:4px 10px;margin-bottom:10px">
                         {{ \App\Models\Course::levelOptions()[$course->level] ?? ucfirst($course->level) }}
                     </div>
 
@@ -69,7 +70,7 @@
 
 {{-- ── CTA ───────────────────────────────────────────────────────── --}}
 <div class="demo-section">
-    <div class="section-label" style="justify-content:center;color:#00C896;margin-bottom:12px">
+    <div class="section-label" style="justify-content:center;color:var(--brand-accent);margin-bottom:12px">
         <i data-lucide="award" style="width:13px;height:13px"></i>
         Get Certified
     </div>

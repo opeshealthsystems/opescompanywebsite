@@ -58,12 +58,12 @@
                 <i data-lucide="compass" style="width:12px;height:12px"></i>
                 {{ $isFr ? 'Diapositive 2 — Vision & mission' : 'Slide 2 — Vision & mission' }}
             </div>
-            <div style="background:#00C89608;border:1px solid #00C89620;border-radius:14px;padding:20px;margin-bottom:12px">
-                <div style="font-size:var(--fs-2xs);font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">{{ $isFr ? 'Notre vision' : 'Our vision' }}</div>
+            <div style="background:#69D5F508;border:1px solid #69D5F520;border-radius:14px;padding:20px;margin-bottom:12px">
+                <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">{{ $isFr ? 'Notre vision' : 'Our vision' }}</div>
                 <p style="font-size:13px;color:#e2e8f0;line-height:1.65;margin:0">{{ $isFr ? 'Devenir le fournisseur d\'infrastructure de santé numérique interopérable le plus fiable d\'Afrique.' : 'To become Africa\'s most trusted provider of interoperable digital health infrastructure.' }}</p>
             </div>
-            <div style="background:#1A6FE808;border:1px solid #1A6FE820;border-radius:14px;padding:20px">
-                <div style="font-size:var(--fs-2xs);font-weight:700;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">{{ $isFr ? 'Notre mission' : 'Our mission' }}</div>
+            <div style="background:#8AC5ED08;border:1px solid #8AC5ED20;border-radius:14px;padding:20px">
+                <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">{{ $isFr ? 'Notre mission' : 'Our mission' }}</div>
                 <p style="font-size:13px;color:#e2e8f0;line-height:1.65;margin:0">{{ $isFr ? 'Connecter les prestataires de soins, patients, assureurs, institutions de santé publique et gouvernements via des technologies de santé sécurisées, interopérables et intelligentes.' : 'To connect healthcare providers, patients, insurers, public health institutions, and governments through secure, interoperable, and intelligent healthcare technologies.' }}</p>
             </div>
         </div>
@@ -98,18 +98,18 @@
     <h2 class="section-title">{{ $isFr ? 'L\'Afrique — une des plus grandes opportunités mondiales de numérisation de santé' : 'Africa — one of the largest healthcare digitisation opportunities globally' }}</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:28px">
         @foreach($isFr
-            ? [['users','#00C896','Croissance démographique','Population en forte croissance avec des besoins de santé croissants.'],
-               ['building','#1A6FE8','Urbanisation','Expansion rapide des villes nécessitant des systèmes de santé structurés.'],
-               ['shield-check','#00C896','Couverture Santé Universelle','Mandats gouvernementaux CSU créant une demande massive de systèmes.'],
-               ['building-2','#1A6FE8','Transformation numérique','Priorités nationales de transformation digitale dans toute l\'Afrique.'],
-               ['trending-up','#00C896','Investissements santé numérique','Croissance des financements internationaux dans la e-santé africaine.'],
-               ['graduation-cap','#1A6FE8','Expansion des effectifs de santé','Besoin croissant d\'outils numériques pour les professionnels de santé.']]
-            : [['users','#00C896','Population growth','Fast-growing population with increasing healthcare needs.'],
-               ['building','#1A6FE8','Urbanisation','Rapid city expansion requiring structured health systems.'],
-               ['shield-check','#00C896','Universal Health Coverage','Government UHC mandates creating massive system demand.'],
-               ['building-2','#1A6FE8','Government digital transformation','National digitalisation priorities across Africa.'],
-               ['trending-up','#00C896','Digital health investment growth','Growing international funding in African e-health.'],
-               ['graduation-cap','#1A6FE8','Healthcare workforce expansion','Growing need for digital tools for healthcare professionals.']]
+            ? [['users','#69D5F5','Croissance démographique','Population en forte croissance avec des besoins de santé croissants.'],
+               ['building','#8AC5ED','Urbanisation','Expansion rapide des villes nécessitant des systèmes de santé structurés.'],
+               ['shield-check','#69D5F5','Couverture Santé Universelle','Mandats gouvernementaux CSU créant une demande massive de systèmes.'],
+               ['building-2','#8AC5ED','Transformation numérique','Priorités nationales de transformation digitale dans toute l\'Afrique.'],
+               ['trending-up','#69D5F5','Investissements santé numérique','Croissance des financements internationaux dans la e-santé africaine.'],
+               ['graduation-cap','#8AC5ED','Expansion des effectifs de santé','Besoin croissant d\'outils numériques pour les professionnels de santé.']]
+            : [['users','#69D5F5','Population growth','Fast-growing population with increasing healthcare needs.'],
+               ['building','#8AC5ED','Urbanisation','Rapid city expansion requiring structured health systems.'],
+               ['shield-check','#69D5F5','Universal Health Coverage','Government UHC mandates creating massive system demand.'],
+               ['building-2','#8AC5ED','Government digital transformation','National digitalisation priorities across Africa.'],
+               ['trending-up','#69D5F5','Digital health investment growth','Growing international funding in African e-health.'],
+               ['graduation-cap','#8AC5ED','Healthcare workforce expansion','Growing need for digital tools for healthcare professionals.']]
         as $opp)
         <div style="background:#0F172A;border:1px solid #1e293b;border-radius:12px;padding:16px">
             <div style="width:32px;height:32px;border-radius:8px;background:{{ $opp[1] }}15;display:flex;align-items:center;justify-content:center;margin-bottom:10px">
@@ -136,8 +136,8 @@
             <h3 style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:14px">OPES Health OS</h3>
             <p style="font-size:var(--fs-xs);color:var(--text-muted);margin-bottom:14px;line-height:1.6">{{ $isFr ? 'Système d\'exploitation de santé intégré pour prestataires, réseaux de santé, institutions de santé publique, assureurs et gouvernements.' : 'Integrated healthcare operating system for providers, health networks, public health institutions, insurers, and governments.' }}</p>
             @foreach($isFr
-                ? [['activity','#00C896','OPES Clinic'],['hospital','#1A6FE8','OPES Hospital'],['layout-grid','#00C896','OPES Specialty Suite'],['share-2','#1A6FE8','OPES Care'],['cpu','#00C896','OPES Clinical Intelligence'],['shield-check','#1A6FE8','OPES Insurance'],['bar-chart-2','#00C896','OPES Public Health'],['truck','#1A6FE8','OPES Supply Chain'],['wrench','#00C896','OPES Biomedical'],['graduation-cap','#1A6FE8','OPES Academy']]
-                : [['activity','#00C896','OPES Clinic'],['hospital','#1A6FE8','OPES Hospital'],['layout-grid','#00C896','OPES Specialty Suite'],['share-2','#1A6FE8','OPES Care'],['cpu','#00C896','OPES Clinical Intelligence'],['shield-check','#1A6FE8','OPES Insurance'],['bar-chart-2','#00C896','OPES Public Health'],['truck','#1A6FE8','OPES Supply Chain'],['wrench','#00C896','OPES Biomedical'],['graduation-cap','#1A6FE8','OPES Academy']]
+                ? [['activity','#69D5F5','OPES Clinic'],['hospital','#8AC5ED','OPES Hospital'],['layout-grid','#69D5F5','OPES Specialty Suite'],['share-2','#8AC5ED','OPES Care'],['cpu','#69D5F5','OPES Clinical Intelligence'],['shield-check','#8AC5ED','OPES Insurance'],['bar-chart-2','#69D5F5','OPES Public Health'],['truck','#8AC5ED','OPES Supply Chain'],['wrench','#69D5F5','OPES Biomedical'],['graduation-cap','#8AC5ED','OPES Academy']]
+                : [['activity','#69D5F5','OPES Clinic'],['hospital','#8AC5ED','OPES Hospital'],['layout-grid','#69D5F5','OPES Specialty Suite'],['share-2','#8AC5ED','OPES Care'],['cpu','#69D5F5','OPES Clinical Intelligence'],['shield-check','#8AC5ED','OPES Insurance'],['bar-chart-2','#69D5F5','OPES Public Health'],['truck','#8AC5ED','OPES Supply Chain'],['wrench','#69D5F5','OPES Biomedical'],['graduation-cap','#8AC5ED','OPES Academy']]
             as $comp)
             <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:#0F172A;border-radius:7px;border:1px solid #1e293b;margin-bottom:5px">
                 <i data-lucide="{{ $comp[0] }}" style="width:12px;height:12px;color:{{ $comp[1] }};flex-shrink:0"></i>
@@ -153,20 +153,20 @@
             </div>
             <h3 style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:14px">{{ $isFr ? '7 couches interconnectées' : '7 interconnected layers' }}</h3>
             @foreach($isFr
-                ? [['#00C896','Systèmes cliniques','EMR, HIS, systèmes de spécialités'],
-                   ['#1A6FE8','Systèmes administratifs','RH, Finance, Approvisionnement'],
-                   ['#00C896','Couche d\'interopérabilité','APIs FHIR, HL7, connecteurs HIE'],
-                   ['#1A6FE8','Couche Health ID','Identifiant patient unique & MPI'],
-                   ['#00C896','Couche intelligence clinique','CDSS, Triage, Analytique'],
-                   ['#1A6FE8','Couche santé publique','Surveillance, Registres, CSU'],
-                   ['#00C896','Couche académie','Formation, Certification, Transfert']]
-                : [['#00C896','Clinical systems','EMR, HIS, specialty systems'],
-                   ['#1A6FE8','Administrative systems','HR, Finance, Procurement'],
-                   ['#00C896','Interoperability layer','FHIR APIs, HL7, HIE connectors'],
-                   ['#1A6FE8','Health ID layer','Unique patient identifier & MPI'],
-                   ['#00C896','Clinical intelligence layer','CDSS, Triage, Analytics'],
-                   ['#1A6FE8','Public health layer','Surveillance, Registries, UHC'],
-                   ['#00C896','Academy layer','Training, Certification, Transfer']]
+                ? [['#69D5F5','Systèmes cliniques','EMR, HIS, systèmes de spécialités'],
+                   ['#8AC5ED','Systèmes administratifs','RH, Finance, Approvisionnement'],
+                   ['#69D5F5','Couche d\'interopérabilité','APIs FHIR, HL7, connecteurs HIE'],
+                   ['#8AC5ED','Couche Health ID','Identifiant patient unique & MPI'],
+                   ['#69D5F5','Couche intelligence clinique','CDSS, Triage, Analytique'],
+                   ['#8AC5ED','Couche santé publique','Surveillance, Registres, CSU'],
+                   ['#69D5F5','Couche académie','Formation, Certification, Transfert']]
+                : [['#69D5F5','Clinical systems','EMR, HIS, specialty systems'],
+                   ['#8AC5ED','Administrative systems','HR, Finance, Procurement'],
+                   ['#69D5F5','Interoperability layer','FHIR APIs, HL7, HIE connectors'],
+                   ['#8AC5ED','Health ID layer','Unique patient identifier & MPI'],
+                   ['#69D5F5','Clinical intelligence layer','CDSS, Triage, Analytics'],
+                   ['#8AC5ED','Public health layer','Surveillance, Registries, UHC'],
+                   ['#69D5F5','Academy layer','Training, Certification, Transfer']]
             as $layer)
             <div style="display:flex;gap:10px;padding:9px 12px;background:#0F172A;border-radius:7px;border-left:2px solid {{ $layer[0] }};margin-bottom:5px">
                 <div>
@@ -176,7 +176,7 @@
             </div>
             @endforeach
             <div style="margin-top:14px;text-align:center;padding:12px;background:#0F172A;border-radius:10px;border:1px solid #1e293b">
-                <div style="font-size:var(--fs-xs);font-weight:700;color:#00C896">{{ $isFr ? 'Une plateforme · Une identité santé · Un écosystème connecté' : 'One Platform · One Health Identity · One Connected Ecosystem' }}</div>
+                <div style="font-size:var(--fs-xs);font-weight:700;color:var(--brand-accent)">{{ $isFr ? 'Une plateforme · Une identité santé · Un écosystème connecté' : 'One Platform · One Health Identity · One Connected Ecosystem' }}</div>
             </div>
         </div>
     </div>
@@ -200,26 +200,26 @@
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px">
         @foreach($isFr
-            ? [['1','#00C896','share-2','Interopérabilité en premier','FHIR & HL7 natifs, pas des add-ons.'],
-               ['2','#1A6FE8','map','Contexte africain','Conçu pour les réalités locales de santé.'],
-               ['3','#00C896','wifi-off','Architecture offline-capable','Fonctionne dans les zones à faible connectivité.'],
-               ['4','#1A6FE8','building-2','Prêt au niveau national','Capable de supporter des programmes nationaux de santé.'],
-               ['5','#00C896','fingerprint','Infrastructure Health ID','Identité patient unique à travers l\'écosystème.'],
-               ['6','#1A6FE8','cpu','Intelligence clinique','CDSS, triage, analytique intégrés nativement.'],
-               ['7','#00C896','layers','Couverture plateforme E2E','Du cabinet à l\'infrastructure de santé nationale.'],
-               ['8','#1A6FE8','map-pin','Capacité d\'implémentation locale','Équipes terrain locales formées.'],
-               ['9','#00C896','graduation-cap','Développement des capacités','OPES Academy — compétences durables.'],
-               ['10','#1A6FE8','handshake','Partenariat à long terme','Engagement de transformation, pas de transaction.']]
-            : [['1','#00C896','share-2','Interoperability first','FHIR & HL7 native, not add-ons.'],
-               ['2','#1A6FE8','map','African context','Designed for local healthcare realities.'],
-               ['3','#00C896','wifi-off','Offline-capable design','Works in low-connectivity environments.'],
-               ['4','#1A6FE8','building-2','National health readiness','Capable of supporting national health programmes.'],
-               ['5','#00C896','fingerprint','Health ID infrastructure','Unique patient identity across the ecosystem.'],
-               ['6','#1A6FE8','cpu','Clinical intelligence','CDSS, triage, analytics built natively.'],
-               ['7','#00C896','layers','End-to-end platform coverage','From clinic to national health infrastructure.'],
-               ['8','#1A6FE8','map-pin','Local implementation capacity','Trained local field teams.'],
-               ['9','#00C896','graduation-cap','Capacity building','OPES Academy — sustainable skills.'],
-               ['10','#1A6FE8','handshake','Long-term partnership','Transformation commitment, not a transaction.']]
+            ? [['1','#69D5F5','share-2','Interopérabilité en premier','FHIR & HL7 natifs, pas des add-ons.'],
+               ['2','#8AC5ED','map','Contexte africain','Conçu pour les réalités locales de santé.'],
+               ['3','#69D5F5','wifi-off','Architecture offline-capable','Fonctionne dans les zones à faible connectivité.'],
+               ['4','#8AC5ED','building-2','Prêt au niveau national','Capable de supporter des programmes nationaux de santé.'],
+               ['5','#69D5F5','fingerprint','Infrastructure Health ID','Identité patient unique à travers l\'écosystème.'],
+               ['6','#8AC5ED','cpu','Intelligence clinique','CDSS, triage, analytique intégrés nativement.'],
+               ['7','#69D5F5','layers','Couverture plateforme E2E','Du cabinet à l\'infrastructure de santé nationale.'],
+               ['8','#8AC5ED','map-pin','Capacité d\'implémentation locale','Équipes terrain locales formées.'],
+               ['9','#69D5F5','graduation-cap','Développement des capacités','OPES Academy — compétences durables.'],
+               ['10','#8AC5ED','handshake','Partenariat à long terme','Engagement de transformation, pas de transaction.']]
+            : [['1','#69D5F5','share-2','Interoperability first','FHIR & HL7 native, not add-ons.'],
+               ['2','#8AC5ED','map','African context','Designed for local healthcare realities.'],
+               ['3','#69D5F5','wifi-off','Offline-capable design','Works in low-connectivity environments.'],
+               ['4','#8AC5ED','building-2','National health readiness','Capable of supporting national health programmes.'],
+               ['5','#69D5F5','fingerprint','Health ID infrastructure','Unique patient identity across the ecosystem.'],
+               ['6','#8AC5ED','cpu','Clinical intelligence','CDSS, triage, analytics built natively.'],
+               ['7','#69D5F5','layers','End-to-end platform coverage','From clinic to national health infrastructure.'],
+               ['8','#8AC5ED','map-pin','Local implementation capacity','Trained local field teams.'],
+               ['9','#69D5F5','graduation-cap','Capacity building','OPES Academy — sustainable skills.'],
+               ['10','#8AC5ED','handshake','Long-term partnership','Transformation commitment, not a transaction.']]
         as $adv)
         <div style="display:flex;gap:10px;padding:12px 14px;background:#0F172A;border-radius:9px;border:1px solid #1e293b">
             <div style="width:22px;height:22px;border-radius:6px;background:{{ $adv[1] }}15;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:var(--fs-2xs);font-weight:800;color:{{ $adv[1] }}">{{ $adv[0] }}</div>
@@ -245,8 +245,8 @@
             </div>
             <h3 style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:14px">{{ $isFr ? '8 sources de revenus diversifiées' : '8 diversified revenue streams' }}</h3>
             @foreach($isFr
-                ? [['#00C896','Licences logicielles'],['#1A6FE8','Maintenance annuelle'],['#00C896','Services d\'implémentation'],['#1A6FE8','Services d\'interopérabilité'],['#00C896','Services Health ID'],['#1A6FE8','Formation & Certification'],['#00C896','Services gérés'],['#1A6FE8','Programmes gouvernementaux']]
-                : [['#00C896','Software licensing'],['#1A6FE8','Annual maintenance'],['#00C896','Implementation services'],['#1A6FE8','Interoperability services'],['#00C896','Health ID services'],['#1A6FE8','Training & certification'],['#00C896','Managed services'],['#1A6FE8','Government programmes']]
+                ? [['#69D5F5','Licences logicielles'],['#8AC5ED','Maintenance annuelle'],['#69D5F5','Services d\'implémentation'],['#8AC5ED','Services d\'interopérabilité'],['#69D5F5','Services Health ID'],['#8AC5ED','Formation & Certification'],['#69D5F5','Services gérés'],['#8AC5ED','Programmes gouvernementaux']]
+                : [['#69D5F5','Software licensing'],['#8AC5ED','Annual maintenance'],['#69D5F5','Implementation services'],['#8AC5ED','Interoperability services'],['#69D5F5','Health ID services'],['#8AC5ED','Training & certification'],['#69D5F5','Managed services'],['#8AC5ED','Government programmes']]
             as $rev)
             <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#0F172A;border-radius:7px;border:1px solid #1e293b;margin-bottom:5px">
                 <div style="width:8px;height:8px;border-radius:50%;background:{{ $rev[0] }};flex-shrink:0"></div>
@@ -254,7 +254,7 @@
             </div>
             @endforeach
             <div style="margin-top:14px">
-                <a href="{{ url($locale.'/financial-model') }}" style="display:inline-flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:#00C896;font-weight:600;text-decoration:none">
+                <a href="{{ url($locale.'/financial-model') }}" style="display:inline-flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:var(--brand-accent);font-weight:600;text-decoration:none">
                     {{ $isFr ? 'Voir le modèle financier détaillé' : 'View detailed financial model' }}
                     <i data-lucide="arrow-right" style="width:11px;height:11px"></i>
                 </a>
@@ -269,14 +269,14 @@
             <h3 style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:14px">{{ $isFr ? '5 phases de pénétration' : '5 penetration phases' }}</h3>
             @foreach($isFr
                 ? [['var(--text-faint)','Phase 1','Cliniques','Premier segment — établissements de soins primaires.'],
-                   ['#1A6FE8','Phase 2','Hôpitaux','Expansion vers les hôpitaux de district et régionaux.'],
+                   ['#8AC5ED','Phase 2','Hôpitaux','Expansion vers les hôpitaux de district et régionaux.'],
                    ['#00A87B','Phase 3','Réseaux hospitaliers','Connecter les groupes multi-sites.'],
-                   ['#00C896','Phase 4','Organisations d\'assurance','Integrer les acteurs de la couverture santé.'],
+                   ['#69D5F5','Phase 4','Organisations d\'assurance','Integrer les acteurs de la couverture santé.'],
                    ['#FFB020','Phase 5','Gouvernements','Programmes nationaux CSU et plateformes de santé publique.']]
                 : [['var(--text-faint)','Phase 1','Clinics','First segment — primary care facilities.'],
-                   ['#1A6FE8','Phase 2','Hospitals','Expansion to district and regional hospitals.'],
+                   ['#8AC5ED','Phase 2','Hospitals','Expansion to district and regional hospitals.'],
                    ['#00A87B','Phase 3','Hospital networks','Connect multi-site groups.'],
-                   ['#00C896','Phase 4','Insurance organisations','Integrate health coverage actors.'],
+                   ['#69D5F5','Phase 4','Insurance organisations','Integrate health coverage actors.'],
                    ['#FFB020','Phase 5','Governments','National UHC programmes and public health platforms.']]
             as $idx => $phase)
             <div style="display:flex;gap:12px;margin-bottom:8px">
@@ -304,18 +304,18 @@
     </div>
     <h2 class="section-title">{{ $isFr ? 'Croissance 2026–2031' : 'Growth 2026–2031' }}</h2>
     <div style="position:relative;margin-top:36px">
-        <div style="position:absolute;top:20px;left:20px;right:20px;height:1px;background:linear-gradient(to right,#00C896,#1A6FE8);z-index:0"></div>
+        <div style="position:absolute;top:20px;left:20px;right:20px;height:1px;background:var(--surface);z-index:0"></div>
         <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;position:relative;z-index:1">
             @foreach($isFr
                 ? [['2026','var(--text-faint)','Fondation','Premières cliniques et hôpitaux déployés'],
-                   ['2027','#1A6FE8','Expansion','Croissance du réseau de prestataires'],
+                   ['2027','#8AC5ED','Expansion','Croissance du réseau de prestataires'],
                    ['2028','#00A87B','Réseau inter.','Connexions HIE actives entre établissements'],
-                   ['2029','#00C896','Prog. nationaux','Premiers contrats gouvernementaux'],
+                   ['2029','#69D5F5','Prog. nationaux','Premiers contrats gouvernementaux'],
                    ['2030–31','#FFB020','Expansion rég.','Déploiement dans la région CEMAC et au-delà']]
                 : [['2026','var(--text-faint)','Foundation','First clinics and hospitals deployed'],
-                   ['2027','#1A6FE8','Expansion','Growing provider network'],
+                   ['2027','#8AC5ED','Expansion','Growing provider network'],
                    ['2028','#00A87B','Interoperability network','Active HIE connections between facilities'],
-                   ['2029','#00C896','National programmes','First government contracts'],
+                   ['2029','#69D5F5','National programmes','First government contracts'],
                    ['2030–31','#FFB020','Regional expansion','Deployment across CEMAC region and beyond']]
             as $ms)
             <div style="background:#0F172A;border:1px solid {{ $ms[1] }}30;border-radius:12px;padding:16px 12px;text-align:center">
@@ -343,8 +343,8 @@
                 {{ $isFr ? 'Diapositive 15 — Impact attendu' : 'Slide 15 — Expected impact' }}
             </div>
             @foreach($isFr
-                ? [['#00C896','check-circle','Meilleurs soins patients'],['#1A6FE8','check-circle','Meilleures données de santé'],['#00C896','check-circle','Meilleure visibilité en santé publique'],['#1A6FE8','check-circle','Meilleure utilisation des ressources'],['#00C896','check-circle','Systèmes de santé plus robustes'],['#1A6FE8','check-circle','Meilleur accès aux soins']]
-                : [['#00C896','check-circle','Better patient care'],['#1A6FE8','check-circle','Better health data'],['#00C896','check-circle','Better public health visibility'],['#1A6FE8','check-circle','Better resource utilisation'],['#00C896','check-circle','Stronger health systems'],['#1A6FE8','check-circle','Better healthcare access']]
+                ? [['#69D5F5','check-circle','Meilleurs soins patients'],['#8AC5ED','check-circle','Meilleures données de santé'],['#69D5F5','check-circle','Meilleure visibilité en santé publique'],['#8AC5ED','check-circle','Meilleure utilisation des ressources'],['#69D5F5','check-circle','Systèmes de santé plus robustes'],['#8AC5ED','check-circle','Meilleur accès aux soins']]
+                : [['#69D5F5','check-circle','Better patient care'],['#8AC5ED','check-circle','Better health data'],['#69D5F5','check-circle','Better public health visibility'],['#8AC5ED','check-circle','Better resource utilisation'],['#69D5F5','check-circle','Stronger health systems'],['#8AC5ED','check-circle','Better healthcare access']]
             as $impact)
             <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#0F172A;border-radius:8px;border:1px solid #1e293b;margin-bottom:6px">
                 <i data-lucide="{{ $impact[1] }}" style="width:13px;height:13px;color:{{ $impact[0] }};flex-shrink:0"></i>
@@ -360,8 +360,8 @@
             </div>
             <h3 style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:14px">{{ $isFr ? '6 indicateurs de suivi' : '6 tracking indicators' }}</h3>
             @foreach($isFr
-                ? [['#00C896','Établissements connectés'],['#1A6FE8','Utilisateurs actifs'],['#00C896','Health IDs émis'],['#1A6FE8','Transactions d\'interopérabilité'],['#00C896','Croissance des revenus'],['#1A6FE8','Croissance des certifications']]
-                : [['#00C896','Facilities connected'],['#1A6FE8','Active users'],['#00C896','Health IDs issued'],['#1A6FE8','Interoperability transactions'],['#00C896','Revenue growth'],['#1A6FE8','Certification growth']]
+                ? [['#69D5F5','Établissements connectés'],['#8AC5ED','Utilisateurs actifs'],['#69D5F5','Health IDs émis'],['#8AC5ED','Transactions d\'interopérabilité'],['#69D5F5','Croissance des revenus'],['#8AC5ED','Croissance des certifications']]
+                : [['#69D5F5','Facilities connected'],['#8AC5ED','Active users'],['#69D5F5','Health IDs issued'],['#8AC5ED','Interoperability transactions'],['#69D5F5','Revenue growth'],['#8AC5ED','Certification growth']]
             as $metric)
             <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:#0F172A;border-radius:8px;border-left:2px solid {{ $metric[0] }};margin-bottom:6px">
                 <span style="font-size:var(--fs-xs);color:var(--text-muted);font-weight:500">{{ $metric[1] }}</span>
@@ -384,8 +384,8 @@
             </div>
             <h3 style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:14px">{{ $isFr ? 'Partenaires cibles' : 'Target partners' }}</h3>
             @foreach($isFr
-                ? [['building-2','#00C896','Ministères de la Santé'],['globe','#1A6FE8','Partenaires de développement'],['hospital','#00C896','Réseaux hospitaliers'],['shield-check','#1A6FE8','Organisations d\'assurance'],['graduation-cap','#00C896','Universités'],['cpu','#1A6FE8','Partenaires technologiques']]
-                : [['building-2','#00C896','Ministries of Health'],['globe','#1A6FE8','Development partners'],['hospital','#00C896','Hospital networks'],['shield-check','#1A6FE8','Insurance organisations'],['graduation-cap','#00C896','Universities'],['cpu','#1A6FE8','Technology partners']]
+                ? [['building-2','#69D5F5','Ministères de la Santé'],['globe','#8AC5ED','Partenaires de développement'],['hospital','#69D5F5','Réseaux hospitaliers'],['shield-check','#8AC5ED','Organisations d\'assurance'],['graduation-cap','#69D5F5','Universités'],['cpu','#8AC5ED','Partenaires technologiques']]
+                : [['building-2','#69D5F5','Ministries of Health'],['globe','#8AC5ED','Development partners'],['hospital','#69D5F5','Hospital networks'],['shield-check','#8AC5ED','Insurance organisations'],['graduation-cap','#69D5F5','Universities'],['cpu','#8AC5ED','Technology partners']]
             as $partner)
             <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#0F172A;border-radius:7px;border:1px solid #1e293b;margin-bottom:5px">
                 <i data-lucide="{{ $partner[0] }}" style="width:12px;height:12px;color:{{ $partner[1] }};flex-shrink:0"></i>
@@ -401,18 +401,18 @@
             </div>
             <h3 style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:14px">{{ $isFr ? 'L\'investissement supporte' : 'Investment supports' }}</h3>
             @foreach($isFr
-                ? [['#00C896','code','Développement produit','Accélérer le développement de la plateforme OPES Health OS.'],
-                   ['#1A6FE8','map','Expansion marché','Déploiements dans de nouveaux marchés africains.'],
-                   ['#00C896','server','Infrastructure','Renforcement de l\'infrastructure cloud et technique.'],
-                   ['#1A6FE8','graduation-cap','Expansion de l\'académie','Programmes de formation et certifications supplémentaires.'],
-                   ['#00C896','building-2','Programmes gouvernementaux','Financer les déploiements au niveau national.'],
-                   ['#1A6FE8','globe','Croissance régionale','Extension dans la région CEMAC et toute l\'Afrique.']]
-                : [['#00C896','code','Product development','Accelerate OPES Health OS platform development.'],
-                   ['#1A6FE8','map','Market expansion','Deployments across new African markets.'],
-                   ['#00C896','server','Infrastructure','Cloud and technical infrastructure strengthening.'],
-                   ['#1A6FE8','graduation-cap','Academy expansion','Additional training programmes and certifications.'],
-                   ['#00C896','building-2','Government programmes','Fund national-level deployments.'],
-                   ['#1A6FE8','globe','Regional growth','Expansion across the CEMAC region and all of Africa.']]
+                ? [['#69D5F5','code','Développement produit','Accélérer le développement de la plateforme OPES Health OS.'],
+                   ['#8AC5ED','map','Expansion marché','Déploiements dans de nouveaux marchés africains.'],
+                   ['#69D5F5','server','Infrastructure','Renforcement de l\'infrastructure cloud et technique.'],
+                   ['#8AC5ED','graduation-cap','Expansion de l\'académie','Programmes de formation et certifications supplémentaires.'],
+                   ['#69D5F5','building-2','Programmes gouvernementaux','Financer les déploiements au niveau national.'],
+                   ['#8AC5ED','globe','Croissance régionale','Extension dans la région CEMAC et toute l\'Afrique.']]
+                : [['#69D5F5','code','Product development','Accelerate OPES Health OS platform development.'],
+                   ['#8AC5ED','map','Market expansion','Deployments across new African markets.'],
+                   ['#69D5F5','server','Infrastructure','Cloud and technical infrastructure strengthening.'],
+                   ['#8AC5ED','graduation-cap','Academy expansion','Additional training programmes and certifications.'],
+                   ['#69D5F5','building-2','Government programmes','Fund national-level deployments.'],
+                   ['#8AC5ED','globe','Regional growth','Expansion across the CEMAC region and all of Africa.']]
             as $inv)
             <div style="display:flex;gap:10px;padding:10px 12px;background:#0F172A;border-radius:8px;border:1px solid #1e293b;margin-bottom:6px">
                 <i data-lucide="{{ $inv[1] }}" style="width:12px;height:12px;color:{{ $inv[0] }};flex-shrink:0;margin-top:1px"></i>
@@ -433,7 +433,7 @@
         ? 'OPES Health Systems crée un écosystème de santé connecté permettant aux prestataires, institutions de santé publique, assureurs et gouvernements de délivrer de meilleurs soins grâce à une infrastructure numérique sécurisée, interopérable et intelligente.'
         : 'OPES Health Systems is creating a connected healthcare ecosystem enabling providers, public health institutions, insurers, and governments to deliver better healthcare through secure, interoperable, and intelligent digital infrastructure.' }}</p>
     <div style="margin-top:16px;font-size:var(--fs-xs);color:var(--text-faint)">
-        Jude Nshome · Founder & CEO · <a href="mailto:{{ config('company.email') }}" style="color:#00C896;text-decoration:none">{{ config('company.email') }}</a> · {{ config('company.phone') }}
+        Jude Nshome · Founder & CEO · <a href="mailto:{{ config('company.email') }}" style="color:var(--brand-accent);text-decoration:none">{{ config('company.email') }}</a> · {{ config('company.phone') }}
     </div>
     <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:16px">
         <a href="{{ url($locale.'/health-os') }}" class="btn-primary">

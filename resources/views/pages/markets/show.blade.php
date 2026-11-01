@@ -1,4 +1,4 @@
-@php $locale = app()->getLocale(); $isFr = $locale === 'fr'; $accent = $market['accent'] ?? '#00C896'; @endphp
+@php $locale = app()->getLocale(); $isFr = $locale === 'fr'; $accent = $market['accent'] ?? '#69D5F5'; @endphp
 
 <x-layouts.app
     title="{{ $market['name'] }} — {{ $isFr ? 'Logiciel de gestion hospitalière' : 'Hospital Management Software' }}"
@@ -52,7 +52,7 @@
             <p style="font-size:14px;line-height:1.8;color:var(--text-muted)">{{ $market['intro'][$locale] }}</p>
         </div>
         {{-- Local driver highlight --}}
-        <div style="background:linear-gradient(135deg,#0f1f2e,#0d1a14);border:1px solid {{ $accent }}33;border-radius:16px;padding:24px">
+        <div style="background:var(--surface);border:1px solid {{ $accent }}33;border-radius:16px;padding:24px">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
                 <div style="width:38px;height:38px;border-radius:10px;background:{{ $accent }}1f;display:flex;align-items:center;justify-content:center;flex-shrink:0">
                     <i data-lucide="{{ $market['driver']['icon'] }}" style="width:18px;height:18px;color:{{ $accent }}"></i>
@@ -134,12 +134,14 @@
         </div>
         @endforeach
     </div>
+    @if($relatedPost)
     <p style="font-size:var(--fs-xs);color:var(--text-faint);margin-top:14px">
         {{ $isFr
             ? 'Pour une analyse approfondie du système de santé, lisez notre article :'
             : 'For an in-depth look at the health system, read our article:' }}
         <a href="{{ url($locale.'/blog/'.$market['related_blog']) }}" style="color:{{ $accent }};text-decoration:none;font-weight:600">{{ $isFr ? 'Santé numérique — '.$market['name'] : 'Digital health — '.$market['name'] }} →</a>
     </p>
+    @endif
 </div>
 
 {{-- ── CTA ──────────────────────────────────────────────────────── --}}

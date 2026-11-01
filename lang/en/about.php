@@ -3,7 +3,7 @@
 return [
     // Meta
     'meta_title'         => 'About OPES Health Systems — Building Africa\'s Digital Health Infrastructure',
-    'meta_desc'          => 'OPES Health Systems is a Cameroon-based healthtech company with 22 integrated healthcare software systems for the CEMAC region. Learn our mission, vision and story.',
+    'meta_desc'          => 'OPES Health Systems is a Cameroon-based healthtech company with a healthcare software catalogue for the CEMAC region. Learn our mission, vision and story.',
 
     // Hero
     'hero_eyebrow'       => 'About OPES Health Systems',

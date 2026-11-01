@@ -21,7 +21,7 @@
     <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 mb-6">
         <div class="flex flex-col sm:flex-row gap-6 items-start">
             <div class="w-20 h-20 rounded-full flex-shrink-0 flex items-center justify-center text-3xl font-bold text-white"
-                 style="background:linear-gradient(135deg,#00C896,#1A6FE8)">
+                 style="background:var(--surface)">
                 {{ strtoupper(substr($profile->user?->name ?? '?', 0, 1)) }}
             </div>
             <div class="flex-1 min-w-0">
@@ -138,7 +138,7 @@
                             </p>
                             @if($finding->overall_rating)
                             <div class="flex items-center gap-1">
-                                <i data-lucide="star" style="width:12px;height:12px;color:#00C896"></i>
+                                <i data-lucide="star" style="width:12px;height:12px;color:var(--brand-accent)"></i>
                                 <span class="text-xs font-semibold text-emerald-400">{{ number_format($finding->overall_rating, 1) }}</span>
                             </div>
                             @endif
@@ -178,7 +178,7 @@
                     </div>
                     <div class="h-1.5 bg-slate-800 rounded-full overflow-hidden">
                         <div class="h-full rounded-full"
-                             style="width:{{ min(100, ($value / 5) * 100) }}%;background:linear-gradient(90deg,#00C896,#1A6FE8)">
+                             style="width:{{ min(100, ($value / 5) * 100) }}%;background:var(--surface)">
                         </div>
                     </div>
                 </div>

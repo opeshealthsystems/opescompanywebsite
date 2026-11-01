@@ -2,6 +2,7 @@
 <tr>
 <td class="header" style="background-color:#0f172a;padding:24px 0;text-align:center;">
 <a href="{{ $url }}" style="display:inline-block;color:#00C896;font-size:20px;font-weight:700;text-decoration:none;">
+<img src="{{ url('/images/opes-seal.png') }}" alt="OPES Health Systems seal" width="72" height="72" style="display:block;margin:0 auto 10px;object-fit:contain;">
 OPES Health Systems
 </a>
 </td>

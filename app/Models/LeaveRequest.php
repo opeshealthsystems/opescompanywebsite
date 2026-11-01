@@ -69,7 +69,7 @@ class LeaveRequest extends Model
     public function deductFromBalance(): void
     {
         // Prefer the stored total_days; fall back to date calculation
-        $days = (int) ($this->total_days > 0 ? $this->total_days : $this->getDurationInDays());
+        $days = (float) ($this->total_days > 0 ? $this->total_days : $this->getDurationInDays());
         if ($days <= 0) return;
 
         $userId = $this->user_id ?? null;

@@ -3,17 +3,17 @@
 return [
     // Hero
     'hero_eyebrow'       => 'Digital Health Infrastructure · Cameroon · CEMAC · Africa',
-    'hero_title_1'       => "Africa's Most Complete",
-    'hero_title_gradient'=> 'Healthcare Ecosystem',
-    'hero_tagline'       => '22 integrated software systems — from EMR to specialist clinics, laboratory, pharmacy, radiology, and a unified Health ID layer. Built bilingual for Cameroon and the entire CEMAC region.',
+    'hero_title_1'       => "Healthcare Software",
+    'hero_title_gradient'=> 'Engineered for Care Teams',
+    'hero_tagline'       => 'Explore our software catalogue — from EMR to specialist clinics, laboratory, pharmacy, radiology, and a unified Health ID layer. Built bilingual for Cameroon and the entire CEMAC region.',
     'cta_explore'        => 'Explore Our Products',
-    'cta_watch_demo'     => 'Watch a Demo',
+    'cta_watch_demo'     => 'Request a Demo',
 
     // Trust strip
     'trust_22'           => 'Software Systems',
     'trust_bilingual'    => 'Fully Bilingual',
-    'trust_cemac'        => 'Regional Coverage',
-    'trust_moh'          => 'MoH 2026–2030 Aligned',
+    'trust_cemac'        => 'Regional Focus',
+    'trust_moh'          => 'Designed in Cameroon',
 
     // Slide 2 — Company Overview
     's2_eyebrow'       => 'Company Overview',
@@ -35,7 +35,7 @@ return [
     // Slide 4 — OPES Care
     's4_eyebrow'       => 'OPES Care · Interoperability',
     's4_title'         => 'Connecting Healthcare',
-    's4_title_grad'    => 'Through OPES Care',
+    's4_title_grad'    => 'Through OPESCare',
     's4_sub'           => 'Secure patient identity, interoperability, and health information exchange for connected healthcare.',
     's4_support'       => 'OPES Care provides Health ID, Master Patient Index, Health Information Exchange, referral management, and interoperability services that enable facilities to securely exchange information.',
     's4_cta'           => 'Discover OPES Care',

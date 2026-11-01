@@ -4,7 +4,7 @@
 
 <div class="cs-wrap">
     <div class="cs-icon">
-        <i data-lucide="construction" style="width:32px;height:32px;color:#00C896"></i>
+        <i data-lucide="construction" style="width:32px;height:32px;color:var(--brand-accent)"></i>
     </div>
     <div class="section-label" style="justify-content:center;margin-bottom:16px">
         <i data-lucide="clock" style="width:11px;height:11px"></i>

@@ -1,0 +1,216 @@
+{
+    "checks": {
+        "wrong_secret": 401,
+        "token_issue": 200,
+        "catalogue": 200,
+        "own_identity": 200,
+        "unapproved_scope": 400,
+        "restricted_token": 200,
+        "scope_denied": 403,
+        "no_token": 401,
+        "malformed_token": 401,
+        "rotated_token_rejected": 401,
+        "old_secret_rejected": 401,
+        "rotated_credentials": 200,
+        "rotated_access": 200,
+        "revoked_token_rejected": 401,
+        "revoked_client_rejected": 401,
+        "disabled_user_grant": 400
+    },
+    "catalogueTotal": 23,
+    "expiresIn": 900,
+    "samples": [
+        {
+            "path": "\/oauth\/token",
+            "status": 401,
+            "body": {
+                "error": "invalid_client",
+                "error_description": "Client authentication failed"
+            },
+            "requestId": "fa238714-0a21-4c49-b9f0-e4b7d0e9d2be"
+        },
+        {
+            "path": "\/oauth\/token",
+            "status": 200,
+            "body": {
+                "token_type": "Bearer",
+                "expires_in": 900,
+                "access_token": "[REDACTED]"
+            },
+            "requestId": "5437d36e-c1aa-490d-ac7e-d88406287f8a"
+        },
+        {
+            "path": "\/catalogue\/products",
+            "status": 200,
+            "body": {
+                "data": [
+                    {
+                        "slug": "cardis",
+                        "name": "CARDIS",
+                        "category": "specialist",
+                        "url": "https:\/\/opeshealthsystems.com\/en\/products\/cardis"
+                    },
+                    {
+                        "slug": "dentis",
+                        "name": "DENTIS",
+                        "category": "specialist",
+                        "url": "https:\/\/opeshealthsystems.com\/en\/products\/dentis"
+                    }
+                ],
+                "meta": {
+                    "page": 1,
+                    "per_page": 2,
+                    "total": 23
+                }
+            },
+            "requestId": "e9651e09-8c3a-43f1-86a4-8fa8d5af4de0"
+        },
+        {
+            "path": "\/integration",
+            "status": 200,
+            "body": {
+                "data": {
+                    "client_id": "01a18e3b-b1f9-73ff-9643-a4d805de8ddd",
+                    "name": "[Technical test] OPES identity verification",
+                    "scopes": [
+                        "catalogue:read",
+                        "integration:read"
+                    ],
+                    "requests_today": 2
+                }
+            },
+            "requestId": "885cb0a0-f68c-4acf-9910-f42b4058bc98"
+        },
+        {
+            "path": "\/oauth\/token",
+            "status": 400,
+            "body": {
+                "error": "invalid_scope",
+                "error_description": "The requested scope is invalid, unknown, or malformed",
+                "hint": "Check the `catalogue:read` scope"
+            },
+            "requestId": "461ad3a4-ad47-4e11-9d78-5eab617f3ecc"
+        },
+        {
+            "path": "\/oauth\/token",
+            "status": 200,
+            "body": {
+                "token_type": "Bearer",
+                "expires_in": 900,
+                "access_token": "[REDACTED]"
+            },
+            "requestId": "ff237a9d-2c8b-4a4f-88f0-f2c4895c6444"
+        },
+        {
+            "path": "\/catalogue\/products",
+            "status": 403,
+            "body": {
+                "type": "about:blank",
+                "title": "Forbidden",
+                "status": 403,
+                "request_id": "5a9dee8f-f0b4-4a16-b8d3-c1063d78b7bd"
+            },
+            "requestId": "5a9dee8f-f0b4-4a16-b8d3-c1063d78b7bd"
+        },
+        {
+            "path": "\/integration",
+            "status": 401,
+            "body": {
+                "type": "about:blank",
+                "title": "Unauthorized",
+                "status": 401,
+                "request_id": "1383af06-5884-4fe7-b90f-7535678b6188"
+            },
+            "requestId": "1383af06-5884-4fe7-b90f-7535678b6188"
+        },
+        {
+            "path": "\/integration",
+            "status": 401,
+            "body": {
+                "type": "about:blank",
+                "title": "Unauthorized",
+                "status": 401,
+                "request_id": "b3028e3b-16d8-4092-816c-6e13a95974a1"
+            },
+            "requestId": "b3028e3b-16d8-4092-816c-6e13a95974a1"
+        },
+        {
+            "path": "\/integration",
+            "status": 401,
+            "body": {
+                "type": "about:blank",
+                "title": "Unauthorized",
+                "status": 401,
+                "request_id": "eedee570-dae6-4359-bc8e-818edc538fc4"
+            },
+            "requestId": "eedee570-dae6-4359-bc8e-818edc538fc4"
+        },
+        {
+            "path": "\/oauth\/token",
+            "status": 401,
+            "body": {
+                "error": "invalid_client",
+                "error_description": "Client authentication failed"
+            },
+            "requestId": "35f2069f-0cde-4937-94ac-253753cc41cc"
+        },
+        {
+            "path": "\/oauth\/token",
+            "status": 200,
+            "body": {
+                "token_type": "Bearer",
+                "expires_in": 900,
+                "access_token": "[REDACTED]"
+            },
+            "requestId": "09389b03-b365-41f4-964c-297f26443ebb"
+        },
+        {
+            "path": "\/integration",
+            "status": 200,
+            "body": {
+                "data": {
+                    "client_id": "01a18e3b-b1f9-73ff-9643-a4d805de8ddd",
+                    "name": "[Technical test] OPES identity verification",
+                    "scopes": [
+                        "integration:read"
+                    ],
+                    "requests_today": 3
+                }
+            },
+            "requestId": "e52562f3-67c6-48e2-a35a-88d555ffc4b1"
+        },
+        {
+            "path": "\/integration",
+            "status": 401,
+            "body": {
+                "type": "about:blank",
+                "title": "Unauthorized",
+                "status": 401,
+                "request_id": "e0a5023e-cf77-4044-8e8f-5f6efc9ace58"
+            },
+            "requestId": "e0a5023e-cf77-4044-8e8f-5f6efc9ace58"
+        },
+        {
+            "path": "\/oauth\/token",
+            "status": 401,
+            "body": {
+                "error": "invalid_client",
+                "error_description": "Client authentication failed"
+            },
+            "requestId": "2248b3a9-b1e3-44aa-954f-fc66a13b48a4"
+        },
+        {
+            "path": "\/oauth\/token",
+            "status": 400,
+            "body": {
+                "error": "unsupported_grant_type",
+                "error_description": "Only client_credentials is enabled."
+            },
+            "requestId": "9d0457b5-c125-4dc0-aef3-a1d442f1372e"
+        }
+    ],
+    "verificationClients": [
+        "01a18e3b-b1f9-73ff-9643-a4d805de8ddd",
+        "01a18e3b-b2cf-732e-9f67-b2c146a453f1"
+    ]
+}

@@ -7,12 +7,12 @@ $isFr   = $locale === 'fr';
                :description="$isFr ? 'Planifiez une démonstration personnalisée de nos logiciels de santé numérique.' : 'Schedule a personalised demo of our digital health software.'">
 
 <style>
-.demo-page-hero { background: linear-gradient(135deg, #080F1E 0%, #0d1a2e 100%); padding: 72px 48px 56px; text-align: center; border-bottom: 1px solid #1e293b; }
+.demo-page-hero { background: var(--surface); padding: 72px 48px 56px; text-align: center; border-bottom: 1px solid #1e293b; }
 .demo-page-hero h1 { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 800; color: #f1f5f9; margin-bottom: 14px; }
 .demo-page-hero p  { color: var(--text-muted); font-size: 1.05rem; max-width: 560px; margin: 0 auto 28px; line-height: 1.7; }
 .demo-steps { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-top: 8px; }
 .demo-step  { display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 0.82rem; }
-.demo-step-num { width: 22px; height: 22px; border-radius: 50%; background: #00C896; color: #0f172a; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.demo-step-num { width: 22px; height: 22px; border-radius: 50%; background: #69D5F5; color: #0f172a; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
 .demo-layout  { max-width: 900px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 340px; gap: 40px; align-items: start; }
 .demo-form-card { background: #080e1a; border: 1px solid #1e293b; border-radius: 16px; padding: 36px; }
@@ -27,17 +27,17 @@ $isFr   = $locale === 'fr';
     padding: 10px 14px; color: #e2e8f0; font-size: 0.88rem; font-family: inherit; width: 100%;
     transition: border-color .2s;
 }
-.df-group input:focus, .df-group select:focus, .df-group textarea:focus { outline: none; border-color: #00C896; }
+.df-group input:focus, .df-group select:focus, .df-group textarea:focus { outline: none; border-color: #69D5F5; }
 .df-group select option { background: #0f172a; }
 .df-group textarea { min-height: 90px; resize: vertical; }
 
 /* product checkboxes */
 .prod-checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .prod-cb-label { display: flex; align-items: center; gap: 8px; background: #0f172a; border: 1px solid #1e293b; border-radius: 8px; padding: 9px 12px; cursor: pointer; font-size: 0.82rem; color: var(--text-muted); transition: all .2s; }
-.prod-cb-label:has(input:checked) { border-color: #00C896; color: #e2e8f0; background: #00C89610; }
-.prod-cb-label input[type=checkbox] { accent-color: #00C896; }
+.prod-cb-label:has(input:checked) { border-color: #69D5F5; color: #e2e8f0; background: #69D5F510; }
+.prod-cb-label input[type=checkbox] { accent-color: #69D5F5; }
 
-.df-submit { background: #00C896; color: #0f172a; border: none; border-radius: 9px; padding: 13px 32px; font-size: 0.92rem; font-weight: 700; cursor: pointer; width: 100%; transition: background .2s; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; }
+.df-submit { background: #69D5F5; color: #0f172a; border: none; border-radius: 9px; padding: 13px 32px; font-size: 0.92rem; font-weight: 700; cursor: pointer; width: 100%; transition: background .2s; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; }
 .df-submit:hover { background: #00b386; }
 
 /* sidebar */
@@ -45,13 +45,13 @@ $isFr   = $locale === 'fr';
 .demo-info-card { background: #080e1a; border: 1px solid #1e293b; border-radius: 14px; padding: 24px; }
 .demo-info-card h3 { font-size: 0.9rem; font-weight: 700; color: #f1f5f9; margin-bottom: 16px; }
 .demo-info-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
-.demo-info-row svg { flex-shrink: 0; margin-top: 1px; color: #00C896; }
-.demo-testimonial { background: linear-gradient(135deg, #00C89612, #1A6FE808); border: 1px solid #00C89630; border-radius: 14px; padding: 20px; }
+.demo-info-row svg { flex-shrink: 0; margin-top: 1px; color: var(--brand-accent); }
+.demo-testimonial { background: var(--surface); border: 1px solid #69D5F530; border-radius: 14px; padding: 20px; }
 .demo-testimonial blockquote { font-size: 0.82rem; color: var(--text-muted); font-style: italic; line-height: 1.65; margin-bottom: 12px; }
 .demo-testimonial cite { font-size: 0.75rem; color: var(--text-muted); font-style: normal; }
 
-.df-success { background: #00C89614; border: 1px solid #00C89640; border-radius: 10px; padding: 28px; text-align: center; }
-.df-success h3 { color: #00C896; font-size: 1.2rem; margin-bottom: 10px; }
+.df-success { background: #69D5F514; border: 1px solid #69D5F540; border-radius: 10px; padding: 28px; text-align: center; }
+.df-success h3 { color: var(--brand-accent); font-size: 1.2rem; margin-bottom: 10px; }
 .df-success p  { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; }
 
 @media (max-width: 768px) {
@@ -64,7 +64,7 @@ $isFr   = $locale === 'fr';
 
 <div class="demo-page-hero">
     <div class="section-label" style="justify-content:center;margin-bottom:16px">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#00C896" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#69D5F5" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         {{ $isFr ? 'Planifier une démo' : 'Schedule a Demo' }}
     </div>
     <h1>{{ $isFr ? 'Voyez OPES en action' : 'See OPES in Action' }}</h1>
@@ -82,13 +82,13 @@ $isFr   = $locale === 'fr';
 
     <div class="demo-form-card">
         <h2>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00C896" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#69D5F5" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             {{ $isFr ? 'Demande de démonstration' : 'Demo Request' }}
         </h2>
 
         @if(session('success'))
         <div class="df-success">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#00C896" stroke-width="2" style="margin:0 auto 14px;display:block"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#69D5F5" stroke-width="2" style="margin:0 auto 14px;display:block"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
             <h3>{{ $isFr ? 'Demande reçue !' : 'Request received!' }}</h3>
             <p>{{ $isFr ? 'Merci ! Notre équipe vous contactera dans les 24 heures ouvrées pour planifier votre démonstration personnalisée.' : 'Thank you! Our team will contact you within 24 business hours to schedule your personalised demo.' }}</p>
         </div>
@@ -127,7 +127,7 @@ $isFr   = $locale === 'fr';
                 <div class="df-row">
                     <div class="df-group">
                         <label>{{ $isFr ? 'Type d\'établissement' : 'Institution type' }}</label>
-                        <select name="institution_type">
+                        <select name="institution_type" aria-label="{{ $isFr ? 'Type d’établissement' : 'Institution type' }}">
                             <option value="">{{ $isFr ? 'Sélectionner...' : 'Select...' }}</option>
                             @foreach(\App\Models\DemoRequest::$institutionTypes as $val => $labels)
                             <option value="{{ $val }}" {{ old('institution_type') === $val ? 'selected' : '' }}>
@@ -138,7 +138,7 @@ $isFr   = $locale === 'fr';
                     </div>
                     <div class="df-group">
                         <label>{{ $isFr ? 'Taille (personnel)' : 'Size (staff)' }}</label>
-                        <select name="institution_size">
+                        <select name="institution_size" aria-label="{{ $isFr ? 'Taille du personnel' : 'Staff size' }}">
                             <option value="">{{ $isFr ? 'Sélectionner...' : 'Select...' }}</option>
                             @foreach(\App\Models\DemoRequest::$sizes as $s)
                             <option value="{{ $s }}" {{ old('institution_size') === $s ? 'selected' : '' }}>{{ $s }} {{ $isFr ? 'personnes' : 'people' }}</option>
@@ -155,9 +155,10 @@ $isFr   = $locale === 'fr';
             <div class="df-section">
                 <div class="df-section-label">{{ $isFr ? 'Produits d\'intérêt' : 'Products of interest' }}</div>
                 <div class="prod-checkbox-grid">
-                    @foreach(['OPESCare (Health ID)', 'OPES EMR', 'OPES Hospital HIS', 'OPES Triage', 'OPES Lab (LABIS)', 'PHARMIS', 'OPES Intelligence', 'Autre / Other'] as $prod)
+                    @foreach($products as $listedProduct)
+                    @php $prod = $listedProduct->name; @endphp
                     <label class="prod-cb-label">
-                        <input type="checkbox" name="products[]" value="{{ $prod }}" {{ in_array($prod, old('products', [])) ? 'checked' : '' }}>
+                        <input type="checkbox" name="products[]" value="{{ $prod }}" {{ in_array($prod, old('products', request('product') === 'opes-drugtrace' ? ['OPES DrugTrace'] : [])) ? 'checked' : '' }}>
                         {{ $prod }}
                     </label>
                     @endforeach
@@ -168,7 +169,7 @@ $isFr   = $locale === 'fr';
                 <div class="df-section-label">{{ $isFr ? 'Planification' : 'Scheduling' }}</div>
                 <div class="df-group">
                     <label>{{ $isFr ? 'Date souhaitée (facultatif)' : 'Preferred date (optional)' }}</label>
-                    <input type="date" name="preferred_date" value="{{ old('preferred_date') }}" min="{{ date('Y-m-d', strtotime('+1 day')) }}">
+                    <input type="date" name="preferred_date" aria-label="{{ $isFr ? 'Date souhaitée' : 'Preferred date' }}" value="{{ old('preferred_date') }}" min="{{ date('Y-m-d', strtotime('+1 day')) }}">
                 </div>
                 <div class="df-group">
                     <label>{{ $isFr ? 'Message ou questions' : 'Message or questions' }}</label>
@@ -225,10 +226,7 @@ $isFr   = $locale === 'fr';
             </div>
         </div>
 
-        <div class="demo-testimonial">
-            <blockquote>"{{ $isFr ? 'La démo OPES nous a convaincus en 45 minutes. Leur expertise du contexte africain est impressionnante.' : 'The OPES demo convinced us in 45 minutes. Their understanding of the African healthcare context is impressive.' }}"</blockquote>
-            <cite>— {{ $isFr ? 'Directeur médical, Hôpital privé, Douala' : 'Medical Director, Private Hospital, Douala' }}</cite>
-        </div>
+
     </div>
 
 </div>

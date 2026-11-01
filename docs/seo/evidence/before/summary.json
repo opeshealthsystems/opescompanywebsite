@@ -1,0 +1,64 @@
+{
+  "crawled": 134,
+  "broken": [
+    {
+      "url": "https://opeshealthsystems.com/en/practitioners/register",
+      "status": 404
+    },
+    {
+      "url": "https://opeshealthsystems.com/en/blog/68-gabon-health-information-system-digital-transformation",
+      "status": 404
+    },
+    {
+      "url": "https://opeshealthsystems.com/en/blog/67-healthcare-digitization-republic-of-congo-brazzaville",
+      "status": 404
+    },
+    {
+      "url": "https://opeshealthsystems.com/en/blog/66-digital-health-chad-hospital-management-system",
+      "status": 404
+    },
+    {
+      "url": "https://opeshealthsystems.com/en/blog/69-central-african-republic-health-technology-challenges",
+      "status": 404
+    },
+    {
+      "url": "https://opeshealthsystems.com/en/blog/70-equatorial-guinea-digital-health-hospital-management",
+      "status": 404
+    },
+    {
+      "url": "https://opeshealthsystems.com/en/login",
+      "status": 404
+    },
+    {
+      "url": "https://opeshealthsystems.com/fr/blog/68-gabon-health-information-system-digital-transformation",
+      "status": 404
+    },
+    {
+      "url": "https://opeshealthsystems.com/fr/blog/67-healthcare-digitization-republic-of-congo-brazzaville",
+      "status": 404
+    },
+    {
+      "url": "https://opeshealthsystems.com/fr/blog/66-digital-health-chad-hospital-management-system",
+      "status": 404
+    },
+    {
+      "url": "https://opeshealthsystems.com/fr/blog/69-central-african-republic-health-technology-challenges",
+      "status": 404
+    },
+    {
+      "url": "https://opeshealthsystems.com/fr/blog/70-equatorial-guinea-digital-health-hospital-management",
+      "status": 404
+    },
+    {
+      "url": "https://opeshealthsystems.com/fr/practitioners/register",
+      "status": 404
+    },
+    {
+      "url": "https://opeshealthsystems.com/fr/login",
+      "status": 404
+    }
+  ],
+  "duplicateTitleGroups": 29,
+  "duplicateDescriptionGroups": 28,
+  "invalidSchemas": 0
+}

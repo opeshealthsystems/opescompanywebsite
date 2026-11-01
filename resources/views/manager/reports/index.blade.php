@@ -14,7 +14,7 @@
 {{-- Leave by Month --}}
 <div class="cp-section-card" style="margin-bottom:1.5rem">
     <div class="cp-section-header">
-        <h2 class="cp-section-title"><i data-lucide="calendar" style="width:17px;height:17px;color:#1A6FE8"></i> Leave Utilisation by Month</h2>
+        <h2 class="cp-section-title"><i data-lucide="calendar" style="width:17px;height:17px;color:var(--brand-accent)"></i> Leave Utilisation by Month</h2>
     </div>
     @if($leaveByMonth->isNotEmpty())
     <div style="overflow-x:auto">
@@ -65,7 +65,7 @@
 {{-- Leave by Employee --}}
 <div class="cp-section-card">
     <div class="cp-section-header">
-        <h2 class="cp-section-title"><i data-lucide="users" style="width:17px;height:17px;color:#1A6FE8"></i> Leave by Employee</h2>
+        <h2 class="cp-section-title"><i data-lucide="users" style="width:17px;height:17px;color:var(--brand-accent)"></i> Leave by Employee</h2>
     </div>
     @if($leaveByEmployee->isNotEmpty())
     <table class="portal-table">

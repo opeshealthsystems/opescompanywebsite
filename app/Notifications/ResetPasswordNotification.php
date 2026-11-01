@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ResetPasswordNotification extends Notification implements ShouldQueue
+class ResetPasswordNotification extends Notification
 {
     use Queueable;
 
@@ -20,7 +20,7 @@ class ResetPasswordNotification extends Notification implements ShouldQueue
 
     public function toMail(object $notifiable): MailMessage
     {
-        $url = route('password.reset.form', ['locale' => 'en', 'token' => $this->token])
+        $url = route('password.reset.form', ['token' => $this->token])
             . '?email=' . urlencode($notifiable->getEmailForPasswordReset());
 
         return (new MailMessage)

@@ -1,0 +1,34 @@
+/* OPES seal palette. Cyan is an accent; blue is the white-label action surface. */
+:root {
+    --bg: #081B30;
+    --surface: #102A43;
+    --surface-2: #16354F;
+    --border: #385671;
+    --text: #F1F5F9;
+    --text-2: #CBD5E1;
+    --text-muted: #A7B8CC;
+    --text-faint: #9DB1C7;
+    --brand-navy: #073656;
+    --brand-blue: #1664D4;
+    --brand-action: #1664D4;
+    --brand-action-hover: #104784;
+    --brand-accent: #69D5F5;
+    --brand-link: #9ACBFF;
+    --brand-icon: #8AC5ED;
+    --control-border: #7890AA;
+    --focus-ring: #A9D8FF;
+    --status-success: #86D9B3;
+    --status-warning: #F5D08A;
+    --status-danger: #FFB4AB;
+    --light-bg: #F3F6FA;
+    --light-surface: #FFFFFF;
+    --light-text: #102A43;
+    --light-muted: #425A70;
+    /* Compatibility names keep existing components on the same brand palette. */
+    --green: var(--brand-accent);
+    --blue: var(--brand-link);
+    --purple: var(--brand-icon);
+    --fs-2xs: 12px;
+    --fs-xs: 13px;
+    --fs-sm: 14px;
+}

@@ -1,12 +1,15 @@
 @php
 $locale = app()->getLocale();
-$color  = $product['color'];
+$color  = strcasecmp($product['color'], '#8AC5ED') === 0 ? '#87baff' : $product['color'];
 $isCore = $product['category'] === 'Core Platform';
 $isDiag = $product['category'] === 'Diagnostics';
 $accentBg = $isCore ? 'rgba(0,200,150,0.1)' : ($isDiag ? 'rgba(26,111,232,0.1)' : 'rgba(255,255,255,0.06)');
 @endphp
 
-<x-layouts.app :title="$product['name'] . ' — OPES Health Systems'" :description="$product['description'] ?? null">
+<x-layouts.app :title="$product['name'].($locale === 'fr' ? ' — Présentation du logiciel' : ' — Software overview')" :description="($locale === 'fr' ? 'Découvrez ' : 'Explore ').$product['name'].($locale === 'fr' ? ', logiciel de santé OPES. Contactez notre équipe pour confirmer les fonctionnalités, intégrations et disponibilités.' : ', healthcare software from OPES. Contact our team to confirm features, integrations and availability.')">
+<div class="section" style="padding-top:16px;padding-bottom:0">
+    <p class="brand-notice">{{ $locale === 'fr' ? 'Présentation du produit. Contactez OPES pour confirmer les fonctionnalités disponibles, les intégrations, les conditions de service et les exigences de confidentialité de votre projet.' : 'Product overview. Contact OPES to confirm available features, integrations, service terms and privacy requirements for your project.' }}</p>
+</div>
 
 {{-- ── BREADCRUMB ──────────────────────────────────────────────── --}}
 <div class="pd-breadcrumb">
@@ -54,11 +57,11 @@ $accentBg = $isCore ? 'rgba(0,200,150,0.1)' : ($isDiag ? 'rgba(26,111,232,0.1)' 
             </div>
             @endforeach
             <div class="pd-stat-row" style="border-top:1px solid rgba(255,255,255,0.07);margin-top:8px;padding-top:12px">
-                <div class="pd-stat-val" style="color:#00C896">EN/FR</div>
+                <div class="pd-stat-val" style="color:var(--brand-accent)">EN/FR</div>
                 <div class="pd-stat-label">{{ __('products.stats_bilingual') }}</div>
             </div>
             <div class="pd-stat-row">
-                <div class="pd-stat-val" style="color:#1A6FE8">HL7 FHIR</div>
+                <div class="pd-stat-val" style="color:var(--brand-accent)">HL7 FHIR</div>
                 <div class="pd-stat-label">{{ __('products.stats_fhir') }}</div>
             </div>
         </div>
@@ -172,7 +175,7 @@ $accentBg = $isCore ? 'rgba(0,200,150,0.1)' : ($isDiag ? 'rgba(26,111,232,0.1)' 
             <div class="pd-wf-desc">{{ $step['desc'] }}</div>
         </div>
         @if($i < count($product['workflow'])-1)
-        <div class="pd-wf-arrow" style="background:linear-gradient(to right,{{ $color }},{{ $isDiag ? '#00C896' : '#1A6FE8' }})"></div>
+        <div class="pd-wf-arrow" style="background:var(--surface-2)"></div>
         @endif
         @endforeach
     </div>
@@ -300,10 +303,12 @@ foreach($product['integrations'] as $slug) {
     <p>{{ __('products.show_demo_body', ['name' => $product['name']]) }}</p>
     <form action="{{ url($locale.'/contact') }}" method="POST" class="demo-form">
         @csrf
-        <input type="hidden" name="product" value="{{ $product['slug'] }}">
-        <input class="demo-input" type="text" name="name" placeholder="{{ __('products.demo_name') }}">
-        <input class="demo-input" type="email" name="email" placeholder="{{ __('products.demo_email') }}">
-        <select class="demo-select" name="facility_type">
+        @if(session('success'))<p role="status">{{ session('success') }}</p>@endif
+        @if($errors->any())<div role="alert">@foreach($errors->all() as $error)<p>{{ $error }}</p>@endforeach</div>@endif
+        <input type="hidden" name="product_slug" value="{{ $product['slug'] }}">
+        <input aria-label="{{ __('products.demo_name') }}" autocomplete="name" class="demo-input" type="text" name="name" required maxlength="100" placeholder="{{ __('products.demo_name') }}">
+        <input aria-label="{{ __('products.demo_email') }}" autocomplete="email" class="demo-input" type="email" name="email" required maxlength="150" placeholder="{{ __('products.demo_email') }}">
+        <select aria-label="{{ __('home.demo_facility') }}" class="demo-select" name="facility_type">
             <option value="">{{ __('products.demo_facility') }}</option>
             @foreach(config('facility_types') as $value => $labels)
             <option value="{{ $value }}">{{ $labels[app()->getLocale()] ?? $labels['en'] }}</option>

@@ -3,11 +3,9 @@
 namespace App\Filament\Resources\InvoiceResource\Pages;
 
 use App\Filament\Resources\InvoiceResource;
-use App\Mail\InvoiceIssued;
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
-use Illuminate\Support\Facades\Mail;
 
 class ViewInvoice extends ViewRecord
 {
@@ -25,18 +23,10 @@ class ViewInvoice extends ViewRecord
                 ->visible(fn () => $this->record->status === 'draft')
                 ->authorize(fn () => InvoiceResource::canAccess())
                 ->action(function () {
-                    $this->record->update(['status' => 'sent']);
-                    $customerEmail = $this->record->customer?->email;
-                    if ($customerEmail) {
-                        Mail::to($customerEmail)->queue(new InvoiceIssued($this->record->load('items')));
-                        $this->record->customer?->notify(new \App\Notifications\FeedEntry(
-                            'accounting.invoice_issued',
-                            'Invoice issued',
-                            'Invoice ' . $this->record->invoice_number . ' is ready to view.',
-                            'document-text',
-                            route('customer.invoices.show', ['locale' => 'en', 'id' => $this->record->id]),
-                        ));
-                    }
+                    app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+                        'admin.finance.invoices.markSent',
+                        new \App\Contexts\Shared\Application\WorkflowInput([], ['invoice' => $this->record], auth()->user(), app()->getLocale()),
+                    );
                     Notification::make()->title('Invoice sent to customer.')->success()->send();
                     $this->refreshFormData(['status']);
                 }),
@@ -48,7 +38,10 @@ class ViewInvoice extends ViewRecord
                 ->visible(fn () => in_array($this->record->status, ['sent', 'overdue']))
                 ->authorize(fn () => InvoiceResource::canAccess())
                 ->action(function () {
-                    $this->record->update(['status' => 'paid', 'paid_at' => now()]);
+                    app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+                        'admin.finance.invoices.markPaid',
+                        new \App\Contexts\Shared\Application\WorkflowInput([], ['invoice' => $this->record], auth()->user(), app()->getLocale()),
+                    );
                     Notification::make()->title('Invoice marked as paid.')->success()->send();
                     $this->refreshFormData(['status']);
                 }),
@@ -60,7 +53,10 @@ class ViewInvoice extends ViewRecord
                 ->visible(fn () => $this->record->status === 'sent')
                 ->authorize(fn () => InvoiceResource::canAccess())
                 ->action(function () {
-                    $this->record->update(['status' => 'overdue']);
+                    app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+                        'admin.finance.invoices.markOverdue',
+                        new \App\Contexts\Shared\Application\WorkflowInput([], ['invoice' => $this->record], auth()->user(), app()->getLocale()),
+                    );
                     Notification::make()->title('Invoice marked as overdue.')->warning()->send();
                     $this->refreshFormData(['status']);
                 }),

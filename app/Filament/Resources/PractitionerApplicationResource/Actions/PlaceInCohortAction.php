@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\PractitionerApplicationResource\Actions;
 
 use App\Models\Cohort;
-use App\Models\CohortMember;
 use App\Models\PractitionerApplication;
 use Filament\Forms;
 use Filament\Notifications\Notification;
@@ -33,15 +32,9 @@ class PlaceInCohortAction
                             ->pluck('name', 'id')),
             ])
             ->action(function (PractitionerApplication $record, array $data): void {
-                CohortMember::create([
-                    'cohort_id' => $data['cohort_id'],
-                    'user_id'   => $record->practitioner_id,
-                    'status'    => 'active',
-                    'placed_at' => now(),
-                ]);
-
-                $record->practitioner?->notify(
-                    new \App\Notifications\PlacedInCohort(Cohort::find($data['cohort_id']))
+                app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+                    'admin.practitioners.applications.placeInCohort',
+                    new \App\Contexts\Shared\Application\WorkflowInput($data, ['application' => $record], auth()->user(), app()->getLocale()),
                 );
 
                 Notification::make()->title('Practitioner placed in cohort.')->success()->send();

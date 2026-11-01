@@ -19,7 +19,7 @@
     {{-- MISSION --}}
     <div class="about-card" style="border-color:rgba(0,200,150,0.2)">
         <div class="about-card-icon" style="background:rgba(0,200,150,0.08)">
-            <i data-lucide="target" style="width:22px;height:22px;color:#00C896"></i>
+            <i data-lucide="target" style="width:22px;height:22px;color:var(--brand-accent)"></i>
         </div>
         <h3>{{ __('about.mission_title') }}</h3>
         <p>{{ __('about.mission_body') }}</p>
@@ -27,7 +27,7 @@
 
     <div class="about-card" style="border-color:rgba(26,111,232,0.2)">
         <div class="about-card-icon" style="background:rgba(26,111,232,0.08)">
-            <i data-lucide="eye" style="width:22px;height:22px;color:#1A6FE8"></i>
+            <i data-lucide="eye" style="width:22px;height:22px;color:var(--brand-accent)"></i>
         </div>
         <h3>{{ __('about.vision_title') }}</h3>
         <p>{{ __('about.vision_body') }}</p>
@@ -64,16 +64,16 @@
     <p style="color:var(--text-muted);max-width:680px;margin:12px auto 0;font-size:15px;line-height:1.75">{{ __('about.platform_desc') }}</p>
     <div class="platform-cat-grid">
         @foreach([
-            ['icon'=>'file-text',    'color'=>'#00C896', 'label'=>__('about.platform_cat_0')],
-            ['icon'=>'building-2',   'color'=>'#1A6FE8', 'label'=>__('about.platform_cat_1')],
-            ['icon'=>'flask-conical','color'=>'#00C896', 'label'=>__('about.platform_cat_2')],
-            ['icon'=>'pill',         'color'=>'#1A6FE8', 'label'=>__('about.platform_cat_3')],
-            ['icon'=>'stethoscope',  'color'=>'#00C896', 'label'=>__('about.platform_cat_4')],
-            ['icon'=>'share-2',      'color'=>'#1A6FE8', 'label'=>__('about.platform_cat_5')],
-            ['icon'=>'brain',        'color'=>'#00C896', 'label'=>__('about.platform_cat_6')],
-            ['icon'=>'zap',          'color'=>'#1A6FE8', 'label'=>__('about.platform_cat_7')],
-            ['icon'=>'badge',        'color'=>'#00C896', 'label'=>__('about.platform_cat_8')],
-            ['icon'=>'bar-chart-2',  'color'=>'#1A6FE8', 'label'=>__('about.platform_cat_9')],
+            ['icon'=>'file-text',    'color'=>'#69D5F5', 'label'=>__('about.platform_cat_0')],
+            ['icon'=>'building-2',   'color'=>'#8AC5ED', 'label'=>__('about.platform_cat_1')],
+            ['icon'=>'flask-conical','color'=>'#69D5F5', 'label'=>__('about.platform_cat_2')],
+            ['icon'=>'pill',         'color'=>'#8AC5ED', 'label'=>__('about.platform_cat_3')],
+            ['icon'=>'stethoscope',  'color'=>'#69D5F5', 'label'=>__('about.platform_cat_4')],
+            ['icon'=>'share-2',      'color'=>'#8AC5ED', 'label'=>__('about.platform_cat_5')],
+            ['icon'=>'brain',        'color'=>'#69D5F5', 'label'=>__('about.platform_cat_6')],
+            ['icon'=>'zap',          'color'=>'#8AC5ED', 'label'=>__('about.platform_cat_7')],
+            ['icon'=>'badge',        'color'=>'#69D5F5', 'label'=>__('about.platform_cat_8')],
+            ['icon'=>'bar-chart-2',  'color'=>'#8AC5ED', 'label'=>__('about.platform_cat_9')],
         ] as $cat)
         <div class="platform-cat-item">
             <div class="platform-cat-icon" style="background:{{ $cat['color'] }}1a">
@@ -112,7 +112,7 @@
     </div>
     <div class="stats-bar" style="max-width:900px;margin:0 auto">
         @foreach([
-            ['value'=>'22','label'=>__('about.stat_0_label')],
+            ['value'=>\App\Models\Product::publicCatalogue()->count(),'label'=>__('about.stat_0_label')],
             ['value'=>'EN/FR','label'=>__('about.stat_1_label')],
             ['value'=>'CEMAC','label'=>__('about.stat_2_label')],
             ['value'=>'HL7 FHIR','label'=>__('about.stat_3_label')],
@@ -155,59 +155,26 @@
 
 <div class="divider"></div>
 
-{{-- GOVERNANCE --}}
-<div class="section" style="max-width:960px;margin:0 auto">
-    <div class="section-label" style="margin-bottom:16px">
-        <i data-lucide="shield-check" style="width:12px;height:12px"></i>
-        {{ $isFr ? 'Gouvernance' : 'Governance' }}
-    </div>
-    <h2 class="section-title">{{ $isFr ? 'Gouvernance d\'entreprise et modèle opérationnel' : 'Corporate governance and operating model' }}</h2>
-    <p style="color:var(--text-muted);max-width:720px;font-size:15px;line-height:1.75;margin-bottom:36px">
-        {{ $isFr
-            ? 'OPES Health Systems opère selon un modèle de gouvernance rigoureux qui aligne nos décisions produit sur les besoins cliniques réels, la conformité réglementaire, et la durabilité de nos clients. Notre architecture de gouvernance comprend des comités techniques, cliniques et éthiques qui supervisent chaque évolution de la plateforme.'
-            : 'OPES Health Systems operates under a rigorous governance model that aligns our product decisions with real clinical needs, regulatory compliance, and the sustainability of our clients. Our governance architecture includes technical, clinical, and ethics committees that oversee every evolution of the platform.' }}
-    </p>
-    <div class="pi-grid" style="max-width:960px">
-        @php
-        $govItems = $isFr ? [
-            ['icon'=>'building-2',   'color'=>'#00C896','title'=>'Conseil de direction',        'desc'=>'Supervision stratégique de l\'entreprise, définition des orientations à long terme et des priorités d\'investissement.'],
-            ['icon'=>'users',        'color'=>'#1A6FE8','title'=>'Comité technique & produit',   'desc'=>'Gouvernance de la roadmap technologique, validation des architectures, gestion des dépendances et des risques techniques.'],
-            ['icon'=>'heart',        'color'=>'#00C896','title'=>'Comité de gouvernance clinique','desc'=>'Révision des modules cliniques par des praticiens de santé africains pour garantir la pertinence médicale de chaque fonctionnalité.'],
-            ['icon'=>'scale',        'color'=>'#1A6FE8','title'=>'Comité conformité & éthique',  'desc'=>'Supervision de la conformité OHADA, droit camerounais des données de santé, GDPR-alignement, et éthique de l\'IA clinique.'],
-            ['icon'=>'bar-chart-2',  'color'=>'#00C896','title'=>'Gestion des risques',           'desc'=>'Identification, évaluation et atténuation des risques opérationnels, financiers, et de continuité de service pour nos clients.'],
-            ['icon'=>'refresh-cw',   'color'=>'#1A6FE8','title'=>'Cycle de révision produit',    'desc'=>'Révisions trimestrielles des performances produit intégrant les retours clients, les incidents et les évolutions réglementaires.'],
-        ] : [
-            ['icon'=>'building-2',   'color'=>'#00C896','title'=>'Board of Directors',           'desc'=>'Strategic oversight of the company, setting long-term direction and investment priorities.'],
-            ['icon'=>'users',        'color'=>'#1A6FE8','title'=>'Technical & Product Committee', 'desc'=>'Governance of the technology roadmap, architecture validation, dependency management, and technical risk.'],
-            ['icon'=>'heart',        'color'=>'#00C896','title'=>'Clinical Governance Committee', 'desc'=>'Review of clinical modules by African health practitioners to ensure the medical relevance of every feature.'],
-            ['icon'=>'scale',        'color'=>'#1A6FE8','title'=>'Compliance & Ethics Committee', 'desc'=>'Supervision of OHADA compliance, Cameroonian health data law, GDPR-alignment, and clinical AI ethics.'],
-            ['icon'=>'bar-chart-2',  'color'=>'#00C896','title'=>'Risk Management',               'desc'=>'Identification, assessment, and mitigation of operational, financial, and service continuity risks for our clients.'],
-            ['icon'=>'refresh-cw',   'color'=>'#1A6FE8','title'=>'Product Review Cycle',         'desc'=>'Quarterly product performance reviews integrating customer feedback, incidents, and regulatory developments.'],
-        ];
-        @endphp
-        @foreach($govItems as $g)
-        <div class="pi-card" style="flex-direction:column;align-items:flex-start">
-            <div style="width:40px;height:40px;border-radius:10px;background:{{ $g['color'] }}15;display:flex;align-items:center;justify-content:center;margin-bottom:12px">
-                <i data-lucide="{{ $g['icon'] }}" style="width:18px;height:18px;color:{{ $g['color'] }}"></i>
-            </div>
-            <div style="font-weight:700;color:#e2e8f0;font-size:14px;margin-bottom:6px">{{ $g['title'] }}</div>
-            <div style="font-size:13px;color:var(--text-muted);line-height:1.6">{{ $g['desc'] }}</div>
-        </div>
-        @endforeach
-    </div>
-</div>
-
-<div class="divider"></div>
+<section class="section" style="max-width:960px;margin:auto">
+    <img src="{{ asset('images/opes-seal.png') }}" alt="OPES Health Systems seal" width="160" height="160" style="object-fit:contain;margin-bottom:24px">
+    <h2 class="section-title">{{ $isFr ? 'Une démarche d’ingénierie centrée sur les équipes de soins' : 'An engineering approach centred on care teams' }}</h2>
+    <p>{{ $isFr ? 'OPES Health Systems développe des logiciels de santé au Cameroun. Notre catalogue distingue les outils de travail clinique, les services de diagnostic et la sécurité du médicament. Un projet doit commencer par les processus de votre établissement, ses contraintes et des critères de réception mesurables.' : 'OPES Health Systems develops healthcare software in Cameroon. Our catalogue distinguishes clinical workflow tools, diagnostic systems and medicine safety. A project should begin with your facility’s workflows, constraints and measurable acceptance criteria.' }}</p>
+    <h3>{{ $isFr ? 'Évaluer une solution' : 'Evaluate a solution' }}</h3>
+    <p>{{ $isFr ? 'Demandez une démonstration des processus pertinents, le périmètre de la version proposée, les interfaces et les résultats de tests disponibles. Confirmez la formation, les responsabilités, l’hébergement et le support avant un déploiement.' : 'Request a demonstration of the relevant workflows, the offered version’s scope, interfaces and available test results. Confirm training, responsibilities, hosting and support before deployment.' }}</p>
+    <h3>{{ $isFr ? 'Échanger avec notre équipe' : 'Talk with our team' }}</h3>
+    <p>{{ $isFr ? 'Contactez OPES pour identifier le responsable produit ou projet approprié et demander des références dont la publication est autorisée. Ce site ne présente pas de déploiement clinique comme vérifié sans éléments de preuve.' : 'Contact OPES to identify the appropriate product or project lead and request references approved for disclosure. This site does not present a clinical deployment as verified without supporting evidence.' }}</p>
+    <a class="btn-primary" href="{{ route('contact') }}">{{ $isFr ? 'Contacter OPES' : 'Contact OPES' }}</a>
+</section>
 
 {{-- VALUES --}}
 <div class="section" style="text-align:center">
     <h2 class="section-title">{{ __('about.values_title') }}</h2>
     <div class="pi-grid" style="max-width:900px;margin:32px auto 0">
         @foreach([
-            ['icon'=>'heart','color'=>'#00C896','title'=>__('about.value_0_title'),'desc'=>__('about.value_0_desc')],
-            ['icon'=>'shield-check','color'=>'#1A6FE8','title'=>__('about.value_1_title'),'desc'=>__('about.value_1_desc')],
-            ['icon'=>'globe-2','color'=>'#00C896','title'=>__('about.value_2_title'),'desc'=>__('about.value_2_desc')],
-            ['icon'=>'handshake','color'=>'#1A6FE8','title'=>__('about.value_3_title'),'desc'=>__('about.value_3_desc')],
+            ['icon'=>'heart','color'=>'#69D5F5','title'=>__('about.value_0_title'),'desc'=>__('about.value_0_desc')],
+            ['icon'=>'shield-check','color'=>'#8AC5ED','title'=>__('about.value_1_title'),'desc'=>__('about.value_1_desc')],
+            ['icon'=>'globe-2','color'=>'#69D5F5','title'=>__('about.value_2_title'),'desc'=>__('about.value_2_desc')],
+            ['icon'=>'handshake','color'=>'#8AC5ED','title'=>__('about.value_3_title'),'desc'=>__('about.value_3_desc')],
         ] as $v)
         <div class="pi-card" style="flex-direction:column;align-items:flex-start">
             <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;margin-bottom:12px">

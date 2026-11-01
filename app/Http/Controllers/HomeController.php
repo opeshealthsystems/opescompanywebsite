@@ -1,22 +1,8 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\PractitionerFinding;
-use App\Models\Product;
-
-class HomeController extends Controller
+/** Web presentation adapter; business queries and commands live in application contexts. */
+class HomeController extends \App\Http\Controllers\Controller
 {
-    public function index()
-    {
-        $products = Product::where('is_active', true)->orderBy('sort_order')->get();
-
-        $testimonials = PractitionerFinding::where('is_published', true)
-            ->whereNotNull('findings_text')
-            ->with(['practitioner.practitionerProfile', 'application.program'])
-            ->latest()
-            ->get();
-
-        return view('pages.home', compact('products', 'testimonials'));
-    }
+    public function index(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('homecontroller.index', $request); }
 }

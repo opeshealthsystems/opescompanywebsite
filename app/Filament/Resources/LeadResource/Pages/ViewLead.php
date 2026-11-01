@@ -7,7 +7,6 @@ use Filament\Actions;
 use Filament\Forms;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
-use Illuminate\Support\Facades\Mail;
 
 class ViewLead extends ViewRecord
 {
@@ -34,19 +33,12 @@ class ViewLead extends ViewRecord
                         ->placeholder('Dear ' . ($this->record->name ?? 'valued contact') . ','),
                 ])
                 ->action(function (array $data): void {
-                    $lead = $this->record;
-                    Mail::html(
-                        '<html><body style="font-family:sans-serif;max-width:600px;margin:auto;padding:20px;">'
-                        . '<h3 style="color:#00C896;">OPES Health Systems</h3>'
-                        . '<p>' . nl2br(e($data['body'])) . '</p>'
-                        . '<hr style="border:none;border-top:1px solid #e2e8f0;margin:20px 0;">'
-                        . '<p style="color:#9fb0c9;font-size: 13px;">OPES Health Systems — automated via admin panel</p>'
-                        . '</body></html>',
-                        function ($message) use ($lead, $data) {
-                            $message->to($lead->email, $lead->name)->subject($data['subject']);
-                        }
+                    \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run(
+                        'admin.enquiries.leads.sendFollowUp',
+                        values: $data,
+                        parameters: ['lead' => $this->record],
                     );
-                    Notification::make()->title('Email sent to ' . $lead->email)->success()->send();
+                    Notification::make()->title('Follow-up email queued.')->success()->send();
                 }),
 
             Actions\EditAction::make(),

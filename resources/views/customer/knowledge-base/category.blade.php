@@ -2,7 +2,7 @@
     {{-- Breadcrumb --}}
     <div style="margin-bottom:1rem;">
         <a href="{{ route('customer.knowledge-base.index', ['locale' => app()->getLocale()]) }}"
-           style="color:#00C896;font-size:0.8125rem;text-decoration:none;"
+           style="color:var(--brand-accent);font-size:0.8125rem;text-decoration:none;"
            onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
             ← Knowledge Base
         </a>

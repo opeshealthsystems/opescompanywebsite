@@ -48,8 +48,8 @@
                 {{ $isFr ? 'Principes ERM' : 'ERM principles' }}
             </div>
             @foreach($isFr
-                ? [['user-check','#00C896','Responsabilité','Chaque risque doit avoir un propriétaire clairement désigné.'],['radar','#1A6FE8','Gestion proactive','Les risques doivent être identifiés avant que les incidents ne surviennent.'],['eye','#00C896','Transparence','Les risques doivent être visibles et reportables à tous les niveaux.'],['refresh-cw','#1A6FE8','Surveillance continue','Les risques nécessitent une revue permanente et un suivi actif.']]
-                : [['user-check','#00C896','Accountability','Every risk must have a clearly designated owner.'],['radar','#1A6FE8','Proactive management','Risks should be identified before incidents occur.'],['eye','#00C896','Transparency','Risks must be visible and reportable at all levels.'],['refresh-cw','#1A6FE8','Continuous monitoring','Risks require ongoing review and active tracking.']]
+                ? [['user-check','#69D5F5','Responsabilité','Chaque risque doit avoir un propriétaire clairement désigné.'],['radar','#8AC5ED','Gestion proactive','Les risques doivent être identifiés avant que les incidents ne surviennent.'],['eye','#69D5F5','Transparence','Les risques doivent être visibles et reportables à tous les niveaux.'],['refresh-cw','#8AC5ED','Surveillance continue','Les risques nécessitent une revue permanente et un suivi actif.']]
+                : [['user-check','#69D5F5','Accountability','Every risk must have a clearly designated owner.'],['radar','#8AC5ED','Proactive management','Risks should be identified before incidents occur.'],['eye','#69D5F5','Transparency','Risks must be visible and reportable at all levels.'],['refresh-cw','#8AC5ED','Continuous monitoring','Risks require ongoing review and active tracking.']]
             as $p)
             <div style="display:flex;gap:12px;align-items:flex-start;padding:14px;background:#0F172A;border-radius:10px;margin-bottom:8px;border-left:3px solid {{ $p[1] }}">
                 <i data-lucide="{{ $p[0] }}" style="width:15px;height:15px;color:{{ $p[1] }};flex-shrink:0;margin-top:1px"></i>
@@ -67,8 +67,8 @@
                 {{ $isFr ? 'Structure de gouvernance des risques' : 'Risk governance structure' }}
             </div>
             @foreach($isFr
-                ? [['#00C896','Comité des risques du Conseil','Supervision stratégique des risques à long terme.'],['#1A6FE8','Comité exécutif des risques','Supervision opérationnelle et revue trimestrielle.'],['#00C896','Bureau de gestion des risques','Activités quotidiennes de gestion des risques et tenue du registre.']]
-                : [['#00C896','Board Risk Committee','Strategic oversight of long-term risks.'],['#1A6FE8','Executive Risk Committee','Operational oversight and quarterly review.'],['#00C896','Risk Management Office','Daily risk management activities and register maintenance.']]
+                ? [['#69D5F5','Comité des risques du Conseil','Supervision stratégique des risques à long terme.'],['#8AC5ED','Comité exécutif des risques','Supervision opérationnelle et revue trimestrielle.'],['#69D5F5','Bureau de gestion des risques','Activités quotidiennes de gestion des risques et tenue du registre.']]
+                : [['#69D5F5','Board Risk Committee','Strategic oversight of long-term risks.'],['#8AC5ED','Executive Risk Committee','Operational oversight and quarterly review.'],['#69D5F5','Risk Management Office','Daily risk management activities and register maintenance.']]
             as $gov)
             <div style="padding:16px;background:#0F172A;border:1px solid #1e293b;border-radius:10px;margin-bottom:8px;border-left:3px solid {{ $gov[0] }}">
                 <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:4px">{{ $gov[1] }}</div>
@@ -85,7 +85,7 @@
                     : ['Operational teams','Management','Executive Committee','Board Committee']
                 as $idx => $level)
                 <div style="display:flex;align-items:center;gap:8px;padding:6px 0">
-                    <div style="width:18px;height:18px;border-radius:4px;background:{{ ['#334155','var(--text-faint)','#1A6FE8','#00C896'][$idx] }}20;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:var(--fs-2xs);font-weight:800;color:{{ ['#334155','var(--text-faint)','#1A6FE8','#00C896'][$idx] }}">{{ $idx+1 }}</div>
+                    <div style="width:18px;height:18px;border-radius:4px;background:{{ ['#334155','var(--text-faint)','#8AC5ED','#69D5F5'][$idx] }}20;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:var(--fs-2xs);font-weight:800;color:{{ ['#334155','var(--text-faint)','#8AC5ED','#69D5F5'][$idx] }}">{{ $idx+1 }}</div>
                     <span style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $level }}</span>
                     @if($idx < 3)<i data-lucide="chevron-right" style="width:10px;height:10px;color:#334155;margin-left:auto"></i>@endif
                 </div>
@@ -106,18 +106,18 @@
     <h2 class="section-title">{{ $isFr ? 'Sept catégories de risques surveillées' : 'Seven risk categories monitored' }}</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:28px">
         @php $riskCats = $isFr ? [
-            ['trending-up','#1A6FE8','Risques stratégiques',['Concurrence','Changement réglementaire','Disruption technologique']],
+            ['trending-up','#8AC5ED','Risques stratégiques',['Concurrence','Changement réglementaire','Disruption technologique']],
             ['dollar-sign','#F59E0B','Risques financiers',['Manque à gagner','Contraintes de trésorerie','Fluctuations de devises']],
             ['heart-pulse','#EF4444','Risques cliniques',['Erreurs CDSS','Défaillances d\'alertes','Incidents patient']],
-            ['settings','#00C896','Risques opérationnels',['Déploiements échoués','Contraintes ressources','Défaillances processus']],
+            ['settings','#69D5F5','Risques opérationnels',['Déploiements échoués','Contraintes ressources','Défaillances processus']],
             ['shield-x','#A855F7','Risques cybersécurité',['Ransomware','Fuites de données','Menaces internes']],
             ['share-2','#F97316','Risques d\'interopérabilité',['Échecs d\'échange','Erreurs d\'identité','Problèmes de mapping']],
             ['message-circle-warning','var(--text-muted)','Risques de réputation',['Interruptions de service','Insatisfaction client','Incidents publics']],
         ] : [
-            ['trending-up','#1A6FE8','Strategic risks',['Market competition','Regulatory change','Technology disruption']],
+            ['trending-up','#8AC5ED','Strategic risks',['Market competition','Regulatory change','Technology disruption']],
             ['dollar-sign','#F59E0B','Financial risks',['Revenue shortfalls','Cash flow constraints','Currency fluctuations']],
             ['heart-pulse','#EF4444','Clinical risks',['Clinical decision errors','Alert failures','Patient safety incidents']],
-            ['settings','#00C896','Operational risks',['Failed deployments','Resource constraints','Process failures']],
+            ['settings','#69D5F5','Operational risks',['Failed deployments','Resource constraints','Process failures']],
             ['shield-x','#A855F7','Cybersecurity risks',['Ransomware','Data breaches','Insider threats']],
             ['share-2','#F97316','Interoperability risks',['Exchange failures','Identity errors','Data mapping issues']],
             ['message-square','var(--text-muted)','Reputational risks',['Service outages','Customer dissatisfaction','Public incidents']],
@@ -143,10 +143,10 @@
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px">
         {{-- Assessment --}}
         <div>
-            <div style="font-size:var(--fs-2xs);font-weight:800;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px">{{ $isFr ? 'Évaluation des risques' : 'Risk assessment' }}</div>
+            <div style="font-size:var(--fs-2xs);font-weight:800;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px">{{ $isFr ? 'Évaluation des risques' : 'Risk assessment' }}</div>
             @foreach($isFr
-                ? [['#00C896','Impact','Gravité si le risque se matérialise.'],['#1A6FE8','Probabilité','Chance que le risque se produise.'],['#F59E0B','Détectabilité','Capacité à détecter le risque avant l\'impact.'],['var(--text-muted)','Risque résiduel','Risque restant après traitement.']]
-                : [['#00C896','Impact','Severity if the risk materialises.'],['#1A6FE8','Likelihood','Probability the risk will occur.'],['#F59E0B','Detectability','Ability to detect the risk before impact.'],['var(--text-muted)','Residual risk','Risk remaining after treatment.']]
+                ? [['#69D5F5','Impact','Gravité si le risque se matérialise.'],['#8AC5ED','Probabilité','Chance que le risque se produise.'],['#F59E0B','Détectabilité','Capacité à détecter le risque avant l\'impact.'],['var(--text-muted)','Risque résiduel','Risque restant après traitement.']]
+                : [['#69D5F5','Impact','Severity if the risk materialises.'],['#8AC5ED','Likelihood','Probability the risk will occur.'],['#F59E0B','Detectability','Ability to detect the risk before impact.'],['var(--text-muted)','Residual risk','Risk remaining after treatment.']]
             as $dim)
             <div style="padding:10px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px;border-left:2px solid {{ $dim[0] }}">
                 <div style="font-weight:700;color:#e2e8f0;font-size:var(--fs-xs)">{{ $dim[1] }}</div>
@@ -156,10 +156,10 @@
         </div>
         {{-- Treatment --}}
         <div>
-            <div style="font-size:var(--fs-2xs);font-weight:800;color:#00C896;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px">{{ $isFr ? 'Options de traitement' : 'Treatment options' }}</div>
+            <div style="font-size:var(--fs-2xs);font-weight:800;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px">{{ $isFr ? 'Options de traitement' : 'Treatment options' }}</div>
             @foreach($isFr
-                ? [['ban','#EF4444','Éviter','Éliminer l\'activité génératrice de risque.'],['minimize-2','#F59E0B','Réduire','Atténuer l\'impact ou la probabilité.'],['arrow-left-right','#1A6FE8','Transférer','Transférer via assurance ou contrats.'],['check-circle','var(--text-muted)','Accepter','Tolérer le risque résiduel documenté.']]
-                : [['ban','#EF4444','Avoid','Eliminate the risk-generating activity.'],['minimize-2','#F59E0B','Reduce','Mitigate impact or likelihood.'],['arrow-left-right','#1A6FE8','Transfer','Transfer via insurance or contracts.'],['check-circle','var(--text-muted)','Accept','Tolerate the documented residual risk.']]
+                ? [['ban','#EF4444','Éviter','Éliminer l\'activité génératrice de risque.'],['minimize-2','#F59E0B','Réduire','Atténuer l\'impact ou la probabilité.'],['arrow-left-right','#8AC5ED','Transférer','Transférer via assurance ou contrats.'],['check-circle','var(--text-muted)','Accepter','Tolérer le risque résiduel documenté.']]
+                : [['ban','#EF4444','Avoid','Eliminate the risk-generating activity.'],['minimize-2','#F59E0B','Reduce','Mitigate impact or likelihood.'],['arrow-left-right','#8AC5ED','Transfer','Transfer via insurance or contracts.'],['check-circle','var(--text-muted)','Accept','Tolerate the documented residual risk.']]
             as $tr)
             <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:#0F172A;border-radius:8px;margin-bottom:6px">
                 <i data-lucide="{{ $tr[0] }}" style="width:13px;height:13px;color:{{ $tr[1] }};flex-shrink:0;margin-top:1px"></i>

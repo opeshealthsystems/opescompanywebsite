@@ -107,24 +107,10 @@ class PractitionerBugReportResource extends Resource
                         Textarea::make('admin_response')->required()->rows(4)->label('Response'),
                     ])
                     ->action(function (PractitionerBugReport $record, array $data) {
-                        $record->update([
-                            'status'         => $data['status'],
-                            'admin_response' => $data['admin_response'],
-                            'responded_by'   => auth()->id(),
-                            'responded_at'   => now(),
-                        ]);
-
-                        if (class_exists(\App\Mail\BugReportResponded::class)) {
-                            \Illuminate\Support\Facades\Mail::to($record->practitioner->email)
-                                ->queue(new \App\Mail\BugReportResponded($record));
-                        }
-                        $record->practitioner?->notify(new \App\Notifications\FeedEntry(
-                            'practitioner.bug_report_responded',
-                            'Response to your bug report',
-                            'Your bug report received a response.',
-                            'bug-ant',
-                            route('practitioner.bug-reports.show', ['locale' => 'en', 'bugReport' => $record->id]),
-                        ));
+                        app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+                            'admin.support.bugReports.respond',
+                            new \App\Contexts\Shared\Application\WorkflowInput($data, ['bugReport' => $record], auth()->user(), app()->getLocale()),
+                        );
 
                         Notification::make()->title('Response sent.')->success()->send();
                     }),

@@ -2,18 +2,18 @@
 
 return [
     // ── Meta ───────────────────────────────────────────────────────────
-    'meta_title'            => 'OPES Health Systems — 22 Integrated Healthcare Software Systems for Cameroon',
-    'meta_desc'             => 'Explore 22 integrated healthcare software systems for hospitals, clinics, labs and pharmacies in Cameroon and the CEMAC region.',
+    'meta_title'            => 'OPES Health Systems — Healthcare Software Catalogue',
+    'meta_desc'             => 'Explore the healthcare software catalogue for hospitals, clinics, labs and pharmacies in Cameroon and the CEMAC region.',
 
     // ── Products Index — page header ───────────────────────────────────
     'index_eyebrow'         => 'All Products',
-    'index_title'           => '22 Healthcare Software Systems',
+    'index_title'           => 'Healthcare Software Catalogue',
     'index_sub'             => 'Purpose-built for the Cameroon and CEMAC health sector. Deploy one system or the full ecosystem — all connected through OPESCare Health ID.',
 
     // Trust bar
     'trust_fhir'            => 'HL7 FHIR Interoperability',
     'trust_bilingual'       => 'EN / FR bilingual',
-    'trust_moh'             => 'MoH 2026–2030 aligned',
+    'trust_moh'             => 'Designed in Cameroon',
     'trust_deploy'          => 'Cloud & on-premise',
 
     // Category sections

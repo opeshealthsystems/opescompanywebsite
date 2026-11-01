@@ -2,6 +2,7 @@
 namespace App\Filament\Resources\JobOpeningResource\RelationManagers;
 
 use App\Models\JobApplication;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -18,7 +19,7 @@ class ApplicationsRelationManager extends RelationManager
             Forms\Components\TextInput::make('applicant_name')->required()->maxLength(200),
             Forms\Components\TextInput::make('email')->email()->required()->maxLength(150),
             Forms\Components\TextInput::make('phone')->nullable()->maxLength(50),
-            Forms\Components\Select::make('status')->options(JobApplication::statusOptions())->default('received')->required(),
+            Forms\Components\Select::make('status')->options(JobApplication::statusOptions())->default('received')->disabled()->dehydrated(false)->required(),
             Forms\Components\DatePicker::make('applied_at')->default(now())->native(false),
             Forms\Components\DatePicker::make('interview_date')->label('Interview Date')->nullable()->native(false),
             Forms\Components\FileUpload::make('resume_path')->label('Resume/CV')->directory('resumes')->acceptedFileTypes(['application/pdf'])->nullable(),
@@ -47,17 +48,17 @@ class ApplicationsRelationManager extends RelationManager
                 Tables\Actions\Action::make('shortlist')
                     ->label('Shortlist')->icon('heroicon-o-star')->color('info')
                     ->hidden(fn (JobApplication $r) => !in_array($r->status, ['received','reviewing']))
-                    ->action(fn (JobApplication $r) => $r->update(['status'=>'shortlisted'])),
+                    ->action(fn (JobApplication $r) => AdminWorkflowAdapter::run('admin.recruitment.applications.shortlist', parameters: ['application' => $r])),
                 Tables\Actions\Action::make('hire')
                     ->label('Hire')->icon('heroicon-o-check-badge')->color('success')
                     ->requiresConfirmation()
                     ->hidden(fn (JobApplication $r) => $r->status !== 'offered')
-                    ->action(fn (JobApplication $r) => $r->update(['status'=>'hired'])),
+                    ->action(fn (JobApplication $r) => AdminWorkflowAdapter::run('admin.recruitment.applications.hire', parameters: ['application' => $r])),
                 Tables\Actions\Action::make('reject')
                     ->label('Reject')->icon('heroicon-o-x-mark')->color('danger')
                     ->requiresConfirmation()
                     ->hidden(fn (JobApplication $r) => in_array($r->status, ['hired','rejected']))
-                    ->action(fn (JobApplication $r) => $r->update(['status'=>'rejected'])),
+                    ->action(fn (JobApplication $r) => AdminWorkflowAdapter::run('admin.recruitment.applications.reject', parameters: ['application' => $r])),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);

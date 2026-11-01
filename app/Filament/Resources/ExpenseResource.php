@@ -58,7 +58,7 @@ class ExpenseResource extends Resource
             Forms\Components\Section::make('Approval')->columns(2)->schema([
                 Forms\Components\Select::make('status')
                     ->options(Expense::statusOptions())
-                    ->default('pending')->required(),
+                    ->default('pending')->required()->disabled()->dehydrated(false),
 
                 Forms\Components\Select::make('submitted_by')
                     ->label('Submitted By')
@@ -71,10 +71,10 @@ class ExpenseResource extends Resource
                     ->options(fn () => User::whereHas('roles', fn ($q) =>
                         $q->whereIn('name', ['super_admin', 'admin'])
                     )->orderBy('name')->pluck('name', 'id'))
-                    ->searchable()->nullable(),
+                    ->searchable()->nullable()->disabled()->dehydrated(false),
 
                 Forms\Components\DateTimePicker::make('approved_at')
-                    ->label('Approved At')->nullable(),
+                    ->label('Approved At')->nullable()->disabled()->dehydrated(false),
             ]),
 
             Forms\Components\Section::make('Notes')->schema([
@@ -136,18 +136,14 @@ class ExpenseResource extends Resource
                     ->color('success')
                     ->requiresConfirmation()
                     ->hidden(fn (Expense $record) => $record->status !== 'pending')
-                    ->action(fn (Expense $record) => $record->update([
-                        'status'      => 'approved',
-                        'approved_by' => auth()->id(),
-                        'approved_at' => now(),
-                    ])),
+                    ->action(fn (Expense $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.expenses.approve', parameters: ['expense' => $record->id])),
                 Tables\Actions\Action::make('mark_paid')
                     ->label('Mark Paid')
                     ->icon('heroicon-o-banknotes')
                     ->color('info')
                     ->requiresConfirmation()
                     ->hidden(fn (Expense $record) => $record->status !== 'approved')
-                    ->action(fn (Expense $record) => $record->update(['status' => 'paid'])),
+                    ->action(fn (Expense $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.expenses.markPaid', parameters: ['expense' => $record->id])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

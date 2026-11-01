@@ -1,0 +1,30 @@
+[
+  {
+    "width": 360,
+    "lang": "en",
+    "h1": "Build with OPES APIs",
+    "overflow": false,
+    "codeOverflow": false
+  },
+  {
+    "width": 360,
+    "lang": "fr",
+    "h1": "Intégrez les API OPES",
+    "overflow": false,
+    "codeOverflow": false
+  },
+  {
+    "width": 1440,
+    "lang": "en",
+    "h1": "Build with OPES APIs",
+    "overflow": false,
+    "codeOverflow": false
+  },
+  {
+    "width": 1440,
+    "lang": "fr",
+    "h1": "Intégrez les API OPES",
+    "overflow": false,
+    "codeOverflow": false
+  }
+]

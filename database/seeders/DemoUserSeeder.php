@@ -10,6 +10,9 @@ class DemoUserSeeder extends Seeder
 {
     public function run(): void
     {
+        if (app()->isProduction()) {
+            return;
+        }
         $demos = [
             ['email' => 'admin@demo.opes',    'name' => 'Demo Admin',    'role' => 'admin'],
             ['email' => 'support@demo.opes',  'name' => 'Demo Support',  'role' => 'support'],

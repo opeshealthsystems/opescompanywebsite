@@ -11,7 +11,6 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\Mail;
 
 class PractitionerApplicationResource extends Resource
 {
@@ -117,20 +116,10 @@ class PractitionerApplicationResource extends Resource
                     ->hidden(fn (PractitionerApplication $record) => $record->status !== 'pending')
                     ->requiresConfirmation()
                     ->action(function (PractitionerApplication $record) {
-                        $record->loadMissing('program');
-                        $record->markApproved(auth()->id());
-                        // Mail queued if mailable exists
-                        if (class_exists(\App\Mail\PractitionerApplicationApproved::class)) {
-                            Mail::to($record->practitioner->email)
-                                ->queue(new \App\Mail\PractitionerApplicationApproved($record));
-                        }
-                        $record->practitioner?->notify(new \App\Notifications\FeedEntry(
-                            'practitioner.application_approved',
-                            'Application approved',
-                            'Your programme application was approved.',
-                            'check-circle',
-                            route('practitioner.applications', ['locale' => 'en']),
-                        ));
+                        app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+                            'admin.practitioners.applications.approve',
+                            new \App\Contexts\Shared\Application\WorkflowInput([], ['application' => $record], auth()->user(), app()->getLocale()),
+                        );
                         Notification::make()->title('Application approved')->success()->send();
                     }),
                 Tables\Actions\Action::make('reject')
@@ -144,23 +133,10 @@ class PractitionerApplicationResource extends Resource
                             ->rows(3),
                     ])
                     ->action(function (PractitionerApplication $record, array $data) {
-                        $record->update([
-                            'status'      => 'rejected',
-                            'reviewed_by' => auth()->id(),
-                            'reviewed_at' => now(),
-                            'admin_notes' => $data['admin_notes'] ?? null,
-                        ]);
-                        if (class_exists(\App\Mail\PractitionerApplicationRejected::class)) {
-                            Mail::to($record->practitioner->email)
-                                ->queue(new \App\Mail\PractitionerApplicationRejected($record));
-                        }
-                        $record->practitioner?->notify(new \App\Notifications\FeedEntry(
-                            'practitioner.application_rejected',
-                            'Application update',
-                            'There is an update on your programme application.',
-                            'clipboard-document',
-                            route('practitioner.applications', ['locale' => 'en']),
-                        ));
+                        app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+                            'admin.practitioners.applications.reject',
+                            new \App\Contexts\Shared\Application\WorkflowInput($data, ['application' => $record], auth()->user(), app()->getLocale()),
+                        );
                         Notification::make()->title('Application rejected')->danger()->send();
                     }),
                 Tables\Actions\Action::make('pay_now')

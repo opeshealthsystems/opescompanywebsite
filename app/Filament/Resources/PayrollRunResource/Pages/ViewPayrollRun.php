@@ -3,13 +3,8 @@
 namespace App\Filament\Resources\PayrollRunResource\Pages;
 
 use App\Filament\Resources\PayrollRunResource;
-use App\Mail\PayrollProcessed;
-use App\Models\PayrollEntry;
-use App\Models\User;
 use Filament\Actions;
-use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
-use Illuminate\Support\Facades\Mail;
 
 class ViewPayrollRun extends ViewRecord
 {
@@ -30,30 +25,8 @@ class ViewPayrollRun extends ViewRecord
                 ->modalDescription('This will mark the run as processed and email each employee their payslip summary. This cannot be undone.')
                 ->modalSubmitActionLabel('Complete & Notify')
                 ->action(function (): void {
-                    $run = $this->record;
-                    $run->update(['status' => 'processed']);
-
-                    $notified = 0;
-                    foreach ($run->entries()->with('employee')->get() as $entry) {
-                        $email = $entry->employee?->email;
-                        if ($email) {
-                            Mail::to($email)->queue(new PayrollProcessed($run, $entry));
-                            \App\Models\User::where('email', $email)->first()?->notify(new \App\Notifications\FeedEntry(
-                                'hr.payroll_processed',
-                                'Payslip available',
-                                'Your latest payroll has been processed.',
-                                'banknotes',
-                                null,
-                            ));
-                            $notified++;
-                        }
-                    }
-
+                    \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.payrollRuns.complete', parameters: ['run' => $this->record->id]);
                     $this->refreshFormData(['status']);
-                    Notification::make()
-                        ->title("Payroll marked complete — {$notified} notification(s) queued")
-                        ->success()
-                        ->send();
                 }),
 
             Actions\Action::make('generate_entries')
@@ -70,67 +43,8 @@ class ViewPayrollRun extends ViewRecord
                 )
                 ->modalSubmitActionLabel('Generate')
                 ->action(function () {
-                    $run = $this->record;
-
-                    // Collect user IDs that already have an entry in this run
-                    $existingUserIds = $run->entries()->pluck('user_id')->toArray();
-
-                    // Active staff = users with any non-customer role, with their EmployeeProfile eager-loaded
-                    $employees = User::whereHas('roles', fn ($q) =>
-                            $q->whereIn('name', ['super_admin', 'admin', 'support', 'tester'])
-                        )
-                        ->with('employeeProfile')
-                        ->whereNotIn('id', $existingUserIds)
-                        ->get();
-
-                    $defaultDeductionTypes = \App\Models\PayrollDeductionType::defaultDeductions();
-
-                    $created = 0;
-                    foreach ($employees as $employee) {
-                        $profile = $employee->employeeProfile;
-
-                        // Prefer EmployeeProfile salary; fall back to users.base_salary; default 0
-                        $gross    = (float) ($profile?->salary ?? $employee->base_salary ?? 0);
-                        $currency = $profile?->currency ?? $run->currency;
-
-                        // Auto-populate default deductions from configured deduction types
-                        $deductions = $defaultDeductionTypes->map(fn ($type) => [
-                            'label'  => $type->name,
-                            'amount' => $type->calculateAmount($gross),
-                        ])->toArray();
-
-                        $totalDeductions = collect($deductions)->sum('amount');
-                        $net = max(0, $gross - $totalDeductions);
-
-                        $run->entries()->create([
-                            'user_id'          => $employee->id,
-                            'gross_salary'     => $gross,
-                            'deductions'       => $deductions,
-                            'total_deductions' => $totalDeductions,
-                            'net_salary'       => $net,
-                            'currency'         => $currency,
-                            'status'           => 'pending',
-                        ]);
-
-                        $created++;
-                    }
-
-                    if ($created > 0) {
-                        // Advance status to processing only if still in draft
-                        if ($run->status === 'draft') {
-                            $run->update(['status' => 'processing']);
-                        }
-                        $run->recalculateTotals();
-                    }
-
+                    \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.payrollRuns.generateEntries', parameters: ['run' => $this->record->id]);
                     $this->refreshFormData(['status', 'total_gross', 'total_net']);
-
-                    Notification::make()
-                        ->title($created > 0
-                            ? "Generated {$created} payroll " . str('entry')->plural($created)
-                            : 'No new entries — all active staff are already included')
-                        ->status($created > 0 ? 'success' : 'warning')
-                        ->send();
                 }),
         ];
     }

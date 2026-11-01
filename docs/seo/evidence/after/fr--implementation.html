@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="https://opeshealthsystems.com/images/opes-seal.png" type="image/png">
+<title>Cadre d&#039;implémentation — OPES Health Systems</title>
+<meta name="description" content="Le cadre d&#039;implémentation structuré d&#039;OPES : de la découverte au déploiement et à l&#039;optimisation continue.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://opeshealthsystems.com/fr/implementation">
+<link rel="alternate" hreflang="en" href="https://opeshealthsystems.com/en/implementation">
+<link rel="alternate" hreflang="fr" href="https://opeshealthsystems.com/fr/implementation">
+<link rel="alternate" hreflang="x-default" href="https://opeshealthsystems.com/en/implementation">
+
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OPES Health Systems">
+<meta property="og:title" content="Cadre d&#039;implémentation — OPES Health Systems">
+<meta property="og:description" content="Le cadre d&#039;implémentation structuré d&#039;OPES : de la découverte au déploiement et à l&#039;optimisation continue.">
+<meta property="og:url" content="https://opeshealthsystems.com/fr/implementation">
+<meta property="og:image" content="https://opeshealthsystems.com/images/opes-seal.png">
+<meta property="og:locale" content="fr_CM">
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cadre d&#039;implémentation — OPES Health Systems">
+<meta name="twitter:description" content="Le cadre d&#039;implémentation structuré d&#039;OPES : de la découverte au déploiement et à l&#039;optimisation continue.">
+<meta name="twitter:image" content="https://opeshealthsystems.com/images/opes-seal.png">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://opeshealthsystems.com/fr/implementation#webpage","url":"https://opeshealthsystems.com/fr/implementation","name":"Cadre d'implémentation — OPES Health Systems","description":"Le cadre d'implémentation structuré d'OPES : de la découverte au déploiement et à l'optimisation continue.","inLanguage":"fr","isPartOf":{"@id":"https://opeshealthsystems.com#website"},"about":{"@id":"https://opeshealthsystems.com#organization"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://opeshealthsystems.com#website","url":"https://opeshealthsystems.com","name":"OPES Health Systems","inLanguage":["en","fr"],"publisher":{"@id":"https://opeshealthsystems.com#organization"}}</script>
+    <link rel="preload" as="style" href="https://opeshealthsystems.com/build/assets/app-BSF3cz3-.css" /><link rel="modulepreload" as="script" href="https://opeshealthsystems.com/build/assets/app-BqopCnbu.js" /><link rel="stylesheet" href="https://opeshealthsystems.com/build/assets/app-BSF3cz3-.css" data-navigate-track="reload" /><script type="module" src="https://opeshealthsystems.com/build/assets/app-BqopCnbu.js" data-navigate-track="reload"></script></head>
+<body class="public-site">
+    <a class="skip-link" href="#main-content">Aller au contenu</a>
+    <nav class="site-nav" id="siteNav">
+    <a href="https://opeshealthsystems.com/fr" class="nav-logo">
+        <img class="site-seal" src="https://opeshealthsystems.com/images/opes-seal.png" alt="" width="44" height="44" style="object-fit:contain;flex-shrink:0">
+        <div class="nav-logo-text">
+            <div class="nav-logo-name">OPES <span>Health</span> Systems</div>
+            <div class="nav-logo-tagline">Infrastructure de santé numérique pour l&#039;Afrique</div>
+        </div>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-label="Afficher le menu" aria-controls="site-navigation" aria-expanded="false">
+        <i data-lucide="menu" class="nav-toggle-open" style="width:22px;height:22px"></i>
+        <i data-lucide="x" class="nav-toggle-close" style="width:22px;height:22px"></i>
+    </button>
+
+    <div class="nav-collapse" id="site-navigation">
+    <div class="nav-links">
+                <a href="https://opeshealthsystems.com/fr/products">Produits</a>
+                <a href="https://opeshealthsystems.com/fr/solutions">Solutions</a>
+                <a href="https://opeshealthsystems.com/fr/about">Entreprise</a>
+                <a href="https://opeshealthsystems.com/fr/blog">Ressources</a>
+                <a href="https://opeshealthsystems.com/fr/compliance">Confiance</a>
+                <a href="https://opeshealthsystems.com/fr/contact">Contact</a>
+            </div>
+
+    <div class="nav-right">
+        <div class="lang-switcher">
+    <button type="button" class="lang-trigger" aria-controls="language-options" aria-expanded="false"
+            aria-label="Choisir la langue">
+        <i data-lucide="globe" style="width:15px;height:15px"></i>
+        <span class="lang-current">FR</span>
+        <i data-lucide="chevron-down" aria-hidden="true" class="lang-caret" style="width:12px;height:12px"></i>
+    </button>
+    <div class="lang-menu" id="language-options">
+                <a href="https://opeshealthsystems.com/en/implementation" lang="en" hreflang="en"
+           class="lang-option"
+           >
+            <span class="lang-option-code">EN</span>
+            <span class="lang-option-label">English</span>
+        </a>
+                <a href="https://opeshealthsystems.com/fr/implementation" lang="fr" hreflang="fr"
+           class="lang-option is-active"
+            aria-current="true" >
+            <span class="lang-option-code">FR</span>
+            <span class="lang-option-label">Français</span>
+        </a>
+            </div>
+</div>
+
+                
+        <a href="https://opeshealthsystems.com/login" class="nav-account-login" title="Connexion">
+            <i data-lucide="user-circle" style="width:20px;height:20px"></i>
+        </a>
+        
+        <a href="https://opeshealthsystems.com/fr/book-demo" class="btn-cta">
+            Demander une démo
+        </a>
+    </div>
+    </div>
+</nav>
+
+<script>
+(function () {
+    var nav = document.getElementById('siteNav');
+    if (!nav) return;
+    nav.addEventListener('keydown', function (event) {
+        if (event.key !== 'Escape') return;
+        nav.classList.remove('nav-open');
+        nav.querySelector('.nav-toggle').setAttribute('aria-expanded', 'false');
+        nav.querySelectorAll('.open').forEach(function (el) { el.classList.remove('open'); });
+        nav.querySelectorAll('[aria-expanded]').forEach(function (el) { el.setAttribute('aria-expanded', 'false'); });
+        nav.querySelector('.nav-logo').focus();
+    });
+
+    // Mobile drawer (hamburger).
+    var toggle = nav.querySelector('.nav-toggle');
+    if (toggle) {
+        toggle.addEventListener('click', function () {
+            var open = nav.classList.toggle('nav-open');
+            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+        // Close the drawer after tapping a link.
+        nav.querySelectorAll('.nav-collapse a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                nav.classList.remove('nav-open');
+                toggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+    }
+
+    // Account menu — tap/click operable (touch has no hover) + state announced.
+    var account = nav.querySelector('.nav-account');
+    var avatar = account && account.querySelector('.nav-account-avatar');
+    if (account && avatar) {
+        var setAccount = function (open) {
+            account.classList.toggle('open', open);
+            avatar.setAttribute('aria-expanded', open ? 'true' : 'false');
+        };
+        avatar.addEventListener('click', function (e) {
+            e.stopPropagation();
+            setAccount(!account.classList.contains('open'));
+        });
+        document.addEventListener('click', function (e) {
+            if (!account.contains(e.target)) setAccount(false);
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') setAccount(false);
+        });
+    }
+
+    // Language switcher — click the globe to open/close the locale dropdown.
+    var lang = nav.querySelector('.lang-switcher');
+    var langTrigger = lang && lang.querySelector('.lang-trigger');
+    if (lang && langTrigger) {
+        var setLang = function (open) {
+            lang.classList.toggle('open', open);
+            langTrigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        };
+        langTrigger.addEventListener('click', function (e) {
+            e.stopPropagation();
+            setLang(!lang.classList.contains('open'));
+        });
+        document.addEventListener('click', function (e) {
+            if (!lang.contains(e.target)) setLang(false);
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') setLang(false);
+        });
+    }
+
+    // Mega-menu triggers: keep aria-expanded in sync with the hover/focus reveal.
+    nav.querySelectorAll('.nav-dropdown-wrap').forEach(function (wrap) {
+        var trigger = wrap.querySelector('.nav-dropdown-trigger');
+        if (!trigger) return;
+        var setState = function (open) { trigger.setAttribute('aria-expanded', open ? 'true' : 'false'); };
+        wrap.addEventListener('mouseenter', function () { setState(true); });
+        wrap.addEventListener('mouseleave', function () { setState(false); });
+        wrap.addEventListener('focusin', function () { setState(true); });
+        wrap.addEventListener('focusout', function () {
+            if (!wrap.contains(document.activeElement)) setState(false);
+        });
+    });
+})();
+</script>
+
+    <main id="main-content" tabindex="-1">
+        <div class="pricing-hero">
+    <div class="section-label" style="justify-content:center;margin-bottom:16px">
+        <i data-lucide="map" style="width:12px;height:12px"></i>
+        Cadre d&#039;implémentation
+    </div>
+    <h1>
+        De zéro au numérique en
+        <span class="gradient-text">90 jours</span>
+    </h1>
+    <p>
+        Notre cadre d&#039;implémentation éprouvé guide chaque établissement à travers chaque étape — de l&#039;évaluation initiale au déploiement opérationnel — avec un accompagnement dédié à chaque phase.
+    </p>
+</div>
+
+
+<div class="section" style="max-width:960px;margin:0 auto">
+    
+    <div style="display:flex;flex-direction:column;gap:0">
+                <div style="display:flex;gap:0;position:relative">
+            
+            <div style="display:flex;flex-direction:column;align-items:center;width:56px;flex-shrink:0">
+                <div style="width:44px;height:44px;border-radius:50%;background:#1A6FE820;border:2px solid #1A6FE8;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#1A6FE8;z-index:1">
+                    01
+                </div>
+                                <div style="width:2px;flex:1;background:linear-gradient(#1A6FE8,#00C896);min-height:40px;margin:4px 0"></div>
+                            </div>
+            
+            <div style="flex:1;padding:0 0 36px 20px">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+                    <i data-lucide="search" style="width:16px;height:16px;color:#1A6FE8"></i>
+                    <span style="font-weight:800;color:#e2e8f0;font-size:16px">Découverte</span>
+                    <span style="font-size:var(--fs-xs);color:var(--text-faint);background:#1e293b;padding:2px 8px;border-radius:20px;margin-left:4px">1–2 semaines</span>
+                </div>
+                <p style="color:var(--text-muted);font-size:13px;line-height:1.65;margin:8px 0 12px;max-width:680px">Évaluation approfondie de l&#039;établissement : cartographie des flux de travail existants, inventaire des équipements, analyse des lacunes, et définition du périmètre fonctionnel. Livrable : rapport d&#039;évaluation et cahier des charges initial.</p>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Rapport d&#039;état des lieux
+                    </span>
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Cartographie des processus métier
+                    </span>
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Périmètre fonctionnel validé
+                    </span>
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Plan de migration des données
+                    </span>
+                                    </div>
+            </div>
+        </div>
+                <div style="display:flex;gap:0;position:relative">
+            
+            <div style="display:flex;flex-direction:column;align-items:center;width:56px;flex-shrink:0">
+                <div style="width:44px;height:44px;border-radius:50%;background:#00C89620;border:2px solid #00C896;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#00C896;z-index:1">
+                    02
+                </div>
+                                <div style="width:2px;flex:1;background:linear-gradient(#00C896,#1A6FE8);min-height:40px;margin:4px 0"></div>
+                            </div>
+            
+            <div style="flex:1;padding:0 0 36px 20px">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+                    <i data-lucide="pen-tool" style="width:16px;height:16px;color:#00C896"></i>
+                    <span style="font-weight:800;color:#e2e8f0;font-size:16px">Conception &amp; Configuration</span>
+                    <span style="font-size:var(--fs-xs);color:var(--text-faint);background:#1e293b;padding:2px 8px;border-radius:20px;margin-left:4px">2–3 semaines</span>
+                </div>
+                <p style="color:var(--text-muted);font-size:13px;line-height:1.65;margin:8px 0 12px;max-width:680px">Configuration de la solution selon les spécificités de l&#039;établissement : organigrammes, rôles et permissions, modèles d&#039;ordonnances, codes diagnostiques, et paramétrage des modules cliniques.</p>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Système configuré et paramétré
+                    </span>
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Modèles de documents créés
+                    </span>
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Référentiels médicaux chargés
+                    </span>
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Comptes utilisateurs créés
+                    </span>
+                                    </div>
+            </div>
+        </div>
+                <div style="display:flex;gap:0;position:relative">
+            
+            <div style="display:flex;flex-direction:column;align-items:center;width:56px;flex-shrink:0">
+                <div style="width:44px;height:44px;border-radius:50%;background:#1A6FE820;border:2px solid #1A6FE8;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#1A6FE8;z-index:1">
+                    03
+                </div>
+                                <div style="width:2px;flex:1;background:linear-gradient(#1A6FE8,#00C896);min-height:40px;margin:4px 0"></div>
+                            </div>
+            
+            <div style="flex:1;padding:0 0 36px 20px">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+                    <i data-lucide="server" style="width:16px;height:16px;color:#1A6FE8"></i>
+                    <span style="font-weight:800;color:#e2e8f0;font-size:16px">Infrastructure</span>
+                    <span style="font-size:var(--fs-xs);color:var(--text-faint);background:#1e293b;padding:2px 8px;border-radius:20px;margin-left:4px">1–2 semaines</span>
+                </div>
+                <p style="color:var(--text-muted);font-size:13px;line-height:1.65;margin:8px 0 12px;max-width:680px">Déploiement de l&#039;infrastructure selon le modèle choisi (on-premise, cloud ou hybride) : installation des serveurs, configuration réseau, sécurisation, sauvegardes automatiques, et tests de performance.</p>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Environnement de production opérationnel
+                    </span>
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Sauvegardes automatisées configurées
+                    </span>
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Monitoring activé
+                    </span>
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Documentation technique
+                    </span>
+                                    </div>
+            </div>
+        </div>
+                <div style="display:flex;gap:0;position:relative">
+            
+            <div style="display:flex;flex-direction:column;align-items:center;width:56px;flex-shrink:0">
+                <div style="width:44px;height:44px;border-radius:50%;background:#00C89620;border:2px solid #00C896;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#00C896;z-index:1">
+                    04
+                </div>
+                                <div style="width:2px;flex:1;background:linear-gradient(#00C896,#1A6FE8);min-height:40px;margin:4px 0"></div>
+                            </div>
+            
+            <div style="flex:1;padding:0 0 36px 20px">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+                    <i data-lucide="database" style="width:16px;height:16px;color:#00C896"></i>
+                    <span style="font-weight:800;color:#e2e8f0;font-size:16px">Migration des données</span>
+                    <span style="font-size:var(--fs-xs);color:var(--text-faint);background:#1e293b;padding:2px 8px;border-radius:20px;margin-left:4px">1–3 semaines</span>
+                </div>
+                <p style="color:var(--text-muted);font-size:13px;line-height:1.65;margin:8px 0 12px;max-width:680px">Migration structurée des données existantes vers OPES Health OS : nettoyage, standardisation, import des dossiers patients historiques, et validation par l&#039;équipe médicale.</p>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Données historiques migrées
+                    </span>
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Contrôle qualité des données
+                    </span>
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Registres de validation
+                    </span>
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Zéro perte de données certifiée
+                    </span>
+                                    </div>
+            </div>
+        </div>
+                <div style="display:flex;gap:0;position:relative">
+            
+            <div style="display:flex;flex-direction:column;align-items:center;width:56px;flex-shrink:0">
+                <div style="width:44px;height:44px;border-radius:50%;background:#1A6FE820;border:2px solid #1A6FE8;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#1A6FE8;z-index:1">
+                    05
+                </div>
+                                <div style="width:2px;flex:1;background:linear-gradient(#1A6FE8,#00C896);min-height:40px;margin:4px 0"></div>
+                            </div>
+            
+            <div style="flex:1;padding:0 0 36px 20px">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+                    <i data-lucide="graduation-cap" style="width:16px;height:16px;color:#1A6FE8"></i>
+                    <span style="font-weight:800;color:#e2e8f0;font-size:16px">Formation</span>
+                    <span style="font-size:var(--fs-xs);color:var(--text-faint);background:#1e293b;padding:2px 8px;border-radius:20px;margin-left:4px">1–2 semaines</span>
+                </div>
+                <p style="color:var(--text-muted);font-size:13px;line-height:1.65;margin:8px 0 12px;max-width:680px">Formation structurée par rôle : médecins, infirmiers, techniciens de laboratoire, agents de caisse, administrateurs IT. Supports bilingues (FR/EN) fournis, certification des utilisateurs clés.</p>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Personnel clé certifié
+                    </span>
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Supports de formation remis
+                    </span>
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Champions utilisateurs identifiés
+                    </span>
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Procédures standard documentées
+                    </span>
+                                    </div>
+            </div>
+        </div>
+                <div style="display:flex;gap:0;position:relative">
+            
+            <div style="display:flex;flex-direction:column;align-items:center;width:56px;flex-shrink:0">
+                <div style="width:44px;height:44px;border-radius:50%;background:#00C89620;border:2px solid #00C896;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#00C896;z-index:1">
+                    06
+                </div>
+                                <div style="width:2px;flex:1;background:linear-gradient(#00C896,#1A6FE8);min-height:40px;margin:4px 0"></div>
+                            </div>
+            
+            <div style="flex:1;padding:0 0 36px 20px">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+                    <i data-lucide="play-circle" style="width:16px;height:16px;color:#00C896"></i>
+                    <span style="font-weight:800;color:#e2e8f0;font-size:16px">Pilote &amp; Go-Live</span>
+                    <span style="font-size:var(--fs-xs);color:var(--text-faint);background:#1e293b;padding:2px 8px;border-radius:20px;margin-left:4px">1–2 semaines</span>
+                </div>
+                <p style="color:var(--text-muted);font-size:13px;line-height:1.65;margin:8px 0 12px;max-width:680px">Déploiement progressif : pilote sur un service, puis extension à l&#039;ensemble de l&#039;établissement. Équipe de support sur site pendant le go-live pour résoudre les problèmes en temps réel.</p>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Pilote validé
+                    </span>
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Go-live réussi
+                    </span>
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Rapport de lancement
+                    </span>
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>KPIs initiaux établis
+                    </span>
+                                    </div>
+            </div>
+        </div>
+                <div style="display:flex;gap:0;position:relative">
+            
+            <div style="display:flex;flex-direction:column;align-items:center;width:56px;flex-shrink:0">
+                <div style="width:44px;height:44px;border-radius:50%;background:#1A6FE820;border:2px solid #1A6FE8;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#1A6FE8;z-index:1">
+                    07
+                </div>
+                            </div>
+            
+            <div style="flex:1;padding:0 0 36px 20px">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+                    <i data-lucide="trending-up" style="width:16px;height:16px;color:#1A6FE8"></i>
+                    <span style="font-weight:800;color:#e2e8f0;font-size:16px">Optimisation continue</span>
+                    <span style="font-size:var(--fs-xs);color:var(--text-faint);background:#1e293b;padding:2px 8px;border-radius:20px;margin-left:4px">Continu</span>
+                </div>
+                <p style="color:var(--text-muted);font-size:13px;line-height:1.65;margin:8px 0 12px;max-width:680px">Suivi des indicateurs de performance, ajustements de configuration, mises à jour fonctionnelles, et revues trimestrielles avec votre responsable de compte OPES.</p>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Rapports de performance mensuels
+                    </span>
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Mises à jour fonctionnelles
+                    </span>
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Revues trimestrielles
+                    </span>
+                                        <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
+                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>Roadmap d&#039;évolution
+                    </span>
+                                    </div>
+            </div>
+        </div>
+            </div>
+</div>
+
+<div class="divider"></div>
+
+
+<div class="section" style="max-width:960px;margin:0 auto;text-align:center">
+    <div class="section-label" style="justify-content:center;margin-bottom:16px">
+        <i data-lucide="star" style="width:12px;height:12px"></i>
+        Notre différence
+    </div>
+    <h2 class="section-title">Un accompagnement pensé pour l&#039;Afrique</h2>
+    <div class="pi-grid" style="max-width:900px;margin:32px auto 0">
+                        <div class="pi-card" style="flex-direction:column;align-items:flex-start">
+            <div style="width:40px;height:40px;border-radius:10px;background:#00C89615;display:flex;align-items:center;justify-content:center;margin-bottom:12px">
+                <i data-lucide="users" style="width:18px;height:18px;color:#00C896"></i>
+            </div>
+            <div style="font-weight:700;color:#e2e8f0;font-size:14px;margin-bottom:6px">Équipe locale</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.6">Ingénieurs et formateurs basés à Douala. Pas de délais de voyage ni de décalage horaire.</div>
+        </div>
+                <div class="pi-card" style="flex-direction:column;align-items:flex-start">
+            <div style="width:40px;height:40px;border-radius:10px;background:#1A6FE815;display:flex;align-items:center;justify-content:center;margin-bottom:12px">
+                <i data-lucide="language" style="width:18px;height:18px;color:#1A6FE8"></i>
+            </div>
+            <div style="font-weight:700;color:#e2e8f0;font-size:14px;margin-bottom:6px">Bilingue FR/EN</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.6">Tous les supports, formations et communications disponibles en français et en anglais.</div>
+        </div>
+                <div class="pi-card" style="flex-direction:column;align-items:flex-start">
+            <div style="width:40px;height:40px;border-radius:10px;background:#00C89615;display:flex;align-items:center;justify-content:center;margin-bottom:12px">
+                <i data-lucide="wifi-off" style="width:18px;height:18px;color:#00C896"></i>
+            </div>
+            <div style="font-weight:700;color:#e2e8f0;font-size:14px;margin-bottom:6px">Mode hors ligne</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.6">OPES fonctionne sans connexion Internet permanente — conçu pour les réalités africaines.</div>
+        </div>
+                <div class="pi-card" style="flex-direction:column;align-items:flex-start">
+            <div style="width:40px;height:40px;border-radius:10px;background:#1A6FE815;display:flex;align-items:center;justify-content:center;margin-bottom:12px">
+                <i data-lucide="smartphone" style="width:18px;height:18px;color:#1A6FE8"></i>
+            </div>
+            <div style="font-weight:700;color:#e2e8f0;font-size:14px;margin-bottom:6px">Mobile Money intégré</div>
+            <div style="font-size:13px;color:var(--text-muted);line-height:1.6">Paiements MTN MoMo et Orange Money natifs — aucun terminal bancaire requis.</div>
+        </div>
+            </div>
+</div>
+
+
+<div class="demo-section">
+    <h2>Prêt à démarrer votre déploiement ?</h2>
+    <p>Contactez notre équipe pour une évaluation gratuite de votre établissement et un plan de déploiement personnalisé.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:12px">
+        <a href="https://opeshealthsystems.com/fr/contact" class="btn-primary">
+            Demander une évaluation <i data-lucide="arrow-right" style="width:15px;height:15px"></i>
+        </a>
+        <a href="https://opeshealthsystems.com/fr/support" class="btn-secondary">
+            Voir les niveaux de support <i data-lucide="headphones" style="width:15px;height:15px;color:var(--text-muted)"></i>
+        </a>
+    </div>
+</div>
+    </main>
+
+    <footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <a href="https://opeshealthsystems.com/fr" class="nav-logo" style="text-decoration:none;margin-bottom:10px">
+                <img class="site-seal" src="https://opeshealthsystems.com/images/opes-seal.png" alt="" width="44" height="44" style="object-fit:contain;flex-shrink:0">
+                <div class="nav-logo-text">
+                    <div class="nav-logo-name">OPES <span>Health</span> Systems</div>
+                </div>
+            </a>
+            <p>Des logiciels de santé conçus au Cameroun pour les équipes de soins en Afrique. Consultez le catalogue et contactez notre équipe pour connaître les disponibilités.</p>
+        </div>
+
+        <div class="footer-col">
+            <h2>Produits</h2>
+            <a href="https://opeshealthsystems.com/fr/health-os" class="footer-highlight">
+                <i data-lucide="layers" style="width:12px;height:12px"></i>OPES Health OS →
+            </a>
+            <a href="https://opeshealthsystems.com/fr/products/opescare">
+                <i data-lucide="fingerprint" style="width:12px;height:12px"></i>OPESCare · Health ID
+            </a>
+            <a href="https://opeshealthsystems.com/fr/products/opes-emr">
+                <i data-lucide="stethoscope" style="width:12px;height:12px"></i>OPES EMR
+            </a>
+            <a href="https://opeshealthsystems.com/fr/products/opes-hospital-his">
+                <i data-lucide="hospital" style="width:12px;height:12px"></i>OPES Hospital HIS
+            </a>
+            <a href="https://opeshealthsystems.com/fr/products/opes-triage">
+                <i data-lucide="timer" style="width:12px;height:12px"></i>Opes Triage
+            </a>
+            <a href="https://opeshealthsystems.com/fr/products" class="footer-highlight">
+                <i data-lucide="layout-grid" style="width:12px;height:12px"></i>Voir le catalogue →
+            </a>
+        </div>
+
+        <div class="footer-col">
+            <h2>Plateforme</h2>
+            <a href="https://opeshealthsystems.com/fr/markets">Marchés CEMAC</a>
+            <a href="https://opeshealthsystems.com/fr/architecture">
+                <i data-lucide="cpu" style="width:12px;height:12px"></i>Architecture
+            </a>
+            <a href="https://opeshealthsystems.com/fr/architecture-diagrams">
+                <i data-lucide="git-branch" style="width:12px;height:12px"></i>Diagrammes architecture
+            </a>
+            <a href="https://opeshealthsystems.com/fr/implementation">
+                <i data-lucide="map" style="width:12px;height:12px"></i>Implémentation
+            </a>
+            <a href="https://opeshealthsystems.com/fr/support">
+                <i data-lucide="headphones" style="width:12px;height:12px"></i>Support & SLA
+            </a>
+            <a href="https://opeshealthsystems.com/fr/academy">
+                <i data-lucide="graduation-cap" style="width:12px;height:12px"></i>OPES Academy
+            </a>
+            <a href="https://opeshealthsystems.com/fr/clinical-governance">
+                <i data-lucide="heart-pulse" style="width:12px;height:12px"></i>Gouvernance clinique
+            </a>
+            <a href="https://opeshealthsystems.com/fr/interoperability">
+                <i data-lucide="share-2" style="width:12px;height:12px"></i>Interopérabilité
+            </a>
+            <a href="https://opeshealthsystems.com/fr/quality">
+                <i data-lucide="badge-check" style="width:12px;height:12px"></i>Qualité (SGQ)
+            </a>
+                        <a href="https://opeshealthsystems.com/fr/national-platform">
+                <i data-lucide="building-2" style="width:12px;height:12px"></i>Plateforme nationale
+            </a>
+        </div>
+
+        <div class="footer-col">
+            <h2>Entreprise</h2>
+            <a href="https://opeshealthsystems.com/fr/about">
+                <i data-lucide="info" style="width:12px;height:12px"></i>À propos d&#039;OPES
+            </a>
+                        <a href="https://opeshealthsystems.com/fr/partner-program">
+                <i data-lucide="handshake" style="width:12px;height:12px"></i>Programme partenaires
+            </a>
+            <a href="https://opeshealthsystems.com/fr/partnerships">
+                <i data-lucide="handshake" style="width:12px;height:12px"></i>Partenariat
+            </a>
+            <a href="https://opeshealthsystems.com/fr/become-a-partner">
+                <i data-lucide="user-plus" style="width:12px;height:12px"></i>Devenir partenaire
+            </a>
+            <a href="https://opeshealthsystems.com/fr/join-testers">
+                <i data-lucide="flask-conical" style="width:12px;height:12px"></i>Rejoindre les testeurs
+            </a>
+            <a href="https://opeshealthsystems.com/fr/mobile-clinic">
+                <i data-lucide="heart" style="width:12px;height:12px"></i>Cliniques mobiles
+            </a>
+            <a href="https://opeshealthsystems.com/fr/book-demo" style="color:#00C896;font-weight:600">
+                <i data-lucide="calendar" style="width:12px;height:12px"></i>Réserver une démo
+            </a>
+            <a href="https://opeshealthsystems.com/fr/pricing">
+                <i data-lucide="tag" style="width:12px;height:12px"></i>Tarification
+            </a>
+            <a href="https://opeshealthsystems.com/fr/blog">
+                <i data-lucide="rss" style="width:12px;height:12px"></i>Blog
+            </a>
+            <a href="https://opeshealthsystems.com/fr/faq">
+                <i data-lucide="help-circle" style="width:12px;height:12px"></i>FAQ
+            </a>
+            <a href="https://opeshealthsystems.com/fr/contact">
+                <i data-lucide="mail" style="width:12px;height:12px"></i>Contact
+            </a>
+        </div>
+
+        <div class="footer-col">
+            <h2>Juridique</h2>
+            <a href="https://opeshealthsystems.com/fr/privacy">
+                <i data-lucide="shield" style="width:12px;height:12px"></i>Politique de confidentialité
+            </a>
+            <a href="https://opeshealthsystems.com/fr/terms">
+                <i data-lucide="file-text" style="width:12px;height:12px"></i>Conditions d&#039;utilisation
+            </a>
+            <a href="https://opeshealthsystems.com/fr/compliance">
+                <i data-lucide="scale" style="width:12px;height:12px"></i>Conformité &amp; confiance
+            </a>
+            <a href="mailto:contact@opeshealthsystems.com">
+                <i data-lucide="mail" style="width:12px;height:12px"></i>contact@opeshealthsystems.com
+            </a>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 OPES Health Systems SARL · Bonamousadi, Douala, Cameroon · OHADA Law</p>
+        <div class="footer-lang">
+            <a href="https://opeshealthsystems.com/en/implementation" class="">EN</a>
+            <a href="https://opeshealthsystems.com/fr/implementation" class="active">FR</a>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://opeshealthsystems.com/vendor/lucide.min.js"></script>
+    <script>lucide.createIcons();</script>
+        <script type="application/ld+json">{
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://opeshealthsystems.com#organization",
+    "name": "OPES Health Systems",
+    "legalName": "OPES Health Systems SARL",
+    "url": "https://opeshealthsystems.com",
+    "logo": "https://opeshealthsystems.com/images/opes-seal.png",
+    "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Bonamousadi, Douala",
+        "addressCountry": "CM"
+    },
+    "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "sales",
+        "email": "contact@opeshealthsystems.com",
+        "availableLanguage": [
+            "French",
+            "English"
+        ]
+    },
+    "sameAs": []
+}</script>
+</body>
+</html>

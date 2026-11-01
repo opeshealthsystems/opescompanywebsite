@@ -1,0 +1,13 @@
+{
+  "regression": {
+    "tests": 70,
+    "passed": 70,
+    "assertions": 2246
+  },
+  "finalTitleAndResetChecks": {
+    "tests": 11,
+    "passed": 11,
+    "assertions": 114
+  },
+  "note": "The final 11 tests overlap the regression suite; counts are not additive."
+}

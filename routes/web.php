@@ -15,6 +15,12 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
+Route::prefix('oauth')->name('passport.')->middleware([\App\Http\Middleware\RequirePkceAuthorization::class, 'auth', 'throttle:oauth-token'])->group(function () {
+    Route::get('authorize', [\Laravel\Passport\Http\Controllers\AuthorizationController::class, 'authorize'])->name('authorizations.authorize');
+    Route::post('authorize', [\Laravel\Passport\Http\Controllers\ApproveAuthorizationController::class, 'approve'])->name('authorizations.approve');
+    Route::delete('authorize', [\Laravel\Passport\Http\Controllers\DenyAuthorizationController::class, 'deny'])->name('authorizations.deny');
+});
+
 // Bare root → locale chosen earlier (cookie) → the visitor's device language → default.
 Route::get('/', function (\Illuminate\Http\Request $request) {
     $supported = config('locale.supported');
@@ -71,8 +77,11 @@ Route::prefix('{locale}')
     ->group(function () {
 
         // Public marketing pages
+        Route::get('/login', fn () => redirect()->route('login', [], 301));
+        Route::get('/practitioners/register', fn () => redirect()->route('register', [], 301));
         Route::get('/',               [HomeController::class,    'index'])->name('home');
         Route::get('/products',       [ProductController::class, 'index'])->name('products.index');
+        Route::view('/developers', 'pages.developers')->name('developers');
         Route::get('/products/{slug}',[ProductController::class, 'show'])->name('product.show');
         Route::get('/products/{slug}/brochure', [\App\Http\Controllers\BrochureController::class, 'download'])->name('product.brochure');
         Route::get('/contact',        [ContactController::class, 'show'])->name('contact');
@@ -281,8 +290,8 @@ Route::prefix('{locale}')
                 Route::post('/performance',              [\App\Http\Controllers\HR\PerformanceController::class, 'store'])->name('performance.store');
                 Route::get('/departments',               [\App\Http\Controllers\HR\DepartmentController::class,  'index'])->name('departments.index');
                 Route::post('/departments/{dept}/head',  [\App\Http\Controllers\HR\DepartmentController::class,  'updateHead'])->name('departments.head');
-                Route::get('/profile',   [\App\Http\Controllers\Hr\ProfileController::class, 'show'])->name('profile');
-                Route::patch('/profile', [\App\Http\Controllers\Hr\ProfileController::class, 'update'])->name('profile.update');
+                Route::get('/profile',   [\App\Http\Controllers\HR\ProfileController::class, 'show'])->name('profile');
+                Route::patch('/profile', [\App\Http\Controllers\HR\ProfileController::class, 'update'])->name('profile.update');
             });
 
         // Accountant portal

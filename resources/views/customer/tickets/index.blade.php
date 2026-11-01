@@ -53,7 +53,7 @@
                     @endphp
                     <tr style="border-bottom:1px solid #1e293b;">
                         <td style="padding:0.75rem;">
-                            <span style="color:#00C896;font-family:monospace;font-size:0.8rem;">{{ $ticket->reference_number }}</span>
+                            <span style="color:var(--brand-accent);font-family:monospace;font-size:0.8rem;">{{ $ticket->reference_number }}</span>
                         </td>
                         <td style="padding:0.75rem;">
                             <span style="color:#e2e8f0;font-size:0.875rem;">{{ Str::limit($ticket->subject, 45) }}</span>

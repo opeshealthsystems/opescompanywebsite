@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PerformanceReviewResource\Pages;
 use App\Models\PerformanceReview;
 use App\Models\User;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Infolists;
@@ -57,7 +58,7 @@ class PerformanceReviewResource extends Resource
                     ->required()->default(now())->native(false),
 
                 Forms\Components\Select::make('status')
-                    ->options(PerformanceReview::statusOptions())->default('draft')->required(),
+                    ->options(PerformanceReview::statusOptions())->default('draft')->disabled()->dehydrated(false)->required(),
             ]),
 
             Forms\Components\Section::make('Ratings (1-5)')->columns(3)->schema([
@@ -114,12 +115,12 @@ class PerformanceReviewResource extends Resource
                     ->label('Submit')->icon('heroicon-o-paper-airplane')->color('info')
                     ->requiresConfirmation()
                     ->hidden(fn (PerformanceReview $record) => $record->status !== 'draft')
-                    ->action(fn (PerformanceReview $record) => $record->update(['status'=>'submitted'])),
+                    ->action(fn (PerformanceReview $record) => AdminWorkflowAdapter::run('admin.workforce.performanceReviews.submit', parameters: ['review' => $record])),
                 Tables\Actions\Action::make('acknowledge')
                     ->label('Acknowledge')->icon('heroicon-o-check-badge')->color('success')
                     ->requiresConfirmation()
                     ->hidden(fn (PerformanceReview $record) => $record->status !== 'submitted')
-                    ->action(fn (PerformanceReview $record) => $record->update(['status'=>'acknowledged','acknowledged_at'=>now()])),
+                    ->action(fn (PerformanceReview $record) => AdminWorkflowAdapter::run('admin.workforce.performanceReviews.acknowledge', parameters: ['review' => $record])),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);

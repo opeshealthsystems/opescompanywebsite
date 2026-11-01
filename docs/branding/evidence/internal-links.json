@@ -1,0 +1,458 @@
+[
+  {
+    "path": "/en",
+    "status": 200
+  },
+  {
+    "path": "/en/products",
+    "status": 200
+  },
+  {
+    "path": "/en/health-os",
+    "status": 200
+  },
+  {
+    "path": "/en/products/opescare",
+    "status": 200
+  },
+  {
+    "path": "/en/products/opes-emr",
+    "status": 200
+  },
+  {
+    "path": "/en/products/opes-hospital-his",
+    "status": 200
+  },
+  {
+    "path": "/en/products/opes-lab",
+    "status": 200
+  },
+  {
+    "path": "/en/products/pharmis",
+    "status": 200
+  },
+  {
+    "path": "/en/products/radis",
+    "status": 200
+  },
+  {
+    "path": "/en/solutions",
+    "status": 200
+  },
+  {
+    "path": "/en/national-platform",
+    "status": 200
+  },
+  {
+    "path": "/en/markets",
+    "status": 200
+  },
+  {
+    "path": "/en/markets/gabon",
+    "status": 200
+  },
+  {
+    "path": "/en/markets/congo-brazzaville",
+    "status": 200
+  },
+  {
+    "path": "/en/markets/chad",
+    "status": 200
+  },
+  {
+    "path": "/en/markets/central-african-republic",
+    "status": 200
+  },
+  {
+    "path": "/en/markets/equatorial-guinea",
+    "status": 200
+  },
+  {
+    "path": "/en/architecture",
+    "status": 200
+  },
+  {
+    "path": "/en/architecture-diagrams",
+    "status": 200
+  },
+  {
+    "path": "/en/implementation",
+    "status": 200
+  },
+  {
+    "path": "/en/support",
+    "status": 200
+  },
+  {
+    "path": "/en/academy",
+    "status": 200
+  },
+  {
+    "path": "/en/courses",
+    "status": 200
+  },
+  {
+    "path": "/en/practitioners",
+    "status": 200
+  },
+  {
+    "path": "/en/compliance",
+    "status": 200
+  },
+  {
+    "path": "/en/clinical-governance",
+    "status": 200
+  },
+  {
+    "path": "/en/interoperability",
+    "status": 200
+  },
+  {
+    "path": "/en/quality",
+    "status": 200
+  },
+  {
+    "path": "/en/about",
+    "status": 200
+  },
+  {
+    "path": "/en/partnerships",
+    "status": 200
+  },
+  {
+    "path": "/en/pricing",
+    "status": 200
+  },
+  {
+    "path": "/en/contact",
+    "status": 200
+  },
+  {
+    "path": "/fr",
+    "status": 200
+  },
+  {
+    "path": "/en/book-demo",
+    "status": 200
+  },
+  {
+    "path": "/en/products/uhc-is",
+    "status": 200
+  },
+  {
+    "path": "/en/products/opes-triage",
+    "status": 200
+  },
+  {
+    "path": "/en/products/cardis",
+    "status": 200
+  },
+  {
+    "path": "/en/products/dentis",
+    "status": 200
+  },
+  {
+    "path": "/en/products/dermis",
+    "status": 200
+  },
+  {
+    "path": "/en/products/endois",
+    "status": 200
+  },
+  {
+    "path": "/en/products/gynobsis",
+    "status": 200
+  },
+  {
+    "path": "/en/products/mhis",
+    "status": 200
+  },
+  {
+    "path": "/en/products/ndis",
+    "status": 200
+  },
+  {
+    "path": "/en/products/ophis",
+    "status": 200
+  },
+  {
+    "path": "/en/products/orthois",
+    "status": 200
+  },
+  {
+    "path": "/en/products/paedis",
+    "status": 200
+  },
+  {
+    "path": "/en/products/rehabis",
+    "status": 200
+  },
+  {
+    "path": "/en/products/sltis",
+    "status": 200
+  },
+  {
+    "path": "/en/products/opes-cdms",
+    "status": 200
+  },
+  {
+    "path": "/en/products/rcmis",
+    "status": 200
+  },
+  {
+    "path": "/en/blog",
+    "status": 200
+  },
+  {
+    "path": "/en/partner-program",
+    "status": 200
+  },
+  {
+    "path": "/en/become-a-partner",
+    "status": 200
+  },
+  {
+    "path": "/en/join-testers",
+    "status": 200
+  },
+  {
+    "path": "/en/mobile-clinic",
+    "status": 200
+  },
+  {
+    "path": "/en/faq",
+    "status": 200
+  },
+  {
+    "path": "/en/privacy",
+    "status": 200
+  },
+  {
+    "path": "/en/terms",
+    "status": 200
+  },
+  {
+    "path": "/fr/products",
+    "status": 200
+  },
+  {
+    "path": "/fr/health-os",
+    "status": 200
+  },
+  {
+    "path": "/fr/products/opescare",
+    "status": 200
+  },
+  {
+    "path": "/fr/products/opes-emr",
+    "status": 200
+  },
+  {
+    "path": "/fr/products/opes-hospital-his",
+    "status": 200
+  },
+  {
+    "path": "/fr/products/opes-lab",
+    "status": 200
+  },
+  {
+    "path": "/fr/products/pharmis",
+    "status": 200
+  },
+  {
+    "path": "/fr/products/radis",
+    "status": 200
+  },
+  {
+    "path": "/fr/solutions",
+    "status": 200
+  },
+  {
+    "path": "/fr/national-platform",
+    "status": 200
+  },
+  {
+    "path": "/fr/markets",
+    "status": 200
+  },
+  {
+    "path": "/fr/markets/gabon",
+    "status": 200
+  },
+  {
+    "path": "/fr/markets/congo-brazzaville",
+    "status": 200
+  },
+  {
+    "path": "/fr/markets/chad",
+    "status": 200
+  },
+  {
+    "path": "/fr/markets/central-african-republic",
+    "status": 200
+  },
+  {
+    "path": "/fr/markets/equatorial-guinea",
+    "status": 200
+  },
+  {
+    "path": "/fr/architecture",
+    "status": 200
+  },
+  {
+    "path": "/fr/architecture-diagrams",
+    "status": 200
+  },
+  {
+    "path": "/fr/implementation",
+    "status": 200
+  },
+  {
+    "path": "/fr/support",
+    "status": 200
+  },
+  {
+    "path": "/fr/academy",
+    "status": 200
+  },
+  {
+    "path": "/fr/courses",
+    "status": 200
+  },
+  {
+    "path": "/fr/practitioners",
+    "status": 200
+  },
+  {
+    "path": "/fr/compliance",
+    "status": 200
+  },
+  {
+    "path": "/fr/clinical-governance",
+    "status": 200
+  },
+  {
+    "path": "/fr/interoperability",
+    "status": 200
+  },
+  {
+    "path": "/fr/quality",
+    "status": 200
+  },
+  {
+    "path": "/fr/about",
+    "status": 200
+  },
+  {
+    "path": "/fr/partnerships",
+    "status": 200
+  },
+  {
+    "path": "/fr/pricing",
+    "status": 200
+  },
+  {
+    "path": "/fr/contact",
+    "status": 200
+  },
+  {
+    "path": "/fr/book-demo",
+    "status": 200
+  },
+  {
+    "path": "/fr/products/uhc-is",
+    "status": 200
+  },
+  {
+    "path": "/fr/products/opes-triage",
+    "status": 200
+  },
+  {
+    "path": "/fr/products/cardis",
+    "status": 200
+  },
+  {
+    "path": "/fr/products/dentis",
+    "status": 200
+  },
+  {
+    "path": "/fr/products/dermis",
+    "status": 200
+  },
+  {
+    "path": "/fr/products/endois",
+    "status": 200
+  },
+  {
+    "path": "/fr/products/gynobsis",
+    "status": 200
+  },
+  {
+    "path": "/fr/products/mhis",
+    "status": 200
+  },
+  {
+    "path": "/fr/products/ndis",
+    "status": 200
+  },
+  {
+    "path": "/fr/products/ophis",
+    "status": 200
+  },
+  {
+    "path": "/fr/products/orthois",
+    "status": 200
+  },
+  {
+    "path": "/fr/products/paedis",
+    "status": 200
+  },
+  {
+    "path": "/fr/products/rehabis",
+    "status": 200
+  },
+  {
+    "path": "/fr/products/sltis",
+    "status": 200
+  },
+  {
+    "path": "/fr/products/opes-cdms",
+    "status": 200
+  },
+  {
+    "path": "/fr/products/rcmis",
+    "status": 200
+  },
+  {
+    "path": "/fr/blog",
+    "status": 200
+  },
+  {
+    "path": "/fr/partner-program",
+    "status": 200
+  },
+  {
+    "path": "/fr/become-a-partner",
+    "status": 200
+  },
+  {
+    "path": "/fr/join-testers",
+    "status": 200
+  },
+  {
+    "path": "/fr/mobile-clinic",
+    "status": 200
+  },
+  {
+    "path": "/fr/faq",
+    "status": 200
+  },
+  {
+    "path": "/fr/privacy",
+    "status": 200
+  },
+  {
+    "path": "/fr/terms",
+    "status": 200
+  }
+]

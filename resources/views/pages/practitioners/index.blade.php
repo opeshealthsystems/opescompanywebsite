@@ -1,4 +1,4 @@
-<x-layouts.app>
+<x-layouts.app :indexable="$practitioners->total() > 0">
 @php $locale = app()->getLocale(); @endphp
 <section class="py-16 px-4" style="min-height:80vh">
     <div style="max-width:1200px;margin:0 auto">
@@ -50,7 +50,7 @@
                class="bg-slate-900 border border-slate-800 hover:border-emerald-700 rounded-xl p-6 flex flex-col gap-4 transition-colors no-underline group">
                 <div class="flex items-start justify-between">
                     <div class="w-14 h-14 rounded-full flex items-center justify-center text-xl font-bold text-white flex-shrink-0"
-                         style="background:linear-gradient(135deg,#00C896,#1A6FE8)">
+                         style="background:var(--surface)">
                         {{ strtoupper(substr($profile->user?->name ?? '?', 0, 1)) }}
                     </div>
                     <div class="flex flex-col items-end gap-1">

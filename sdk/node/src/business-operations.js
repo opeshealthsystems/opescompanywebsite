@@ -1,0 +1,3532 @@
+export const businessOperations = Object.freeze({
+    "accountant_dashboardcontroller_index": {
+        "method": "GET",
+        "path": "/accountant/dashboard",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "accountant_expensecontroller_approve": {
+        "method": "POST",
+        "path": "/accountant/expenses/{id}/approve",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "id"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "accountant_expensecontroller_index": {
+        "method": "GET",
+        "path": "/accountant/expenses",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "accountant_expensecontroller_reject": {
+        "method": "POST",
+        "path": "/accountant/expenses/{id}/reject",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "id"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "accountant_invoicecontroller_index": {
+        "method": "GET",
+        "path": "/accountant/invoices",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "accountant_invoicecontroller_markPaid": {
+        "method": "POST",
+        "path": "/accountant/invoices/{invoice}/mark-paid",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "invoice"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "accountant_invoicecontroller_show": {
+        "method": "GET",
+        "path": "/accountant/invoices/{invoice}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "invoice"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "accountant_payrollcontroller_index": {
+        "method": "GET",
+        "path": "/accountant/payroll",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "accountant_payrollcontroller_show": {
+        "method": "GET",
+        "path": "/accountant/payroll/{run}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "run"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "accountant_profilecontroller_show": {
+        "method": "GET",
+        "path": "/accountant/profile",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "accountant_profilecontroller_update": {
+        "method": "PATCH",
+        "path": "/accountant/profile",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "accountant_reportcontroller_index": {
+        "method": "GET",
+        "path": "/accountant/reports",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_content_articles_publish": {
+        "method": "POST",
+        "path": "/content/articles/{article}/publish",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "article"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_contracts_activate": {
+        "method": "POST",
+        "path": "/contracts/{contract}/activate",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "contract"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_contracts_terminate": {
+        "method": "POST",
+        "path": "/contracts/{contract}/terminate",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "contract"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_documents_markSent": {
+        "method": "POST",
+        "path": "/documents/{document}/mark-sent",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "document"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_documents_void": {
+        "method": "POST",
+        "path": "/documents/{document}/void",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "document"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_enquiries_leads_sendFollowUp": {
+        "method": "POST",
+        "path": "/admin/enquiries/leads/{lead}/follow-up",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "lead"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_finance_creditNotes_issue": {
+        "method": "POST",
+        "path": "/finance/credit-notes/{creditNote}/issue",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "creditNote"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_creditNotes_void": {
+        "method": "POST",
+        "path": "/finance/credit-notes/{creditNote}/void",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "creditNote"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_expenses_approve": {
+        "method": "POST",
+        "path": "/finance/expenses/{expense}/approve",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "expense"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_expenses_markPaid": {
+        "method": "POST",
+        "path": "/finance/expenses/{expense}/mark-paid",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "expense"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_invoiceTemplates_generate": {
+        "method": "POST",
+        "path": "/finance/invoice-templates/{invoiceTemplate}/generate-invoice",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "invoiceTemplate"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_invoices_markManySent": {
+        "method": "POST",
+        "path": "/finance/invoices/mark-sent",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_finance_invoices_markOverdue": {
+        "method": "POST",
+        "path": "/finance/invoices/{invoice}/mark-overdue",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "invoice"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_invoices_markPaid": {
+        "method": "POST",
+        "path": "/finance/invoices/{invoice}/mark-paid",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "invoice"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_invoices_markSent": {
+        "method": "POST",
+        "path": "/finance/invoices/{invoice}/mark-sent",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "invoice"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_payrollEntries_markManyPaid": {
+        "method": "POST",
+        "path": "/finance/payroll-runs/{run}/entries/mark-paid",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "run"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_finance_payrollEntries_markPaid": {
+        "method": "POST",
+        "path": "/finance/payroll-runs/{run}/entries/{entry}/mark-paid",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "run",
+            "entry"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_payrollRuns_complete": {
+        "method": "POST",
+        "path": "/finance/payroll-runs/{run}/complete",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "run"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_payrollRuns_generateEntries": {
+        "method": "POST",
+        "path": "/finance/payroll-runs/{run}/generate-entries",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "run"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_purchaseOrders_approve": {
+        "method": "POST",
+        "path": "/finance/purchase-orders/{purchaseOrder}/approve",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "purchaseOrder"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_purchaseOrders_receive": {
+        "method": "POST",
+        "path": "/finance/purchase-orders/{purchaseOrder}/receive",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "purchaseOrder"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_quotes_accept": {
+        "method": "POST",
+        "path": "/finance/quotes/{quote}/accept",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "quote"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_quotes_markSent": {
+        "method": "POST",
+        "path": "/finance/quotes/{quote}/mark-sent",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "quote"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_supplierBills_approve": {
+        "method": "POST",
+        "path": "/finance/supplier-bills/{supplierBill}/approve",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "supplierBill"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_supplierBills_markPaid": {
+        "method": "POST",
+        "path": "/finance/supplier-bills/{supplierBill}/mark-paid",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "supplierBill"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_identity_users_sendWelcome": {
+        "method": "POST",
+        "path": "/admin/users/{user}/send-welcome",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "user"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_learning_enrollments_complete": {
+        "method": "POST",
+        "path": "/learning/enrollments/{enrollment}/complete",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "enrollment"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_practitioners_applications_approve": {
+        "method": "POST",
+        "path": "/practitioners/applications/{application}/approve",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "application"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_practitioners_applications_placeInCohort": {
+        "method": "POST",
+        "path": "/practitioners/applications/{application}/place-in-cohort",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "application"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_practitioners_applications_reject": {
+        "method": "POST",
+        "path": "/practitioners/applications/{application}/reject",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "application"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_practitioners_findings_publish": {
+        "method": "POST",
+        "path": "/practitioners/findings/{finding}/publish",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "finding"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_practitioners_findings_unpublish": {
+        "method": "POST",
+        "path": "/practitioners/findings/{finding}/unpublish",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "finding"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_practitioners_profiles_verify": {
+        "method": "POST",
+        "path": "/practitioners/profiles/{profile}/verify",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "profile"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_practitioners_suggestions_respond": {
+        "method": "POST",
+        "path": "/practitioners/suggestions/{suggestion}/respond",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "suggestion"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_recruitment_applications_hire": {
+        "method": "POST",
+        "path": "/recruitment/applications/{application}/hire",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "application"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_recruitment_applications_makeOffer": {
+        "method": "POST",
+        "path": "/recruitment/applications/{application}/make-offer",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "application"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_recruitment_applications_reject": {
+        "method": "POST",
+        "path": "/recruitment/applications/{application}/reject",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "application"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_recruitment_applications_scheduleInterview": {
+        "method": "POST",
+        "path": "/recruitment/applications/{application}/schedule-interview",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "application"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_recruitment_applications_shortlist": {
+        "method": "POST",
+        "path": "/recruitment/applications/{application}/shortlist",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "application"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_recruitment_openings_close": {
+        "method": "POST",
+        "path": "/recruitment/openings/{opening}/close",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "opening"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_reports_workforce_summary": {
+        "method": "GET",
+        "path": "/admin/reports/workforce-summary",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_risk_mitigate": {
+        "method": "POST",
+        "path": "/risk/{risk}/mitigate",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "risk"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_settings_show": {
+        "method": "GET",
+        "path": "/admin/company-settings",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_settings_update": {
+        "method": "POST",
+        "path": "/admin/company-settings",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_support_bugReports_respond": {
+        "method": "POST",
+        "path": "/practitioners/bug-reports/{bugReport}/respond",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "bugReport"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_support_serviceRequests_complete": {
+        "method": "POST",
+        "path": "/support/service-requests/{serviceRequest}/complete",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "serviceRequest"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_support_serviceRequests_confirm": {
+        "method": "POST",
+        "path": "/support/service-requests/{serviceRequest}/confirm-assign",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "serviceRequest"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_support_tickets_reply": {
+        "method": "POST",
+        "path": "/admin/support/tickets/{ticket}/reply",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "ticket"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_support_tickets_status": {
+        "method": "POST",
+        "path": "/admin/support/tickets/{ticket}/status",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "ticket"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_validation_certificates_inviteToCouncil": {
+        "method": "POST",
+        "path": "/validation/certificates/{certificate}/invite-to-council",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "certificate"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_validation_developerTasks_assign": {
+        "method": "POST",
+        "path": "/validation/developer-tasks/{task}/assign",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "task"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_validation_developerTasks_markFixed": {
+        "method": "POST",
+        "path": "/validation/developer-tasks/{task}/mark-fixed",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "task"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_validation_developerTasks_reopen": {
+        "method": "POST",
+        "path": "/validation/developer-tasks/{task}/reopen",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "task"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_developerTasks_start": {
+        "method": "POST",
+        "path": "/validation/developer-tasks/{task}/start",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "task"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_developerTasks_wontFix": {
+        "method": "POST",
+        "path": "/validation/developer-tasks/{task}/wont-fix",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "task"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_validation_finalEvaluations_create": {
+        "method": "POST",
+        "path": "/validation/final-evaluations",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_validation_finalEvaluations_issueCertificate": {
+        "method": "POST",
+        "path": "/validation/final-evaluations/{evaluation}/issue-certificate",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "evaluation"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_finalEvaluations_list": {
+        "method": "GET",
+        "path": "/validation/final-evaluations",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_finalEvaluations_update": {
+        "method": "POST",
+        "path": "/validation/final-evaluations/{evaluation}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "evaluation"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_validation_issues_clinicalReview": {
+        "method": "POST",
+        "path": "/validation/issues/{issue}/clinical-review",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "issue"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_validation_issues_close": {
+        "method": "POST",
+        "path": "/validation/issues/{issue}/close",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "issue"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_issues_productDecision": {
+        "method": "POST",
+        "path": "/validation/issues/{issue}/product-decision",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "issue"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_validation_issues_sendToProductReview": {
+        "method": "POST",
+        "path": "/validation/issues/{issue}/send-to-product-review",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "issue"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_leaves_approve": {
+        "method": "POST",
+        "path": "/admin/leaves/{leave}/approve",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "leave"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_leaves_bulkApprove": {
+        "method": "POST",
+        "path": "/admin/leaves/bulk-approve",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_leaves_bulkReject": {
+        "method": "POST",
+        "path": "/admin/leaves/bulk-reject",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_leaves_reject": {
+        "method": "POST",
+        "path": "/admin/leaves/{leave}/reject",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "leave"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_milestones_complete": {
+        "method": "POST",
+        "path": "/operations/milestones/{milestone}/complete",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "milestone"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_performanceReviews_acknowledge": {
+        "method": "POST",
+        "path": "/admin/performance-reviews/{review}/acknowledge",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "review"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_performanceReviews_submit": {
+        "method": "POST",
+        "path": "/admin/performance-reviews/{review}/submit",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "review"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_training_complete": {
+        "method": "POST",
+        "path": "/training-records/{trainingRecord}/complete",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "trainingRecord"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "administration_licenses_create": {
+        "method": "POST",
+        "path": "/administration/licenses",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "administration_licenses_delete": {
+        "method": "DELETE",
+        "path": "/administration/licenses/{license}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "license"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "administration_licenses_index": {
+        "method": "GET",
+        "path": "/administration/licenses",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "administration_licenses_reactivate": {
+        "method": "POST",
+        "path": "/administration/licenses/{license}/reactivate",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "license"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "administration_licenses_show": {
+        "method": "GET",
+        "path": "/administration/licenses/{license}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "license"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "administration_licenses_suspend": {
+        "method": "POST",
+        "path": "/administration/licenses/{license}/suspend",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "license"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "administration_licenses_update": {
+        "method": "PUT",
+        "path": "/administration/licenses/{license}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "license"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "administration_projects_create": {
+        "method": "POST",
+        "path": "/administration/projects",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "administration_projects_delete": {
+        "method": "DELETE",
+        "path": "/administration/projects/{project}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "project"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "administration_projects_index": {
+        "method": "GET",
+        "path": "/administration/projects",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "administration_projects_show": {
+        "method": "GET",
+        "path": "/administration/projects/{project}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "project"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "administration_projects_update": {
+        "method": "PUT",
+        "path": "/administration/projects/{project}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "project"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "blogcontroller_comment": {
+        "method": "POST",
+        "path": "/public/blog/{slug}/comment",
+        "authenticated": false,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "slug"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "blogcontroller_index": {
+        "method": "GET",
+        "path": "/public/blog",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "blogcontroller_like": {
+        "method": "POST",
+        "path": "/public/blog/{slug}/like",
+        "authenticated": false,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "slug"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "blogcontroller_share": {
+        "method": "POST",
+        "path": "/public/blog/{slug}/share",
+        "authenticated": false,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "slug"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "blogcontroller_show": {
+        "method": "GET",
+        "path": "/public/blog/{slug}",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "slug"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "brochurecontroller_download": {
+        "method": "GET",
+        "path": "/public/products/{slug}/brochure",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "slug"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "certificatepdfcontroller_download": {
+        "method": "GET",
+        "path": "/files/certificates/{certificate}/download",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "certificate"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "contractcontroller_pdf": {
+        "method": "GET",
+        "path": "/files/contracts/{contract}/pdf",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "contract"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_certificatecontroller_index": {
+        "method": "GET",
+        "path": "/customer/certificates",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_coursecontroller_enroll": {
+        "method": "POST",
+        "path": "/customer/courses/{course:slug}/enroll",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "course:slug"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_coursecontroller_index": {
+        "method": "GET",
+        "path": "/customer/courses",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_coursecontroller_show": {
+        "method": "GET",
+        "path": "/customer/courses/{course:slug}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "course:slug"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_dashboardcontroller_index": {
+        "method": "GET",
+        "path": "/customer/dashboard",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_documentcontroller_index": {
+        "method": "GET",
+        "path": "/customer/documents",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_documentcontroller_show": {
+        "method": "GET",
+        "path": "/customer/documents/{id}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "id"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_invoicecontroller_index": {
+        "method": "GET",
+        "path": "/customer/invoices",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_invoicecontroller_show": {
+        "method": "GET",
+        "path": "/customer/invoices/{id}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "id"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_knowledgebasecontroller_category": {
+        "method": "GET",
+        "path": "/customer/knowledge-base/category/{slug}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "slug"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_knowledgebasecontroller_index": {
+        "method": "GET",
+        "path": "/customer/knowledge-base",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_knowledgebasecontroller_show": {
+        "method": "GET",
+        "path": "/customer/knowledge-base/{slug}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "slug"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_lessoncontroller_markDone": {
+        "method": "POST",
+        "path": "/customer/courses/{course:slug}/lessons/{lesson}/done",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "course:slug",
+            "lesson"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_lessoncontroller_show": {
+        "method": "GET",
+        "path": "/customer/courses/{course:slug}/lessons/{lesson}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "course:slug",
+            "lesson"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_licensecontroller_index": {
+        "method": "GET",
+        "path": "/customer/licenses",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_licensecontroller_show": {
+        "method": "GET",
+        "path": "/customer/licenses/{id}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "id"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_profilecontroller_changePassword": {
+        "method": "PUT",
+        "path": "/customer/profile/password",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_profilecontroller_show": {
+        "method": "GET",
+        "path": "/customer/profile",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_profilecontroller_update": {
+        "method": "PUT",
+        "path": "/customer/profile",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "customer_servicerequestcontroller_create": {
+        "method": "GET",
+        "path": "/customer/service-requests/options",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_servicerequestcontroller_index": {
+        "method": "GET",
+        "path": "/customer/service-requests",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_servicerequestcontroller_show": {
+        "method": "GET",
+        "path": "/customer/service-requests/{serviceRequest}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "serviceRequest"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_servicerequestcontroller_store": {
+        "method": "POST",
+        "path": "/customer/service-requests",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "customer_surveycontroller_index": {
+        "method": "GET",
+        "path": "/customer/surveys",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_surveycontroller_show": {
+        "method": "GET",
+        "path": "/customer/surveys/{survey}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "survey"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_surveycontroller_submit": {
+        "method": "POST",
+        "path": "/customer/surveys/{survey}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "survey"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_ticketcontroller_create": {
+        "method": "GET",
+        "path": "/customer/tickets/options",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_ticketcontroller_index": {
+        "method": "GET",
+        "path": "/customer/tickets",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_ticketcontroller_reply": {
+        "method": "POST",
+        "path": "/customer/tickets/{id}/reply",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "id"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "customer_ticketcontroller_show": {
+        "method": "GET",
+        "path": "/customer/tickets/{id}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "id"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "customer_ticketcontroller_store": {
+        "method": "POST",
+        "path": "/customer/tickets",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "demorequestcontroller_show": {
+        "method": "GET",
+        "path": "/public/book-demo",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "demorequestcontroller_submit": {
+        "method": "POST",
+        "path": "/public/book-demo",
+        "authenticated": false,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "documentcontroller_pdf": {
+        "method": "GET",
+        "path": "/files/documents/{document}/pdf",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "document"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "documentcontroller_preview": {
+        "method": "GET",
+        "path": "/files/documents/{document}/view",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "document"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "documentsigningcontroller_show": {
+        "method": "GET",
+        "path": "/public/documents/{token}/sign",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "token"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "documentsigningcontroller_sign": {
+        "method": "POST",
+        "path": "/public/documents/{token}/sign",
+        "authenticated": false,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "token"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "homecontroller_index": {
+        "method": "GET",
+        "path": "/public/home",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "hr_dashboardcontroller_index": {
+        "method": "GET",
+        "path": "/hr/dashboard",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "hr_departmentcontroller_index": {
+        "method": "GET",
+        "path": "/hr/departments",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "hr_departmentcontroller_updateHead": {
+        "method": "POST",
+        "path": "/hr/departments/{dept}/head",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "dept"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "hr_employeecontroller_index": {
+        "method": "GET",
+        "path": "/hr/employees",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "hr_employeecontroller_show": {
+        "method": "GET",
+        "path": "/hr/employees/{user}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "user"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "hr_leavecontroller_approve": {
+        "method": "POST",
+        "path": "/hr/leave/{id}/approve",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "id"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "hr_leavecontroller_index": {
+        "method": "GET",
+        "path": "/hr/leave",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "hr_leavecontroller_reject": {
+        "method": "POST",
+        "path": "/hr/leave/{id}/reject",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "id"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "hr_payrollcontroller_index": {
+        "method": "GET",
+        "path": "/hr/payroll",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "hr_payrollcontroller_show": {
+        "method": "GET",
+        "path": "/hr/payroll/{run}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "run"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "hr_performancecontroller_index": {
+        "method": "GET",
+        "path": "/hr/performance",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "hr_performancecontroller_store": {
+        "method": "POST",
+        "path": "/hr/performance",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "hr_profilecontroller_show": {
+        "method": "GET",
+        "path": "/hr/profile",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "hr_profilecontroller_update": {
+        "method": "PATCH",
+        "path": "/hr/profile",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "identity_password_request": {
+        "method": "POST",
+        "path": "/public/password/forgot",
+        "authenticated": false,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "identity_password_reset": {
+        "method": "POST",
+        "path": "/public/password/reset",
+        "authenticated": false,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "identity_register": {
+        "method": "POST",
+        "path": "/public/accounts",
+        "authenticated": false,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "inspectIntegration": {
+        "method": "GET",
+        "path": "/integration",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": false,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "invoicecontroller_pdf": {
+        "method": "GET",
+        "path": "/files/invoices/{invoice}/pdf",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "invoice"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "issueDelegatedUserToken": {
+        "method": "POST",
+        "path": "/oauth/user-token",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": false,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/x-www-form-urlencoded"
+        ]
+    },
+    "issueMachineToken": {
+        "method": "POST",
+        "path": "/oauth/token",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": false,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/x-www-form-urlencoded"
+        ]
+    },
+    "listCatalogueProducts": {
+        "method": "GET",
+        "path": "/catalogue/products",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "locale"
+        ],
+        "acceptLanguage": false,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "manager_dashboardcontroller_index": {
+        "method": "GET",
+        "path": "/manager/dashboard",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "manager_leavecontroller_approve": {
+        "method": "POST",
+        "path": "/manager/leave/{id}/approve",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "id"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "manager_leavecontroller_index": {
+        "method": "GET",
+        "path": "/manager/leave",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "manager_leavecontroller_reject": {
+        "method": "POST",
+        "path": "/manager/leave/{id}/reject",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "id"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "manager_performancecontroller_index": {
+        "method": "GET",
+        "path": "/manager/performance",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "manager_performancecontroller_store": {
+        "method": "POST",
+        "path": "/manager/performance",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "manager_profilecontroller_show": {
+        "method": "GET",
+        "path": "/manager/profile",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "manager_profilecontroller_update": {
+        "method": "PATCH",
+        "path": "/manager/profile",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "manager_reportcontroller_index": {
+        "method": "GET",
+        "path": "/manager/reports",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "manager_teamcontroller_index": {
+        "method": "GET",
+        "path": "/manager/team",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "marketcontroller_index": {
+        "method": "GET",
+        "path": "/public/markets",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "marketcontroller_show": {
+        "method": "GET",
+        "path": "/public/markets/{country}",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "country"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "notificationcontroller_index": {
+        "method": "GET",
+        "path": "/notifications",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "notificationcontroller_markAllRead": {
+        "method": "POST",
+        "path": "/notifications/read-all",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "notificationcontroller_markRead": {
+        "method": "POST",
+        "path": "/notifications/{id}/read",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "id"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "partnerapplicationcontroller_show": {
+        "method": "GET",
+        "path": "/public/become-a-partner",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "partnerapplicationcontroller_submit": {
+        "method": "POST",
+        "path": "/public/become-a-partner",
+        "authenticated": false,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "partnershipscontroller_index": {
+        "method": "GET",
+        "path": "/public/partnerships",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "payrollcontroller_payslip": {
+        "method": "GET",
+        "path": "/files/payroll/entries/{entry}/payslip",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "entry"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_applicationcontroller_index": {
+        "method": "GET",
+        "path": "/practitioner/applications",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_applicationcontroller_show": {
+        "method": "GET",
+        "path": "/practitioner/applications/{application}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "application"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_bugreportcontroller_create": {
+        "method": "GET",
+        "path": "/practitioner/bug-reports/options",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_bugreportcontroller_index": {
+        "method": "GET",
+        "path": "/practitioner/bug-reports",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_bugreportcontroller_show": {
+        "method": "GET",
+        "path": "/practitioner/bug-reports/{bugReport}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "bugReport"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_bugreportcontroller_store": {
+        "method": "POST",
+        "path": "/practitioner/bug-reports",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "practitioner_certificatecontroller_downloadValidation": {
+        "method": "GET",
+        "path": "/practitioner/certificates/validation/{certificate}/download",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "certificate"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_certificatecontroller_index": {
+        "method": "GET",
+        "path": "/practitioner/certificates",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_coursecontroller_enroll": {
+        "method": "POST",
+        "path": "/practitioner/courses/{course:slug}/enroll",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "course:slug"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_coursecontroller_index": {
+        "method": "GET",
+        "path": "/practitioner/courses",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_coursecontroller_show": {
+        "method": "GET",
+        "path": "/practitioner/courses/{course:slug}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "course:slug"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_dashboardcontroller_index": {
+        "method": "GET",
+        "path": "/practitioner/dashboard",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_findingcontroller_create": {
+        "method": "GET",
+        "path": "/practitioner/applications/{application}/findings/options",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "application"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_findingcontroller_store": {
+        "method": "POST",
+        "path": "/practitioner/applications/{application}/findings",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "application"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "practitioner_lessoncontroller_markDone": {
+        "method": "POST",
+        "path": "/practitioner/courses/{course:slug}/lessons/{lesson}/done",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "course:slug",
+            "lesson"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_lessoncontroller_show": {
+        "method": "GET",
+        "path": "/practitioner/courses/{course:slug}/lessons/{lesson}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "course:slug",
+            "lesson"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_profilecontroller_changePassword": {
+        "method": "PUT",
+        "path": "/practitioner/profile/password",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "practitioner_profilecontroller_show": {
+        "method": "GET",
+        "path": "/practitioner/profile",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_profilecontroller_update": {
+        "method": "PUT",
+        "path": "/practitioner/profile",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "practitioner_programcontroller_apply": {
+        "method": "POST",
+        "path": "/practitioner/programs/{program}/apply",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "program"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "practitioner_programcontroller_index": {
+        "method": "GET",
+        "path": "/practitioner/programs",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_programcontroller_show": {
+        "method": "GET",
+        "path": "/practitioner/programs/{program}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "program"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_suggestioncontroller_create": {
+        "method": "GET",
+        "path": "/practitioner/suggestions/options",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_suggestioncontroller_index": {
+        "method": "GET",
+        "path": "/practitioner/suggestions",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_suggestioncontroller_store": {
+        "method": "POST",
+        "path": "/practitioner/suggestions",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "practitioner_surveycontroller_index": {
+        "method": "GET",
+        "path": "/practitioner/surveys",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_surveycontroller_show": {
+        "method": "GET",
+        "path": "/practitioner/surveys/{survey}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "survey"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_surveycontroller_submit": {
+        "method": "POST",
+        "path": "/practitioner/surveys/{survey}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "survey"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_validation_dashboardcontroller_show": {
+        "method": "GET",
+        "path": "/practitioner/validation",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_validation_issuereportcontroller_create": {
+        "method": "GET",
+        "path": "/practitioner/validation/issues/options",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_validation_issuereportcontroller_index": {
+        "method": "GET",
+        "path": "/practitioner/validation/issues",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_validation_issuereportcontroller_show": {
+        "method": "GET",
+        "path": "/practitioner/validation/issues/{issue}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "issue"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_validation_issuereportcontroller_store": {
+        "method": "POST",
+        "path": "/practitioner/validation/issues",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "practitioner_validation_retestcontroller_store": {
+        "method": "POST",
+        "path": "/practitioner/validation/issues/{issue}/retests",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "issue"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "practitioner_validation_sessioncontroller_create": {
+        "method": "GET",
+        "path": "/practitioner/validation/sessions/options",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_validation_sessioncontroller_index": {
+        "method": "GET",
+        "path": "/practitioner/validation/sessions",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_validation_sessioncontroller_store": {
+        "method": "POST",
+        "path": "/practitioner/validation/sessions",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "productcontroller_index": {
+        "method": "GET",
+        "path": "/public/products",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "productcontroller_show": {
+        "method": "GET",
+        "path": "/public/products/{slug}",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "slug"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "public_practitionerdirectorycontroller_index": {
+        "method": "GET",
+        "path": "/public/practitioners",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "public_practitionerdirectorycontroller_show": {
+        "method": "GET",
+        "path": "/public/practitioners/{id}",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "id"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "publiccoursecontroller_index": {
+        "method": "GET",
+        "path": "/public/courses",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "publiccoursecontroller_show": {
+        "method": "GET",
+        "path": "/public/courses/{course:slug}",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "course:slug"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "purchaseordercontroller_pdf": {
+        "method": "GET",
+        "path": "/files/purchase-orders/{purchaseOrder}/pdf",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "purchaseOrder"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "quotecontroller_pdf": {
+        "method": "GET",
+        "path": "/files/quotes/{quote}/pdf",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "quote"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "readOwnBusinessActivity": {
+        "method": "GET",
+        "path": "/me/activity",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": false,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "submitEnquiry": {
+        "method": "POST",
+        "path": "/enquiries",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": false,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json"
+        ]
+    },
+    "supplierbillcontroller_pdf": {
+        "method": "GET",
+        "path": "/files/supplier-bills/{supplierBill}/pdf",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "supplierBill"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "support_dashboardcontroller_index": {
+        "method": "GET",
+        "path": "/support/dashboard",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "support_profilecontroller_show": {
+        "method": "GET",
+        "path": "/support/profile",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "support_profilecontroller_update": {
+        "method": "PATCH",
+        "path": "/support/profile",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "support_ticketcontroller_assignToMe": {
+        "method": "PATCH",
+        "path": "/support/tickets/{ticket}/assign",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "ticket"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "support_ticketcontroller_index": {
+        "method": "GET",
+        "path": "/support/tickets",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "support_ticketcontroller_reply": {
+        "method": "POST",
+        "path": "/support/tickets/{ticket}/reply",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "ticket"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "support_ticketcontroller_show": {
+        "method": "GET",
+        "path": "/support/tickets/{ticket}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "ticket"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "support_ticketcontroller_updateStatus": {
+        "method": "PATCH",
+        "path": "/support/tickets/{ticket}/status",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "ticket"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "tester_assignmentcontroller_index": {
+        "method": "GET",
+        "path": "/testing/assignments",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "tester_assignmentcontroller_show": {
+        "method": "GET",
+        "path": "/testing/assignments/{id}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "id"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "tester_assignmentcontroller_storeBugReport": {
+        "method": "POST",
+        "path": "/testing/assignments/{id}/bug-reports",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "id"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "tester_assignmentcontroller_updateStatus": {
+        "method": "PATCH",
+        "path": "/testing/assignments/{id}/status",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "id"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "tester_bugreportcontroller_index": {
+        "method": "GET",
+        "path": "/testing/bug-reports",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "tester_dashboardcontroller_index": {
+        "method": "GET",
+        "path": "/testing/dashboard",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "tester_profilecontroller_show": {
+        "method": "GET",
+        "path": "/testing/profile",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "tester_profilecontroller_update": {
+        "method": "PATCH",
+        "path": "/testing/profile",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "testerapplicationcontroller_show": {
+        "method": "GET",
+        "path": "/public/join-testers",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "testerapplicationcontroller_submit": {
+        "method": "POST",
+        "path": "/public/join-testers",
+        "authenticated": false,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    }
+});

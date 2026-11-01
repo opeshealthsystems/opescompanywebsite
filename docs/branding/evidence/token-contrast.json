@@ -1,0 +1,74 @@
+[
+  {
+    "name": "action text",
+    "foreground": "#ffffff",
+    "background": "#075b76",
+    "ratio": 7.59,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "name": "action hover",
+    "foreground": "#ffffff",
+    "background": "#06475d",
+    "ratio": 10.16,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "name": "muted text",
+    "foreground": "#9fb0c9",
+    "background": "#1a2438",
+    "ratio": 7.04,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "name": "caption text",
+    "foreground": "#8696b4",
+    "background": "#1a2438",
+    "ratio": 5.2,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "name": "blue text",
+    "foreground": "#87baff",
+    "background": "#1a2438",
+    "ratio": 7.76,
+    "required": 4.5,
+    "pass": true
+  },
+  {
+    "name": "control border",
+    "foreground": "#71839f",
+    "background": "#1a2438",
+    "ratio": 4.03,
+    "required": 3,
+    "pass": true
+  },
+  {
+    "name": "focus ring",
+    "foreground": "#87baff",
+    "background": "#1a2438",
+    "ratio": 7.76,
+    "required": 3,
+    "pass": true
+  },
+  {
+    "name": "headline teal",
+    "foreground": "#67dccc",
+    "background": "#0f172a",
+    "ratio": 10.78,
+    "required": 3,
+    "pass": true
+  },
+  {
+    "name": "headline blue",
+    "foreground": "#87baff",
+    "background": "#0f172a",
+    "ratio": 8.92,
+    "required": 3,
+    "pass": true
+  }
+]

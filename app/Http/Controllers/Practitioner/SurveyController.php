@@ -1,97 +1,10 @@
 <?php
 namespace App\Http\Controllers\Practitioner;
 
-use App\Http\Controllers\Controller;
-use App\Models\Survey;
-use App\Models\SurveyAnswer;
-use App\Models\SurveyResponse;
-use Illuminate\Http\Request;
-
-class SurveyController extends Controller
+/** Web presentation adapter; business queries and commands live in application contexts. */
+class SurveyController extends \App\Http\Controllers\Controller
 {
-    public function index()
-    {
-        $surveys = Survey::where('status', 'active')
-            ->whereIn('audience', ['practitioners', 'all'])
-            ->get();
-
-        $myResponseIds = SurveyResponse::where('user_id', auth()->id())
-            ->whereIn('survey_id', $surveys->pluck('id'))
-            ->whereNotNull('submitted_at')
-            ->pluck('survey_id')
-            ->toArray();
-
-        return view('practitioner.surveys.index', compact('surveys', 'myResponseIds'));
-    }
-
-    public function show($locale, Survey $survey)
-    {
-        abort_unless(in_array($survey->audience, ['practitioners', 'all']), 403);
-        $survey->load('questions');
-
-        $response = SurveyResponse::firstOrCreate(
-            ['survey_id' => $survey->id, 'user_id' => auth()->id()]
-        );
-
-        $existingAnswers = $response->answers()->pluck('answer_text', 'question_id')->toArray();
-
-        return view('practitioner.surveys.show', compact('survey', 'response', 'existingAnswers'));
-    }
-
-    public function submit(Request $request, $locale, Survey $survey)
-    {
-        abort_unless(in_array($survey->audience, ['practitioners', 'all']), 403);
-        $survey->load('questions');
-
-        $response = SurveyResponse::firstOrCreate(
-            ['survey_id' => $survey->id, 'user_id' => auth()->id()]
-        );
-
-        if ($response->isSubmitted()) {
-            return back()->with('error', 'You have already submitted this survey.');
-        }
-
-        $rules = [];
-        foreach ($survey->questions as $question) {
-            $key = "q_{$question->id}";
-            $rules[$key] = match ($question->type) {
-                'rating'          => 'nullable|integer|min:1|max:5',
-                'multiple_choice' => 'nullable|string|in:' . implode(',', (array) ($question->options ?? [])),
-                'yes_no'          => 'nullable|string|in:yes,no',
-                default           => 'nullable|string|max:2000',
-            };
-            if ($question->is_required) {
-                $rules[$key] = str_replace('nullable', 'required', $rules[$key]);
-            }
-        }
-        $request->validate($rules);
-
-        foreach ($survey->questions as $question) {
-            $key = "q_{$question->id}";
-            $value = $request->input($key);
-
-            if ($question->is_required && empty($value)) {
-                return back()->withErrors(["q_{$question->id}" => 'This question is required.'])->withInput();
-            }
-
-            $answerData = ['response_id' => $response->id, 'question_id' => $question->id];
-            match ($question->type) {
-                'rating'          => $answerData['answer_rating'] = (int) $value,
-                'multiple_choice' => $answerData['answer_choice'] = $value,
-                'yes_no'          => $answerData['answer_bool']   = ($value === 'yes'),
-                default           => $answerData['answer_text']   = $value,
-            };
-
-            SurveyAnswer::updateOrCreate(
-                ['response_id' => $response->id, 'question_id' => $question->id],
-                $answerData
-            );
-        }
-
-        $response->update(['submitted_at' => now()]);
-
-        return redirect()
-            ->route('practitioner.surveys', ['locale' => app()->getLocale()])
-            ->with('success', 'Survey submitted. Thank you for your feedback!');
-    }
+    public function index(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('practitioner.surveycontroller.index', $request); }
+    public function show(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('practitioner.surveycontroller.show', $request); }
+    public function submit(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('practitioner.surveycontroller.submit', $request); }
 }

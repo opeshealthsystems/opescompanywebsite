@@ -162,7 +162,7 @@ $isFr       = $locale === 'fr';
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #00C896, #1A6FE8);
+    background: var(--surface);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -206,11 +206,11 @@ $isFr       = $locale === 'fr';
 }
 .bcf-group input:focus, .bcf-group textarea:focus {
     outline: none;
-    border-color: #00C896;
+    border-color: #69D5F5;
 }
 .bcf-group textarea { min-height: 110px; resize: vertical; }
 .bcf-submit {
-    background: #00C896;
+    background: #69D5F5;
     color: #0f172a;
     border: none;
     border-radius: 8px;
@@ -222,11 +222,11 @@ $isFr       = $locale === 'fr';
 }
 .bcf-submit:hover { background: #00b386; }
 .bcf-success {
-    background: #00C89618;
-    border: 1px solid #00C89640;
+    background: #69D5F518;
+    border: 1px solid #69D5F540;
     border-radius: 8px;
     padding: 14px 18px;
-    color: #00C896;
+    color: var(--brand-accent);
     font-size: 0.88rem;
     margin-bottom: 20px;
 }
@@ -328,7 +328,7 @@ $isFr       = $locale === 'fr';
         {{-- ── Comments section ─────────────────────────────── --}}
         <div class="blog-comments">
             <div class="blog-comments-title">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00C896" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#69D5F5" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                 {{ $isFr ? 'Commentaires' : 'Comments' }}
                 <span style="background:#1e293b;color:var(--text-muted);font-size:0.75rem;padding:2px 9px;border-radius:10px;font-weight:600">{{ $comments->count() }}</span>
             </div>
@@ -397,17 +397,17 @@ $isFr       = $locale === 'fr';
             @foreach($related as $rp)
             @php
             $relColors = [
-                'Digital Health in Cameroon' => '#00C896',
+                'Digital Health in Cameroon' => '#69D5F5',
                 'Healthcare Challenges'      => '#ef4444',
-                'HMS Solutions'              => '#1A6FE8',
-                "Buyer's Guide"              => '#8b5cf6',
+                'HMS Solutions'              => '#8AC5ED',
+                "Buyer's Guide"              => '#8AC5ED',
                 'AI & Technology'            => '#f59e0b',
                 'Insights & Case Studies'    => 'var(--text-muted)',
             ];
             $relColor = $relColors[$rp->category] ?? 'var(--text-muted)';
             @endphp
             <a href="{{ url($locale.'/blog/'.$rp->slug) }}" class="blog-card">
-                <div class="blog-card-img blog-card-img-gradient" style="background:linear-gradient(135deg,{{ $relColor }}22,{{ $relColor }}08)">
+                <div class="blog-card-img blog-card-img-gradient" style="background:var(--surface-2)">
                     <i data-lucide="file-text" style="width:24px;height:24px;color:{{ $relColor }};opacity:0.5"></i>
                 </div>
                 <div class="blog-card-body">

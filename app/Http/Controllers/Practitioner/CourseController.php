@@ -1,64 +1,10 @@
 <?php
 namespace App\Http\Controllers\Practitioner;
 
-use App\Http\Controllers\Controller;
-use App\Models\Course;
-use Illuminate\Http\Request;
-
-class CourseController extends Controller
+/** Web presentation adapter; business queries and commands live in application contexts. */
+class CourseController extends \App\Http\Controllers\Controller
 {
-    public function index()
-    {
-        $courses = Course::where('is_active', true)->orderBy('sort_order')->get();
-        $myEnrollments = auth()->user()->courseEnrollments()->with('course')->get()->keyBy('course_id');
-
-        return view('practitioner.courses.index', compact('courses', 'myEnrollments'));
-    }
-
-    public function show($locale, Course $course)
-    {
-        abort_unless($course->is_active, 404);
-        $course->load('lessons');
-
-        $enrollment = auth()->user()->courseEnrollments()->where('course_id', $course->id)->first();
-        $completedLessonIds = [];
-        if ($enrollment) {
-            $completedLessonIds = $enrollment->lessonProgress()
-                ->whereNotNull('completed_at')->pluck('lesson_id')->toArray();
-        }
-
-        return view('practitioner.courses.show', compact('course', 'enrollment', 'completedLessonIds'));
-    }
-
-    public function enroll($locale, Course $course)
-    {
-        abort_unless($course->is_active, 404);
-
-        $existing = auth()->user()->courseEnrollments()->where('course_id', $course->id)->first();
-        if ($existing) {
-            return redirect()->route('practitioner.courses.show', ['locale' => app()->getLocale(), 'course' => $course->slug]);
-        }
-
-        $enrollment = auth()->user()->courseEnrollments()->create([
-            'course_id'   => $course->id,
-            'status'      => 'enrolled',
-            'enrolled_at' => now(),
-        ]);
-
-        if (class_exists(\App\Mail\CourseEnrollmentConfirmed::class)) {
-            \Illuminate\Support\Facades\Mail::to(auth()->user()->email)
-                ->queue(new \App\Mail\CourseEnrollmentConfirmed($enrollment));
-        }
-        auth()->user()->notify(new \App\Notifications\FeedEntry(
-            'learning.enrolled',
-            'Enrolled in course',
-            'You enrolled in ' . $course->title . '.',
-            'academic-cap',
-            route('practitioner.courses.show', ['locale' => 'en', 'course' => $course->slug]),
-        ));
-
-        return redirect()
-            ->route('practitioner.courses.show', ['locale' => app()->getLocale(), 'course' => $course->slug])
-            ->with('success', 'You are now enrolled. Start learning!');
-    }
+    public function index(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('practitioner.coursecontroller.index', $request); }
+    public function show(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('practitioner.coursecontroller.show', $request); }
+    public function enroll(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('practitioner.coursecontroller.enroll', $request); }
 }

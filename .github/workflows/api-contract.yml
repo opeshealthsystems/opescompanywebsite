@@ -1,0 +1,46 @@
+name: API contract and enquiry regression
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  api-foundation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install openapi-spec-validator==0.7.2
+      - run: python -m openapi_spec_validator docs/api/openapi.json
+      - run: python -m unittest discover -s scripts/api -p test_compatibility.py
+      - name: Preserve released API operation shapes
+        env:
+          BASE_REVISION: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if git cat-file -e "$BASE_REVISION:docs/api/openapi.json" 2>/dev/null; then
+            git show "$BASE_REVISION:docs/api/openapi.json" > "$RUNNER_TEMP/opes-api-baseline.json"
+          else
+            cp docs/api/baselines/0.3.0.json "$RUNNER_TEMP/opes-api-baseline.json"
+          fi
+          python scripts/api/check_compatibility.py "$RUNNER_TEMP/opes-api-baseline.json" docs/api/openapi.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test sdk/node/test/*.test.mjs
+      - run: npm pack --ignore-scripts --dry-run
+        working-directory: sdk/node
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, intl, pdo_sqlite, sqlite3, sodium
+          coverage: none
+      - run: composer install --no-interaction --prefer-dist
+      - run: composer audit --no-dev --no-interaction
+      - run: cp .env.example .env
+      - run: php artisan key:generate
+      - run: php artisan test --compact tests/Feature/EnquiriesApiTest.php tests/Feature/WebsiteFormDeliveryTest.php tests/Feature/EnquiryReliabilityTest.php tests/Feature/ApiIdentityTest.php

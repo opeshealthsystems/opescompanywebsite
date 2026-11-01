@@ -93,7 +93,7 @@
     <div class="cp-section-card">
         <div class="cp-section-header">
             <h2 class="cp-section-title">
-                <i data-lucide="check-circle-2" style="width:17px;height:17px;color:#00C896"></i>
+                <i data-lucide="check-circle-2" style="width:17px;height:17px;color:var(--brand-accent)"></i>
                 Recent Payments
             </h2>
             <a href="{{ route('accountant.invoices.index', ['locale' => $locale, 'status' => 'paid']) }}" class="cp-btn-outline" style="font-size:.8125rem">View All</a>
@@ -106,7 +106,7 @@
                 <tr>
                     <td style="font-family:monospace;font-size:.8125rem;color:var(--text-muted)">{{ $inv->reference }}</td>
                     <td style="color:#f1f5f9">{{ $inv->customer->name ?? '—' }}</td>
-                    <td style="color:#00C896;font-weight:600">{{ number_format($inv->grand_total ?? 0, 0) }}</td>
+                    <td style="color:var(--brand-accent);font-weight:600">{{ number_format($inv->grand_total ?? 0, 0) }}</td>
                     <td style="color:var(--text-muted);font-size:.8125rem">{{ $inv->paid_at?->format('M j') }}</td>
                 </tr>
                 @endforeach

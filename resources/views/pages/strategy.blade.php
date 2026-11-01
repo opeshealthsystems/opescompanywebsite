@@ -24,8 +24,8 @@
 {{-- ── VISION / MISSION ─────────────────────────────────────────── --}}
 <div class="section" style="max-width:960px;margin:0 auto">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
-        <div style="background:linear-gradient(135deg,#0f1f2e,#0d1a14);border:1px solid rgba(0,200,150,0.2);border-radius:16px;padding:28px">
-            <div style="font-size:var(--fs-2xs);font-weight:800;color:#00C896;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px">
+        <div style="background:var(--surface);border:1px solid rgba(0,200,150,0.2);border-radius:16px;padding:28px">
+            <div style="font-size:var(--fs-2xs);font-weight:800;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px">
                 {{ $isFr ? 'Vision 2031' : 'Vision 2031' }}
             </div>
             <p style="font-size:15px;font-weight:700;color:#e2e8f0;line-height:1.65;margin:0">
@@ -34,8 +34,8 @@
                     : 'Become Africa\'s most trusted provider of interoperable digital health infrastructure.' }}
             </p>
         </div>
-        <div style="background:linear-gradient(135deg,#0f152e,#0f1a2e);border:1px solid rgba(26,111,232,0.2);border-radius:16px;padding:28px">
-            <div style="font-size:var(--fs-2xs);font-weight:800;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px">
+        <div style="background:var(--surface);border:1px solid rgba(26,111,232,0.2);border-radius:16px;padding:28px">
+            <div style="font-size:var(--fs-2xs);font-weight:800;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px">
                 {{ $isFr ? 'Mission' : 'Mission' }}
             </div>
             <p style="font-size:15px;font-weight:700;color:#e2e8f0;line-height:1.65;margin:0">
@@ -73,17 +73,17 @@
     <h2 class="section-title">{{ $isFr ? 'Cinq axes pour transformer la santé en Afrique' : 'Five axes to transform healthcare in Africa' }}</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:28px">
         @php $themes = $isFr ? [
-            ['1','hospital','#00C896','Digitalisation des établissements','Accélérer la numérisation des soins à travers toute l\'Afrique.',['500+ cliniques','100+ hôpitaux','25+ réseaux hospitaliers']],
-            ['2','share-2','#1A6FE8','Interopérabilité de la santé','Construire le plus grand écosystème d\'interopérabilité de santé en Afrique centrale.',['Identifiant national de santé','Infrastructure HIE','Réseau de référencement','Connectivité assurance']],
-            ['3','brain','#00C896','Intelligence clinique','Développer des capacités avancées d\'intelligence clinique.',['CDSS mature','Plateforme de triage nationale','Plateforme d\'analytique clinique']],
-            ['4','building-2','#1A6FE8','Programmes nationaux de santé numérique','Soutenir les initiatives gouvernementales de santé numérique.',['Registres nationaux','Plateformes de santé publique','Programmes CSU','Surveillance des maladies']],
-            ['5','graduation-cap','#00C896','Développement des capacités humaines','Développer une main-d\'œuvre en technologie de la santé.',['10 000 utilisateurs certifiés','1 000 administrateurs certifiés','500 implémenteurs certifiés','100 formateurs certifiés']],
+            ['1','hospital','#69D5F5','Digitalisation des établissements','Accélérer la numérisation des soins à travers toute l\'Afrique.',['500+ cliniques','100+ hôpitaux','25+ réseaux hospitaliers']],
+            ['2','share-2','#8AC5ED','Interopérabilité de la santé','Construire le plus grand écosystème d\'interopérabilité de santé en Afrique centrale.',['Identifiant national de santé','Infrastructure HIE','Réseau de référencement','Connectivité assurance']],
+            ['3','brain','#69D5F5','Intelligence clinique','Développer des capacités avancées d\'intelligence clinique.',['CDSS mature','Plateforme de triage nationale','Plateforme d\'analytique clinique']],
+            ['4','building-2','#8AC5ED','Programmes nationaux de santé numérique','Soutenir les initiatives gouvernementales de santé numérique.',['Registres nationaux','Plateformes de santé publique','Programmes CSU','Surveillance des maladies']],
+            ['5','graduation-cap','#69D5F5','Développement des capacités humaines','Développer une main-d\'œuvre en technologie de la santé.',['10 000 utilisateurs certifiés','1 000 administrateurs certifiés','500 implémenteurs certifiés','100 formateurs certifiés']],
         ] : [
-            ['1','hospital','#00C896','Healthcare facility digitization','Accelerate healthcare digitization across the continent.',['500+ clinics','100+ hospitals','25+ hospital networks']],
-            ['2','share-2','#1A6FE8','Healthcare interoperability','Build the largest healthcare interoperability ecosystem in Central Africa.',['National Health ID','HIE infrastructure','Referral exchange network','Insurance connectivity']],
-            ['3','brain','#00C896','Clinical intelligence','Develop advanced clinical intelligence capabilities.',['Mature CDSS','National triage platform','Clinical analytics platform']],
-            ['4','building-2','#1A6FE8','National digital health programs','Support government digital health initiatives.',['National registries','Public health platforms','UHC programs','Disease surveillance']],
-            ['5','graduation-cap','#00C896','Human capacity development','Build a healthcare technology workforce through OPES Academy.',['10,000 certified users','1,000 certified administrators','500 certified implementers','100 certified trainers']],
+            ['1','hospital','#69D5F5','Healthcare facility digitization','Accelerate healthcare digitization across the continent.',['500+ clinics','100+ hospitals','25+ hospital networks']],
+            ['2','share-2','#8AC5ED','Healthcare interoperability','Build the largest healthcare interoperability ecosystem in Central Africa.',['National Health ID','HIE infrastructure','Referral exchange network','Insurance connectivity']],
+            ['3','brain','#69D5F5','Clinical intelligence','Develop advanced clinical intelligence capabilities.',['Mature CDSS','National triage platform','Clinical analytics platform']],
+            ['4','building-2','#8AC5ED','National digital health programs','Support government digital health initiatives.',['National registries','Public health platforms','UHC programs','Disease surveillance']],
+            ['5','graduation-cap','#69D5F5','Human capacity development','Build a healthcare technology workforce through OPES Academy.',['10,000 certified users','1,000 certified administrators','500 certified implementers','100 certified trainers']],
         ]; @endphp
         @foreach($themes as $t)
         <div style="background:#0F172A;border:1px solid #1e293b;border-radius:14px;padding:20px">
@@ -117,20 +117,20 @@
     <div style="margin-top:28px">
         @php $years = $isFr ? [
             ['2026','var(--text-faint)','Fondation','Stabilisation produit, déploiements pilotes, mise en place de la gouvernance.',['10 établissements','2 hôpitaux phares'],'pen-line'],
-            ['2027','#1A6FE8','Expansion','Croissance commerciale, visibilité régionale, montée en échelle.',['50 établissements','10 hôpitaux'],'trending-up'],
+            ['2027','#8AC5ED','Expansion','Croissance commerciale, visibilité régionale, montée en échelle.',['50 établissements','10 hôpitaux'],'trending-up'],
             ['2028','#00A87B','Interopérabilité','Déploiement Health ID, mise en service de l\'HIE, réseau connecté.',['Réseau d\'établissements connectés'],'share-2'],
-            ['2029','#00C896','Programmes nationaux','Engagement gouvernemental, registres nationaux, santé publique.',['Projets de santé publique'],'building-2'],
+            ['2029','#69D5F5','Programmes nationaux','Engagement gouvernemental, registres nationaux, santé publique.',['Projets de santé publique'],'building-2'],
             ['2030–31','#FFB020','Leadership régional','Expansion multi-pays, infrastructure de santé numérique régionale.',['Infrastructure régionale déployée'],'globe'],
         ] : [
             ['2026','var(--text-faint)','Foundation','Product stabilization, pilot deployments, governance implementation.',['10 facilities','2 flagship hospitals'],'pen-line'],
-            ['2027','#1A6FE8','Expansion','Commercial growth, regional visibility, scale-up.',['50 facilities','10 hospitals'],'trending-up'],
+            ['2027','#8AC5ED','Expansion','Commercial growth, regional visibility, scale-up.',['50 facilities','10 hospitals'],'trending-up'],
             ['2028','#00A87B','Interoperability','Health ID rollout, HIE deployment, connected facility network.',['Connected facility network'],'share-2'],
-            ['2029','#00C896','National programs','Government engagement, national registries, public health projects.',['Public health projects launched'],'building-2'],
+            ['2029','#69D5F5','National programs','Government engagement, national registries, public health projects.',['Public health projects launched'],'building-2'],
             ['2030–31','#FFB020','Regional leadership','Multi-country expansion, regional digital health infrastructure.',['Regional infrastructure live'],'globe'],
         ]; @endphp
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0;position:relative">
             {{-- connecting line --}}
-            <div style="position:absolute;top:40px;left:10%;right:10%;height:2px;background:linear-gradient(90deg,#1e293b,#00C896,#1e293b);z-index:0;border-radius:2px"></div>
+            <div style="position:absolute;top:40px;left:10%;right:10%;height:2px;background:var(--surface);z-index:0;border-radius:2px"></div>
             @foreach($years as $idx => $y)
             <div style="position:relative;z-index:1;padding:0 8px;text-align:center">
                 <div style="width:56px;height:56px;border-radius:50%;background:{{ $y[1] }}20;border:2px solid {{ $y[1] }};display:flex;align-items:center;justify-content:center;margin:12px auto 14px;flex-shrink:0">
@@ -160,15 +160,15 @@
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:28px">
         @foreach($isFr
             ? [
-                ['trending-up','#00C896','Croissance',['Revenus récurrents annuels','Nombre d\'établissements','Nombre d\'utilisateurs']],
-                ['settings','#1A6FE8','Opérations',['Rétention client','Taux de succès des déploiements','Performance du support']],
-                ['heart-pulse','#00C896','Clinique',['Complétude de la documentation','Indicateurs de sécurité clinique']],
-                ['share-2','#1A6FE8','Interopérabilité',['Établissements connectés','Transactions d\'échange','Taux de correspondance d\'identité']],
+                ['trending-up','#69D5F5','Croissance',['Revenus récurrents annuels','Nombre d\'établissements','Nombre d\'utilisateurs']],
+                ['settings','#8AC5ED','Opérations',['Rétention client','Taux de succès des déploiements','Performance du support']],
+                ['heart-pulse','#69D5F5','Clinique',['Complétude de la documentation','Indicateurs de sécurité clinique']],
+                ['share-2','#8AC5ED','Interopérabilité',['Établissements connectés','Transactions d\'échange','Taux de correspondance d\'identité']],
             ] : [
-                ['trending-up','#00C896','Growth',['Annual recurring revenue','Number of facilities','Number of users']],
-                ['settings','#1A6FE8','Operations',['Customer retention','Deployment success rate','Support performance']],
-                ['heart-pulse','#00C896','Clinical',['Documentation completeness','Clinical safety indicators']],
-                ['share-2','#1A6FE8','Interoperability',['Connected facilities','Exchange transactions','Identity match rates']],
+                ['trending-up','#69D5F5','Growth',['Annual recurring revenue','Number of facilities','Number of users']],
+                ['settings','#8AC5ED','Operations',['Customer retention','Deployment success rate','Support performance']],
+                ['heart-pulse','#69D5F5','Clinical',['Documentation completeness','Clinical safety indicators']],
+                ['share-2','#8AC5ED','Interoperability',['Connected facilities','Exchange transactions','Identity match rates']],
             ]
         as $cat)
         <div style="background:#0F172A;border:1px solid #1e293b;border-radius:12px;padding:18px">
@@ -197,8 +197,8 @@
     <h2 class="section-title">{{ $isFr ? 'Ce qu\'OPES sera en 2031' : 'What OPES will be by 2031' }}</h2>
     <div style="display:flex;flex-direction:column;gap:10px;margin-top:28px;max-width:640px;margin-left:auto;margin-right:auto">
         @foreach($isFr
-            ? [['#00C896','star','Un leader reconnu de la technologie de santé en Afrique'],['#1A6FE8','share-2','Un fournisseur d\'interopérabilité reconnu à l\'échelle nationale'],['#00C896','building-2','Un partenaire de confiance des gouvernements africains'],['#1A6FE8','graduation-cap','Le principal développeur de la main-d\'œuvre de santé numérique'],['#00C896','globe','Une plateforme d\'infrastructure de santé numérique régionale']]
-            : [['#00C896','star','A leading healthcare technology company across Africa'],['#1A6FE8','share-2','A recognised national interoperability provider'],['#00C896','building-2','A trusted partner of African governments'],['#1A6FE8','graduation-cap','A major digital health workforce developer'],['#00C896','globe','A regional digital health infrastructure platform']]
+            ? [['#69D5F5','star','Un leader reconnu de la technologie de santé en Afrique'],['#8AC5ED','share-2','Un fournisseur d\'interopérabilité reconnu à l\'échelle nationale'],['#69D5F5','building-2','Un partenaire de confiance des gouvernements africains'],['#8AC5ED','graduation-cap','Le principal développeur de la main-d\'œuvre de santé numérique'],['#69D5F5','globe','Une plateforme d\'infrastructure de santé numérique régionale']]
+            : [['#69D5F5','star','A leading healthcare technology company across Africa'],['#8AC5ED','share-2','A recognised national interoperability provider'],['#69D5F5','building-2','A trusted partner of African governments'],['#8AC5ED','graduation-cap','A major digital health workforce developer'],['#69D5F5','globe','A regional digital health infrastructure platform']]
         as $outcome)
         <div style="display:flex;align-items:center;gap:14px;background:#0F172A;border:1px solid #1e293b;border-left:3px solid {{ $outcome[0] }};border-radius:10px;padding:14px 18px;text-align:left">
             <div style="width:34px;height:34px;border-radius:8px;background:{{ $outcome[0] }}15;display:flex;align-items:center;justify-content:center;flex-shrink:0">

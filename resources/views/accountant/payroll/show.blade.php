@@ -41,7 +41,7 @@
                 <td style="font-weight:500;color:#f1f5f9">{{ $row->dept_name }}</td>
                 <td>{{ $row->count }}</td>
                 <td>{{ number_format($row->total_gross, 0) }}</td>
-                <td style="color:#00C896;font-weight:600">{{ number_format($row->total_net, 0) }}</td>
+                <td style="color:var(--brand-accent);font-weight:600">{{ number_format($row->total_net, 0) }}</td>
             </tr>
             @endforeach
         </tbody>
@@ -63,7 +63,7 @@
                 <td style="font-weight:500;color:#f1f5f9">{{ $entry->employee->name ?? '—' }}</td>
                 <td>{{ number_format($entry->gross_salary ?? 0, 2) }}</td>
                 <td style="color:#ef4444">{{ number_format($entry->total_deductions ?? 0, 2) }}</td>
-                <td style="color:#00C896;font-weight:600">{{ number_format($entry->net_salary ?? 0, 2) }}</td>
+                <td style="color:var(--brand-accent);font-weight:600">{{ number_format($entry->net_salary ?? 0, 2) }}</td>
                 <td><span class="portal-badge {{ $entry->status === 'paid' ? 'portal-badge-green' : 'portal-badge-amber' }}">{{ ucfirst($entry->status) }}</span></td>
             </tr>
             @empty

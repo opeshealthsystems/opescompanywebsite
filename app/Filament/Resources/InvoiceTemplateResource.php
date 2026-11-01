@@ -219,19 +219,7 @@ class InvoiceTemplateResource extends Resource
                     ->color('success')
                     ->requiresConfirmation()
                     ->action(function (InvoiceTemplate $record) {
-                        $invoice = $record->generateInvoice();
-
-                        if ($invoice) {
-                            Notification::make()
-                                ->title('Invoice ' . $invoice->invoice_number . ' created')
-                                ->success()
-                                ->send();
-                        } else {
-                            Notification::make()
-                                ->title('Could not generate — template inactive or past end date')
-                                ->warning()
-                                ->send();
-                        }
+                        \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.invoiceTemplates.generate', parameters: ['invoiceTemplate' => $record->id]);
                     }),
 
                 Tables\Actions\DeleteAction::make(),

@@ -192,18 +192,18 @@ class LicenseResource extends Resource
                     ->color('warning')
                     ->requiresConfirmation()
                     ->visible(fn (License $record) => $record->status === 'active')
-                    ->action(fn (License $record) => $record->update(['status' => 'suspended'])),
+                    ->action(fn (License $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('administration.licenses.suspend', parameters: ['license' => $record->id])),
                 Tables\Actions\Action::make('reactivate')
                     ->label('Reactivate')
                     ->icon('heroicon-o-play-circle')
                     ->color('success')
                     ->requiresConfirmation()
                     ->visible(fn (License $record) => $record->status === 'suspended')
-                    ->action(fn (License $record) => $record->update(['status' => 'active'])),
+                    ->action(fn (License $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('administration.licenses.reactivate', parameters: ['license' => $record->id])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->using(function ($records) { foreach ($records as $record) \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('administration.licenses.delete', parameters: ['license' => $record->id]); }),
                 ]),
             ]);
     }

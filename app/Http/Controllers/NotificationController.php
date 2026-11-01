@@ -1,32 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-class NotificationController extends Controller
+/** Web presentation adapter; business queries and commands live in application contexts. */
+class NotificationController extends \App\Http\Controllers\Controller
 {
-    public function index(Request $request)
-    {
-        $notifications = $request->user()->notifications()->paginate(20);
-
-        return view('notifications.index', compact('notifications'));
-    }
-
-    public function markRead($locale, string $id, Request $request)
-    {
-        $notification = $request->user()->notifications()->findOrFail($id);
-        $notification->markAsRead();
-
-        $url = $notification->data['url'] ?? null;
-
-        return $url ? redirect($url) : back();
-    }
-
-    public function markAllRead(Request $request)
-    {
-        $request->user()->unreadNotifications->markAsRead();
-
-        return back()->with('success', 'All notifications marked as read.');
-    }
+    public function index(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('notificationcontroller.index', $request); }
+    public function markAllRead(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('notificationcontroller.markAllRead', $request); }
+    public function markRead(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('notificationcontroller.markRead', $request); }
 }

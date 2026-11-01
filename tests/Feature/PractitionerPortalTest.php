@@ -73,7 +73,7 @@ class PractitionerPortalTest extends TestCase
             'profession' => 'doctor',
         ]);
 
-        Mail::assertQueued(PractitionerWelcome::class, function ($mail) use ($user) {
+        Mail::assertSent(PractitionerWelcome::class, function ($mail) use ($user) {
             return $mail->user->id === $user->id;
         });
     }
@@ -169,7 +169,7 @@ class PractitionerPortalTest extends TestCase
             'status'          => 'pending',
         ]);
 
-        Mail::assertQueued(PractitionerApplicationReceived::class);
+        Mail::assertSent(PractitionerApplicationReceived::class);
     }
 
     public function test_practitioner_cannot_apply_twice_to_same_program(): void

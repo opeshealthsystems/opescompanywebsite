@@ -53,7 +53,7 @@
     <div class="cp-section-card" style="grid-column: 1 / -1">
         <div class="cp-section-header">
             <h2 class="cp-section-title">
-                <i data-lucide="calendar-check" style="width:17px;height:17px;color:#1A6FE8"></i>
+                <i data-lucide="calendar-check" style="width:17px;height:17px;color:var(--brand-accent)"></i>
                 Pending Leave Requests
             </h2>
             <a href="{{ route('manager.leave.index', ['locale' => $locale]) }}" class="cp-btn-outline" style="font-size:.8125rem">View All</a>
@@ -108,7 +108,7 @@
     <div class="cp-section-card">
         <div class="cp-section-header">
             <h2 class="cp-section-title">
-                <i data-lucide="users" style="width:17px;height:17px;color:#1A6FE8"></i>
+                <i data-lucide="users" style="width:17px;height:17px;color:var(--brand-accent)"></i>
                 My Team
             </h2>
             <a href="{{ route('manager.team', ['locale' => $locale]) }}" class="cp-btn-outline" style="font-size:.8125rem">View All</a>
@@ -118,7 +118,7 @@
             @foreach($team as $member)
             <div style="display:flex;align-items:center;gap:.75rem;padding:.5rem 0;border-bottom:1px solid #1e293b">
                 <div style="width:34px;height:34px;border-radius:50%;background:rgba(26,111,232,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                    <i data-lucide="user" style="width:16px;height:16px;color:#1A6FE8"></i>
+                    <i data-lucide="user" style="width:16px;height:16px;color:var(--brand-accent)"></i>
                 </div>
                 <div style="flex:1;min-width:0">
                     <p style="color:#f1f5f9;font-size:.875rem;font-weight:500;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ $member->name }}</p>

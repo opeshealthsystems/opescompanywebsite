@@ -19,12 +19,12 @@
     <div class="sol-grid">
 
         @foreach([
-            ['id'=>'hospitals','icon'=>'hospital','color'=>'#00C896','bg'=>'rgba(0,200,150,0.08)','title'=>__('solutions.facility_0_title'),'desc'=>__('solutions.facility_0_desc'),'systems'=>['OPES Hospital HIS','OPES EMR','OPESCare','OPES Lab','PHARMIS','RADIS','RCMIS']],
-            ['id'=>'clinics','icon'=>'stethoscope','color'=>'#1A6FE8','bg'=>'rgba(26,111,232,0.08)','title'=>__('solutions.facility_1_title'),'desc'=>__('solutions.facility_1_desc'),'systems'=>['OPES EMR','Opes Triage','OPESCare']],
-            ['id'=>'laboratories','icon'=>'microscope','color'=>'#00C896','bg'=>'rgba(0,200,150,0.08)','title'=>__('solutions.facility_2_title'),'desc'=>__('solutions.facility_2_desc'),'systems'=>['OPES Lab','OPESCare']],
-            ['id'=>'pharmacies','icon'=>'pill','color'=>'#1A6FE8','bg'=>'rgba(26,111,232,0.08)','title'=>__('solutions.facility_3_title'),'desc'=>__('solutions.facility_3_desc'),'systems'=>['PHARMIS','OPESCare']],
-            ['id'=>'government','icon'=>'shield-check','color'=>'#00C896','bg'=>'rgba(0,200,150,0.08)','title'=>__('solutions.facility_4_title'),'desc'=>__('solutions.facility_4_desc'),'systems'=>['UHC IS','OPES CDMS','OPESCare','RCMIS']],
-            ['id'=>'multi-site','icon'=>'users','color'=>'#1A6FE8','bg'=>'rgba(26,111,232,0.08)','title'=>__('solutions.facility_5_title'),'desc'=>__('solutions.facility_5_desc'),'systems'=>['OPESCare','OPES Hospital HIS','OPES EMR','All 22 systems']],
+            ['id'=>'hospitals','icon'=>'hospital','color'=>'#69D5F5','bg'=>'rgba(0,200,150,0.08)','title'=>__('solutions.facility_0_title'),'desc'=>__('solutions.facility_0_desc'),'systems'=>['OPES Hospital HIS','OPES EMR','OPESCare','OPES Lab','PHARMIS','RADIS','RCMIS']],
+            ['id'=>'clinics','icon'=>'stethoscope','color'=>'#8AC5ED','bg'=>'rgba(26,111,232,0.08)','title'=>__('solutions.facility_1_title'),'desc'=>__('solutions.facility_1_desc'),'systems'=>['OPES EMR','Opes Triage','OPESCare']],
+            ['id'=>'laboratories','icon'=>'microscope','color'=>'#69D5F5','bg'=>'rgba(0,200,150,0.08)','title'=>__('solutions.facility_2_title'),'desc'=>__('solutions.facility_2_desc'),'systems'=>['OPES Lab','OPESCare']],
+            ['id'=>'pharmacies','icon'=>'pill','color'=>'#8AC5ED','bg'=>'rgba(26,111,232,0.08)','title'=>__('solutions.facility_3_title'),'desc'=>__('solutions.facility_3_desc'),'systems'=>['PHARMIS','OPESCare']],
+            ['id'=>'government','icon'=>'shield-check','color'=>'#69D5F5','bg'=>'rgba(0,200,150,0.08)','title'=>__('solutions.facility_4_title'),'desc'=>__('solutions.facility_4_desc'),'systems'=>['UHC IS','OPES CDMS','OPESCare','RCMIS']],
+            ['id'=>'multi-site','icon'=>'users','color'=>'#8AC5ED','bg'=>'rgba(26,111,232,0.08)','title'=>__('solutions.facility_5_title'),'desc'=>__('solutions.facility_5_desc'),'systems'=>['OPESCare','OPES Hospital HIS','OPES EMR','All 22 systems']],
         ] as $sol)
         <div class="sol-card" id="{{ $sol['id'] }}" style="scroll-margin-top:90px">
             <div class="sol-card-icon" style="background:{{ $sol['bg'] }}">
@@ -56,12 +56,12 @@
 
     <div class="pi-grid" style="max-width:900px;margin:0 auto">
         @foreach([
-            ['icon'=>'globe','color'=>'#00C896','title'=>__('solutions.why_0_title'),'desc'=>__('solutions.why_0_desc')],
-            ['icon'=>'link','color'=>'#1A6FE8','title'=>__('solutions.why_1_title'),'desc'=>__('solutions.why_1_desc')],
-            ['icon'=>'wifi-off','color'=>'#00C896','title'=>__('solutions.why_2_title'),'desc'=>__('solutions.why_2_desc')],
-            ['icon'=>'shield','color'=>'#1A6FE8','title'=>__('solutions.why_3_title'),'desc'=>__('solutions.why_3_desc')],
-            ['icon'=>'cpu','color'=>'#00C896','title'=>__('solutions.why_4_title'),'desc'=>__('solutions.why_4_desc')],
-            ['icon'=>'life-buoy','color'=>'#1A6FE8','title'=>__('solutions.why_5_title'),'desc'=>__('solutions.why_5_desc')],
+            ['icon'=>'globe','color'=>'#69D5F5','title'=>__('solutions.why_0_title'),'desc'=>__('solutions.why_0_desc')],
+            ['icon'=>'link','color'=>'#8AC5ED','title'=>__('solutions.why_1_title'),'desc'=>__('solutions.why_1_desc')],
+            ['icon'=>'wifi-off','color'=>'#69D5F5','title'=>__('solutions.why_2_title'),'desc'=>__('solutions.why_2_desc')],
+            ['icon'=>'shield','color'=>'#8AC5ED','title'=>__('solutions.why_3_title'),'desc'=>__('solutions.why_3_desc')],
+            ['icon'=>'cpu','color'=>'#69D5F5','title'=>__('solutions.why_4_title'),'desc'=>__('solutions.why_4_desc')],
+            ['icon'=>'life-buoy','color'=>'#8AC5ED','title'=>__('solutions.why_5_title'),'desc'=>__('solutions.why_5_desc')],
         ] as $w)
         <div class="pi-card" style="flex-direction:column;align-items:flex-start">
             <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;margin-bottom:12px">

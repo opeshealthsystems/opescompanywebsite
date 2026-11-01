@@ -2,10 +2,6 @@
 
 namespace App\Filament\Pages;
 
-use App\Models\Department;
-use App\Models\JobOpening;
-use App\Models\LeaveRequest;
-use App\Models\User;
 use Filament\Actions\Action;
 use Filament\Pages\Page;
 
@@ -18,6 +14,8 @@ class HrSummary extends Page
     protected static ?int $navigationSort = 95;
     protected static string $view = 'filament.pages.hr-summary';
 
+    private ?array $summaryCache = null;
+
     public static function canAccess(): bool
     {
         return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
@@ -25,49 +23,30 @@ class HrSummary extends Page
 
     public function getHeadcountByDepartment(): array
     {
-        $departments = Department::where('is_active', true)
-            ->withCount('members')
-            ->orderByDesc('members_count')
-            ->get();
-
-        $unassigned = User::whereNull('department_id')
-            ->whereHas('roles', fn($q) => $q->where('name', '!=', 'customer'))
-            ->count();
-
-        $result = $departments->map(fn($d) => [
-            'name'  => $d->name,
-            'count' => $d->members_count,
-        ])->toArray();
-
-        if ($unassigned > 0) {
-            $result[] = ['name' => 'Unassigned', 'count' => $unassigned];
-        }
-
-        return $result;
+        return $this->summary()['headcount_by_department'];
     }
 
     public function getLeaveStats(): array
     {
-        $thisMonth = LeaveRequest::whereMonth('start_date', now()->month)
-            ->whereYear('start_date', now()->year)
-            ->get();
-
-        return [
-            'total_requests' => $thisMonth->count(),
-            'approved'       => $thisMonth->where('status', 'approved')->count(),
-            'pending'        => $thisMonth->where('status', 'pending')->count(),
-            'rejected'       => $thisMonth->where('status', 'rejected')->count(),
-        ];
+        return $this->summary()['leave'];
     }
 
     public function getOpenPositions(): int
     {
-        return JobOpening::where('status', 'open')->count();
+        return $this->summary()['open_positions'];
     }
 
     public function getTotalHeadcount(): int
     {
-        return User::whereHas('roles', fn($q) => $q->where('name', '!=', 'customer'))->count();
+        return $this->summary()['total_headcount'];
+    }
+
+    private function summary(): array
+    {
+        return $this->summaryCache ??= app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+            'admin.reports.workforce.summary',
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user()),
+        )->data['summary'];
     }
 
     protected function getHeaderActions(): array

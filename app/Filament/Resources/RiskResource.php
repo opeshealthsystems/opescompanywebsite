@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\RiskResource\Pages;
 use App\Models\Risk;
 use App\Models\User;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Infolists;
@@ -38,7 +39,7 @@ class RiskResource extends Resource
         return $form->schema([
             Forms\Components\Section::make('Risk')->columns(2)->schema([
                 Forms\Components\TextInput::make('reference')->disabled()->placeholder('Auto-generated'),
-                Forms\Components\Select::make('status')->options(Risk::statusOptions())->default('open')->required(),
+                Forms\Components\Select::make('status')->options(Risk::statusOptions())->default('open')->disabled()->dehydrated(false)->required(),
                 Forms\Components\TextInput::make('title')->required()->maxLength(250)->columnSpanFull(),
                 Forms\Components\Select::make('category')->options(Risk::categoryOptions())->required(),
                 Forms\Components\Select::make('owner_id')
@@ -102,7 +103,7 @@ class RiskResource extends Resource
                     ->label('Mark Mitigated')->icon('heroicon-o-shield-check')->color('warning')
                     ->requiresConfirmation()
                     ->hidden(fn (Risk $record) => $record->status !== 'open')
-                    ->action(fn (Risk $record) => $record->update(['status'=>'mitigated'])),
+                    ->action(fn (Risk $record) => AdminWorkflowAdapter::run('admin.risk.mitigate', parameters: ['risk' => $record])),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);

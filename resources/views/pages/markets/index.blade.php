@@ -23,13 +23,13 @@
 
 {{-- ── HOME MARKET ──────────────────────────────────────────────── --}}
 <div class="section" style="max-width:960px;margin:0 auto">
-    <a href="{{ url($locale.'/products') }}" style="display:flex;align-items:center;gap:16px;padding:20px 24px;background:linear-gradient(135deg,#0f1f2e,#0d1a14);border:1px solid rgba(0,200,150,0.25);border-radius:16px;text-decoration:none">
+    <a href="{{ url($locale.'/products') }}" style="display:flex;align-items:center;gap:16px;padding:20px 24px;background:var(--surface);border:1px solid rgba(0,200,150,0.25);border-radius:16px;text-decoration:none">
         <img src="{{ asset('flags/cm.svg') }}" alt="Cameroon" style="width:42px;height:28px;border-radius:4px;object-fit:cover">
         <div style="flex:1">
-            <div style="font-weight:800;color:#00C896;font-size:15px;margin-bottom:3px">{{ $isFr ? 'Cameroun — marché d\'origine' : 'Cameroon — home market' }}</div>
+            <div style="font-weight:800;color:var(--brand-accent);font-size:15px;margin-bottom:3px">{{ $isFr ? 'Cameroun — marché d\'origine' : 'Cameroon — home market' }}</div>
             <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.6">{{ $isFr ? 'Conçu et développé au Cameroun : bilingue EN/FR, mobile money (MoMo, Orange Money), facturation CNPS/mutuelles/CSU, et les 22 systèmes OPES.' : 'Designed and built in Cameroon: bilingual EN/FR, mobile money (MoMo, Orange Money), CNPS/mutuelles/CSU billing, and all 22 OPES systems.' }}</div>
         </div>
-        <i data-lucide="arrow-right" style="width:18px;height:18px;color:#00C896;flex-shrink:0"></i>
+        <i data-lucide="arrow-right" style="width:18px;height:18px;color:var(--brand-accent);flex-shrink:0"></i>
     </a>
 </div>
 
@@ -43,7 +43,7 @@
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:24px">
         @foreach($markets as $m)
-        @php $accent = $m['accent'] ?? '#00C896'; @endphp
+        @php $accent = $m['accent'] ?? '#69D5F5'; @endphp
         <a href="{{ url($locale.'/markets/'.$m['slug']) }}" style="display:block;background:#0F172A;border:1px solid #1e293b;border-radius:14px;padding:20px;text-decoration:none">
             <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
                 <img src="{{ asset('flags/'.$m['code'].'.svg') }}" alt="" style="width:36px;height:24px;border-radius:3px;object-fit:cover">

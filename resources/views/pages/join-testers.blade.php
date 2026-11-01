@@ -7,7 +7,7 @@ $isFr   = $locale === 'fr';
                :description="$isFr ? 'Rejoignez le programme de test OPES et aidez à façonner l\'avenir des logiciels de santé africains.' : 'Join the OPES beta testing programme and help shape the future of African health software.'">
 
 <style>
-.testers-hero { background: linear-gradient(135deg, #080F1E 0%, #0c1220 100%); padding: 72px 48px 56px; text-align: center; border-bottom: 1px solid #1e293b; }
+.testers-hero { background: var(--surface); padding: 72px 48px 56px; text-align: center; border-bottom: 1px solid #1e293b; }
 .testers-hero h1 { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 800; color: #f1f5f9; margin-bottom: 14px; }
 .testers-hero p  { color: var(--text-muted); font-size: 1.05rem; max-width: 560px; margin: 0 auto; line-height: 1.7; }
 
@@ -229,7 +229,7 @@ $isFr   = $locale === 'fr';
             @endforeach
         </div>
 
-        <div class="testers-info-card" style="background:linear-gradient(135deg,#F59E0B08,#080e1a);border-color:#F59E0B20">
+        <div class="testers-info-card" style="background:var(--surface);border-color:#F59E0B20">
             <h3>{{ $isFr ? 'Déjà testeur ?' : 'Already a tester?' }}</h3>
             <p style="font-size:.8rem;color:var(--text-muted);line-height:1.6;margin-bottom:14px">{{ $isFr ? 'Connectez-vous à votre tableau de bord testeur pour voir vos missions et soumettre vos rapports.' : 'Log in to your tester dashboard to view assignments and submit reports.' }}</p>
             <a href="{{ url($locale.'/login') }}" style="display:block;text-align:center;background:#F59E0B20;border:1px solid #F59E0B40;color:#F59E0B;border-radius:8px;padding:10px;font-size:.82rem;font-weight:600;text-decoration:none">

@@ -36,18 +36,18 @@
 
         @php
         $layers = $isFr ? [
-            ['label'=>'Couche Présentation',     'items'=>'Portails web · Application mobile · Tableaux de bord analytiques · API tierces',           'color'=>'#1A6FE8','icon'=>'monitor'],
-            ['label'=>'Couche Services Métier',  'items'=>'Dossier patient · SIH hospitalier · Laboratoire · Pharmacie · Radiologie · Maternité',     'color'=>'#00C896','icon'=>'layers'],
-            ['label'=>'Couche Interopérabilité', 'items'=>'HL7 FHIR R4 · SNOMED CT · ICD-10/11 · DICOM · CDA · API ouverte REST/JSON',               'color'=>'#1A6FE8','icon'=>'share-2'],
-            ['label'=>'Couche Identité Santé',   'items'=>'OPESCare Health ID · Master Patient Index · CRVS · Correspondance multi-établissements',   'color'=>'#00C896','icon'=>'fingerprint'],
-            ['label'=>'Couche Données & IA',     'items'=>'Entrepôt de données cliniques · Analytique HMIS · IA décision clinique · Rapports MoH',    'color'=>'#1A6FE8','icon'=>'brain'],
+            ['label'=>'Couche Présentation',     'items'=>'Portails web · Application mobile · Tableaux de bord analytiques · API tierces',           'color'=>'#8AC5ED','icon'=>'monitor'],
+            ['label'=>'Couche Services Métier',  'items'=>'Dossier patient · SIH hospitalier · Laboratoire · Pharmacie · Radiologie · Maternité',     'color'=>'#69D5F5','icon'=>'layers'],
+            ['label'=>'Couche Interopérabilité', 'items'=>'HL7 FHIR R4 · SNOMED CT · ICD-10/11 · DICOM · CDA · API ouverte REST/JSON',               'color'=>'#8AC5ED','icon'=>'share-2'],
+            ['label'=>'Couche Identité Santé',   'items'=>'OPESCare Health ID · Master Patient Index · CRVS · Correspondance multi-établissements',   'color'=>'#69D5F5','icon'=>'fingerprint'],
+            ['label'=>'Couche Données & IA',     'items'=>'Entrepôt de données cliniques · Analytique HMIS · IA décision clinique · Rapports MoH',    'color'=>'#8AC5ED','icon'=>'brain'],
             ['label'=>'Couche Infrastructure',   'items'=>'On-premise · Cloud privé · Déploiement hybride · Datacenter Cameroun',                     'color'=>'var(--text-faint)','icon'=>'server'],
         ] : [
-            ['label'=>'Presentation Layer',     'items'=>'Web portals · Mobile app · Analytics dashboards · Third-party integrations',               'color'=>'#1A6FE8','icon'=>'monitor'],
-            ['label'=>'Business Services Layer','items'=>'Patient record · Hospital HIS · Laboratory · Pharmacy · Radiology · Maternity',            'color'=>'#00C896','icon'=>'layers'],
-            ['label'=>'Interoperability Layer', 'items'=>'HL7 FHIR R4 · SNOMED CT · ICD-10/11 · DICOM · CDA · Open REST/JSON API',                  'color'=>'#1A6FE8','icon'=>'share-2'],
-            ['label'=>'Health Identity Layer',  'items'=>'OPESCare Health ID · Master Patient Index · CRVS · Cross-facility record matching',        'color'=>'#00C896','icon'=>'fingerprint'],
-            ['label'=>'Data & Intelligence Layer','items'=>'Clinical data warehouse · HMIS analytics · AI clinical decision support · MoH reporting','color'=>'#1A6FE8','icon'=>'brain'],
+            ['label'=>'Presentation Layer',     'items'=>'Web portals · Mobile app · Analytics dashboards · Third-party integrations',               'color'=>'#8AC5ED','icon'=>'monitor'],
+            ['label'=>'Business Services Layer','items'=>'Patient record · Hospital HIS · Laboratory · Pharmacy · Radiology · Maternity',            'color'=>'#69D5F5','icon'=>'layers'],
+            ['label'=>'Interoperability Layer', 'items'=>'HL7 FHIR R4 · SNOMED CT · ICD-10/11 · DICOM · CDA · Open REST/JSON API',                  'color'=>'#8AC5ED','icon'=>'share-2'],
+            ['label'=>'Health Identity Layer',  'items'=>'OPESCare Health ID · Master Patient Index · CRVS · Cross-facility record matching',        'color'=>'#69D5F5','icon'=>'fingerprint'],
+            ['label'=>'Data & Intelligence Layer','items'=>'Clinical data warehouse · HMIS analytics · AI clinical decision support · MoH reporting','color'=>'#8AC5ED','icon'=>'brain'],
             ['label'=>'Infrastructure Layer',   'items'=>'On-premise · Private cloud · Hybrid deployment · Cameroon data centres',                   'color'=>'var(--text-faint)','icon'=>'server'],
         ];
         @endphp
@@ -85,19 +85,19 @@
     <div class="pi-grid" style="max-width:960px">
         @php
         $standards = $isFr ? [
-            ['icon'=>'share-2','color'=>'#00C896','title'=>'HL7 FHIR R4','desc'=>'API FHIR native pour l\'échange de ressources cliniques — patients, observations, prescriptions et comptes rendus.'],
-            ['icon'=>'file-text','color'=>'#1A6FE8','title'=>'ICD-10 / ICD-11','desc'=>'Codification diagnostique conforme OMS, avec transition automatisée vers ICD-11 prête à l\'emploi.'],
-            ['icon'=>'image','color'=>'#00C896','title'=>'DICOM','desc'=>'Gestion des images médicales (radiologie, échographie, scanner) avec stockage PACS intégré.'],
-            ['icon'=>'code-2','color'=>'#1A6FE8','title'=>'API REST ouverte','desc'=>'API documentée (OpenAPI 3.0) pour connecter des systèmes tiers, portails gouvernementaux et applications de télémédecine.'],
-            ['icon'=>'database','color'=>'#00C896','title'=>'SNOMED CT','desc'=>'Terminologie clinique normalisée pour les diagnostics, procédures et observations.'],
-            ['icon'=>'building','color'=>'#1A6FE8','title'=>'HMIS / DHIS2','desc'=>'Exports DHIS2-compatibles pour le reporting vers le Ministère de la Santé et les partenaires de développement.'],
+            ['icon'=>'share-2','color'=>'#69D5F5','title'=>'HL7 FHIR R4','desc'=>'API FHIR native pour l\'échange de ressources cliniques — patients, observations, prescriptions et comptes rendus.'],
+            ['icon'=>'file-text','color'=>'#8AC5ED','title'=>'ICD-10 / ICD-11','desc'=>'Codification diagnostique conforme OMS, avec transition automatisée vers ICD-11 prête à l\'emploi.'],
+            ['icon'=>'image','color'=>'#69D5F5','title'=>'DICOM','desc'=>'Gestion des images médicales (radiologie, échographie, scanner) avec stockage PACS intégré.'],
+            ['icon'=>'code-2','color'=>'#8AC5ED','title'=>'API REST ouverte','desc'=>'API documentée (OpenAPI 3.0) pour connecter des systèmes tiers, portails gouvernementaux et applications de télémédecine.'],
+            ['icon'=>'database','color'=>'#69D5F5','title'=>'SNOMED CT','desc'=>'Terminologie clinique normalisée pour les diagnostics, procédures et observations.'],
+            ['icon'=>'building','color'=>'#8AC5ED','title'=>'HMIS / DHIS2','desc'=>'Exports DHIS2-compatibles pour le reporting vers le Ministère de la Santé et les partenaires de développement.'],
         ] : [
-            ['icon'=>'share-2','color'=>'#00C896','title'=>'HL7 FHIR R4','desc'=>'Native FHIR API for clinical resource exchange — patients, observations, prescriptions, and reports.'],
-            ['icon'=>'file-text','color'=>'#1A6FE8','title'=>'ICD-10 / ICD-11','desc'=>'WHO-compliant diagnostic coding with automated ICD-11 transition pathways built in.'],
-            ['icon'=>'image','color'=>'#00C896','title'=>'DICOM','desc'=>'Medical imaging management (radiology, ultrasound, CT) with integrated PACS-compatible storage.'],
-            ['icon'=>'code-2','color'=>'#1A6FE8','title'=>'Open REST API','desc'=>'Documented API (OpenAPI 3.0) for connecting third-party systems, government portals, and telemedicine apps.'],
-            ['icon'=>'database','color'=>'#00C896','title'=>'SNOMED CT','desc'=>'Standardised clinical terminology for diagnoses, procedures, and observations.'],
-            ['icon'=>'building','color'=>'#1A6FE8','title'=>'HMIS / DHIS2','desc'=>'DHIS2-compatible exports for reporting to the Ministry of Health and development partners.'],
+            ['icon'=>'share-2','color'=>'#69D5F5','title'=>'HL7 FHIR R4','desc'=>'Native FHIR API for clinical resource exchange — patients, observations, prescriptions, and reports.'],
+            ['icon'=>'file-text','color'=>'#8AC5ED','title'=>'ICD-10 / ICD-11','desc'=>'WHO-compliant diagnostic coding with automated ICD-11 transition pathways built in.'],
+            ['icon'=>'image','color'=>'#69D5F5','title'=>'DICOM','desc'=>'Medical imaging management (radiology, ultrasound, CT) with integrated PACS-compatible storage.'],
+            ['icon'=>'code-2','color'=>'#8AC5ED','title'=>'Open REST API','desc'=>'Documented API (OpenAPI 3.0) for connecting third-party systems, government portals, and telemedicine apps.'],
+            ['icon'=>'database','color'=>'#69D5F5','title'=>'SNOMED CT','desc'=>'Standardised clinical terminology for diagnoses, procedures, and observations.'],
+            ['icon'=>'building','color'=>'#8AC5ED','title'=>'HMIS / DHIS2','desc'=>'DHIS2-compatible exports for reporting to the Ministry of Health and development partners.'],
         ];
         @endphp
         @foreach($standards as $s)
@@ -134,7 +134,7 @@
                 ? ['Indexe patient maître (MPI)','Correspondance multi-établissements','Conformité CRVS','ID hors ligne & mode dégradé']
                 : ['Master Patient Index (MPI)','Cross-facility record matching','CRVS-compliant','Offline ID & degraded mode'] as $f)
             <div style="display:flex;align-items:center;gap:8px">
-                <i data-lucide="check-circle" style="width:15px;height:15px;color:#00C896;flex-shrink:0"></i>
+                <i data-lucide="check-circle" style="width:15px;height:15px;color:var(--brand-accent);flex-shrink:0"></i>
                 <span style="color:var(--text-muted);font-size:13px">{{ $f }}</span>
             </div>
             @endforeach
@@ -173,7 +173,7 @@
         @foreach($secItems as $item)
         <div class="pi-card" style="flex-direction:column;align-items:flex-start;text-align:left">
             <div style="width:40px;height:40px;border-radius:10px;background:rgba(0,200,150,0.08);display:flex;align-items:center;justify-content:center;margin-bottom:12px">
-                <i data-lucide="{{ $item['icon'] }}" style="width:18px;height:18px;color:#00C896"></i>
+                <i data-lucide="{{ $item['icon'] }}" style="width:18px;height:18px;color:var(--brand-accent)"></i>
             </div>
             <div style="font-weight:700;color:#e2e8f0;font-size:13px;margin-bottom:6px">{{ $item['title'] }}</div>
             <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.6">{{ $item['desc'] }}</div>
@@ -194,13 +194,13 @@
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:32px">
         @php
         $deployOptions = $isFr ? [
-            ['icon'=>'server',    'color'=>'#00C896','title'=>'On-Premise',           'desc'=>'Hébergement sur vos propres serveurs, dans votre établissement ou datacenter. Contrôle total des données, idéal pour les hôpitaux généraux et les réseaux publics.'],
-            ['icon'=>'cloud',     'color'=>'#1A6FE8','title'=>'Cloud Privé Cameroun', 'desc'=>'Hébergement managé dans nos datacenters au Cameroun. Données en souveraineté nationale, conformes aux exigences du Ministère de la Santé.'],
-            ['icon'=>'git-merge', 'color'=>'#00C896','title'=>'Hybride',              'desc'=>'Combinaison on-premise et cloud pour les réseaux multi-sites : données sensibles locales, agrégation analytique dans le cloud.'],
+            ['icon'=>'server',    'color'=>'#69D5F5','title'=>'On-Premise',           'desc'=>'Hébergement sur vos propres serveurs, dans votre établissement ou datacenter. Contrôle total des données, idéal pour les hôpitaux généraux et les réseaux publics.'],
+            ['icon'=>'cloud',     'color'=>'#8AC5ED','title'=>'Cloud Privé Cameroun', 'desc'=>'Hébergement managé dans nos datacenters au Cameroun. Données en souveraineté nationale, conformes aux exigences du Ministère de la Santé.'],
+            ['icon'=>'git-merge', 'color'=>'#69D5F5','title'=>'Hybride',              'desc'=>'Combinaison on-premise et cloud pour les réseaux multi-sites : données sensibles locales, agrégation analytique dans le cloud.'],
         ] : [
-            ['icon'=>'server',    'color'=>'#00C896','title'=>'On-Premise',           'desc'=>'Hosted on your own servers, within your facility or data centre. Full data control — ideal for general hospitals and public health networks.'],
-            ['icon'=>'cloud',     'color'=>'#1A6FE8','title'=>'Private Cloud Cameroon','desc'=>'Managed hosting in our Cameroon data centres. Data remains in-country, compliant with Ministry of Health requirements.'],
-            ['icon'=>'git-merge', 'color'=>'#00C896','title'=>'Hybrid',               'desc'=>'Combination of on-premise and cloud for multi-site networks — sensitive data stays local, analytics aggregated in the cloud.'],
+            ['icon'=>'server',    'color'=>'#69D5F5','title'=>'On-Premise',           'desc'=>'Hosted on your own servers, within your facility or data centre. Full data control — ideal for general hospitals and public health networks.'],
+            ['icon'=>'cloud',     'color'=>'#8AC5ED','title'=>'Private Cloud Cameroon','desc'=>'Managed hosting in our Cameroon data centres. Data remains in-country, compliant with Ministry of Health requirements.'],
+            ['icon'=>'git-merge', 'color'=>'#69D5F5','title'=>'Hybrid',               'desc'=>'Combination of on-premise and cloud for multi-site networks — sensitive data stays local, analytics aggregated in the cloud.'],
         ];
         @endphp
         @foreach($deployOptions as $d)

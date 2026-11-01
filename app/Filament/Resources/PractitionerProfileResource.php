@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\PractitionerProfileResource\Pages;
 use App\Models\PractitionerProfile;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -59,7 +60,7 @@ class PractitionerProfileResource extends Resource
                         ->maxValue(60)
                         ->nullable(),
                     Forms\Components\Toggle::make('is_verified')
-                        ->label('Verified'),
+                        ->label('Verified')->disabled()->dehydrated(false),
                 ]),
             Forms\Components\Section::make('Workplace')
                 ->columns(2)
@@ -138,7 +139,7 @@ class PractitionerProfileResource extends Resource
                     ->hidden(fn (PractitionerProfile $record) => $record->is_verified)
                     ->requiresConfirmation()
                     ->action(function (PractitionerProfile $record) {
-                        $record->update(['is_verified' => true]);
+                        AdminWorkflowAdapter::run('admin.practitioners.profiles.verify', parameters: ['profile' => $record]);
                         Notification::make()->title('Practitioner verified')->success()->send();
                     }),
             ])

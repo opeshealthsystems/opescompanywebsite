@@ -25,7 +25,7 @@
 
         <div class="cp-section-card">
             <h2 class="cp-section-title" style="margin-bottom:1.5rem">
-                <i data-lucide="user" style="width:18px;height:18px;color:#00C896"></i> Contact Details
+                <i data-lucide="user" style="width:18px;height:18px;color:var(--brand-accent)"></i> Contact Details
             </h2>
             <div class="auth-grid-2">
                 <div class="auth-field">
@@ -48,7 +48,7 @@
 
         <div class="cp-section-card" style="margin-top:1.5rem">
             <h2 class="cp-section-title" style="margin-bottom:1.5rem">
-                <i data-lucide="building-2" style="width:18px;height:18px;color:#00C896"></i> Facility Information
+                <i data-lucide="building-2" style="width:18px;height:18px;color:var(--brand-accent)"></i> Facility Information
             </h2>
             <div class="auth-grid-2">
                 <div class="auth-field">
@@ -106,7 +106,7 @@
 
         <div class="cp-section-card">
             <h2 class="cp-section-title" style="margin-bottom:1.5rem">
-                <i data-lucide="lock" style="width:18px;height:18px;color:#1A6FE8"></i> Change Password
+                <i data-lucide="lock" style="width:18px;height:18px;color:var(--brand-accent)"></i> Change Password
             </h2>
             <div class="auth-grid-2">
                 <div class="auth-field" style="grid-column:1/-1">

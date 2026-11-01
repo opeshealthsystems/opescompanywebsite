@@ -69,7 +69,7 @@
     {{-- Recently completed --}}
     <div class="bg-slate-900 border border-slate-800 rounded-xl p-5">
         <h2 class="font-semibold text-white text-sm mb-4 flex items-center gap-2">
-            <i data-lucide="check-circle" style="width:16px;height:16px;color:#00C896"></i> Recently Completed
+            <i data-lucide="check-circle" style="width:16px;height:16px;color:var(--brand-accent)"></i> Recently Completed
         </h2>
         @forelse($completed as $a)
         <div class="flex items-center justify-between mb-3 pb-3 border-b border-slate-800 last:border-0 last:mb-0 last:pb-0">

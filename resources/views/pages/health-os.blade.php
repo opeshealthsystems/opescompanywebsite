@@ -55,28 +55,28 @@
     <h2 class="section-title">{{ $isFr ? 'Six familles de produits, un écosystème unifié' : 'Six product families, one unified ecosystem' }}</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:28px">
         @php $families = [
-            ['activity','#00C896','1','OPES Clinic',
+            ['activity','#69D5F5','1','OPES Clinic',
                 $isFr ? 'Cliniques & Centres ambulatoires' : 'Clinics & Outpatient Centers',
                 $isFr ? ['DME','Rendez-vous','Prescriptions','Facturation','Inventaire'] : ['EMR','Appointments','Prescriptions','Billing','Inventory']],
-            ['hospital','#1A6FE8','2','OPES Hospital',
+            ['hospital','#8AC5ED','2','OPES Hospital',
                 $isFr ? 'Hôpitaux de district, régionaux & de référence' : 'District, Regional & Referral Hospitals',
                 $isFr ? ['Admissions','Gestion des lits','Bloc opératoire','Urgences','Tableaux de bord'] : ['Admissions','Bed management','Theatre','Emergency dept','Dashboards']],
-            ['layout-grid','#00C896','3','OPES Specialty Suite',
+            ['layout-grid','#69D5F5','3','OPES Specialty Suite',
                 $isFr ? '12 systèmes d\'information départementaux' : '12 departmental information systems',
                 $isFr ? ['Labo','Pharmacie','Radiologie','Cardio','Pédiatrie','Oncologie…'] : ['Lab','Pharmacy','Radiology','Cardio','Pediatrics','Oncology…']],
-            ['share-2','#1A6FE8','4','OPES Care',
+            ['share-2','#8AC5ED','4','OPES Care',
                 $isFr ? 'Fondation d\'interopérabilité' : 'Interoperability Foundation',
                 $isFr ? ['Health ID','Index Patient Maître','HIE','Registres','Portail patient'] : ['Health ID','Master Patient Index','HIE','Registries','Patient portal']],
-            ['cpu','#00C896','5','OPES Clinical Intelligence',
+            ['cpu','#69D5F5','5','OPES Clinical Intelligence',
                 $isFr ? 'IA clinique & analytique de santé publique' : 'Clinical AI & population health analytics',
                 $isFr ? ['CDSS','Triage','Analytique population','Surveillance maladies'] : ['CDSS','Triage','Population analytics','Disease surveillance']],
-            ['graduation-cap','#1A6FE8','6','OPES Academy',
+            ['graduation-cap','#8AC5ED','6','OPES Academy',
                 $isFr ? 'Formation & développement des capacités' : 'Training & capacity development',
                 $isFr ? ['5 certifications','Développement RH','Formation numérique'] : ['5 certifications','Workforce development','Digital health training']],
         ]; @endphp
         @foreach($families as $f)
         <div style="background:#0F172A;border:1px solid #1e293b;border-radius:14px;padding:20px;position:relative;overflow:hidden">
-            <div style="position:absolute;top:10px;right:14px;font-size:32px;font-weight:900;color:{{ $f[2] === '1' || $f[2] === '3' || $f[2] === '5' ? '#00C896' : '#1A6FE8' }}06;line-height:1;pointer-events:none">{{ $f[2] }}</div>
+            <div style="position:absolute;top:10px;right:14px;font-size:32px;font-weight:900;color:{{ $f[2] === '1' || $f[2] === '3' || $f[2] === '5' ? '#69D5F5' : '#8AC5ED' }}06;line-height:1;pointer-events:none">{{ $f[2] }}</div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
                 <div style="width:36px;height:36px;border-radius:9px;background:{{ $f[3] }}15;display:flex;align-items:center;justify-content:center;flex-shrink:0">
                     <i data-lucide="{{ $f[0] }}" style="width:16px;height:16px;color:{{ $f[3] }}"></i>
@@ -114,7 +114,7 @@
                 : ['Patient registration','Appointment management','Electronic medical records','Prescriptions','Billing','Inventory management','Reporting','Patient history','Clinical documentation']
             as $cap)
             <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0F172A;border-radius:7px;border:1px solid #1e293b;margin-bottom:5px">
-                <i data-lucide="check" style="width:11px;height:11px;color:#00C896;flex-shrink:0"></i>
+                <i data-lucide="check" style="width:11px;height:11px;color:var(--brand-accent);flex-shrink:0"></i>
                 <span style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $cap }}</span>
             </div>
             @endforeach
@@ -132,7 +132,7 @@
                 : ['Registration','Admissions','Bed management','Nursing management','Theatre management','Emergency department','Billing','Insurance','Inventory','Procurement','Operational reporting','Executive dashboards']
             as $cap)
             <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0F172A;border-radius:7px;border:1px solid #1e293b;margin-bottom:5px">
-                <i data-lucide="check" style="width:11px;height:11px;color:#1A6FE8;flex-shrink:0"></i>
+                <i data-lucide="check" style="width:11px;height:11px;color:var(--brand-accent);flex-shrink:0"></i>
                 <span style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $cap }}</span>
             </div>
             @endforeach
@@ -151,31 +151,31 @@
     <h2 class="section-title">{{ $isFr ? 'OPES Specialty Suite — 12 systèmes départementaux' : 'OPES Specialty Suite — 12 departmental systems' }}</h2>
     <p style="color:var(--text-muted);font-size:14px;margin-bottom:28px">{{ $isFr ? 'Systèmes d\'information spécialisés pour chaque département clinique.' : 'Specialised information systems for every clinical department.' }}</p>
     @php $specialties = $isFr ? [
-        ['microscope','#00C896','OPES Lab IS','Opérations laboratoire',['Commandes d\'analyses','Suivi des échantillons','Résultats','Contrôle qualité','Intégration instruments']],
-        ['pill','#1A6FE8','OPES Pharmacy IS','Opérations pharmacie',['Traitement ordonnances','Dispensation','Inventaire médicaments','Suivi lots','Surveillance péremption']],
-        ['scan','#00C896','OPES Radiology IS','Opérations imagerie',['Demandes d\'imagerie','Planification','Rapports','Workflow radiologue']],
-        ['heart','#1A6FE8','OPES Cardiology IS','Services cardiologie',['Gestion ECG','Échocardiographie','Rapports cardiologie']],
-        ['smile','#00C896','OPES Dental IS','Gestion cabinet dentaire',['Bilan dentaire','Procédures','Imagerie','Plan de traitement']],
-        ['zap','#1A6FE8','OPES Dermatology IS','Gestion dermatologie',['Imagerie clinique','Suivi traitement','Gestion de cas']],
-        ['droplet','#00C896','OPES Endocrinology IS','Diabète & soins endocriniens',['Suivi diabète','Maladies chroniques','Suivi de contrôle']],
-        ['heart-pulse','#1A6FE8','OPES Obstetrics & Gynecology IS','Services santé féminine',['CPN','Gestion accouchements','Soins postnataux','Dossiers femmes']],
-        ['users','#00C896','OPES Pediatrics IS','Soins pédiatriques',['Suivi croissance','Suivi vaccinations','Documentation pédiatrique']],
-        ['shield','#1A6FE8','OPES Oncology IS','Prise en charge oncologique',['Plan de traitement','Suivi chimiothérapie','Dossiers oncologie']],
-        ['eye','#00C896','OPES Ophthalmology IS','Services ophtalmologie',['Évaluation visuelle','Documentation clinique','Suivi procédures']],
-        ['activity','#1A6FE8','OPES Orthopedics IS','Soins orthopédiques',['Gestion des fractures','Documentation procédures','Suivi postopératoire']],
+        ['microscope','#69D5F5','OPES Lab IS','Opérations laboratoire',['Commandes d\'analyses','Suivi des échantillons','Résultats','Contrôle qualité','Intégration instruments']],
+        ['pill','#8AC5ED','OPES Pharmacy IS','Opérations pharmacie',['Traitement ordonnances','Dispensation','Inventaire médicaments','Suivi lots','Surveillance péremption']],
+        ['scan','#69D5F5','OPES Radiology IS','Opérations imagerie',['Demandes d\'imagerie','Planification','Rapports','Workflow radiologue']],
+        ['heart','#8AC5ED','OPES Cardiology IS','Services cardiologie',['Gestion ECG','Échocardiographie','Rapports cardiologie']],
+        ['smile','#69D5F5','OPES Dental IS','Gestion cabinet dentaire',['Bilan dentaire','Procédures','Imagerie','Plan de traitement']],
+        ['zap','#8AC5ED','OPES Dermatology IS','Gestion dermatologie',['Imagerie clinique','Suivi traitement','Gestion de cas']],
+        ['droplet','#69D5F5','OPES Endocrinology IS','Diabète & soins endocriniens',['Suivi diabète','Maladies chroniques','Suivi de contrôle']],
+        ['heart-pulse','#8AC5ED','OPES Obstetrics & Gynecology IS','Services santé féminine',['CPN','Gestion accouchements','Soins postnataux','Dossiers femmes']],
+        ['users','#69D5F5','OPES Pediatrics IS','Soins pédiatriques',['Suivi croissance','Suivi vaccinations','Documentation pédiatrique']],
+        ['shield','#8AC5ED','OPES Oncology IS','Prise en charge oncologique',['Plan de traitement','Suivi chimiothérapie','Dossiers oncologie']],
+        ['eye','#69D5F5','OPES Ophthalmology IS','Services ophtalmologie',['Évaluation visuelle','Documentation clinique','Suivi procédures']],
+        ['activity','#8AC5ED','OPES Orthopedics IS','Soins orthopédiques',['Gestion des fractures','Documentation procédures','Suivi postopératoire']],
     ] : [
-        ['microscope','#00C896','OPES Lab IS','Laboratory operations',['Test orders','Sample tracking','Result reporting','Quality control','Instrument integration']],
-        ['pill','#1A6FE8','OPES Pharmacy IS','Pharmacy operations',['Prescription processing','Dispensing','Drug inventory','Batch tracking','Expiry monitoring']],
-        ['scan','#00C896','OPES Radiology IS','Imaging operations',['Imaging requests','Scheduling','Reporting','Radiologist workflow']],
-        ['heart','#1A6FE8','OPES Cardiology IS','Cardiology services',['ECG management','Echocardiography','Cardiology reporting']],
-        ['smile','#00C896','OPES Dental IS','Dental practice management',['Dental charting','Procedures','Imaging','Treatment planning']],
-        ['zap','#1A6FE8','OPES Dermatology IS','Dermatology practice',['Clinical imaging','Treatment tracking','Case management']],
-        ['droplet','#00C896','OPES Endocrinology IS','Diabetes & endocrine care',['Diabetes monitoring','Chronic disease management','Follow-up tracking']],
-        ['heart-pulse','#1A6FE8','OPES Obstetrics & Gynecology IS','Women\'s health services',['ANC','Delivery management','Postnatal care','Women\'s health records']],
-        ['users','#00C896','OPES Pediatrics IS','Pediatric care',['Growth monitoring','Vaccination tracking','Pediatric documentation']],
-        ['shield','#1A6FE8','OPES Oncology IS','Cancer care management',['Treatment planning','Chemotherapy tracking','Oncology records']],
-        ['eye','#00C896','OPES Ophthalmology IS','Eye care services',['Vision assessment','Clinical documentation','Procedure tracking']],
-        ['activity','#1A6FE8','OPES Orthopedics IS','Orthopedic care',['Fracture management','Procedure documentation','Follow-up care']],
+        ['microscope','#69D5F5','OPES Lab IS','Laboratory operations',['Test orders','Sample tracking','Result reporting','Quality control','Instrument integration']],
+        ['pill','#8AC5ED','OPES Pharmacy IS','Pharmacy operations',['Prescription processing','Dispensing','Drug inventory','Batch tracking','Expiry monitoring']],
+        ['scan','#69D5F5','OPES Radiology IS','Imaging operations',['Imaging requests','Scheduling','Reporting','Radiologist workflow']],
+        ['heart','#8AC5ED','OPES Cardiology IS','Cardiology services',['ECG management','Echocardiography','Cardiology reporting']],
+        ['smile','#69D5F5','OPES Dental IS','Dental practice management',['Dental charting','Procedures','Imaging','Treatment planning']],
+        ['zap','#8AC5ED','OPES Dermatology IS','Dermatology practice',['Clinical imaging','Treatment tracking','Case management']],
+        ['droplet','#69D5F5','OPES Endocrinology IS','Diabetes & endocrine care',['Diabetes monitoring','Chronic disease management','Follow-up tracking']],
+        ['heart-pulse','#8AC5ED','OPES Obstetrics & Gynecology IS','Women\'s health services',['ANC','Delivery management','Postnatal care','Women\'s health records']],
+        ['users','#69D5F5','OPES Pediatrics IS','Pediatric care',['Growth monitoring','Vaccination tracking','Pediatric documentation']],
+        ['shield','#8AC5ED','OPES Oncology IS','Cancer care management',['Treatment planning','Chemotherapy tracking','Oncology records']],
+        ['eye','#69D5F5','OPES Ophthalmology IS','Eye care services',['Vision assessment','Clinical documentation','Procedure tracking']],
+        ['activity','#8AC5ED','OPES Orthopedics IS','Orthopedic care',['Fracture management','Procedure documentation','Follow-up care']],
     ]; @endphp
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px">
         @foreach($specialties as $sp)
@@ -210,21 +210,21 @@
     <h2 class="section-title">{{ $isFr ? 'OPES Care — Fondation d\'interopérabilité' : 'OPES Care — Interoperability Foundation' }}</h2>
     <p style="color:var(--text-muted);font-size:14px;margin-bottom:28px">{{ $isFr ? 'L\'infrastructure qui connecte tous les produits OPES et les systèmes externes via l\'identifiant patient unique.' : 'The infrastructure that connects all OPES products and external systems through the unique patient identifier.' }}</p>
     @php $careComps = $isFr ? [
-        ['fingerprint','#00C896','OPES Health ID','Identification unique du patient, reconnaissance QR, inter-établissements, dossiers longitudinaux'],
-        ['users','#1A6FE8','Index Patient Maître','Détection de doublons, résolution d\'identité, correspondance de dossiers'],
-        ['git-merge','#00C896','Échange d\'informations de santé','Échanges cliniques, référentiels, résultats de laboratoire, imagerie'],
-        ['user-check','#1A6FE8','Registre des professionnels','Registre des professionnels de santé, accréditations, suivi des licences'],
-        ['building','#00C896','Registre des établissements','Enregistrement, classification et gestion du réseau des établissements'],
-        ['monitor','#1A6FE8','Portail patient','Prise de rendez-vous, accès aux dossiers et résultats, communication'],
-        ['arrow-right-left','#00C896','Plateforme de référence','Création, suivi et contre-référencement'],
+        ['fingerprint','#69D5F5','OPES Health ID','Identification unique du patient, reconnaissance QR, inter-établissements, dossiers longitudinaux'],
+        ['users','#8AC5ED','Index Patient Maître','Détection de doublons, résolution d\'identité, correspondance de dossiers'],
+        ['git-merge','#69D5F5','Échange d\'informations de santé','Échanges cliniques, référentiels, résultats de laboratoire, imagerie'],
+        ['user-check','#8AC5ED','Registre des professionnels','Registre des professionnels de santé, accréditations, suivi des licences'],
+        ['building','#69D5F5','Registre des établissements','Enregistrement, classification et gestion du réseau des établissements'],
+        ['monitor','#8AC5ED','Portail patient','Prise de rendez-vous, accès aux dossiers et résultats, communication'],
+        ['arrow-right-left','#69D5F5','Plateforme de référence','Création, suivi et contre-référencement'],
     ] : [
-        ['fingerprint','#00C896','OPES Health ID','Unique patient identification, QR recognition, cross-facility, longitudinal records'],
-        ['users','#1A6FE8','Master Patient Index','Duplicate detection, identity resolution, record matching'],
-        ['git-merge','#00C896','Health Information Exchange','Clinical, referral, laboratory, and imaging exchange'],
-        ['user-check','#1A6FE8','Provider Registry','Healthcare professional registry, credential management, licence tracking'],
-        ['building','#00C896','Facility Registry','Facility registration, classification, and network management'],
-        ['monitor','#1A6FE8','Patient Portal','Appointment booking, record & results access, patient communication'],
-        ['arrow-right-left','#00C896','Referral Exchange Platform','Referral creation, tracking, and counter-referrals'],
+        ['fingerprint','#69D5F5','OPES Health ID','Unique patient identification, QR recognition, cross-facility, longitudinal records'],
+        ['users','#8AC5ED','Master Patient Index','Duplicate detection, identity resolution, record matching'],
+        ['git-merge','#69D5F5','Health Information Exchange','Clinical, referral, laboratory, and imaging exchange'],
+        ['user-check','#8AC5ED','Provider Registry','Healthcare professional registry, credential management, licence tracking'],
+        ['building','#69D5F5','Facility Registry','Facility registration, classification, and network management'],
+        ['monitor','#8AC5ED','Patient Portal','Appointment booking, record & results access, patient communication'],
+        ['arrow-right-left','#69D5F5','Referral Exchange Platform','Referral creation, tracking, and counter-referrals'],
     ]; @endphp
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px">
         @foreach($careComps as $c)
@@ -252,19 +252,19 @@
     <h2 class="section-title">{{ $isFr ? 'OPES Clinical Intelligence' : 'OPES Clinical Intelligence' }}</h2>
     <p style="color:var(--text-muted);font-size:14px;margin-bottom:28px">{{ $isFr ? 'La couche d\'intelligence clinique et d\'analytique de santé publique de la plateforme OPES.' : 'The clinical intelligence and population health analytics layer of the OPES platform.' }}</p>
     @php $ciComps = $isFr ? [
-        ['cpu','#00C896','OPES CDSS','Vérification des interactions médicamenteuses, directives cliniques, aide au diagnostic, recommandations thérapeutiques'],
-        ['zap','#1A6FE8','OPES Triage','Évaluation des risques, priorisation des patients, classification des urgences'],
-        ['bar-chart-2','#00C896','Analytique de santé populationnelle','Tendances des maladies, stratification des risques, analyse des résultats'],
-        ['activity','#1A6FE8','Surveillance des maladies','Détection des épidémies, surveillance santé publique, rapports épidémiologiques'],
-        ['layout-dashboard','#00C896','Tableaux de bord Intelligence Executive','KPIs cliniques, financiers, opérationnels et de santé publique'],
-        ['shield-check','#1A6FE8','Analytique qualité des soins','Indicateurs qualité clinique, conformité, benchmarking de performance'],
+        ['cpu','#69D5F5','OPES CDSS','Vérification des interactions médicamenteuses, directives cliniques, aide au diagnostic, recommandations thérapeutiques'],
+        ['zap','#8AC5ED','OPES Triage','Évaluation des risques, priorisation des patients, classification des urgences'],
+        ['bar-chart-2','#69D5F5','Analytique de santé populationnelle','Tendances des maladies, stratification des risques, analyse des résultats'],
+        ['activity','#8AC5ED','Surveillance des maladies','Détection des épidémies, surveillance santé publique, rapports épidémiologiques'],
+        ['layout-dashboard','#69D5F5','Tableaux de bord Intelligence Executive','KPIs cliniques, financiers, opérationnels et de santé publique'],
+        ['shield-check','#8AC5ED','Analytique qualité des soins','Indicateurs qualité clinique, conformité, benchmarking de performance'],
     ] : [
-        ['cpu','#00C896','OPES CDSS','Drug interaction checking, clinical guidelines, diagnostic assistance, treatment recommendations'],
-        ['zap','#1A6FE8','OPES Triage','Risk assessment, patient prioritisation, emergency classification'],
-        ['bar-chart-2','#00C896','Population Health Analytics','Disease trends, risk stratification, outcome analysis'],
-        ['activity','#1A6FE8','Disease Surveillance','Outbreak detection, public health monitoring, epidemiological reporting'],
-        ['layout-dashboard','#00C896','Executive Intelligence Dashboards','Clinical, financial, operational, and population health KPIs'],
-        ['shield-check','#1A6FE8','Healthcare Quality Analytics','Clinical quality indicators, compliance monitoring, performance benchmarking'],
+        ['cpu','#69D5F5','OPES CDSS','Drug interaction checking, clinical guidelines, diagnostic assistance, treatment recommendations'],
+        ['zap','#8AC5ED','OPES Triage','Risk assessment, patient prioritisation, emergency classification'],
+        ['bar-chart-2','#69D5F5','Population Health Analytics','Disease trends, risk stratification, outcome analysis'],
+        ['activity','#8AC5ED','Disease Surveillance','Outbreak detection, public health monitoring, epidemiological reporting'],
+        ['layout-dashboard','#69D5F5','Executive Intelligence Dashboards','Clinical, financial, operational, and population health KPIs'],
+        ['shield-check','#8AC5ED','Healthcare Quality Analytics','Clinical quality indicators, compliance monitoring, performance benchmarking'],
     ]; @endphp
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px">
         @foreach($ciComps as $c)
@@ -300,7 +300,7 @@
                     : ['Certified User','Certified Professional','Certified Administrator','Certified Implementer','Certified Trainer']
                 as $cert)
                 <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0F172A;border-radius:7px;border:1px solid #1e293b;margin-bottom:5px">
-                    <i data-lucide="award" style="width:11px;height:11px;color:#1A6FE8;flex-shrink:0"></i>
+                    <i data-lucide="award" style="width:11px;height:11px;color:var(--brand-accent);flex-shrink:0"></i>
                     <span style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $cert }}</span>
                 </div>
                 @endforeach
@@ -311,12 +311,12 @@
                 : ['Digital health training','Capacity building','Certification programmes']
             as $cap)
             <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0F172A;border-radius:7px;border:1px solid #1e293b;margin-bottom:5px">
-                <i data-lucide="check" style="width:11px;height:11px;color:#1A6FE8;flex-shrink:0"></i>
+                <i data-lucide="check" style="width:11px;height:11px;color:var(--brand-accent);flex-shrink:0"></i>
                 <span style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $cap }}</span>
             </div>
             @endforeach
             <div style="margin-top:16px">
-                <a href="{{ url($locale.'/academy') }}" style="display:inline-flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:#1A6FE8;font-weight:600;text-decoration:none">
+                <a href="{{ url($locale.'/academy') }}" style="display:inline-flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:var(--brand-accent);font-weight:600;text-decoration:none">
                     {{ $isFr ? 'Explorer l\'académie' : 'Explore the Academy' }}
                     <i data-lucide="arrow-right" style="width:11px;height:11px"></i>
                 </a>
@@ -331,14 +331,14 @@
             <h3 style="font-size:16px;font-weight:700;color:#e2e8f0;margin-bottom:6px">{{ $isFr ? 'Inclus dans tous les produits OPES' : 'Included across all OPES products' }}</h3>
             <p style="font-size:var(--fs-xs);color:var(--text-faint);margin-bottom:16px">{{ $isFr ? 'Services communs disponibles pour toute la suite.' : 'Common services available across the entire suite.' }}</p>
             @foreach($isFr
-                ? [['shield','#00C896','Sécurité','Authentification, MFA, journaux d\'audit, chiffrement'],
-                   ['scale','#1A6FE8','Conformité','Gestion du consentement, gouvernance des données, contrôles réglementaires'],
-                   ['share-2','#00C896','Interopérabilité','APIs, FHIR R4/R5, HL7, services de terminologie'],
-                   ['file-text','#1A6FE8','Rapports','Rapports opérationnels, cliniques et exécutifs']]
-                : [['shield','#00C896','Security','Authentication, MFA, audit logging, encryption'],
-                   ['scale','#1A6FE8','Compliance','Consent management, data governance, regulatory controls'],
-                   ['share-2','#00C896','Interoperability','APIs, FHIR R4/R5, HL7, terminology services'],
-                   ['file-text','#1A6FE8','Reporting','Operational, clinical & executive reporting']]
+                ? [['shield','#69D5F5','Sécurité','Authentification, MFA, journaux d\'audit, chiffrement'],
+                   ['scale','#8AC5ED','Conformité','Gestion du consentement, gouvernance des données, contrôles réglementaires'],
+                   ['share-2','#69D5F5','Interopérabilité','APIs, FHIR R4/R5, HL7, services de terminologie'],
+                   ['file-text','#8AC5ED','Rapports','Rapports opérationnels, cliniques et exécutifs']]
+                : [['shield','#69D5F5','Security','Authentication, MFA, audit logging, encryption'],
+                   ['scale','#8AC5ED','Compliance','Consent management, data governance, regulatory controls'],
+                   ['share-2','#69D5F5','Interoperability','APIs, FHIR R4/R5, HL7, terminology services'],
+                   ['file-text','#8AC5ED','Reporting','Operational, clinical & executive reporting']]
             as $svc)
             <div style="display:flex;gap:12px;padding:12px 14px;background:#0F172A;border-radius:9px;border:1px solid #1e293b;margin-bottom:8px">
                 <i data-lucide="{{ $svc[0] }}" style="width:14px;height:14px;color:{{ $svc[1] }};margin-top:1px;flex-shrink:0"></i>
@@ -363,12 +363,12 @@
     <h2 class="section-title">{{ $isFr ? 'S\'adapte à chaque organisation' : 'Adapts to every organisation' }}</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:28px">
         @foreach($isFr
-            ? [['server','#00C896','On-Premise','Hôpitaux & Institutions gouvernementales','Contrôle total des données sur site — idéal pour les hôpitaux publics et ministères exigeant la souveraineté des données.'],
-               ['cloud','#1A6FE8','Cloud privé','Réseaux hospitaliers & Grandes organisations','Scalabilité et haute disponibilité pour les groupes multi-sites nécessitant une infrastructure gérée.'],
-               ['git-branch','#00C896','Hybride','Déploiements nationaux','Combine infrastructure locale et services cloud pour les programmes nationaux de santé nécessitant flexibilité et résilience.']]
-            : [['server','#00C896','On-Premise','Hospitals & Government institutions','Full local data control — ideal for public hospitals and ministries requiring data sovereignty.'],
-               ['cloud','#1A6FE8','Private Cloud','Hospital networks & Large organisations','Scalability and high availability for multi-site groups needing managed infrastructure.'],
-               ['git-branch','#00C896','Hybrid','National deployments','Combines local infrastructure with cloud services for national health programmes requiring flexibility and resilience.']]
+            ? [['server','#69D5F5','On-Premise','Hôpitaux & Institutions gouvernementales','Contrôle total des données sur site — idéal pour les hôpitaux publics et ministères exigeant la souveraineté des données.'],
+               ['cloud','#8AC5ED','Cloud privé','Réseaux hospitaliers & Grandes organisations','Scalabilité et haute disponibilité pour les groupes multi-sites nécessitant une infrastructure gérée.'],
+               ['git-branch','#69D5F5','Hybride','Déploiements nationaux','Combine infrastructure locale et services cloud pour les programmes nationaux de santé nécessitant flexibilité et résilience.']]
+            : [['server','#69D5F5','On-Premise','Hospitals & Government institutions','Full local data control — ideal for public hospitals and ministries requiring data sovereignty.'],
+               ['cloud','#8AC5ED','Private Cloud','Hospital networks & Large organisations','Scalability and high availability for multi-site groups needing managed infrastructure.'],
+               ['git-branch','#69D5F5','Hybrid','National deployments','Combines local infrastructure with cloud services for national health programmes requiring flexibility and resilience.']]
         as $dep)
         <div style="background:#0F172A;border:1px solid #1e293b;border-radius:14px;padding:22px">
             <div style="width:40px;height:40px;border-radius:10px;background:{{ $dep[1] }}15;display:flex;align-items:center;justify-content:center;margin-bottom:14px">
@@ -401,24 +401,24 @@
             </thead>
             <tbody>
                 @foreach($isFr
-                    ? [['Clinique','OPES Clinic','#00C896'],
-                       ['Centre médical','OPES Clinic + Lab IS + Pharmacy IS','#1A6FE8'],
-                       ['Hôpital de district','OPES Hospital','#00C896'],
-                       ['Hôpital régional','OPES Hospital + OPES Care + Clinical Intelligence','#1A6FE8'],
-                       ['Groupe hospitalier','OPES Health OS complet','#00C896'],
-                       ['Organisation d\'assurance','OPES Care + Analytics','#1A6FE8'],
-                       ['Ministère de la Santé','Plateforme nationale complète','#00C896'],
-                       ['Programmes ONG','OPES Care + Registres + Analytics','#1A6FE8'],
-                       ['Programmes de santé publique','Clinical Intelligence + Registres','#00C896']]
-                    : [['Clinic','OPES Clinic','#00C896'],
-                       ['Medical Center','OPES Clinic + Lab IS + Pharmacy IS','#1A6FE8'],
-                       ['District Hospital','OPES Hospital','#00C896'],
-                       ['Regional Hospital','OPES Hospital + OPES Care + Clinical Intelligence','#1A6FE8'],
-                       ['Hospital Group','Full OPES Health OS','#00C896'],
-                       ['Insurance Organisation','OPES Care + Analytics','#1A6FE8'],
-                       ['Ministry of Health','Full National Platform','#00C896'],
-                       ['NGO Programmes','OPES Care + Registries + Analytics','#1A6FE8'],
-                       ['Public Health Programmes','Clinical Intelligence + Registries','#00C896']]
+                    ? [['Clinique','OPES Clinic','#69D5F5'],
+                       ['Centre médical','OPES Clinic + Lab IS + Pharmacy IS','#8AC5ED'],
+                       ['Hôpital de district','OPES Hospital','#69D5F5'],
+                       ['Hôpital régional','OPES Hospital + OPES Care + Clinical Intelligence','#8AC5ED'],
+                       ['Groupe hospitalier','OPES Health OS complet','#69D5F5'],
+                       ['Organisation d\'assurance','OPES Care + Analytics','#8AC5ED'],
+                       ['Ministère de la Santé','Plateforme nationale complète','#69D5F5'],
+                       ['Programmes ONG','OPES Care + Registres + Analytics','#8AC5ED'],
+                       ['Programmes de santé publique','Clinical Intelligence + Registres','#69D5F5']]
+                    : [['Clinic','OPES Clinic','#69D5F5'],
+                       ['Medical Center','OPES Clinic + Lab IS + Pharmacy IS','#8AC5ED'],
+                       ['District Hospital','OPES Hospital','#69D5F5'],
+                       ['Regional Hospital','OPES Hospital + OPES Care + Clinical Intelligence','#8AC5ED'],
+                       ['Hospital Group','Full OPES Health OS','#69D5F5'],
+                       ['Insurance Organisation','OPES Care + Analytics','#8AC5ED'],
+                       ['Ministry of Health','Full National Platform','#69D5F5'],
+                       ['NGO Programmes','OPES Care + Registries + Analytics','#8AC5ED'],
+                       ['Public Health Programmes','Clinical Intelligence + Registries','#69D5F5']]
                 as $idx => $row)
                 <tr style="border-bottom:1px solid #0f172a40;{{ $idx % 2 === 0 ? 'background:#0F172A40' : '' }}">
                     <td style="padding:10px 14px;color:var(--text-muted);font-weight:600">{{ $row[0] }}</td>
@@ -449,7 +449,7 @@
                 : ['Unified platform architecture','Interoperability-first design','Health ID infrastructure','Clinical intelligence layer','Specialty information systems','National health readiness','African healthcare focus','Offline-capable architecture','Scalable deployment models','Workforce development ecosystem']
             as $i => $diff)
             <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #0f172a">
-                <div style="width:20px;height:20px;border-radius:50%;background:{{ $i % 2 === 0 ? '#00C89615' : '#1A6FE815' }};border:1px solid {{ $i % 2 === 0 ? '#00C89630' : '#1A6FE830' }};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:var(--fs-2xs);font-weight:800;color:{{ $i % 2 === 0 ? '#00C896' : '#1A6FE8' }}">{{ $i + 1 }}</div>
+                <div style="width:20px;height:20px;border-radius:50%;background:{{ $i % 2 === 0 ? '#69D5F515' : '#8AC5ED15' }};border:1px solid {{ $i % 2 === 0 ? '#69D5F530' : '#8AC5ED30' }};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:var(--fs-2xs);font-weight:800;color:{{ $i % 2 === 0 ? '#69D5F5' : '#8AC5ED' }}">{{ $i + 1 }}</div>
                 <span style="font-size:var(--fs-xs);color:var(--text-muted);padding-top:2px;line-height:1.5">{{ $diff }}</span>
             </div>
             @endforeach
@@ -467,12 +467,12 @@
                 : ['National Health ID','National HIE','National Provider Registry','National Facility Registry','Disease surveillance','Immunisation programmes','UHC programmes','National health dashboards','Population health analytics']
             as $cap)
             <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #0f172a40">
-                <i data-lucide="check-circle" style="width:12px;height:12px;color:#00C896;flex-shrink:0"></i>
+                <i data-lucide="check-circle" style="width:12px;height:12px;color:var(--brand-accent);flex-shrink:0"></i>
                 <span style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $cap }}</span>
             </div>
             @endforeach
             <div style="margin-top:16px">
-                <a href="{{ url($locale.'/national-platform') }}" style="display:inline-flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:#00C896;font-weight:600;text-decoration:none">
+                <a href="{{ url($locale.'/national-platform') }}" style="display:inline-flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:var(--brand-accent);font-weight:600;text-decoration:none">
                     {{ $isFr ? 'Voir la Plateforme Nationale' : 'View National Platform' }}
                     <i data-lucide="arrow-right" style="width:11px;height:11px"></i>
                 </a>

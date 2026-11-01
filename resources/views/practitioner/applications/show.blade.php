@@ -51,7 +51,7 @@
     @if(optional($application->program)->type === 'paid')
     <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 mb-6">
         <div class="flex items-center gap-3 mb-4">
-            <i data-lucide="banknote" style="width:20px;height:20px;color:#00C896"></i>
+            <i data-lucide="banknote" style="width:20px;height:20px;color:var(--brand-accent)"></i>
             <h2 class="text-white font-semibold text-base">Compensation</h2>
             @php
                 $payoutColors = [
@@ -97,7 +97,7 @@
     @if($application->findings->isNotEmpty())
     <div class="bg-slate-900 border border-slate-800 rounded-xl p-6">
         <div class="flex items-center gap-3 mb-4">
-            <i data-lucide="bar-chart-2" style="width:20px;height:20px;color:#00C896"></i>
+            <i data-lucide="bar-chart-2" style="width:20px;height:20px;color:var(--brand-accent)"></i>
             <h2 class="text-white font-semibold text-base">Submitted Findings</h2>
             <span class="text-xs text-slate-500 ml-auto">{{ $application->findings->count() }} finding(s)</span>
         </div>

@@ -52,7 +52,7 @@ class CourseEnrollmentTest extends TestCase
             ->where('course_id', $course->id)->first();
         $this->assertNotNull($enrollment->enrolled_at);
 
-        Mail::assertQueued(CourseEnrollmentConfirmed::class);
+        Mail::assertSent(CourseEnrollmentConfirmed::class);
     }
 
     public function test_duplicate_enroll_does_not_create_second_enrollment(): void
@@ -132,7 +132,7 @@ class CourseEnrollmentTest extends TestCase
         $cert = $enrollment->certificate;
         $this->assertMatchesRegularExpression('/^CERT-\d{4}-\d{6}$/', $cert->certificate_number);
 
-        Mail::assertQueued(CourseCertificateIssued::class);
+        Mail::assertSent(CourseCertificateIssued::class);
     }
 
     public function test_progress_percent_returns_zero_and_hundred(): void

@@ -12,7 +12,7 @@ return [
             'name'    => 'OPES Clinic',
             'tagline' => 'Primary & outpatient care digitalisation',
             'icon'    => 'stethoscope',
-            'color'   => '#00C896',
+            'color'   => '#8AC5ED',
             'desc'    => 'EMR, OPD workflows, triage, prescriptions, and patient identity for clinics, private practices, and health centres.',
         ],
         [
@@ -20,7 +20,7 @@ return [
             'name'    => 'OPES Hospital',
             'tagline' => 'Full hospital information system',
             'icon'    => 'building-2',
-            'color'   => '#1A6FE8',
+            'color'   => '#8AC5ED',
             'desc'    => 'End-to-end hospital operations: inpatient management, nursing, lab, pharmacy, radiology, maternity, and billing.',
         ],
         [
@@ -28,7 +28,7 @@ return [
             'name'    => 'OPES Specialty Suite',
             'tagline' => 'Departmental & specialist modules',
             'icon'    => 'flask-conical',
-            'color'   => '#00C896',
+            'color'   => '#8AC5ED',
             'desc'    => 'Dedicated modules for radiology (RADIS), laboratory (OPES Lab), pharmacy (PHARMIS), maternity, oncology, and renal care.',
         ],
         [
@@ -36,7 +36,7 @@ return [
             'name'    => 'OPES Care',
             'tagline' => 'Patient identity & care coordination',
             'icon'    => 'fingerprint',
-            'color'   => '#1A6FE8',
+            'color'   => '#8AC5ED',
             'desc'    => 'OPESCare universal health ID, longitudinal patient record, mobile patient portal, and cross-facility care continuity.',
         ],
         [
@@ -44,7 +44,7 @@ return [
             'name'    => 'OPES Clinical Intelligence',
             'tagline' => 'Analytics, BI & public health reporting',
             'icon'    => 'brain',
-            'color'   => '#00C896',
+            'color'   => '#8AC5ED',
             'desc'    => 'Real-time dashboards, epidemiological surveillance, HMIS reporting, and AI-assisted clinical decision support.',
         ],
         [
@@ -52,7 +52,7 @@ return [
             'name'    => 'OPES Academy',
             'tagline' => 'Workforce development & certification',
             'icon'    => 'graduation-cap',
-            'color'   => '#1A6FE8',
+            'color'   => '#8AC5ED',
             'desc'    => 'Role-based digital health training, system certification programmes, and continuing professional development for health workers.',
         ],
     ],

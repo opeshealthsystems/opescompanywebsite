@@ -18,9 +18,10 @@
             {{ $isFr ? 'Juridique' : 'Legal' }}
         </div>
         <h1 class="section-title">{{ $isFr ? 'Politique de confidentialité' : 'Privacy Policy' }}</h1>
-        <p class="section-sub">{{ $isFr ? 'Date d\'effet : 1er janvier 2025 &nbsp;·&nbsp; OPES Health Systems SARL' : 'Effective date: 1 January 2025 &nbsp;·&nbsp; OPES Health Systems SARL' }}</p>
+        <p class="section-sub">{{ $isFr ? 'Informations du site mises à jour : 30 octobre 2026 &nbsp;·&nbsp; OPES Health Systems SARL' : 'Website information updated: 30 October 2026 &nbsp;·&nbsp; OPES Health Systems SARL' }}</p>
     </div>
 
+    <p class="brand-notice">{{ $isFr ? 'Pour les projets au Cameroun, consultez la loi n° 2024/017 du 23 décembre 2024 sur la protection des données à caractère personnel. Les obligations et accords de chaque projet nécessitent une revue juridique ; ce site ne constitue pas une attestation de conformité.' : 'For projects in Cameroon, consult Law No. 2024/017 of 23 December 2024 on personal data protection. Each project’s obligations and agreements require legal review; this website is not a compliance attestation.' }} <a href="https://www.prc.cm/files/9b/df/2c/e818fedc7d5568778f884ea2886bea7d.pdf">{{ $isFr ? 'Texte officiel' : 'Official text' }}</a></p>
     <div class="blog-art-body prose">
 
         @if($isFr)
@@ -42,21 +43,21 @@
         <p>Nous ne vendons pas de données personnelles. Nous partageons les données uniquement avec les prestataires de services nécessaires à l'exploitation de la Plateforme (hébergement cloud, envoi d'e-mails) dans le cadre d'accords de confidentialité, ou lorsque la loi l'exige.</p>
 
         <h2>5. Conservation des données</h2>
-        <p>Les données de contact sont conservées pendant 3 ans maximum. Les données de la Plateforme sont conservées pendant la durée de votre licence, plus toute période de conservation légale requise par la réglementation camerounaise en matière de santé.</p>
+        <p>Contactez notre équipe pour connaître les durées de conservation applicables à votre demande ou projet. Les exigences de conservation et de suppression des données cliniques doivent être définies dans le contrat du projet.</p>
 
         <h2>6. Sécurité</h2>
         <p>Nous mettons en œuvre des mesures techniques et organisationnelles conformes aux normes de l'industrie, notamment le chiffrement des transmissions de données (TLS 1.3), le contrôle d'accès basé sur les rôles, les journaux d'audit et les évaluations régulières de sécurité. Pour les déploiements cliniques, les données peuvent être stockées sur site dans votre établissement.</p>
 
         <h2>7. Vos droits</h2>
-        <p>Sous réserve du droit applicable, vous avez le droit d'accéder à vos données personnelles, de les corriger ou d'en demander la suppression. Pour exercer ces droits, contactez-nous à l'adresse <a href="mailto:privacy@opeshealthsystems.com" style="color:#00C896">privacy@opeshealthsystems.com</a>.</p>
+        <p>Sous réserve du droit applicable, vous avez le droit d'accéder à vos données personnelles, de les corriger ou d'en demander la suppression. Pour exercer ces droits, contactez-nous à l'adresse <a href="mailto:privacy@opeshealthsystems.com" style="color:var(--brand-accent)">privacy@opeshealthsystems.com</a>.</p>
 
         <h2>8. Cookies</h2>
-        <p>Notre site web de marketing utilise uniquement des cookies de session essentiels. Aucun cookie de suivi ou de publicité tiers n'est utilisé.</p>
+        <p>Le site utilise des cookies de session et de sécurité ainsi qu’un cookie de préférence linguistique pouvant être conservé pendant un an. Les services tiers intégrés peuvent appliquer leurs propres politiques de cookies lors de leur utilisation.</p>
 
         <h2>9. Contact</h2>
         <p>OPES Health Systems SARL<br>
         Bonamousadi, Douala, Cameroun<br>
-        E-mail : <a href="mailto:privacy@opeshealthsystems.com" style="color:#00C896">privacy@opeshealthsystems.com</a></p>
+        E-mail : <a href="mailto:privacy@opeshealthsystems.com" style="color:var(--brand-accent)">privacy@opeshealthsystems.com</a></p>
 
         @else
         <h2>1. Who We Are</h2>
@@ -77,21 +78,21 @@
         <p>We do not sell personal data. We share data only with service providers necessary to operate the Platform (cloud hosting, email delivery) under confidentiality agreements, or where required by law.</p>
 
         <h2>5. Data Retention</h2>
-        <p>Contact enquiry data is retained for up to 3 years. Platform data is retained for the duration of your licence plus any statutory retention period required by Cameroonian health regulations.</p>
+        <p>Contact our privacy team for the retention periods applicable to your enquiry or project. Clinical data retention and deletion requirements must be established in the relevant project agreement.</p>
 
         <h2>6. Security</h2>
         <p>We implement industry-standard technical and organisational measures including encrypted data transmission (TLS 1.3), role-based access control, audit logs and regular security assessments. For clinical deployments, data may be stored on-premise at your facility.</p>
 
         <h2>7. Your Rights</h2>
-        <p>Subject to applicable law, you have the right to access, correct or request deletion of your personal data. To exercise these rights, contact us at <a href="mailto:privacy@opeshealthsystems.com" style="color:#00C896">privacy@opeshealthsystems.com</a>.</p>
+        <p>Subject to applicable law, you have the right to access, correct or request deletion of your personal data. To exercise these rights, contact us at <a href="mailto:privacy@opeshealthsystems.com" style="color:var(--brand-accent)">privacy@opeshealthsystems.com</a>.</p>
 
         <h2>8. Cookies</h2>
-        <p>Our marketing website uses only essential session cookies. No third-party tracking or advertising cookies are used.</p>
+        <p>The website uses session and security cookies and a language-preference cookie that can persist for up to one year. Embedded third-party services may apply their own cookie policies when used.</p>
 
         <h2>9. Contact</h2>
         <p>OPES Health Systems SARL<br>
         Bonamousadi, Douala, Cameroon<br>
-        Email: <a href="mailto:privacy@opeshealthsystems.com" style="color:#00C896">privacy@opeshealthsystems.com</a></p>
+        Email: <a href="mailto:privacy@opeshealthsystems.com" style="color:var(--brand-accent)">privacy@opeshealthsystems.com</a></p>
         @endif
 
     </div>

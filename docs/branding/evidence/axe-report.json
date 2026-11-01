@@ -1,0 +1,158 @@
+[
+  {
+    "route": "/en",
+    "width": 320,
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "nodes": 32
+      }
+    ]
+  },
+  {
+    "route": "/fr",
+    "width": 320,
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "nodes": 33
+      }
+    ]
+  },
+  {
+    "route": "/en/products",
+    "width": 320,
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "nodes": 3
+      }
+    ]
+  },
+  {
+    "route": "/fr/products",
+    "width": 320,
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "nodes": 3
+      }
+    ]
+  },
+  {
+    "route": "/en/products/opescare",
+    "width": 320,
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "nodes": 32
+      }
+    ]
+  },
+  {
+    "route": "/fr/products/opescare",
+    "width": 320,
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "nodes": 32
+      }
+    ]
+  },
+  {
+    "route": "/en/contact",
+    "width": 320,
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "route": "/fr/contact",
+    "width": 320,
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "route": "/en",
+    "width": 1440,
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "nodes": 29
+      }
+    ]
+  },
+  {
+    "route": "/fr",
+    "width": 1440,
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "nodes": 29
+      }
+    ]
+  },
+  {
+    "route": "/en/products",
+    "width": 1440,
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "nodes": 3
+      }
+    ]
+  },
+  {
+    "route": "/fr/products",
+    "width": 1440,
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "nodes": 3
+      }
+    ]
+  },
+  {
+    "route": "/en/products/opescare",
+    "width": 1440,
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "nodes": 30
+      }
+    ]
+  },
+  {
+    "route": "/fr/products/opescare",
+    "width": 1440,
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "nodes": 30
+      }
+    ]
+  },
+  {
+    "route": "/en/contact",
+    "width": 1440,
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "route": "/fr/contact",
+    "width": 1440,
+    "violations": [],
+    "incomplete": []
+  }
+]

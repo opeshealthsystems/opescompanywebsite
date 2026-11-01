@@ -2,13 +2,13 @@
     {{-- Breadcrumb --}}
     <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.8125rem;margin-bottom:1.5rem;flex-wrap:wrap;">
         <a href="{{ route('customer.knowledge-base.index', ['locale' => app()->getLocale()]) }}"
-           style="color:#00C896;text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
+           style="color:var(--brand-accent);text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
             ← Knowledge Base
         </a>
         @if($article->category)
         <span style="color:var(--text-faint);">/</span>
         <a href="{{ route('customer.knowledge-base.category', ['locale' => app()->getLocale(), 'slug' => $article->category->slug]) }}"
-           style="color:#00C896;text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
+           style="color:var(--brand-accent);text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
             {{ $article->category->name }}
         </a>
         @endif
@@ -34,7 +34,7 @@
             @foreach($related as $r)
             <li>
                 <a href="{{ route('customer.knowledge-base.show', ['locale' => app()->getLocale(), 'slug' => $r->slug]) }}"
-                   style="color:#00C896;font-size:0.875rem;text-decoration:none;"
+                   style="color:var(--brand-accent);font-size:0.875rem;text-decoration:none;"
                    onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
                     {{ $r->title }}
                 </a>

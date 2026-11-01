@@ -102,25 +102,10 @@ class ServiceRequestResource extends Resource
                         Textarea::make('admin_notes')->rows(3)->label('Notes (optional)'),
                     ])
                     ->action(function (ServiceRequest $record, array $data) {
-                        $record->update([
-                            'status'                 => 'confirmed',
-                            'assigned_technician_id' => $data['assigned_technician_id'],
-                            'confirmed_date'         => $data['confirmed_date'],
-                            'confirmed_time'         => $data['confirmed_time'] ?? null,
-                            'admin_notes'            => $data['admin_notes'] ?? null,
-                        ]);
-
-                        if (class_exists(\App\Mail\ServiceRequestConfirmed::class)) {
-                            \Illuminate\Support\Facades\Mail::to($record->customer->email)
-                                ->queue(new \App\Mail\ServiceRequestConfirmed($record));
-                        }
-                        $record->customer?->notify(new \App\Notifications\FeedEntry(
-                            'support.service_request',
-                            'Service request confirmed',
-                            'Your service request has been confirmed.',
-                            'wrench',
-                            route('customer.service-requests.show', ['locale' => 'en', 'serviceRequest' => $record->id]),
-                        ));
+                        app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+                            'admin.support.serviceRequests.confirm',
+                            new \App\Contexts\Shared\Application\WorkflowInput($data, ['serviceRequest' => $record], auth()->user(), app()->getLocale()),
+                        );
 
                         Notification::make()->title('Service request confirmed.')->success()->send();
                     }),
@@ -130,7 +115,10 @@ class ServiceRequestResource extends Resource
                     ->color('success')
                     ->visible(fn (ServiceRequest $record) => $record->status === 'assigned')
                     ->requiresConfirmation()
-                    ->action(fn (ServiceRequest $record) => $record->update(['status' => 'completed'])),
+                    ->action(fn (ServiceRequest $record) => app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+                        'admin.support.serviceRequests.complete',
+                        new \App\Contexts\Shared\Application\WorkflowInput([], ['serviceRequest' => $record], auth()->user(), app()->getLocale()),
+                    )),
             ])
             ->defaultSort('created_at', 'desc');
     }

@@ -1,0 +1,200 @@
+{
+  "overall_score": 55,
+  "checks": {
+    "title": {
+      "value": "Healthcare software designed in Cameroon \u2014 OPES Health Systems",
+      "length": 62,
+      "optimal_range": "50-60 chars",
+      "pass": false,
+      "score": 50,
+      "note": "Too long (62 chars)"
+    },
+    "meta_description": {
+      "value": "Healthcare software designed in Cameroon. Explore OPES information and contact o...",
+      "length": 112,
+      "optimal_range": "150-160 chars",
+      "pass": false,
+      "score": 50,
+      "note": "Too short (112 chars)"
+    },
+    "h1": {
+      "count": 5,
+      "values": [
+        "Healthcare Software \n                         Engineered for Care Teams",
+        "Building the Digital Health Infrastructure of Africa",
+        "One Platform. Every Department. Complete Healthcare Management.",
+        "Connecting Healthcare Through OPESCare",
+        "Smarter Healthcare Powered by Clinical Intelligence"
+      ],
+      "pass": false,
+      "score": 50,
+      "note": "Multiple H1s (5)"
+    },
+    "heading_hierarchy": {
+      "headings": [
+        [
+          "H1",
+          "Healthcare Software \n                         Engineered for"
+        ],
+        [
+          "H1",
+          "Building the Digital Health Infrastructure of Africa"
+        ],
+        [
+          "H1",
+          "One Platform. Every Department. Complete Healthcare Manageme"
+        ],
+        [
+          "H1",
+          "Connecting Healthcare Through OPESCare"
+        ],
+        [
+          "H1",
+          "Smarter Healthcare Powered by Clinical Intelligence"
+        ],
+        [
+          "H2",
+          "23 Systems. One Ecosystem."
+        ],
+        [
+          "H3",
+          "Built for Africa"
+        ],
+        [
+          "H3",
+          "Fully Interoperable"
+        ],
+        [
+          "H3",
+          "Every Facility, Every Specialty"
+        ],
+        [
+          "H2",
+          "One Health ID. Every System Connected."
+        ],
+        [
+          "H3",
+          "Reduce Patient Wait Times \u2014 Starting Tomorrow"
+        ],
+        [
+          "H2",
+          "Start with the Essentials"
+        ],
+        [
+          "H3",
+          "OPESCare \u2014 Health ID"
+        ],
+        [
+          "H3",
+          "OPES EMR"
+        ],
+        [
+          "H3",
+          "OPES Hospital HIS"
+        ],
+        [
+          "H2",
+          "See OPES in Action"
+        ],
+        [
+          "H2",
+          "Partner With OPES"
+        ],
+        [
+          "H3",
+          "Hospitals & Clinics"
+        ],
+        [
+          "H3",
+          "Investors"
+        ],
+        [
+          "H3",
+          "Government & NGOs"
+        ],
+        [
+          "H3",
+          "Pharma & Insurance"
+        ],
+        [
+          "H3",
+          "Academic & Research"
+        ],
+        [
+          "H3",
+          "Technology Partners"
+        ],
+        [
+          "H2",
+          "Plan your digital health project"
+        ],
+        [
+          "H3",
+          "Planning a healthcare software implementation"
+        ],
+        [
+          "H3",
+          "Questions to ask about healthcare interoperability"
+        ],
+        [
+          "H3",
+          "Prepare a useful healthcare software demonstration"
+        ],
+        [
+          "H2",
+          "OPES DrugTrace"
+        ],
+        [
+          "H2",
+          "Products"
+        ],
+        [
+          "H2",
+          "Platform"
+        ],
+        [
+          "H2",
+          "Company"
+        ],
+        [
+          "H2",
+          "Legal"
+        ]
+      ],
+      "issues": [],
+      "pass": true,
+      "score": 100,
+      "note": "Hierarchy OK"
+    },
+    "image_alt_text": {
+      "total_images": 2,
+      "with_alt": 0,
+      "coverage_pct": 0.0,
+      "pass": false,
+      "score": 0,
+      "note": "2 image(s) missing alt"
+    },
+    "link_ratio": {
+      "total_links": 89,
+      "internal": 3,
+      "external": 86,
+      "internal_pct": 3.4,
+      "pass": false,
+      "score": 3,
+      "note": "More external than internal links"
+    },
+    "word_count": {
+      "count": 1256,
+      "minimum": 300,
+      "pass": true,
+      "score": 100,
+      "note": "1256 words (good)"
+    },
+    "viewport_meta": {
+      "present": true,
+      "pass": true,
+      "score": 100,
+      "note": "Mobile viewport tag present"
+    }
+  }
+}

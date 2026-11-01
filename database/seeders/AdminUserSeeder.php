@@ -14,7 +14,7 @@ class AdminUserSeeder extends Seeder
             ['email' => 'admin@opeshealthsystems.com'],
             [
                 'name'     => 'OPES Admin',
-                'password' => Hash::make('OPESadmin2026!'),
+                'password' => Hash::make(\Illuminate\Support\Str::random(64)),
             ]
         );
     }

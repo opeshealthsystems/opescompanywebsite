@@ -49,7 +49,7 @@ class SupplierBillResource extends Resource
                 Forms\Components\Select::make('status')
                     ->options(SupplierBill::statusOptions())
                     ->default('received')
-                    ->required(),
+                    ->required()->disabled()->dehydrated(false),
                 Forms\Components\TextInput::make('bill_number')
                     ->label("Supplier's Invoice #")
                     ->nullable()
@@ -195,14 +195,14 @@ class SupplierBillResource extends Resource
                     ->color('success')
                     ->requiresConfirmation()
                     ->hidden(fn (SupplierBill $r) => $r->status !== 'received')
-                    ->action(fn (SupplierBill $r) => $r->update(['status' => 'approved'])),
+                    ->action(fn (SupplierBill $r) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.supplierBills.approve', parameters: ['supplierBill' => $r->id])),
                 Tables\Actions\Action::make('mark_paid')
                     ->label('Mark Paid')
                     ->icon('heroicon-o-banknotes')
                     ->color('info')
                     ->requiresConfirmation()
                     ->hidden(fn (SupplierBill $r) => $r->status !== 'approved')
-                    ->action(fn (SupplierBill $r) => $r->update(['status' => 'paid', 'paid_at' => now()])),
+                    ->action(fn (SupplierBill $r) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.supplierBills.markPaid', parameters: ['supplierBill' => $r->id])),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

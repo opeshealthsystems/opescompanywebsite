@@ -18,27 +18,9 @@ class ResetPasswordController extends Controller
 
     public function reset(Request $request)
     {
-        $request->validate([
-            'token'                 => 'required',
-            'email'                 => 'required|email',
-            'password'              => 'required|min:8|confirmed',
-            'password_confirmation' => 'required',
-        ]);
-
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user, $password) {
-                $user->forceFill(['password' => Hash::make($password)])
-                     ->setRememberToken(Str::random(60));
-                $user->save();
-                event(new PasswordReset($user));
-            }
-        );
-
-        if ($status === Password::PASSWORD_RESET) {
-            return redirect()->route('login')->with('status', __($status));
-        }
-
-        return back()->withErrors(['email' => __($status)]);
+        $input = new \App\Contexts\Shared\Application\WorkflowInput($request->all(), address: $request->ip());
+        $result = app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute('identity.password_reset', $input);
+        if ($result->errors) return back()->withErrors($result->errors)->onlyInput('email');
+        return redirect()->route('login')->with('status', $result->data['message']);
     }
 }

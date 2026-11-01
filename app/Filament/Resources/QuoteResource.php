@@ -43,7 +43,7 @@ class QuoteResource extends Resource
         return $form->schema([
             Forms\Components\Section::make('Quote')->columns(2)->schema([
                 Forms\Components\TextInput::make('reference')->disabled()->placeholder('Auto-generated'),
-                Forms\Components\Select::make('status')->options(Quote::statusOptions())->default('draft')->required(),
+                Forms\Components\Select::make('status')->options(Quote::statusOptions())->default('draft')->required()->disabled()->dehydrated(false),
                 Forms\Components\TextInput::make('title')->required()->maxLength(250)->columnSpanFull(),
 
                 Forms\Components\Select::make('lead_id')
@@ -118,12 +118,12 @@ class QuoteResource extends Resource
                     ->label('Mark Sent')->icon('heroicon-o-paper-airplane')->color('info')
                     ->requiresConfirmation()
                     ->hidden(fn (Quote $record) => $record->status !== 'draft')
-                    ->action(fn (Quote $record) => $record->update(['status' => 'sent'])),
+                    ->action(fn (Quote $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.quotes.markSent', parameters: ['quote' => $record->id])),
                 Tables\Actions\Action::make('accept')
                     ->label('Accept')->icon('heroicon-o-check-circle')->color('success')
                     ->requiresConfirmation()
                     ->hidden(fn (Quote $record) => $record->status !== 'sent')
-                    ->action(fn (Quote $record) => $record->update(['status' => 'accepted'])),
+                    ->action(fn (Quote $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.quotes.accept', parameters: ['quote' => $record->id])),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);

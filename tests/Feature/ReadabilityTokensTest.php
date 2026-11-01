@@ -8,7 +8,7 @@ class ReadabilityTokensTest extends TestCase
 {
     private function appCss(): string
     {
-        return file_get_contents(base_path('resources/css/app.css'));
+        return file_get_contents(base_path('resources/css/seal-tokens.css')).file_get_contents(base_path('resources/css/app.css'));
     }
 
     /** SP1-scoped Blade files (public pages + shared public chrome). */
@@ -32,9 +32,9 @@ class ReadabilityTokensTest extends TestCase
     {
         $css = $this->appCss();
         foreach ([
-            '--text: #e8edf5', '--text-2: #c2cde0', '--text-muted: #9fb0c9', '--text-faint: #8696b4',
-            '--bg: #0F172A', '--border: #243149',
-            '--green: #00C896', '--blue: #2f7df0',
+            '--text: #F1F5F9', '--text-2: #CBD5E1', '--text-muted: #A7B8CC', '--text-faint: #9DB1C7',
+            '--bg: #081B30', '--border: #385671',
+            '--green: var(--brand-accent)', '--blue: var(--brand-link)',
             '--fs-2xs: 12px', '--fs-xs: 13px', '--fs-sm: 14px',
         ] as $token) {
             $this->assertStringContainsString($token, $css, "Missing token: {$token}");

@@ -8,6 +8,20 @@ Disallow: /fr/tester/
 Disallow: /login
 Disallow: /register
 Disallow: /documents/
+Disallow: /forgot-password
+Disallow: /reset-password/
+Disallow: /*/practitioner/
+Disallow: /*/support/
+Disallow: /*/manager/
+Disallow: /*/hr/
+Disallow: /*/accountant/
+Disallow: /*/notifications
+Disallow: /*/strategy
+Disallow: /*/risk
+Disallow: /*/financial-model
+Disallow: /*/sales-playbook
+Disallow: /*/government-proposal
+Disallow: /*/investor-pitch
 
 Allow: /en/blog/
 Allow: /fr/blog/

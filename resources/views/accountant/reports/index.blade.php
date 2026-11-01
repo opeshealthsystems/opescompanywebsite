@@ -31,7 +31,7 @@
             @endphp
             <tr>
                 <td style="font-weight:500;color:#f1f5f9">{{ \Carbon\Carbon::parse($m.'-01')->format('M Y') }}</td>
-                <td style="color:#00C896">{{ number_format($rev, 0) }}</td>
+                <td style="color:var(--brand-accent)">{{ number_format($rev, 0) }}</td>
                 <td style="color:#ef4444">{{ number_format($pay, 0) }}</td>
                 <td style="color:#F59E0B">{{ number_format($exp, 0) }}</td>
                 <td style="font-weight:700;color:{{ $net >= 0 ? '#00C896' : '#ef4444' }}">{{ number_format($net, 0) }}</td>

@@ -14,8 +14,8 @@
   <rect x="80" y="80" width="160" height="6" rx="3" fill="url(#accent)"/>
   <text x="80" y="200" font-family="Arial,sans-serif" font-size="72" font-weight="700" fill="#e2e8f0">OPES Health</text>
   <text x="80" y="285" font-family="Arial,sans-serif" font-size="72" font-weight="700" fill="#e2e8f0">Systems</text>
-  <text x="80" y="370" font-family="Arial,sans-serif" font-size="28" fill="#94a3b8">Africa's Most Complete Digital Health Ecosystem</text>
-  <text x="80" y="420" font-family="Arial,sans-serif" font-size="22" fill="#64748b">22 Integrated Healthcare Systems · Bilingual · HL7 FHIR</text>
+  <text x="80" y="370" font-family="Arial,sans-serif" font-size="28" fill="#94a3b8">Healthcare software designed in Cameroon</text>
+  <text x="80" y="420" font-family="Arial,sans-serif" font-size="22" fill="#9fb0c9">Hospitals · Clinics · Laboratories · Pharmacies</text>
   <rect x="80" y="510" width="160" height="6" rx="3" fill="url(#accent)"/>
-  <text x="80" y="580" font-family="Arial,sans-serif" font-size="20" fill="#475569">opeshealthsystems.com</text>
+  <text x="80" y="580" font-family="Arial,sans-serif" font-size="20" fill="#9fb0c9">opeshealthsystems.com</text>
 </svg>

@@ -3,16 +3,11 @@
 namespace App\Filament\Resources\TicketResource\Pages;
 
 use App\Filament\Resources\TicketResource;
-use App\Mail\TicketReplied;
-use App\Mail\TicketStatusChanged;
 use App\Models\Ticket;
-use App\Models\TicketReply;
-use App\Models\User;
 use Filament\Actions;
 use Filament\Forms;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
-use Illuminate\Support\Facades\Mail;
 
 class ViewTicket extends ViewRecord
 {
@@ -35,28 +30,10 @@ class ViewTicket extends ViewRecord
                         ->default(false),
                 ])
                 ->action(function (array $data): void {
-                    $reply = TicketReply::create([
-                        'ticket_id'   => $this->record->id,
-                        'user_id'     => auth()->id(),
-                        'body'        => $data['body'],
-                        'is_internal' => $data['is_internal'],
-                    ]);
-                    if ($this->record->status === 'open') {
-                        $this->record->update(['status' => 'in_progress']);
-                    }
-                    if (!$data['is_internal']) {
-                        $customerEmail = $this->record->user?->email;
-                        if ($customerEmail) {
-                            Mail::to($customerEmail)->queue(new TicketReplied($this->record, $reply));
-                            $this->record->user?->notify(new \App\Notifications\FeedEntry(
-                                'support.ticket_replied',
-                                'New reply on your ticket',
-                                'There is a new reply on "' . $this->record->subject . '".',
-                                'chat-bubble-left-right',
-                                route('customer.tickets.show', ['locale' => 'en', 'id' => $this->record->id]),
-                            ));
-                        }
-                    }
+                    app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+                        'admin.support.tickets.reply',
+                        new \App\Contexts\Shared\Application\WorkflowInput($data, ['ticket' => $this->record], auth()->user(), app()->getLocale()),
+                    );
                     Notification::make()->title('Reply added')->success()->send();
                 }),
 
@@ -79,35 +56,10 @@ class ViewTicket extends ViewRecord
                         ->nullable(),
                 ])
                 ->action(function (array $data): void {
-                    $updates = [
-                        'status'      => $data['status'],
-                        'assigned_to' => $data['assigned_to'],
-                    ];
-                    if (!empty($data['resolution'])) {
-                        $updates['resolution'] = $data['resolution'];
-                    }
-                    if (in_array($data['status'], ['resolved', 'closed']) && !$this->record->resolved_at) {
-                        $updates['resolved_at'] = now();
-                    }
-                    if ($data['status'] === 'closed' && !$this->record->closed_at) {
-                        $updates['closed_at'] = now();
-                    }
-                    $oldStatus = $this->record->status;
-                    $this->record->update($updates);
-                    $notifyStatuses = ['resolved', 'closed', 'pending_customer'];
-                    if ($data['status'] !== $oldStatus && in_array($data['status'], $notifyStatuses)) {
-                        $customerEmail = $this->record->user?->email;
-                        if ($customerEmail) {
-                            Mail::to($customerEmail)->queue(new TicketStatusChanged($this->record, $data['status']));
-                            $this->record->user?->notify(new \App\Notifications\FeedEntry(
-                                'support.ticket_status',
-                                'Ticket status updated',
-                                '"' . $this->record->subject . '" is now ' . str_replace('_', ' ', $data['status']) . '.',
-                                'arrow-path',
-                                route('customer.tickets.show', ['locale' => 'en', 'id' => $this->record->id]),
-                            ));
-                        }
-                    }
+                    app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+                        'admin.support.tickets.status',
+                        new \App\Contexts\Shared\Application\WorkflowInput($data, ['ticket' => $this->record], auth()->user(), app()->getLocale()),
+                    );
                     Notification::make()->title('Ticket updated')->success()->send();
                     $this->refreshFormData(['status', 'assigned_to', 'resolution']);
                 }),

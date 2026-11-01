@@ -1,0 +1,74 @@
+{
+  "overall_score": 88.0,
+  "grade": "B",
+  "industry": "saas",
+  "weights_used": {
+    "technical": 0.27,
+    "content": 0.28,
+    "on_page": 0.2,
+    "schema": 0.05,
+    "performance": 0.1,
+    "ai_readiness": 0.1,
+    "images": 0.0
+  },
+  "category_scores": {
+    "technical": 100.0,
+    "on_page": 100.0,
+    "content": 75.0,
+    "schema": 100.0,
+    "ai_readiness": 100.0,
+    "performance": 50.0,
+    "images": 100.0
+  },
+  "total_checks": 10,
+  "passed": 8,
+  "warnings": 2,
+  "failures": 0,
+  "findings": [
+    {
+      "category": "content",
+      "check": "Public service claims consistent",
+      "result": "warn",
+      "severity": "high",
+      "detail": "Conflicting SLA/certification copy removed from FAQ/support/trust/terms; remaining product capability claims still need owner evidence."
+    },
+    {
+      "category": "performance",
+      "check": "Live field CWV measured",
+      "result": "warn",
+      "severity": "medium",
+      "detail": "Unavailable; previous local lab results did not meet all performance targets"
+    }
+  ],
+  "quick_wins": [
+    {
+      "category": "content",
+      "check": "Public service claims consistent",
+      "result": "warn",
+      "severity": "high",
+      "detail": "Conflicting SLA/certification copy removed from FAQ/support/trust/terms; remaining product capability claims still need owner evidence."
+    }
+  ],
+  "action_plan": {
+    "critical": [],
+    "high": [
+      {
+        "category": "content",
+        "check": "Public service claims consistent",
+        "result": "warn",
+        "severity": "high",
+        "detail": "Conflicting SLA/certification copy removed from FAQ/support/trust/terms; remaining product capability claims still need owner evidence."
+      }
+    ],
+    "medium": [
+      {
+        "category": "performance",
+        "check": "Live field CWV measured",
+        "result": "warn",
+        "severity": "medium",
+        "detail": "Unavailable; previous local lab results did not meet all performance targets"
+      }
+    ],
+    "low": []
+  }
+}

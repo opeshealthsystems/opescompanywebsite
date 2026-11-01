@@ -65,17 +65,10 @@ class ValidationCertificateResource extends Resource
                         Forms\Components\DatePicker::make('term_end')->native(false),
                     ])
                     ->action(function (ValidationCertificate $r, array $data) {
-                        $member = AdvisoryCouncilMember::create([
-                            'user_id'                   => $r->cohortMember->user_id,
-                            'validation_certificate_id' => $r->id,
-                            'title'                     => $data['title'],
-                            'term_start'                => $data['term_start'],
-                            'term_end'                  => $data['term_end'] ?? null,
-                            'status'                    => 'active',
-                            'invited_by'                => auth()->id(),
-                            'invited_at'                => now(),
-                        ]);
-                        $r->cohortMember->user?->notify(new \App\Notifications\CouncilInvitation($member));
+                        app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+                            'admin.validation.certificates.inviteToCouncil',
+                            new \App\Contexts\Shared\Application\WorkflowInput($data, ['certificate' => $r], auth()->user(), app()->getLocale()),
+                        );
                         Notification::make()->title('Practitioner invited to the Advisory Council.')->success()->send();
                     }),
             ]);

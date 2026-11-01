@@ -52,7 +52,7 @@ class InvoiceResource extends Resource
                 Forms\Components\Select::make('status')
                     ->options(Invoice::statusOptions())
                     ->default('draft')
-                    ->required(),
+                    ->required()->disabled()->dehydrated(false),
 
                 Forms\Components\Select::make('license_id')
                     ->label('Linked License (optional)')
@@ -185,14 +185,7 @@ class InvoiceResource extends Resource
                             ->label('Reference / Transaction ID')->nullable(),
                     ])
                     ->action(function (Invoice $record, array $data) {
-                        $record->payments()->create([
-                            'amount'           => $data['amount'],
-                            'payment_method'   => $data['payment_method'],
-                            'payment_date'     => $data['payment_date'],
-                            'reference_number' => $data['reference_number'] ?? null,
-                            'recorded_by'      => auth()->id(),
-                        ]);
-                        $record->reconcilePaymentStatus();
+                        app(\App\Contexts\Finance\Application\RecordInvoicePayment::class)->record(auth()->user(), $record->id, $data);
                         Notification::make()->title('Payment recorded')->success()->send();
                     }),
                 Tables\Actions\Action::make('credit_note')
@@ -236,12 +229,7 @@ class InvoiceResource extends Resource
                         ->requiresConfirmation()
                         ->deselectRecordsAfterCompletion()
                         ->action(function ($records) {
-                            $records->each(function ($record) {
-                                if ($record->status === 'draft') {
-                                    $record->update(['status' => 'sent']);
-                                }
-                            });
-                            Notification::make()->title('Invoices marked as sent')->success()->send();
+                            \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.invoices.markSent', values: ['ids' => $records->modelKeys()]);
                         }),
 
                     Tables\Actions\DeleteBulkAction::make(),

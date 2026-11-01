@@ -64,8 +64,8 @@
         <div>
             <div style="font-size:var(--fs-xs);font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px">{{ $isFr ? 'OPES vend :' : 'OPES sells:' }}</div>
             @foreach($isFr
-                ? [['heart-pulse','#00C896','Meilleurs soins patients'],['trending-up','#1A6FE8','Efficacité opérationnelle'],['dollar-sign','#00C896','Optimisation des revenus'],['zap','#1A6FE8','Transformation numérique'],['share-2','#00C896','Interopérabilité'],['cpu','#1A6FE8','Intelligence en santé'],['building-2','#00C896','Infrastructure de santé nationale']]
-                : [['heart-pulse','#00C896','Better patient care'],['trending-up','#1A6FE8','Operational efficiency'],['dollar-sign','#00C896','Revenue optimisation'],['zap','#1A6FE8','Digital transformation'],['share-2','#00C896','Interoperability'],['cpu','#1A6FE8','Healthcare intelligence'],['building-2','#00C896','National health infrastructure']]
+                ? [['heart-pulse','#69D5F5','Meilleurs soins patients'],['trending-up','#8AC5ED','Efficacité opérationnelle'],['dollar-sign','#69D5F5','Optimisation des revenus'],['zap','#8AC5ED','Transformation numérique'],['share-2','#69D5F5','Interopérabilité'],['cpu','#8AC5ED','Intelligence en santé'],['building-2','#69D5F5','Infrastructure de santé nationale']]
+                : [['heart-pulse','#69D5F5','Better patient care'],['trending-up','#8AC5ED','Operational efficiency'],['dollar-sign','#69D5F5','Revenue optimisation'],['zap','#8AC5ED','Digital transformation'],['share-2','#69D5F5','Interoperability'],['cpu','#8AC5ED','Healthcare intelligence'],['building-2','#69D5F5','National health infrastructure']]
             as $v)
             <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#0F172A;border-radius:8px;border:1px solid #1e293b;margin-bottom:6px">
                 <i data-lucide="{{ $v[0] }}" style="width:13px;height:13px;color:{{ $v[1] }};flex-shrink:0"></i>
@@ -86,52 +86,52 @@
     </div>
     <h2 class="section-title">{{ $isFr ? 'Six segments cibles, une approche sur mesure' : 'Six target segments, one tailored approach' }}</h2>
     @php $segments = $isFr ? [
-        ['activity','#00C896','1','Cliniques privées',
+        ['activity','#69D5F5','1','Cliniques privées',
             ['Propriétaire','Directeur médical','Gestionnaire de cabinet'],
             ['DME','Facturation','Rendez-vous','Pharmacie'],
             ['OPES Clinic']],
-        ['stethoscope','#1A6FE8','2','Centres médicaux',
+        ['stethoscope','#8AC5ED','2','Centres médicaux',
             ['Directeur médical','Administrateur'],
             ['DME','Laboratoire','Pharmacie','Rapports'],
             ['OPES Clinic','OPES Lab IS','OPES Pharmacy IS']],
-        ['hospital','#00C896','3','Hôpitaux',
+        ['hospital','#69D5F5','3','Hôpitaux',
             ['DG','DAF','Directeur médical'],
             ['HIS','DME','Facturation','Inventaire','Labo','Radiologie'],
             ['OPES Hospital','OPES Specialty Suite']],
-        ['network','#1A6FE8','4','Groupes hospitaliers',
+        ['network','#8AC5ED','4','Groupes hospitaliers',
             ['PDG','DSI','Directeur médical'],
             ['Interopérabilité','Rapports centraux','Gestion multi-sites'],
             ['OPES Health OS','OPES Care']],
-        ['shield-check','#00C896','5','Organisations d\'assurance',
+        ['shield-check','#69D5F5','5','Organisations d\'assurance',
             ['DG','Actuaire','DSI'],
             ['Sinistres','Gestion bénéficiaires','Analytique'],
             ['OPES Insurance','OPES Care']],
-        ['building-2','#1A6FE8','6','Gouvernements',
+        ['building-2','#8AC5ED','6','Gouvernements',
             ['Ministère de la Santé','Agences nationales'],
             ['Health ID national','HIE','CSU','Registres','Surveillance'],
             ['OPES National Digital Health Platform']],
     ] : [
-        ['activity','#00C896','1','Private Clinics',
+        ['activity','#69D5F5','1','Private Clinics',
             ['Owner','Medical Director','Practice Manager'],
             ['EMR','Billing','Appointments','Pharmacy'],
             ['OPES Clinic']],
-        ['stethoscope','#1A6FE8','2','Medical Centers',
+        ['stethoscope','#8AC5ED','2','Medical Centers',
             ['Medical Director','Administrator'],
             ['EMR','Laboratory','Pharmacy','Reporting'],
             ['OPES Clinic','OPES Lab IS','OPES Pharmacy IS']],
-        ['hospital','#00C896','3','Hospitals',
+        ['hospital','#69D5F5','3','Hospitals',
             ['CEO','CFO','Medical Director'],
             ['HIS','EMR','Billing','Inventory','Lab','Radiology'],
             ['OPES Hospital','OPES Specialty Suite']],
-        ['network','#1A6FE8','4','Hospital Groups',
+        ['network','#8AC5ED','4','Hospital Groups',
             ['CEO','CIO','Medical Director'],
             ['Interoperability','Central reporting','Multi-site management'],
             ['OPES Health OS','OPES Care']],
-        ['shield-check','#00C896','5','Insurance Organisations',
+        ['shield-check','#69D5F5','5','Insurance Organisations',
             ['CEO','Actuary','CIO'],
             ['Claims','Beneficiary management','Analytics'],
             ['OPES Insurance','OPES Care']],
-        ['building-2','#1A6FE8','6','Governments',
+        ['building-2','#8AC5ED','6','Governments',
             ['Ministry of Health','National agencies'],
             ['National Health ID','HIE','UHC','Registries','Surveillance'],
             ['OPES National Digital Health Platform']],
@@ -139,7 +139,7 @@
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:28px">
         @foreach($segments as $seg)
         <div style="background:#0F172A;border:1px solid #1e293b;border-radius:14px;padding:20px;position:relative;overflow:hidden">
-            <div style="position:absolute;top:10px;right:14px;font-size:32px;font-weight:900;color:{{ $seg[2] === '1' || $seg[2] === '3' || $seg[2] === '5' ? '#00C896' : '#1A6FE8' }}06;line-height:1;pointer-events:none">{{ $seg[2] }}</div>
+            <div style="position:absolute;top:10px;right:14px;font-size:32px;font-weight:900;color:{{ $seg[2] === '1' || $seg[2] === '3' || $seg[2] === '5' ? '#69D5F5' : '#8AC5ED' }}06;line-height:1;pointer-events:none">{{ $seg[2] }}</div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
                 <div style="width:34px;height:34px;border-radius:9px;background:{{ $seg[3] }}15;display:flex;align-items:center;justify-content:center;flex-shrink:0">
                     <i data-lucide="{{ $seg[0] }}" style="width:15px;height:15px;color:{{ $seg[3] }}"></i>
@@ -183,21 +183,21 @@
     <div style="position:relative;margin-top:36px;overflow-x:auto;padding-bottom:8px">
         <div style="display:flex;gap:0;min-width:700px;align-items:flex-start">
             @php $stages = $isFr ? [
-                ['target','#00C896','1','Génération de leads','Site web · Référencements · Conférences · Visites terrain · Appels d\'offres · Partenaires'],
-                ['filter','#1A6FE8','2','Qualification','Problème · Décideur · Budget · Délai · Systèmes existants · Parrainage exécutif'],
-                ['search','#00C896','3','Découverte','Workflows cliniques · Défis opérationnels · Exigences de reporting · Infrastructure → Rapport de découverte'],
-                ['monitor','#1A6FE8','4','Démonstration','Démontrer uniquement les flux pertinents. Ne pas montrer toutes les fonctionnalités.'],
-                ['file-text','#00C896','5','Proposition','Résumé exécutif · Problème · Solution · Architecture · Tarification · Plan d\'implémentation · ROI'],
-                ['scale','#1A6FE8','6','Négociation','Concentrer sur la valeur, non le prix. Sur les résultats, non les fonctionnalités. Sur la transformation.'],
-                ['check-circle','#00C896','7','Contrat & Passation','Contrat signé · Charte projet · Plan d\'implémentation · Réunion de lancement'],
+                ['target','#69D5F5','1','Génération de leads','Site web · Référencements · Conférences · Visites terrain · Appels d\'offres · Partenaires'],
+                ['filter','#8AC5ED','2','Qualification','Problème · Décideur · Budget · Délai · Systèmes existants · Parrainage exécutif'],
+                ['search','#69D5F5','3','Découverte','Workflows cliniques · Défis opérationnels · Exigences de reporting · Infrastructure → Rapport de découverte'],
+                ['monitor','#8AC5ED','4','Démonstration','Démontrer uniquement les flux pertinents. Ne pas montrer toutes les fonctionnalités.'],
+                ['file-text','#69D5F5','5','Proposition','Résumé exécutif · Problème · Solution · Architecture · Tarification · Plan d\'implémentation · ROI'],
+                ['scale','#8AC5ED','6','Négociation','Concentrer sur la valeur, non le prix. Sur les résultats, non les fonctionnalités. Sur la transformation.'],
+                ['check-circle','#69D5F5','7','Contrat & Passation','Contrat signé · Charte projet · Plan d\'implémentation · Réunion de lancement'],
             ] : [
-                ['target','#00C896','1','Lead Generation','Website · Referrals · Conferences · Hospital visits · Procurement notices · Partner referrals'],
-                ['filter','#1A6FE8','2','Qualification','Problem · Decision maker · Budget · Timeline · Existing systems · Executive sponsorship'],
-                ['search','#00C896','3','Discovery','Clinical workflows · Operational challenges · Reporting requirements · Infrastructure → Discovery Report'],
-                ['monitor','#1A6FE8','4','Demonstration','Demonstrate only relevant workflows. Do not show every feature.'],
-                ['file-text','#00C896','5','Proposal Development','Executive summary · Problem · Solution · Architecture · Pricing · Implementation plan · ROI'],
-                ['scale','#1A6FE8','6','Negotiation','Focus on value, not price. On outcomes, not features. On transformation.'],
-                ['check-circle','#00C896','7','Contract & Handover','Signed contract · Project charter · Implementation plan · Kickoff meeting'],
+                ['target','#69D5F5','1','Lead Generation','Website · Referrals · Conferences · Hospital visits · Procurement notices · Partner referrals'],
+                ['filter','#8AC5ED','2','Qualification','Problem · Decision maker · Budget · Timeline · Existing systems · Executive sponsorship'],
+                ['search','#69D5F5','3','Discovery','Clinical workflows · Operational challenges · Reporting requirements · Infrastructure → Discovery Report'],
+                ['monitor','#8AC5ED','4','Demonstration','Demonstrate only relevant workflows. Do not show every feature.'],
+                ['file-text','#69D5F5','5','Proposal Development','Executive summary · Problem · Solution · Architecture · Pricing · Implementation plan · ROI'],
+                ['scale','#8AC5ED','6','Negotiation','Focus on value, not price. On outcomes, not features. On transformation.'],
+                ['check-circle','#69D5F5','7','Contract & Handover','Signed contract · Project charter · Implementation plan · Kickoff meeting'],
             ]; @endphp
             @foreach($stages as $idx => $st)
             <div style="display:flex;align-items:flex-start;flex:1;min-width:0">
@@ -235,12 +235,12 @@
             </div>
             <h3 style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:16px">{{ $isFr ? 'Adapter la démo au segment' : 'Adapt the demo to the segment' }}</h3>
             @foreach($isFr
-                ? [['activity','#00C896','Démo Clinique',['Enregistrement','Consultation','Prescription','Facturation']],
-                   ['hospital','#1A6FE8','Démo Hôpital',['Enregistrement','Admissions','Laboratoire','Pharmacie','Facturation','Reporting']],
-                   ['building-2','#00C896','Démo Gouvernement',['Health ID','HIE','Registres','Analytique','Tableaux de bord']]]
-                : [['activity','#00C896','Clinic Demo',['Registration','Consultation','Prescription','Billing']],
-                   ['hospital','#1A6FE8','Hospital Demo',['Registration','Admissions','Laboratory','Pharmacy','Billing','Reporting']],
-                   ['building-2','#00C896','Government Demo',['Health ID','HIE','Registries','Analytics','Dashboards']]]
+                ? [['activity','#69D5F5','Démo Clinique',['Enregistrement','Consultation','Prescription','Facturation']],
+                   ['hospital','#8AC5ED','Démo Hôpital',['Enregistrement','Admissions','Laboratoire','Pharmacie','Facturation','Reporting']],
+                   ['building-2','#69D5F5','Démo Gouvernement',['Health ID','HIE','Registres','Analytique','Tableaux de bord']]]
+                : [['activity','#69D5F5','Clinic Demo',['Registration','Consultation','Prescription','Billing']],
+                   ['hospital','#8AC5ED','Hospital Demo',['Registration','Admissions','Laboratory','Pharmacy','Billing','Reporting']],
+                   ['building-2','#69D5F5','Government Demo',['Health ID','HIE','Registries','Analytics','Dashboards']]]
             as $demo)
             <div style="background:#0F172A;border:1px solid #1e293b;border-radius:10px;padding:14px;margin-bottom:10px">
                 <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
@@ -263,14 +263,14 @@
             </div>
             <h3 style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:16px">{{ $isFr ? '4 dimensions clés à explorer' : '4 key dimensions to explore' }}</h3>
             @foreach($isFr
-                ? [['heart-pulse','#00C896','Clinique',['Gestion des dossiers patients aujourd\'hui ?','Gestion des prescriptions ?','Livraison des résultats de labo ?','Gestion des référencements ?']],
-                   ['trending-up','#1A6FE8','Opérationnel',['Patients vus par jour ?','Nombre de départements ?','Utilisateurs nécessitant un accès ?']],
-                   ['dollar-sign','#00C896','Financier',['Budget technologique annuel ?','Gestion des sinistres ?','Suivi des paiements ?']],
-                   ['server','#1A6FE8','Technique',['Disponibilité Internet ?','Disponibilité serveur ?','Systèmes logiciels actuels ?']]]
-                : [['heart-pulse','#00C896','Clinical',['How are patient records managed today?','How are prescriptions managed?','How are lab results delivered?','How are referrals handled?']],
-                   ['trending-up','#1A6FE8','Operational',['How many patients seen daily?','How many departments exist?','How many users require access?']],
-                   ['dollar-sign','#00C896','Financial',['Annual technology budget?','How are claims managed?','How are payments tracked?']],
-                   ['server','#1A6FE8','Technical',['Internet availability?','Server availability?','Current software systems?']]]
+                ? [['heart-pulse','#69D5F5','Clinique',['Gestion des dossiers patients aujourd\'hui ?','Gestion des prescriptions ?','Livraison des résultats de labo ?','Gestion des référencements ?']],
+                   ['trending-up','#8AC5ED','Opérationnel',['Patients vus par jour ?','Nombre de départements ?','Utilisateurs nécessitant un accès ?']],
+                   ['dollar-sign','#69D5F5','Financier',['Budget technologique annuel ?','Gestion des sinistres ?','Suivi des paiements ?']],
+                   ['server','#8AC5ED','Technique',['Disponibilité Internet ?','Disponibilité serveur ?','Systèmes logiciels actuels ?']]]
+                : [['heart-pulse','#69D5F5','Clinical',['How are patient records managed today?','How are prescriptions managed?','How are lab results delivered?','How are referrals handled?']],
+                   ['trending-up','#8AC5ED','Operational',['How many patients seen daily?','How many departments exist?','How many users require access?']],
+                   ['dollar-sign','#69D5F5','Financial',['Annual technology budget?','How are claims managed?','How are payments tracked?']],
+                   ['server','#8AC5ED','Technical',['Internet availability?','Server availability?','Current software systems?']]]
             as $q)
             <div style="margin-bottom:12px">
                 <div style="display:flex;align-items:center;gap:7px;margin-bottom:6px">
@@ -295,10 +295,10 @@
         {{ $isFr ? 'Pitch ascenseur' : 'Elevator pitch' }}
     </div>
     <h2 class="section-title">{{ $isFr ? '30 secondes pour convaincre' : '30 seconds to convince' }}</h2>
-    <div style="background:#0F172A;border:1px solid #00C89630;border-radius:16px;padding:28px 32px;margin-top:24px;text-align:left">
+    <div style="background:#0F172A;border:1px solid #69D5F530;border-radius:16px;padding:28px 32px;margin-top:24px;text-align:left">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-            <i data-lucide="quote" style="width:20px;height:20px;color:#00C896;opacity:0.5"></i>
-            <span style="font-size:var(--fs-2xs);font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.08em">30 {{ $isFr ? 'secondes' : 'seconds' }}</span>
+            <i data-lucide="quote" style="width:20px;height:20px;color:var(--brand-accent);opacity:0.5"></i>
+            <span style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.08em">30 {{ $isFr ? 'secondes' : 'seconds' }}</span>
         </div>
         <p style="font-size:15px;color:#e2e8f0;line-height:1.75;font-style:italic">
             {{ $isFr
@@ -321,12 +321,12 @@
         @foreach($isFr
             ? [['#F59E0B','Nous avons déjà un logiciel.','La plupart des établissements de santé ont un logiciel. La vraie question est de savoir si votre solution actuelle supporte l\'interopérabilité, l\'évolutivité, l\'intelligence clinique et les objectifs de transformation numérique futurs.'],
                ['#EF4444','C\'est trop cher.','La technologie de santé doit être évaluée sur les économies opérationnelles, la protection des revenus, l\'amélioration de la sécurité patient et la durabilité à long terme — et non sur le seul coût d\'acquisition.'],
-               ['#8B5CF6','Notre personnel n\'est pas technique.','OPES Academy fournit des formations structurées, des certifications et des programmes de gestion du changement pour garantir une adoption réussie.'],
-               ['#1A6FE8','Nous avons peur de l\'échec de l\'implémentation.','OPES suit une méthodologie d\'implémentation structurée : découverte, formation, déploiement pilote, support au go-live et optimisation post-implémentation.']]
+               ['#8AC5ED','Notre personnel n\'est pas technique.','OPES Academy fournit des formations structurées, des certifications et des programmes de gestion du changement pour garantir une adoption réussie.'],
+               ['#8AC5ED','Nous avons peur de l\'échec de l\'implémentation.','OPES suit une méthodologie d\'implémentation structurée : découverte, formation, déploiement pilote, support au go-live et optimisation post-implémentation.']]
             : [['#F59E0B','We already have software.','Most healthcare facilities have software. The question is whether your existing solution supports interoperability, scalability, clinical intelligence, and future digital transformation goals.'],
                ['#EF4444','It is expensive.','Healthcare technology should be evaluated based on operational savings, revenue protection, patient safety improvements, and long-term sustainability — not acquisition cost alone.'],
-               ['#8B5CF6','Our staff are not technical.','OPES Academy provides structured training, certification, and change management programmes to ensure successful adoption.'],
-               ['#1A6FE8','We are afraid of implementation failure.','OPES follows a structured implementation methodology: discovery, training, pilot deployment, go-live support, and post-implementation optimisation.']]
+               ['#8AC5ED','Our staff are not technical.','OPES Academy provides structured training, certification, and change management programmes to ensure successful adoption.'],
+               ['#8AC5ED','We are afraid of implementation failure.','OPES follows a structured implementation methodology: discovery, training, pilot deployment, go-live support, and post-implementation optimisation.']]
         as $obj)
         <div style="background:#0F172A;border:1px solid #1e293b;border-radius:12px;overflow:hidden">
             <div style="display:grid;grid-template-columns:1fr 2fr">
@@ -337,7 +337,7 @@
                     </div>
                 </div>
                 <div style="padding:18px 20px;display:flex;align-items:flex-start;gap:8px">
-                    <i data-lucide="check-circle" style="width:14px;height:14px;color:#00C896;flex-shrink:0;margin-top:1px"></i>
+                    <i data-lucide="check-circle" style="width:14px;height:14px;color:var(--brand-accent);flex-shrink:0;margin-top:1px"></i>
                     <div style="font-size:var(--fs-xs);color:var(--text-muted);line-height:1.6">{{ $obj[2] }}</div>
                 </div>
             </div>
@@ -359,11 +359,11 @@
             </div>
             <h3 style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:16px">{{ $isFr ? 'Comment se différencier' : 'How to differentiate' }}</h3>
             @foreach($isFr
-                ? [['#00C896','vs DMEs génériques',['Intégré','Évolutif','Interopérable','Enterprise-ready']],
-                   ['#1A6FE8','vs Systèmes labo standalone',['Connecté','Multi-département','Health ID activé']],
+                ? [['#69D5F5','vs DMEs génériques',['Intégré','Évolutif','Interopérable','Enterprise-ready']],
+                   ['#8AC5ED','vs Systèmes labo standalone',['Connecté','Multi-département','Health ID activé']],
                    ['#F59E0B','vs Fournisseurs internationaux',['Support local','Contexte africain','Déploiement flexible','Rapport qualité-prix','Prêt au niveau national']]]
-                : [['#00C896','vs Generic EMRs',['Integrated','Scalable','Interoperable','Enterprise-ready']],
-                   ['#1A6FE8','vs Standalone lab systems',['Connected','Multi-department','Health ID enabled']],
+                : [['#69D5F5','vs Generic EMRs',['Integrated','Scalable','Interoperable','Enterprise-ready']],
+                   ['#8AC5ED','vs Standalone lab systems',['Connected','Multi-department','Health ID enabled']],
                    ['#F59E0B','vs International vendors',['Local support','African context','Flexible deployment','Cost-effective','National readiness']]]
             as $comp)
             <div style="background:#0F172A;border:1px solid #1e293b;border-radius:10px;padding:14px 16px;margin-bottom:10px">
@@ -384,11 +384,11 @@
             </div>
             <h3 style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:16px">{{ $isFr ? 'Positionner OPES sur 3 niveaux' : 'Position OPES at three levels' }}</h3>
             @foreach($isFr
-                ? [['#00C896','Bénéfices immédiats','Enregistrement plus rapide · Meilleure facturation · Meilleure documentation'],
-                   ['#1A6FE8','Bénéfices à moyen terme','Reporting amélioré · Efficacité opérationnelle · Optimisation des revenus'],
+                ? [['#69D5F5','Bénéfices immédiats','Enregistrement plus rapide · Meilleure facturation · Meilleure documentation'],
+                   ['#8AC5ED','Bénéfices à moyen terme','Reporting amélioré · Efficacité opérationnelle · Optimisation des revenus'],
                    ['#F59E0B','Bénéfices à long terme','Interopérabilité · Intelligence en santé · Connectivité nationale']]
-                : [['#00C896','Immediate benefits','Faster registration · Better billing · Better documentation'],
-                   ['#1A6FE8','Medium-term benefits','Improved reporting · Operational efficiency · Revenue optimisation'],
+                : [['#69D5F5','Immediate benefits','Faster registration · Better billing · Better documentation'],
+                   ['#8AC5ED','Medium-term benefits','Improved reporting · Operational efficiency · Revenue optimisation'],
                    ['#F59E0B','Long-term benefits','Interoperability · Health intelligence · National connectivity']]
             as $level)
             <div style="padding:16px;background:#0F172A;border-radius:10px;border-left:3px solid {{ $level[0] }};margin-bottom:10px">
@@ -403,7 +403,7 @@
                     : ['Executive summary','Problem statement','Proposed solution','Architecture','Pricing','Implementation plan','Support plan','ROI']
                 as $comp)
                 <div style="font-size:var(--fs-xs);color:var(--text-faint);padding:2px 0">
-                    <i data-lucide="chevron-right" style="width:9px;height:9px;color:#00C896;margin-right:4px"></i>{{ $comp }}
+                    <i data-lucide="chevron-right" style="width:9px;height:9px;color:var(--brand-accent);margin-right:4px"></i>{{ $comp }}
                 </div>
                 @endforeach
             </div>
@@ -427,7 +427,7 @@
                 : ['Ministries of Health','Regional hospitals','National insurance funds','Donor programmes','University hospitals','Hospital networks']
             as $acct)
             <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #0f172a">
-                <i data-lucide="chevron-right" style="width:9px;height:9px;color:#00C896;flex-shrink:0"></i>
+                <i data-lucide="chevron-right" style="width:9px;height:9px;color:var(--brand-accent);flex-shrink:0"></i>
                 <span style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $acct }}</span>
             </div>
             @endforeach
@@ -442,7 +442,7 @@
                 ? ['Valeur du pipeline','Opportunités qualifiées','Taux de succès des propositions','Taille moyenne des contrats','Coût d\'acquisition client','Revenu par représentant commercial','Taux de fidélisation client']
                 : ['Pipeline value','Qualified opportunities','Proposal win rate','Average deal size','Customer acquisition cost','Revenue per sales representative','Customer retention rate']
             as $kpi)
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0F172A;border-radius:7px;border-left:2px solid #1A6FE8;margin-bottom:5px">
+            <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0F172A;border-radius:7px;border-left:2px solid #8AC5ED;margin-bottom:5px">
                 <span style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $kpi }}</span>
             </div>
             @endforeach
@@ -458,7 +458,7 @@
                 ? ['Modules supplémentaires','Services d\'interopérabilité','Services Health ID','Analytique avancée','Programmes de formation','Services gérés']
                 : ['Additional modules','Interoperability services','Health ID services','Advanced analytics','Training programmes','Managed services']
             as $exp)
-            <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0F172A;border-radius:7px;border-left:2px solid #00C896;margin-bottom:5px">
+            <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0F172A;border-radius:7px;border-left:2px solid #69D5F5;margin-bottom:5px">
                 <span style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $exp }}</span>
             </div>
             @endforeach

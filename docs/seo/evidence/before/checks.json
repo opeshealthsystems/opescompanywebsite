@@ -1,0 +1,70 @@
+[
+  {
+    "category": "technical",
+    "check": "All discovered public links resolve",
+    "result": "fail",
+    "severity": "high",
+    "detail": "14 broken internal routes in 134-page live crawl"
+  },
+  {
+    "category": "technical",
+    "check": "Public landing pages covered by sitemap",
+    "result": "fail",
+    "severity": "high",
+    "detail": "Only seven static routes configured before fixes"
+  },
+  {
+    "category": "technical",
+    "check": "robots.txt present",
+    "result": "pass",
+    "severity": "medium"
+  },
+  {
+    "category": "on_page",
+    "check": "Distinct titles across useful pages",
+    "result": "fail",
+    "severity": "high",
+    "detail": "Repeated brand suffixes, home/blog/directory duplicates and untranslated product titles"
+  },
+  {
+    "category": "content",
+    "check": "No sample partner endorsements or courses",
+    "result": "fail",
+    "severity": "high",
+    "detail": "Five example.com partner entries and three sample-video courses confirmed in live DB"
+  },
+  {
+    "category": "content",
+    "check": "Public service claims consistent",
+    "result": "fail",
+    "severity": "high",
+    "detail": "99.5%, 99.9%, 99.95% and 99.99% promises conflict; certification issuer missing"
+  },
+  {
+    "category": "schema",
+    "check": "JSON-LD syntactically parseable",
+    "result": "pass",
+    "severity": "medium"
+  },
+  {
+    "category": "ai_readiness",
+    "check": "Clear and supportable factual answers",
+    "result": "fail",
+    "severity": "high",
+    "detail": "FAQ contained unverified certification, compatibility and SLA claims"
+  },
+  {
+    "category": "performance",
+    "check": "Live field CWV measured",
+    "result": "warn",
+    "severity": "medium",
+    "detail": "Unavailable; previous local lab results did not meet all performance targets"
+  },
+  {
+    "category": "images",
+    "check": "Official brand asset used",
+    "result": "fail",
+    "severity": "medium",
+    "detail": "Owner supplied approved seal during remediation"
+  }
+]

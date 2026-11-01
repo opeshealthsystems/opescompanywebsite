@@ -7,6 +7,7 @@ use App\Filament\Resources\DeveloperTaskResource\RelationManagers\RetestsRelatio
 use App\Models\DeveloperTask;
 use App\Models\IssueReport;
 use App\Models\User;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use Filament\Forms;
 use Filament\Infolists;
 use Filament\Infolists\Infolist;
@@ -60,42 +61,27 @@ class DeveloperTaskResource extends Resource
                             ->options(fn () => User::query()->orderBy('name')->pluck('name', 'id'))
                             ->searchable()->required(),
                     ])
-                    ->action(function (DeveloperTask $record, array $data) {
-                        $record->update(['assigned_to' => $data['assigned_to']]);
-                        Notification::make()->title('Task assigned.')->success()->send();
-                    }),
+                    ->action(fn (DeveloperTask $record, array $data) => AdminWorkflowAdapter::run('admin.validation.developerTasks.assign', ['assigned_to' => $data['assigned_to']], ['task' => $record])),
                 Tables\Actions\Action::make('start')
                     ->label('Start')->icon('heroicon-o-play')->color('info')
                     ->visible(fn (DeveloperTask $r) => in_array($r->status, ['open', 'reopened']))
-                    ->action(function (DeveloperTask $r) {
-                        $r->markInProgress();
-                        Notification::make()->title('Task in progress.')->success()->send();
-                    }),
+                    ->action(fn (DeveloperTask $r) => AdminWorkflowAdapter::run('admin.validation.developerTasks.start', parameters: ['task' => $r])),
                 Tables\Actions\Action::make('mark_fixed')
                     ->label('Mark Fixed')->icon('heroicon-o-check-circle')->color('success')
                     ->visible(fn (DeveloperTask $r) => in_array($r->status, ['in_progress', 'reopened']))
                     ->form([Forms\Components\Textarea::make('resolution_notes')->rows(3)])
-                    ->action(function (DeveloperTask $r, array $data) {
-                        $r->markFixed($data['resolution_notes'] ?? null);
-                        Notification::make()->title('Marked fixed — issue ready for retest.')->success()->send();
-                    }),
+                    ->action(fn (DeveloperTask $r, array $data) => AdminWorkflowAdapter::run('admin.validation.developerTasks.markFixed', ['resolution_notes' => $data['resolution_notes'] ?? null], ['task' => $r])),
                 Tables\Actions\Action::make('reopen')
                     ->label('Reopen')->icon('heroicon-o-arrow-path')->color('warning')
                     ->visible(fn (DeveloperTask $r) => $r->status === 'fixed'
                         && ! in_array($r->issueReport->status, ['closed', 'retest_passed'], true))
                     ->requiresConfirmation()
-                    ->action(function (DeveloperTask $r) {
-                        $r->reopen();
-                        Notification::make()->title('Task reopened.')->success()->send();
-                    }),
+                    ->action(fn (DeveloperTask $r) => AdminWorkflowAdapter::run('admin.validation.developerTasks.reopen', parameters: ['task' => $r])),
                 Tables\Actions\Action::make('wont_fix')
                     ->label("Won't Fix")->icon('heroicon-o-no-symbol')->color('danger')
                     ->visible(fn (DeveloperTask $r) => $r->status !== 'wont_fix')
                     ->form([Forms\Components\Textarea::make('notes')->rows(3)])
-                    ->action(function (DeveloperTask $r, array $data) {
-                        $r->markWontFix($data['notes'] ?? null);
-                        Notification::make()->title("Marked won't fix — issue rejected.")->success()->send();
-                    }),
+                    ->action(fn (DeveloperTask $r, array $data) => AdminWorkflowAdapter::run('admin.validation.developerTasks.wontFix', ['notes' => $data['notes'] ?? null], ['task' => $r])),
             ]);
     }
 

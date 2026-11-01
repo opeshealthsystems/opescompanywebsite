@@ -12,7 +12,7 @@
     {{-- Review List --}}
     <div class="cp-section-card" style="grid-column:1/-1">
         <div class="cp-section-header">
-            <h2 class="cp-section-title"><i data-lucide="trending-up" style="width:17px;height:17px;color:#1A6FE8"></i> Reviews</h2>
+            <h2 class="cp-section-title"><i data-lucide="trending-up" style="width:17px;height:17px;color:var(--brand-accent)"></i> Reviews</h2>
         </div>
 
         <form method="GET" class="portal-filter-bar">
@@ -77,7 +77,7 @@
     {{-- New Review Form --}}
     <div class="cp-section-card">
         <div class="cp-section-header">
-            <h2 class="cp-section-title"><i data-lucide="plus-circle" style="width:17px;height:17px;color:#1A6FE8"></i> Initiate New Review</h2>
+            <h2 class="cp-section-title"><i data-lucide="plus-circle" style="width:17px;height:17px;color:var(--brand-accent)"></i> Initiate New Review</h2>
         </div>
         <form method="POST" action="{{ route('manager.performance.store', ['locale' => $locale]) }}" class="cp-form">
             @csrf

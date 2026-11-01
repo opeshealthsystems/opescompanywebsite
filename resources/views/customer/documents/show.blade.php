@@ -21,9 +21,9 @@
 
     @if($document->isSigned())
         <div style="background:rgba(0,200,150,0.08);border:1px solid rgba(0,200,150,0.25);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;">
-            <span style="color:#00C896;font-size:1.5rem;font-weight:700;">&#10003;</span>
+            <span style="color:var(--brand-accent);font-size:1.5rem;font-weight:700;">&#10003;</span>
             <div>
-                <p style="color:#00C896;font-weight:600;font-size:0.9rem;margin:0;">Signed by {{ $document->signed_by_name }}</p>
+                <p style="color:var(--brand-accent);font-weight:600;font-size:0.9rem;margin:0;">Signed by {{ $document->signed_by_name }}</p>
                 <p style="color:var(--text-muted);font-size:0.8rem;margin:0.1rem 0 0;">{{ $document->signed_at?->format('d M Y, H:i') }} UTC</p>
             </div>
         </div>

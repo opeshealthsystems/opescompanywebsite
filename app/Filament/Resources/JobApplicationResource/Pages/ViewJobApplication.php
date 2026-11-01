@@ -4,6 +4,7 @@ namespace App\Filament\Resources\JobApplicationResource\Pages;
 
 use App\Filament\Resources\JobApplicationResource;
 use App\Models\JobApplication;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use Filament\Actions;
 use Filament\Infolists;
 use Filament\Infolists\Infolist;
@@ -61,7 +62,7 @@ class ViewJobApplication extends ViewRecord
                 ->icon('heroicon-o-star')
                 ->color('info')
                 ->hidden(fn () => !in_array($this->record->status, ['received', 'reviewing']))
-                ->action(fn () => $this->record->update(['status' => 'shortlisted']))
+                ->action(fn () => AdminWorkflowAdapter::run('admin.recruitment.applications.shortlist', parameters: ['application' => $this->record]))
                 ->after(fn () => $this->refreshFormData(['status'])),
             Actions\Action::make('make_offer')
                 ->label('Make Offer')
@@ -69,7 +70,7 @@ class ViewJobApplication extends ViewRecord
                 ->color('success')
                 ->hidden(fn () => $this->record->status !== 'interviewed')
                 ->requiresConfirmation()
-                ->action(fn () => $this->record->update(['status' => 'offered']))
+                ->action(fn () => AdminWorkflowAdapter::run('admin.recruitment.applications.makeOffer', parameters: ['application' => $this->record]))
                 ->after(fn () => $this->refreshFormData(['status'])),
             Actions\Action::make('hire')
                 ->label('Hire')
@@ -77,7 +78,7 @@ class ViewJobApplication extends ViewRecord
                 ->color('success')
                 ->requiresConfirmation()
                 ->hidden(fn () => $this->record->status !== 'offered')
-                ->action(fn () => $this->record->update(['status' => 'hired']))
+                ->action(fn () => AdminWorkflowAdapter::run('admin.recruitment.applications.hire', parameters: ['application' => $this->record]))
                 ->after(fn () => $this->refreshFormData(['status'])),
             Actions\Action::make('reject')
                 ->label('Reject')
@@ -85,7 +86,7 @@ class ViewJobApplication extends ViewRecord
                 ->color('danger')
                 ->requiresConfirmation()
                 ->hidden(fn () => in_array($this->record->status, ['hired', 'rejected']))
-                ->action(fn () => $this->record->update(['status' => 'rejected']))
+                ->action(fn () => AdminWorkflowAdapter::run('admin.recruitment.applications.reject', parameters: ['application' => $this->record]))
                 ->after(fn () => $this->refreshFormData(['status'])),
         ];
     }

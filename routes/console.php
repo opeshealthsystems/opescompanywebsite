@@ -22,3 +22,7 @@ Schedule::command('training:send-expiry-warnings')->dailyAt('09:00');
 
 // Confirm pending mobile-money payouts
 Schedule::command('payouts:poll')->everyFiveMinutes()->withoutOverlapping();
+
+// Requires a hosting scheduler invoking artisan schedule:run every minute.
+Schedule::command('website-forms:deliver --retry-only --limit=100')->everyMinute()->withoutOverlapping();
+Schedule::command('business:outbox --limit=100')->everyMinute()->withoutOverlapping();

@@ -1,0 +1,40 @@
+<?php
+
+return [
+    'canonical_url' => 'https://opeshealthsystems.com',
+    // Only public, useful landing pages belong in the sitemap. Authentication and
+    // confidential application routes are deliberately absent.
+    'pages' => [
+        'developers' => ['APIs and developer documentation', 'API et documentation développeur'],
+        '' => ['Healthcare software designed in Cameroon', 'Logiciels de santé conçus au Cameroun'],
+        'products' => ['Healthcare software catalogue', 'Catalogue de logiciels de santé'],
+        'solutions' => ['Software for hospitals, clinics and care teams', 'Logiciels pour hôpitaux, cliniques et équipes de soins'],
+        'about' => ['About OPES Health Systems', 'À propos d’OPES Health Systems'],
+        'partnerships' => ['Healthcare technology partnerships', 'Partenariats en technologie de santé'],
+        'blog' => ['Digital health articles and insights', 'Articles et actualités sur la santé numérique'],
+        'contact' => ['Contact our healthcare software team', 'Contacter notre équipe de logiciels de santé'],
+        'pricing' => ['Healthcare software pricing and project quotes', 'Tarifs des logiciels de santé et devis de projet'],
+        'privacy' => ['Privacy information', 'Informations sur la confidentialité'],
+        'terms' => ['Website and service terms', 'Conditions du site et des services'],
+        'compliance' => ['Security and project assurance', 'Sécurité et vérification des projets'],
+        'architecture' => ['Healthcare software architecture', 'Architecture des logiciels de santé'],
+        'implementation' => ['Planning your software implementation', 'Planifier le déploiement de votre logiciel'],
+        'support' => ['Support and service agreements', 'Support et contrats de service'],
+        'academy' => ['OPES training and learning pathways', 'Formations et parcours d’apprentissage OPES'],
+        'clinical-governance' => ['Clinical software governance', 'Gouvernance des logiciels cliniques'],
+        'interoperability' => ['Healthcare system interoperability', 'Interopérabilité des systèmes de santé'],
+        'quality' => ['Healthcare software quality practices', 'Pratiques qualité des logiciels de santé'],
+        'national-platform' => ['National health platform planning', 'Planification de plateformes nationales de santé'],
+        'partner-program' => ['OPES partner programme', 'Programme partenaires OPES'],
+        'health-os' => ['OPES healthcare software ecosystem', 'Écosystème de logiciels de santé OPES'],
+        'architecture-diagrams' => ['Healthcare software architecture diagrams', 'Schémas d’architecture des logiciels de santé'],
+        'faq' => ['Healthcare software questions and answers', 'Questions et réponses sur les logiciels de santé'],
+        'book-demo' => ['Request a healthcare software demonstration', 'Demander une démonstration des logiciels de santé'],
+        'become-a-partner' => ['Apply to become an OPES partner', 'Devenir partenaire OPES'],
+        'join-testers' => ['Apply to test OPES software', 'Participer aux tests des logiciels OPES'],
+        'mobile-clinic' => ['Mobile clinic software and workflows', 'Logiciels et processus pour cliniques mobiles'],
+        'markets' => ['Healthcare software for CEMAC markets', 'Logiciels de santé pour les marchés CEMAC'],
+        'practitioners' => ['Healthcare practitioner directory', 'Annuaire des professionnels de santé'],
+        'courses' => ['OPES training course catalogue', 'Catalogue des formations OPES'],
+    ],
+];

@@ -1,10 +1,10 @@
 @php
 $locale = app()->getLocale();
 $catColors = [
-    'Digital Health in Cameroon' => '#00C896',
+    'Digital Health in Cameroon' => '#69D5F5',
     'Healthcare Challenges'      => '#ef4444',
-    'HMS Solutions'              => '#1A6FE8',
-    "Buyer's Guide"              => '#8b5cf6',
+    'HMS Solutions'              => '#8AC5ED',
+    "Buyer's Guide"              => '#8AC5ED',
     'AI & Technology'            => '#f59e0b',
     'Insights & Case Studies'    => 'var(--text-muted)',
 ];
@@ -12,7 +12,7 @@ $heroFeatured  = $featured->first();
 $heroHeadlines = $featured->skip(1)->values();
 @endphp
 
-<x-layouts.app>
+<x-layouts.app :indexable="$categories->sum('count') > 0">
 
 {{-- ═══════════════════════════════════════════════════════════════
      BLOG HERO — Health Technology Headlines
@@ -45,15 +45,15 @@ $heroHeadlines = $featured->skip(1)->values();
                         <img src="{{ Storage::url($heroFeatured->cover_image) }}"
                              alt="{{ $heroFeatured->getLocalizedTitle($locale) }}">
                     @else
-                        @php $heroColor = $catColors[$heroFeatured->category] ?? '#00C896'; @endphp
-                        <div class="blog-hero-img-icon" style="background:linear-gradient(135deg,{{ $heroColor }}18,{{ $heroColor }}06)">
+                        @php $heroColor = $catColors[$heroFeatured->category] ?? '#69D5F5'; @endphp
+                        <div class="blog-hero-img-icon" style="background:var(--surface-2)">
                             <i data-lucide="file-text" style="width:26px;height:26px;color:{{ $heroColor }};opacity:0.6"></i>
                         </div>
                     @endif
                     <span class="blog-hero-badge">{{ __('blog.badge_featured') }}</span>
                 </div>
                 <div class="blog-hero-content">
-                    @php $heroColor = $catColors[$heroFeatured->category] ?? '#00C896'; @endphp
+                    @php $heroColor = $catColors[$heroFeatured->category] ?? '#69D5F5'; @endphp
                     <span class="blog-cat" style="color:{{ $heroColor }}">
                         {{ $heroFeatured->category }}
                     </span>
@@ -137,7 +137,7 @@ $heroHeadlines = $featured->skip(1)->values();
             {{-- All articles link --}}
             <a href="{{ url($locale.'/blog') }}"
                class="blog-sb-cat {{ empty($activeCategory) ? 'sb-active' : '' }}">
-                <span class="blog-sb-cat-dot" style="background:#00C896"></span>
+                <span class="blog-sb-cat-dot" style="background:#69D5F5"></span>
                 {{ __('blog.all_articles') }}
                 <span class="blog-sb-cat-count">{{ $categories->sum('count') }}</span>
             </a>
@@ -161,7 +161,7 @@ $heroHeadlines = $featured->skip(1)->values();
         {{-- CTA Widget --}}
         <div class="blog-sb-cta">
             <div class="blog-sb-cta-icon">
-                <i data-lucide="building-2" style="width:22px;height:22px;color:#00C896"></i>
+                <i data-lucide="building-2" style="width:22px;height:22px;color:var(--brand-accent)"></i>
             </div>
             <h4>{{ __('blog.cta_heading') }}</h4>
             <p>{{ __('blog.cta_body') }}</p>
@@ -206,12 +206,12 @@ $heroHeadlines = $featured->skip(1)->values();
                 <h2 class="blog-main-title">
                     @if(!empty($search))
                         <span style="display:inline-flex;align-items:center;gap:8px">
-                            <i data-lucide="search" style="width:14px;height:14px;color:#00C896"></i>
+                            <i data-lucide="search" style="width:14px;height:14px;color:var(--brand-accent)"></i>
                             "{{ $search }}"
                         </span>
                     @elseif($activeCategory)
                         <span style="display:inline-flex;align-items:center;gap:8px">
-                            <span style="width:10px;height:10px;border-radius:50%;background:{{ $catColors[$activeCategory] ?? '#00C896' }};display:inline-block;flex-shrink:0"></span>
+                            <span style="width:10px;height:10px;border-radius:50%;background:{{ $catColors[$activeCategory] ?? '#69D5F5' }};display:inline-block;flex-shrink:0"></span>
                             {{ $activeCategory }}
                         </span>
                     @else
@@ -239,7 +239,7 @@ $heroHeadlines = $featured->skip(1)->values();
                     <img src="{{ Storage::url($post->cover_image) }}" alt="{{ $post->getLocalizedTitle($locale) }}" style="width:100%;height:100%;object-fit:cover">
                 </div>
                 @else
-                <div class="blog-card-img blog-card-img-gradient" style="background:linear-gradient(135deg,{{ $postColor }}22,{{ $postColor }}08)">
+                <div class="blog-card-img blog-card-img-gradient" style="background:var(--surface-2)">
                     <i data-lucide="file-text" style="width:28px;height:28px;color:{{ $postColor }};opacity:0.5"></i>
                 </div>
                 @endif
@@ -261,15 +261,15 @@ $heroHeadlines = $featured->skip(1)->values();
             @endforeach
         </div>
         <div style="margin-top:36px">
-            {{ $posts->links() }}
+            <x-public-pagination :paginator="$posts" />
         </div>
         @else
         <div style="text-align:center;padding:80px 24px">
             <div class="cs-icon" style="margin:0 auto 24px">
-                <i data-lucide="search" style="width:28px;height:28px;color:#00C896"></i>
+                <i data-lucide="search" style="width:28px;height:28px;color:var(--brand-accent)"></i>
             </div>
-            <h2 style="font-size:22px;font-weight:700;color:#e2e8f0;margin-bottom:10px">{{ __('blog.empty_heading') }}</h2>
-            <p style="color:var(--text-muted);font-size:14px;margin-bottom:24px">{{ __('blog.empty_body') }}</p>
+            <h2 style="font-size:22px;font-weight:700;color:#e2e8f0;margin-bottom:10px">{{ $categories->sum('count') === 0 ? ($locale === 'fr' ? 'Aucun article publié pour le moment' : 'No published articles yet') : __('blog.empty_heading') }}</h2>
+            <p style="color:var(--text-muted);font-size:14px;margin-bottom:24px">{{ $categories->sum('count') === 0 ? ($locale === 'fr' ? 'Consultez notre catalogue ou contactez notre équipe pour des informations sur les produits.' : 'Explore the catalogue or contact our team for product information.') : __('blog.empty_body') }}</p>
             <a href="{{ url($locale.'/blog') }}" class="btn-secondary" style="display:inline-flex;gap:6px;align-items:center">
                 <i data-lucide="arrow-left" style="width:14px;height:14px"></i>
                 {{ __('blog.view_all') }}

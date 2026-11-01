@@ -59,7 +59,7 @@
         @php
         $tracks = $isFr ? [
             [
-                'icon'=>'stethoscope','color'=>'#00C896',
+                'icon'=>'stethoscope','color'=>'#69D5F5',
                 'title'=>'Clinicien Numérique',
                 'cert'=>'OPES Certified Clinical User',
                 'audience'=>'Médecins, infirmiers, sages-femmes',
@@ -67,7 +67,7 @@
                 'modules'=>['EMR & dossier patient','Prescriptions & ordonnances','Triage & admissions','Gestion des consultations'],
             ],
             [
-                'icon'=>'flask-conical','color'=>'#1A6FE8',
+                'icon'=>'flask-conical','color'=>'#8AC5ED',
                 'title'=>'Technicien de Laboratoire',
                 'cert'=>'OPES Certified Lab Technician',
                 'audience'=>'Biologistes, techniciens, laborantins',
@@ -75,7 +75,7 @@
                 'modules'=>['Gestion des demandes','Validation des résultats','Contrôle qualité','Intégration EMR'],
             ],
             [
-                'icon'=>'pill','color'=>'#00C896',
+                'icon'=>'pill','color'=>'#69D5F5',
                 'title'=>'Gestionnaire de Pharmacie',
                 'cert'=>'OPES Certified Pharmacy Manager',
                 'audience'=>'Pharmaciens, préparateurs, gestionnaires',
@@ -83,7 +83,7 @@
                 'modules'=>['Gestion des stocks','Dispensation','Alertes médicamenteuses','Rapports de pharmacie'],
             ],
             [
-                'icon'=>'bar-chart-2','color'=>'#1A6FE8',
+                'icon'=>'bar-chart-2','color'=>'#8AC5ED',
                 'title'=>'Administrateur de données de santé',
                 'cert'=>'OPES Certified Health Data Administrator',
                 'audience'=>'Informaticiens, administrateurs DRH, DSI',
@@ -91,7 +91,7 @@
                 'modules'=>['Administration système','Reporting HMIS','Export DHIS2','Gestion des utilisateurs'],
             ],
             [
-                'icon'=>'brain','color'=>'#00C896',
+                'icon'=>'brain','color'=>'#69D5F5',
                 'title'=>'Analyste Intelligence Clinique',
                 'cert'=>'OPES Certified Clinical Intelligence Analyst',
                 'audience'=>'Épidémiologistes, DSP, chercheurs',
@@ -99,7 +99,7 @@
                 'modules'=>['Tableaux de bord avancés','Indicateurs épidémiologiques','Rapport de performance','IA décision clinique'],
             ],
             [
-                'icon'=>'server','color'=>'#1A6FE8',
+                'icon'=>'server','color'=>'#8AC5ED',
                 'title'=>'Ingénieur Système OPES',
                 'cert'=>'OPES Certified System Engineer',
                 'audience'=>'Ingénieurs IT, intégrateurs, DSI',
@@ -108,7 +108,7 @@
             ],
         ] : [
             [
-                'icon'=>'stethoscope','color'=>'#00C896',
+                'icon'=>'stethoscope','color'=>'#69D5F5',
                 'title'=>'Digital Clinician',
                 'cert'=>'OPES Certified Clinical User',
                 'audience'=>'Doctors, nurses, midwives',
@@ -116,7 +116,7 @@
                 'modules'=>['EMR & patient records','Prescriptions & orders','Triage & admissions','Consultation management'],
             ],
             [
-                'icon'=>'flask-conical','color'=>'#1A6FE8',
+                'icon'=>'flask-conical','color'=>'#8AC5ED',
                 'title'=>'Lab Technician',
                 'cert'=>'OPES Certified Lab Technician',
                 'audience'=>'Biologists, technicians, lab staff',
@@ -124,7 +124,7 @@
                 'modules'=>['Request management','Result validation','Quality control','EMR integration'],
             ],
             [
-                'icon'=>'pill','color'=>'#00C896',
+                'icon'=>'pill','color'=>'#69D5F5',
                 'title'=>'Pharmacy Manager',
                 'cert'=>'OPES Certified Pharmacy Manager',
                 'audience'=>'Pharmacists, dispensers, store managers',
@@ -132,7 +132,7 @@
                 'modules'=>['Stock management','Dispensing','Drug interactions','Pharmacy reports'],
             ],
             [
-                'icon'=>'bar-chart-2','color'=>'#1A6FE8',
+                'icon'=>'bar-chart-2','color'=>'#8AC5ED',
                 'title'=>'Health Data Administrator',
                 'cert'=>'OPES Certified Health Data Administrator',
                 'audience'=>'IT officers, data managers, CIOs',
@@ -140,7 +140,7 @@
                 'modules'=>['System administration','HMIS reporting','DHIS2 export','User management'],
             ],
             [
-                'icon'=>'brain','color'=>'#00C896',
+                'icon'=>'brain','color'=>'#69D5F5',
                 'title'=>'Clinical Intelligence Analyst',
                 'cert'=>'OPES Certified Clinical Intelligence Analyst',
                 'audience'=>'Epidemiologists, public health officers, researchers',
@@ -148,7 +148,7 @@
                 'modules'=>['Advanced dashboards','Epidemiological indicators','Performance reporting','AI decision support'],
             ],
             [
-                'icon'=>'server','color'=>'#1A6FE8',
+                'icon'=>'server','color'=>'#8AC5ED',
                 'title'=>'OPES System Engineer',
                 'cert'=>'OPES Certified System Engineer',
                 'audience'=>'IT engineers, integrators, CIOs',
@@ -188,15 +188,15 @@
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:36px">
         @php
         $steps = $isFr ? [
-            ['icon'=>'user-plus',      'color'=>'#1A6FE8','step'=>'01','title'=>'S\'inscrire',        'desc'=>'Créez votre compte praticien OPES et choisissez votre parcours de certification.'],
-            ['icon'=>'book-open',      'color'=>'#00C896','step'=>'02','title'=>'Suivre les cours',   'desc'=>'Accédez aux modules e-learning bilingues à votre rythme, depuis n\'importe quel appareil.'],
-            ['icon'=>'check-square',   'color'=>'#1A6FE8','step'=>'03','title'=>'Valider les acquis', 'desc'=>'Évaluations pratiques et quiz à la fin de chaque module pour mesurer votre progression.'],
-            ['icon'=>'award',          'color'=>'#00C896','step'=>'04','title'=>'Obtenir la certification','desc'=>'Certificat numérique OPES téléchargeable, avec code de vérification unique.'],
+            ['icon'=>'user-plus',      'color'=>'#8AC5ED','step'=>'01','title'=>'S\'inscrire',        'desc'=>'Créez votre compte praticien OPES et choisissez votre parcours de certification.'],
+            ['icon'=>'book-open',      'color'=>'#69D5F5','step'=>'02','title'=>'Suivre les cours',   'desc'=>'Accédez aux modules e-learning bilingues à votre rythme, depuis n\'importe quel appareil.'],
+            ['icon'=>'check-square',   'color'=>'#8AC5ED','step'=>'03','title'=>'Valider les acquis', 'desc'=>'Évaluations pratiques et quiz à la fin de chaque module pour mesurer votre progression.'],
+            ['icon'=>'award',          'color'=>'#69D5F5','step'=>'04','title'=>'Obtenir la certification','desc'=>'Certificat numérique OPES téléchargeable, avec code de vérification unique.'],
         ] : [
-            ['icon'=>'user-plus',      'color'=>'#1A6FE8','step'=>'01','title'=>'Register',           'desc'=>'Create your OPES practitioner account and choose your certification track.'],
-            ['icon'=>'book-open',      'color'=>'#00C896','step'=>'02','title'=>'Take courses',       'desc'=>'Access bilingual e-learning modules at your own pace from any device.'],
-            ['icon'=>'check-square',   'color'=>'#1A6FE8','step'=>'03','title'=>'Validate knowledge', 'desc'=>'Practical assessments and quizzes at the end of each module to measure progress.'],
-            ['icon'=>'award',          'color'=>'#00C896','step'=>'04','title'=>'Get certified',      'desc'=>'Downloadable OPES digital certificate with a unique verification code.'],
+            ['icon'=>'user-plus',      'color'=>'#8AC5ED','step'=>'01','title'=>'Register',           'desc'=>'Create your OPES practitioner account and choose your certification track.'],
+            ['icon'=>'book-open',      'color'=>'#69D5F5','step'=>'02','title'=>'Take courses',       'desc'=>'Access bilingual e-learning modules at your own pace from any device.'],
+            ['icon'=>'check-square',   'color'=>'#8AC5ED','step'=>'03','title'=>'Validate knowledge', 'desc'=>'Practical assessments and quizzes at the end of each module to measure progress.'],
+            ['icon'=>'award',          'color'=>'#69D5F5','step'=>'04','title'=>'Get certified',      'desc'=>'Downloadable OPES digital certificate with a unique verification code.'],
         ];
         @endphp
         @foreach($steps as $step)

@@ -16,8 +16,12 @@ class QuoteObserver
 
         $lead = $quote->lead;
         if ($lead && $lead->email) {
-            Notification::route('mail', $lead->email)
-                ->notify(new QuoteSent($quote, $lead->name ?? 'there'));
+            $message = new QuoteSent($quote, $lead->name ?? 'there');
+            if (\App\Contexts\Shared\Application\CurrentWorkflow::actor()) {
+                \App\Contexts\Shared\Infrastructure\DomainNotificationRoute::route('mail', $lead->email)->notify($message);
+            } else {
+                Notification::route('mail', $lead->email)->notify($message);
+            }
         }
     }
 }

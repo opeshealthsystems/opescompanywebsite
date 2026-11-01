@@ -65,8 +65,8 @@ class MarketPageTest extends TestCase
         $this->get('/en/products')->assertOk();
     }
 
-    public function test_navbar_shows_markets_menu(): void
+    public function test_markets_remains_discoverable_with_simplified_navigation(): void
     {
-        $this->get('/en')->assertOk()->assertSee('Markets')->assertSee('/en/markets/gabon');
+        $this->get('/en')->assertOk()->assertSee('Markets')->assertSee('/en/markets');
     }
 }

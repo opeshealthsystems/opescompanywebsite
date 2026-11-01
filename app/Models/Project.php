@@ -17,10 +17,7 @@ class Project extends Model
 
     public static function generateReference(): string
     {
-        $year = now()->year;
-        $last = static::where('reference', 'like', "PROJ-{$year}-%")->orderByDesc('reference')->value('reference');
-        $next = $last ? (int) preg_replace('/.*-/', '', $last) + 1 : 1;
-        return "PROJ-{$year}-" . str_pad($next, 3, '0', STR_PAD_LEFT);
+        return \App\Contexts\Operations\Application\ProjectReference::next();
     }
 
     public static function statusOptions(): array

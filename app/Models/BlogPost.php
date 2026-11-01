@@ -22,7 +22,9 @@ class BlogPost extends Model
 
     public function scopePublished($query)
     {
-        return $query->where('published', true)->orderByDesc('published_at');
+        return $query->where('published', true)->where(function ($q) {
+            $q->whereNull('published_at')->orWhere('published_at', '<=', now());
+        })->orderByDesc('published_at');
     }
 
     public function getLocalizedTitle(string $locale): string

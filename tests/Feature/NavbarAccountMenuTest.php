@@ -84,11 +84,11 @@ class NavbarAccountMenuTest extends TestCase
         $this->assertStringNotContainsString('/en/customer/dashboard', $nav);
     }
 
-    public function test_admin_sees_confidential_strategy_and_risk_links(): void
+    public function test_admin_sees_confidential_strategy_and_risk_links_in_page(): void
     {
-        $nav = $this->navFor('super_admin');
-        $this->assertStringContainsString('/en/strategy', $nav);
-        $this->assertStringContainsString('/en/risk', $nav);
+        $page = $this->pageFor('super_admin');
+        $this->assertStringContainsString('/en/strategy', $page);
+        $this->assertStringContainsString('/en/risk', $page);
     }
 
     public function test_customer_does_not_see_confidential_links(): void
@@ -115,19 +115,21 @@ class NavbarAccountMenuTest extends TestCase
         $this->assertStringNotContainsString('/en/risk', $nav);
     }
 
-    public function test_previously_orphaned_public_pages_are_linked_in_nav(): void
+    public function test_developer_and_learning_entry_points_are_reachable(): void
     {
-        $nav = $this->navFor(null); // visible to everyone
-        $this->assertStringContainsString('/en/courses', $nav);
-        $this->assertStringContainsString('/en/practitioners', $nav);
+        $page = $this->pageFor(null);
+        $this->assertStringContainsString('/en/developers', $page);
+        $this->assertStringContainsString('/en/academy', $page);
     }
 
-    public function test_solutions_dropdown_items_use_section_anchors(): void
+    public function test_primary_navigation_links_to_six_public_sections(): void
     {
         $nav = $this->navFor(null);
-        foreach (['#hospitals', '#clinics', '#laboratories', '#government'] as $anchor) {
-            $this->assertStringContainsString('/solutions'.$anchor, $nav);
+        foreach (['products', 'solutions', 'about', 'blog', 'compliance', 'contact'] as $path) {
+            $this->assertStringContainsString('/en/'.$path, $nav);
         }
+        preg_match('/<div class="nav-links">(.*?)<\/div>/s', $nav, $links);
+        $this->assertSame(6, substr_count($links[1] ?? '', '<a '));
     }
 
     public function test_footer_confidential_links_hidden_from_guests_and_non_admin_roles(): void
@@ -149,11 +151,11 @@ class NavbarAccountMenuTest extends TestCase
         $this->assertStringContainsString('/en/financial-model', $page);
     }
 
-    public function test_blog_is_in_the_footer_not_the_header(): void
+    public function test_resources_are_available_from_header_and_footer(): void
     {
         $page = $this->pageFor(null);
         $nav = $this->navFor(null);
-        $this->assertStringNotContainsString('/en/blog', $nav, 'Blog should no longer be a header link');
+        $this->assertStringContainsString('/en/blog', $nav, 'Resources must remain a primary destination');
         $this->assertStringContainsString('/en/blog', $page, 'Blog should still be reachable from the footer');
     }
 
@@ -162,7 +164,8 @@ class NavbarAccountMenuTest extends TestCase
         $nav = $this->navFor(null);
         $this->assertStringContainsString('lang-trigger', $nav);
         $this->assertStringContainsString('lang-menu', $nav);
-        $this->assertStringContainsString('aria-haspopup="menu"', $nav);
+        $this->assertStringContainsString('aria-controls="language-options"', $nav);
+        $this->assertStringContainsString('aria-expanded="false"', $nav);
         $this->assertStringContainsString('English', $nav);
         $this->assertStringContainsString('Français', $nav);
     }

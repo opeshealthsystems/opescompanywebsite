@@ -1,17 +1,8 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\PartnerInstitution;
-
-class PartnershipsController extends Controller
+/** Web presentation adapter; business queries and commands live in application contexts. */
+class PartnershipsController extends \App\Http\Controllers\Controller
 {
-    public function index()
-    {
-        $partners = PartnerInstitution::featured()
-            ->orderBy('sort_order')
-            ->get();
-
-        return view('pages.partnerships', compact('partners'));
-    }
+    public function index(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('partnershipscontroller.index', $request); }
 }

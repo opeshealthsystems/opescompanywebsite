@@ -22,6 +22,9 @@ class DemoContentSeeder extends Seeder
 {
     public function run(): void
     {
+        if (app()->isProduction()) {
+            return;
+        }
         $practitioner = $this->seedPractitioner();
         $this->seedFindings($practitioner);
         $this->seedPrograms();

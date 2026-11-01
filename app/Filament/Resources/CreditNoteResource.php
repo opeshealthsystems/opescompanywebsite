@@ -38,7 +38,7 @@ class CreditNoteResource extends Resource
                 Forms\Components\Select::make('status')
                     ->options(CreditNote::statusOptions())
                     ->default('draft')
-                    ->required(),
+                    ->required()->disabled()->dehydrated(false),
 
                 Forms\Components\Select::make('invoice_id')
                     ->label('Original Invoice')
@@ -70,7 +70,7 @@ class CreditNoteResource extends Resource
                 Forms\Components\DatePicker::make('issued_at')
                     ->label('Issue Date')
                     ->native(false)
-                    ->nullable(),
+                    ->nullable()->disabled()->dehydrated(false),
 
                 Forms\Components\Select::make('currency')
                     ->options(['XAF' => 'XAF', 'USD' => 'USD', 'EUR' => 'EUR'])
@@ -176,17 +176,14 @@ class CreditNoteResource extends Resource
                     ->color('success')
                     ->requiresConfirmation()
                     ->hidden(fn (CreditNote $record) => $record->status !== 'draft')
-                    ->action(fn (CreditNote $record) => $record->update([
-                        'status'    => 'issued',
-                        'issued_at' => $record->issued_at ?? now(),
-                    ])),
+                    ->action(fn (CreditNote $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.creditNotes.issue', parameters: ['creditNote' => $record->id])),
                 Tables\Actions\Action::make('void')
                     ->label('Void')
                     ->icon('heroicon-o-x-circle')
                     ->color('danger')
                     ->requiresConfirmation()
                     ->hidden(fn (CreditNote $record) => ! in_array($record->status, ['draft', 'issued']))
-                    ->action(fn (CreditNote $record) => $record->update(['status' => 'void'])),
+                    ->action(fn (CreditNote $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.creditNotes.void', parameters: ['creditNote' => $record->id])),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

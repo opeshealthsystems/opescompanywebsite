@@ -30,7 +30,7 @@
         [
             'num'  => '01',
             'icon' => 'search',
-            'color'=> '#1A6FE8',
+            'color'=> '#8AC5ED',
             'title'=> 'Découverte',
             'duration' => '1–2 semaines',
             'desc' => 'Évaluation approfondie de l\'établissement : cartographie des flux de travail existants, inventaire des équipements, analyse des lacunes, et définition du périmètre fonctionnel. Livrable : rapport d\'évaluation et cahier des charges initial.',
@@ -39,7 +39,7 @@
         [
             'num'  => '02',
             'icon' => 'pen-tool',
-            'color'=> '#00C896',
+            'color'=> '#69D5F5',
             'title'=> 'Conception & Configuration',
             'duration' => '2–3 semaines',
             'desc' => 'Configuration de la solution selon les spécificités de l\'établissement : organigrammes, rôles et permissions, modèles d\'ordonnances, codes diagnostiques, et paramétrage des modules cliniques.',
@@ -48,7 +48,7 @@
         [
             'num'  => '03',
             'icon' => 'server',
-            'color'=> '#1A6FE8',
+            'color'=> '#8AC5ED',
             'title'=> 'Infrastructure',
             'duration' => '1–2 semaines',
             'desc' => 'Déploiement de l\'infrastructure selon le modèle choisi (on-premise, cloud ou hybride) : installation des serveurs, configuration réseau, sécurisation, sauvegardes automatiques, et tests de performance.',
@@ -57,7 +57,7 @@
         [
             'num'  => '04',
             'icon' => 'database',
-            'color'=> '#00C896',
+            'color'=> '#69D5F5',
             'title'=> 'Migration des données',
             'duration' => '1–3 semaines',
             'desc' => 'Migration structurée des données existantes vers OPES Health OS : nettoyage, standardisation, import des dossiers patients historiques, et validation par l\'équipe médicale.',
@@ -66,7 +66,7 @@
         [
             'num'  => '05',
             'icon' => 'graduation-cap',
-            'color'=> '#1A6FE8',
+            'color'=> '#8AC5ED',
             'title'=> 'Formation',
             'duration' => '1–2 semaines',
             'desc' => 'Formation structurée par rôle : médecins, infirmiers, techniciens de laboratoire, agents de caisse, administrateurs IT. Supports bilingues (FR/EN) fournis, certification des utilisateurs clés.',
@@ -75,7 +75,7 @@
         [
             'num'  => '06',
             'icon' => 'play-circle',
-            'color'=> '#00C896',
+            'color'=> '#69D5F5',
             'title'=> 'Pilote & Go-Live',
             'duration' => '1–2 semaines',
             'desc' => 'Déploiement progressif : pilote sur un service, puis extension à l\'ensemble de l\'établissement. Équipe de support sur site pendant le go-live pour résoudre les problèmes en temps réel.',
@@ -84,7 +84,7 @@
         [
             'num'  => '07',
             'icon' => 'trending-up',
-            'color'=> '#1A6FE8',
+            'color'=> '#8AC5ED',
             'title'=> 'Optimisation continue',
             'duration' => 'Continu',
             'desc' => 'Suivi des indicateurs de performance, ajustements de configuration, mises à jour fonctionnelles, et revues trimestrielles avec votre responsable de compte OPES.',
@@ -94,7 +94,7 @@
         [
             'num'  => '01',
             'icon' => 'search',
-            'color'=> '#1A6FE8',
+            'color'=> '#8AC5ED',
             'title'=> 'Discovery',
             'duration' => '1–2 weeks',
             'desc' => 'In-depth facility assessment: mapping existing workflows, equipment inventory, gap analysis, and defining the functional scope. Deliverable: assessment report and initial requirements specification.',
@@ -103,7 +103,7 @@
         [
             'num'  => '02',
             'icon' => 'pen-tool',
-            'color'=> '#00C896',
+            'color'=> '#69D5F5',
             'title'=> 'Design & Configuration',
             'duration' => '2–3 weeks',
             'desc' => 'Solution configuration tailored to the facility: org structures, roles and permissions, prescription templates, diagnostic codes, and clinical module settings.',
@@ -112,7 +112,7 @@
         [
             'num'  => '03',
             'icon' => 'server',
-            'color'=> '#1A6FE8',
+            'color'=> '#8AC5ED',
             'title'=> 'Infrastructure',
             'duration' => '1–2 weeks',
             'desc' => 'Infrastructure deployment under the chosen model (on-premise, cloud, or hybrid): server installation, network configuration, hardening, automated backups, and performance testing.',
@@ -121,7 +121,7 @@
         [
             'num'  => '04',
             'icon' => 'database',
-            'color'=> '#00C896',
+            'color'=> '#69D5F5',
             'title'=> 'Data Migration',
             'duration' => '1–3 weeks',
             'desc' => 'Structured migration of existing data into OPES Health OS: cleansing, standardisation, import of historical patient records, and validation by the medical team.',
@@ -130,7 +130,7 @@
         [
             'num'  => '05',
             'icon' => 'graduation-cap',
-            'color'=> '#1A6FE8',
+            'color'=> '#8AC5ED',
             'title'=> 'Training',
             'duration' => '1–2 weeks',
             'desc' => 'Role-based training: doctors, nurses, lab technicians, cashiers, IT administrators. Bilingual (FR/EN) materials provided, key user certification included.',
@@ -139,7 +139,7 @@
         [
             'num'  => '06',
             'icon' => 'play-circle',
-            'color'=> '#00C896',
+            'color'=> '#69D5F5',
             'title'=> 'Pilot & Go-Live',
             'duration' => '1–2 weeks',
             'desc' => 'Phased rollout: pilot on one department, then facility-wide go-live. On-site OPES support team during launch to resolve issues in real time.',
@@ -148,7 +148,7 @@
         [
             'num'  => '07',
             'icon' => 'trending-up',
-            'color'=> '#1A6FE8',
+            'color'=> '#8AC5ED',
             'title'=> 'Continuous Optimisation',
             'duration' => 'Ongoing',
             'desc' => 'Performance indicator tracking, configuration adjustments, feature updates, and quarterly reviews with your OPES account manager.',
@@ -166,7 +166,7 @@
                     {{ $phase['num'] }}
                 </div>
                 @if(!$loop->last)
-                <div style="width:2px;flex:1;background:linear-gradient({{ $phase['color'] }},{{ $phases[$i+1]['color'] }});min-height:40px;margin:4px 0"></div>
+                <div style="width:2px;flex:1;background:var(--surface-2);min-height:40px;margin:4px 0"></div>
                 @endif
             </div>
             {{-- Right: content --}}
@@ -180,7 +180,7 @@
                 <div style="display:flex;flex-wrap:wrap;gap:8px">
                     @foreach($phase['deliverables'] as $d)
                     <span style="font-size:var(--fs-xs);color:var(--text-muted);background:#0F172A;border:1px solid #1e293b;border-radius:6px;padding:3px 10px">
-                        <i data-lucide="check" style="width:10px;height:10px;color:#00C896;margin-right:4px"></i>{{ $d }}
+                        <i data-lucide="check" style="width:10px;height:10px;color:var(--brand-accent);margin-right:4px"></i>{{ $d }}
                     </span>
                     @endforeach
                 </div>
@@ -202,15 +202,15 @@
     <div class="pi-grid" style="max-width:900px;margin:32px auto 0">
         @php
         $diffs = $isFr ? [
-            ['icon'=>'users','color'=>'#00C896','title'=>'Équipe locale','desc'=>'Ingénieurs et formateurs basés à Douala. Pas de délais de voyage ni de décalage horaire.'],
-            ['icon'=>'language','color'=>'#1A6FE8','title'=>'Bilingue FR/EN','desc'=>'Tous les supports, formations et communications disponibles en français et en anglais.'],
-            ['icon'=>'wifi-off','color'=>'#00C896','title'=>'Mode hors ligne','desc'=>'OPES fonctionne sans connexion Internet permanente — conçu pour les réalités africaines.'],
-            ['icon'=>'smartphone','color'=>'#1A6FE8','title'=>'Mobile Money intégré','desc'=>'Paiements MTN MoMo et Orange Money natifs — aucun terminal bancaire requis.'],
+            ['icon'=>'users','color'=>'#69D5F5','title'=>'Équipe locale','desc'=>'Ingénieurs et formateurs basés à Douala. Pas de délais de voyage ni de décalage horaire.'],
+            ['icon'=>'language','color'=>'#8AC5ED','title'=>'Bilingue FR/EN','desc'=>'Tous les supports, formations et communications disponibles en français et en anglais.'],
+            ['icon'=>'wifi-off','color'=>'#69D5F5','title'=>'Mode hors ligne','desc'=>'OPES fonctionne sans connexion Internet permanente — conçu pour les réalités africaines.'],
+            ['icon'=>'smartphone','color'=>'#8AC5ED','title'=>'Mobile Money intégré','desc'=>'Paiements MTN MoMo et Orange Money natifs — aucun terminal bancaire requis.'],
         ] : [
-            ['icon'=>'users','color'=>'#00C896','title'=>'Local team','desc'=>'Engineers and trainers based in Douala. No travel delays or time zone gaps.'],
-            ['icon'=>'language','color'=>'#1A6FE8','title'=>'Bilingual FR/EN','desc'=>'All materials, training, and communications available in both French and English.'],
-            ['icon'=>'wifi-off','color'=>'#00C896','title'=>'Offline-capable','desc'=>'OPES operates without a permanent internet connection — designed for African realities.'],
-            ['icon'=>'smartphone','color'=>'#1A6FE8','title'=>'Mobile Money built-in','desc'=>'Native MTN MoMo and Orange Money payments — no banking terminal required.'],
+            ['icon'=>'users','color'=>'#69D5F5','title'=>'Local team','desc'=>'Engineers and trainers based in Douala. No travel delays or time zone gaps.'],
+            ['icon'=>'language','color'=>'#8AC5ED','title'=>'Bilingual FR/EN','desc'=>'All materials, training, and communications available in both French and English.'],
+            ['icon'=>'wifi-off','color'=>'#69D5F5','title'=>'Offline-capable','desc'=>'OPES operates without a permanent internet connection — designed for African realities.'],
+            ['icon'=>'smartphone','color'=>'#8AC5ED','title'=>'Mobile Money built-in','desc'=>'Native MTN MoMo and Orange Money payments — no banking terminal required.'],
         ];
         @endphp
         @foreach($diffs as $d)

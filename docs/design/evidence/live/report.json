@@ -1,0 +1,709 @@
+{
+  "results": [
+    {
+      "route": "/en",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "nav-toggle",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(241, 245, 249)"
+        },
+        {
+          "class": "btn-primary",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "class": "hero-dot active",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(241, 245, 249)"
+        }
+      ]
+    },
+    {
+      "route": "/fr",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "nav-toggle",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(241, 245, 249)"
+        },
+        {
+          "class": "btn-primary",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "class": "hero-dot active",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(241, 245, 249)"
+        }
+      ]
+    },
+    {
+      "route": "/en/products",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "nav-toggle",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(241, 245, 249)"
+        },
+        {
+          "class": "btn-primary",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "route": "/en/products/opes-emr",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "nav-toggle",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(241, 245, 249)"
+        },
+        {
+          "class": "btn-primary",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "class": "demo-btn",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "route": "/en/products/opes-drugtrace",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "nav-toggle",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(241, 245, 249)"
+        },
+        {
+          "class": "btn-primary",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "route": "/en/faq",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "nav-toggle",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(241, 245, 249)"
+        },
+        {
+          "class": "btn-primary",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "route": "/en/contact",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "nav-toggle",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(241, 245, 249)"
+        },
+        {
+          "class": "cf-submit",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "route": "/en/book-demo",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "nav-toggle",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(241, 245, 249)"
+        },
+        {
+          "class": "df-submit",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "route": "/en/pricing",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "nav-toggle",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(241, 245, 249)"
+        },
+        {
+          "class": "btn-primary",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "route": "/en/about",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "nav-toggle",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(241, 245, 249)"
+        },
+        {
+          "class": "btn-primary",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "class": "btn-primary",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "route": "/en/blog",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "nav-toggle",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(241, 245, 249)"
+        }
+      ]
+    },
+    {
+      "route": "/login",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "auth-btn",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "route": "/forgot-password",
+      "width": 360,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "auth-btn",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "route": "/en",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "lang-trigger",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(167, 184, 204)"
+        },
+        {
+          "class": "btn-cta",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "class": "btn-primary",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "route": "/fr",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "lang-trigger",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(167, 184, 204)"
+        },
+        {
+          "class": "btn-cta",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "class": "btn-primary",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "route": "/en/products",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "lang-trigger",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(167, 184, 204)"
+        },
+        {
+          "class": "btn-cta",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "class": "btn-primary",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "route": "/en/products/opes-emr",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "lang-trigger",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(167, 184, 204)"
+        },
+        {
+          "class": "btn-cta",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "class": "btn-primary",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "route": "/en/products/opes-drugtrace",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "lang-trigger",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(167, 184, 204)"
+        },
+        {
+          "class": "btn-cta",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "class": "btn-primary",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "route": "/en/faq",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "lang-trigger",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(167, 184, 204)"
+        },
+        {
+          "class": "btn-cta",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "class": "btn-primary",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "route": "/en/contact",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "lang-trigger",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(167, 184, 204)"
+        },
+        {
+          "class": "btn-cta",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "class": "cf-submit",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "route": "/en/book-demo",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "lang-trigger",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(167, 184, 204)"
+        },
+        {
+          "class": "btn-cta",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "class": "df-submit",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "route": "/en/pricing",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "lang-trigger",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(167, 184, 204)"
+        },
+        {
+          "class": "btn-cta",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "class": "btn-primary",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "route": "/en/about",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "lang-trigger",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(167, 184, 204)"
+        },
+        {
+          "class": "btn-cta",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        },
+        {
+          "class": "btn-primary",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "route": "/en/blog",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "lang-trigger",
+          "bg": "rgba(0, 0, 0, 0)",
+          "color": "rgb(167, 184, 204)"
+        },
+        {
+          "class": "btn-cta",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "route": "/login",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "auth-btn",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "route": "/forgot-password",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "effects": [],
+      "bg": "rgb(8, 27, 48)",
+      "buttons": [
+        {
+          "class": "auth-btn",
+          "bg": "rgb(21, 89, 166)",
+          "color": "rgb(255, 255, 255)"
+        }
+      ]
+    }
+  ],
+  "axe": [
+    {
+      "route": "/en",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/fr",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/en/products",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/en/products/opes-emr",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/en/products/opes-drugtrace",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/en/faq",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/en/contact",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/en/book-demo",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/en/pricing",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/en/about",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/en/blog",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/login",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/forgot-password",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/en",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "/fr",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "/en/products",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "/en/products/opes-emr",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "/en/products/opes-drugtrace",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "/en/faq",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "/en/contact",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "/en/book-demo",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "/en/pricing",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "/en/about",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "/en/blog",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "/login",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "/forgot-password",
+      "width": 1440,
+      "violations": []
+    }
+  ],
+  "hover": {
+    "shadow": "none",
+    "bg": "rgb(20, 85, 158)"
+  },
+  "focus": {
+    "outline": "solid",
+    "color": "rgb(255, 255, 255)"
+  }
+}

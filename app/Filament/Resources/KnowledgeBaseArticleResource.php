@@ -5,6 +5,7 @@ use App\Filament\Resources\KnowledgeBaseArticleResource\Pages;
 use App\Models\KnowledgeBaseArticle;
 use App\Models\KnowledgeBaseCategory;
 use App\Models\User;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Infolists;
@@ -53,7 +54,7 @@ class KnowledgeBaseArticleResource extends Resource
                     ->options(fn () => User::orderBy('name')->pluck('name','id'))
                     ->default(fn () => auth()->id())->searchable()->required(),
                 Forms\Components\Select::make('status')
-                    ->options(KnowledgeBaseArticle::statusOptions())->default('draft')->required()
+                    ->options(KnowledgeBaseArticle::statusOptions())->default('draft')->disabled()->dehydrated(false)->required()
                     ->live()
                     ->afterStateUpdated(function ($state, $set) {
                         if ($state === 'published') {
@@ -102,7 +103,7 @@ class KnowledgeBaseArticleResource extends Resource
                     ->label('Publish')->icon('heroicon-o-check-circle')->color('success')
                     ->requiresConfirmation()
                     ->hidden(fn (KnowledgeBaseArticle $r) => $r->status === 'published')
-                    ->action(fn (KnowledgeBaseArticle $r) => $r->update(['status'=>'published','published_at'=>$r->published_at ?? now()])),
+                    ->action(fn (KnowledgeBaseArticle $r) => AdminWorkflowAdapter::run('admin.content.articles.publish', parameters: ['article' => $r])),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);

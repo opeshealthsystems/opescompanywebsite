@@ -20,11 +20,10 @@ class ViewExpense extends ViewRecord
                 ->color('success')
                 ->requiresConfirmation()
                 ->hidden(fn () => $this->record->status !== 'pending')
-                ->action(fn () => $this->record->update([
-                    'status'      => 'approved',
-                    'approved_by' => auth()->id(),
-                    'approved_at' => now(),
-                ]))
+                ->action(fn () => app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+                    'admin.finance.expenses.approve',
+                    new \App\Contexts\Shared\Application\WorkflowInput([], ['expense' => $this->record], auth()->user(), app()->getLocale()),
+                ))
                 ->after(fn () => $this->refreshFormData(['status', 'approved_by', 'approved_at'])),
             Actions\Action::make('mark_paid')
                 ->label('Mark as Paid')
@@ -32,7 +31,10 @@ class ViewExpense extends ViewRecord
                 ->color('info')
                 ->requiresConfirmation()
                 ->hidden(fn () => $this->record->status !== 'approved')
-                ->action(fn () => $this->record->update(['status' => 'paid']))
+                ->action(fn () => app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+                    'admin.finance.expenses.markPaid',
+                    new \App\Contexts\Shared\Application\WorkflowInput([], ['expense' => $this->record], auth()->user(), app()->getLocale()),
+                ))
                 ->after(fn () => $this->refreshFormData(['status'])),
         ];
     }

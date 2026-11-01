@@ -1,0 +1,81 @@
+{
+  "url": null,
+  "industry": "saas",
+  "audited_at": "2026-10-29T19:49:01.520333Z",
+  "composite_score": 59,
+  "verdict": "BELOW_THRESHOLD",
+  "threshold": 70,
+  "letter_grade": "D",
+  "dimensions": {
+    "experience": {
+      "score": 23,
+      "signals": {
+        "first_person_evidence": 0,
+        "dated_example": 0,
+        "case_study_marker": 1,
+        "monetary_evidence": 0,
+        "metric_evidence": 0
+      }
+    },
+    "expertise": {
+      "score": 38,
+      "signals": {
+        "credential_marker": 2,
+        "author_byline": 0,
+        "academic_citation": 0,
+        "numbered_citation": 0,
+        "source_link": 0
+      }
+    },
+    "authoritativeness": {
+      "score": 97,
+      "signals": {
+        "external_link": 106,
+        "schema_org_jsonld": 3,
+        "schema_script": 1,
+        "schema_inline": 0
+      }
+    },
+    "trustworthiness": {
+      "score": 97,
+      "signals": {
+        "https": 106,
+        "contact_marker": 20,
+        "corrections_policy": 0,
+        "disclosure": 0,
+        "policy_link": 1
+      }
+    },
+    "structure": {
+      "h2_count": 0,
+      "h3_count": 0,
+      "list_items": 60,
+      "table_count": 0,
+      "word_count": 4679,
+      "structure_score": 40
+    }
+  },
+  "top_fixes": [
+    [
+      "Experience",
+      "Add first-person evidence (\"we ran X\", \"we tested Y\") in first 200 words"
+    ],
+    [
+      "Expertise",
+      "Add numbered citations [1], [2], ... pointing to primary sources"
+    ],
+    [
+      "Structure",
+      "Add more H2 headings (0 \u2192 target 3+) to improve LLM parsability"
+    ],
+    [
+      "Trustworthiness",
+      "Link to a corrections policy from footer or article"
+    ]
+  ],
+  "audit_trail": {
+    "patterns_evaluated": 19,
+    "text_length_chars": 70719,
+    "text_length_words": 4679
+  }
+}

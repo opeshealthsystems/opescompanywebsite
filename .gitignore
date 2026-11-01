@@ -31,3 +31,15 @@ Thumbs.db
 
 # Dusk local env (copied secrets)
 .env.dusk.local
+.gstack/
+/storage/branding-tools/
+/storage/branding-*.cjs
+/storage/branding-before-qa.png
+/storage/branding-release*/
+/storage/branding-release*.zip
+/storage/branding-baseline.json
+/storage/branding-live.php
+/storage/seo-*
+/storage/palette-*
+/scripts/api/__pycache__/
+/sdk/node/node_modules/

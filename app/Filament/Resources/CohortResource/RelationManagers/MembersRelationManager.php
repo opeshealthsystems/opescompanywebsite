@@ -51,15 +51,10 @@ class MembersRelationManager extends RelationManager
                         \Filament\Forms\Components\Textarea::make('recommendation')->rows(3),
                     ])
                     ->action(function (\App\Models\CohortMember $record, array $data) {
-                        \App\Models\FinalEvaluation::create(array_merge(
-                            [
-                                'cohort_member_id' => $record->id,
-                                'assessment'       => $data['assessment'],
-                                'rating'           => $data['rating'],
-                                'recommendation'   => $data['recommendation'] ?? null,
-                            ],
-                            \App\Models\FinalEvaluation::snapshotData($record, auth()->id())
-                        ));
+                        app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+                            'admin.validation.finalEvaluations.create',
+                            new \App\Contexts\Shared\Application\WorkflowInput($data + ['cohort_member_id' => $record->id], [], auth()->user(), app()->getLocale()),
+                        );
                         \Filament\Notifications\Notification::make()->title('Final evaluation recorded.')->success()->send();
                     }),
             ]);

@@ -10,7 +10,7 @@ $isFr   = $locale === 'fr';
 <style>
 /* ── Mobile Clinic page ─────────────────────────────────────── */
 .mc-hero {
-    background: linear-gradient(135deg, #041e12 0%, #062a1a 60%, #080F1E 100%);
+    background: var(--surface);
     padding: 80px 48px 64px;
     text-align: center;
     border-bottom: 1px solid #0e2d1c;
@@ -21,15 +21,15 @@ $isFr   = $locale === 'fr';
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(0,200,150,.12) 0%, transparent 70%);
+    background: var(--surface);
     pointer-events: none;
 }
-.mc-hero .section-label { justify-content: center; margin-bottom: 16px; color: #00C896; }
+.mc-hero .section-label { justify-content: center; margin-bottom: 16px; color: var(--brand-accent); }
 .mc-hero h1 { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; color: #f1f5f9; margin-bottom: 18px; line-height: 1.15; }
-.mc-hero h1 span { color: #00C896; }
+.mc-hero h1 span { color: var(--brand-accent); }
 .mc-hero p { color: var(--text-muted); font-size: 1.05rem; max-width: 620px; margin: 0 auto 36px; line-height: 1.75; }
 .mc-hero-badges { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-.mc-badge { background: rgba(0,200,150,0.08); border: 1px solid rgba(0,200,150,0.2); border-radius: 20px; padding: 7px 16px; font-size: 0.78rem; color: #00C896; display: flex; align-items: center; gap: 6px; }
+.mc-badge { background: rgba(0,200,150,0.08); border: 1px solid rgba(0,200,150,0.2); border-radius: 20px; padding: 7px 16px; font-size: 0.78rem; color: var(--brand-accent); display: flex; align-items: center; gap: 6px; }
 
 /* Impact numbers */
 .mc-impact { max-width: 1000px; margin: 0 auto; padding: 56px 24px 0; }
@@ -38,7 +38,7 @@ $isFr   = $locale === 'fr';
 .mc-impact-title p { color: var(--text-muted); font-size: 0.9rem; }
 .mc-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 56px; }
 .mc-stat { background: #080e1a; border: 1px solid #1e293b; border-radius: 14px; padding: 24px; text-align: center; }
-.mc-stat-num { font-size: 2rem; font-weight: 800; color: #00C896; line-height: 1; margin-bottom: 6px; }
+.mc-stat-num { font-size: 2rem; font-weight: 800; color: var(--brand-accent); line-height: 1; margin-bottom: 6px; }
 .mc-stat-label { font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; }
 
 /* What we're building */
@@ -48,7 +48,7 @@ $isFr   = $locale === 'fr';
 .mc-what > .mc-what-inner > p { color: var(--text-muted); margin-bottom: 36px; }
 .mc-build-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .mc-build-card { background: #080e1a; border: 1px solid #1e293b; border-radius: 14px; padding: 24px; }
-.mc-build-card svg { color: #00C896; margin-bottom: 14px; }
+.mc-build-card svg { color: var(--brand-accent); margin-bottom: 14px; }
 .mc-build-card h3 { font-size: 0.92rem; font-weight: 700; color: #e2e8f0; margin-bottom: 10px; }
 .mc-build-card p  { font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; }
 
@@ -56,20 +56,20 @@ $isFr   = $locale === 'fr';
 .mc-how { max-width: 1000px; margin: 0 auto; padding: 60px 24px; }
 .mc-how h2 { font-size: 1.5rem; font-weight: 800; color: #f1f5f9; margin-bottom: 36px; text-align: center; }
 .mc-phases { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
-.mc-phases::before { content: ''; position: absolute; top: 28px; left: 14%; right: 14%; height: 2px; background: linear-gradient(90deg, #00C896, #1A6FE8); z-index: 0; }
+.mc-phases::before { content: ''; position: absolute; top: 28px; left: 14%; right: 14%; height: 2px; background: var(--surface); z-index: 0; }
 .mc-phase { text-align: center; padding: 0 12px; position: relative; z-index: 1; }
-.mc-phase-num { width: 56px; height: 56px; border-radius: 50%; background: #0f172a; border: 2px solid #00C896; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 1.2rem; font-weight: 800; color: #00C896; }
+.mc-phase-num { width: 56px; height: 56px; border-radius: 50%; background: #0f172a; border: 2px solid #69D5F5; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 1.2rem; font-weight: 800; color: var(--brand-accent); }
 .mc-phase h3 { font-size: 0.82rem; font-weight: 700; color: #e2e8f0; margin-bottom: 8px; }
 .mc-phase p  { font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; }
 
 /* Support / Donate section */
-.mc-support { background: linear-gradient(135deg, #041e12, #062a1a); border-top: 1px solid #0e2d1c; border-bottom: 1px solid #0e2d1c; padding: 72px 24px; }
+.mc-support { background: var(--surface); border-top: 1px solid #0e2d1c; border-bottom: 1px solid #0e2d1c; padding: 72px 24px; }
 .mc-support-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 380px; gap: 52px; align-items: start; }
 .mc-support h2 { font-size: 1.6rem; font-weight: 800; color: #f1f5f9; margin-bottom: 14px; }
 .mc-support > .mc-support-inner > div > p { color: var(--text-muted); line-height: 1.75; margin-bottom: 28px; }
 .mc-support-options { display: flex; flex-direction: column; gap: 14px; }
 .mc-support-option { display: flex; align-items: flex-start; gap: 12px; }
-.mc-support-option svg { color: #00C896; margin-top: 2px; flex-shrink: 0; }
+.mc-support-option svg { color: var(--brand-accent); margin-top: 2px; flex-shrink: 0; }
 .mc-support-option h4 { font-size: 0.85rem; font-weight: 700; color: #e2e8f0; margin-bottom: 3px; }
 .mc-support-option p  { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
 
@@ -79,7 +79,7 @@ $isFr   = $locale === 'fr';
 .mc-fund-form p  { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5; }
 .mc-fund-amounts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
 .mc-amount-btn { background: #0f172a; border: 1px solid #1e293b; border-radius: 8px; padding: 10px; text-align: center; cursor: pointer; font-size: 0.82rem; color: var(--text-muted); transition: all .2s; font-weight: 600; }
-.mc-amount-btn.selected, .mc-amount-btn:hover { border-color: #00C896; color: #00C896; background: #00C89610; }
+.mc-amount-btn.selected, .mc-amount-btn:hover { border-color: #69D5F5; color: var(--brand-accent); background: #69D5F510; }
 .mff-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
 .mff-group label { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); }
 .mff-group input, .mff-group select, .mff-group textarea {
@@ -87,13 +87,13 @@ $isFr   = $locale === 'fr';
     padding: 10px 14px; color: #e2e8f0; font-size: 0.88rem; font-family: inherit; width: 100%;
     transition: border-color .2s;
 }
-.mff-group input:focus, .mff-group select:focus { outline: none; border-color: #00C896; }
-.mff-submit { background: #00C896; color: #0f172a; border: none; border-radius: 9px; padding: 13px 24px; font-size: 0.9rem; font-weight: 700; cursor: pointer; width: 100%; transition: background .2s; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 4px; }
+.mff-group input:focus, .mff-group select:focus { outline: none; border-color: #69D5F5; }
+.mff-submit { background: #69D5F5; color: #0f172a; border: none; border-radius: 9px; padding: 13px 24px; font-size: 0.9rem; font-weight: 700; cursor: pointer; width: 100%; transition: background .2s; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 4px; }
 .mff-submit:hover { background: #00b386; }
 .mc-fund-note { font-size: 0.72rem; color: var(--text-faint); text-align: center; margin-top: 12px; line-height: 1.5; }
 
 .mff-success { text-align: center; padding: 20px 0; }
-.mff-success h4 { color: #00C896; margin-bottom: 8px; }
+.mff-success h4 { color: var(--brand-accent); margin-bottom: 8px; }
 .mff-success p  { color: var(--text-muted); font-size: .82rem; line-height: 1.6; }
 
 /* Transparency */
@@ -102,12 +102,12 @@ $isFr   = $locale === 'fr';
 .mc-transparency > p { color: var(--text-muted); text-align: center; margin-bottom: 36px; font-size: 0.9rem; }
 .mc-transp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 .mc-transp-card { background: #080e1a; border: 1px solid #1e293b; border-radius: 12px; padding: 22px; text-align: center; }
-.mc-transp-card svg { color: #1A6FE8; margin: 0 auto 12px; display: block; }
+.mc-transp-card svg { color:var(--brand-accent); margin: 0 auto 12px; display: block; }
 .mc-transp-card h4 { font-size: 0.85rem; font-weight: 700; color: #e2e8f0; margin-bottom: 8px; }
 .mc-transp-card p  { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
 
 /* CTA strip */
-.mc-cta { background: linear-gradient(90deg, #00C89614, #1A6FE808); border-top: 1px solid #1e293b; border-bottom: 1px solid #1e293b; padding: 52px 24px; text-align: center; }
+.mc-cta { background: var(--surface); border-top: 1px solid #1e293b; border-bottom: 1px solid #1e293b; padding: 52px 24px; text-align: center; }
 .mc-cta h2 { font-size: 1.5rem; font-weight: 800; color: #f1f5f9; margin-bottom: 12px; }
 .mc-cta p  { color: var(--text-muted); margin-bottom: 28px; max-width: 540px; margin-left: auto; margin-right: auto; }
 .mc-cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
@@ -128,7 +128,7 @@ $isFr   = $locale === 'fr';
 {{-- ── HERO ──────────────────────────────────────────────────────── --}}
 <div class="mc-hero">
     <div class="section-label">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#00C896" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#69D5F5" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         {{ $isFr ? 'Initiative communautaire · OPES Health Systems' : 'Community Initiative · OPES Health Systems' }}
     </div>
     <h1>{{ $isFr ? 'Opération' : 'Operation' }}<br><span>{{ $isFr ? 'Cliniques Mobiles' : 'Build Mobile Clinics' }}</span></h1>
@@ -182,7 +182,7 @@ $isFr   = $locale === 'fr';
 {{-- ── WHAT WE'RE BUILDING ───────────────────────────────────────── --}}
 <div class="mc-what">
     <div class="mc-what-inner">
-        <div class="section-label" style="margin-bottom:12px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#00C896" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg> {{ $isFr ? 'Ce que nous construisons' : 'What we\'re building' }}</div>
+        <div class="section-label" style="margin-bottom:12px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#69D5F5" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg> {{ $isFr ? 'Ce que nous construisons' : 'What we\'re building' }}</div>
         <h2>{{ $isFr ? 'Des soins pour les zones oubliées' : 'Healthcare for forgotten zones' }}</h2>
         <p>{{ $isFr ? 'Trop de communautés rurales vivent à plus de 50 km du centre de santé le plus proche. Nous changeons cela.' : 'Too many rural communities live more than 50 km from the nearest health facility. We are changing that.' }}</p>
         <div class="mc-build-grid">
@@ -251,8 +251,8 @@ $isFr   = $locale === 'fr';
 <div class="mc-support">
     <div class="mc-support-inner">
         <div>
-            <div class="section-label" style="margin-bottom:14px;color:#00C896">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#00C896" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <div class="section-label" style="margin-bottom:14px;color:var(--brand-accent)">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#69D5F5" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
                 {{ $isFr ? 'Comment soutenir' : 'How to support' }}
             </div>
             <h2>{{ $isFr ? 'Chaque franc compte' : 'Every contribution counts' }}</h2>
@@ -295,7 +295,7 @@ $isFr   = $locale === 'fr';
 
             @if(session('mc_success'))
             <div class="mff-success">
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#00C896" stroke-width="2" style="margin:0 auto 12px;display:block"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#69D5F5" stroke-width="2" style="margin:0 auto 12px;display:block"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                 <h4>{{ $isFr ? 'Merci !' : 'Thank you!' }}</h4>
                 <p>{{ $isFr ? 'Nous avons bien reçu votre intérêt. Notre équipe vous contactera sous 48h.' : 'We received your interest. Our team will contact you within 48 hours.' }}</p>
             </div>
@@ -372,7 +372,7 @@ $isFr   = $locale === 'fr';
             {{ $isFr ? 'Nous contacter' : 'Contact us' }}
         </a>
         <a href="{{ url($locale.'/become-a-partner') }}" class="btn-secondary">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00C896" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#69D5F5" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
             {{ $isFr ? 'Devenir partenaire' : 'Become a partner' }}
         </a>
     </div>

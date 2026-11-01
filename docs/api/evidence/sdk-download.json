@@ -1,0 +1,40 @@
+{
+  "downloadStatus": 200,
+  "bytes": 4416,
+  "sha256": "f680c563c77113c0d8742e8a72d26b5d1486500012207c9a5f19dd7dac6c2e94",
+  "checksumVerified": true,
+  "layouts": [
+    {
+      "width": 360,
+      "lang": "en",
+      "status": 200,
+      "overflow": false,
+      "codeOverflow": false,
+      "sdkLink": true
+    },
+    {
+      "width": 360,
+      "lang": "fr",
+      "status": 200,
+      "overflow": false,
+      "codeOverflow": false,
+      "sdkLink": true
+    },
+    {
+      "width": 1440,
+      "lang": "en",
+      "status": 200,
+      "overflow": false,
+      "codeOverflow": false,
+      "sdkLink": true
+    },
+    {
+      "width": 1440,
+      "lang": "fr",
+      "status": 200,
+      "overflow": false,
+      "codeOverflow": false,
+      "sdkLink": true
+    }
+  ]
+}

@@ -45,7 +45,7 @@
 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
     <div class="bg-slate-900 rounded-xl border border-slate-800 p-5 flex items-center gap-4">
         <div class="w-11 h-11 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(0,200,150,0.1)">
-            <i data-lucide="clipboard-list" style="width:22px;height:22px;color:#00C896"></i>
+            <i data-lucide="clipboard-list" style="width:22px;height:22px;color:var(--brand-accent)"></i>
         </div>
         <div>
             <p class="text-2xl font-bold text-white">{{ $activeApplications }}</p>
@@ -54,7 +54,7 @@
     </div>
     <div class="bg-slate-900 rounded-xl border border-slate-800 p-5 flex items-center gap-4">
         <div class="w-11 h-11 rounded-lg flex items-center justify-center flex-shrink-0" style="background:rgba(26,111,232,0.1)">
-            <i data-lucide="file-search" style="width:22px;height:22px;color:#1A6FE8"></i>
+            <i data-lucide="file-search" style="width:22px;height:22px;color:var(--brand-accent)"></i>
         </div>
         <div>
             <p class="text-2xl font-bold text-white">{{ $totalFindings }}</p>
@@ -86,7 +86,7 @@
     <div class="bg-slate-900 border border-slate-800 rounded-xl p-5">
         <div class="flex items-center justify-between mb-4">
             <h2 class="font-semibold text-white flex items-center gap-2 text-sm">
-                <i data-lucide="banknote" style="width:16px;height:16px;color:#00C896"></i> Payout Tracker
+                <i data-lucide="banknote" style="width:16px;height:16px;color:var(--brand-accent)"></i> Payout Tracker
             </h2>
             <a href="{{ route('practitioner.applications', ['locale' => $locale]) }}" class="text-xs text-slate-400 hover:text-white no-underline">View All →</a>
         </div>
@@ -133,7 +133,7 @@
     <div class="bg-slate-900 border border-slate-800 rounded-xl p-5">
         <div class="flex items-center justify-between mb-4">
             <h2 class="font-semibold text-white flex items-center gap-2 text-sm">
-                <i data-lucide="file-search" style="width:16px;height:16px;color:#1A6FE8"></i> Recent Findings
+                <i data-lucide="file-search" style="width:16px;height:16px;color:var(--brand-accent)"></i> Recent Findings
             </h2>
         </div>
         @if($recentFindings->isNotEmpty())
@@ -166,7 +166,7 @@
 <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 mb-6">
     <div class="flex items-center justify-between mb-4">
         <h2 class="font-semibold text-white flex items-center gap-2 text-sm">
-            <i data-lucide="beaker" style="width:16px;height:16px;color:#00C896"></i> Open Programs
+            <i data-lucide="beaker" style="width:16px;height:16px;color:var(--brand-accent)"></i> Open Programs
         </h2>
         <a href="{{ route('practitioner.programs', ['locale' => $locale]) }}" class="text-xs text-slate-400 hover:text-white no-underline">View All →</a>
     </div>
@@ -195,7 +195,7 @@
 
 {{-- Help --}}
 <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 flex items-start gap-4">
-    <i data-lucide="life-buoy" style="width:22px;height:22px;color:#00C896;flex-shrink:0;margin-top:2px"></i>
+    <i data-lucide="life-buoy" style="width:22px;height:22px;color:var(--brand-accent);flex-shrink:0;margin-top:2px"></i>
     <div>
         <p class="font-semibold text-white mb-1 text-sm">Need help?</p>
         <p class="text-sm text-slate-400">

@@ -3,7 +3,7 @@
         <div>
             <h1 class="cp-page-title">{{ $ticket->subject }}</h1>
             <p class="cp-page-subtitle">
-                <span style="font-family:monospace;color:#00C896;">{{ $ticket->reference_number }}</span>
+                <span style="font-family:monospace;color:var(--brand-accent);">{{ $ticket->reference_number }}</span>
                 &middot; Opened {{ $ticket->created_at->diffForHumans() }}
             </p>
         </div>
@@ -58,7 +58,7 @@
 
     @if($ticket->resolution)
     <div style="background:rgba(0,200,150,0.06);border:1px solid rgba(0,200,150,0.2);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1rem;">
-        <p style="color:#00C896;font-weight:600;font-size:0.875rem;margin-bottom:0.5rem;">&#10003; Resolution</p>
+        <p style="color:var(--brand-accent);font-weight:600;font-size:0.875rem;margin-bottom:0.5rem;">&#10003; Resolution</p>
         <p style="color:var(--text-muted);font-size:0.875rem;line-height:1.7;">{{ $ticket->resolution }}</p>
     </div>
     @endif
@@ -79,7 +79,7 @@
     </div>
     @else
     <div style="text-align:center;padding:1.5rem;color:var(--text-muted);font-size:0.875rem;">
-        This ticket is {{ $ticket->status }}. <a href="{{ route('customer.tickets.create', ['locale' => app()->getLocale()]) }}" style="color:#00C896;">Open a new ticket</a> if you need further assistance.
+        This ticket is {{ $ticket->status }}. <a href="{{ route('customer.tickets.create', ['locale' => app()->getLocale()]) }}" style="color:var(--brand-accent);">Open a new ticket</a> if you need further assistance.
     </div>
     @endif
 </x-layouts.customer>

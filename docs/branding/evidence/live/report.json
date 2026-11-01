@@ -1,0 +1,212 @@
+{
+  "checkedAt": "2026-10-29T19:32:37.347Z",
+  "results": [
+    {
+      "route": "/en",
+      "status": 200,
+      "url": "https://opeshealthsystems.com/en",
+      "title": "Healthcare software designed in Cameroon — OPES Health Systems"
+    },
+    {
+      "route": "/fr",
+      "status": 200,
+      "url": "https://opeshealthsystems.com/fr",
+      "title": "Logiciels de santé conçus au Cameroun — OPES Health Systems"
+    },
+    {
+      "route": "/en/products",
+      "status": 200,
+      "url": "https://opeshealthsystems.com/en/products",
+      "title": "OPES Health Systems — Healthcare Software Catalogue — OPES Health Systems"
+    },
+    {
+      "route": "/fr/products",
+      "status": 200,
+      "url": "https://opeshealthsystems.com/fr/products",
+      "title": "OPES Health Systems — Catalogue de logiciels de santé — OPES Health Systems"
+    },
+    {
+      "route": "/en/products/opescare",
+      "status": 200,
+      "url": "https://opeshealthsystems.com/en/products/opescare",
+      "title": "OPESCare — OPES Health Systems"
+    },
+    {
+      "route": "/fr/products/opescare",
+      "status": 200,
+      "url": "https://opeshealthsystems.com/fr/products/opescare",
+      "title": "OPESCare — OPES Health Systems"
+    },
+    {
+      "route": "/en/contact",
+      "status": 200,
+      "url": "https://opeshealthsystems.com/en/contact",
+      "title": "Contact OPES Health Systems — Book a Free HMS Demo in Cameroon — OPES Health Systems"
+    },
+    {
+      "route": "/fr/contact",
+      "status": 200,
+      "url": "https://opeshealthsystems.com/fr/contact",
+      "title": "Contacter OPES Health Systems — Réserver une démo HMS gratuite au Cameroun — OPES Health Systems"
+    },
+    {
+      "route": "/en/book-demo",
+      "status": 200,
+      "url": "https://opeshealthsystems.com/en/book-demo",
+      "title": "Book a Demo — OPES Health Systems — OPES Health Systems"
+    },
+    {
+      "route": "/fr/book-demo",
+      "status": 200,
+      "url": "https://opeshealthsystems.com/fr/book-demo",
+      "title": "Réserver une démo — OPES Health Systems — OPES Health Systems"
+    },
+    {
+      "route": "/sitemap.xml",
+      "status": 200,
+      "url": "https://opeshealthsystems.com/sitemap.xml",
+      "title": ""
+    },
+    {
+      "route": "/login",
+      "status": 200,
+      "url": "https://opeshealthsystems.com/login",
+      "title": "Sign In"
+    },
+    {
+      "route": "/en",
+      "width": 360,
+      "overflow": false,
+      "brand": "OPES Health Systems",
+      "skip": true,
+      "css": [
+        "https://opeshealthsystems.com/build/assets/app-B8QaNT14.css"
+      ],
+      "buttonBackground": "rgb(7, 91, 118)"
+    },
+    {
+      "route": "/fr",
+      "width": 360,
+      "overflow": false,
+      "brand": "OPES Health Systems",
+      "skip": true,
+      "css": [
+        "https://opeshealthsystems.com/build/assets/app-B8QaNT14.css"
+      ],
+      "buttonBackground": "rgb(7, 91, 118)"
+    },
+    {
+      "route": "/en/contact",
+      "width": 360,
+      "overflow": false,
+      "brand": "OPES Health Systems",
+      "skip": true,
+      "css": [
+        "https://opeshealthsystems.com/build/assets/app-B8QaNT14.css"
+      ],
+      "buttonBackground": "rgb(7, 91, 118)"
+    },
+    {
+      "route": "/fr/contact",
+      "width": 360,
+      "overflow": false,
+      "brand": "OPES Health Systems",
+      "skip": true,
+      "css": [
+        "https://opeshealthsystems.com/build/assets/app-B8QaNT14.css"
+      ],
+      "buttonBackground": "rgb(7, 91, 118)"
+    },
+    {
+      "route": "/en",
+      "width": 1440,
+      "overflow": false,
+      "brand": "OPES Health Systems",
+      "skip": true,
+      "css": [
+        "https://opeshealthsystems.com/build/assets/app-B8QaNT14.css"
+      ],
+      "buttonBackground": "rgb(7, 91, 118)"
+    },
+    {
+      "route": "/fr",
+      "width": 1440,
+      "overflow": false,
+      "brand": "OPES Health Systems",
+      "skip": true,
+      "css": [
+        "https://opeshealthsystems.com/build/assets/app-B8QaNT14.css"
+      ],
+      "buttonBackground": "rgb(7, 91, 118)"
+    },
+    {
+      "route": "/en/contact",
+      "width": 1440,
+      "overflow": false,
+      "brand": "OPES Health Systems",
+      "skip": true,
+      "css": [
+        "https://opeshealthsystems.com/build/assets/app-B8QaNT14.css"
+      ],
+      "buttonBackground": "rgb(7, 91, 118)"
+    },
+    {
+      "route": "/fr/contact",
+      "width": 1440,
+      "overflow": false,
+      "brand": "OPES Health Systems",
+      "skip": true,
+      "css": [
+        "https://opeshealthsystems.com/build/assets/app-B8QaNT14.css"
+      ],
+      "buttonBackground": "rgb(7, 91, 118)"
+    }
+  ],
+  "axe": [
+    {
+      "route": "/en",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/fr",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/en/contact",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/fr/contact",
+      "width": 360,
+      "violations": []
+    },
+    {
+      "route": "/en",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "/fr",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "/en/contact",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "route": "/fr/contact",
+      "width": 1440,
+      "violations": []
+    }
+  ],
+  "menu": {
+    "opened": "true",
+    "closed": "false"
+  },
+  "contactBrowserValidation": true
+}

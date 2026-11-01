@@ -1,13 +1,8 @@
 <?php
 namespace App\Http\Controllers\Customer;
 
-use App\Http\Controllers\Controller;
-
-class CertificateController extends Controller
+/** Web presentation adapter; business queries and commands live in application contexts. */
+class CertificateController extends \App\Http\Controllers\Controller
 {
-    public function index()
-    {
-        $certificates = auth()->user()->courseCertificates()->with('course')->latest('issued_at')->get();
-        return view('customer.certificates.index', compact('certificates'));
-    }
+    public function index(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('customer.certificatecontroller.index', $request); }
 }

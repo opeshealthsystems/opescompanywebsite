@@ -40,6 +40,7 @@ class PartnerInstitution extends Model
 
     public function scopeFeatured(Builder $query): Builder
     {
-        return $query->where('is_featured', true)->where('is_active', true);
+        return $query->where('is_featured', true)->where('is_active', true)
+            ->where(function ($q) { $q->whereNull('website')->orWhere('website', 'not like', '%example.com%'); });
     }
 }

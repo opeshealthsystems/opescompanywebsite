@@ -15,14 +15,9 @@ class ForgotPasswordController extends Controller
 
     public function submit(Request $request)
     {
-        $request->validate(['email' => 'required|email']);
-
-        $status = Password::sendResetLink($request->only('email'));
-
-        if ($status === Password::RESET_LINK_SENT) {
-            return back()->with('status', __($status));
-        }
-
-        return back()->withErrors(['email' => __($status)]);
+        $input = new \App\Contexts\Shared\Application\WorkflowInput($request->all(), address: $request->ip());
+        $result = app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute('identity.password_request', $input);
+        if ($result->errors) return back()->withErrors($result->errors)->onlyInput('email');
+        return back()->with('status', $result->data['message']);
     }
 }

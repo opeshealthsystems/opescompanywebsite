@@ -1,35 +1,9 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\Document;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Http\Request;
-
-class DocumentController extends Controller
+/** Web presentation adapter; business queries and commands live in application contexts. */
+class DocumentController extends \App\Http\Controllers\Controller
 {
-    public function pdf(Request $request, Document $document)
-    {
-        $user = $request->user();
-        $canAccess = $user->hasAnyRole(['super_admin', 'admin'])
-            || ($document->addressee_user_id && (int) $document->addressee_user_id === $user->id);
-
-        abort_unless($canAccess, 403);
-
-        $pdf = Pdf::loadView('documents.pdf', compact('document'))
-            ->setPaper('a4', 'portrait');
-
-        return $pdf->download($document->reference_number . '.pdf');
-    }
-
-    public function preview(Request $request, Document $document)
-    {
-        $user = $request->user();
-        $canAccess = $user->hasAnyRole(['super_admin', 'admin'])
-            || ($document->addressee_user_id && (int) $document->addressee_user_id === $user->id);
-
-        abort_unless($canAccess, 403);
-
-        return view('documents.pdf', compact('document'));
-    }
+    public function pdf(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('documentcontroller.pdf', $request); }
+    public function preview(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('documentcontroller.preview', $request); }
 }

@@ -1,54 +1,11 @@
 <?php
 namespace App\Http\Controllers\Customer;
 
-use App\Filament\Resources\ServiceRequestResource;
-use App\Http\Controllers\Controller;
-use App\Models\ServiceRequest;
-use App\Support\AdminNotifier;
-use Illuminate\Http\Request;
-
-class ServiceRequestController extends Controller
+/** Web presentation adapter; business queries and commands live in application contexts. */
+class ServiceRequestController extends \App\Http\Controllers\Controller
 {
-    public function index()
-    {
-        $serviceRequests = auth()->user()->serviceRequests()->latest()->get();
-        return view('customer.service-requests.index', compact('serviceRequests'));
-    }
-
-    public function create()
-    {
-        $typeOptions = ServiceRequest::typeOptions();
-        return view('customer.service-requests.create', compact('typeOptions'));
-    }
-
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'type'           => 'required|string|in:' . implode(',', array_keys(ServiceRequest::typeOptions())),
-            'product_slug'   => 'nullable|string|max:100',
-            'description'    => 'nullable|string|max:1000',
-            'preferred_date' => 'required|date|after:today',
-            'preferred_time' => 'nullable|string|max:10',
-            'location'       => 'nullable|string|max:200',
-        ]);
-
-        $serviceRequest = auth()->user()->serviceRequests()->create($data);
-
-        AdminNotifier::notify(
-            'New service request',
-            $serviceRequest->reference_number . ' · ' . $serviceRequest->type,
-            ServiceRequestResource::getUrl('view', ['record' => $serviceRequest]),
-            ['super_admin', 'admin', 'support'],
-        );
-
-        return redirect()
-            ->route('customer.service-requests', ['locale' => app()->getLocale()])
-            ->with('success', 'Your service request has been submitted. We will contact you to confirm.');
-    }
-
-    public function show($locale, ServiceRequest $serviceRequest)
-    {
-        abort_unless($serviceRequest->customer_id === auth()->id(), 403);
-        return view('customer.service-requests.show', compact('serviceRequest'));
-    }
+    public function index(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('customer.servicerequestcontroller.index', $request); }
+    public function store(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('customer.servicerequestcontroller.store', $request); }
+    public function create(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('customer.servicerequestcontroller.create', $request); }
+    public function show(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('customer.servicerequestcontroller.show', $request); }
 }

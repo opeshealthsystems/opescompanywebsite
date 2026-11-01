@@ -6,7 +6,7 @@
         <div style="background:#1e293b;border-radius:12px;padding:1.25rem;">
             <div style="color:#9fb0c9;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem;">Customers</div>
             <div style="color:#e2e8f0;font-size:1.875rem;font-weight:700;">{{ $m['totalCustomers'] }}</div>
-            <div style="color:#00C896;font-size:0.8125rem;margin-top:0.25rem;">+{{ $m['newCustomers'] }} this month</div>
+            <div style="color:var(--brand-accent);font-size:0.8125rem;margin-top:0.25rem;">+{{ $m['newCustomers'] }} this month</div>
         </div>
 
         <div style="background:#1e293b;border-radius:12px;padding:1.25rem;">
@@ -71,7 +71,7 @@
             <p style="color:#9fb0c9;font-size:0.875rem;">No open tickets.</p>
             @endforelse
             <div style="margin-top:0.75rem;">
-                <a href="{{ \App\Filament\Resources\TicketResource::getUrl('index') }}" style="color:#00C896;font-size:0.75rem;text-decoration:none;">View all tickets &rarr;</a>
+                <a href="{{ \App\Filament\Resources\TicketResource::getUrl('index') }}" style="color:var(--brand-accent);font-size:0.75rem;text-decoration:none;">View all tickets &rarr;</a>
             </div>
         </div>
 
@@ -94,7 +94,7 @@
             <p style="color:#9fb0c9;font-size:0.875rem;">No outstanding invoices.</p>
             @endforelse
             <div style="margin-top:0.75rem;">
-                <a href="{{ \App\Filament\Resources\InvoiceResource::getUrl('index') }}" style="color:#00C896;font-size:0.75rem;text-decoration:none;">View all invoices &rarr;</a>
+                <a href="{{ \App\Filament\Resources\InvoiceResource::getUrl('index') }}" style="color:var(--brand-accent);font-size:0.75rem;text-decoration:none;">View all invoices &rarr;</a>
             </div>
         </div>
 

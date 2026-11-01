@@ -30,8 +30,11 @@ class SystemSettings extends Page implements HasForms
 
     public function mount(): void
     {
-        $settings = CompanySetting::current();
-        $this->form->fill($settings->toArray());
+        $result = app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+            'admin.settings.show',
+            new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user()),
+        );
+        $this->form->fill($result->data['settings']);
     }
 
     public function form(Form $form): Form
@@ -124,8 +127,7 @@ class SystemSettings extends Page implements HasForms
 
     public function save(): void
     {
-        $settings = CompanySetting::current();
-        $settings->update($this->form->getState());
+        \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.settings.update', values: $this->form->getState());
 
         Notification::make()
             ->title('Settings saved successfully')

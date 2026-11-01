@@ -3,8 +3,9 @@
 <x-layouts.app
     title="{{ $isFr ? 'Tarification & licences — OPES Health Systems' : 'Pricing & Licensing — OPES Health Systems' }}"
     description="{{ $isFr
-        ? 'Tarification officielle OPES Health Systems : licences SaaS, perpétuelles et hybrides pour cliniques, hôpitaux, spécialités, interopérabilité et programmes nationaux.'
-        : 'Official OPES Health Systems pricing: SaaS, perpetual, and hybrid licenses for clinics, hospitals, specialty systems, interoperability, and national programmes.' }}">
+        ? 'Options de licences OPES pour les établissements de santé. Confirmez le périmètre, les tarifs et les services dans un devis écrit.'
+        : 'OPES licensing options for healthcare facilities. Confirm scope, pricing and services in a written project quote.' }}">
+<div class="section" style="padding-bottom:0;padding-top:20px"><p class="brand-notice">{{ $isFr ? 'Les montants et services présentés sont indicatifs. Seuls le devis et le contrat signés définissent le prix, le périmètre, la disponibilité et les engagements de service de votre projet.' : 'Displayed amounts and services are indicative. Your signed quote and agreement define the price, scope, availability and service commitments for your project.' }}</p></div>
 
 <style>
 /* ── Pricing page — mobile responsive ─────────────────────────── */
@@ -63,7 +64,7 @@
             [
                 'num'   => 'Option 1',
                 'icon'  => 'server',
-                'color' => '#00C896',
+                'color' => '#69D5F5',
                 'title' => 'On-Premise',
                 'model' => 'Licence perpétuelle + Maintenance annuelle',
                 'for'   => ['Hôpitaux','Réseaux hospitaliers','Institutions gouvernementales','Organismes d\'assurance'],
@@ -72,7 +73,7 @@
             [
                 'num'   => 'Option 2',
                 'icon'  => 'cloud',
-                'color' => '#1A6FE8',
+                'color' => '#8AC5ED',
                 'title' => 'Cloud OPES',
                 'model' => 'Abonnement annuel',
                 'for'   => ['Cliniques','Centres médicaux','Organisations en croissance'],
@@ -81,7 +82,7 @@
             [
                 'num'   => 'Option 3',
                 'icon'  => 'layers',
-                'color' => '#00C896',
+                'color' => '#69D5F5',
                 'title' => 'Hybride',
                 'model' => 'Licence perpétuelle + Services cloud',
                 'for'   => ['Hôpitaux régionaux','Groupes hospitaliers','Programmes gouvernementaux'],
@@ -91,7 +92,7 @@
             [
                 'num'   => 'Option 1',
                 'icon'  => 'server',
-                'color' => '#00C896',
+                'color' => '#69D5F5',
                 'title' => 'On-Premise',
                 'model' => 'Perpetual licence + Annual maintenance',
                 'for'   => ['Hospitals','Hospital networks','Government institutions','Insurance organisations'],
@@ -100,7 +101,7 @@
             [
                 'num'   => 'Option 2',
                 'icon'  => 'cloud',
-                'color' => '#1A6FE8',
+                'color' => '#8AC5ED',
                 'title' => 'Cloud by OPES',
                 'model' => 'Annual subscription',
                 'for'   => ['Clinics','Medical centres','Growing healthcare organisations'],
@@ -109,7 +110,7 @@
             [
                 'num'   => 'Option 3',
                 'icon'  => 'layers',
-                'color' => '#00C896',
+                'color' => '#69D5F5',
                 'title' => 'Hybrid',
                 'model' => 'Perpetual licence + Cloud services',
                 'for'   => ['Regional hospitals','Hospital groups','Government programmes'],
@@ -184,12 +185,12 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
 
 {{-- ── OPES CLINIC ─────────────────────────────────────────────── --}}
 <div class="prod-card" style="{{ $prodCard }}">
-    <div style="padding:18px 24px;border-bottom:1px solid #1e293b;display:flex;align-items:center;gap:14px;background:#00C89606">
-        <div style="width:38px;height:38px;border-radius:9px;background:#00C89615;border:1px solid #00C89630;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <i data-lucide="stethoscope" style="width:18px;height:18px;color:#00C896"></i>
+    <div style="padding:18px 24px;border-bottom:1px solid #1e293b;display:flex;align-items:center;gap:14px;background:#69D5F506">
+        <div style="width:38px;height:38px;border-radius:9px;background:#69D5F515;border:1px solid #69D5F530;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <i data-lucide="stethoscope" style="width:18px;height:18px;color:var(--brand-accent)"></i>
         </div>
         <div>
-            <div style="font-size:var(--fs-2xs);font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.07em">{{ $isFr ? 'Cliniques, cabinets médicaux & centres ambulatoires' : 'Clinics, medical practices & outpatient centres' }}</div>
+            <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.07em">{{ $isFr ? 'Cliniques, cabinets médicaux & centres ambulatoires' : 'Clinics, medical practices & outpatient centres' }}</div>
             <div style="font-size:17px;font-weight:800;color:#e2e8f0">OPES Clinic</div>
         </div>
     </div>
@@ -201,28 +202,28 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
                 : ['Electronic Medical Records','Appointments','Billing','Prescriptions','Clinical Documentation','Inventory','Reporting']
             as $inc)
             <div style="display:flex;align-items:center;gap:7px;font-size:var(--fs-xs);color:var(--text-muted);margin-bottom:6px">
-                <i data-lucide="check" style="width:11px;height:11px;color:#00C896;flex-shrink:0"></i>{{ $inc }}
+                <i data-lucide="check" style="width:11px;height:11px;color:var(--brand-accent);flex-shrink:0"></i>{{ $inc }}
             </div>
             @endforeach
         </div>
         <div style="{{ $priceCol }}">
             <div class="pc-g2" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
                 <div style="{{ $priceTile }}">
-                    <div style="font-size:var(--fs-2xs);font-weight:700;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">SaaS</div>
+                    <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">SaaS</div>
                     <div style="font-size:var(--fs-xs);color:var(--text-faint);margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
                     <div style="font-size:22px;font-weight:800;color:#e2e8f0;line-height:1.1">150 000</div>
-                    <div style="font-size:var(--fs-xs);color:#00C896;font-weight:700;margin-bottom:12px">FCFA / {{ $isFr ? 'mois' : 'month' }}</div>
-                    <a href="{{ route('contact', ['locale' => $locale]) }}" style="display:inline-flex;align-items:center;gap:5px;background:#1A6FE820;border:1px solid #1A6FE840;border-radius:7px;padding:7px 14px;font-size:var(--fs-xs);font-weight:700;color:#1A6FE8;text-decoration:none">
+                    <div style="font-size:var(--fs-xs);color:var(--brand-accent);font-weight:700;margin-bottom:12px">FCFA / {{ $isFr ? 'mois' : 'month' }}</div>
+                    <a href="{{ route('contact', ['locale' => $locale]) }}" style="display:inline-flex;align-items:center;gap:5px;background:#8AC5ED20;border:1px solid #8AC5ED40;border-radius:7px;padding:7px 14px;font-size:var(--fs-xs);font-weight:700;color:var(--brand-accent);text-decoration:none">
                         <i data-lucide="send" style="width:11px;height:11px"></i>{{ $isFr ? 'Démarrer' : 'Get started' }}
                     </a>
                 </div>
                 <div style="{{ $priceTile }}">
-                    <div style="font-size:var(--fs-2xs);font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">{{ $isFr ? 'Licence perpétuelle' : 'Perpetual licence' }}</div>
+                    <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">{{ $isFr ? 'Licence perpétuelle' : 'Perpetual licence' }}</div>
                     <div style="font-size:var(--fs-xs);color:var(--text-faint);margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
                     <div style="font-size:22px;font-weight:800;color:#e2e8f0;line-height:1.1">2 500 000</div>
-                    <div style="font-size:var(--fs-xs);color:#00C896;font-weight:700;margin-bottom:3px">FCFA</div>
+                    <div style="font-size:var(--fs-xs);color:var(--brand-accent);font-weight:700;margin-bottom:3px">FCFA</div>
                     <div style="font-size:var(--fs-2xs);color:var(--text-faint);margin-bottom:12px">{{ $isFr ? '+ maintenance 15–20 %/an' : '+ 15–20% annual maintenance' }}</div>
-                    <a href="{{ route('contact', ['locale' => $locale]) }}" style="display:inline-flex;align-items:center;gap:5px;background:#00C89615;border:1px solid #00C89630;border-radius:7px;padding:7px 14px;font-size:var(--fs-xs);font-weight:700;color:#00C896;text-decoration:none">
+                    <a href="{{ route('contact', ['locale' => $locale]) }}" style="display:inline-flex;align-items:center;gap:5px;background:#69D5F515;border:1px solid #69D5F530;border-radius:7px;padding:7px 14px;font-size:var(--fs-xs);font-weight:700;color:var(--brand-accent);text-decoration:none">
                         <i data-lucide="file-text" style="width:11px;height:11px"></i>{{ $isFr ? 'Demander un devis' : 'Request a quote' }}
                     </a>
                 </div>
@@ -233,12 +234,12 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
 
 {{-- ── OPES HOSPITAL ────────────────────────────────────────────── --}}
 <div class="prod-card" style="{{ $prodCard }}">
-    <div style="padding:18px 24px;border-bottom:1px solid #1e293b;display:flex;align-items:center;gap:14px;background:#1A6FE806">
-        <div style="width:38px;height:38px;border-radius:9px;background:#1A6FE815;border:1px solid #1A6FE830;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <i data-lucide="hospital" style="width:18px;height:18px;color:#1A6FE8"></i>
+    <div style="padding:18px 24px;border-bottom:1px solid #1e293b;display:flex;align-items:center;gap:14px;background:#8AC5ED06">
+        <div style="width:38px;height:38px;border-radius:9px;background:#8AC5ED15;border:1px solid #8AC5ED30;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <i data-lucide="hospital" style="width:18px;height:18px;color:var(--brand-accent)"></i>
         </div>
         <div>
-            <div style="font-size:var(--fs-2xs);font-weight:700;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.07em">{{ $isFr ? 'Hôpitaux de district, régionaux & de référence' : 'District, regional & referral hospitals' }}</div>
+            <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.07em">{{ $isFr ? 'Hôpitaux de district, régionaux & de référence' : 'District, regional & referral hospitals' }}</div>
             <div style="font-size:17px;font-weight:800;color:#e2e8f0">OPES Hospital</div>
         </div>
     </div>
@@ -250,7 +251,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
                 : ['Hospital Information System','EMR','Admissions','Billing','Inventory','Procurement','Clinical Documentation','Reporting']
             as $inc)
             <div style="display:flex;align-items:center;gap:7px;font-size:var(--fs-xs);color:var(--text-muted);margin-bottom:6px">
-                <i data-lucide="check" style="width:11px;height:11px;color:#1A6FE8;flex-shrink:0"></i>{{ $inc }}
+                <i data-lucide="check" style="width:11px;height:11px;color:var(--brand-accent);flex-shrink:0"></i>{{ $inc }}
             </div>
             @endforeach
         </div>
@@ -258,22 +259,22 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
             <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px">{{ $isFr ? 'Licence perpétuelle — par taille d\'hôpital' : 'Perpetual licence — by hospital size' }}</div>
             <div class="pc-g2" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
                 <div style="{{ $priceTile }}">
-                    <div style="font-size:var(--fs-2xs);font-weight:700;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">{{ $isFr ? 'Petit hôpital' : 'Small hospital' }}</div>
+                    <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">{{ $isFr ? 'Petit hôpital' : 'Small hospital' }}</div>
                     <div style="font-size:var(--fs-xs);color:var(--text-faint);margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
                     <div style="font-size:22px;font-weight:800;color:#e2e8f0;line-height:1.1">15 000 000</div>
-                    <div style="font-size:var(--fs-xs);color:#1A6FE8;font-weight:700;margin-bottom:3px">FCFA</div>
+                    <div style="font-size:var(--fs-xs);color:var(--brand-accent);font-weight:700;margin-bottom:3px">FCFA</div>
                     <div style="font-size:var(--fs-2xs);color:var(--text-faint);margin-bottom:12px">{{ $isFr ? '+ maintenance 15–20 %/an' : '+ 15–20% annual maintenance' }}</div>
-                    <a href="{{ route('contact', ['locale' => $locale]) }}" style="display:inline-flex;align-items:center;gap:5px;background:#1A6FE815;border:1px solid #1A6FE830;border-radius:7px;padding:7px 14px;font-size:var(--fs-xs);font-weight:700;color:#1A6FE8;text-decoration:none">
+                    <a href="{{ route('contact', ['locale' => $locale]) }}" style="display:inline-flex;align-items:center;gap:5px;background:#8AC5ED15;border:1px solid #8AC5ED30;border-radius:7px;padding:7px 14px;font-size:var(--fs-xs);font-weight:700;color:var(--brand-accent);text-decoration:none">
                         <i data-lucide="send" style="width:11px;height:11px"></i>{{ $isFr ? 'Contacter' : 'Contact us' }}
                     </a>
                 </div>
                 <div style="{{ $priceTile }}">
-                    <div style="font-size:var(--fs-2xs);font-weight:700;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">{{ $isFr ? 'Hôpital moyen & grand' : 'Medium & large hospital' }}</div>
+                    <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">{{ $isFr ? 'Hôpital moyen & grand' : 'Medium & large hospital' }}</div>
                     <div style="font-size:var(--fs-xs);color:var(--text-faint);margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
                     <div style="font-size:20px;font-weight:800;color:#e2e8f0;line-height:1.1">25 000 000 – 50 000 000</div>
-                    <div style="font-size:var(--fs-xs);color:#1A6FE8;font-weight:700;margin-bottom:3px">FCFA</div>
+                    <div style="font-size:var(--fs-xs);color:var(--brand-accent);font-weight:700;margin-bottom:3px">FCFA</div>
                     <div style="font-size:var(--fs-2xs);color:var(--text-faint);margin-bottom:12px">{{ $isFr ? '+ maintenance 15–20 %/an' : '+ 15–20% annual maintenance' }}</div>
-                    <a href="{{ route('contact', ['locale' => $locale]) }}" style="display:inline-flex;align-items:center;gap:5px;background:#1A6FE815;border:1px solid #1A6FE830;border-radius:7px;padding:7px 14px;font-size:var(--fs-xs);font-weight:700;color:#1A6FE8;text-decoration:none">
+                    <a href="{{ route('contact', ['locale' => $locale]) }}" style="display:inline-flex;align-items:center;gap:5px;background:#8AC5ED15;border:1px solid #8AC5ED30;border-radius:7px;padding:7px 14px;font-size:var(--fs-xs);font-weight:700;color:var(--brand-accent);text-decoration:none">
                         <i data-lucide="send" style="width:11px;height:11px"></i>{{ $isFr ? 'Demander un devis' : 'Request a quote' }}
                     </a>
                 </div>
@@ -285,34 +286,34 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
 {{-- ── SPECIALTY SUITE ──────────────────────────────────────────── --}}
 <div class="section" style="max-width:960px;margin:0 auto">
     <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
-        <div style="width:38px;height:38px;border-radius:9px;background:#00C89615;border:1px solid #00C89630;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <i data-lucide="grid-2x2" style="width:18px;height:18px;color:#00C896"></i>
+        <div style="width:38px;height:38px;border-radius:9px;background:#69D5F515;border:1px solid #69D5F530;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <i data-lucide="grid-2x2" style="width:18px;height:18px;color:var(--brand-accent)"></i>
         </div>
         <div>
-            <div style="font-size:var(--fs-2xs);font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.07em">{{ $isFr ? 'Systèmes d\'information départementaux' : 'Departmental information systems' }}</div>
+            <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.07em">{{ $isFr ? 'Systèmes d\'information départementaux' : 'Departmental information systems' }}</div>
             <div style="font-size:17px;font-weight:800;color:#e2e8f0">{{ $isFr ? 'Suite spécialisée OPES' : 'OPES Specialty Suite' }}</div>
         </div>
     </div>
     <div class="pc-g4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
         @php
         $specialties = $isFr ? [
-            ['microscope','#00C896','OPES Lab IS','3 000 000'],
-            ['pill','#1A6FE8','OPES Pharmacie IS','2 500 000'],
-            ['scan','#00C896','OPES Radiologie IS','4 000 000'],
-            ['heart-pulse','#1A6FE8','OPES Cardiologie IS','4 000 000'],
-            ['shield','#00C896','OPES Dentaire IS','2 500 000'],
-            ['sun','#1A6FE8','OPES Dermatologie IS','2 500 000'],
-            ['baby','#00C896','OPES Pédiatrie IS','3 000 000'],
-            ['circle','#1A6FE8','OPES Gynécologie-Obstétrique IS','3 500 000'],
+            ['microscope','#69D5F5','OPES Lab IS','3 000 000'],
+            ['pill','#8AC5ED','OPES Pharmacie IS','2 500 000'],
+            ['scan','#69D5F5','OPES Radiologie IS','4 000 000'],
+            ['heart-pulse','#8AC5ED','OPES Cardiologie IS','4 000 000'],
+            ['shield','#69D5F5','OPES Dentaire IS','2 500 000'],
+            ['sun','#8AC5ED','OPES Dermatologie IS','2 500 000'],
+            ['baby','#69D5F5','OPES Pédiatrie IS','3 000 000'],
+            ['circle','#8AC5ED','OPES Gynécologie-Obstétrique IS','3 500 000'],
         ] : [
-            ['microscope','#00C896','OPES Lab IS','3 000 000'],
-            ['pill','#1A6FE8','OPES Pharmacy IS','2 500 000'],
-            ['scan','#00C896','OPES Radiology IS','4 000 000'],
-            ['heart-pulse','#1A6FE8','OPES Cardiology IS','4 000 000'],
-            ['shield','#00C896','OPES Dental IS','2 500 000'],
-            ['sun','#1A6FE8','OPES Dermatology IS','2 500 000'],
-            ['baby','#00C896','OPES Pediatrics IS','3 000 000'],
-            ['circle','#1A6FE8','OPES Obstetrics & Gynecology IS','3 500 000'],
+            ['microscope','#69D5F5','OPES Lab IS','3 000 000'],
+            ['pill','#8AC5ED','OPES Pharmacy IS','2 500 000'],
+            ['scan','#69D5F5','OPES Radiology IS','4 000 000'],
+            ['heart-pulse','#8AC5ED','OPES Cardiology IS','4 000 000'],
+            ['shield','#69D5F5','OPES Dental IS','2 500 000'],
+            ['sun','#8AC5ED','OPES Dermatology IS','2 500 000'],
+            ['baby','#69D5F5','OPES Pediatrics IS','3 000 000'],
+            ['circle','#8AC5ED','OPES Obstetrics & Gynecology IS','3 500 000'],
         ];
         @endphp
         @foreach($specialties as $sp)
@@ -333,12 +334,12 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
 
 {{-- ── OPES CARE ────────────────────────────────────────────────── --}}
 <div class="prod-card" style="{{ $prodCard }}">
-    <div style="padding:18px 24px;border-bottom:1px solid #1e293b;display:flex;align-items:center;gap:14px;background:#1A6FE806">
-        <div style="width:38px;height:38px;border-radius:9px;background:#1A6FE815;border:1px solid #1A6FE830;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <i data-lucide="share-2" style="width:18px;height:18px;color:#1A6FE8"></i>
+    <div style="padding:18px 24px;border-bottom:1px solid #1e293b;display:flex;align-items:center;gap:14px;background:#8AC5ED06">
+        <div style="width:38px;height:38px;border-radius:9px;background:#8AC5ED15;border:1px solid #8AC5ED30;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <i data-lucide="share-2" style="width:18px;height:18px;color:var(--brand-accent)"></i>
         </div>
         <div>
-            <div style="font-size:var(--fs-2xs);font-weight:700;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.07em">{{ $isFr ? 'Plateforme d\'interopérabilité de santé' : 'Healthcare interoperability platform' }}</div>
+            <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.07em">{{ $isFr ? 'Plateforme d\'interopérabilité de santé' : 'Healthcare interoperability platform' }}</div>
             <div style="font-size:17px;font-weight:800;color:#e2e8f0">OPES Care</div>
         </div>
     </div>
@@ -350,25 +351,25 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
                 : ['Health ID','Master Patient Index','Health Information Exchange','Referral Exchange','Provider Registry','Facility Registry','Patient Portal']
             as $inc)
             <div style="display:flex;align-items:center;gap:7px;font-size:var(--fs-xs);color:var(--text-muted);margin-bottom:6px">
-                <i data-lucide="check" style="width:11px;height:11px;color:#1A6FE8;flex-shrink:0"></i>{{ $inc }}
+                <i data-lucide="check" style="width:11px;height:11px;color:var(--brand-accent);flex-shrink:0"></i>{{ $inc }}
             </div>
             @endforeach
         </div>
         <div style="{{ $priceCol }}">
             <div class="pc-g3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
                 <div style="{{ $priceTile }}">
-                    <div style="font-size:var(--fs-2xs);font-weight:700;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">{{ $isFr ? 'Hôpital unique' : 'Single hospital' }}</div>
+                    <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">{{ $isFr ? 'Hôpital unique' : 'Single hospital' }}</div>
                     <div style="font-size:var(--fs-xs);color:var(--text-faint);margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
                     <div style="font-size:20px;font-weight:800;color:#e2e8f0;line-height:1.1">25 000 000</div>
-                    <div style="font-size:var(--fs-xs);color:#1A6FE8;font-weight:700;margin-bottom:12px">FCFA</div>
-                    <a href="{{ route('contact', ['locale' => $locale]) }}" style="font-size:var(--fs-2xs);font-weight:700;color:#1A6FE8;text-decoration:none;border:1px solid #1A6FE830;border-radius:6px;padding:6px 12px">{{ $isFr ? 'Contacter' : 'Contact' }}</a>
+                    <div style="font-size:var(--fs-xs);color:var(--brand-accent);font-weight:700;margin-bottom:12px">FCFA</div>
+                    <a href="{{ route('contact', ['locale' => $locale]) }}" style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-decoration:none;border:1px solid #8AC5ED30;border-radius:6px;padding:6px 12px">{{ $isFr ? 'Contacter' : 'Contact' }}</a>
                 </div>
                 <div style="{{ $priceTile }}">
-                    <div style="font-size:var(--fs-2xs);font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">{{ $isFr ? 'Réseau multi-hôpitaux' : 'Multi-hospital network' }}</div>
+                    <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">{{ $isFr ? 'Réseau multi-hôpitaux' : 'Multi-hospital network' }}</div>
                     <div style="font-size:var(--fs-xs);color:var(--text-faint);margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
                     <div style="font-size:20px;font-weight:800;color:#e2e8f0;line-height:1.1">50 000 000</div>
-                    <div style="font-size:var(--fs-xs);color:#00C896;font-weight:700;margin-bottom:12px">FCFA</div>
-                    <a href="{{ route('contact', ['locale' => $locale]) }}" style="font-size:var(--fs-2xs);font-weight:700;color:#00C896;text-decoration:none;border:1px solid #00C89630;border-radius:6px;padding:6px 12px">{{ $isFr ? 'Contacter' : 'Contact' }}</a>
+                    <div style="font-size:var(--fs-xs);color:var(--brand-accent);font-weight:700;margin-bottom:12px">FCFA</div>
+                    <a href="{{ route('contact', ['locale' => $locale]) }}" style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-decoration:none;border:1px solid #69D5F530;border-radius:6px;padding:6px 12px">{{ $isFr ? 'Contacter' : 'Contact' }}</a>
                 </div>
                 <div style="{{ $rfqTile }}">
                     <div style="font-size:var(--fs-2xs);font-weight:700;color:#F59E0B;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">{{ $isFr ? 'Programme national / régional' : 'National / regional programme' }}</div>
@@ -383,12 +384,12 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
 
 {{-- ── OPES HEALTH ID ───────────────────────────────────────────── --}}
 <div class="prod-card" style="{{ $prodCard }}">
-    <div style="padding:18px 24px;border-bottom:1px solid #1e293b;display:flex;align-items:center;gap:14px;background:#00C89606">
-        <div style="width:38px;height:38px;border-radius:9px;background:#00C89615;border:1px solid #00C89630;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <i data-lucide="fingerprint" style="width:18px;height:18px;color:#00C896"></i>
+    <div style="padding:18px 24px;border-bottom:1px solid #1e293b;display:flex;align-items:center;gap:14px;background:#69D5F506">
+        <div style="width:38px;height:38px;border-radius:9px;background:#69D5F515;border:1px solid #69D5F530;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <i data-lucide="fingerprint" style="width:18px;height:18px;color:var(--brand-accent)"></i>
         </div>
         <div>
-            <div style="font-size:var(--fs-2xs);font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.07em">{{ $isFr ? 'Infrastructure d\'identité unique patient' : 'Unique patient identity infrastructure' }}</div>
+            <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.07em">{{ $isFr ? 'Infrastructure d\'identité unique patient' : 'Unique patient identity infrastructure' }}</div>
             <div style="font-size:17px;font-weight:800;color:#e2e8f0">OPES Health ID</div>
         </div>
     </div>
@@ -400,18 +401,18 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
                 : ['Patient identity management','Cross-facility identification','QR identity','Identity resolution']
             as $inc)
             <div style="display:flex;align-items:center;gap:7px;font-size:var(--fs-xs);color:var(--text-muted);margin-bottom:6px">
-                <i data-lucide="check" style="width:11px;height:11px;color:#00C896;flex-shrink:0"></i>{{ $inc }}
+                <i data-lucide="check" style="width:11px;height:11px;color:var(--brand-accent);flex-shrink:0"></i>{{ $inc }}
             </div>
             @endforeach
         </div>
         <div style="{{ $priceCol }}">
             <div class="pc-g3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
                 <div style="{{ $priceTile }}">
-                    <div style="font-size:var(--fs-2xs);font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">{{ $isFr ? 'Déploiement établissement' : 'Facility deployment' }}</div>
+                    <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">{{ $isFr ? 'Déploiement établissement' : 'Facility deployment' }}</div>
                     <div style="font-size:var(--fs-xs);color:var(--text-faint);margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
                     <div style="font-size:22px;font-weight:800;color:#e2e8f0;line-height:1.1">5 000 000</div>
-                    <div style="font-size:var(--fs-xs);color:#00C896;font-weight:700;margin-bottom:12px">FCFA</div>
-                    <a href="{{ route('contact', ['locale' => $locale]) }}" style="font-size:var(--fs-2xs);font-weight:700;color:#00C896;text-decoration:none;border:1px solid #00C89630;border-radius:6px;padding:6px 12px">{{ $isFr ? 'Contacter' : 'Contact' }}</a>
+                    <div style="font-size:var(--fs-xs);color:var(--brand-accent);font-weight:700;margin-bottom:12px">FCFA</div>
+                    <a href="{{ route('contact', ['locale' => $locale]) }}" style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-decoration:none;border:1px solid #69D5F530;border-radius:6px;padding:6px 12px">{{ $isFr ? 'Contacter' : 'Contact' }}</a>
                 </div>
                 <div style="{{ $rfqTile }}">
                     <div style="font-size:var(--fs-2xs);font-weight:700;color:#F59E0B;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:10px">{{ $isFr ? 'Multi-établissements' : 'Multi-facility' }}</div>
@@ -442,72 +443,72 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
 
         {{-- CDMS --}}
         <div style="background:#080E1A;border:1px solid #1e293b;border-radius:14px;overflow:hidden">
-            <div style="padding:16px 18px;border-bottom:1px solid #1e293b;background:#00C89606">
-                <div style="font-size:var(--fs-2xs);font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px">CDMS</div>
+            <div style="padding:16px 18px;border-bottom:1px solid #1e293b;background:#69D5F506">
+                <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px">CDMS</div>
                 <div style="font-size:14px;font-weight:800;color:#e2e8f0">{{ $isFr ? 'Gestion de documents cliniques' : 'Clinical Document Management' }}</div>
             </div>
             <div style="padding:16px 18px">
                 @foreach($isFr
                     ? ['Dossiers numériques','Archivage de documents','Gestion des flux','Signatures numériques']
                     : ['Digital records','Document archiving','Workflow management','Digital signatures']
-                as $i)<div style="display:flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:var(--text-muted);margin-bottom:5px"><i data-lucide="check" style="width:10px;height:10px;color:#00C896;flex-shrink:0"></i>{{ $i }}</div>@endforeach
+                as $i)<div style="display:flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:var(--text-muted);margin-bottom:5px"><i data-lucide="check" style="width:10px;height:10px;color:var(--brand-accent);flex-shrink:0"></i>{{ $i }}</div>@endforeach
             </div>
             <div style="padding:0 18px 18px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
                 <div style="background:#0F172A;border:1px solid #1e293b;border-radius:9px;padding:12px;text-align:center">
-                    <div style="font-size:var(--fs-2xs);font-weight:700;color:#1A6FE8;text-transform:uppercase;margin-bottom:6px">SaaS</div>
+                    <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-transform:uppercase;margin-bottom:6px">SaaS</div>
                     <div style="font-size:16px;font-weight:800;color:#e2e8f0">100 000</div>
-                    <div style="font-size:var(--fs-2xs);color:#1A6FE8;font-weight:600">FCFA/{{ $isFr ? 'mois' : 'mo' }}</div>
+                    <div style="font-size:var(--fs-2xs);color:var(--brand-accent);font-weight:600">FCFA/{{ $isFr ? 'mois' : 'mo' }}</div>
                 </div>
                 <div style="background:#0F172A;border:1px solid #1e293b;border-radius:9px;padding:12px;text-align:center">
-                    <div style="font-size:var(--fs-2xs);font-weight:700;color:#00C896;text-transform:uppercase;margin-bottom:6px">{{ $isFr ? 'Perpétuel' : 'Perpetual' }}</div>
+                    <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-transform:uppercase;margin-bottom:6px">{{ $isFr ? 'Perpétuel' : 'Perpetual' }}</div>
                     <div style="font-size:16px;font-weight:800;color:#e2e8f0">4 000 000</div>
-                    <div style="font-size:var(--fs-2xs);color:#00C896;font-weight:600">FCFA</div>
+                    <div style="font-size:var(--fs-2xs);color:var(--brand-accent);font-weight:600">FCFA</div>
                 </div>
             </div>
         </div>
 
         {{-- Triage --}}
         <div style="background:#080E1A;border:1px solid #1e293b;border-radius:14px;overflow:hidden">
-            <div style="padding:16px 18px;border-bottom:1px solid #1e293b;background:#1A6FE806">
-                <div style="font-size:var(--fs-2xs);font-weight:700;color:#1A6FE8;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px">OPES Triage</div>
+            <div style="padding:16px 18px;border-bottom:1px solid #1e293b;background:#8AC5ED06">
+                <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px">OPES Triage</div>
                 <div style="font-size:14px;font-weight:800;color:#e2e8f0">{{ $isFr ? 'Triage numérique & évaluation des risques' : 'Digital triage & risk assessment' }}</div>
             </div>
             <div style="padding:16px 18px">
                 @foreach($isFr
                     ? ['Priorisation des patients','Classification des urgences','Score de risque','Escalade clinique']
                     : ['Patient prioritisation','Emergency classification','Risk scoring','Clinical escalation']
-                as $i)<div style="display:flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:var(--text-muted);margin-bottom:5px"><i data-lucide="check" style="width:10px;height:10px;color:#1A6FE8;flex-shrink:0"></i>{{ $i }}</div>@endforeach
+                as $i)<div style="display:flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:var(--text-muted);margin-bottom:5px"><i data-lucide="check" style="width:10px;height:10px;color:var(--brand-accent);flex-shrink:0"></i>{{ $i }}</div>@endforeach
             </div>
             <div style="padding:0 18px 18px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
                 <div style="background:#0F172A;border:1px solid #1e293b;border-radius:9px;padding:12px;text-align:center">
-                    <div style="font-size:var(--fs-2xs);font-weight:700;color:#1A6FE8;text-transform:uppercase;margin-bottom:6px">SaaS</div>
+                    <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-transform:uppercase;margin-bottom:6px">SaaS</div>
                     <div style="font-size:16px;font-weight:800;color:#e2e8f0">150 000</div>
-                    <div style="font-size:var(--fs-2xs);color:#1A6FE8;font-weight:600">FCFA/{{ $isFr ? 'mois' : 'mo' }}</div>
+                    <div style="font-size:var(--fs-2xs);color:var(--brand-accent);font-weight:600">FCFA/{{ $isFr ? 'mois' : 'mo' }}</div>
                 </div>
                 <div style="background:#0F172A;border:1px solid #1e293b;border-radius:9px;padding:12px;text-align:center">
-                    <div style="font-size:var(--fs-2xs);font-weight:700;color:#00C896;text-transform:uppercase;margin-bottom:6px">{{ $isFr ? 'Perpétuel' : 'Perpetual' }}</div>
+                    <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-transform:uppercase;margin-bottom:6px">{{ $isFr ? 'Perpétuel' : 'Perpetual' }}</div>
                     <div style="font-size:16px;font-weight:800;color:#e2e8f0">5 000 000</div>
-                    <div style="font-size:var(--fs-2xs);color:#00C896;font-weight:600">FCFA</div>
+                    <div style="font-size:var(--fs-2xs);color:var(--brand-accent);font-weight:600">FCFA</div>
                 </div>
             </div>
         </div>
 
         {{-- CDSS --}}
         <div style="background:#080E1A;border:1px solid #1e293b;border-radius:14px;overflow:hidden">
-            <div style="padding:16px 18px;border-bottom:1px solid #1e293b;background:#00C89606">
-                <div style="font-size:var(--fs-2xs);font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px">OPES CDSS</div>
+            <div style="padding:16px 18px;border-bottom:1px solid #1e293b;background:#69D5F506">
+                <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px">OPES CDSS</div>
                 <div style="font-size:14px;font-weight:800;color:#e2e8f0">{{ $isFr ? 'Aide à la décision clinique' : 'Clinical Decision Support' }}</div>
             </div>
             <div style="padding:16px 18px">
                 @foreach($isFr
                     ? ['Règles cliniques','Interactions médicamenteuses','Alertes cliniques','Recommandations de traitement','Aide au diagnostic']
                     : ['Clinical rules','Drug interaction checking','Clinical alerts','Treatment recommendations','Diagnostic assistance']
-                as $i)<div style="display:flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:var(--text-muted);margin-bottom:5px"><i data-lucide="check" style="width:10px;height:10px;color:#00C896;flex-shrink:0"></i>{{ $i }}</div>@endforeach
+                as $i)<div style="display:flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:var(--text-muted);margin-bottom:5px"><i data-lucide="check" style="width:10px;height:10px;color:var(--brand-accent);flex-shrink:0"></i>{{ $i }}</div>@endforeach
             </div>
             <div style="padding:0 18px 18px;display:flex;flex-direction:column;gap:8px">
                 <div style="background:#0F172A;border:1px solid #1e293b;border-radius:9px;padding:10px;display:flex;justify-content:space-between;align-items:center">
                     <span style="font-size:var(--fs-2xs);color:var(--text-muted)">{{ $isFr ? 'Hôpital' : 'Hospital' }}</span>
-                    <span style="font-size:13px;font-weight:800;color:#e2e8f0">10 000 000 <span style="font-size:var(--fs-2xs);color:#00C896;font-weight:600">FCFA</span></span>
+                    <span style="font-size:13px;font-weight:800;color:#e2e8f0">10 000 000 <span style="font-size:var(--fs-2xs);color:var(--brand-accent);font-weight:600">FCFA</span></span>
                 </div>
                 <div style="background:#0F172A;border:1px dashed #1e293b;border-radius:9px;padding:10px;display:flex;justify-content:space-between;align-items:center">
                     <span style="font-size:var(--fs-2xs);color:var(--text-muted)">{{ $isFr ? 'Réseau / National' : 'Network / National' }}</span>
@@ -537,11 +538,11 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
     <div class="pc-g3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px">
         @php
         $govProducts = $isFr ? [
-            ['shield-check','#8B5CF6','OPES Assurance',['Gestion des membres','Traitement des sinistres','Gestion des prestataires','Gestion des tarifs','Remboursements','Surveillance des fraudes']],
+            ['shield-check','#8AC5ED','OPES Assurance',['Gestion des membres','Traitement des sinistres','Gestion des prestataires','Gestion des tarifs','Remboursements','Surveillance des fraudes']],
             ['activity','#EF4444','OPES Santé publique',['Surveillance des maladies','Rapports de programme','Programmes de vaccination','Santé maternelle','Tableaux de bord nationaux']],
             ['globe-2','#F59E0B','Plateforme nationale de santé numérique',['Health ID national','HIE nationale','Registre national des prestataires','Registre national des établissements','Plateforme CSU','Surveillance de santé publique','Analytique nationale','Tableaux de bord nationaux']],
         ] : [
-            ['shield-check','#8B5CF6','OPES Insurance',['Member management','Claims processing','Provider management','Tariff management','Reimbursements','Fraud monitoring']],
+            ['shield-check','#8AC5ED','OPES Insurance',['Member management','Claims processing','Provider management','Tariff management','Reimbursements','Fraud monitoring']],
             ['activity','#EF4444','OPES Public Health',['Disease surveillance','Programme reporting','Vaccination programmes','Maternal health','National dashboards']],
             ['globe-2','#F59E0B','National Digital Health Platform',['National Health ID','National HIE','National provider registry','National facility registry','UHC platform','Public health surveillance','National analytics','National dashboards']],
         ];
@@ -582,8 +583,8 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
     </div>
     <div class="pc-g4" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px">
         @foreach($isFr
-            ? [['map','#00C896','Implémentation','À partir de 1 500 000 FCFA','De l\'installation à la mise en production'],['database','#1A6FE8','Migration de données','À partir de 1 000 000 FCFA','Depuis les formats CSV, HL7, FHIR'],['graduation-cap','#00C896','Formation','À partir de 500 000 FCFA','Tous rôles, en ligne ou sur site'],['code','#1A6FE8','Intégrations sur mesure','Sur demande de devis','Connexion aux systèmes existants']]
-            : [['map','#00C896','Implementation','Starting from 1 500 000 FCFA','From installation to go-live'],['database','#1A6FE8','Data migration','Starting from 1 000 000 FCFA','From CSV, HL7, FHIR formats'],['graduation-cap','#00C896','Training','Starting from 500 000 FCFA','All roles, online or on-site'],['code','#1A6FE8','Custom integrations','Request quotation','Connect to existing systems']]
+            ? [['map','#69D5F5','Implémentation','À partir de 1 500 000 FCFA','De l\'installation à la mise en production'],['database','#8AC5ED','Migration de données','À partir de 1 000 000 FCFA','Depuis les formats CSV, HL7, FHIR'],['graduation-cap','#69D5F5','Formation','À partir de 500 000 FCFA','Tous rôles, en ligne ou sur site'],['code','#8AC5ED','Intégrations sur mesure','Sur demande de devis','Connexion aux systèmes existants']]
+            : [['map','#69D5F5','Implementation','Starting from 1 500 000 FCFA','From installation to go-live'],['database','#8AC5ED','Data migration','Starting from 1 000 000 FCFA','From CSV, HL7, FHIR formats'],['graduation-cap','#69D5F5','Training','Starting from 500 000 FCFA','All roles, online or on-site'],['code','#8AC5ED','Custom integrations','Request quotation','Connect to existing systems']]
         as $svc)
         <div style="background:#080E1A;border:1px solid #1e293b;border-radius:12px;padding:18px;text-align:center">
             <i data-lucide="{{ $svc[0] }}" style="width:22px;height:22px;color:{{ $svc[1] }};margin-bottom:10px"></i>
@@ -613,8 +614,8 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
     </p>
     <div class="pc-g3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px">
         @foreach($isFr
-            ? [['var(--text-faint)','Standard','15 % de la valeur de la licence','Mises à jour + support Bronze','Établissements de santé standards'],['#00C896','Premium','20 % de la valeur de la licence','Mises à jour + support Gold','Hôpitaux & groupes de santé'],['#F59E0B','Enterprise','Sur devis','Contrat de service personnalisé','Ministères & programmes nationaux']]
-            : [['var(--text-faint)','Standard','15% of licence value','Updates + Bronze support','Standard health facilities'],['#00C896','Premium','20% of licence value','Updates + Gold support','Hospitals & health groups'],['#F59E0B','Enterprise','Custom','Custom service contract','Ministries & national programmes']]
+            ? [['var(--text-faint)','Standard','15 % de la valeur de la licence','Mises à jour + support Bronze','Établissements de santé standards'],['#69D5F5','Premium','20 % de la valeur de la licence','Mises à jour + support Gold','Hôpitaux & groupes de santé'],['#F59E0B','Enterprise','Sur devis','Contrat de service personnalisé','Ministères & programmes nationaux']]
+            : [['var(--text-faint)','Standard','15% of licence value','Updates + Bronze support','Standard health facilities'],['#69D5F5','Premium','20% of licence value','Updates + Gold support','Hospitals & health groups'],['#F59E0B','Enterprise','Custom','Custom service contract','Ministries & national programmes']]
         as $tier)
         <div style="background:#0F172A;border:1px solid {{ $tier[0] }}30;border-radius:12px;padding:22px;text-align:center">
             <div style="font-size:var(--fs-xs);font-weight:800;color:{{ $tier[0] }};text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">{{ $tier[1] }}</div>
@@ -643,7 +644,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
                     : ['Managed infrastructure','Managed backups','Security monitoring','Disaster recovery','Technical support']
                 as $h)
                 <div style="display:flex;align-items:center;gap:7px;font-size:var(--fs-xs);color:var(--text-muted)">
-                    <i data-lucide="check" style="width:11px;height:11px;color:#00C896;flex-shrink:0"></i>{{ $h }}
+                    <i data-lucide="check" style="width:11px;height:11px;color:var(--brand-accent);flex-shrink:0"></i>{{ $h }}
                 </div>
                 @endforeach
             </div>
@@ -651,9 +652,9 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
         <div style="text-align:center;min-width:180px">
             <div style="font-size:var(--fs-xs);color:var(--text-faint);margin-bottom:4px">{{ $isFr ? 'À partir de' : 'Starting from' }}</div>
             <div style="font-size:32px;font-weight:800;color:#e2e8f0;line-height:1.1">100 000</div>
-            <div style="font-size:14px;color:#00C896;font-weight:700;margin-bottom:4px">FCFA / {{ $isFr ? 'mois' : 'month' }}</div>
+            <div style="font-size:14px;color:var(--brand-accent);font-weight:700;margin-bottom:4px">FCFA / {{ $isFr ? 'mois' : 'month' }}</div>
             <div style="font-size:var(--fs-xs);color:var(--text-faint);margin-bottom:16px">{{ $isFr ? 'Selon la charge de travail & l\'infrastructure' : 'Based on workload & infrastructure' }}</div>
-            <a href="{{ route('contact', ['locale' => $locale]) }}" style="display:inline-flex;align-items:center;gap:6px;background:#00C89615;border:1px solid #00C89630;border-radius:8px;padding:9px 16px;font-size:var(--fs-xs);font-weight:700;color:#00C896;text-decoration:none">
+            <a href="{{ route('contact', ['locale' => $locale]) }}" style="display:inline-flex;align-items:center;gap:6px;background:#69D5F515;border:1px solid #69D5F530;border-radius:8px;padding:9px 16px;font-size:var(--fs-xs);font-weight:700;color:var(--brand-accent);text-decoration:none">
                 <i data-lucide="send" style="width:12px;height:12px"></i>{{ $isFr ? 'Demander un devis' : 'Request a quote' }}
             </a>
         </div>
@@ -671,8 +672,8 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
     <h2 class="section-title" style="font-size:clamp(18px,2.5vw,22px)">{{ $isFr ? 'Payez comme vous le souhaitez' : 'Pay the way that works for you' }}</h2>
     <div class="pc-g5" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;max-width:800px;margin:24px auto 0">
         @foreach($isFr
-            ? [['smartphone','#FFCC00','MTN Mobile Money','Paiements MoMo XAF'],['smartphone','#FF6600','Orange Money','Paiements Orange XAF'],['landmark','#1A6FE8','Virement bancaire','XAF · EUR · USD'],['credit-card','#00C896','Carte bancaire','Visa · Mastercard'],['file-text','var(--text-faint)','Bon de commande','Marchés publics & PME']]
-            : [['smartphone','#FFCC00','MTN Mobile Money','MoMo XAF payments'],['smartphone','#FF6600','Orange Money','Orange XAF payments'],['landmark','#1A6FE8','Bank transfer','XAF · EUR · USD'],['credit-card','#00C896','Card payment','Visa · Mastercard'],['file-text','var(--text-faint)','Purchase order','Public procurement & SMEs']]
+            ? [['smartphone','#FFCC00','MTN Mobile Money','Paiements MoMo XAF'],['smartphone','#FF6600','Orange Money','Paiements Orange XAF'],['landmark','#8AC5ED','Virement bancaire','XAF · EUR · USD'],['credit-card','#69D5F5','Carte bancaire','Visa · Mastercard'],['file-text','var(--text-faint)','Bon de commande','Marchés publics & PME']]
+            : [['smartphone','#FFCC00','MTN Mobile Money','MoMo XAF payments'],['smartphone','#FF6600','Orange Money','Orange XAF payments'],['landmark','#8AC5ED','Bank transfer','XAF · EUR · USD'],['credit-card','#69D5F5','Card payment','Visa · Mastercard'],['file-text','var(--text-faint)','Purchase order','Public procurement & SMEs']]
         as $pm)
         <div style="background:#0F172A;border:1px solid #1e293b;border-radius:10px;padding:14px;text-align:center">
             <i data-lucide="{{ $pm[0] }}" style="width:20px;height:20px;color:{{ $pm[1] }};margin-bottom:6px"></i>
@@ -695,7 +696,7 @@ $rfqTile   = 'background:#0F172A;border:1px dashed #1e293b;border-radius:10px;pa
             {{ $isFr ? 'Demander une proposition' : 'Request a proposal' }}
         </a>
         <a href="mailto:{{ config('company.email') }}" class="btn-secondary">
-            <i data-lucide="mail" style="width:14px;height:14px;color:#00C896"></i>
+            <i data-lucide="mail" style="width:14px;height:14px;color:var(--brand-accent)"></i>
             {{ config('company.email') }}
         </a>
     </div>

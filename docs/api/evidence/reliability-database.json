@@ -1,0 +1,15 @@
+{
+  "technicalEnquiries": 1,
+  "technicalDeliveries": 1,
+  "technicalAttempts": 1,
+  "technicalStatus": "sent",
+  "eventId": "ba71fb41-0fcb-4af7-94fb-6e7a61ec16ba",
+  "totalLeads": 18,
+  "deliveryStatuses": {
+    "sent": 18
+  },
+  "legacyLedgerUnchanged": true,
+  "databaseBackupBytes": 49365,
+  "databaseBackupMode": "0600",
+  "temporaryCredentialsRemoved": true
+}

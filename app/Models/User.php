@@ -21,10 +21,26 @@ use App\Models\TrainingRecord;
 use App\Notifications\ResetPasswordNotification;
 
 #[ObservedBy(UserObserver::class)]
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser, \Laravel\Passport\Contracts\OAuthenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, HasRoles, \Laravel\Passport\HasApiTokens;
+    use Notifiable { notify as private notifyImmediately; }
+
+    public function notify($instance)
+    {
+        $context = app(\App\Contexts\Shared\Application\CurrentWorkflow::class);
+        if ($context->command && !\App\Contexts\Shared\Infrastructure\DomainOutbox::$delivering && str_starts_with(get_class($instance), 'App\\Notifications\\')) {
+            \App\Contexts\Shared\Infrastructure\DomainOutbox::append('notification', get_class($instance), [
+                'recipient' => \App\Contexts\Shared\Infrastructure\MessageValueCodec::encode($this),
+                'message' => \App\Contexts\Shared\Infrastructure\MessageValueCodec::message($instance),
+            ]);
+            return;
+        }
+        return $this->notifyImmediately($instance);
+    }
+
+    protected $attributes = ['is_active' => true];
 
     protected $fillable = [
         'name',
@@ -50,7 +66,7 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->hasAnyRole(['super_admin', 'admin', 'support']);
+        return $this->is_active && $this->hasAnyRole(['super_admin', 'admin', 'support']);
     }
 
     protected function casts(): array

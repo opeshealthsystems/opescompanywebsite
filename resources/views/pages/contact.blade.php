@@ -21,25 +21,32 @@
         <p style="color:var(--text-muted);font-size:13px;margin-bottom:24px">{{ __('contact.form_subtitle') }}</p>
 
         @if(session('success'))
-        <div class="contact-success">
-            <i data-lucide="check-circle" style="width:16px;height:16px;color:#00C896"></i>
+        <div class="contact-success" role="status">
+            <i data-lucide="check-circle" style="width:16px;height:16px;color:var(--brand-accent)"></i>
             {{ session('success') }}
         </div>
         @endif
 
         <form action="{{ url($locale.'/contact') }}" method="POST" class="contact-form">
             @csrf
+            @if($errors->any())
+                <div role="alert" class="brand-notice">
+                    <p>{{ $locale === 'fr' ? 'Veuillez corriger les champs suivants :' : 'Please correct the following fields:' }}</p>
+                    <ul>@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
+                </div>
+            @endif
+            <p class="cf-label">{{ $locale === 'fr' ? 'Ne transmettez pas de données de patients dans ce formulaire.' : 'Do not include patient information in this form.' }}</p>
 
             <div class="cf-row">
                 <div class="cf-field">
-                    <label class="cf-label">{{ __('contact.label_name') }}</label>
-                    <input class="cf-input @error('name') cf-error @enderror" type="text" name="name"
+                    <label class="cf-label" for="contact-name">{{ __('contact.label_name') }}</label>
+                    <input id="contact-name" autocomplete="name" class="cf-input @error('name') cf-error @enderror" type="text" name="name"
                            value="{{ old('name') }}" required maxlength="100" placeholder="{{ __('contact.placeholder_name') }}">
                     @error('name')<span class="cf-err-msg">{{ $message }}</span>@enderror
                 </div>
                 <div class="cf-field">
-                    <label class="cf-label">{{ __('contact.label_email') }}</label>
-                    <input class="cf-input @error('email') cf-error @enderror" type="email" name="email"
+                    <label class="cf-label" for="contact-email">{{ __('contact.label_email') }}</label>
+                    <input id="contact-email" autocomplete="email" class="cf-input @error('email') cf-error @enderror" type="email" name="email"
                            value="{{ old('email') }}" required maxlength="150" placeholder="{{ __('contact.placeholder_email') }}">
                     @error('email')<span class="cf-err-msg">{{ $message }}</span>@enderror
                 </div>
@@ -47,12 +54,12 @@
 
             <div class="cf-row">
                 <div class="cf-field">
-                    <label class="cf-label">{{ __('contact.label_phone') }}</label>
-                    <input class="cf-input" type="tel" name="phone" maxlength="30" value="{{ old('phone') }}" placeholder="{{ __('contact.placeholder_phone') }}">
+                    <label class="cf-label" for="contact-phone">{{ __('contact.label_phone') }}</label>
+                    <input id="contact-phone" autocomplete="tel" class="cf-input" type="tel" name="phone" maxlength="30" value="{{ old('phone') }}" placeholder="{{ __('contact.placeholder_phone') }}">
                 </div>
                 <div class="cf-field">
-                    <label class="cf-label">{{ __('contact.label_facility') }}</label>
-                    <select class="cf-input" name="facility_type">
+                    <label class="cf-label" for="contact-facility">{{ __('contact.label_facility') }}</label>
+                    <select id="contact-facility" class="cf-input" name="facility_type">
                         <option value="">{{ __('contact.select_default') }}</option>
                         @foreach(config('facility_types') as $value => $labels)
                         <option value="{{ $value }}" @selected(old('facility_type') === $value)>
@@ -64,14 +71,14 @@
             </div>
 
             <div class="cf-field">
-                <label class="cf-label">{{ __('contact.label_products') }}</label>
-                <input class="cf-input" type="text" name="products"
+                <label class="cf-label" for="contact-products">{{ __('contact.label_products') }}</label>
+                <input id="contact-products" class="cf-input" type="text" name="products"
                        value="{{ old('products') }}" maxlength="255" placeholder="{{ __('contact.placeholder_products') }}">
             </div>
 
             <div class="cf-field">
-                <label class="cf-label">{{ __('contact.label_message') }}</label>
-                <textarea class="cf-input cf-textarea" name="message" rows="4" maxlength="2000"
+                <label class="cf-label" for="contact-message">{{ __('contact.label_message') }}</label>
+                <textarea id="contact-message" class="cf-input cf-textarea" name="message" rows="4" maxlength="2000"
                           placeholder="{{ __('contact.placeholder_message') }}">{{ old('message') }}</textarea>
             </div>
 
@@ -87,21 +94,21 @@
         <div class="contact-info-card">
             <h3 style="font-size:16px;margin-bottom:20px">{{ __('contact.office_title') }}</h3>
             <div class="ci-row">
-                <i data-lucide="map-pin" style="width:15px;height:15px;color:#00C896;flex-shrink:0;margin-top:2px"></i>
+                <i data-lucide="map-pin" style="width:15px;height:15px;color:var(--brand-accent);flex-shrink:0;margin-top:2px"></i>
                 <div>
                     <div style="font-weight:600;color:#e2e8f0">{{ __('contact.office_city') }}</div>
                     <div style="color:var(--text-muted);font-size:13px">{{ __('contact.office_region') }}</div>
                 </div>
             </div>
             <div class="ci-row">
-                <i data-lucide="mail" style="width:15px;height:15px;color:#1A6FE8;flex-shrink:0"></i>
+                <i data-lucide="mail" style="width:15px;height:15px;color:var(--brand-accent);flex-shrink:0"></i>
                 <div>
                     <div style="color:#e2e8f0">contact@opeshealthsystems.com</div>
                     <div style="color:var(--text-muted);font-size:13px">{{ __('contact.office_email_note') }}</div>
                 </div>
             </div>
             <div class="ci-row">
-                <i data-lucide="phone" style="width:15px;height:15px;color:#00C896;flex-shrink:0"></i>
+                <i data-lucide="phone" style="width:15px;height:15px;color:var(--brand-accent);flex-shrink:0"></i>
                 <div>
                     <div style="color:#e2e8f0">{{ config('company.phone') }}</div>
                     <div style="color:var(--text-muted);font-size:13px">{{ __('contact.office_phone_hours') }}</div>
@@ -112,9 +119,9 @@
         <div class="contact-info-card" style="margin-top:20px">
             <h3 style="font-size:15px;margin-bottom:16px">{{ __('contact.steps_title') }}</h3>
             @foreach([
-                ['icon'=>'user-check','color'=>'#00C896','step'=>__('contact.step_0_title'),'desc'=>__('contact.step_0_desc')],
-                ['icon'=>'calendar','color'=>'#1A6FE8','step'=>__('contact.step_1_title'),'desc'=>__('contact.step_1_desc')],
-                ['icon'=>'file-text','color'=>'#00C896','step'=>__('contact.step_2_title'),'desc'=>__('contact.step_2_desc')],
+                ['icon'=>'user-check','color'=>'#69D5F5','step'=>__('contact.step_0_title'),'desc'=>__('contact.step_0_desc')],
+                ['icon'=>'calendar','color'=>'#8AC5ED','step'=>__('contact.step_1_title'),'desc'=>__('contact.step_1_desc')],
+                ['icon'=>'file-text','color'=>'#69D5F5','step'=>__('contact.step_2_title'),'desc'=>__('contact.step_2_desc')],
             ] as $s)
             <div class="ci-step">
                 <div class="ci-step-icon" style="background:rgba(255,255,255,0.05)">

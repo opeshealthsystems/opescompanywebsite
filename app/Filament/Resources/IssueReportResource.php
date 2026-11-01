@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\IssueReportResource\Pages;
 use App\Models\IssueReport;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use Filament\Forms;
 use Filament\Infolists;
 use Filament\Infolists\Infolist;
@@ -92,20 +93,14 @@ class IssueReportResource extends Resource
                             ->required(),
                         Forms\Components\Textarea::make('notes')->rows(3),
                     ])
-                    ->action(function (IssueReport $r, array $data) {
-                        $r->recordClinicalReview(auth()->id(), $data['decision'], $data['notes'] ?? null);
-                        Notification::make()->title('Clinical review recorded.')->success()->send();
-                    }),
+                    ->action(fn (IssueReport $r, array $data) => AdminWorkflowAdapter::run('admin.validation.issues.clinicalReview', $data, ['issue' => $r])),
                 Tables\Actions\Action::make('send_to_product_review')
                     ->label('Send to Product Review')
                     ->icon('heroicon-o-arrow-right-circle')
                     ->color('info')
                     ->visible(fn (IssueReport $r) => $r->status === 'clinical_review' && $r->clinicalApproved())
                     ->requiresConfirmation()
-                    ->action(function (IssueReport $r) {
-                        $r->sendToProductReview();
-                        Notification::make()->title('Sent to product review.')->success()->send();
-                    }),
+                    ->action(fn (IssueReport $r) => AdminWorkflowAdapter::run('admin.validation.issues.sendToProductReview', parameters: ['issue' => $r])),
                 Tables\Actions\Action::make('product_decision')
                     ->label('Product Decision')
                     ->icon('heroicon-o-cube')
@@ -117,20 +112,14 @@ class IssueReportResource extends Resource
                             ->required(),
                         Forms\Components\Textarea::make('notes')->rows(3),
                     ])
-                    ->action(function (IssueReport $r, array $data) {
-                        $r->recordProductReview(auth()->id(), $data['decision'], $data['notes'] ?? null);
-                        Notification::make()->title('Product decision recorded.')->success()->send();
-                    }),
+                    ->action(fn (IssueReport $r, array $data) => AdminWorkflowAdapter::run('admin.validation.issues.productDecision', $data, ['issue' => $r])),
                 Tables\Actions\Action::make('close')
                     ->label('Close')
                     ->icon('heroicon-o-lock-closed')
                     ->color('gray')
                     ->visible(fn (IssueReport $r) => in_array($r->status, ['accepted', 'rejected', 'duplicate', 'retest_passed']))
                     ->requiresConfirmation()
-                    ->action(function (IssueReport $r) {
-                        $r->closeIssue();
-                        Notification::make()->title('Issue closed.')->success()->send();
-                    }),
+                    ->action(fn (IssueReport $r) => AdminWorkflowAdapter::run('admin.validation.issues.close', parameters: ['issue' => $r])),
             ]);
     }
 

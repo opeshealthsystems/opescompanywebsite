@@ -3,7 +3,7 @@
         <span style="color: #9fb0c9; font-size: 0.8125rem;">Document Preview</span>
         <a href="{{ route('documents.pdf', $getRecord()) }}"
            target="_blank"
-           style="color: #00C896; font-size: 0.75rem; text-decoration: none;">
+           style="color: var(--brand-accent); font-size: 0.75rem; text-decoration: none;">
             Download PDF ↗
         </a>
     </div>

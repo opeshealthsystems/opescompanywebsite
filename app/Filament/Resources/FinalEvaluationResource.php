@@ -63,7 +63,10 @@ class FinalEvaluationResource extends Resource
                         && ! \App\Models\ValidationCertificate::where('cohort_member_id', $r->cohort_member_id)->exists())
                     ->requiresConfirmation()
                     ->action(function (\App\Models\FinalEvaluation $r) {
-                        \App\Models\ValidationCertificate::issueFor($r, auth()->id());
+                        app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+                            'admin.validation.finalEvaluations.issueCertificate',
+                            new \App\Contexts\Shared\Application\WorkflowInput([], ['evaluation' => $r], auth()->user(), app()->getLocale()),
+                        );
                         \Filament\Notifications\Notification::make()->title('Certificate issued.')->success()->send();
                     }),
                 Tables\Actions\ViewAction::make(),

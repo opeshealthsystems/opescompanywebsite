@@ -59,7 +59,7 @@
     @if($myApplication)
         <div class="bg-slate-900 border border-slate-700 rounded-xl p-6">
             <div class="flex items-center gap-3 mb-3">
-                <i data-lucide="clipboard-check" style="width:20px;height:20px;color:#00C896"></i>
+                <i data-lucide="clipboard-check" style="width:20px;height:20px;color:var(--brand-accent)"></i>
                 <h2 class="text-white font-semibold text-base">Your Application</h2>
             </div>
             <div class="flex items-center justify-between">

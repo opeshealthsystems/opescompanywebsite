@@ -53,17 +53,17 @@
     </div>
     <h2 class="section-title">{{ $isFr ? 'En-tête de chaque proposition' : 'Header for every proposal' }}</h2>
     <div style="background:#0F172A;border:1px solid #1e293b;border-radius:14px;padding:28px 32px;margin-top:24px;max-width:720px">
-        <div style="font-size:var(--fs-2xs);font-weight:700;color:#00C896;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px">{{ $isFr ? 'PAGE DE COUVERTURE' : 'COVER PAGE' }}</div>
+        <div style="font-size:var(--fs-2xs);font-weight:700;color:var(--brand-accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px">{{ $isFr ? 'PAGE DE COUVERTURE' : 'COVER PAGE' }}</div>
         @foreach($isFr
-            ? [['file-text','#00C896','Titre de la proposition','Ex: Plateforme nationale d\'échange d\'informations de santé pour la République du Cameroun'],
-               ['building-2','#1A6FE8','Préparé par','OPES Health Systems — Building the Digital Health Infrastructure of Africa'],
-               ['hash','#00C896','Numéro de référence','[Insérer la référence]'],
-               ['calendar','#1A6FE8','Date de soumission','[Insérer la date]'],
+            ? [['file-text','#69D5F5','Titre de la proposition','Ex: Plateforme nationale d\'échange d\'informations de santé pour la République du Cameroun'],
+               ['building-2','#8AC5ED','Préparé par','OPES Health Systems — Building the Digital Health Infrastructure of Africa'],
+               ['hash','#69D5F5','Numéro de référence','[Insérer la référence]'],
+               ['calendar','#8AC5ED','Date de soumission','[Insérer la date]'],
                ['lock','#F59E0B','Déclaration de confidentialité','Ce document est propriétaire et confidentiel.']]
-            : [['file-text','#00C896','Proposal title','e.g., National Health Information Exchange Platform for the Republic of Cameroon'],
-               ['building-2','#1A6FE8','Prepared by','OPES Health Systems — Building the Digital Health Infrastructure of Africa'],
-               ['hash','#00C896','Reference number','[Insert reference]'],
-               ['calendar','#1A6FE8','Submission date','[Insert date]'],
+            : [['file-text','#69D5F5','Proposal title','e.g., National Health Information Exchange Platform for the Republic of Cameroon'],
+               ['building-2','#8AC5ED','Prepared by','OPES Health Systems — Building the Digital Health Infrastructure of Africa'],
+               ['hash','#69D5F5','Reference number','[Insert reference]'],
+               ['calendar','#8AC5ED','Submission date','[Insert date]'],
                ['lock','#F59E0B','Confidentiality statement','This document is proprietary and confidential.']]
         as $field)
         <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #0f172a">
@@ -87,41 +87,41 @@
     </div>
     <h2 class="section-title">{{ $isFr ? '17 sections de la proposition complète' : '17 sections in every complete proposal' }}</h2>
     @php $sections = $isFr ? [
-        ['1','Résumé exécutif','#00C896','Aperçu concis : problème, solution proposée, résultats attendus'],
-        ['2','Profil organisationnel','#1A6FE8','Présentation d\'OPES, mission, vision, solutions principales'],
-        ['3','Compréhension des exigences','#00C896','Défis : cliniques, opérationnels, santé publique, interopérabilité, CSU'],
-        ['4','Évaluation de la situation actuelle','#1A6FE8','Systèmes, processus, infrastructure, données et gouvernance existants'],
-        ['5','Solution proposée','#00C896','Vue d\'ensemble de la plateforme, composants, bénéfices stratégiques'],
-        ['6','Architecture technique','#1A6FE8','Application, infrastructure, sécurité, interopérabilité, reprise après sinistre'],
-        ['7','Méthodologie d\'implémentation','#00C896','6 phases : évaluation, conception, déploiement, formation, go-live, optimisation'],
-        ['8','Cadre de gouvernance','#1A6FE8','Comités de pilotage, technique, clinique et de gouvernance des données'],
-        ['9','Stratégie de renforcement des capacités','#00C896','Formation utilisateurs, administrateurs, certifications, transfert de connaissances'],
-        ['10','Plan de durabilité','#1A6FE8','Durabilité opérationnelle, technique, financière et institutionnelle'],
-        ['11','Équipe projet','#00C896','Sponsor exécutif, directeur, architecte, lead clinique, lead sécurité, formateur'],
-        ['12','Gestion des risques','#1A6FE8','Résistance utilisateurs, limites d\'infrastructure, qualité des données, sécurité, délais'],
-        ['13','Proposition financière','#00C896','Licences, implémentation, formation, support, maintenance, services optionnels'],
-        ['14','Cadre de suivi & évaluation','#1A6FE8','Taux d\'adoption, disponibilité, qualité des données, satisfaction, performance'],
-        ['15','Résultats attendus','#00C896','Meilleurs soins, continuité, rapports, planification, utilisation des ressources'],
-        ['16','Pourquoi OPES Health Systems','#1A6FE8','Interopérabilité, contexte africain, présence locale, architecture évolutive'],
-        ['17','Conclusion','#00C896','Engagement partenarial pour une infrastructure de santé numérique durable'],
+        ['1','Résumé exécutif','#69D5F5','Aperçu concis : problème, solution proposée, résultats attendus'],
+        ['2','Profil organisationnel','#8AC5ED','Présentation d\'OPES, mission, vision, solutions principales'],
+        ['3','Compréhension des exigences','#69D5F5','Défis : cliniques, opérationnels, santé publique, interopérabilité, CSU'],
+        ['4','Évaluation de la situation actuelle','#8AC5ED','Systèmes, processus, infrastructure, données et gouvernance existants'],
+        ['5','Solution proposée','#69D5F5','Vue d\'ensemble de la plateforme, composants, bénéfices stratégiques'],
+        ['6','Architecture technique','#8AC5ED','Application, infrastructure, sécurité, interopérabilité, reprise après sinistre'],
+        ['7','Méthodologie d\'implémentation','#69D5F5','6 phases : évaluation, conception, déploiement, formation, go-live, optimisation'],
+        ['8','Cadre de gouvernance','#8AC5ED','Comités de pilotage, technique, clinique et de gouvernance des données'],
+        ['9','Stratégie de renforcement des capacités','#69D5F5','Formation utilisateurs, administrateurs, certifications, transfert de connaissances'],
+        ['10','Plan de durabilité','#8AC5ED','Durabilité opérationnelle, technique, financière et institutionnelle'],
+        ['11','Équipe projet','#69D5F5','Sponsor exécutif, directeur, architecte, lead clinique, lead sécurité, formateur'],
+        ['12','Gestion des risques','#8AC5ED','Résistance utilisateurs, limites d\'infrastructure, qualité des données, sécurité, délais'],
+        ['13','Proposition financière','#69D5F5','Licences, implémentation, formation, support, maintenance, services optionnels'],
+        ['14','Cadre de suivi & évaluation','#8AC5ED','Taux d\'adoption, disponibilité, qualité des données, satisfaction, performance'],
+        ['15','Résultats attendus','#69D5F5','Meilleurs soins, continuité, rapports, planification, utilisation des ressources'],
+        ['16','Pourquoi OPES Health Systems','#8AC5ED','Interopérabilité, contexte africain, présence locale, architecture évolutive'],
+        ['17','Conclusion','#69D5F5','Engagement partenarial pour une infrastructure de santé numérique durable'],
     ] : [
-        ['1','Executive Summary','#00C896','Concise overview: problem, proposed solution, expected outcomes'],
-        ['2','Organisational Profile','#1A6FE8','OPES overview, mission, vision, core solutions'],
-        ['3','Understanding of Requirements','#00C896','Challenges: clinical, operational, public health, interoperability, UHC'],
-        ['4','Current Situation Assessment','#1A6FE8','Existing systems, processes, infrastructure, data and governance structures'],
-        ['5','Proposed Solution','#00C896','Platform overview, components, strategic benefits'],
-        ['6','Technical Architecture','#1A6FE8','Application, infrastructure, security, interoperability, disaster recovery'],
-        ['7','Implementation Methodology','#00C896','6 phases: assessment, design, deployment, training, go-live, optimisation'],
-        ['8','Governance Framework','#1A6FE8','Steering, technical, clinical, and data governance committees'],
-        ['9','Capacity Building Strategy','#00C896','User training, administrator training, certifications, knowledge transfer'],
-        ['10','Sustainability Plan','#1A6FE8','Operational, technical, financial, and institutional sustainability'],
-        ['11','Project Team','#00C896','Executive sponsor, director, architect, clinical lead, security lead, trainer'],
-        ['12','Risk Management','#1A6FE8','User resistance, infrastructure limits, data quality, security, timeline risks'],
-        ['13','Financial Proposal','#00C896','Licensing, implementation, training, support, maintenance, optional services'],
-        ['14','Monitoring & Evaluation Framework','#1A6FE8','Adoption rate, availability, data quality, user satisfaction, reporting performance'],
-        ['15','Expected Outcomes','#00C896','Better care, continuity, public health reporting, planning, resource utilisation'],
-        ['16','Why OPES Health Systems','#1A6FE8','Interoperability, African context, local presence, scalable architecture'],
-        ['17','Conclusion','#00C896','Partnership commitment for sustainable digital health infrastructure'],
+        ['1','Executive Summary','#69D5F5','Concise overview: problem, proposed solution, expected outcomes'],
+        ['2','Organisational Profile','#8AC5ED','OPES overview, mission, vision, core solutions'],
+        ['3','Understanding of Requirements','#69D5F5','Challenges: clinical, operational, public health, interoperability, UHC'],
+        ['4','Current Situation Assessment','#8AC5ED','Existing systems, processes, infrastructure, data and governance structures'],
+        ['5','Proposed Solution','#69D5F5','Platform overview, components, strategic benefits'],
+        ['6','Technical Architecture','#8AC5ED','Application, infrastructure, security, interoperability, disaster recovery'],
+        ['7','Implementation Methodology','#69D5F5','6 phases: assessment, design, deployment, training, go-live, optimisation'],
+        ['8','Governance Framework','#8AC5ED','Steering, technical, clinical, and data governance committees'],
+        ['9','Capacity Building Strategy','#69D5F5','User training, administrator training, certifications, knowledge transfer'],
+        ['10','Sustainability Plan','#8AC5ED','Operational, technical, financial, and institutional sustainability'],
+        ['11','Project Team','#69D5F5','Executive sponsor, director, architect, clinical lead, security lead, trainer'],
+        ['12','Risk Management','#8AC5ED','User resistance, infrastructure limits, data quality, security, timeline risks'],
+        ['13','Financial Proposal','#69D5F5','Licensing, implementation, training, support, maintenance, optional services'],
+        ['14','Monitoring & Evaluation Framework','#8AC5ED','Adoption rate, availability, data quality, user satisfaction, reporting performance'],
+        ['15','Expected Outcomes','#69D5F5','Better care, continuity, public health reporting, planning, resource utilisation'],
+        ['16','Why OPES Health Systems','#8AC5ED','Interoperability, African context, local presence, scalable architecture'],
+        ['17','Conclusion','#69D5F5','Partnership commitment for sustainable digital health infrastructure'],
     ]; @endphp
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:28px">
         @foreach($sections as $sec)
@@ -150,11 +150,11 @@
             <h3 style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:14px">{{ $isFr ? 'Structure en 3 parties' : '3-part structure' }}</h3>
             @foreach($isFr
                 ? [['alert-triangle','#EF4444','Problème','Défis actuels de santé auxquels le client est confronté.'],
-                   ['cpu','#00C896','Solution proposée','Plateforme OPES Health OS et composants recommandés.'],
-                   ['trending-up','#1A6FE8','Résultats attendus','Meilleurs soins, rapports, interopérabilité, résultats patients.']]
+                   ['cpu','#69D5F5','Solution proposée','Plateforme OPES Health OS et composants recommandés.'],
+                   ['trending-up','#8AC5ED','Résultats attendus','Meilleurs soins, rapports, interopérabilité, résultats patients.']]
                 : [['alert-triangle','#EF4444','Problem','Current healthcare challenges the client faces.'],
-                   ['cpu','#00C896','Proposed solution','OPES Health OS platform and recommended components.'],
-                   ['trending-up','#1A6FE8','Expected outcomes','Better care, reporting, interoperability, patient outcomes.']]
+                   ['cpu','#69D5F5','Proposed solution','OPES Health OS platform and recommended components.'],
+                   ['trending-up','#8AC5ED','Expected outcomes','Better care, reporting, interoperability, patient outcomes.']]
             as $es)
             <div style="display:flex;gap:12px;padding:14px;background:#0F172A;border-radius:10px;border-left:2px solid {{ $es[1] }};margin-bottom:10px">
                 <i data-lucide="{{ $es[0] }}" style="width:14px;height:14px;color:{{ $es[1] }};flex-shrink:0;margin-top:1px"></i>
@@ -178,7 +178,7 @@
                     : ['Health ID','EMR','HIS','Laboratory','Pharmacy','HIE','Registries','Analytics','Surveillance']
                 as $comp)
                 <div style="display:flex;align-items:center;gap:6px;padding:7px 9px;background:#0F172A;border-radius:7px;border:1px solid #1e293b">
-                    <i data-lucide="check" style="width:10px;height:10px;color:#00C896;flex-shrink:0"></i>
+                    <i data-lucide="check" style="width:10px;height:10px;color:var(--brand-accent);flex-shrink:0"></i>
                     <span style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $comp }}</span>
                 </div>
                 @endforeach
@@ -189,7 +189,7 @@
                 : ['Better care','Better reporting','Better planning','Better governance']
             as $ben)
             <div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #0f172a40">
-                <i data-lucide="arrow-right" style="width:10px;height:10px;color:#1A6FE8;flex-shrink:0"></i>
+                <i data-lucide="arrow-right" style="width:10px;height:10px;color:var(--brand-accent);flex-shrink:0"></i>
                 <span style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $ben }}</span>
             </div>
             @endforeach
@@ -209,19 +209,19 @@
     <div style="position:relative;margin-top:36px;overflow-x:auto;padding-bottom:8px">
         <div style="display:flex;gap:0;min-width:700px;align-items:flex-start">
             @php $phases = $isFr ? [
-                ['search','#00C896','1','Évaluation','Engagement parties prenantes · Évaluation infrastructure · Évaluation workflows'],
-                ['cpu','#1A6FE8','2','Conception','Configuration · Conception de l\'architecture'],
-                ['server','#00C896','3','Déploiement','Installation · Tests · Migration des données'],
-                ['graduation-cap','#1A6FE8','4','Formation','Formation utilisateurs finaux · Formation administrateurs'],
-                ['zap','#00C896','5','Go-Live','Activation en production · Support Hypercare'],
-                ['trending-up','#1A6FE8','6','Optimisation','Suivi des KPIs · Amélioration continue'],
+                ['search','#69D5F5','1','Évaluation','Engagement parties prenantes · Évaluation infrastructure · Évaluation workflows'],
+                ['cpu','#8AC5ED','2','Conception','Configuration · Conception de l\'architecture'],
+                ['server','#69D5F5','3','Déploiement','Installation · Tests · Migration des données'],
+                ['graduation-cap','#8AC5ED','4','Formation','Formation utilisateurs finaux · Formation administrateurs'],
+                ['zap','#69D5F5','5','Go-Live','Activation en production · Support Hypercare'],
+                ['trending-up','#8AC5ED','6','Optimisation','Suivi des KPIs · Amélioration continue'],
             ] : [
-                ['search','#00C896','1','Assessment','Stakeholder engagement · Infrastructure assessment · Workflow assessment'],
-                ['cpu','#1A6FE8','2','Design','Configuration · Architecture design'],
-                ['server','#00C896','3','Deployment','Installation · Testing · Data migration'],
-                ['graduation-cap','#1A6FE8','4','Training','End-user training · Administrator training'],
-                ['zap','#00C896','5','Go-Live','Production activation · Hypercare support'],
-                ['trending-up','#1A6FE8','6','Optimisation','KPI monitoring · Continuous improvement'],
+                ['search','#69D5F5','1','Assessment','Stakeholder engagement · Infrastructure assessment · Workflow assessment'],
+                ['cpu','#8AC5ED','2','Design','Configuration · Architecture design'],
+                ['server','#69D5F5','3','Deployment','Installation · Testing · Data migration'],
+                ['graduation-cap','#8AC5ED','4','Training','End-user training · Administrator training'],
+                ['zap','#69D5F5','5','Go-Live','Production activation · Hypercare support'],
+                ['trending-up','#8AC5ED','6','Optimisation','KPI monitoring · Continuous improvement'],
             ]; @endphp
             @foreach($phases as $idx => $ph)
             <div style="display:flex;align-items:flex-start;flex:1;min-width:0">
@@ -259,16 +259,16 @@
             </div>
             <h3 style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:16px">{{ $isFr ? 'Fondations techniques non-négociables' : 'Non-negotiable technical foundations' }}</h3>
             @foreach($isFr
-                ? [['share-2','#00C896','Interopérabilité en premier','FHIR R4/R5, HL7, APIs ouvertes par défaut'],
-                   ['shield','#1A6FE8','Sécurité by design','Authentification, chiffrement, audit intégré dès la conception'],
-                   ['lock','#00C896','Confidentialité by design','Consentement, gouvernance des données, contrôles réglementaires'],
-                   ['trending-up','#1A6FE8','Évolutivité','Conçu pour évoluer du cabinet clinique à la plateforme nationale'],
-                   ['activity','#00C896','Résilience','Reprise après sinistre, haute disponibilité, mode hors ligne']]
-                : [['share-2','#00C896','Interoperability first','FHIR R4/R5, HL7, open APIs by default'],
-                   ['shield','#1A6FE8','Security by design','Authentication, encryption, audit built in from the start'],
-                   ['lock','#00C896','Privacy by design','Consent, data governance, regulatory controls'],
-                   ['trending-up','#1A6FE8','Scalability','Built to scale from clinic to national platform'],
-                   ['activity','#00C896','Resilience','Disaster recovery, high availability, offline mode']]
+                ? [['share-2','#69D5F5','Interopérabilité en premier','FHIR R4/R5, HL7, APIs ouvertes par défaut'],
+                   ['shield','#8AC5ED','Sécurité by design','Authentification, chiffrement, audit intégré dès la conception'],
+                   ['lock','#69D5F5','Confidentialité by design','Consentement, gouvernance des données, contrôles réglementaires'],
+                   ['trending-up','#8AC5ED','Évolutivité','Conçu pour évoluer du cabinet clinique à la plateforme nationale'],
+                   ['activity','#69D5F5','Résilience','Reprise après sinistre, haute disponibilité, mode hors ligne']]
+                : [['share-2','#69D5F5','Interoperability first','FHIR R4/R5, HL7, open APIs by default'],
+                   ['shield','#8AC5ED','Security by design','Authentication, encryption, audit built in from the start'],
+                   ['lock','#69D5F5','Privacy by design','Consent, data governance, regulatory controls'],
+                   ['trending-up','#8AC5ED','Scalability','Built to scale from clinic to national platform'],
+                   ['activity','#69D5F5','Resilience','Disaster recovery, high availability, offline mode']]
             as $prin)
             <div style="display:flex;gap:10px;padding:10px 12px;background:#0F172A;border-radius:8px;border:1px solid #1e293b;margin-bottom:7px">
                 <i data-lucide="{{ $prin[0] }}" style="width:13px;height:13px;color:{{ $prin[1] }};flex-shrink:0;margin-top:1px"></i>
@@ -287,14 +287,14 @@
             </div>
             <h3 style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:16px">{{ $isFr ? '4 comités de supervision' : '4 oversight committees' }}</h3>
             @foreach($isFr
-                ? [['#00C896','Comité de pilotage','Supervision stratégique — direction générale, ministère, partenaires'],
-                   ['#1A6FE8','Comité technique','Supervision technique — architecture, sécurité, infrastructure'],
-                   ['#00C896','Comité clinique','Supervision clinique — workflows, sécurité patient, qualité'],
-                   ['#1A6FE8','Comité de gouvernance des données','Gouvernance de l\'information — confidentialité, qualité, conformité']]
-                : [['#00C896','Steering Committee','Strategic oversight — executive leadership, ministry, partners'],
-                   ['#1A6FE8','Technical Committee','Technical oversight — architecture, security, infrastructure'],
-                   ['#00C896','Clinical Committee','Clinical oversight — workflows, patient safety, quality'],
-                   ['#1A6FE8','Data Governance Committee','Information governance — privacy, data quality, compliance']]
+                ? [['#69D5F5','Comité de pilotage','Supervision stratégique — direction générale, ministère, partenaires'],
+                   ['#8AC5ED','Comité technique','Supervision technique — architecture, sécurité, infrastructure'],
+                   ['#69D5F5','Comité clinique','Supervision clinique — workflows, sécurité patient, qualité'],
+                   ['#8AC5ED','Comité de gouvernance des données','Gouvernance de l\'information — confidentialité, qualité, conformité']]
+                : [['#69D5F5','Steering Committee','Strategic oversight — executive leadership, ministry, partners'],
+                   ['#8AC5ED','Technical Committee','Technical oversight — architecture, security, infrastructure'],
+                   ['#69D5F5','Clinical Committee','Clinical oversight — workflows, patient safety, quality'],
+                   ['#8AC5ED','Data Governance Committee','Information governance — privacy, data quality, compliance']]
             as $idx => $com)
             <div style="padding:16px;background:#0F172A;border-radius:10px;border-left:3px solid {{ $com[0] }};margin-bottom:10px">
                 <div style="font-size:var(--fs-xs);font-weight:700;color:#e2e8f0;margin-bottom:4px">{{ $com[1] }}</div>
@@ -318,14 +318,14 @@
             </div>
             <h3 style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:16px">{{ $isFr ? '4 piliers de durabilité' : '4 sustainability pillars' }}</h3>
             @foreach($isFr
-                ? [['#00C896','activity','Durabilité opérationnelle','Garantir la continuité des opérations après le déploiement initial.'],
-                   ['#1A6FE8','cpu','Durabilité technique','Développer la capacité technique locale pour la maintenance et l\'évolution.'],
-                   ['#00C896','dollar-sign','Durabilité financière','Soutenir la viabilité à long terme avec un modèle de financement pérenne.'],
-                   ['#1A6FE8','building','Durabilité institutionnelle','Ancrer la propriété au sein des institutions locales et du gouvernement.']]
-                : [['#00C896','activity','Operational sustainability','Ensure continued operation after initial deployment.'],
-                   ['#1A6FE8','cpu','Technical sustainability','Develop local technical capacity for maintenance and evolution.'],
-                   ['#00C896','dollar-sign','Financial sustainability','Support long-term viability with a sustainable financing model.'],
-                   ['#1A6FE8','building','Institutional sustainability','Embed ownership within local institutions and government.']]
+                ? [['#69D5F5','activity','Durabilité opérationnelle','Garantir la continuité des opérations après le déploiement initial.'],
+                   ['#8AC5ED','cpu','Durabilité technique','Développer la capacité technique locale pour la maintenance et l\'évolution.'],
+                   ['#69D5F5','dollar-sign','Durabilité financière','Soutenir la viabilité à long terme avec un modèle de financement pérenne.'],
+                   ['#8AC5ED','building','Durabilité institutionnelle','Ancrer la propriété au sein des institutions locales et du gouvernement.']]
+                : [['#69D5F5','activity','Operational sustainability','Ensure continued operation after initial deployment.'],
+                   ['#8AC5ED','cpu','Technical sustainability','Develop local technical capacity for maintenance and evolution.'],
+                   ['#69D5F5','dollar-sign','Financial sustainability','Support long-term viability with a sustainable financing model.'],
+                   ['#8AC5ED','building','Institutional sustainability','Embed ownership within local institutions and government.']]
             as $sus)
             <div style="padding:14px 16px;background:#0F172A;border-radius:10px;border-left:2px solid {{ $sus[0] }};margin-bottom:8px">
                 <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
@@ -344,16 +344,16 @@
             </div>
             <h3 style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:16px">{{ $isFr ? '7 rôles clés' : '7 key roles' }}</h3>
             @foreach($isFr
-                ? [['#00C896','Sponsor exécutif'],['#1A6FE8','Directeur de projet'],['#00C896','Architecte de solution'],['#1A6FE8','Lead clinique'],['#00C896','Lead implémentation'],['#1A6FE8','Lead sécurité'],['#00C896','Lead formation']]
-                : [['#00C896','Executive Sponsor'],['#1A6FE8','Project Director'],['#00C896','Solution Architect'],['#1A6FE8','Clinical Lead'],['#00C896','Implementation Lead'],['#1A6FE8','Security Lead'],['#00C896','Training Lead']]
+                ? [['#69D5F5','Sponsor exécutif'],['#8AC5ED','Directeur de projet'],['#69D5F5','Architecte de solution'],['#8AC5ED','Lead clinique'],['#69D5F5','Lead implémentation'],['#8AC5ED','Lead sécurité'],['#69D5F5','Lead formation']]
+                : [['#69D5F5','Executive Sponsor'],['#8AC5ED','Project Director'],['#69D5F5','Solution Architect'],['#8AC5ED','Clinical Lead'],['#69D5F5','Implementation Lead'],['#8AC5ED','Security Lead'],['#69D5F5','Training Lead']]
             as $role)
             <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#0F172A;border-radius:8px;border:1px solid #1e293b;margin-bottom:6px">
                 <div style="width:8px;height:8px;border-radius:50%;background:{{ $role[0] }};flex-shrink:0"></div>
                 <span style="font-size:var(--fs-xs);color:var(--text-muted);font-weight:500">{{ $role[1] }}</span>
             </div>
             @endforeach
-            <div style="margin-top:14px;padding:12px 14px;background:#00C89608;border:1px solid #00C89620;border-radius:9px">
-                <div style="font-size:var(--fs-xs);color:#00C896;font-weight:600;margin-bottom:4px">{{ $isFr ? 'Formation via' : 'Training delivered via' }}</div>
+            <div style="margin-top:14px;padding:12px 14px;background:#69D5F508;border:1px solid #69D5F520;border-radius:9px">
+                <div style="font-size:var(--fs-xs);color:var(--brand-accent);font-weight:600;margin-bottom:4px">{{ $isFr ? 'Formation via' : 'Training delivered via' }}</div>
                 <div style="font-size:var(--fs-xs);color:var(--text-muted)">{{ $isFr ? 'OPES Academy — Utilisateurs, administrateurs, certifications et transfert de connaissances' : 'OPES Academy — Users, administrators, certifications, and knowledge transfer' }}</div>
             </div>
         </div>
@@ -371,22 +371,22 @@
     <h2 class="section-title">{{ $isFr ? '8 raisons pour les gouvernements de choisir OPES' : '8 reasons governments choose OPES' }}</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:28px">
         @foreach($isFr
-            ? [['share-2','#00C896','Interopérabilité en premier','Standards HL7 FHIR par défaut, pas en option.'],
-               ['map','#1A6FE8','Contexte africain','Conçu pour les défis et réalités de santé africains.'],
-               ['map-pin','#00C896','Présence locale','Support terrain, maintenance et équipes d\'implémentation locales.'],
-               ['trending-up','#1A6FE8','Architecture évolutive','De la clinique au système de santé national.'],
-               ['fingerprint','#00C896','Infrastructure Health ID','Identité patient unique à travers tous les établissements.'],
-               ['cpu','#1A6FE8','Intelligence clinique','CDSS, triage, analytique population, surveillance.'],
-               ['graduation-cap','#00C896','Renforcement des capacités','Développement des compétences locales via OPES Academy.'],
-               ['handshake','#1A6FE8','Partenariat à long terme','Engagement au-delà du déploiement initial.']]
-            : [['share-2','#00C896','Interoperability first','HL7 FHIR standards by default, not optional.'],
-               ['map','#1A6FE8','African context','Designed for African healthcare challenges and realities.'],
-               ['map-pin','#00C896','Local presence','On-the-ground support, maintenance, and local implementation teams.'],
-               ['trending-up','#1A6FE8','Scalable architecture','From clinic to national health system.'],
-               ['fingerprint','#00C896','Health ID infrastructure','Unique patient identity across all facilities.'],
-               ['cpu','#1A6FE8','Clinical intelligence','CDSS, triage, population analytics, surveillance.'],
-               ['graduation-cap','#00C896','Capacity building','Local skill development through OPES Academy.'],
-               ['handshake','#1A6FE8','Long-term partnership','Commitment beyond initial deployment.']]
+            ? [['share-2','#69D5F5','Interopérabilité en premier','Standards HL7 FHIR par défaut, pas en option.'],
+               ['map','#8AC5ED','Contexte africain','Conçu pour les défis et réalités de santé africains.'],
+               ['map-pin','#69D5F5','Présence locale','Support terrain, maintenance et équipes d\'implémentation locales.'],
+               ['trending-up','#8AC5ED','Architecture évolutive','De la clinique au système de santé national.'],
+               ['fingerprint','#69D5F5','Infrastructure Health ID','Identité patient unique à travers tous les établissements.'],
+               ['cpu','#8AC5ED','Intelligence clinique','CDSS, triage, analytique population, surveillance.'],
+               ['graduation-cap','#69D5F5','Renforcement des capacités','Développement des compétences locales via OPES Academy.'],
+               ['handshake','#8AC5ED','Partenariat à long terme','Engagement au-delà du déploiement initial.']]
+            : [['share-2','#69D5F5','Interoperability first','HL7 FHIR standards by default, not optional.'],
+               ['map','#8AC5ED','African context','Designed for African healthcare challenges and realities.'],
+               ['map-pin','#69D5F5','Local presence','On-the-ground support, maintenance, and local implementation teams.'],
+               ['trending-up','#8AC5ED','Scalable architecture','From clinic to national health system.'],
+               ['fingerprint','#69D5F5','Health ID infrastructure','Unique patient identity across all facilities.'],
+               ['cpu','#8AC5ED','Clinical intelligence','CDSS, triage, population analytics, surveillance.'],
+               ['graduation-cap','#69D5F5','Capacity building','Local skill development through OPES Academy.'],
+               ['handshake','#8AC5ED','Long-term partnership','Commitment beyond initial deployment.']]
         as $why)
         <div style="background:#0F172A;border:1px solid #1e293b;border-radius:12px;padding:16px">
             <div style="width:32px;height:32px;border-radius:8px;background:{{ $why[1] }}15;display:flex;align-items:center;justify-content:center;margin-bottom:10px">

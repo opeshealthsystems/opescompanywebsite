@@ -30,11 +30,10 @@ class ViewPurchaseOrder extends ViewRecord
                 ->visible(fn () => $this->record->status === 'submitted'
                     && auth()->user()?->hasAnyRole(['super_admin', 'admin']))
                 ->action(function () {
-                    $this->record->update([
-                        'status'      => 'approved',
-                        'approved_by' => auth()->id(),
-                        'approved_at' => now(),
-                    ]);
+                    app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+                        'admin.finance.purchaseOrders.approve',
+                        new \App\Contexts\Shared\Application\WorkflowInput([], ['purchaseOrder' => $this->record], auth()->user(), app()->getLocale()),
+                    );
                 })
                 ->after(fn () => $this->refreshFormData(['status', 'approved_by', 'approved_at'])),
 
@@ -45,10 +44,10 @@ class ViewPurchaseOrder extends ViewRecord
                 ->requiresConfirmation()
                 ->visible(fn () => $this->record->status === 'approved')
                 ->action(function () {
-                    $this->record->update([
-                        'status'        => 'received',
-                        'received_date' => now(),
-                    ]);
+                    app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+                        'admin.finance.purchaseOrders.receive',
+                        new \App\Contexts\Shared\Application\WorkflowInput([], ['purchaseOrder' => $this->record], auth()->user(), app()->getLocale()),
+                    );
                 })
                 ->after(fn () => $this->refreshFormData(['status', 'received_date'])),
         ];

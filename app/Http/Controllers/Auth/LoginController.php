@@ -54,6 +54,16 @@ class LoginController extends Controller
         RateLimiter::clear($throttleKey);
         $request->session()->regenerate();
 
+        $intended = $request->session()->pull('url.intended');
+        if (is_string($intended)) {
+            $parts = parse_url($intended);
+            if (($parts['path'] ?? '') === '/oauth/authorize'
+                && (!isset($parts['host']) || $parts['host'] === $request->getHost())
+                && (!isset($parts['scheme']) || $parts['scheme'] === $request->getScheme())
+                && ($parts['port'] ?? null) === (parse_url($request->getSchemeAndHttpHost(), PHP_URL_PORT) ?: null)
+                && !str_contains($intended, '\\')) return redirect($intended);
+        }
+
         if ($user->hasAnyRole(['super_admin', 'admin'])) {
             return redirect('/admin');
         }

@@ -64,7 +64,7 @@
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;">
             <div>
                 <p style="color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.25rem;">License Key</p>
-                <p style="color:#00C896;font-family:monospace;font-size:0.9rem;word-break:break-all;">{{ $license->license_key }}</p>
+                <p style="color:var(--brand-accent);font-family:monospace;font-size:0.9rem;word-break:break-all;">{{ $license->license_key }}</p>
             </div>
             <div>
                 <p style="color:var(--text-muted);font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.25rem;">Status</p>
@@ -109,7 +109,7 @@
     <div class="cp-section-card" style="margin-top:1rem;">
         <p style="color:var(--text-muted);font-size:0.8125rem;line-height:1.7;">
             Need to renew, upgrade, or have questions about this license? Contact
-            <a href="mailto:support@opeshealthsystems.com" style="color:#00C896;">support@opeshealthsystems.com</a>
+            <a href="mailto:support@opeshealthsystems.com" style="color:var(--brand-accent);">support@opeshealthsystems.com</a>
             or call {{ config('company.phone') }}.
         </p>
     </div>

@@ -3,7 +3,7 @@
 return [
     // Méta
     'meta_title'         => "À propos d'OPES Health Systems — Bâtir l'infrastructure de santé numérique de l'Afrique",
-    'meta_desc'          => "OPES Health Systems est une entreprise healthtech basée au Cameroun, avec 22 systèmes logiciels de santé intégrés pour la région CEMAC. Découvrez notre mission, notre vision et notre histoire.",
+    'meta_desc'          => "OPES Health Systems est une entreprise healthtech basée au Cameroun, avec un catalogue de logiciels de santé pour la région CEMAC. Découvrez notre mission, notre vision et notre histoire.",
 
     // Héros
     'hero_eyebrow'       => 'À propos d\'OPES Health Systems',

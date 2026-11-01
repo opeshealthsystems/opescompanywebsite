@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\LeaveRequestResource\Pages;
 use App\Models\LeaveRequest;
 use App\Models\User;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Infolists;
@@ -24,6 +25,16 @@ class LeaveRequestResource extends Resource
     public static function canAccess(): bool
     {
         return auth()->user()?->hasAnyRole(['super_admin', 'admin']) ?? false;
+    }
+
+    public static function canEdit(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return static::canAccess() && $record->status === 'pending';
+    }
+
+    public static function canDelete(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return static::canAccess() && $record->status === 'pending';
     }
 
     public static function getNavigationBadge(): ?string
@@ -88,9 +99,11 @@ class LeaveRequestResource extends Resource
                 ->schema([
                     Forms\Components\Select::make('status')
                         ->options(LeaveRequest::statusOptions())
+                        ->disabled()->dehydrated(false)
                         ->default('pending'),
 
                     Forms\Components\Select::make('approved_by')
+                        ->disabled()->dehydrated(false)
                         ->label('Approved By')
                         ->options(fn () => User::whereHas('roles', fn ($q) =>
                             $q->whereIn('name', ['super_admin', 'admin'])
@@ -99,6 +112,7 @@ class LeaveRequestResource extends Resource
                         ->nullable(),
 
                     Forms\Components\DateTimePicker::make('approved_at')
+                        ->disabled()->dehydrated(false)
                         ->nullable(),
 
                     Forms\Components\Textarea::make('notes')
@@ -174,12 +188,7 @@ class LeaveRequestResource extends Resource
                     ->hidden(fn (LeaveRequest $record) => $record->status !== 'pending')
                     ->visible(fn () => auth()->user()?->hasAnyRole(['super_admin', 'admin']))
                     ->action(function (LeaveRequest $record) {
-                        $record->update([
-                            'status'      => 'approved',
-                            'approved_by' => auth()->id(),
-                            'approved_at' => now(),
-                        ]);
-                        $record->deductFromBalance();
+                        AdminWorkflowAdapter::run('admin.workforce.leaves.approve', parameters: ['leave' => $record]);
                         \Filament\Notifications\Notification::make()
                             ->title('Leave request approved')
                             ->success()
@@ -193,11 +202,7 @@ class LeaveRequestResource extends Resource
                     ->hidden(fn (LeaveRequest $record) => $record->status !== 'pending')
                     ->visible(fn () => auth()->user()?->hasAnyRole(['super_admin', 'admin']))
                     ->action(function (LeaveRequest $record) {
-                        $record->update([
-                            'status'      => 'rejected',
-                            'approved_by' => auth()->id(),
-                            'approved_at' => now(),
-                        ]);
+                        AdminWorkflowAdapter::run('admin.workforce.leaves.reject', parameters: ['leave' => $record]);
                         \Filament\Notifications\Notification::make()
                             ->title('Leave request rejected')
                             ->danger()
@@ -213,15 +218,7 @@ class LeaveRequestResource extends Resource
                         ->requiresConfirmation()
                         ->deselectRecordsAfterCompletion()
                         ->action(function ($records) {
-                            $records->each(function ($record) {
-                                if ($record->status === 'pending') {
-                                    $record->update([
-                                        'status'      => 'approved',
-                                        'approved_by' => auth()->id(),
-                                        'approved_at' => now(),
-                                    ]);
-                                }
-                            });
+                            AdminWorkflowAdapter::run('admin.workforce.leaves.bulkApprove', ['ids' => $records->modelKeys()]);
                             \Filament\Notifications\Notification::make()
                                 ->title('Selected leave requests approved')
                                 ->success()
@@ -235,15 +232,7 @@ class LeaveRequestResource extends Resource
                         ->requiresConfirmation()
                         ->deselectRecordsAfterCompletion()
                         ->action(function ($records) {
-                            $records->each(function ($record) {
-                                if ($record->status === 'pending') {
-                                    $record->update([
-                                        'status'      => 'rejected',
-                                        'approved_by' => auth()->id(),
-                                        'approved_at' => now(),
-                                    ]);
-                                }
-                            });
+                            AdminWorkflowAdapter::run('admin.workforce.leaves.bulkReject', ['ids' => $records->modelKeys()]);
                             \Filament\Notifications\Notification::make()
                                 ->title('Selected leave requests rejected')
                                 ->danger()
@@ -251,6 +240,9 @@ class LeaveRequestResource extends Resource
                         }),
 
                     Tables\Actions\DeleteBulkAction::make()
+                        ->before(function ($records) {
+                            abort_unless($records->every(fn ($record) => $record->status === 'pending'), 422, 'Decided leave requests must be retained.');
+                        })
                         ->visible(fn () => auth()->user()?->hasAnyRole(['super_admin', 'admin'])),
                 ]),
             ]);

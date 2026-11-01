@@ -25,7 +25,7 @@
 
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 mb-6">
             <h2 class="flex items-center gap-2 text-base font-semibold text-white mb-5">
-                <i data-lucide="user" style="width:18px;height:18px;color:#00C896"></i> Contact Details
+                <i data-lucide="user" style="width:18px;height:18px;color:var(--brand-accent)"></i> Contact Details
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="flex flex-col gap-1">
@@ -52,7 +52,7 @@
 
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 mb-6">
             <h2 class="flex items-center gap-2 text-base font-semibold text-white mb-5">
-                <i data-lucide="stethoscope" style="width:18px;height:18px;color:#00C896"></i> Professional Information
+                <i data-lucide="stethoscope" style="width:18px;height:18px;color:var(--brand-accent)"></i> Professional Information
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="flex flex-col gap-1">
@@ -91,7 +91,7 @@
 
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 mb-6">
             <h2 class="flex items-center gap-2 text-base font-semibold text-white mb-5">
-                <i data-lucide="building-2" style="width:18px;height:18px;color:#00C896"></i> Workplace
+                <i data-lucide="building-2" style="width:18px;height:18px;color:var(--brand-accent)"></i> Workplace
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="flex flex-col gap-1 sm:col-span-2">
@@ -117,7 +117,7 @@
 
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 mb-6">
             <h2 class="flex items-center gap-2 text-base font-semibold text-white mb-5">
-                <i data-lucide="banknote" style="width:18px;height:18px;color:#00C896"></i> Payout Details
+                <i data-lucide="banknote" style="width:18px;height:18px;color:var(--brand-accent)"></i> Payout Details
             </h2>
             <div class="flex flex-col gap-1">
                 <label for="payout_number" class="text-xs font-medium text-slate-400 uppercase tracking-wide">Mobile-Money Number</label>
@@ -130,7 +130,7 @@
 
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 mb-6">
             <h2 class="flex items-center gap-2 text-base font-semibold text-white mb-5">
-                <i data-lucide="file-text" style="width:18px;height:18px;color:#00C896"></i> About You
+                <i data-lucide="file-text" style="width:18px;height:18px;color:var(--brand-accent)"></i> About You
             </h2>
             <div class="flex flex-col gap-4">
                 <div class="flex flex-col gap-1">
@@ -174,7 +174,7 @@
 
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 mb-6">
             <h2 class="flex items-center gap-2 text-base font-semibold text-white mb-5">
-                <i data-lucide="lock" style="width:18px;height:18px;color:#1A6FE8"></i> Change Password
+                <i data-lucide="lock" style="width:18px;height:18px;color:var(--brand-accent)"></i> Change Password
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="flex flex-col gap-1 sm:col-span-2">

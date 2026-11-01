@@ -6,6 +6,7 @@ use App\Filament\Resources\JobOpeningResource\RelationManagers\ApplicationsRelat
 use App\Models\Department;
 use App\Models\JobOpening;
 use App\Models\User;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Infolists;
@@ -45,7 +46,7 @@ class JobOpeningResource extends Resource
                     ->searchable()->nullable(),
                 Forms\Components\Select::make('type')->options(JobOpening::typeOptions())->default('full_time')->required(),
                 Forms\Components\TextInput::make('location')->nullable()->maxLength(150),
-                Forms\Components\Select::make('status')->options(JobOpening::statusOptions())->default('open')->required(),
+                Forms\Components\Select::make('status')->options(JobOpening::statusOptions())->default('open')->disabled()->dehydrated(false)->required(),
                 Forms\Components\TextInput::make('openings_count')->label('# Openings')->numeric()->default(1)->minValue(1),
                 Forms\Components\TextInput::make('salary_range')->label('Salary Range')->nullable()->placeholder('e.g. XAF 200,000 – 350,000/month'),
                 Forms\Components\Select::make('created_by')
@@ -93,7 +94,7 @@ class JobOpeningResource extends Resource
                     ->label('Close')->icon('heroicon-o-x-circle')->color('gray')
                     ->requiresConfirmation()
                     ->hidden(fn (JobOpening $r) => !in_array($r->status, ['open','paused']))
-                    ->action(fn (JobOpening $r) => $r->update(['status'=>'closed'])),
+                    ->action(fn (JobOpening $r) => AdminWorkflowAdapter::run('admin.recruitment.openings.close', parameters: ['opening' => $r])),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);

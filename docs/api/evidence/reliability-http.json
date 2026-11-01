@@ -1,0 +1,82 @@
+{
+  "contractVersion": "0.2.0",
+  "concurrent": [
+    {
+      "status": 409,
+      "replayed": null,
+      "requestId": "c0e2f719-03b7-44ec-bca7-f20ea424ee36",
+      "retryAfter": "2",
+      "body": {
+        "type": "about:blank",
+        "title": "Conflict",
+        "status": 409,
+        "request_id": "c0e2f719-03b7-44ec-bca7-f20ea424ee36"
+      }
+    },
+    {
+      "status": 201,
+      "replayed": "false",
+      "requestId": "af3f2d5e-e636-4790-a928-de80a83aa151",
+      "retryAfter": null,
+      "body": {
+        "data": {
+          "status": "recorded",
+          "delivery_status": "sent"
+        }
+      }
+    }
+  ],
+  "replay": {
+    "status": 201,
+    "replayed": "true",
+    "requestId": "5425dfe3-8c28-49a4-bfde-2012b7f18caa",
+    "retryAfter": null,
+    "body": {
+      "data": {
+        "status": "recorded",
+        "delivery_status": "sent"
+      }
+    }
+  },
+  "conflict": {
+    "status": 409,
+    "replayed": null,
+    "requestId": "d317eeed-112a-4b5b-9428-f60abd901f3d",
+    "retryAfter": null,
+    "body": {
+      "type": "about:blank",
+      "title": "Conflict",
+      "status": 409,
+      "request_id": "d317eeed-112a-4b5b-9428-f60abd901f3d"
+    }
+  },
+  "invalid": {
+    "status": 422,
+    "replayed": null,
+    "requestId": "b3825543-b1c9-4aaa-96ed-90645dbd5094",
+    "retryAfter": null,
+    "body": {
+      "type": "about:blank",
+      "title": "Unprocessable Content",
+      "status": 422,
+      "request_id": "b3825543-b1c9-4aaa-96ed-90645dbd5094",
+      "errors": {
+        "idempotency_key": [
+          "The idempotency key field must be at least 16 characters."
+        ]
+      }
+    }
+  },
+  "limit": {
+    "status": 429,
+    "replayed": null,
+    "requestId": "4fd8d92a-ff39-4fcf-86ed-d6271b57ac65",
+    "retryAfter": "58",
+    "body": {
+      "type": "about:blank",
+      "title": "Too Many Requests",
+      "status": 429,
+      "request_id": "4fd8d92a-ff39-4fcf-86ed-d6271b57ac65"
+    }
+  }
+}

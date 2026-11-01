@@ -75,7 +75,16 @@ class ValidationCertificate extends Model
             'issued_at'           => now(),
         ]);
 
-        $certificate->cohortMember?->user?->notify(new \App\Notifications\CertificateIssued($certificate));
+        $recipient = $certificate->cohortMember?->user;
+        $notification = new \App\Notifications\CertificateIssued($certificate);
+        if ($recipient && \Illuminate\Support\Facades\DB::transactionLevel() > 0) {
+            \App\Contexts\Shared\Infrastructure\DomainOutbox::append('notification', get_class($notification), [
+                'recipient' => \App\Contexts\Shared\Infrastructure\MessageValueCodec::encode($recipient),
+                'message' => \App\Contexts\Shared\Infrastructure\MessageValueCodec::message($notification),
+            ]);
+        } else {
+            $recipient?->notify($notification);
+        }
 
         return $certificate;
     }

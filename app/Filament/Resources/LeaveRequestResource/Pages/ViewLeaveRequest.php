@@ -4,6 +4,7 @@ namespace App\Filament\Resources\LeaveRequestResource\Pages;
 
 use App\Filament\Resources\LeaveRequestResource;
 use App\Models\LeaveRequest;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 
@@ -22,11 +23,7 @@ class ViewLeaveRequest extends ViewRecord
                 ->requiresConfirmation()
                 ->visible(fn () => $this->record->status === 'pending' && auth()->user()?->hasAnyRole(['super_admin', 'admin']))
                 ->action(function () {
-                    $this->record->update([
-                        'status'      => 'approved',
-                        'approved_by' => auth()->id(),
-                        'approved_at' => now(),
-                    ]);
+                    AdminWorkflowAdapter::run('admin.workforce.leaves.approve', parameters: ['leave' => $this->record]);
                     $this->refreshFormData(['status', 'approved_by', 'approved_at']);
                 }),
             Actions\Action::make('reject')
@@ -36,11 +33,7 @@ class ViewLeaveRequest extends ViewRecord
                 ->requiresConfirmation()
                 ->visible(fn () => $this->record->status === 'pending' && auth()->user()?->hasAnyRole(['super_admin', 'admin']))
                 ->action(function () {
-                    $this->record->update([
-                        'status'      => 'rejected',
-                        'approved_by' => auth()->id(),
-                        'approved_at' => now(),
-                    ]);
+                    AdminWorkflowAdapter::run('admin.workforce.leaves.reject', parameters: ['leave' => $this->record]);
                     $this->refreshFormData(['status', 'approved_by', 'approved_at']);
                 }),
         ];

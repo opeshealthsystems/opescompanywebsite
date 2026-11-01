@@ -1,0 +1,150 @@
+{
+  "checkedAt": "2026-10-30T00:22:15.560Z",
+  "results": [
+    {
+      "path": "/en/products",
+      "status": 200,
+      "finalPath": "/en/products",
+      "title": "Healthcare software catalogue — OPES Health Systems",
+      "robots": "index, follow",
+      "demoCredentials": false,
+      "schemaValid": true
+    },
+    {
+      "path": "/fr/products",
+      "status": 200,
+      "finalPath": "/fr/products",
+      "title": "Catalogue de logiciels de santé — OPES Health Systems",
+      "robots": "index, follow",
+      "demoCredentials": false,
+      "schemaValid": true
+    },
+    {
+      "path": "/en/about",
+      "status": 200,
+      "finalPath": "/en/about",
+      "title": "About OPES Health Systems",
+      "robots": "index, follow",
+      "demoCredentials": false,
+      "schemaValid": true
+    },
+    {
+      "path": "/fr/about",
+      "status": 200,
+      "finalPath": "/fr/about",
+      "title": "À propos d’OPES Health Systems",
+      "robots": "index, follow",
+      "demoCredentials": false,
+      "schemaValid": true
+    },
+    {
+      "path": "/en/partnerships",
+      "status": 200,
+      "finalPath": "/en/partnerships",
+      "title": "Healthcare technology partnerships — OPES Health Systems",
+      "robots": "index, follow",
+      "demoCredentials": false,
+      "schemaValid": true
+    },
+    {
+      "path": "/fr/partnerships",
+      "status": 200,
+      "finalPath": "/fr/partnerships",
+      "title": "Partenariats en technologie de santé — OPES Health Systems",
+      "robots": "index, follow",
+      "demoCredentials": false,
+      "schemaValid": true
+    },
+    {
+      "path": "/en/contact",
+      "status": 200,
+      "finalPath": "/en/contact",
+      "title": "Contact our healthcare software team — OPES Health Systems",
+      "robots": "index, follow",
+      "demoCredentials": false,
+      "schemaValid": true
+    },
+    {
+      "path": "/fr/contact",
+      "status": 200,
+      "finalPath": "/fr/contact",
+      "title": "Contacter notre équipe de logiciels de santé — OPES Health Systems",
+      "robots": "index, follow",
+      "demoCredentials": false,
+      "schemaValid": true
+    },
+    {
+      "path": "/login",
+      "status": 200,
+      "finalPath": "/login",
+      "title": "Sign In",
+      "robots": "noindex, follow",
+      "demoCredentials": false,
+      "schemaValid": true
+    },
+    {
+      "path": "/admin/login",
+      "status": 200,
+      "finalPath": "/login",
+      "title": "Sign In",
+      "robots": "noindex, follow",
+      "demoCredentials": false,
+      "schemaValid": true
+    },
+    {
+      "path": "/en/login",
+      "status": 200,
+      "finalPath": "/login",
+      "title": "Sign In",
+      "robots": "noindex, follow",
+      "demoCredentials": false,
+      "schemaValid": true
+    },
+    {
+      "path": "/fr/login",
+      "status": 200,
+      "finalPath": "/login",
+      "title": "Sign In",
+      "robots": "noindex, follow",
+      "demoCredentials": false,
+      "schemaValid": true
+    },
+    {
+      "path": "/en/practitioners/register",
+      "status": 200,
+      "finalPath": "/register",
+      "title": "Create Account",
+      "robots": "noindex, follow",
+      "demoCredentials": false,
+      "schemaValid": true
+    },
+    {
+      "path": "/en/blog",
+      "status": 200,
+      "finalPath": "/en/blog",
+      "title": "Digital health articles and insights — OPES Health Systems",
+      "robots": "index, follow",
+      "demoCredentials": false,
+      "schemaValid": true
+    },
+    {
+      "path": "/en/products/opes-drugtrace",
+      "status": 200,
+      "finalPath": "/en/products/opes-drugtrace",
+      "title": "OPES DrugTrace — Pharmaceutical traceability — OPES Health Systems",
+      "robots": "index, follow",
+      "demoCredentials": false,
+      "schemaValid": true
+    }
+  ],
+  "www": {
+    "status": 301,
+    "location": "https://opeshealthsystems.com/en"
+  },
+  "seal": {
+    "width": 1254,
+    "height": 1254,
+    "cornerAlpha": 0,
+    "centreAlpha": 253
+  }
+}

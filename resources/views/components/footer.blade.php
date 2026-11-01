@@ -12,16 +12,16 @@ $current = $locale;
     <div class="footer-inner">
         <div class="footer-brand">
             <a href="{{ url($locale) }}" class="nav-logo" style="text-decoration:none;margin-bottom:10px">
-                <div class="nav-logo-mark"><i data-lucide="circle-dashed" style="width:20px;height:20px"></i></div>
+                <img class="site-seal" src="{{ asset('images/opes-seal.png') }}" alt="" width="44" height="44" style="object-fit:contain;flex-shrink:0">
                 <div class="nav-logo-text">
-                    <div class="nav-logo-name">Opes <span>Health</span> Systems</div>
+                    <div class="nav-logo-name">OPES <span>Health</span> Systems</div>
                 </div>
             </a>
-            <p>{{ $isFr ? 'L\'écosystème de santé numérique le plus complet d\'Afrique. Conçu au Cameroun pour la région CEMAC et toute l\'Afrique. Bilingue · Interopérable · Aligné Ministère de la Santé.' : 'Africa\'s most complete digital health ecosystem. Built in Cameroon for the CEMAC region and all of Africa. Bilingual · Interoperable · Ministry-Aligned.' }}</p>
+            <p>{{ $isFr ? 'Des logiciels de santé conçus au Cameroun pour les équipes de soins en Afrique. Consultez le catalogue et contactez notre équipe pour connaître les disponibilités.' : 'Healthcare software designed in Cameroon for healthcare teams across Africa. Explore the catalogue and discuss availability with our team.' }}</p>
         </div>
 
         <div class="footer-col">
-            <h5>{{ $isFr ? 'Produits' : 'Products' }}</h5>
+            <h2>{{ $isFr ? 'Produits' : 'Products' }}</h2>
             <a href="{{ url($locale.'/health-os') }}" class="footer-highlight">
                 <i data-lucide="layers" style="width:12px;height:12px"></i>OPES Health OS →
             </a>
@@ -38,12 +38,14 @@ $current = $locale;
                 <i data-lucide="timer" style="width:12px;height:12px"></i>Opes Triage
             </a>
             <a href="{{ url($locale.'/products') }}" class="footer-highlight">
-                <i data-lucide="layout-grid" style="width:12px;height:12px"></i>{{ $isFr ? 'Voir les 22 →' : 'View All 22 →' }}
+                <i data-lucide="layout-grid" style="width:12px;height:12px"></i>{{ $isFr ? 'Voir le catalogue →' : 'View catalogue →' }}
             </a>
         </div>
 
         <div class="footer-col">
-            <h5>{{ $isFr ? 'Plateforme' : 'Platform' }}</h5>
+            <h2>{{ $isFr ? 'Plateforme' : 'Platform' }}</h2>
+            <a href="{{ url($locale.'/markets') }}">{{ $isFr ? 'Marchés CEMAC' : 'CEMAC Markets' }}</a>
+            <a href="{{ url($locale.'/developers') }}">{{ $isFr ? 'API et développeurs' : 'APIs and developers' }}</a>
             <a href="{{ url($locale.'/architecture') }}">
                 <i data-lucide="cpu" style="width:12px;height:12px"></i>{{ $isFr ? 'Architecture' : 'Architecture' }}
             </a>
@@ -81,7 +83,7 @@ $current = $locale;
         </div>
 
         <div class="footer-col">
-            <h5>{{ $isFr ? 'Entreprise' : 'Company' }}</h5>
+            <h2>{{ $isFr ? 'Entreprise' : 'Company' }}</h2>
             <a href="{{ url($locale.'/about') }}">
                 <i data-lucide="info" style="width:12px;height:12px"></i>{{ $isFr ? 'À propos d\'OPES' : 'About OPES' }}
             </a>
@@ -119,7 +121,7 @@ $current = $locale;
             <a href="{{ url($locale.'/mobile-clinic') }}">
                 <i data-lucide="heart" style="width:12px;height:12px"></i>{{ $isFr ? 'Cliniques mobiles' : 'Mobile Clinics' }}
             </a>
-            <a href="{{ url($locale.'/book-demo') }}" style="color:#00C896;font-weight:600">
+            <a href="{{ url($locale.'/book-demo') }}" style="color:var(--brand-accent);font-weight:600">
                 <i data-lucide="calendar" style="width:12px;height:12px"></i>{{ $isFr ? 'Réserver une démo' : 'Book a Demo' }}
             </a>
             <a href="{{ url($locale.'/pricing') }}">
@@ -137,7 +139,7 @@ $current = $locale;
         </div>
 
         <div class="footer-col">
-            <h5>{{ $isFr ? 'Juridique' : 'Legal' }}</h5>
+            <h2>{{ $isFr ? 'Juridique' : 'Legal' }}</h2>
             <a href="{{ url($locale.'/privacy') }}">
                 <i data-lucide="shield" style="width:12px;height:12px"></i>{{ $isFr ? 'Politique de confidentialité' : 'Privacy Policy' }}
             </a>

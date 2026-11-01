@@ -7,6 +7,27 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
+    /** Public cards must resolve to an existing detail page, including before content seeding. */
+    public static function publicCatalogue(): \Illuminate\Support\Collection
+    {
+        $catalogue = array_merge(config('products', []), config('products_specialist', []), config('products_drugtrace', []));
+        $stored = static::orderBy('sort_order')->get();
+        if ($stored->isNotEmpty()) {
+            return $stored->where('is_active', true)->filter(fn ($p) => isset($catalogue[$p->slug]))->values();
+        }
+
+        return collect($catalogue)->map(function ($data, $slug) {
+            $data['slug'] = $slug;
+            $data['category'] = match ($data['category'] ?? '') {
+                'Core Platform' => 'core',
+                'Diagnostics' => 'diagnostics',
+                'Medicine Safety' => 'specialist',
+                default => 'specialist',
+            };
+            return new static($data);
+        })->values();
+    }
+
     protected $fillable = [
         'slug',
         'name',

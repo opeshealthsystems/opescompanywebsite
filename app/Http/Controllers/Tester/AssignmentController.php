@@ -1,77 +1,11 @@
 <?php
-
 namespace App\Http\Controllers\Tester;
 
-use App\Http\Controllers\Controller;
-use App\Models\Ticket;
-use App\Models\TesterAssignment;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-
-class AssignmentController extends Controller
+/** Web presentation adapter; business queries and commands live in application contexts. */
+class AssignmentController extends \App\Http\Controllers\Controller
 {
-    public function index()
-    {
-        $user        = Auth::user();
-        $assignments = TesterAssignment::where('assigned_to', $user->id)
-            ->orderByDesc('created_at')
-            ->paginate(15);
-
-        return view('tester.assignments.index', compact('assignments'));
-    }
-
-    public function show(Request $request)
-    {
-        $id         = (int) $request->route('id');
-        $assignment = TesterAssignment::with('bugReports')->findOrFail($id);
-
-        $this->authorize('view', $assignment);
-
-        return view('tester.assignments.show', compact('assignment'));
-    }
-
-    public function updateStatus(Request $request)
-    {
-        $id         = (int) $request->route('id');
-        $assignment = TesterAssignment::findOrFail($id);
-
-        $this->authorize('update', $assignment);
-
-        $validated = $request->validate([
-            'status' => 'required|in:pending,in_progress,completed,cancelled',
-        ]);
-
-        $assignment->update(['status' => $validated['status']]);
-
-        return redirect()
-            ->route('tester.assignments.show', ['locale' => app()->getLocale(), 'id' => $assignment->id])
-            ->with('success', 'Assignment status updated.');
-    }
-
-    public function storeBugReport(Request $request)
-    {
-        $user       = Auth::user();
-        $id         = (int) $request->route('id');
-        $assignment = TesterAssignment::findOrFail($id);
-
-        $this->authorize('update', $assignment);
-        abort_unless($assignment->isActive(), 403, 'Cannot file a bug report on a completed or cancelled assignment.');
-
-        $validated = $request->validate([
-            'subject'     => 'required|string|max:255',
-            'description' => 'required|string|max:10000',
-            'priority'    => 'required|in:low,medium,high,urgent',
-        ]);
-
-        Ticket::create(array_merge($validated, [
-            'user_id'              => $user->id,
-            'type'                 => 'bug_report',
-            'status'               => 'open',
-            'tester_assignment_id' => $assignment->id,
-        ]));
-
-        return redirect()
-            ->route('tester.assignments.show', ['locale' => app()->getLocale(), 'id' => $assignment->id])
-            ->with('success', 'Bug report filed and sent to support.');
-    }
+    public function index(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('tester.assignmentcontroller.index', $request); }
+    public function show(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('tester.assignmentcontroller.show', $request); }
+    public function storeBugReport(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('tester.assignmentcontroller.storeBugReport', $request); }
+    public function updateStatus(\Illuminate\Http\Request $request) { return app(\App\Contexts\Shared\Infrastructure\WorkflowHttpAdapter::class)->web('tester.assignmentcontroller.updateStatus', $request); }
 }

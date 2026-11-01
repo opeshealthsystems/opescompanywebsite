@@ -47,17 +47,17 @@
     <h2 class="section-title">{{ $isFr ? 'Cinq types de partenariats' : 'Five partnership types' }}</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:28px">
         @php $cats = $isFr ? [
-            ['tag','#00C896','Revendeur autorisé','Génération de leads et activités commerciales.',['Génération de leads','Activités de vente'],['Commission commerciale','Support marketing']],
-            ['map','#1A6FE8','Partenaire implémenteur','Déploiement, configuration et formation des équipes client.',['Déploiement','Configuration','Formation'],['Implémenteurs certifiés requis']],
-            ['code','#00C896','Partenaire technologique','Intégrations, APIs et infrastructure.',['Intégrations','APIs','Infrastructure'],['Fournisseurs cloud','Paiement','Identité']],
-            ['graduation-cap','#1A6FE8','Partenaire académique','Développement des compétences et recherche.',['Universités','Écoles de soins infirmiers','Écoles de médecine'],['Développement des effectifs','Recherche']],
-            ['building-2','#00C896','Partenaire gouvernemental stratégique','Ministères, programmes d\'assurance et institutions de santé publique.',['Ministères','Programmes d\'assurance nationale','Institutions de santé publique'],[]],
+            ['tag','#69D5F5','Revendeur autorisé','Génération de leads et activités commerciales.',['Génération de leads','Activités de vente'],['Commission commerciale','Support marketing']],
+            ['map','#8AC5ED','Partenaire implémenteur','Déploiement, configuration et formation des équipes client.',['Déploiement','Configuration','Formation'],['Implémenteurs certifiés requis']],
+            ['code','#69D5F5','Partenaire technologique','Intégrations, APIs et infrastructure.',['Intégrations','APIs','Infrastructure'],['Fournisseurs cloud','Paiement','Identité']],
+            ['graduation-cap','#8AC5ED','Partenaire académique','Développement des compétences et recherche.',['Universités','Écoles de soins infirmiers','Écoles de médecine'],['Développement des effectifs','Recherche']],
+            ['building-2','#69D5F5','Partenaire gouvernemental stratégique','Ministères, programmes d\'assurance et institutions de santé publique.',['Ministères','Programmes d\'assurance nationale','Institutions de santé publique'],[]],
         ] : [
-            ['tag','#00C896','Authorized Reseller','Lead generation and sales activities on behalf of OPES.',['Lead generation','Sales activities'],['Sales commission','Marketing support']],
-            ['map','#1A6FE8','Implementation Partner','Deployment, configuration, and training for customer sites.',['Deployment','Configuration','Training'],['Certified implementers required']],
-            ['code','#00C896','Technology Partner','Integrations, APIs, and infrastructure partnerships.',['Integrations','APIs','Infrastructure'],['Cloud providers','Payment providers','Identity providers']],
-            ['graduation-cap','#1A6FE8','Academic Partner','Workforce development and research.',['Universities','Nursing schools','Medical schools'],['Workforce development','Research collaboration']],
-            ['building-2','#00C896','Strategic Government Partner','Ministries, national insurance programs, and public health institutions.',['Ministries','National insurance programs','Public health institutions'],[]],
+            ['tag','#69D5F5','Authorized Reseller','Lead generation and sales activities on behalf of OPES.',['Lead generation','Sales activities'],['Sales commission','Marketing support']],
+            ['map','#8AC5ED','Implementation Partner','Deployment, configuration, and training for customer sites.',['Deployment','Configuration','Training'],['Certified implementers required']],
+            ['code','#69D5F5','Technology Partner','Integrations, APIs, and infrastructure partnerships.',['Integrations','APIs','Infrastructure'],['Cloud providers','Payment providers','Identity providers']],
+            ['graduation-cap','#8AC5ED','Academic Partner','Workforce development and research.',['Universities','Nursing schools','Medical schools'],['Workforce development','Research collaboration']],
+            ['building-2','#69D5F5','Strategic Government Partner','Ministries, national insurance programs, and public health institutions.',['Ministries','National insurance programs','Public health institutions'],[]],
         ]; @endphp
         @foreach($cats as $cat)
         <div style="background:#0F172A;border:1px solid #1e293b;border-radius:14px;padding:20px">
@@ -74,7 +74,7 @@
             @if(count($cat[5]))
             <div style="margin-top:10px;padding-top:10px;border-top:1px solid #1e293b">
                 @foreach($cat[5] as $ben)
-                <div style="display:flex;align-items:center;gap:6px;font-size:var(--fs-2xs);color:#00C896;padding:2px 0">
+                <div style="display:flex;align-items:center;gap:6px;font-size:var(--fs-2xs);color:var(--brand-accent);padding:2px 0">
                     <i data-lucide="check" style="width:9px;height:9px;flex-shrink:0"></i>{{ $ben }}
                 </div>
                 @endforeach
@@ -96,8 +96,8 @@
     <h2 class="section-title">{{ $isFr ? 'Quatre niveaux de certification' : 'Four certification levels' }}</h2>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:28px">
         @foreach($isFr
-            ? [['var(--text-muted)','Silver','Niveau d\'entrée','2 professionnels certifiés','entry'],['#F59E0B','Gold','Intermédiaire','5 professionnels certifiés','intermediate'],['#1A6FE8','Platinum','Avancé','10 professionnels certifiés','advanced'],['#00C896','Strategic','Partenaire national','Approbation du Conseil','top']]
-            : [['var(--text-muted)','Silver','Entry level','2 certified professionals','entry'],['#F59E0B','Gold','Intermediate','5 certified professionals','intermediate'],['#1A6FE8','Platinum','Advanced','10 certified professionals','advanced'],['#00C896','Strategic','National-level','Board approval required','top']]
+            ? [['var(--text-muted)','Silver','Niveau d\'entrée','2 professionnels certifiés','entry'],['#F59E0B','Gold','Intermédiaire','5 professionnels certifiés','intermediate'],['#8AC5ED','Platinum','Avancé','10 professionnels certifiés','advanced'],['#69D5F5','Strategic','Partenaire national','Approbation du Conseil','top']]
+            : [['var(--text-muted)','Silver','Entry level','2 certified professionals','entry'],['#F59E0B','Gold','Intermediate','5 certified professionals','intermediate'],['#8AC5ED','Platinum','Advanced','10 certified professionals','advanced'],['#69D5F5','Strategic','National-level','Board approval required','top']]
         as $level)
         <div style="background:#0F172A;border:2px solid {{ $level[0] }}40;border-radius:14px;padding:20px;text-align:center;{{ $level[4]==='top' ? 'border-color:'.$level[0].';background:#0d1f19;' : '' }}">
             <div style="width:48px;height:48px;border-radius:50%;background:{{ $level[0] }}20;border:2px solid {{ $level[0] }};display:flex;align-items:center;justify-content:center;margin:0 auto 12px">
@@ -124,8 +124,8 @@
             </div>
             <div style="display:flex;flex-direction:column;gap:8px">
                 @foreach($isFr
-                    ? [['badge-check','#00C896','Certification','Accès aux programmes de certification OPES.'],['headphones','#1A6FE8','Support technique','Support dédié aux partenaires certifiés.'],['trending-up','#00C896','Enablement commercial','Outils de vente, ressources et formation commerciale.'],['megaphone','#1A6FE8','Marketing conjoint','Cobranding et activités marketing communes.'],['cpu','#00C896','Accès produit anticipé','Accès prioritaire aux nouvelles versions et fonctionnalités.']]
-                    : [['badge-check','#00C896','Certification','Access to OPES certification programmes.'],['headphones','#1A6FE8','Technical support','Dedicated support for certified partners.'],['trending-up','#00C896','Sales enablement','Sales tools, resources, and commercial training.'],['megaphone','#1A6FE8','Joint marketing','Co-branding and joint marketing activities.'],['cpu','#00C896','Early product access','Priority access to new releases and features.']]
+                    ? [['badge-check','#69D5F5','Certification','Accès aux programmes de certification OPES.'],['headphones','#8AC5ED','Support technique','Support dédié aux partenaires certifiés.'],['trending-up','#69D5F5','Enablement commercial','Outils de vente, ressources et formation commerciale.'],['megaphone','#8AC5ED','Marketing conjoint','Cobranding et activités marketing communes.'],['cpu','#69D5F5','Accès produit anticipé','Accès prioritaire aux nouvelles versions et fonctionnalités.']]
+                    : [['badge-check','#69D5F5','Certification','Access to OPES certification programmes.'],['headphones','#8AC5ED','Technical support','Dedicated support for certified partners.'],['trending-up','#69D5F5','Sales enablement','Sales tools, resources, and commercial training.'],['megaphone','#8AC5ED','Joint marketing','Co-branding and joint marketing activities.'],['cpu','#69D5F5','Early product access','Priority access to new releases and features.']]
                 as $b)
                 <div style="display:flex;align-items:center;gap:10px;padding:12px;background:#0F172A;border-radius:8px;border-left:2px solid {{ $b[1] }}">
                     <i data-lucide="{{ $b[0] }}" style="width:14px;height:14px;color:{{ $b[1] }};flex-shrink:0"></i>
@@ -144,24 +144,24 @@
                 {{ $isFr ? 'KPIs & gouvernance partenaires' : 'Partner KPIs & governance' }}
             </div>
             <div style="background:#0f1a2e;border:1px solid rgba(0,200,150,0.15);border-radius:12px;padding:18px;margin-bottom:16px">
-                <div style="font-size:var(--fs-xs);font-weight:700;color:#00C896;margin-bottom:10px">{{ $isFr ? 'Indicateurs de performance' : 'Performance indicators' }}</div>
+                <div style="font-size:var(--fs-xs);font-weight:700;color:var(--brand-accent);margin-bottom:10px">{{ $isFr ? 'Indicateurs de performance' : 'Performance indicators' }}</div>
                 @foreach($isFr
                     ? ['Revenus générés','Satisfaction client','Taux de succès des déploiements','Taux de complétion de la formation']
                     : ['Revenue generated','Customer satisfaction','Deployment success rate','Training completion rate']
                 as $kpi)
                 <div style="display:flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:var(--text-muted);padding:5px 0;border-bottom:1px solid #1e293b30">
-                    <i data-lucide="chevron-right" style="width:10px;height:10px;color:#00C896;flex-shrink:0"></i>{{ $kpi }}
+                    <i data-lucide="chevron-right" style="width:10px;height:10px;color:var(--brand-accent);flex-shrink:0"></i>{{ $kpi }}
                 </div>
                 @endforeach
             </div>
             <div style="background:#0f152e;border:1px solid rgba(26,111,232,0.15);border-radius:12px;padding:18px">
-                <div style="font-size:var(--fs-xs);font-weight:700;color:#1A6FE8;margin-bottom:10px">{{ $isFr ? 'Évaluation des partenaires' : 'Partner evaluation' }}</div>
+                <div style="font-size:var(--fs-xs);font-weight:700;color:var(--brand-accent);margin-bottom:10px">{{ $isFr ? 'Évaluation des partenaires' : 'Partner evaluation' }}</div>
                 @foreach($isFr
                     ? ['Revues de performance','Audits qualité','Revues de certification','Revues de conformité']
                     : ['Performance reviews','Quality audits','Certification reviews','Compliance reviews']
                 as $ev)
                 <div style="display:flex;align-items:center;gap:6px;font-size:var(--fs-xs);color:var(--text-muted);padding:5px 0;border-bottom:1px solid #1e293b30">
-                    <i data-lucide="chevron-right" style="width:10px;height:10px;color:#1A6FE8;flex-shrink:0"></i>{{ $ev }}
+                    <i data-lucide="chevron-right" style="width:10px;height:10px;color:var(--brand-accent);flex-shrink:0"></i>{{ $ev }}
                 </div>
                 @endforeach
             </div>

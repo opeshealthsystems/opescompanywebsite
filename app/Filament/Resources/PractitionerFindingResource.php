@@ -3,6 +3,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\PractitionerFindingResource\Pages;
 use App\Models\PractitionerFinding;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Infolists;
@@ -37,7 +38,7 @@ class PractitionerFindingResource extends Resource
                         ->relationship('application', 'id')
                         ->searchable()
                         ->required(),
-                    Forms\Components\Toggle::make('is_published')->label('Published'),
+                    Forms\Components\Toggle::make('is_published')->label('Published')->disabled()->dehydrated(false),
                     Forms\Components\Select::make('overall_rating')->options($ratingOptions)->nullable(),
                     Forms\Components\Select::make('wait_time_rating')->label('Wait Time Rating')->options($ratingOptions)->nullable(),
                     Forms\Components\Select::make('data_integrity_rating')->label('Data Integrity Rating')->options($ratingOptions)->nullable(),
@@ -86,7 +87,8 @@ class PractitionerFindingResource extends Resource
                     ->label(fn (PractitionerFinding $record) => $record->is_published ? 'Unpublish' : 'Publish')
                     ->icon('heroicon-o-eye')
                     ->action(function (PractitionerFinding $record) {
-                        $record->update(['is_published' => !$record->is_published]);
+                        $operation = $record->is_published ? 'admin.practitioners.findings.unpublish' : 'admin.practitioners.findings.publish';
+                        AdminWorkflowAdapter::run($operation, parameters: ['finding' => $record]);
                         Notification::make()
                             ->title($record->is_published ? 'Finding published' : 'Finding unpublished')
                             ->success()->send();

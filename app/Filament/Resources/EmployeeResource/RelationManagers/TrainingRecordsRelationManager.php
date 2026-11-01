@@ -54,7 +54,7 @@ class TrainingRecordsRelationManager extends RelationManager
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
                     ->hidden(fn (TrainingRecord $r) => $r->status === 'completed')
-                    ->action(fn (TrainingRecord $r) => $r->update(['status'=>'completed','completed_at'=>$r->completed_at ?? now()])),
+                    ->action(fn (TrainingRecord $r) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.training.complete', parameters: ['trainingRecord' => $r])),
                 Tables\Actions\DeleteAction::make(),
             ]);
     }

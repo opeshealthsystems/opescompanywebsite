@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
-use App\Mail\WelcomeEmail;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -13,7 +12,6 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\Mail;
 
 class UserResource extends Resource
 {
@@ -160,14 +158,10 @@ class UserResource extends Resource
                     ->requiresConfirmation()
                     ->modalDescription(fn (User $record) => "Send a welcome email to {$record->email}?")
                     ->action(function (User $record) {
-                        Mail::to($record->email)->queue(new WelcomeEmail($record));
-                        $record->notify(new \App\Notifications\FeedEntry(
-                            'account.welcome',
-                            'Welcome to OPES',
-                            'Welcome to OPES Health Systems.',
-                            'sparkles',
-                            null,
-                        ));
+                        app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+                            'admin.identity.users.sendWelcome',
+                            new \App\Contexts\Shared\Application\WorkflowInput([], ['user' => $record], auth()->user(), app()->getLocale()),
+                        );
                         Notification::make()->title('Welcome email queued')->success()->send();
                     }),
                 Tables\Actions\DeleteAction::make()

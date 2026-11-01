@@ -46,7 +46,7 @@ class MilestonesRelationManager extends RelationManager
                 Tables\Actions\Action::make('complete')
                     ->icon('heroicon-o-check-circle')->color('success')
                     ->hidden(fn (Milestone $record) => $record->status === 'completed')
-                    ->action(fn (Milestone $record) => $record->update(['status'=>'completed','completed_at'=>now()])),
+                    ->action(fn (Milestone $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.milestones.complete', parameters: ['milestone' => $record])),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);
