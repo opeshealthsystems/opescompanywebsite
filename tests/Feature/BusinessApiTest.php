@@ -877,4 +877,34 @@ class BusinessApiTest extends TestCase
         $this->assertDatabaseHas('business_outbox', ['type' => 'publishing.contract_created.v1', 'actor_id' => $admin->id]);
         $this->assertDatabaseHas('business_outbox', ['type' => 'finance.payroll_run_created.v1', 'actor_id' => $admin->id]);
     }
+
+    public function test_document_lifecycle_renders_from_active_template_and_protects_issued_documents(): void
+    {
+        $admin = $this->user('admin');
+        $headers = ['Authorization' => 'Bearer '.$this->access($admin, ['documents:write']), 'Idempotency-Key' => 'document-create-000001'];
+        $template = \App\Models\DocumentTemplate::create(['name' => 'Fictional welcome note', 'type' => 'letterhead', 'body' => 'Welcome {{name}}', 'variables' => ['name'], 'is_active' => true]);
+        $body = ['document_template_id' => $template->id, 'title' => 'Fictional welcome note', 'addressee_name' => 'Example Recipient', 'requires_signature' => false, 'variable_values' => ['name' => 'Example Recipient'], 'status' => 'signed', 'issued_by' => 99];
+        $this->postJson('/api/v1/documents', $body, $headers)->assertUnprocessable();
+        unset($body['status'], $body['issued_by']);
+        $created = $this->postJson('/api/v1/documents', $body, $headers)->assertCreated()->assertJsonPath('data.status', 'draft');
+        $id = $created->json('data.id');
+        $document = \App\Models\Document::query()->findOrFail($id);
+        $this->assertSame('Welcome Example Recipient', $document->body_rendered);
+        $headers['Idempotency-Key'] = 'document-update-000001';
+        $this->putJson('/api/v1/documents/'.$id, ['title' => 'Fictional updated title'], $headers)->assertOk();
+        $headers['Idempotency-Key'] = 'document-delete-000001';
+        $this->deleteJson('/api/v1/documents/'.$id, [], $headers)->assertOk();
+        $this->assertDatabaseMissing('documents', ['id' => $id]);
+        $headers['Idempotency-Key'] = 'document-signature-0001';
+        $body['requires_signature'] = true;
+        $signed = $this->postJson('/api/v1/documents', $body, $headers)->assertCreated()->assertJsonPath('data.status', 'pending_signature');
+        $signedDocument = \App\Models\Document::query()->findOrFail($signed->json('data.id'));
+        $this->assertNotEmpty($signedDocument->signature_token);
+        $headers['Idempotency-Key'] = 'document-protected-delete-0001';
+        $this->deleteJson('/api/v1/documents/'.$signedDocument->id, [], $headers)->assertUnprocessable();
+        $headers['Idempotency-Key'] = 'document-void-000001';
+        $this->postJson('/api/v1/documents/'.$signedDocument->id.'/void', [], $headers)->assertOk()->assertJsonPath('data.status', 'voided');
+        $this->assertDatabaseHas('business_outbox', ['type' => 'documents.document_created.v1', 'actor_id' => $admin->id]);
+        $this->postJson('/api/v1/documents', $body, ['Idempotency-Key' => 'document-anon-000001'])->assertUnauthorized();
+    }
 }

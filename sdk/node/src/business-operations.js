@@ -293,6 +293,33 @@ export const businessOperations = Object.freeze({
             "multipart/form-data"
         ]
     },
+    "admin_documents_create": {
+        "method": "POST",
+        "path": "/documents",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_documents_delete": {
+        "method": "DELETE",
+        "path": "/documents/{document}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "document"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_documents_markSent": {
         "method": "POST",
         "path": "/documents/{document}/mark-sent",
@@ -305,6 +332,22 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
+    },
+    "admin_documents_update": {
+        "method": "PUT",
+        "path": "/documents/{document}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "document"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
     },
     "admin_documents_void": {
         "method": "POST",

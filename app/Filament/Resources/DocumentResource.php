@@ -39,6 +39,7 @@ class DocumentResource extends Resource
                             ->mapWithKeys(fn ($t) => [$t->id => "[{$t->type}] {$t->name}"])
                     )
                     ->required()
+                    ->visibleOn('create')
                     ->live()
                     ->afterStateUpdated(function (Set $set, $state) {
                         if (!$state) return;
@@ -61,7 +62,7 @@ class DocumentResource extends Resource
 
                 Forms\Components\Toggle::make('requires_signature')
                     ->label('Requires Digital Signature')
-                    ->default(false),
+                    ->default(false)->visibleOn('create'),
             ])->columns(2),
 
             Forms\Components\Section::make('Recipient')->schema([
@@ -100,6 +101,7 @@ class DocumentResource extends Resource
                         ->keyLabel('Variable')
                         ->valueLabel('Value')
                         ->reorderable(false)
+                    ->visibleOn('create')
                         ->helperText('These values will replace {{variable_name}} placeholders in the template body.'),
                 ]),
 
@@ -180,7 +182,8 @@ class DocumentResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make()
-                    ->hidden(fn (Document $record) => in_array($record->status, ['signed', 'voided'])),
+                    ->hidden(fn (Document $record) => $record->status !== 'draft'),
+                Tables\Actions\DeleteAction::make()->hidden(fn (Document $record) => $record->status !== 'draft')->using(function (Document $record) { AdminWorkflowAdapter::run('admin.documents.delete', parameters: ['document' => $record->id]); return true; }),
                 Tables\Actions\Action::make('download_pdf')
                     ->label('PDF')
                     ->icon('heroicon-o-arrow-down-tray')

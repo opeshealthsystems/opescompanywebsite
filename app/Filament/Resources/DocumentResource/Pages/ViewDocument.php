@@ -65,7 +65,11 @@ class ViewDocument extends ViewRecord
     {
         return [
             Actions\EditAction::make()
-                ->hidden(fn () => in_array($this->record->status, ['signed', 'voided'])),
+                ->hidden(fn () => $this->record->status !== 'draft'),
+            Actions\DeleteAction::make()->hidden(fn () => $this->record->status !== 'draft')->using(function ($record) {
+                AdminWorkflowAdapter::run('admin.documents.delete', parameters: ['document' => $record->id]);
+                return true;
+            }),
             Actions\Action::make('download_pdf')
                 ->label('Download PDF')
                 ->icon('heroicon-o-arrow-down-tray')

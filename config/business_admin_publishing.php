@@ -11,6 +11,11 @@ $add = function (string $name, string $method, string $path, array $params, stri
         'scope' => $scope, 'api_path' => $path, 'http_methods' => ['POST'],
         'source_controller' => $source, 'source_action' => $action];
 };
+$add('admin.documents.create', 'createDocument', 'documents', [$input], 'documents:write', 'DocumentResource', 'create');
+$add('admin.documents.update', 'updateDocument', 'documents/{document}', [$input, $document], 'documents:write', 'DocumentResource', 'update');
+$definitions['admin.documents.update']['http_methods'] = ['PUT'];
+$add('admin.documents.delete', 'deleteDocument', 'documents/{document}', [$input, $document], 'documents:write', 'DocumentResource', 'delete');
+$definitions['admin.documents.delete']['http_methods'] = ['DELETE'];
 $add('admin.documents.markSent', 'markDocumentSent', 'documents/{document}/mark-sent', [$input, $document], 'documents:write', 'DocumentResource', 'mark_sent');
 $add('admin.documents.void', 'voidDocument', 'documents/{document}/void', [$input, $document], 'documents:write', 'DocumentResource', 'void');
 $add('admin.content.articles.publish', 'publishArticle', 'content/articles/{article}/publish', [$input, $article], 'content:write', 'KnowledgeBaseArticleResource', 'publish');
