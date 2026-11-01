@@ -1,4 +1,4 @@
-@php $locale = app()->getLocale(); @endphp
+@php $locale = app()->getLocale(); $quoteSelection = $quoteSelection ?? null; @endphp
 
 <x-layouts.app
     title="{{ __('contact.meta_title') }}"
@@ -37,6 +37,16 @@
             @endif
             <p class="cf-label">{{ $locale === 'fr' ? 'Ne transmettez pas de données de patients dans ce formulaire.' : 'Do not include patient information in this form.' }}</p>
 
+            @if($quoteSelection)
+                <input type="hidden" name="quote_option" value="{{ $quoteSelection['key'] }}">
+                <div class="brand-notice" style="margin:0 0 18px">
+                    <strong>{{ $locale === 'fr' ? 'Option sélectionnée pour votre demande de devis' : 'Selected option for your quote request' }}</strong>
+                    <div>{{ $quoteSelection['product'] }} · {{ $quoteSelection['option'] }}</div>
+                    <div style="font-weight:700">{{ $quoteSelection['price'] }}</div>
+                    <small>{{ $locale === 'fr' ? 'Prix indicatif affiché ; le prix définitif sera confirmé dans un devis formel.' : 'Indicative displayed price; the final price will be confirmed in a formal quotation.' }}</small>
+                </div>
+            @endif
+
             <div class="cf-row">
                 <div class="cf-field">
                     <label class="cf-label" for="contact-name">{{ __('contact.label_name') }}</label>
@@ -73,7 +83,7 @@
             <div class="cf-field">
                 <label class="cf-label" for="contact-products">{{ __('contact.label_products') }}</label>
                 <input id="contact-products" class="cf-input" type="text" name="products"
-                       value="{{ old('products') }}" maxlength="255" placeholder="{{ __('contact.placeholder_products') }}">
+                       value="{{ old('products', $quoteSelection['product'] ?? '') }}" maxlength="255" placeholder="{{ __('contact.placeholder_products') }}">
             </div>
 
             <div class="cf-field">

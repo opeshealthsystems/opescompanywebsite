@@ -11,15 +11,25 @@ use Illuminate\Support\Str;
 class WebsiteFormMailer
 {
     public const MODELS = [\App\Models\Lead::class, \App\Models\DemoRequest::class, \App\Models\PartnerApplication::class, \App\Models\TesterApplication::class];
+    public const QUOTE_RECEIPT_EVENT = 'website.quote_request.receipt.v1';
 
     public function ensure(Model $submission): WebsiteFormDelivery
     {
+        return $this->ensureFor($submission, config('website_forms.recipient'), 'website.submission.received.v1');
+    }
+
+    public function ensureQuoteReceipt(\App\Models\Lead $lead): WebsiteFormDelivery
+    {
+        return $this->ensureFor($lead, $lead->email, self::QUOTE_RECEIPT_EVENT);
+    }
+
+    private function ensureFor(Model $submission, string $recipient, string $eventType): WebsiteFormDelivery
+    {
         if (!in_array(get_class($submission), self::MODELS, true) || !$submission->exists) throw new \InvalidArgumentException('Unsupported website form');
-        $recipient = config('website_forms.recipient');
         if (!filter_var($recipient, FILTER_VALIDATE_EMAIL) || strlen($recipient) > 191) throw new \RuntimeException('Invalid website form recipient');
         return WebsiteFormDelivery::firstOrCreate([
             'submission_type' => get_class($submission), 'submission_id' => $submission->getKey(), 'recipient' => $recipient,
-        ], ['event_id' => (string) Str::uuid(), 'event_type' => 'website.submission.received.v1', 'status' => 'pending']);
+        ], ['event_id' => (string) Str::uuid(), 'event_type' => $eventType, 'status' => 'pending']);
     }
 
     /** Compatibility view for the recovery command; the private file is now an import source only. */
@@ -36,6 +46,17 @@ class WebsiteFormMailer
     public function deliver(Model $submission, bool $recovered = false, bool $retryUncertain = false): string
     {
         $row = $this->ensure($submission);
+        return $this->deliverRow($submission, $row, fn (WebsiteFormDelivery $delivery) => new WebsiteSubmissionReceived($submission, $recovered, $delivery->event_id), $recovered, $retryUncertain);
+    }
+
+    public function deliverQuoteReceipt(\App\Models\Lead $lead, bool $recovered = false, bool $retryUncertain = false): string
+    {
+        $row = $this->ensureQuoteReceipt($lead);
+        return $this->deliverRow($lead, $row, fn (WebsiteFormDelivery $delivery) => new \App\Mail\QuoteRequestReceipt($lead, $delivery->event_id), $recovered, $retryUncertain);
+    }
+
+    private function deliverRow(Model $submission, WebsiteFormDelivery $row, callable $buildMail, bool $recovered, bool $retryUncertain): string
+    {
         if ($row->status === 'sent') return 'already-sent';
         // An abandoned SMTP attempt may already have been accepted. Never silently reclaim it.
         WebsiteFormDelivery::whereKey($row->id)->where('status', 'processing')
@@ -54,7 +75,7 @@ class WebsiteFormMailer
         try {
             $pending = Mail::to($row->recipient);
             $transportStarted = true;
-            $sent = $pending->send(new WebsiteSubmissionReceived($submission, $recovered, $row->event_id));
+            $sent = $pending->send($buildMail($row));
         } catch (\Throwable $error) {
             $status = $transportStarted ? 'uncertain' : 'failed';
             WebsiteFormDelivery::whereKey($row->id)->where('claim_token', $token)->where('status', 'processing')->update([

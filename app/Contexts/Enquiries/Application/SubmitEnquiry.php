@@ -17,12 +17,20 @@ class SubmitEnquiry
 
     public function __construct(private WebsiteFormMailer $mailer) {}
 
-    public function handle(array $fields, string $locale, ?string $ip, ?string $idempotencyKey = null): array
+    public function handle(array $fields, string $locale, ?string $ip, ?string $idempotencyKey = null, ?string $quoteOption = null): array
     {
         $payload = array_replace(array_fill_keys(array_keys(self::RULES), null), array_intersect_key($fields, self::RULES));
+        $quoteSelection = PricingQuoteSelection::find($quoteOption, $locale);
+        if ($quoteOption !== null && $quoteSelection === null) {
+            throw \Illuminate\Validation\ValidationException::withMessages(['quote_option' => ['The selected quote option is invalid.']]);
+        }
+        if ($quoteSelection !== null) {
+            $payload['product_slug'] = $quoteSelection['product_slug'];
+            $payload['products'] = implode(' — ', [$quoteSelection['product'], $quoteSelection['option'], $quoteSelection['price']]);
+        }
         $fingerprint = hash_hmac('sha256', json_encode([$payload, $locale], JSON_THROW_ON_ERROR), (string) config('app.key'));
         $keyHash = $idempotencyKey === null ? null : hash('sha256', 'POST:/api/v1/enquiries:'.$idempotencyKey);
-        $prepared = \Illuminate\Support\Facades\DB::transaction(function () use ($payload, $locale, $ip, $keyHash, $fingerprint) {
+        $prepared = \Illuminate\Support\Facades\DB::transaction(function () use ($payload, $locale, $ip, $keyHash, $fingerprint, $quoteSelection) {
             $receipt = null;
             if ($keyHash !== null) {
                 \App\Models\ApiIdempotencyRecord::insertOrIgnore([
@@ -50,7 +58,7 @@ class SubmitEnquiry
                 }
             }
             $lead = Lead::create(array_merge($payload, [
-                'source' => !empty($payload['product_slug']) ? 'product-page' : 'contact', 'locale' => $locale, 'ip_address' => $ip,
+                'source' => ($quoteSelection !== null || !empty($payload['product_slug'])) ? 'product-page' : 'contact', 'locale' => $locale, 'ip_address' => $ip,
             ]));
             $this->mailer->ensure($lead);
             if ($receipt) { $receipt->lead_id = $lead->id; $receipt->save(); }
@@ -59,6 +67,7 @@ class SubmitEnquiry
         if (isset($prepared['response'])) return $prepared;
         $lead = $prepared['lead'];
         $delivery = $this->mailer->deliver($lead);
+        $receiptDelivery = $quoteSelection !== null ? $this->mailer->deliverQuoteReceipt($lead) : null;
         // A staff notification failure must not make the caller repeat an already committed submission.
         try {
             $admins = User::role('admin')->get();
@@ -77,6 +86,6 @@ class SubmitEnquiry
                 return $response;
             });
         }
-        return ['response' => $response, 'replayed' => false];
+        return ['response' => $response, 'replayed' => false, 'receipt_status' => $receiptDelivery];
     }
 }

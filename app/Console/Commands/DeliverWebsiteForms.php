@@ -36,8 +36,7 @@ class DeliverWebsiteForms extends Command
                 }
             }
         } else {
-            $due = \App\Models\WebsiteFormDelivery::where('recipient', config('website_forms.recipient'))
-                ->where(function ($query) {
+            $due = \App\Models\WebsiteFormDelivery::where(function ($query) {
                     $query->where(function ($ready) {
                         $ready->whereIn('status', ['pending', 'failed'])->where(fn ($time) => $time->whereNull('next_attempt_at')->orWhere('next_attempt_at', '<=', now()));
                     })->orWhere(fn ($stale) => $stale->where('status', 'processing')->where('locked_at', '<=', now()->subMinutes(2)))
@@ -46,7 +45,10 @@ class DeliverWebsiteForms extends Command
             foreach ($due as $entry) {
                 if (!in_array($entry->submission_type, WebsiteFormMailer::MODELS, true)) continue;
                 if ($submission = $entry->submission_type::find($entry->submission_id)) {
-                    $results[$mailer->deliver($submission, true, (bool) $this->option('retry-uncertain'))]++;
+                    $result = $entry->event_type === WebsiteFormMailer::QUOTE_RECEIPT_EVENT && $submission instanceof \App\Models\Lead
+                        ? $mailer->deliverQuoteReceipt($submission, true, (bool) $this->option('retry-uncertain'))
+                        : $mailer->deliver($submission, true, (bool) $this->option('retry-uncertain'));
+                    $results[$result]++;
                     if (--$remaining <= 0) break;
                 }
             }
