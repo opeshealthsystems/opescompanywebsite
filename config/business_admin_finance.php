@@ -25,6 +25,9 @@ $add = function (string $name, string $method, string $path, array $parameters, 
 $input = ['name' => 'workflowInput', 'kind' => 'input'];
 $model = fn (string $name, string $type) => ['name' => $name, 'kind' => 'model', 'class' => 'App\\Models\\'.$type, 'key' => 'id'];
 
+$add('admin.finance.expenses.create', 'createExpense', 'finance/expenses', [$input], 'ExpenseResource', 'create');
+$add('admin.finance.expenses.update', 'updateExpense', 'finance/expenses/{expense}', [$input, $model('expense', 'Expense')], 'ExpenseResource', 'update');
+$definitions['admin.finance.expenses.update']['http_methods'] = ['PUT'];
 $add('admin.finance.expenses.approve', 'approveExpense', 'finance/expenses/{expense}/approve', [$input, $model('expense', 'Expense')], 'ExpenseResource', 'approve');
 $add('admin.finance.expenses.markPaid', 'markExpensePaid', 'finance/expenses/{expense}/mark-paid', [$input, $model('expense', 'Expense')], 'ExpenseResource', 'mark_paid');
 $add('admin.finance.creditNotes.issue', 'issueCreditNote', 'finance/credit-notes/{creditNote}/issue', [$input, $model('creditNote', 'CreditNote')], 'CreditNoteResource', 'issue');

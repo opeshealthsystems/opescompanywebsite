@@ -19,6 +19,7 @@ use App\Models\Quote;
 use App\Models\SupplierBill;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 /** Shared, transactional finance commands used by the API and Filament adapters. */
@@ -39,6 +40,100 @@ final class AdminFinanceCommands extends WorkflowHandler
     private function invalid(string $field, string $message): never
     {
         throw ValidationException::withMessages([$field => $message]);
+    }
+
+    public function createExpense(WorkflowInput $input): WorkflowResult
+    {
+        $actor = $this->adminActor($input);
+        $data = $input->validate([
+            'title' => 'required|string|max:200',
+            'description' => 'nullable|string|max:5000',
+            'category' => 'required|in:'.implode(',', array_keys(Expense::categoryOptions())),
+            'amount' => 'required|numeric|gt:0',
+            'currency' => 'required|in:XAF,USD,EUR',
+            'vendor' => 'nullable|string|max:150',
+            'expense_date' => 'required|date',
+            'receipt_path' => 'nullable|string|max:255',
+            'submitted_by' => 'required|integer|exists:users,id',
+            'notes' => 'nullable|string|max:5000',
+            'reference' => 'prohibited',
+            'status' => 'prohibited',
+            'approved_by' => 'prohibited',
+            'approved_at' => 'prohibited',
+        ]);
+        $this->validateExpenseReceipt($data['receipt_path'] ?? null);
+
+        $record = DB::transaction(function () use ($data, $actor) {
+            $year = now()->year;
+            $sequenceName = 'expense:'.$year;
+            DB::table('business_sequences')->insertOrIgnore(['name' => $sequenceName, 'last_value' => 0]);
+            $sequence = DB::table('business_sequences')->where('name', $sequenceName)->lockForUpdate()->first();
+            $previous = (int) $sequence->last_value;
+            if ($previous === 0) {
+                $prefix = 'EXP-'.$year.'-';
+                $previous = Expense::query()->where('reference', 'like', $prefix.'%')->pluck('reference')
+                    ->map(fn ($reference) => ctype_digit(substr($reference, strlen($prefix))) ? (int) substr($reference, strlen($prefix)) : 0)->max() ?? 0;
+            }
+            $next = $previous + 1;
+            DB::table('business_sequences')->where('name', $sequenceName)->update(['last_value' => $next]);
+            $record = Expense::create($data + [
+                'reference' => 'EXP-'.$year.'-'.str_pad((string) $next, 5, '0', STR_PAD_LEFT),
+                'status' => 'pending',
+                'approved_by' => null,
+                'approved_at' => null,
+            ]);
+            DomainOutbox::append('event', 'finance.expense_created.v1', [
+                'references' => [['resource' => 'Expense', 'id' => $record->id]],
+                'changed_fields' => array_keys($data),
+            ], $actor->id);
+            return $record;
+        }, 3);
+
+        return WorkflowResult::payload(['id' => $record->id, 'reference' => $record->reference, 'status' => $record->status], 201)->with('success', 'Expense recorded for approval.');
+    }
+
+    public function updateExpense(WorkflowInput $input, Expense $expense): WorkflowResult
+    {
+        $actor = $this->adminActor($input);
+        $data = $input->validate([
+            'title' => 'sometimes|required|string|max:200',
+            'description' => 'sometimes|nullable|string|max:5000',
+            'category' => 'sometimes|required|in:'.implode(',', array_keys(Expense::categoryOptions())),
+            'amount' => 'sometimes|required|numeric|gt:0',
+            'currency' => 'sometimes|required|in:XAF,USD,EUR',
+            'vendor' => 'sometimes|nullable|string|max:150',
+            'expense_date' => 'sometimes|required|date',
+            'receipt_path' => 'sometimes|nullable|string|max:255',
+            'submitted_by' => 'sometimes|required|integer|exists:users,id',
+            'notes' => 'sometimes|nullable|string|max:5000',
+            'reference' => 'prohibited',
+            'status' => 'prohibited',
+            'approved_by' => 'prohibited',
+            'approved_at' => 'prohibited',
+        ]);
+        if ($data === []) $this->invalid('expense', 'Provide at least one expense field to update.');
+        $this->validateExpenseReceipt($data['receipt_path'] ?? null);
+
+        $record = DB::transaction(function () use ($expense, $data, $actor) {
+            $record = Expense::query()->lockForUpdate()->findOrFail($expense->id);
+            if ($record->status !== 'pending') $this->invalid('status', 'Only pending expenses can be edited.');
+            $record->update($data);
+            DomainOutbox::append('event', 'finance.expense_updated.v1', [
+                'references' => [['resource' => 'Expense', 'id' => $record->id]],
+                'changed_fields' => array_keys($data),
+            ], $actor->id);
+            return $record;
+        }, 3);
+
+        return $this->outcome('expense', $record->id, $record->status, 'Expense updated.', ['reference' => $record->reference]);
+    }
+
+    private function validateExpenseReceipt(?string $path): void
+    {
+        if ($path !== null && $path !== ''
+            && (!str_starts_with($path, 'expense-receipts/') || !Storage::disk('public')->exists($path))) {
+            $this->invalid('receipt_path', 'Choose an existing receipt uploaded to expense-receipts.');
+        }
     }
 
     public function approveExpense(WorkflowInput $input, Expense $expense): WorkflowResult

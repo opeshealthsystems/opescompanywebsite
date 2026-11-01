@@ -288,6 +288,20 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_finance_expenses_create": {
+        "method": "POST",
+        "path": "/finance/expenses",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
     "admin_finance_expenses_markPaid": {
         "method": "POST",
         "path": "/finance/expenses/{expense}/mark-paid",
@@ -300,6 +314,22 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
+    },
+    "admin_finance_expenses_update": {
+        "method": "PUT",
+        "path": "/finance/expenses/{expense}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "expense"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
     },
     "admin_finance_invoiceTemplates_generate": {
         "method": "POST",

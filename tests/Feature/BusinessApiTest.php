@@ -168,6 +168,40 @@ class BusinessApiTest extends TestCase
         $this->assertSame('pending', $other->fresh()->status);
     }
 
+    public function test_expense_create_and_update_are_idempotent_and_keep_approval_fields_server_owned(): void
+    {
+        $admin = $this->user('admin');
+        $token = $this->access($admin, ['finance:write']);
+        $headers = ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'finance-expense-create-0001'];
+        $body = [
+            'title' => 'Fictional API travel expense', 'category' => 'travel', 'amount' => 275.50,
+            'currency' => 'XAF', 'expense_date' => today()->toDateString(), 'submitted_by' => $admin->id,
+            'notes' => 'Test-only expense', 'status' => 'paid', 'approved_by' => $admin->id,
+        ];
+
+        $this->postJson('/api/v1/finance/expenses', $body, ['Idempotency-Key' => 'finance-expense-anonymous-01'])->assertUnauthorized();
+        $created = $this->postJson('/api/v1/finance/expenses', $body, $headers)->assertUnprocessable();
+        $this->assertDatabaseCount('expenses', 0);
+        unset($body['status'], $body['approved_by']);
+        $created = $this->postJson('/api/v1/finance/expenses', $body, $headers)->assertCreated();
+        $id = $created->json('data.id');
+        $this->postJson('/api/v1/finance/expenses', $body, $headers)->assertCreated()->assertExactJson($created->json());
+        $expense = \App\Models\Expense::findOrFail($id);
+        $this->assertSame('pending', $expense->status);
+        $this->assertSame('00001', substr($expense->reference, -5));
+        $this->assertDatabaseHas('business_outbox', ['type' => 'finance.expense_created.v1', 'actor_id' => $admin->id]);
+
+        $headers['Idempotency-Key'] = 'finance-expense-update-0001';
+        $patch = ['amount' => 300, 'notes' => 'Revised test-only amount'];
+        $updated = $this->putJson('/api/v1/finance/expenses/'.$id, $patch, $headers)->assertOk();
+        $this->putJson('/api/v1/finance/expenses/'.$id, $patch, $headers)->assertOk()->assertExactJson($updated->json());
+        $this->assertDatabaseHas('expenses', ['id' => $id, 'amount' => '300.00', 'status' => 'pending']);
+
+        $headers['Idempotency-Key'] = 'finance-expense-update-0002';
+        $this->putJson('/api/v1/finance/expenses/'.$id, ['status' => 'paid'], $headers)->assertUnprocessable();
+        $this->assertDatabaseHas('expenses', ['id' => $id, 'status' => 'pending']);
+    }
+
     public function test_payroll_generation_completion_and_payment_are_shared_and_idempotent(): void
     {
         $admin = $this->user('admin');
