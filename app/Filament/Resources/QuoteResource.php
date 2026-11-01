@@ -55,6 +55,7 @@ class QuoteResource extends Resource
                     ->label('Created By')
                     ->options(fn () => User::orderBy('name')->pluck('name', 'id'))
                     ->default(fn () => auth()->id())
+                    ->disabled()->dehydrated(false)
                     ->searchable()->required(),
 
                 Forms\Components\DatePicker::make('valid_until')->label('Valid Until')->native(false)->nullable(),
@@ -63,7 +64,6 @@ class QuoteResource extends Resource
 
             Forms\Components\Section::make('Line Items')->schema([
                 Forms\Components\Repeater::make('items')
-                    ->relationship('items')
                     ->columns(4)
                     ->schema([
                         Forms\Components\TextInput::make('product_name')->required()->label('Product/Service')->columnSpan(2),
@@ -124,9 +124,17 @@ class QuoteResource extends Resource
                     ->requiresConfirmation()
                     ->hidden(fn (Quote $record) => $record->status !== 'sent')
                     ->action(fn (Quote $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.quotes.accept', parameters: ['quote' => $record->id])),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->action(fn (Quote $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.quotes.delete', parameters: ['quote' => $record->id])),
             ])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);
+            ->bulkActions([Tables\Actions\BulkActionGroup::make([
+                Tables\Actions\BulkAction::make('deleteDrafts')->label('Delete selected drafts')->requiresConfirmation()
+                    ->action(function (\Illuminate\Database\Eloquent\Collection $records): void {
+                        foreach ($records as $record) {
+                            \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.quotes.delete', parameters: ['quote' => $record->id]);
+                        }
+                    }),
+            ])]);
     }
 
     public static function infolist(Infolist $infolist): Infolist

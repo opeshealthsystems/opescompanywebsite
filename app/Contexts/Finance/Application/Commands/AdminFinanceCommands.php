@@ -238,6 +238,117 @@ final class AdminFinanceCommands extends WorkflowHandler
         }
     }
 
+    public function createQuote(WorkflowInput $input): WorkflowResult
+    {
+        $actor = $this->adminActor($input);
+        $data = $input->validate([
+            'lead_id' => 'nullable|integer|exists:leads,id',
+            'title' => 'required|string|max:250',
+            'valid_until' => 'nullable|date',
+            'tax_rate' => 'nullable|numeric|min:0|max:100',
+            'currency' => 'required|in:XAF,USD,EUR',
+            'notes' => 'nullable|string|max:5000',
+            'items' => 'required|array|min:1|max:100',
+            'items.*.product_name' => 'required|string|max:250',
+            'items.*.quantity' => 'required|numeric|gt:0|max:1000000',
+            'items.*.unit_price' => 'required|numeric|min:0|max:1000000000',
+            'reference' => 'prohibited', 'status' => 'prohibited', 'tax_amount' => 'prohibited',
+            'subtotal' => 'prohibited', 'total' => 'prohibited', 'created_by' => 'prohibited',
+        ]);
+        $items = $data['items'];
+        unset($data['items']);
+
+        $record = DB::transaction(function () use ($data, $items, $actor) {
+            $year = now()->year;
+            $sequenceName = 'quote:'.$year;
+            DB::table('business_sequences')->insertOrIgnore(['name' => $sequenceName, 'last_value' => 0]);
+            $sequence = DB::table('business_sequences')->where('name', $sequenceName)->lockForUpdate()->first();
+            $previous = (int) $sequence->last_value;
+            if ($previous === 0) {
+                $prefix = 'QTE-'.$year.'-';
+                $previous = Quote::query()->where('reference', 'like', $prefix.'%')->pluck('reference')
+                    ->map(fn ($reference) => ctype_digit(substr($reference, strlen($prefix))) ? (int) substr($reference, strlen($prefix)) : 0)->max() ?? 0;
+            }
+            $next = $previous + 1;
+            DB::table('business_sequences')->where('name', $sequenceName)->update(['last_value' => $next]);
+            $record = Quote::create($data + [
+                'reference' => 'QTE-'.$year.'-'.str_pad((string) $next, 4, '0', STR_PAD_LEFT),
+                'status' => 'draft', 'created_by' => $actor->id, 'tax_rate' => $data['tax_rate'] ?? 0,
+            ]);
+            $this->replaceQuoteItems($record, $items);
+            $record->recalculateTotals();
+            DomainOutbox::append('event', 'finance.quote_created.v1', [
+                'references' => [['resource' => 'Quote', 'id' => $record->id]], 'changed_fields' => array_keys($data),
+            ], $actor->id);
+            return $record;
+        }, 3);
+
+        return WorkflowResult::payload(['id' => $record->id, 'reference' => $record->reference, 'status' => $record->status, 'subtotal' => $record->subtotal, 'total' => $record->total], 201)->with('success', 'Quote created.');
+    }
+
+    public function updateQuote(WorkflowInput $input, Quote $quote): WorkflowResult
+    {
+        $actor = $this->adminActor($input);
+        $data = $input->validate([
+            'lead_id' => 'sometimes|nullable|integer|exists:leads,id',
+            'title' => 'sometimes|required|string|max:250',
+            'valid_until' => 'sometimes|nullable|date',
+            'tax_rate' => 'sometimes|nullable|numeric|min:0|max:100',
+            'currency' => 'sometimes|required|in:XAF,USD,EUR',
+            'notes' => 'sometimes|nullable|string|max:5000',
+            'items' => 'sometimes|required|array|min:1|max:100',
+            'items.*.product_name' => 'required_with:items|string|max:250',
+            'items.*.quantity' => 'required_with:items|numeric|gt:0|max:1000000',
+            'items.*.unit_price' => 'required_with:items|numeric|min:0|max:1000000000',
+            'reference' => 'prohibited', 'status' => 'prohibited', 'tax_amount' => 'prohibited',
+            'subtotal' => 'prohibited', 'total' => 'prohibited', 'created_by' => 'prohibited',
+        ]);
+        if ($data === []) $this->invalid('quote', 'Provide at least one quote field to update.');
+        $items = $data['items'] ?? null;
+        unset($data['items']);
+
+        $record = DB::transaction(function () use ($quote, $data, $items, $actor) {
+            $record = Quote::query()->lockForUpdate()->findOrFail($quote->id);
+            if ($record->status !== 'draft') $this->invalid('status', 'Only draft quotes can be edited.');
+            $record->fill($data)->save();
+            if ($items !== null) $this->replaceQuoteItems($record, $items);
+            $record->recalculateTotals();
+            DomainOutbox::append('event', 'finance.quote_updated.v1', [
+                'references' => [['resource' => 'Quote', 'id' => $record->id]],
+                'changed_fields' => array_merge(array_keys($data), $items !== null ? ['items'] : []),
+            ], $actor->id);
+            return $record;
+        }, 3);
+
+        return $this->outcome('quote', $record->id, $record->status, 'Quote updated.', ['reference' => $record->reference, 'subtotal' => $record->subtotal, 'total' => $record->total]);
+    }
+
+    public function deleteQuote(WorkflowInput $input, Quote $quote): WorkflowResult
+    {
+        $actor = $this->adminActor($input);
+        DB::transaction(function () use ($quote, $actor) {
+            $record = Quote::query()->lockForUpdate()->findOrFail($quote->id);
+            if ($record->status !== 'draft') $this->invalid('status', 'Only draft quotes can be deleted.');
+            DomainOutbox::append('event', 'finance.quote_deleted.v1', ['references' => [['resource' => 'Quote', 'id' => $record->id]]], $actor->id);
+            $record->delete();
+        }, 3);
+
+        return WorkflowResult::payload(['id' => $quote->id, 'status' => 'deleted'])->with('success', 'Draft quote deleted.');
+    }
+
+    private function replaceQuoteItems(Quote $record, array $items): void
+    {
+        $record->items()->delete();
+        foreach ($items as $item) {
+            $quantity = (float) $item['quantity'];
+            $unitPrice = (float) $item['unit_price'];
+            $record->items()->create([
+                'product_name' => $item['product_name'], 'quantity' => $quantity,
+                'unit_price' => $unitPrice, 'total' => round($quantity * $unitPrice, 2),
+            ]);
+        }
+    }
+
     private function validateExpenseReceipt(?string $path): void
     {
         if ($path !== null && $path !== ''

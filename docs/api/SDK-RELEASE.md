@@ -1,6 +1,6 @@
 # Node SDK preview and contract release checks
 
-SDK 0.21.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations. Download `/downloads/opes-health-api-client-0.21.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
+SDK 0.22.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations. Download `/downloads/opes-health-api-client-0.22.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
 
 The archive contains only package metadata, client sources, the generated business operation registry, type definitions, README and an executable read-only catalogue example. It contains no credentials, test fixtures, environment files or runtime dependencies. Install from the archive URL or a reviewed local download; the README includes machine and delegated business usage.
 
@@ -68,3 +68,7 @@ SDK 0.20.0 archive: 12955 bytes, SHA-256 `34819519a1c74267975079d1b5174313991feb
 SDK 0.21.0 adds draft credit note create, update and delete operations. Shared commands own reference allocation, line-item persistence, total calculation, draft-only mutations and transactional outbox events for the API and admin UI.
 
 SDK 0.21.0 archive: 13001 bytes, SHA-256 `8d8e384f6c918b69d79efb2fc93da4f024517476b0acc3529372fc9b152e4f25`. It carries all 255 API operation IDs, including the 249 business operations in OpenAPI 0.25.0.
+
+SDK 0.22.0 adds draft quote create, update and delete operations. Shared finance commands own reference allocation, quote line items, tax calculations, draft-only changes and domain events across API and admin screens.
+
+SDK 0.22.0 archive: 13052 bytes, SHA-256 `9416011c0ad467aac547c6bd996132e219ab16da4f040be934fb4fd9c277356f`. It carries all 258 API operation IDs, including the 252 business operations in OpenAPI 0.26.0.

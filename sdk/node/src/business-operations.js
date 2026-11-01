@@ -535,6 +535,33 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_finance_quotes_create": {
+        "method": "POST",
+        "path": "/finance/quotes",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_finance_quotes_delete": {
+        "method": "DELETE",
+        "path": "/finance/quotes/{quote}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "quote"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_finance_quotes_markSent": {
         "method": "POST",
         "path": "/finance/quotes/{quote}/mark-sent",
@@ -547,6 +574,22 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
+    },
+    "admin_finance_quotes_update": {
+        "method": "PUT",
+        "path": "/finance/quotes/{quote}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "quote"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
     },
     "admin_finance_supplierBills_approve": {
         "method": "POST",

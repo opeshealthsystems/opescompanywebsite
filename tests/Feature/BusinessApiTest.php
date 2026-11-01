@@ -240,6 +240,38 @@ class BusinessApiTest extends TestCase
         $this->postJson('/api/v1/finance/credit-notes', $body, ['Idempotency-Key' => 'credit-note-anonymous-01'])->assertUnauthorized();
     }
 
+    public function test_quote_lifecycle_is_api_backed_and_keeps_amounts_and_identity_server_owned(): void
+    {
+        $admin = $this->user('admin');
+        $token = $this->access($admin, ['finance:write']);
+        $headers = ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'quote-create-000001'];
+        $body = [
+            'title' => 'Fictional API test quote', 'currency' => 'XAF', 'tax_rate' => 10,
+            'items' => [['product_name' => 'Test service', 'quantity' => 2, 'unit_price' => 50]],
+            'reference' => 'spoofed', 'status' => 'accepted', 'total' => 1, 'created_by' => 999, 'tax_amount' => 0,
+        ];
+        $this->postJson('/api/v1/finance/quotes', $body, $headers)->assertUnprocessable();
+        unset($body['reference'], $body['status'], $body['total'], $body['created_by'], $body['tax_amount']);
+        $created = $this->postJson('/api/v1/finance/quotes', $body, $headers)->assertCreated()
+            ->assertJsonPath('data.status', 'draft')->assertJsonPath('data.total', '110.00');
+        $this->postJson('/api/v1/finance/quotes', $body, $headers)->assertExactJson($created->json());
+        $quote = \App\Models\Quote::query()->findOrFail($created->json('data.id'));
+        $this->assertSame($admin->id, $quote->created_by);
+        $this->assertDatabaseCount('quote_items', 1);
+
+        $headers['Idempotency-Key'] = 'quote-update-000001';
+        $update = ['title' => 'Updated test quote', 'tax_rate' => 5, 'items' => [['product_name' => 'Replacement test service', 'quantity' => 1, 'unit_price' => 80]]];
+        $updated = $this->putJson('/api/v1/finance/quotes/'.$quote->id, $update, $headers)->assertOk()->assertJsonPath('data.total', '84.00');
+        $this->putJson('/api/v1/finance/quotes/'.$quote->id, $update, $headers)->assertExactJson($updated->json());
+        $headers['Idempotency-Key'] = 'quote-delete-000001';
+        $this->deleteJson('/api/v1/finance/quotes/'.$quote->id, [], $headers)->assertOk();
+        $this->assertDatabaseMissing('quotes', ['id' => $quote->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'finance.quote_created.v1', 'actor_id' => $admin->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'finance.quote_updated.v1', 'actor_id' => $admin->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'finance.quote_deleted.v1', 'actor_id' => $admin->id]);
+        $this->postJson('/api/v1/finance/quotes', $body, ['Idempotency-Key' => 'quote-anonymous-0001'])->assertUnauthorized();
+    }
+
     public function test_payroll_generation_completion_and_payment_are_shared_and_idempotent(): void
     {
         $admin = $this->user('admin');
