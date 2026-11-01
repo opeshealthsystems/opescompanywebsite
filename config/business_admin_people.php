@@ -6,6 +6,15 @@ $risk = ['name' => 'risk', 'kind' => 'model', 'class' => 'App\\Models\\Risk', 'k
 $trainingRecord = ['name' => 'trainingRecord', 'kind' => 'model', 'class' => 'App\\Models\\TrainingRecord', 'key' => 'id'];
 $user = ['name' => 'user', 'kind' => 'model', 'class' => 'App\\Models\\User', 'key' => 'id'];
 return [
+    'admin.identity.users.create' => ['handler' => $class, 'method' => 'createUser', 'parameters' => [$input], 'command' => true,
+        'context' => 'Identity', 'roles' => ['super_admin', 'admin'], 'authenticated' => true, 'scope' => 'administration:write',
+        'api_path' => 'admin/users', 'http_methods' => ['POST'], 'source_controller' => 'UserResource', 'source_action' => 'create'],
+    'admin.identity.users.update' => ['handler' => $class, 'method' => 'updateUser', 'parameters' => [$input, $user], 'command' => true,
+        'context' => 'Identity', 'roles' => ['super_admin', 'admin'], 'authenticated' => true, 'scope' => 'administration:write',
+        'api_path' => 'admin/users/{user}', 'http_methods' => ['PUT'], 'source_controller' => 'UserResource', 'source_action' => 'update'],
+    'admin.identity.users.delete' => ['handler' => $class, 'method' => 'deleteUser', 'parameters' => [$input, $user], 'command' => true,
+        'context' => 'Identity', 'roles' => ['super_admin', 'admin'], 'authenticated' => true, 'scope' => 'administration:write',
+        'api_path' => 'admin/users/{user}', 'http_methods' => ['DELETE'], 'source_controller' => 'UserResource', 'source_action' => 'delete'],
     'admin.workforce.risks.create' => ['handler' => $class, 'method' => 'createRisk', 'parameters' => [$input], 'command' => true,
         'context' => 'Risk', 'roles' => ['super_admin', 'admin'], 'authenticated' => true, 'scope' => 'risk:write',
         'api_path' => 'risk', 'http_methods' => ['POST'], 'source_controller' => 'RiskResource', 'source_action' => 'create'],

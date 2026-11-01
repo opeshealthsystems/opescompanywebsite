@@ -2,7 +2,7 @@
     "openapi": "3.1.1",
     "info": {
         "title": "OHS Platform API",
-        "version": "0.28.0",
+        "version": "0.29.0",
         "description": "Versioned OHS business APIs. Public enquiries and account recovery, machine catalogue access, and delegated business workflows with authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.",
         "contact": {
             "name": "OHS support",
@@ -46828,6 +46828,876 @@
                                                 "operation": {
                                                     "type": "string",
                                                     "const": "admin.workforce.performanceReviews.acknowledge"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Valid delegated user token required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Role, scope or record access denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Idempotency key used with a different request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Rate limit exceeded",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/users": {
+            "post": {
+                "operationId": "admin_identity_users_create",
+                "summary": "Admin People Commands createUser",
+                "description": "Shared application operation: admin.identity.users.create. Existing role and record policies remain authoritative.",
+                "tags": [
+                    "Identity"
+                ],
+                "security": [
+                    {
+                        "UserOAuth2": [
+                            "administration:write"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "Accept-Language",
+                        "description": "Response language; defaults to English.",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "en",
+                                "fr"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Idempotency-Key",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "minLength": 16,
+                            "maxLength": 128,
+                            "pattern": "^[A-Za-z0-9._:-]+$"
+                        },
+                        "description": "A unique command key. Repeat the same body and key within 24 hours to retrieve the first outcome. A changed body returns 409."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.identity.users.create"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Valid delegated user token required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Role, scope or record access denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Idempotency key used with a different request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Rate limit exceeded",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Validation: required|string|max:100",
+                                        "maxLength": 100
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Validation: required|email:rfc|max:150|unique:users,email",
+                                        "maxLength": 150
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "Validation: required|string|min:8|max:64",
+                                        "minLength": 8,
+                                        "maxLength": 64
+                                    },
+                                    "phone": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: nullable|string|max:30",
+                                        "maxLength": 30
+                                    },
+                                    "avatar": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: nullable|string|max:255",
+                                        "maxLength": 255
+                                    },
+                                    "employee_id": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: nullable|string|max:50|unique:users,employee_id",
+                                        "maxLength": 50
+                                    },
+                                    "hire_date": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: nullable|date",
+                                        "format": "date"
+                                    },
+                                    "department": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: nullable|string|max:80",
+                                        "maxLength": 80
+                                    },
+                                    "position": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: nullable|string|max:80",
+                                        "maxLength": 80
+                                    },
+                                    "is_active": {
+                                        "type": "boolean",
+                                        "description": "Validation: sometimes|boolean"
+                                    },
+                                    "roles": {
+                                        "type": "array",
+                                        "description": "Validation: sometimes|array|max:10",
+                                        "items": [],
+                                        "maxItems": 10
+                                    },
+                                    "email_verified_at": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "remember_token": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "id": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ]
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Validation: required|string|max:100",
+                                        "maxLength": 100
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Validation: required|email:rfc|max:150|unique:users,email",
+                                        "maxLength": 150
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "Validation: required|string|min:8|max:64",
+                                        "minLength": 8,
+                                        "maxLength": 64
+                                    },
+                                    "phone": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: nullable|string|max:30",
+                                        "maxLength": 30
+                                    },
+                                    "avatar": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: nullable|string|max:255",
+                                        "maxLength": 255
+                                    },
+                                    "employee_id": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: nullable|string|max:50|unique:users,employee_id",
+                                        "maxLength": 50
+                                    },
+                                    "hire_date": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: nullable|date",
+                                        "format": "date"
+                                    },
+                                    "department": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: nullable|string|max:80",
+                                        "maxLength": 80
+                                    },
+                                    "position": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: nullable|string|max:80",
+                                        "maxLength": 80
+                                    },
+                                    "is_active": {
+                                        "type": "boolean",
+                                        "description": "Validation: sometimes|boolean"
+                                    },
+                                    "roles": {
+                                        "type": "array",
+                                        "description": "Validation: sometimes|array|max:10",
+                                        "items": [],
+                                        "maxItems": 10
+                                    },
+                                    "email_verified_at": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "remember_token": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "id": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/users/{user}": {
+            "put": {
+                "operationId": "admin_identity_users_update",
+                "summary": "Admin People Commands updateUser",
+                "description": "Shared application operation: admin.identity.users.update. Existing role and record policies remain authoritative.",
+                "tags": [
+                    "Identity"
+                ],
+                "security": [
+                    {
+                        "UserOAuth2": [
+                            "administration:write"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "user",
+                        "description": "Record identifier or slug from an authorized read response.",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Accept-Language",
+                        "description": "Response language; defaults to English.",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "en",
+                                "fr"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Idempotency-Key",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "minLength": 16,
+                            "maxLength": 128,
+                            "pattern": "^[A-Za-z0-9._:-]+$"
+                        },
+                        "description": "A unique command key. Repeat the same body and key within 24 hours to retrieve the first outcome. A changed body returns 409."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.identity.users.update"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Valid delegated user token required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Role, scope or record access denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Idempotency key used with a different request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Rate limit exceeded",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|required|string|max:100",
+                                        "maxLength": 100
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|required|string|min:8|max:64",
+                                        "minLength": 8,
+                                        "maxLength": 64
+                                    },
+                                    "phone": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:30",
+                                        "maxLength": 30
+                                    },
+                                    "avatar": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:255",
+                                        "maxLength": 255
+                                    },
+                                    "hire_date": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|date",
+                                        "format": "date"
+                                    },
+                                    "department": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:80",
+                                        "maxLength": 80
+                                    },
+                                    "position": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:80",
+                                        "maxLength": 80
+                                    },
+                                    "is_active": {
+                                        "type": "boolean",
+                                        "description": "Validation: sometimes|boolean"
+                                    },
+                                    "roles": {
+                                        "type": "array",
+                                        "description": "Validation: sometimes|array|max:10",
+                                        "items": [],
+                                        "maxItems": 10
+                                    },
+                                    "email_verified_at": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "remember_token": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "id": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "password"
+                                ]
+                            }
+                        },
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|required|string|max:100",
+                                        "maxLength": 100
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|required|string|min:8|max:64",
+                                        "minLength": 8,
+                                        "maxLength": 64
+                                    },
+                                    "phone": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:30",
+                                        "maxLength": 30
+                                    },
+                                    "avatar": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:255",
+                                        "maxLength": 255
+                                    },
+                                    "hire_date": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|date",
+                                        "format": "date"
+                                    },
+                                    "department": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:80",
+                                        "maxLength": 80
+                                    },
+                                    "position": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:80",
+                                        "maxLength": 80
+                                    },
+                                    "is_active": {
+                                        "type": "boolean",
+                                        "description": "Validation: sometimes|boolean"
+                                    },
+                                    "roles": {
+                                        "type": "array",
+                                        "description": "Validation: sometimes|array|max:10",
+                                        "items": [],
+                                        "maxItems": 10
+                                    },
+                                    "email_verified_at": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "remember_token": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    },
+                                    "id": {
+                                        "type": "string",
+                                        "description": "Validation: prohibited"
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "password"
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "admin_identity_users_delete",
+                "summary": "Admin People Commands deleteUser",
+                "description": "Shared application operation: admin.identity.users.delete. Existing role and record policies remain authoritative.",
+                "tags": [
+                    "Identity"
+                ],
+                "security": [
+                    {
+                        "UserOAuth2": [
+                            "administration:write"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "user",
+                        "description": "Record identifier or slug from an authorized read response.",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Accept-Language",
+                        "description": "Response language; defaults to English.",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "en",
+                                "fr"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Idempotency-Key",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "minLength": 16,
+                            "maxLength": 128,
+                            "pattern": "^[A-Za-z0-9._:-]+$"
+                        },
+                        "description": "A unique command key. Repeat the same body and key within 24 hours to retrieve the first outcome. A changed body returns 409."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.identity.users.delete"
                                                 }
                                             }
                                         },

@@ -11,6 +11,7 @@ use App\Models\Risk;
 use App\Models\TrainingRecord;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 /** Shared admin commands for risk mitigation and staff training completion. */
@@ -137,5 +138,104 @@ final class AdminPeopleCommands extends WorkflowHandler
             return $record;
         }, 3);
         return WorkflowResult::payload(['id' => $record->id, 'status' => 'queued'])->with('success', 'Welcome message queued.');
+    }
+
+    public function createUser(WorkflowInput $input): WorkflowResult
+    {
+        $actor = $this->admin($input);
+        if ($input->has('roles')) abort_unless($actor->hasRole('super_admin'), 403);
+        $data = $input->validate([
+            'name' => 'required|string|max:100', 'email' => 'required|email:rfc|max:150|unique:users,email',
+            'password' => 'required|string|min:8|max:64', 'phone' => 'nullable|string|max:30',
+            'avatar' => 'nullable|string|max:255', 'employee_id' => 'nullable|string|max:50|unique:users,employee_id',
+            'hire_date' => 'nullable|date', 'department' => 'nullable|string|max:80', 'position' => 'nullable|string|max:80',
+            'is_active' => 'sometimes|boolean', 'roles' => 'sometimes|array|max:10',
+            'roles.*' => 'required|string|distinct|exists:roles,name',
+            'email_verified_at' => 'prohibited', 'remember_token' => 'prohibited', 'id' => 'prohibited',
+        ]);
+        $this->validateAvatar($data['avatar'] ?? null);
+        $roles = $data['roles'] ?? [];
+        unset($data['roles']);
+        if (in_array('super_admin', $roles, true)) abort_unless($actor->hasRole('super_admin'), 403);
+
+        $record = DB::transaction(function () use ($data, $roles, $actor) {
+            $record = User::create($data + ['is_active' => $data['is_active'] ?? true]);
+            if ($roles !== []) $record->syncRoles($roles);
+            \App\Contexts\Shared\Infrastructure\DomainMail::to($record->email)->queue(new \App\Mail\WelcomeEmail($record));
+            $record->notify(new \App\Notifications\FeedEntry('account.welcome', 'Welcome to OPES', 'Welcome to OPES Health Systems.', 'sparkles', null));
+            DomainOutbox::append('event', 'identity.user_created.v1', [
+                'references' => [['resource' => 'User', 'id' => $record->id]], 'changed_fields' => array_keys($data),
+            ], $actor->id);
+            return $record;
+        }, 3);
+
+        return WorkflowResult::payload(['id' => $record->id, 'email' => $record->email, 'is_active' => $record->is_active, 'roles' => $record->getRoleNames()->values()], 201)->with('success', 'User account created.');
+    }
+
+    public function updateUser(WorkflowInput $input, User $user): WorkflowResult
+    {
+        $actor = $this->admin($input);
+        if ($input->has('roles')) abort_unless($actor->hasRole('super_admin'), 403);
+        $data = $input->validate([
+            'name' => 'sometimes|required|string|max:100',
+            'email' => ['sometimes', 'required', 'email:rfc', 'max:150', \Illuminate\Validation\Rule::unique('users', 'email')->ignore($user->id)],
+            'password' => 'sometimes|required|string|min:8|max:64', 'phone' => 'sometimes|nullable|string|max:30',
+            'avatar' => 'sometimes|nullable|string|max:255',
+            'employee_id' => ['sometimes', 'nullable', 'string', 'max:50', \Illuminate\Validation\Rule::unique('users', 'employee_id')->ignore($user->id)],
+            'hire_date' => 'sometimes|nullable|date', 'department' => 'sometimes|nullable|string|max:80',
+            'position' => 'sometimes|nullable|string|max:80', 'is_active' => 'sometimes|boolean',
+            'roles' => 'sometimes|array|max:10', 'roles.*' => 'required|string|distinct|exists:roles,name',
+            'email_verified_at' => 'prohibited', 'remember_token' => 'prohibited', 'id' => 'prohibited',
+        ]);
+        if ($data === []) throw ValidationException::withMessages(['user' => 'Provide at least one user field to update.']);
+        $this->validateAvatar($data['avatar'] ?? null);
+        $roles = $data['roles'] ?? null;
+        unset($data['roles']);
+        if ($roles !== null && in_array('super_admin', $roles, true)) abort_unless($actor->hasRole('super_admin'), 403);
+        if ($user->id === $actor->id && array_key_exists('is_active', $data) && !$data['is_active']) {
+            throw ValidationException::withMessages(['is_active' => 'You cannot deactivate your own account.']);
+        }
+
+        $record = DB::transaction(function () use ($user, $data, $roles, $actor) {
+            $record = User::query()->lockForUpdate()->findOrFail($user->id);
+            if ($record->hasRole('super_admin') && $roles !== null && !in_array('super_admin', $roles, true)
+                && User::role('super_admin')->where('is_active', true)->where('id', '!=', $record->id)->exists() === false) {
+                throw ValidationException::withMessages(['roles' => 'The last active super administrator cannot be removed.']);
+            }
+            $record->fill($data)->save();
+            if ($roles !== null) $record->syncRoles($roles);
+            DomainOutbox::append('event', 'identity.user_updated.v1', [
+                'references' => [['resource' => 'User', 'id' => $record->id]],
+                'changed_fields' => array_merge(array_keys($data), $roles !== null ? ['roles'] : []),
+            ], $actor->id);
+            return $record->load('roles');
+        }, 3);
+
+        return WorkflowResult::payload(['id' => $record->id, 'email' => $record->email, 'is_active' => $record->is_active, 'roles' => $record->getRoleNames()->values()])->with('success', 'User account updated.');
+    }
+
+    public function deleteUser(WorkflowInput $input, User $user): WorkflowResult
+    {
+        $actor = $this->admin($input);
+        abort_unless($actor->id !== $user->id, 403);
+        DB::transaction(function () use ($user, $actor) {
+            $record = User::query()->lockForUpdate()->findOrFail($user->id);
+            if ($record->hasRole('super_admin')) {
+                abort_unless($actor->hasRole('super_admin'), 403);
+                if (User::role('super_admin')->where('is_active', true)->where('id', '!=', $record->id)->exists() === false) {
+                    throw ValidationException::withMessages(['user' => 'The last active super administrator cannot be deleted.']);
+                }
+            }
+            DomainOutbox::append('event', 'identity.user_deleted.v1', ['references' => [['resource' => 'User', 'id' => $record->id]]], $actor->id);
+            $record->delete();
+        }, 3);
+        return WorkflowResult::payload(['id' => $user->id, 'status' => 'deleted'])->with('success', 'User deleted.');
+    }
+
+    private function validateAvatar(?string $path): void
+    {
+        if ($path !== null && $path !== '' && (!str_starts_with($path, 'avatars/') || !Storage::disk('public')->exists($path))) {
+            throw ValidationException::withMessages(['avatar' => 'Choose an existing avatar uploaded to the avatars directory.']);
+        }
     }
 }

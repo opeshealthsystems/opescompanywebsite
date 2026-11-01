@@ -746,6 +746,33 @@ export const businessOperations = Object.freeze({
             "multipart/form-data"
         ]
     },
+    "admin_identity_users_create": {
+        "method": "POST",
+        "path": "/admin/users",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_identity_users_delete": {
+        "method": "DELETE",
+        "path": "/admin/users/{user}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "user"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_identity_users_sendWelcome": {
         "method": "POST",
         "path": "/admin/users/{user}/send-welcome",
@@ -758,6 +785,22 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
+    },
+    "admin_identity_users_update": {
+        "method": "PUT",
+        "path": "/admin/users/{user}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "user"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
     },
     "admin_learning_enrollments_complete": {
         "method": "POST",

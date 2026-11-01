@@ -1,6 +1,6 @@
 # Node SDK preview and contract release checks
 
-SDK 0.24.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations. Download `/downloads/opes-health-api-client-0.24.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
+SDK 0.25.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations. Download `/downloads/opes-health-api-client-0.25.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
 
 The archive contains only package metadata, client sources, the generated business operation registry, type definitions, README and an executable read-only catalogue example. It contains no credentials, test fixtures, environment files or runtime dependencies. Install from the archive URL or a reviewed local download; the README includes machine and delegated business usage.
 
@@ -80,3 +80,7 @@ SDK 0.23.0 archive: 13093 bytes, SHA-256 `1d8e04488bafcf2a9988a647cd5c5d6a8a8d5e
 SDK 0.24.0 adds draft purchase order and preapproval supplier bill create, update and delete operations. The shared finance commands own references, validated line items, totals, status boundaries and domain events for API and admin UI consumers.
 
 SDK 0.24.0 archive: 13190 bytes, SHA-256 `1f7459eb2498cc6f6d77646901a9d0bbab17636bdf19b5760b3a9f7f1bb79851`. It carries all 267 API operation IDs, including the 261 business operations in OpenAPI 0.28.0.
+
+SDK 0.25.0 adds administrator user create/update/delete operations. Passwords are hashed by the identity model, role assignment is restricted to super administrators, users cannot deactivate or delete themselves, and the last active super administrator is protected.
+
+SDK 0.25.0 archive: 13231 bytes, SHA-256 `a445adc38da17384587ce8d77d00160562894c0eaddd4234a3a749048f1ca165`. It carries all 270 API operation IDs, including the 264 business operations in OpenAPI 0.29.0.

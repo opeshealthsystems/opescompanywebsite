@@ -90,7 +90,7 @@ class UserResource extends Resource
                         ->label('Active')
                         ->default(true),
                     Forms\Components\CheckboxList::make('roles')
-                        ->relationship('roles', 'name')
+                        ->options(fn () => \Spatie\Permission\Models\Role::query()->orderBy('name')->pluck('name', 'name'))
                         ->columns(2)
                         ->columnSpanFull()
                         ->searchable()
@@ -165,11 +165,19 @@ class UserResource extends Resource
                         Notification::make()->title('Welcome email queued')->success()->send();
                     }),
                 Tables\Actions\DeleteAction::make()
+                    ->action(fn (User $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.identity.users.delete', parameters: ['user' => $record->id]))
                     ->hidden(fn (User $record) => $record->id === auth()->id()),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('deleteUsers')->label('Delete selected users')->requiresConfirmation()
+                        ->action(function (\Illuminate\Database\Eloquent\Collection $records): void {
+                            foreach ($records as $record) {
+                                if ($record->id !== auth()->id()) {
+                                    \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.identity.users.delete', parameters: ['user' => $record->id]);
+                                }
+                            }
+                        }),
                 ]),
             ]);
     }

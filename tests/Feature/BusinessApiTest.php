@@ -370,6 +370,40 @@ class BusinessApiTest extends TestCase
         $this->postJson('/api/v1/finance/supplier-bills', $body, ['Idempotency-Key' => 'supplier-bill-anon-001'])->assertUnauthorized();
     }
 
+    public function test_admin_user_lifecycle_is_api_backed_and_role_changes_require_super_admin(): void
+    {
+        $admin = $this->user('admin');
+        $token = $this->access($admin, ['administration:write']);
+        $headers = ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'identity-user-create-001'];
+        $body = ['name' => 'Fictional API test account', 'email' => 'api-user@example.test', 'password' => 'TestOnly-Password-123', 'phone' => '+237600000001'];
+        $created = $this->postJson('/api/v1/admin/users', $body, $headers)->assertCreated()->assertJsonPath('data.email', $body['email']);
+        $this->postJson('/api/v1/admin/users', $body, $headers)->assertExactJson($created->json());
+        $user = User::query()->findOrFail($created->json('data.id'));
+        $this->assertNotSame($body['password'], $user->password);
+        $this->assertTrue(\Illuminate\Support\Facades\Hash::check($body['password'], $user->password));
+        $this->assertDatabaseHas('business_outbox', ['type' => 'identity.user_created.v1', 'actor_id' => $admin->id]);
+        $this->assertDatabaseHas('business_outbox', ['kind' => 'mail', 'status' => 'completed']);
+
+        $headers['Idempotency-Key'] = 'identity-user-admin-role-001';
+        $this->putJson('/api/v1/admin/users/'.$user->id, ['roles' => ['admin']], $headers)->assertForbidden();
+        $headers['Idempotency-Key'] = 'identity-user-update-0001';
+        $updated = $this->putJson('/api/v1/admin/users/'.$user->id, ['phone' => '+237600000002'], $headers)->assertOk();
+        $this->putJson('/api/v1/admin/users/'.$user->id, ['phone' => '+237600000002'], $headers)->assertExactJson($updated->json());
+
+        $superAdmin = $this->user('admin');
+        Role::findOrCreate('super_admin', 'web');
+        $superAdmin->syncRoles(['super_admin']);
+        $superToken = $this->access($superAdmin, ['administration:write']);
+        $superHeaders = ['Authorization' => 'Bearer '.$superToken, 'Idempotency-Key' => 'identity-user-role-00001'];
+        $this->putJson('/api/v1/admin/users/'.$user->id, ['roles' => ['support']], $superHeaders)->assertOk();
+        $this->assertTrue($user->fresh()->hasRole('support'));
+
+        $superHeaders['Idempotency-Key'] = 'identity-user-delete-0001';
+        $this->deleteJson('/api/v1/admin/users/'.$user->id, [], $superHeaders)->assertOk();
+        $this->assertDatabaseMissing('users', ['id' => $user->id]);
+        $this->postJson('/api/v1/admin/users', $body, ['Idempotency-Key' => 'identity-user-anon-001'])->assertUnauthorized();
+    }
+
     public function test_payroll_generation_completion_and_payment_are_shared_and_idempotent(): void
     {
         $admin = $this->user('admin');
