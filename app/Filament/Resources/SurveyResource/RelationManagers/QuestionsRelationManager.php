@@ -2,6 +2,7 @@
 namespace App\Filament\Resources\SurveyResource\RelationManagers;
 
 use App\Models\SurveyQuestion;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -47,7 +48,6 @@ class QuestionsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->reorderable('sort_order')
             ->columns([
                 Tables\Columns\TextColumn::make('sort_order')->label('#')->sortable(),
                 Tables\Columns\TextColumn::make('question')->limit(60),
@@ -55,11 +55,14 @@ class QuestionsRelationManager extends RelationManager
                 Tables\Columns\IconColumn::make('is_required')->label('Req.')->boolean(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()->visible(fn () => $this->getOwnerRecord()->status === 'draft')
+                    ->using(fn (SurveyQuestion $record, array $data) => AdminWorkflowAdapter::record('admin.programmes.surveyQuestions.update', $data, ['survey' => $this->getOwnerRecord()->id, 'question' => $record->id])),
+                Tables\Actions\DeleteAction::make()->visible(fn () => $this->getOwnerRecord()->status === 'draft')
+                    ->using(function (SurveyQuestion $record) { AdminWorkflowAdapter::run('admin.programmes.surveyQuestions.delete', parameters: ['survey' => $this->getOwnerRecord()->id, 'question' => $record->id]); return true; }),
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()->visible(fn () => $this->getOwnerRecord()->status === 'draft')
+                    ->using(fn (array $data) => AdminWorkflowAdapter::record('admin.programmes.surveyQuestions.create', $data, ['survey' => $this->getOwnerRecord()->id])),
             ]);
     }
 }

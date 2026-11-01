@@ -10,6 +10,7 @@ class CustomerSurveyCommands extends \App\Contexts\Shared\Application\WorkflowHa
     public function submit(\App\Contexts\Shared\Application\WorkflowInput $request, $locale, \App\Models\Survey $survey): \App\Contexts\Shared\Application\WorkflowResult
     {
         abort_unless(in_array($survey->audience, ['customers', 'all']), 403);
+        abort_unless($survey->acceptsResponses(), 404);
         $survey->load('questions');
         $response = \App\Models\SurveyResponse::firstOrCreate(['survey_id' => $survey->id, 'user_id' => \App\Contexts\Shared\Application\CurrentWorkflow::id()]);
         if ($response->isSubmitted()) {

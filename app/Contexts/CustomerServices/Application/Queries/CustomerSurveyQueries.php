@@ -9,12 +9,15 @@ class CustomerSurveyQueries extends \App\Contexts\Shared\Application\WorkflowHan
 {
     public function index(\App\Contexts\Shared\Application\WorkflowInput $workflowInput): \App\Contexts\Shared\Application\WorkflowResult
     {
-        $surveys = $workflowInput->collect(\App\Models\Survey::where('status', 'active')->whereIn('audience', ['customers', 'all']));
+        $surveys = $workflowInput->collect(\App\Models\Survey::where('status', 'active')->whereIn('audience', ['customers', 'all'])
+            ->where(fn ($q) => $q->whereNull('starts_at')->orWhere('starts_at', '<=', now()))
+            ->where(fn ($q) => $q->whereNull('ends_at')->orWhere('ends_at', '>=', now())));
         $myResponseIds = \App\Models\SurveyResponse::where('user_id', \App\Contexts\Shared\Application\CurrentWorkflow::id())->whereIn('survey_id', $surveys->pluck('id'))->whereNotNull('submitted_at')->pluck('survey_id')->toArray();
         return \App\Contexts\Shared\Application\WorkflowResult::read('customer_surveycontroller_index_1', compact('surveys', 'myResponseIds'));
     }
     public function show(\App\Contexts\Shared\Application\WorkflowInput $workflowInput, $locale, \App\Models\Survey $survey): \App\Contexts\Shared\Application\WorkflowResult
     {
+        abort_unless($survey->acceptsResponses(), 404);
         abort_unless(in_array($survey->audience, ['customers', 'all']), 403);
         $survey->load('questions');
         $response = \App\Models\SurveyResponse::firstOrNew(['survey_id' => $survey->id, 'user_id' => \App\Contexts\Shared\Application\CurrentWorkflow::id()]);

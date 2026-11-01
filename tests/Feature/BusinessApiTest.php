@@ -867,6 +867,38 @@ class BusinessApiTest extends TestCase
         $this->assertDatabaseHas('business_outbox', ['type' => 'learning.course_lesson_deleted.v1']);
     }
 
+    public function test_admin_survey_and_question_apis_share_lifecycle_and_preserve_responses(): void
+    {
+        $admin = $this->user('admin');
+        $token = $this->access($admin, ['programmes:read', 'programmes:write']);
+        $headers = ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'programme-survey-create-001'];
+        $this->postJson('/api/v1/programmes/surveys', ['title' => 'Fictional API survey', 'audience' => 'customers', 'status' => 'active'], $headers)->assertUnprocessable();
+        $headers['Idempotency-Key'] = 'programme-survey-create-002';
+        $surveyId = $this->postJson('/api/v1/programmes/surveys', [
+            'title' => 'Fictional API survey', 'audience' => 'customers', 'starts_at' => now()->subMinute()->toIso8601String(),
+        ], $headers)->assertCreated()->json('data.record.id');
+        $headers['Idempotency-Key'] = 'programme-survey-activate-01';
+        $this->postJson('/api/v1/programmes/surveys/'.$surveyId.'/activate', [], $headers)->assertUnprocessable();
+        $headers['Idempotency-Key'] = 'programme-question-create-01';
+        $questionId = $this->postJson('/api/v1/programmes/surveys/'.$surveyId.'/questions', [
+            'question' => 'Fictional question?', 'type' => 'multiple_choice', 'options' => ['Yes', 'No'], 'is_required' => true,
+        ], $headers)->assertCreated()->json('data.record.id');
+        $this->getJson('/api/v1/programmes/surveys/'.$surveyId.'/questions', ['Authorization' => 'Bearer '.$token])->assertOk()
+            ->assertJsonPath('data.items.0.id', $questionId);
+        $headers['Idempotency-Key'] = 'programme-survey-activate-02';
+        $this->postJson('/api/v1/programmes/surveys/'.$surveyId.'/activate', [], $headers)->assertOk()->assertJsonPath('data.status', 'active');
+        $headers['Idempotency-Key'] = 'programme-question-update-01';
+        $this->putJson('/api/v1/programmes/surveys/'.$surveyId.'/questions/'.$questionId, ['question' => 'Changed?'], $headers)->assertUnprocessable();
+        $headers['Idempotency-Key'] = 'programme-survey-close-01';
+        $this->postJson('/api/v1/programmes/surveys/'.$surveyId.'/close', [], $headers)->assertOk()->assertJsonPath('data.status', 'closed');
+        $this->getJson('/api/v1/programmes/surveys?status=closed', ['Authorization' => 'Bearer '.$token])->assertOk()
+            ->assertJsonPath('data.items.0.status', 'closed');
+        $headers['Idempotency-Key'] = 'programme-survey-delete-01';
+        $this->deleteJson('/api/v1/programmes/surveys/'.$surveyId, [], $headers)->assertUnprocessable();
+        $this->assertDatabaseHas('business_outbox', ['type' => 'programmes.survey_activated.v1']);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'programmes.survey_question_created.v1']);
+    }
+
     public function test_document_and_knowledge_article_publishing_are_shared_transitions(): void
     {
         $admin = $this->user('admin');

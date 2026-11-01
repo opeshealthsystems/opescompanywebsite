@@ -6495,6 +6495,7 @@ $registry['definitions'] += require __DIR__.'/business_admin_contracts.php';
 $registry['definitions'] += require __DIR__.'/business_admin_validation.php';
 $registry['definitions'] += require __DIR__.'/business_admin_recruitment.php';
 $registry['definitions'] += require __DIR__.'/business_admin_courses.php';
+$registry['definitions'] += require __DIR__.'/business_admin_surveys.php';
 $registry['definitions'] += require __DIR__.'/business_admin_publishing.php';
 $registry['definitions'] += require __DIR__.'/business_admin_leave.php';
 $registry['definitions'] += require __DIR__.'/business_admin_performance.php';

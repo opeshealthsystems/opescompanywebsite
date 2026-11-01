@@ -1,6 +1,8 @@
 # Node SDK preview and contract release checks
 
-SDK 0.48.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations, including blog publishing, CRM demo-request administration, validation-cohort management, recruitment and learning administration. Download `/downloads/opes-health-api-client-0.48.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
+SDK 0.49.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations, including blog publishing, CRM demo-request administration, validation-cohort management, recruitment, learning and survey administration. Download `/downloads/opes-health-api-client-0.49.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
+
+SDK 0.49.0 adds twelve protected survey-administration operations for survey and question reads/CRUD plus activate/close lifecycle actions. Filament uses the same Programme commands. Surveys with responses and questions with response records cannot be structurally changed; multiple-choice question choices are validated, and participant read/submit flows honor survey start/end windows.
 
 SDK 0.48.0 adds ten protected learning operations for paginated course and lesson reads and CRUD. Filament course forms, the active toggle and lesson relation manager use the shared Learning commands. Courses with enrollment/certificate history cannot be deleted, lessons with learner progress are retained, course images must be managed image files, and drag-reorder controls were removed in favor of API-backed sort-order edits.
 
@@ -15,6 +17,8 @@ SDK 0.46.0 adds eight validation-cohort operations for cohort administration, me
 SDK 0.47.0 archive: 16052 bytes, SHA-256 `9f4b04d09d3791ca6967db817108ad84f83ef39a0262c2a7b2a77d221221132b`. It carries all 412 API operation IDs, including 406 business operations in OpenAPI 0.51.0.
 
 SDK 0.48.0 archive: 16237 bytes, SHA-256 `f4224b41e76a31512c48d6a3abbad1298a8efc3b3592ee4393e87d0c0c6334b4`. It carries all 422 API operation IDs, including 416 business operations in OpenAPI 0.52.0.
+
+SDK 0.49.0 archive: 16468 bytes, SHA-256 `a839e7170906cb3b68cb1b990197329cced2d21b71c40555eaa1e4663a36bb5d`. It carries all 434 API operation IDs, including 428 business operations in OpenAPI 0.53.0.
 
 The archive contains only package metadata, client sources, the generated business operation registry, type definitions, README and an executable read-only catalogue example. It contains no credentials, test fixtures, environment files or runtime dependencies. Install from the archive URL or a reviewed local download; the README includes machine and delegated business usage.
 

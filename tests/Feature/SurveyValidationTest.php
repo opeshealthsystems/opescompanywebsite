@@ -103,4 +103,20 @@ class SurveyValidationTest extends TestCase
             ])
             ->assertSessionHasErrors("q_{$question->id}");
     }
+
+    public function test_scheduled_and_expired_surveys_are_not_visible_or_submittable(): void
+    {
+        $customer = $this->makeUser('customer');
+        [$scheduled, $scheduledQuestion] = $this->makeSurveyWithQuestion('customers', 'text');
+        $scheduled->update(['starts_at' => now()->addDay()]);
+        [$expired, $expiredQuestion] = $this->makeSurveyWithQuestion('customers', 'text');
+        $expired->update(['ends_at' => now()->subMinute()]);
+
+        $this->actingAs($customer)->get('/en/customer/surveys')->assertOk()->assertDontSee($scheduled->title)->assertDontSee($expired->title);
+        $this->actingAs($customer)->get('/en/customer/surveys/'.$scheduled->id)->assertNotFound();
+        $this->actingAs($customer)->get('/en/customer/surveys/'.$expired->id)->assertNotFound();
+        $this->actingAs($customer)->post('/en/customer/surveys/'.$scheduled->id, ["q_{$scheduledQuestion->id}" => 'test'])->assertNotFound();
+        $this->actingAs($customer)->post('/en/customer/surveys/'.$expired->id, ["q_{$expiredQuestion->id}" => 'test'])->assertNotFound();
+        $this->assertDatabaseCount('survey_responses', 0);
+    }
 }

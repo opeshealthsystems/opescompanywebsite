@@ -34,6 +34,14 @@ class Survey extends Model
         return $this->status === 'active';
     }
 
+    public function acceptsResponses(): bool
+    {
+        $now = now();
+        return $this->status === 'active'
+            && ($this->starts_at === null || $this->starts_at->lte($now))
+            && ($this->ends_at === null || $this->ends_at->gte($now));
+    }
+
     public static function audienceOptions(): array
     {
         return [

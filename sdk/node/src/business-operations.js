@@ -1938,6 +1938,185 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "admin_programmes_surveyQuestions_create": {
+        "method": "POST",
+        "path": "/programmes/surveys/{survey}/questions",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "survey"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_programmes_surveyQuestions_delete": {
+        "method": "DELETE",
+        "path": "/programmes/surveys/{survey}/questions/{question}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "survey",
+            "question"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_programmes_surveyQuestions_index": {
+        "method": "GET",
+        "path": "/programmes/surveys/{survey}/questions",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "survey"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_programmes_surveyQuestions_show": {
+        "method": "GET",
+        "path": "/programmes/surveys/{survey}/questions/{question}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "survey",
+            "question"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_programmes_surveyQuestions_update": {
+        "method": "PUT",
+        "path": "/programmes/surveys/{survey}/questions/{question}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "survey",
+            "question"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_programmes_surveys_activate": {
+        "method": "POST",
+        "path": "/programmes/surveys/{survey}/activate",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "survey"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_programmes_surveys_close": {
+        "method": "POST",
+        "path": "/programmes/surveys/{survey}/close",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "survey"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_programmes_surveys_create": {
+        "method": "POST",
+        "path": "/programmes/surveys",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_programmes_surveys_delete": {
+        "method": "DELETE",
+        "path": "/programmes/surveys/{survey}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "survey"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_programmes_surveys_index": {
+        "method": "GET",
+        "path": "/programmes/surveys",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_programmes_surveys_show": {
+        "method": "GET",
+        "path": "/programmes/surveys/{survey}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "survey"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_programmes_surveys_update": {
+        "method": "PUT",
+        "path": "/programmes/surveys/{survey}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "survey"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
     "admin_publishing_blogPosts_create": {
         "method": "POST",
         "path": "/publishing/blog-posts",

@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\SurveyResource\Pages;
 use App\Filament\Resources\SurveyResource\RelationManagers;
 use App\Models\Survey;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Infolists;
@@ -40,7 +41,7 @@ class SurveyResource extends Resource
                     Forms\Components\Select::make('status')
                         ->options(Survey::statusOptions())
                         ->default('draft')
-                        ->required(),
+                        ->disabled()->dehydrated(false),
                     Forms\Components\DateTimePicker::make('starts_at')->nullable(),
                     Forms\Components\DateTimePicker::make('ends_at')->nullable(),
                 ]),
@@ -82,12 +83,16 @@ class SurveyResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\EditAction::make()->hidden(fn (Survey $record) => $record->status !== 'draft')
+                    ->using(fn (Survey $record, array $data) => AdminWorkflowAdapter::record('admin.programmes.surveys.update', $data, ['survey' => $record->id])),
+                Tables\Actions\Action::make('activate')->label('Activate')->color('success')->requiresConfirmation()
+                    ->visible(fn (Survey $record) => $record->status === 'draft')
+                    ->action(fn (Survey $record) => AdminWorkflowAdapter::run('admin.programmes.surveys.activate', parameters: ['survey' => $record->id])),
+                Tables\Actions\Action::make('close')->label('Close')->color('gray')->requiresConfirmation()
+                    ->visible(fn (Survey $record) => $record->status === 'active')
+                    ->action(fn (Survey $record) => AdminWorkflowAdapter::run('admin.programmes.surveys.close', parameters: ['survey' => $record->id])),
+                Tables\Actions\DeleteAction::make()->hidden(fn (Survey $record) => $record->status !== 'draft' || $record->responses()->exists())
+                    ->using(function (Survey $record) { AdminWorkflowAdapter::run('admin.programmes.surveys.delete', parameters: ['survey' => $record->id]); return true; }),
             ]);
     }
 
@@ -107,7 +112,7 @@ class SurveyResource extends Resource
         ]);
     }
 
-    public static function getRelationManagers(): array
+    public static function getRelations(): array
     {
         return [
             RelationManagers\QuestionsRelationManager::class,
