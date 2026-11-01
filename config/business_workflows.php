@@ -6512,4 +6512,5 @@ $registry['definitions'] += require __DIR__.'/business_admin_organization_setup.
 $registry['definitions'] += require __DIR__.'/business_admin_compensation_setup.php';
 $registry['definitions'] += require __DIR__.'/business_admin_reference_setup.php';
 $registry['definitions'] += require __DIR__.'/business_admin_content_setup.php';
+$registry['definitions'] += require __DIR__.'/business_admin_finance_setup.php';
 return $registry;

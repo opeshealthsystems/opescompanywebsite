@@ -14,7 +14,10 @@ class ViewBudget extends ViewRecord
     {
         return [
             Actions\EditAction::make(),
-            Actions\DeleteAction::make(),
+            Actions\DeleteAction::make()->using(function ($record) {
+                \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.budgets.delete', parameters: ['budget' => $record->id]);
+                return true;
+            }),
         ];
     }
 }

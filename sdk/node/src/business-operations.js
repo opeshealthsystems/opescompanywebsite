@@ -585,6 +585,73 @@ export const businessOperations = Object.freeze({
             "multipart/form-data"
         ]
     },
+    "admin_finance_budgets_create": {
+        "method": "POST",
+        "path": "/finance/budgets",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_budgets_delete": {
+        "method": "DELETE",
+        "path": "/finance/budgets/{budget}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "budget"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_budgets_index": {
+        "method": "GET",
+        "path": "/finance/budgets",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_budgets_show": {
+        "method": "GET",
+        "path": "/finance/budgets/{budget}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "budget"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_finance_budgets_update": {
+        "method": "PUT",
+        "path": "/finance/budgets/{budget}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "budget"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_finance_creditNotes_create": {
         "method": "POST",
         "path": "/finance/credit-notes",
