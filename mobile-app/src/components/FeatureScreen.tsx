@@ -33,13 +33,13 @@ export default function FeatureScreen() {
 
   useEffect(() => { void Promise.resolve().then(load); }, [load]);
 
-  const action = async (row: ApiRecord, kind: 'complete' | 'start' | 'enroll' | 'sent' | 'contactStatus') => {
+  const action = async (row: ApiRecord, kind: 'complete' | 'start' | 'enroll' | 'sent' | 'contactStatus' | 'partnerReview' | 'partnerApprove' | 'partnerReject') => {
     if (!feature || !mayWrite) return;
     const rowId = String(row.id ?? row.slug ?? '');
     setActing(rowId); setError(''); setMessage('');
     try {
       if (session.demo) {
-        const change = kind === 'contactStatus' ? String(row.status) === 'new' ? 'contacted' : String(row.status) === 'contacted' ? 'qualified' : 'closed' : kind === 'complete' ? 'completed' : kind === 'start' ? 'in_progress' : kind === 'sent' ? 'sent' : 'enrolled';
+        const change = kind === 'contactStatus' ? String(row.status) === 'new' ? 'contacted' : String(row.status) === 'contacted' ? 'qualified' : 'closed' : kind === 'partnerReview' ? 'reviewing' : kind === 'partnerApprove' ? 'approved' : kind === 'partnerReject' ? 'rejected' : kind === 'complete' ? 'completed' : kind === 'start' ? 'in_progress' : kind === 'sent' ? 'sent' : 'enrolled';
         if (kind === 'enroll') session.mutateDemo(feature.id, 'enroll', { status: change }, rowId);
         else session.mutateDemo(feature.id, 'update-status', { status: change }, rowId);
         setMessage(`Demo updated: ${feature.title.toLowerCase()} now ${change}.`);
@@ -53,6 +53,10 @@ export default function FeatureScreen() {
           products: row.products ?? null, message: row.message ?? null, source: row.source ?? 'contact', product_slug: row.product_slug ?? null, locale: row.locale ?? 'en', status: next,
         });
         setMessage(`Contact marked ${next}.`);
+      } else if (feature.id === 'partnerApps' && ['partnerReview','partnerApprove','partnerReject'].includes(kind)) {
+        const next = kind === 'partnerReview' ? 'reviewing' : kind === 'partnerApprove' ? 'approved' : 'rejected';
+        await session.request(`/crm/partner-applications/${encodeURIComponent(rowId)}`, 'PATCH', { status: next });
+        setMessage(`Partner application marked ${next}.`);
       } else if (feature.id === 'courses') {
         const slug = String(row.slug ?? rowId);
         await session.request(`/practitioner/courses/${encodeURIComponent(slug)}/enroll`, 'POST', {});
@@ -78,7 +82,7 @@ export default function FeatureScreen() {
     <Pressable onPress={() => router.back()}><Text style={{ color: colors.blue, fontSize: 13, fontWeight: '700', marginTop: 3 }}>‹ Back to workspace</Text></Pressable>
     {!!session.demo && <Notice>DEMO MODE · All records and actions on this screen are fictional and local to this app.</Notice>}
     <Heading eyebrow="Workspace" title={title} subtitle={feature?.description ?? 'Manage account information and work items.'} />
-    {feature?.createAction && mayWrite && <ActionButton label={feature.id === 'partnerApplication' ? 'Start an application' : `Create ${feature.title.toLowerCase().replace(/s$/, '')}`} onPress={startCreate} />}
+    {feature?.createAction && mayWrite && <ActionButton label={feature.id === 'partnerApplication' ? 'Start an application' : feature.id === 'contacts' ? 'Add a contact' : `Create ${feature.title.toLowerCase().replace(/s$/, '')}`} onPress={startCreate} />}
     {!!error && <Notice tone="error">{error}</Notice>}{!!message && <Notice tone="success">{message}</Notice>}
     <SectionTitle title={feature?.id === 'partnerApplication' ? 'Application information' : `Records · ${rows.length}`} trailing={<Pressable onPress={() => void load()}><Text style={{ color: colors.blue, fontWeight: '700' }}>Refresh</Text></Pressable>} />
     {busy ? <ActivityIndicator color={colors.blue} style={{ marginVertical: 24 }} /> : null}
@@ -104,6 +108,8 @@ export default function FeatureScreen() {
           <View style={{ flex: 1 }}><ActionButton label="Report bug" secondary onPress={() => router.push({ pathname: '/action/bugReport', params: { assignmentId: key } } as never)} /></View>
         </View>}
         {!!mayWrite && feature?.id === 'contacts' && status !== 'closed' && <ActionButton label={status === 'new' ? 'Mark contacted' : status === 'contacted' ? 'Qualify contact' : 'Close contact'} secondary onPress={() => void action(row, 'contactStatus')} busy={acting === key} />}
+        {!!mayWrite && feature?.id === 'partnerApps' && status === 'pending' && <ActionButton label="Start review" secondary onPress={() => void action(row, 'partnerReview')} busy={acting === key} />}
+        {!!mayWrite && feature?.id === 'partnerApps' && ['pending','reviewing'].includes(status) && <View style={{ flexDirection: 'row', gap: 8 }}><View style={{ flex: 1 }}><ActionButton label="Approve" onPress={() => void action(row, 'partnerApprove')} busy={acting === key} /></View><View style={{ flex: 1 }}><ActionButton label="Reject" secondary onPress={() => void action(row, 'partnerReject')} busy={acting === key} /></View></View>}
         {!!mayWrite && feature?.id === 'courses' && !['enrolled','in_progress','completed'].includes(status) && <ActionButton label="Enroll in course" onPress={() => void action(row, 'enroll')} busy={acting === key} />}
         {!!mayWrite && feature?.id === 'quotes' && status === 'draft' && <ActionButton label="Mark as sent" onPress={() => void action(row, 'sent')} busy={acting === key} />}
         {!!mayWrite && feature?.id === 'tickets' && <ActionButton label="Reply to ticket" secondary onPress={() => router.push({ pathname: '/action/reply', params: { recordId: key } } as never)} />}

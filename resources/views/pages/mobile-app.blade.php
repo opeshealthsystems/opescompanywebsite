@@ -50,7 +50,11 @@
     </section>
 
     <section class="ohs-app-bottom" id="download">
-        @if(file_exists(public_path('mobile-app/opes-health-0.1.0-build-2.apk')))
+        @if(file_exists(public_path('mobile-app/opes-health-0.1.0-build-3.apk')))
+            <h2>{{ $fr ? 'Télécharger l’application Android' : 'Download the Android app' }}</h2>
+            <p>{{ $fr ? 'Version 0.1.0 · Build 3 · Espaces interactifs et connexion sécurisée corrigée. Après installation, ouvrez l’application et choisissez un espace de démonstration ou connectez-vous avec votre compte OPES.' : 'Version 0.1.0 · Build 3 · Interactive workspaces and corrected secure sign-in. After installing, open the app to explore a demo workspace or sign in with your OPES account.' }}</p>
+            <a href="{{ asset('mobile-app/opes-health-0.1.0-build-3.apk') }}" download>{{ $fr ? 'Télécharger l’application Android' : 'Download Android app' }}</a>
+        @elseif(file_exists(public_path('mobile-app/opes-health-0.1.0-build-2.apk')))
             <h2>{{ $fr ? 'Télécharger l’aperçu Android' : 'Download the Android preview' }}</h2>
             <p>{{ $fr ? 'Version 0.1.0 · Build 2 · Aperçu privé Android. Utilisez votre compte OPES ; vos rôles déterminent votre espace.' : 'Version 0.1.0 · Build 2 · Private Android preview. Sign in with your OPES account; your roles determine your workspace.' }}</p>
             <a href="{{ asset('mobile-app/opes-health-0.1.0-build-2.apk') }}" download>{{ $fr ? 'Télécharger le fichier APK' : 'Download Android APK' }}</a>
