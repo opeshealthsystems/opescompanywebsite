@@ -387,6 +387,33 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_finance_invoices_create": {
+        "method": "POST",
+        "path": "/finance/invoices",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_finance_invoices_delete": {
+        "method": "DELETE",
+        "path": "/finance/invoices/{invoice}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "invoice"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_finance_invoices_markManySent": {
         "method": "POST",
         "path": "/finance/invoices/mark-sent",
@@ -439,6 +466,22 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
+    },
+    "admin_finance_invoices_update": {
+        "method": "PUT",
+        "path": "/finance/invoices/{invoice}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "invoice"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
     },
     "admin_finance_payrollEntries_markManyPaid": {
         "method": "POST",

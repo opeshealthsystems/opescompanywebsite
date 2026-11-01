@@ -272,6 +272,40 @@ class BusinessApiTest extends TestCase
         $this->postJson('/api/v1/finance/quotes', $body, ['Idempotency-Key' => 'quote-anonymous-0001'])->assertUnauthorized();
     }
 
+    public function test_invoice_lifecycle_is_api_backed_with_customer_scope_and_computed_totals(): void
+    {
+        $admin = $this->user('admin');
+        $customer = $this->user('customer');
+        $token = $this->access($admin, ['finance:write']);
+        $headers = ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'invoice-create-000001'];
+        $body = [
+            'customer_id' => $customer->id, 'currency' => 'XAF', 'tax_rate' => 10,
+            'items' => [['description' => 'Fictional test invoice item', 'quantity' => 2, 'unit_price' => 50]],
+            'invoice_number' => 'spoofed', 'status' => 'paid', 'issued_by' => 999, 'grand_total' => 1,
+        ];
+        $this->postJson('/api/v1/finance/invoices', $body, $headers)->assertUnprocessable();
+        unset($body['invoice_number'], $body['status'], $body['issued_by'], $body['grand_total']);
+        $created = $this->postJson('/api/v1/finance/invoices', $body, $headers)->assertCreated()
+            ->assertJsonPath('data.status', 'draft')->assertJsonPath('data.grand_total', 110);
+        $this->postJson('/api/v1/finance/invoices', $body, $headers)->assertExactJson($created->json());
+        $invoice = \App\Models\Invoice::query()->findOrFail($created->json('data.id'));
+        $this->assertSame($admin->id, $invoice->issued_by);
+        $this->assertStringStartsWith('INV-'.now()->year.'-', $invoice->invoice_number);
+        $this->assertDatabaseCount('invoice_items', 1);
+
+        $headers['Idempotency-Key'] = 'invoice-update-000001';
+        $update = ['tax_rate' => 5, 'items' => [['description' => 'Updated test invoice item', 'quantity' => 1, 'unit_price' => 80]]];
+        $updated = $this->putJson('/api/v1/finance/invoices/'.$invoice->id, $update, $headers)->assertOk()->assertJsonPath('data.grand_total', 84);
+        $this->putJson('/api/v1/finance/invoices/'.$invoice->id, $update, $headers)->assertExactJson($updated->json());
+        $headers['Idempotency-Key'] = 'invoice-delete-000001';
+        $this->deleteJson('/api/v1/finance/invoices/'.$invoice->id, [], $headers)->assertOk();
+        $this->assertDatabaseMissing('invoices', ['id' => $invoice->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'finance.invoice_created.v1', 'actor_id' => $admin->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'finance.invoice_updated.v1', 'actor_id' => $admin->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'finance.invoice_deleted.v1', 'actor_id' => $admin->id]);
+        $this->postJson('/api/v1/finance/invoices', $body, ['Idempotency-Key' => 'invoice-anonymous-0001'])->assertUnauthorized();
+    }
+
     public function test_payroll_generation_completion_and_payment_are_shared_and_idempotent(): void
     {
         $admin = $this->user('admin');

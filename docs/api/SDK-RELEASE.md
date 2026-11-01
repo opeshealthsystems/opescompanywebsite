@@ -1,6 +1,6 @@
 # Node SDK preview and contract release checks
 
-SDK 0.22.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations. Download `/downloads/opes-health-api-client-0.22.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
+SDK 0.23.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations. Download `/downloads/opes-health-api-client-0.23.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
 
 The archive contains only package metadata, client sources, the generated business operation registry, type definitions, README and an executable read-only catalogue example. It contains no credentials, test fixtures, environment files or runtime dependencies. Install from the archive URL or a reviewed local download; the README includes machine and delegated business usage.
 
@@ -72,3 +72,7 @@ SDK 0.21.0 archive: 13001 bytes, SHA-256 `8d8e384f6c918b69d79efb2fc93da4f0245174
 SDK 0.22.0 adds draft quote create, update and delete operations. Shared finance commands own reference allocation, quote line items, tax calculations, draft-only changes and domain events across API and admin screens.
 
 SDK 0.22.0 archive: 13052 bytes, SHA-256 `9416011c0ad467aac547c6bd996132e219ab16da4f040be934fb4fd9c277356f`. It carries all 258 API operation IDs, including the 252 business operations in OpenAPI 0.26.0.
+
+SDK 0.23.0 adds draft invoice create, update and delete operations. The application commands allocate invoice numbers, validate customer identity and line items, compute amounts server-side, restrict edits to drafts and protect invoices with payment or credit-note history from deletion.
+
+SDK 0.23.0 archive: 13093 bytes, SHA-256 `1d8e04488bafcf2a9988a647cd5c5d6a8a8d5ebcb52adbe2c8570f762d39a136`. It carries all 261 API operation IDs, including the 255 business operations in OpenAPI 0.27.0.

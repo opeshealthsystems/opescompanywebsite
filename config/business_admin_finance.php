@@ -25,6 +25,11 @@ $add = function (string $name, string $method, string $path, array $parameters, 
 $input = ['name' => 'workflowInput', 'kind' => 'input'];
 $model = fn (string $name, string $type) => ['name' => $name, 'kind' => 'model', 'class' => 'App\\Models\\'.$type, 'key' => 'id'];
 
+$add('admin.finance.invoices.create', 'createInvoice', 'finance/invoices', [$input], 'InvoiceResource', 'create');
+$add('admin.finance.invoices.update', 'updateInvoice', 'finance/invoices/{invoice}', [$input, $model('invoice', 'Invoice')], 'InvoiceResource', 'update');
+$definitions['admin.finance.invoices.update']['http_methods'] = ['PUT'];
+$add('admin.finance.invoices.delete', 'deleteInvoice', 'finance/invoices/{invoice}', [$input, $model('invoice', 'Invoice')], 'InvoiceResource', 'delete');
+$definitions['admin.finance.invoices.delete']['http_methods'] = ['DELETE'];
 $add('admin.finance.quotes.create', 'createQuote', 'finance/quotes', [$input], 'QuoteResource', 'create');
 $add('admin.finance.quotes.update', 'updateQuote', 'finance/quotes/{quote}', [$input, $model('quote', 'Quote')], 'QuoteResource', 'update');
 $definitions['admin.finance.quotes.update']['http_methods'] = ['PUT'];

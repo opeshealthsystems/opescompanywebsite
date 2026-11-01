@@ -349,6 +349,117 @@ final class AdminFinanceCommands extends WorkflowHandler
         }
     }
 
+    public function createInvoice(WorkflowInput $input): WorkflowResult
+    {
+        $actor = $this->adminActor($input);
+        $data = $input->validate([
+            'customer_id' => 'required|integer|exists:users,id',
+            'license_id' => 'nullable|integer|exists:licenses,id',
+            'currency' => 'required|in:XAF,USD,EUR',
+            'tax_rate' => 'nullable|numeric|min:0|max:100',
+            'due_date' => 'nullable|date',
+            'notes' => 'nullable|string|max:5000',
+            'items' => 'required|array|min:1|max:100',
+            'items.*.description' => 'required|string|max:500',
+            'items.*.quantity' => 'required|integer|min:1|max:1000000',
+            'items.*.unit_price' => 'required|integer|min:0|max:1000000000',
+            'invoice_number' => 'prohibited', 'status' => 'prohibited', 'issued_by' => 'prohibited',
+            'paid_at' => 'prohibited', 'total' => 'prohibited', 'grand_total' => 'prohibited',
+            'reference' => 'prohibited',
+        ]);
+        if (!User::role('customer')->whereKey($data['customer_id'])->exists()) $this->invalid('customer_id', 'Choose an active customer account.');
+        $items = $data['items'];
+        unset($data['items']);
+
+        $record = DB::transaction(function () use ($data, $items, $actor) {
+            $year = now()->year;
+            $sequenceName = 'invoice:'.$year;
+            DB::table('business_sequences')->insertOrIgnore(['name' => $sequenceName, 'last_value' => 0]);
+            $sequence = DB::table('business_sequences')->where('name', $sequenceName)->lockForUpdate()->first();
+            $previous = (int) $sequence->last_value;
+            if ($previous === 0) {
+                $prefix = 'INV-'.$year.'-';
+                $previous = Invoice::query()->where('invoice_number', 'like', $prefix.'%')->pluck('invoice_number')
+                    ->map(fn ($reference) => ctype_digit(substr($reference, strlen($prefix))) ? (int) substr($reference, strlen($prefix)) : 0)->max() ?? 0;
+            }
+            $next = $previous + 1;
+            DB::table('business_sequences')->where('name', $sequenceName)->update(['last_value' => $next]);
+            $record = Invoice::create($data + [
+                'invoice_number' => 'INV-'.$year.'-'.str_pad((string) $next, 5, '0', STR_PAD_LEFT),
+                'issued_by' => $actor->id, 'status' => 'draft', 'tax_rate' => $data['tax_rate'] ?? 0,
+            ]);
+            $this->replaceInvoiceItems($record, $items);
+            DomainOutbox::append('event', 'finance.invoice_created.v1', [
+                'references' => [['resource' => 'Invoice', 'id' => $record->id]], 'changed_fields' => array_keys($data),
+            ], $actor->id);
+            return $record;
+        }, 3);
+
+        return WorkflowResult::payload(['id' => $record->id, 'invoice_number' => $record->invoice_number, 'status' => $record->status, 'subtotal' => $record->subtotal, 'tax_amount' => $record->tax_amount, 'grand_total' => $record->grand_total], 201)->with('success', 'Invoice created.');
+    }
+
+    public function updateInvoice(WorkflowInput $input, Invoice $invoice): WorkflowResult
+    {
+        $actor = $this->adminActor($input);
+        $data = $input->validate([
+            'customer_id' => 'sometimes|required|integer|exists:users,id',
+            'license_id' => 'sometimes|nullable|integer|exists:licenses,id',
+            'currency' => 'sometimes|required|in:XAF,USD,EUR',
+            'tax_rate' => 'sometimes|nullable|numeric|min:0|max:100',
+            'due_date' => 'sometimes|nullable|date',
+            'notes' => 'sometimes|nullable|string|max:5000',
+            'items' => 'sometimes|required|array|min:1|max:100',
+            'items.*.description' => 'required_with:items|string|max:500',
+            'items.*.quantity' => 'required_with:items|integer|min:1|max:1000000',
+            'items.*.unit_price' => 'required_with:items|integer|min:0|max:1000000000',
+            'invoice_number' => 'prohibited', 'status' => 'prohibited', 'issued_by' => 'prohibited',
+            'paid_at' => 'prohibited', 'total' => 'prohibited', 'grand_total' => 'prohibited', 'reference' => 'prohibited',
+        ]);
+        if (isset($data['customer_id']) && !User::role('customer')->whereKey($data['customer_id'])->exists()) $this->invalid('customer_id', 'Choose an active customer account.');
+        if ($data === []) $this->invalid('invoice', 'Provide at least one invoice field to update.');
+        $items = $data['items'] ?? null;
+        unset($data['items']);
+
+        $record = DB::transaction(function () use ($invoice, $data, $items, $actor) {
+            $record = Invoice::query()->lockForUpdate()->findOrFail($invoice->id);
+            if ($record->status !== 'draft') $this->invalid('status', 'Only draft invoices can be edited.');
+            $record->fill($data)->save();
+            if ($items !== null) $this->replaceInvoiceItems($record, $items);
+            DomainOutbox::append('event', 'finance.invoice_updated.v1', [
+                'references' => [['resource' => 'Invoice', 'id' => $record->id]],
+                'changed_fields' => array_merge(array_keys($data), $items !== null ? ['items'] : []),
+            ], $actor->id);
+            return $record->load('items');
+        }, 3);
+
+        return $this->outcome('invoice', $record->id, $record->status, 'Invoice updated.', ['invoice_number' => $record->invoice_number, 'subtotal' => $record->subtotal, 'tax_amount' => $record->tax_amount, 'grand_total' => $record->grand_total]);
+    }
+
+    public function deleteInvoice(WorkflowInput $input, Invoice $invoice): WorkflowResult
+    {
+        $actor = $this->adminActor($input);
+        DB::transaction(function () use ($invoice, $actor) {
+            $record = Invoice::query()->lockForUpdate()->findOrFail($invoice->id);
+            if ($record->status !== 'draft') $this->invalid('status', 'Only draft invoices can be deleted.');
+            if ($record->payments()->exists() || $record->creditNotes()->exists()) $this->invalid('invoice', 'An invoice with payment or credit note history cannot be deleted.');
+            DomainOutbox::append('event', 'finance.invoice_deleted.v1', ['references' => [['resource' => 'Invoice', 'id' => $record->id]]], $actor->id);
+            $record->delete();
+        }, 3);
+
+        return WorkflowResult::payload(['id' => $invoice->id, 'status' => 'deleted'])->with('success', 'Draft invoice deleted.');
+    }
+
+    private function replaceInvoiceItems(Invoice $record, array $items): void
+    {
+        $record->items()->delete();
+        foreach ($items as $item) {
+            $record->items()->create([
+                'description' => $item['description'], 'quantity' => (int) $item['quantity'],
+                'unit_price' => (int) $item['unit_price'],
+            ]);
+        }
+    }
+
     private function validateExpenseReceipt(?string $path): void
     {
         if ($path !== null && $path !== ''

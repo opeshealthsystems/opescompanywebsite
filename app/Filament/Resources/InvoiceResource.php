@@ -47,7 +47,7 @@ class InvoiceResource extends Resource
                         $q->whereIn('name', ['super_admin', 'admin'])
                     )->orderBy('name')->pluck('name', 'id'))
                     ->searchable()
-                    ->nullable(),
+                    ->nullable()->disabled()->dehydrated(false),
 
                 Forms\Components\Select::make('status')
                     ->options(Invoice::statusOptions())
@@ -87,7 +87,6 @@ class InvoiceResource extends Resource
 
             Forms\Components\Section::make('Line Items')->schema([
                 Forms\Components\Repeater::make('items')
-                    ->relationship()
                     ->schema([
                         Forms\Components\TextInput::make('description')
                             ->required()
@@ -99,13 +98,6 @@ class InvoiceResource extends Resource
                             ->required(),
                         Forms\Components\TextInput::make('unit_price')
                             ->label('Unit Price')
-                            ->numeric()
-                            ->required()
-                            ->live(onBlur: true)
-                            ->afterStateUpdated(function (Forms\Get $get, Forms\Set $set) {
-                                $set('total', (int) $get('quantity') * (int) $get('unit_price'));
-                            }),
-                        Forms\Components\TextInput::make('total')
                             ->numeric()
                             ->required(),
                     ])
@@ -232,7 +224,14 @@ class InvoiceResource extends Resource
                             \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.invoices.markSent', values: ['ids' => $records->modelKeys()]);
                         }),
 
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('deleteDrafts')
+                        ->label('Delete selected drafts')
+                        ->requiresConfirmation()
+                        ->action(function (\Illuminate\Database\Eloquent\Collection $records): void {
+                            foreach ($records as $record) {
+                                \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.invoices.delete', parameters: ['invoice' => $record->id]);
+                            }
+                        }),
                 ]),
             ]);
     }
