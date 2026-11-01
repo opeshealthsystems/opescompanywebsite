@@ -18,7 +18,8 @@
             <h1>{{ $fr ? 'Les services OPES, dans votre espace mobile.' : 'OPES services, in your mobile workspace.' }}</h1>
             <p class="ohs-app-lede">{{ $fr ? 'Un accès sécurisé aux comptes, services et outils OPES, avec des écrans adaptés à chaque rôle.' : 'Secure access to OPES accounts, services and work tools, with screens tailored to each account role.' }}</p>
             <div class="ohs-app-actions">
-                <a class="ohs-app-primary" href="#download">{{ $fr ? 'Télécharger l’aperçu Android' : 'Download Android preview' }}</a>
+                <a class="ohs-app-primary" href="opeshealth://">{{ $fr ? 'Se connecter dans l’application' : 'Sign in in the app' }}</a>
+                <a class="ohs-app-secondary" href="#download">{{ $fr ? 'Télécharger l’aperçu Android' : 'Download Android preview' }}</a>
                 <a class="ohs-app-secondary" href="{{ url('/'.app()->getLocale().'/developers') }}">{{ $fr ? 'Documentation API' : 'API documentation' }}</a>
             </div>
             <p class="ohs-app-status"><span></span>{{ $fr ? 'Aperçu privé Android · Connexion sécurisée par rôle' : 'Private Android preview · Secure role-based sign-in' }}</p>
@@ -30,12 +31,12 @@
         <p class="ohs-app-eyebrow">{{ $fr ? 'UN SEUL ACCÈS' : 'ONE SECURE SIGN-IN' }}</p>
         <h2>{{ $fr ? 'Chaque rôle retrouve son propre espace.' : 'Every account gets its own workspace.' }}</h2>
         <div class="ohs-app-grid">
-            <article><h3>{{ $fr ? 'Équipe et administration' : 'Staff and administrators' }}</h3><p>{{ $fr ? 'Les API publiées prennent en charge les devis, profils clients, demandes de partenariat et dossiers CRM selon les droits du compte.' : 'Published APIs support quotes, customer profiles, partner applications and CRM records according to account permissions.' }}</p></article>
+            <article><h3>{{ $fr ? 'Équipe et administration' : 'Staff and administrators' }}</h3><p>{{ $fr ? 'Gérez les devis, les profils clients, les contacts et demandes, les dossiers CRM et les demandes de partenariat selon les autorisations du compte.' : 'Manage quotes, customer profiles, contacts and enquiries, CRM deals and partner applications according to account permissions.' }}</p></article>
             <article><h3>{{ $fr ? 'Clients' : 'Customers' }}</h3><p>{{ $fr ? 'Consultez le profil, les demandes de service, factures et tickets d’assistance.' : 'Access your profile, service requests, invoices and support tickets.' }}</p></article>
             <article><h3>{{ $fr ? 'Praticiens de santé' : 'Health practitioners' }}</h3><p>{{ $fr ? 'Gérez votre profil et accédez aux cours et certificats disponibles pour votre compte.' : 'Manage your profile and access courses and certificates available to your account.' }}</p></article>
             <article><h3>{{ $fr ? 'Testeurs' : 'Testers' }}</h3><p>{{ $fr ? 'Consultez vos affectations, mettez à jour leur progression et signalez les problèmes.' : 'Review assignments, update progress and report issues.' }}</p></article>
         </div>
-        <p class="ohs-app-note">{{ $fr ? 'L’accès est autorisé par OAuth 2.0 avec PKCE. Les API appliquent les rôles, autorisations et accès aux dossiers à chaque requête. Les fonctions de gestion des contacts et des comptes partenaires restent à ajouter au contrat API.' : 'Access uses OAuth 2.0 with PKCE. The API checks roles, permissions and record access on every request. Contact-directory management and partner self-service accounts still need API operations.' }}</p>
+        <p class="ohs-app-note">{{ $fr ? 'L’accès utilise OAuth 2.0 avec PKCE. Les API vérifient les rôles et autorisations à chaque requête. La gestion des contacts est réservée aux rôles administrateur ; la gestion privée des comptes partenaires reste à venir.' : 'Access uses OAuth 2.0 with PKCE. The API checks roles and permissions on every request. Contact management is limited to administrator roles; private partner account management is still planned.' }}</p>
     </section>
 
     <section class="ohs-app-section" id="updates">
@@ -43,16 +44,16 @@
         <h2>{{ $fr ? 'Versions et mises à jour' : 'Versions and updates' }}</h2>
         <div class="ohs-app-release">
             <div class="ohs-app-version"><strong>0.1.0</strong><span>{{ $fr ? 'APERÇU PRIVÉ' : 'PRIVATE PREVIEW' }}</span></div>
-            <div><h3>{{ $fr ? 'Fondations de l’application' : 'App foundation' }}</h3><p>{{ $fr ? '1 novembre 2026 · Connexion OAuth PKCE, routage automatique selon les rôles RBAC, identité visuelle et API publiées.' : '1 November 2026 · OAuth PKCE sign-in, automatic RBAC workspace routing, app branding and published API connections.' }}</p><ul><li>{{ $fr ? 'Espaces équipe, client, praticien, testeur et partenaire' : 'Staff, customer, practitioner, tester and partner workspaces' }}</li><li>{{ $fr ? 'Jetons stockés dans le coffre sécurisé natif' : 'Tokens stored in native secure storage' }}</li><li>{{ $fr ? 'Mises à jour OTA pour les versions compatibles' : 'OTA updates for compatible installed builds' }}</li><li>{{ $fr ? 'Aucun compte ni donnée de démonstration' : 'No demo accounts or sample business data' }}</li></ul></div>
+            <div><h3>{{ $fr ? 'Espaces de travail interactifs' : 'Interactive workspaces' }}</h3><p>{{ $fr ? '1 novembre 2026 · Connexion OAuth PKCE, routage automatique RBAC, navigation mobile et opérations API publiées.' : '1 November 2026 · OAuth PKCE sign-in, automatic RBAC routing, mobile navigation and published API workflows.' }}</p><ul><li>{{ $fr ? 'Équipe/admin : devis, clients, contacts, dossiers CRM et demandes de partenariat' : 'Staff/admin: quotes, customers, contacts, CRM deals and partner applications' }}</li><li>{{ $fr ? 'Clients : profil, demandes de service, tickets et factures' : 'Customers: profile, service requests, tickets and invoices' }}</li><li>{{ $fr ? 'Praticiens : profil professionnel, cours et certificats' : 'Practitioners: professional profile, courses and certificates' }}</li><li>{{ $fr ? 'Testeurs : affectations, progression et rapports de bugs' : 'Testers: assignments, progress and bug reports' }}</li><li>{{ $fr ? 'Les comptes fictifs restent en mode local et ne modifient aucune donnée réelle' : 'Fictional accounts stay local and cannot change real data' }}</li><li>{{ $fr ? 'Les mises à jour OTA compatibles s’installent au prochain redémarrage' : 'Compatible OTA updates install after the next restart' }}</li></ul></div>
         </div>
         <div class="ohs-app-release ohs-app-future"><div class="ohs-app-version"><strong>1.0.0</strong><span>{{ $fr ? 'À VENIR' : 'PLANNED' }}</span></div><div><h3>{{ $fr ? 'Première version publique' : 'First public release' }}</h3><p>{{ $fr ? 'La publication suivra les validations des boutiques et la confirmation des API de gestion des comptes partenaires et des contacts.' : 'Public release follows store readiness and completion of contact-directory and partner-account APIs.' }}</p></div></div>
     </section>
 
     <section class="ohs-app-bottom" id="download">
-        @if(file_exists(public_path('mobile-app/opes-health-0.1.0.apk')))
+        @if(file_exists(public_path('mobile-app/opes-health-0.1.0-build-2.apk')))
             <h2>{{ $fr ? 'Télécharger l’aperçu Android' : 'Download the Android preview' }}</h2>
-            <p>{{ $fr ? 'Version 0.1.0 · Aperçu privé Android. Utilisez votre compte OPES ; vos rôles déterminent votre espace.' : 'Version 0.1.0 · Private Android preview. Sign in with your OPES account; your roles determine your workspace.' }}</p>
-            <a href="{{ asset('mobile-app/opes-health-0.1.0.apk') }}" download>{{ $fr ? 'Télécharger le fichier APK' : 'Download Android APK' }}</a>
+            <p>{{ $fr ? 'Version 0.1.0 · Build 2 · Aperçu privé Android. Utilisez votre compte OPES ; vos rôles déterminent votre espace.' : 'Version 0.1.0 · Build 2 · Private Android preview. Sign in with your OPES account; your roles determine your workspace.' }}</p>
+            <a href="{{ asset('mobile-app/opes-health-0.1.0-build-2.apk') }}" download>{{ $fr ? 'Télécharger le fichier APK' : 'Download Android APK' }}</a>
         @else
             <h2>{{ $fr ? 'Aperçu Android en préparation' : 'Android preview in progress' }}</h2>
             <p>{{ $fr ? 'Le fichier d’installation sera disponible ici après la compilation et la vérification.' : 'The install file will appear here after the Android build is complete and verified.' }}</p>

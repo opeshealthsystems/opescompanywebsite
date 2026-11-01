@@ -12,12 +12,27 @@
       "checkAutomatically": "ON_LOAD",
       "fallbackToCacheTimeout": 0
     },
-    "runtimeVersion": { "policy": "appVersion" },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
     "plugins": [
       "expo-router",
       "expo-secure-store",
       "expo-updates",
-      "expo-web-browser"
+      "expo-web-browser",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/icon.png",
+          "imageWidth": 180,
+          "resizeMode": "contain",
+          "backgroundColor": "#F5F8FC",
+          "dark": {
+            "image": "./assets/icon.png",
+            "backgroundColor": "#F5F8FC"
+          }
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

@@ -1,3 +1,3 @@
-import RootScreen from '../../App';
+import LoginScreen from '../components/LoginScreen';
 
-export default RootScreen;
+export default LoginScreen;
