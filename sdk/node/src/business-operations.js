@@ -194,6 +194,33 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_contracts_create": {
+        "method": "POST",
+        "path": "/contracts",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_contracts_delete": {
+        "method": "DELETE",
+        "path": "/contracts/{contract}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "contract"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_contracts_terminate": {
         "method": "POST",
         "path": "/contracts/{contract}/terminate",
@@ -206,6 +233,22 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
+    },
+    "admin_contracts_update": {
+        "method": "PUT",
+        "path": "/contracts/{contract}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "contract"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
     },
     "admin_crm_deals_create": {
         "method": "POST",
@@ -569,6 +612,33 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_finance_payrollRuns_create": {
+        "method": "POST",
+        "path": "/finance/payroll-runs",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_finance_payrollRuns_delete": {
+        "method": "DELETE",
+        "path": "/finance/payroll-runs/{run}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "run"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_finance_payrollRuns_generateEntries": {
         "method": "POST",
         "path": "/finance/payroll-runs/{run}/generate-entries",
@@ -581,6 +651,22 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
+    },
+    "admin_finance_payrollRuns_update": {
+        "method": "PUT",
+        "path": "/finance/payroll-runs/{run}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "run"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
     },
     "admin_finance_purchaseOrders_approve": {
         "method": "POST",

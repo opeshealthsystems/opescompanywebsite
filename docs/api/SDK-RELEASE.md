@@ -1,6 +1,6 @@
 # Node SDK preview and contract release checks
 
-SDK 0.27.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations. Download `/downloads/opes-health-api-client-0.27.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
+SDK 0.28.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations. Download `/downloads/opes-health-api-client-0.28.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
 
 The archive contains only package metadata, client sources, the generated business operation registry, type definitions, README and an executable read-only catalogue example. It contains no credentials, test fixtures, environment files or runtime dependencies. Install from the archive URL or a reviewed local download; the README includes machine and delegated business usage.
 
@@ -92,3 +92,7 @@ SDK 0.26.0 archive: 13356 bytes, SHA-256 `7d67c182a94a2366342ad7dba96e58ce71dc8f
 SDK 0.27.0 adds delegated weekly review snapshots and tester assignment management. Weekly metrics are generated on the server and immutable; assignment transitions validate product ownership, active tester identity, allowed states and report-history deletion rules.
 
 SDK 0.27.0 archive: 13478 bytes, SHA-256 `665e434a217ac734e4d1300cd383684c3288dd9dfcbb81a363660d8db92a7a91`. It carries all 281 API operation IDs, including the 275 business operations in OpenAPI 0.31.0.
+
+SDK 0.28.0 adds contract create/update/delete and payroll-run create/update/delete business operations. Contract references and payroll references are allocated server-side; active/renewed contracts are protected from deletion, and payroll runs cannot be changed or deleted after entries exist or processing begins. The operations use explicit OAuth scopes and shared transactional command handlers.
+
+SDK 0.28.0 archive: 13563 bytes, SHA-256 `1f886835d605e5279f7dde9e680a8b833b03933bb79e3354d4074766484e6dc4`. It carries all 287 API operation IDs, including the 281 business operations in OpenAPI 0.32.0.

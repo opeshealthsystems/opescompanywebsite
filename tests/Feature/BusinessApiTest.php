@@ -851,4 +851,30 @@ class BusinessApiTest extends TestCase
         $this->postJson('/api/v1/finance/invoice-templates/'.$template->id.'/generate-invoice', [], $headers)->assertUnprocessable();
         $this->assertDatabaseCount('invoices', 1);
     }
+
+    public function test_contract_and_payroll_run_lifecycles_use_api_commands(): void
+    {
+        $admin = $this->user('admin');
+        $headers = ['Authorization' => 'Bearer '.$this->access($admin, ['contracts:write', 'finance:write']), 'Idempotency-Key' => 'contract-payroll-create-0001'];
+        $this->postJson('/api/v1/contracts', [], ['Idempotency-Key' => 'contract-anonymous-0001'])->assertUnauthorized();
+        $contractResponse = $this->postJson('/api/v1/contracts', ['title' => 'Fictional service agreement', 'type' => 'service_agreement', 'currency' => 'XAF', 'auto_renew' => false, 'value' => 1500], $headers)->assertCreated();
+        $contract = \App\Models\Contract::query()->findOrFail($contractResponse->json('data.id'));
+        $this->assertSame($admin->id, $contract->created_by);
+        $headers['Idempotency-Key'] = 'contract-payroll-update-0001';
+        $this->putJson('/api/v1/contracts/'.$contract->id, ['title' => 'Fictional updated draft'], $headers)->assertOk();
+        $headers['Idempotency-Key'] = 'contract-payroll-delete-0001';
+        $this->deleteJson('/api/v1/contracts/'.$contract->id, [], $headers)->assertOk();
+
+        $headers['Idempotency-Key'] = 'payroll-run-create-000001';
+        $runResponse = $this->postJson('/api/v1/finance/payroll-runs', ['period_start' => '2026-10-01', 'period_end' => '2026-10-31', 'currency' => 'XAF'], $headers)->assertCreated();
+        $run = \App\Models\PayrollRun::query()->findOrFail($runResponse->json('data.id'));
+        $this->assertSame($admin->id, $run->processed_by);
+        $headers['Idempotency-Key'] = 'payroll-run-update-000001';
+        $this->putJson('/api/v1/finance/payroll-runs/'.$run->id, ['notes' => 'Fictional test notes'], $headers)->assertOk();
+        $headers['Idempotency-Key'] = 'payroll-run-delete-000001';
+        $this->deleteJson('/api/v1/finance/payroll-runs/'.$run->id, [], $headers)->assertOk();
+        $this->assertDatabaseMissing('payroll_runs', ['id' => $run->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'publishing.contract_created.v1', 'actor_id' => $admin->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'finance.payroll_run_created.v1', 'actor_id' => $admin->id]);
+    }
 }

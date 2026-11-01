@@ -66,6 +66,11 @@ $add('admin.finance.quotes.accept', 'acceptQuote', 'finance/quotes/{quote}/accep
 $add('admin.finance.invoices.markSent', 'markInvoiceSent', 'finance/invoices/{invoice}/mark-sent', [$input, $model('invoice', 'Invoice')], 'InvoiceResource', 'mark_sent');
 $add('admin.finance.invoices.markPaid', 'markInvoicePaid', 'finance/invoices/{invoice}/mark-paid', [$input, $model('invoice', 'Invoice')], 'InvoiceResource', 'mark_paid');
 $add('admin.finance.invoices.markOverdue', 'markInvoiceOverdue', 'finance/invoices/{invoice}/mark-overdue', [$input, $model('invoice', 'Invoice')], 'InvoiceResource', 'mark_overdue');
+$add('admin.finance.payrollRuns.create', 'createPayrollRun', 'finance/payroll-runs', [$input], 'PayrollRunResource', 'create');
+$add('admin.finance.payrollRuns.update', 'updatePayrollRun', 'finance/payroll-runs/{run}', [$input, $model('run', 'PayrollRun')], 'PayrollRunResource', 'update');
+$definitions['admin.finance.payrollRuns.update']['http_methods'] = ['PUT'];
+$add('admin.finance.payrollRuns.delete', 'deletePayrollRun', 'finance/payroll-runs/{run}', [$input, $model('run', 'PayrollRun')], 'PayrollRunResource', 'delete');
+$definitions['admin.finance.payrollRuns.delete']['http_methods'] = ['DELETE'];
 $add('admin.finance.invoices.markManySent', 'markInvoicesSent', 'finance/invoices/mark-sent', [$input], 'InvoiceResource', 'mark_sent_bulk');
 $add('admin.finance.invoiceTemplates.generate', 'generateInvoiceFromTemplate', 'finance/invoice-templates/{invoiceTemplate}/generate-invoice', [$input, $model('invoiceTemplate', 'InvoiceTemplate')], 'InvoiceTemplateResource', 'generate_invoice');
 $add('admin.finance.payrollRuns.generateEntries', 'generatePayrollEntries', 'finance/payroll-runs/{run}/generate-entries', [$input, $model('run', 'PayrollRun')], 'PayrollRunResource', 'generate_entries');

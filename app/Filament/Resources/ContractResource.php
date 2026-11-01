@@ -77,7 +77,7 @@ class ContractResource extends Resource
                     ->options(fn () => User::orderBy('name')->pluck('name', 'id'))
                     ->default(fn () => auth()->id())
                     ->searchable()
-                    ->required(),
+                    ->required()->disabled()->dehydrated(false),
             ]),
             Forms\Components\Section::make('Dates & Value')->columns(2)->schema([
                 Forms\Components\DatePicker::make('start_date')
@@ -88,7 +88,7 @@ class ContractResource extends Resource
                     ->nullable(),
                 Forms\Components\DateTimePicker::make('signed_at')
                     ->label('Signed At')
-                    ->nullable(),
+                    ->nullable()->disabled()->dehydrated(false),
                 Forms\Components\Toggle::make('auto_renew')
                     ->label('Auto-Renew')
                     ->default(false),
@@ -180,11 +180,11 @@ class ContractResource extends Resource
                     ->requiresConfirmation()
                     ->hidden(fn (Contract $record) => $record->status !== 'active')
                     ->action(fn (Contract $record) => AdminWorkflowAdapter::run('admin.contracts.terminate', parameters: ['contract' => $record])),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()->using(function (Contract $record) { AdminWorkflowAdapter::run('admin.contracts.delete', parameters: ['contract' => $record->id]); return true; }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->using(function ($records) { foreach ($records as $record) AdminWorkflowAdapter::run('admin.contracts.delete', parameters: ['contract' => $record->id]); }),
                 ]),
             ]);
     }

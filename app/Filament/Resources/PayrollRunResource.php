@@ -72,7 +72,7 @@ class PayrollRunResource extends Resource
                     ->options(fn () => User::orderBy('name')->pluck('name', 'id'))
                     ->default(fn () => auth()->id())
                     ->searchable()
-                    ->required(),
+                    ->required()->disabled()->dehydrated(false),
 
                 Forms\Components\Textarea::make('notes')
                     ->rows(2)
@@ -129,6 +129,7 @@ class PayrollRunResource extends Resource
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make()
                     ->hidden(fn (PayrollRun $record) => $record->status === 'completed'),
+                Tables\Actions\DeleteAction::make()->using(function (PayrollRun $record) { \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.payrollRuns.delete', parameters: ['run' => $record->id]); return true; }),
                 Tables\Actions\Action::make('complete')
                     ->label('Mark Complete')
                     ->icon('heroicon-o-check-circle')
@@ -139,7 +140,7 @@ class PayrollRunResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->using(function ($records) { foreach ($records as $record) \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.payrollRuns.delete', parameters: ['run' => $record->id]); }),
                 ]),
             ]);
     }

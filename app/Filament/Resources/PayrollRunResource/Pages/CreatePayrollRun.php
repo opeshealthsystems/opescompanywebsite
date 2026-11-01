@@ -10,10 +10,9 @@ class CreatePayrollRun extends CreateRecord
 {
     protected static string $resource = PayrollRunResource::class;
 
-    protected function mutateFormDataBeforeCreate(array $data): array
+    protected function handleRecordCreation(array $data): \Illuminate\Database\Eloquent\Model
     {
-        $data['reference'] = PayrollRun::generateReference();
-        return $data;
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.finance.payrollRuns.create', $data);
     }
 
     protected function getRedirectUrl(): string

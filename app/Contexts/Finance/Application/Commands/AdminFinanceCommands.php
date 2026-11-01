@@ -42,6 +42,72 @@ final class AdminFinanceCommands extends WorkflowHandler
         throw ValidationException::withMessages([$field => $message]);
     }
 
+    public function createPayrollRun(WorkflowInput $input): WorkflowResult
+    {
+        $actor = $this->adminActor($input);
+        $data = $input->validate([
+            'period_start' => 'required|date', 'period_end' => 'required|date|after_or_equal:period_start',
+            'currency' => 'required|in:XAF,USD,EUR', 'notes' => 'nullable|string|max:5000',
+            'reference' => 'prohibited', 'status' => 'prohibited', 'processed_by' => 'prohibited',
+            'total_gross' => 'prohibited', 'total_net' => 'prohibited', 'completed_at' => 'prohibited',
+        ]);
+        $record = DB::transaction(function () use ($data, $actor) {
+            $year = now()->year;
+            $name = 'payroll_run:'.$year;
+            DB::table('business_sequences')->insertOrIgnore(['name' => $name, 'last_value' => 0]);
+            $sequence = DB::table('business_sequences')->where('name', $name)->lockForUpdate()->first();
+            $previous = (int) $sequence->last_value;
+            if ($previous === 0) {
+                $prefix = 'PAY-'.$year.'-';
+                $previous = PayrollRun::query()->where('reference', 'like', $prefix.'%')->pluck('reference')
+                    ->map(fn ($ref) => ctype_digit(substr($ref, strlen($prefix))) ? (int) substr($ref, strlen($prefix)) : 0)->max() ?? 0;
+            }
+            $next = $previous + 1;
+            DB::table('business_sequences')->where('name', $name)->update(['last_value' => $next]);
+            $record = PayrollRun::create($data + ['reference' => 'PAY-'.$year.'-'.str_pad((string) $next, 4, '0', STR_PAD_LEFT), 'status' => 'draft', 'processed_by' => $actor->id, 'total_gross' => 0, 'total_net' => 0]);
+            DomainOutbox::append('event', 'finance.payroll_run_created.v1', ['references' => [['resource' => 'PayrollRun', 'id' => $record->id]]], $actor->id);
+            return $record;
+        }, 3);
+        return WorkflowResult::payload(['record' => $record, 'id' => $record->id, 'reference' => $record->reference], 201);
+    }
+
+    public function updatePayrollRun(WorkflowInput $input, PayrollRun $run): WorkflowResult
+    {
+        $actor = $this->adminActor($input);
+        $data = $input->validate([
+            'period_start' => 'sometimes|required|date', 'period_end' => 'sometimes|required|date',
+            'currency' => 'sometimes|required|in:XAF,USD,EUR', 'notes' => 'sometimes|nullable|string|max:5000',
+            'reference' => 'prohibited', 'status' => 'prohibited', 'processed_by' => 'prohibited',
+            'total_gross' => 'prohibited', 'total_net' => 'prohibited', 'completed_at' => 'prohibited',
+        ]);
+        if ($data === []) $this->invalid('payroll_run', 'Provide at least one payroll run field to update.');
+        $record = DB::transaction(function () use ($run, $data, $actor) {
+            $record = PayrollRun::query()->lockForUpdate()->findOrFail($run->id);
+            if ($record->status !== 'draft' || $record->entries()->exists()) $this->invalid('status', 'Only draft payroll runs without entries can be edited.');
+            $start = isset($data['period_start']) ? \Carbon\Carbon::parse($data['period_start']) : $record->period_start;
+            $end = isset($data['period_end']) ? \Carbon\Carbon::parse($data['period_end']) : $record->period_end;
+            if ($end && $start && $end->lt($start)) $this->invalid('period_end', 'The period end must not precede the period start.');
+            $record->update($data);
+            DomainOutbox::append('event', 'finance.payroll_run_updated.v1', ['references' => [['resource' => 'PayrollRun', 'id' => $record->id]], 'changed_fields' => array_keys($data)], $actor->id);
+            return $record;
+        }, 3);
+        return WorkflowResult::payload(['record' => $record, 'id' => $record->id, 'reference' => $record->reference]);
+    }
+
+    public function deletePayrollRun(WorkflowInput $input, PayrollRun $run): WorkflowResult
+    {
+        $actor = $this->adminActor($input);
+        $id = DB::transaction(function () use ($run, $actor) {
+            $record = PayrollRun::query()->lockForUpdate()->findOrFail($run->id);
+            if ($record->status !== 'draft' || $record->entries()->exists()) $this->invalid('status', 'Only draft payroll runs without entries can be deleted.');
+            $id = $record->id;
+            $record->delete();
+            DomainOutbox::append('event', 'finance.payroll_run_deleted.v1', ['references' => [['resource' => 'PayrollRun', 'id' => $id]]], $actor->id);
+            return $id;
+        }, 3);
+        return WorkflowResult::payload(['deleted_id' => $id]);
+    }
+
     public function createExpense(WorkflowInput $input): WorkflowResult
     {
         $actor = $this->adminActor($input);

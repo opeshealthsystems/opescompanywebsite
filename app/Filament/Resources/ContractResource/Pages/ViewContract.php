@@ -20,7 +20,10 @@ class ViewContract extends ViewRecord
                 ->url(fn () => route('contracts.pdf', $this->record))
                 ->openUrlInNewTab(),
             Actions\EditAction::make(),
-            Actions\DeleteAction::make(),
+            Actions\DeleteAction::make()->using(function ($record) {
+                \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.contracts.delete', parameters: ['contract' => $record->id]);
+                return true;
+            }),
         ];
     }
 }

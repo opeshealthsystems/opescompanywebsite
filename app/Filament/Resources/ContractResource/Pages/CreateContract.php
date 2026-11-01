@@ -9,9 +9,8 @@ class CreateContract extends CreateRecord
 {
     protected static string $resource = ContractResource::class;
 
-    protected function mutateFormDataBeforeCreate(array $data): array
+    protected function handleRecordCreation(array $data): \Illuminate\Database\Eloquent\Model
     {
-        $data['reference'] = \App\Models\Contract::generateReference();
-        return $data;
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.contracts.create', $data);
     }
 }
