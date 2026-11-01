@@ -168,6 +168,79 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_catalogue_products_archive": {
+        "method": "POST",
+        "path": "/admin/products/{product}/archive",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "product"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_catalogue_products_create": {
+        "method": "POST",
+        "path": "/admin/products",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_catalogue_products_index": {
+        "method": "GET",
+        "path": "/admin/products",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_catalogue_products_show": {
+        "method": "GET",
+        "path": "/admin/products/{product}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "product"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_catalogue_products_update": {
+        "method": "PUT",
+        "path": "/admin/products/{product}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "product"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
     "admin_communications_announcements_create": {
         "method": "POST",
         "path": "/communications/announcements",
