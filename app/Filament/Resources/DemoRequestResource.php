@@ -68,7 +68,15 @@ class DemoRequestResource extends Resource
                 Tables\Filters\SelectFilter::make('institution_type')->options(collect(DemoRequest::$institutionTypes)->map(fn($v) => $v['en'])),
             ])
             ->actions([Tables\Actions\EditAction::make()])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);
+            ->bulkActions([Tables\Actions\BulkActionGroup::make([
+                Tables\Actions\DeleteBulkAction::make()->action(function (\Illuminate\Support\Collection $records): void {
+                    \Illuminate\Support\Facades\DB::transaction(function () use ($records): void {
+                        foreach ($records as $record) {
+                            \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.crm.demoRequests.delete', parameters: ['demoRequest' => $record->id]);
+                        }
+                    }, 3);
+                }),
+            ])]);
     }
 
     public static function getPages(): array

@@ -585,6 +585,79 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "admin_crm_demoRequests_create": {
+        "method": "POST",
+        "path": "/crm/demo-requests",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_crm_demoRequests_delete": {
+        "method": "DELETE",
+        "path": "/crm/demo-requests/{demoRequest}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "demoRequest"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_crm_demoRequests_index": {
+        "method": "GET",
+        "path": "/crm/demo-requests",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_crm_demoRequests_show": {
+        "method": "GET",
+        "path": "/crm/demo-requests/{demoRequest}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "demoRequest"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_crm_demoRequests_update": {
+        "method": "PUT",
+        "path": "/crm/demo-requests/{demoRequest}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "demoRequest"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
     "admin_documents_create": {
         "method": "POST",
         "path": "/documents",
@@ -2291,6 +2364,126 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [
             "certificate"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_validation_cohortMembers_update": {
+        "method": "PUT",
+        "path": "/validation/cohorts/{cohort}/members/{member}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "cohort",
+            "member"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_validation_cohortTestCases_attach": {
+        "method": "POST",
+        "path": "/validation/cohorts/{cohort}/test-cases",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "cohort"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_validation_cohortTestCases_detach": {
+        "method": "DELETE",
+        "path": "/validation/cohorts/{cohort}/test-cases/{testCase}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "cohort",
+            "testCase"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_cohorts_create": {
+        "method": "POST",
+        "path": "/validation/cohorts",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_validation_cohorts_delete": {
+        "method": "DELETE",
+        "path": "/validation/cohorts/{cohort}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "cohort"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_cohorts_index": {
+        "method": "GET",
+        "path": "/validation/cohorts",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_cohorts_show": {
+        "method": "GET",
+        "path": "/validation/cohorts/{cohort}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "cohort"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_cohorts_update": {
+        "method": "PUT",
+        "path": "/validation/cohorts/{cohort}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "cohort"
         ],
         "queryParameters": [],
         "acceptLanguage": true,

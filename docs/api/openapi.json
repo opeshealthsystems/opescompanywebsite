@@ -2,8 +2,8 @@
     "openapi": "3.1.1",
     "info": {
         "title": "OHS Platform API",
-        "version": "0.48.0",
-        "description": "Versioned OHS business APIs. Public enquiries, published content, account recovery and machine catalogue access, with delegated business workflows using authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.",
+        "version": "0.50.0",
+        "description": "Versioned OHS business APIs. Public enquiries, published content, CRM demo-request and validation-cohort management, account recovery and machine catalogue access, with delegated business workflows using authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.",
         "contact": {
             "name": "OHS support",
             "email": "contact@opeshealthsystems.com"
@@ -78893,6 +78893,3079 @@
                 }
             }
         },
+        "/crm/demo-requests": {
+            "get": {
+                "operationId": "admin_crm_demoRequests_index",
+                "summary": "Admin Demo Request Queries index",
+                "description": "Shared application operation: admin.crm.demoRequests.index. Existing role and record policies remain authoritative.",
+                "tags": [
+                    "Enquiries"
+                ],
+                "security": [
+                    {
+                        "UserOAuth2": [
+                            "crm:read"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "Accept-Language",
+                        "description": "Response language; defaults to English.",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "en",
+                                "fr"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 10000
+                        },
+                        "description": "One-based page for paginated collections. Ignored by single-record and aggregate reads."
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 100
+                        },
+                        "description": "Page size, up to 100 records, for paginated collections. Non-paginated lists are bounded to 100 records."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.crm.demoRequests.index"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Valid delegated user token required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Role, scope or record access denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Idempotency key used with a different request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Rate limit exceeded",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "operationId": "admin_crm_demoRequests_create",
+                "summary": "Admin Demo Request Commands create",
+                "description": "Shared application operation: admin.crm.demoRequests.create. Existing role and record policies remain authoritative.",
+                "tags": [
+                    "Enquiries"
+                ],
+                "security": [
+                    {
+                        "UserOAuth2": [
+                            "crm:write"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "Accept-Language",
+                        "description": "Response language; defaults to English.",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "en",
+                                "fr"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Idempotency-Key",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "minLength": 16,
+                            "maxLength": 128,
+                            "pattern": "^[A-Za-z0-9._:-]+$"
+                        },
+                        "description": "A unique command key. Repeat the same body and key within 24 hours to retrieve the first outcome. A changed body returns 409."
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Valid delegated user token required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Role, scope or record access denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Idempotency key used with a different request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Rate limit exceeded",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.crm.demoRequests.create"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Validation: required|string|max:100",
+                                        "maxLength": 100
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Validation: required|email|max:150",
+                                        "format": "email",
+                                        "maxLength": 150
+                                    },
+                                    "phone": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:30",
+                                        "maxLength": 30
+                                    },
+                                    "organization_name": {
+                                        "type": "string",
+                                        "description": "Validation: required|string|max:150",
+                                        "maxLength": 150
+                                    },
+                                    "country": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:60",
+                                        "maxLength": 60
+                                    },
+                                    "institution_type": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:40|in:government_hospital,private_hospital,clinic,pharmacy,laboratory,ministry,ngo,other",
+                                        "maxLength": 40,
+                                        "enum": [
+                                            "government_hospital",
+                                            "private_hospital",
+                                            "clinic",
+                                            "pharmacy",
+                                            "laboratory",
+                                            "ministry",
+                                            "ngo",
+                                            "other"
+                                        ]
+                                    },
+                                    "institution_size": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|in:1-10,11-50,51-200,201-500,500+",
+                                        "enum": [
+                                            "1-10",
+                                            "11-50",
+                                            "51-200",
+                                            "201-500",
+                                            "500+"
+                                        ]
+                                    },
+                                    "products": {
+                                        "type": [
+                                            "array",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|array|max:20",
+                                        "items": {
+                                            "type": "string",
+                                            "description": "Validation: required|string|max:60|distinct:strict",
+                                            "maxLength": 60
+                                        },
+                                        "maxItems": 20
+                                    },
+                                    "message": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:2000",
+                                        "maxLength": 2000
+                                    },
+                                    "preferred_date": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|date",
+                                        "format": "date"
+                                    },
+                                    "locale": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|in:en,fr",
+                                        "enum": [
+                                            "en",
+                                            "fr"
+                                        ]
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|in:new,contacted,scheduled,completed,rejected",
+                                        "enum": [
+                                            "new",
+                                            "contacted",
+                                            "scheduled",
+                                            "completed",
+                                            "rejected"
+                                        ]
+                                    },
+                                    "admin_notes": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:20000",
+                                        "maxLength": 20000
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "organization_name"
+                                ]
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Validation: required|string|max:100",
+                                        "maxLength": 100
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Validation: required|email|max:150",
+                                        "format": "email",
+                                        "maxLength": 150
+                                    },
+                                    "phone": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:30",
+                                        "maxLength": 30
+                                    },
+                                    "organization_name": {
+                                        "type": "string",
+                                        "description": "Validation: required|string|max:150",
+                                        "maxLength": 150
+                                    },
+                                    "country": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:60",
+                                        "maxLength": 60
+                                    },
+                                    "institution_type": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:40|in:government_hospital,private_hospital,clinic,pharmacy,laboratory,ministry,ngo,other",
+                                        "maxLength": 40,
+                                        "enum": [
+                                            "government_hospital",
+                                            "private_hospital",
+                                            "clinic",
+                                            "pharmacy",
+                                            "laboratory",
+                                            "ministry",
+                                            "ngo",
+                                            "other"
+                                        ]
+                                    },
+                                    "institution_size": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|in:1-10,11-50,51-200,201-500,500+",
+                                        "enum": [
+                                            "1-10",
+                                            "11-50",
+                                            "51-200",
+                                            "201-500",
+                                            "500+"
+                                        ]
+                                    },
+                                    "products": {
+                                        "type": [
+                                            "array",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|array|max:20",
+                                        "items": {
+                                            "type": "string",
+                                            "description": "Validation: required|string|max:60|distinct:strict",
+                                            "maxLength": 60
+                                        },
+                                        "maxItems": 20
+                                    },
+                                    "message": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:2000",
+                                        "maxLength": 2000
+                                    },
+                                    "preferred_date": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|date",
+                                        "format": "date"
+                                    },
+                                    "locale": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|in:en,fr",
+                                        "enum": [
+                                            "en",
+                                            "fr"
+                                        ]
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|in:new,contacted,scheduled,completed,rejected",
+                                        "enum": [
+                                            "new",
+                                            "contacted",
+                                            "scheduled",
+                                            "completed",
+                                            "rejected"
+                                        ]
+                                    },
+                                    "admin_notes": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:20000",
+                                        "maxLength": 20000
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "organization_name"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/crm/demo-requests/{demoRequest}": {
+            "get": {
+                "operationId": "admin_crm_demoRequests_show",
+                "summary": "Admin Demo Request Queries show",
+                "description": "Shared application operation: admin.crm.demoRequests.show. Existing role and record policies remain authoritative.",
+                "tags": [
+                    "Enquiries"
+                ],
+                "security": [
+                    {
+                        "UserOAuth2": [
+                            "crm:read"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "demoRequest",
+                        "description": "Record identifier or slug from an authorized read response.",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Accept-Language",
+                        "description": "Response language; defaults to English.",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "en",
+                                "fr"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 10000
+                        },
+                        "description": "One-based page for paginated collections. Ignored by single-record and aggregate reads."
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 100
+                        },
+                        "description": "Page size, up to 100 records, for paginated collections. Non-paginated lists are bounded to 100 records."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.crm.demoRequests.show"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Valid delegated user token required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Role, scope or record access denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Idempotency key used with a different request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Rate limit exceeded",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "operationId": "admin_crm_demoRequests_update",
+                "summary": "Admin Demo Request Commands update",
+                "description": "Shared application operation: admin.crm.demoRequests.update. Existing role and record policies remain authoritative.",
+                "tags": [
+                    "Enquiries"
+                ],
+                "security": [
+                    {
+                        "UserOAuth2": [
+                            "crm:write"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "demoRequest",
+                        "description": "Record identifier or slug from an authorized read response.",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Accept-Language",
+                        "description": "Response language; defaults to English.",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "en",
+                                "fr"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Idempotency-Key",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "minLength": 16,
+                            "maxLength": 128,
+                            "pattern": "^[A-Za-z0-9._:-]+$"
+                        },
+                        "description": "A unique command key. Repeat the same body and key within 24 hours to retrieve the first outcome. A changed body returns 409."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.crm.demoRequests.update"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Valid delegated user token required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Role, scope or record access denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Idempotency key used with a different request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Rate limit exceeded",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|required|string|max:100",
+                                        "maxLength": 100
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|required|email|max:150",
+                                        "format": "email",
+                                        "maxLength": 150
+                                    },
+                                    "phone": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:30",
+                                        "maxLength": 30
+                                    },
+                                    "organization_name": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|required|string|max:150",
+                                        "maxLength": 150
+                                    },
+                                    "country": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:60",
+                                        "maxLength": 60
+                                    },
+                                    "institution_type": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:40|in:government_hospital,private_hospital,clinic,pharmacy,laboratory,ministry,ngo,other",
+                                        "maxLength": 40,
+                                        "enum": [
+                                            "government_hospital",
+                                            "private_hospital",
+                                            "clinic",
+                                            "pharmacy",
+                                            "laboratory",
+                                            "ministry",
+                                            "ngo",
+                                            "other"
+                                        ]
+                                    },
+                                    "institution_size": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|in:1-10,11-50,51-200,201-500,500+",
+                                        "enum": [
+                                            "1-10",
+                                            "11-50",
+                                            "51-200",
+                                            "201-500",
+                                            "500+"
+                                        ]
+                                    },
+                                    "products": {
+                                        "type": [
+                                            "array",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|array|max:20",
+                                        "items": {
+                                            "type": "string",
+                                            "description": "Validation: required|string|max:60|distinct:strict",
+                                            "maxLength": 60
+                                        },
+                                        "maxItems": 20
+                                    },
+                                    "message": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:2000",
+                                        "maxLength": 2000
+                                    },
+                                    "preferred_date": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|date",
+                                        "format": "date"
+                                    },
+                                    "locale": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|in:en,fr",
+                                        "enum": [
+                                            "en",
+                                            "fr"
+                                        ]
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|in:new,contacted,scheduled,completed,rejected",
+                                        "enum": [
+                                            "new",
+                                            "contacted",
+                                            "scheduled",
+                                            "completed",
+                                            "rejected"
+                                        ]
+                                    },
+                                    "admin_notes": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:20000",
+                                        "maxLength": 20000
+                                    }
+                                }
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|required|string|max:100",
+                                        "maxLength": 100
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|required|email|max:150",
+                                        "format": "email",
+                                        "maxLength": 150
+                                    },
+                                    "phone": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:30",
+                                        "maxLength": 30
+                                    },
+                                    "organization_name": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|required|string|max:150",
+                                        "maxLength": 150
+                                    },
+                                    "country": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:60",
+                                        "maxLength": 60
+                                    },
+                                    "institution_type": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:40|in:government_hospital,private_hospital,clinic,pharmacy,laboratory,ministry,ngo,other",
+                                        "maxLength": 40,
+                                        "enum": [
+                                            "government_hospital",
+                                            "private_hospital",
+                                            "clinic",
+                                            "pharmacy",
+                                            "laboratory",
+                                            "ministry",
+                                            "ngo",
+                                            "other"
+                                        ]
+                                    },
+                                    "institution_size": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|in:1-10,11-50,51-200,201-500,500+",
+                                        "enum": [
+                                            "1-10",
+                                            "11-50",
+                                            "51-200",
+                                            "201-500",
+                                            "500+"
+                                        ]
+                                    },
+                                    "products": {
+                                        "type": [
+                                            "array",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|array|max:20",
+                                        "items": {
+                                            "type": "string",
+                                            "description": "Validation: required|string|max:60|distinct:strict",
+                                            "maxLength": 60
+                                        },
+                                        "maxItems": 20
+                                    },
+                                    "message": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:2000",
+                                        "maxLength": 2000
+                                    },
+                                    "preferred_date": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|date",
+                                        "format": "date"
+                                    },
+                                    "locale": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|in:en,fr",
+                                        "enum": [
+                                            "en",
+                                            "fr"
+                                        ]
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|in:new,contacted,scheduled,completed,rejected",
+                                        "enum": [
+                                            "new",
+                                            "contacted",
+                                            "scheduled",
+                                            "completed",
+                                            "rejected"
+                                        ]
+                                    },
+                                    "admin_notes": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:20000",
+                                        "maxLength": 20000
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "admin_crm_demoRequests_delete",
+                "summary": "Admin Demo Request Commands delete",
+                "description": "Shared application operation: admin.crm.demoRequests.delete. Existing role and record policies remain authoritative.",
+                "tags": [
+                    "Enquiries"
+                ],
+                "security": [
+                    {
+                        "UserOAuth2": [
+                            "crm:write"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "demoRequest",
+                        "description": "Record identifier or slug from an authorized read response.",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Accept-Language",
+                        "description": "Response language; defaults to English.",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "en",
+                                "fr"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Idempotency-Key",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "minLength": 16,
+                            "maxLength": 128,
+                            "pattern": "^[A-Za-z0-9._:-]+$"
+                        },
+                        "description": "A unique command key. Repeat the same body and key within 24 hours to retrieve the first outcome. A changed body returns 409."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.crm.demoRequests.delete"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Valid delegated user token required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Role, scope or record access denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Idempotency key used with a different request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Rate limit exceeded",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/validation/cohorts": {
+            "get": {
+                "operationId": "admin_validation_cohorts_index",
+                "summary": "Admin Cohort Queries index",
+                "description": "Shared application operation: admin.validation.cohorts.index. Existing role and record policies remain authoritative.",
+                "tags": [
+                    "Validation"
+                ],
+                "security": [
+                    {
+                        "UserOAuth2": [
+                            "validation:read"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "Accept-Language",
+                        "description": "Response language; defaults to English.",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "en",
+                                "fr"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 10000
+                        },
+                        "description": "One-based page for paginated collections. Ignored by single-record and aggregate reads."
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 100
+                        },
+                        "description": "Page size, up to 100 records, for paginated collections. Non-paginated lists are bounded to 100 records."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.validation.cohorts.index"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Valid delegated user token required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Role, scope or record access denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Idempotency key used with a different request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Rate limit exceeded",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "operationId": "admin_validation_cohorts_create",
+                "summary": "Admin Cohort Commands create",
+                "description": "Shared application operation: admin.validation.cohorts.create. Existing role and record policies remain authoritative.",
+                "tags": [
+                    "Validation"
+                ],
+                "security": [
+                    {
+                        "UserOAuth2": [
+                            "validation:write"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "Accept-Language",
+                        "description": "Response language; defaults to English.",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "en",
+                                "fr"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Idempotency-Key",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "minLength": 16,
+                            "maxLength": 128,
+                            "pattern": "^[A-Za-z0-9._:-]+$"
+                        },
+                        "description": "A unique command key. Repeat the same body and key within 24 hours to retrieve the first outcome. A changed body returns 409."
+                    }
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Valid delegated user token required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Role, scope or record access denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Idempotency key used with a different request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Rate limit exceeded",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.validation.cohorts.create"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "practitioner_program_id": {
+                                        "type": "integer",
+                                        "description": "Validation: required|integer|exists:practitioner_programs,id,program_type,validation"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Validation: required|string|max:255",
+                                        "maxLength": 255
+                                    },
+                                    "specialty": {
+                                        "type": "string",
+                                        "description": "Validation: required|string|max:255",
+                                        "maxLength": 255
+                                    },
+                                    "description": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:10000",
+                                        "maxLength": 10000
+                                    },
+                                    "start_date": {
+                                        "type": "string",
+                                        "description": "Validation: required|date",
+                                        "format": "date"
+                                    },
+                                    "end_date": {
+                                        "type": "string",
+                                        "description": "Validation: required|date",
+                                        "format": "date"
+                                    },
+                                    "max_members": {
+                                        "type": [
+                                            "integer",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|integer|min:1|max:50000",
+                                        "minimum": 1,
+                                        "maximum": 50000
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|in:draft,active,completed",
+                                        "enum": [
+                                            "draft",
+                                            "active",
+                                            "completed"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "practitioner_program_id",
+                                    "name",
+                                    "specialty",
+                                    "start_date",
+                                    "end_date"
+                                ]
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "practitioner_program_id": {
+                                        "type": "integer",
+                                        "description": "Validation: required|integer|exists:practitioner_programs,id,program_type,validation"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Validation: required|string|max:255",
+                                        "maxLength": 255
+                                    },
+                                    "specialty": {
+                                        "type": "string",
+                                        "description": "Validation: required|string|max:255",
+                                        "maxLength": 255
+                                    },
+                                    "description": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:10000",
+                                        "maxLength": 10000
+                                    },
+                                    "start_date": {
+                                        "type": "string",
+                                        "description": "Validation: required|date",
+                                        "format": "date"
+                                    },
+                                    "end_date": {
+                                        "type": "string",
+                                        "description": "Validation: required|date",
+                                        "format": "date"
+                                    },
+                                    "max_members": {
+                                        "type": [
+                                            "integer",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|integer|min:1|max:50000",
+                                        "minimum": 1,
+                                        "maximum": 50000
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|in:draft,active,completed",
+                                        "enum": [
+                                            "draft",
+                                            "active",
+                                            "completed"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "practitioner_program_id",
+                                    "name",
+                                    "specialty",
+                                    "start_date",
+                                    "end_date"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/validation/cohorts/{cohort}": {
+            "get": {
+                "operationId": "admin_validation_cohorts_show",
+                "summary": "Admin Cohort Queries show",
+                "description": "Shared application operation: admin.validation.cohorts.show. Existing role and record policies remain authoritative.",
+                "tags": [
+                    "Validation"
+                ],
+                "security": [
+                    {
+                        "UserOAuth2": [
+                            "validation:read"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "cohort",
+                        "description": "Record identifier or slug from an authorized read response.",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Accept-Language",
+                        "description": "Response language; defaults to English.",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "en",
+                                "fr"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 10000
+                        },
+                        "description": "One-based page for paginated collections. Ignored by single-record and aggregate reads."
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 100
+                        },
+                        "description": "Page size, up to 100 records, for paginated collections. Non-paginated lists are bounded to 100 records."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.validation.cohorts.show"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Valid delegated user token required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Role, scope or record access denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Idempotency key used with a different request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Rate limit exceeded",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "operationId": "admin_validation_cohorts_update",
+                "summary": "Admin Cohort Commands update",
+                "description": "Shared application operation: admin.validation.cohorts.update. Existing role and record policies remain authoritative.",
+                "tags": [
+                    "Validation"
+                ],
+                "security": [
+                    {
+                        "UserOAuth2": [
+                            "validation:write"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "cohort",
+                        "description": "Record identifier or slug from an authorized read response.",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Accept-Language",
+                        "description": "Response language; defaults to English.",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "en",
+                                "fr"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Idempotency-Key",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "minLength": 16,
+                            "maxLength": 128,
+                            "pattern": "^[A-Za-z0-9._:-]+$"
+                        },
+                        "description": "A unique command key. Repeat the same body and key within 24 hours to retrieve the first outcome. A changed body returns 409."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.validation.cohorts.update"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Valid delegated user token required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Role, scope or record access denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Idempotency key used with a different request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Rate limit exceeded",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "practitioner_program_id": {
+                                        "type": "integer",
+                                        "description": "Validation: sometimes|required|integer|exists:practitioner_programs,id,program_type,validation"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|required|string|max:255",
+                                        "maxLength": 255
+                                    },
+                                    "specialty": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|required|string|max:255",
+                                        "maxLength": 255
+                                    },
+                                    "description": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:10000",
+                                        "maxLength": 10000
+                                    },
+                                    "start_date": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|required|date",
+                                        "format": "date"
+                                    },
+                                    "end_date": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|required|date",
+                                        "format": "date"
+                                    },
+                                    "max_members": {
+                                        "type": [
+                                            "integer",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|integer|min:1|max:50000",
+                                        "minimum": 1,
+                                        "maximum": 50000
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|in:draft,active,completed",
+                                        "enum": [
+                                            "draft",
+                                            "active",
+                                            "completed"
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "practitioner_program_id": {
+                                        "type": "integer",
+                                        "description": "Validation: sometimes|required|integer|exists:practitioner_programs,id,program_type,validation"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|required|string|max:255",
+                                        "maxLength": 255
+                                    },
+                                    "specialty": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|required|string|max:255",
+                                        "maxLength": 255
+                                    },
+                                    "description": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|string|max:10000",
+                                        "maxLength": 10000
+                                    },
+                                    "start_date": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|required|date",
+                                        "format": "date"
+                                    },
+                                    "end_date": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|required|date",
+                                        "format": "date"
+                                    },
+                                    "max_members": {
+                                        "type": [
+                                            "integer",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|integer|min:1|max:50000",
+                                        "minimum": 1,
+                                        "maximum": 50000
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "description": "Validation: sometimes|in:draft,active,completed",
+                                        "enum": [
+                                            "draft",
+                                            "active",
+                                            "completed"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "admin_validation_cohorts_delete",
+                "summary": "Admin Cohort Commands delete",
+                "description": "Shared application operation: admin.validation.cohorts.delete. Existing role and record policies remain authoritative.",
+                "tags": [
+                    "Validation"
+                ],
+                "security": [
+                    {
+                        "UserOAuth2": [
+                            "validation:write"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "cohort",
+                        "description": "Record identifier or slug from an authorized read response.",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Accept-Language",
+                        "description": "Response language; defaults to English.",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "en",
+                                "fr"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Idempotency-Key",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "minLength": 16,
+                            "maxLength": 128,
+                            "pattern": "^[A-Za-z0-9._:-]+$"
+                        },
+                        "description": "A unique command key. Repeat the same body and key within 24 hours to retrieve the first outcome. A changed body returns 409."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.validation.cohorts.delete"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Valid delegated user token required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Role, scope or record access denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Idempotency key used with a different request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Rate limit exceeded",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/validation/cohorts/{cohort}/members/{member}": {
+            "put": {
+                "operationId": "admin_validation_cohortMembers_update",
+                "summary": "Admin Cohort Commands updateMember",
+                "description": "Shared application operation: admin.validation.cohortMembers.update. Existing role and record policies remain authoritative.",
+                "tags": [
+                    "Validation"
+                ],
+                "security": [
+                    {
+                        "UserOAuth2": [
+                            "validation:write"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "cohort",
+                        "description": "Record identifier or slug from an authorized read response.",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "member",
+                        "description": "Record identifier or slug from an authorized read response.",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Accept-Language",
+                        "description": "Response language; defaults to English.",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "en",
+                                "fr"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Idempotency-Key",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "minLength": 16,
+                            "maxLength": 128,
+                            "pattern": "^[A-Za-z0-9._:-]+$"
+                        },
+                        "description": "A unique command key. Repeat the same body and key within 24 hours to retrieve the first outcome. A changed body returns 409."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.validation.cohortMembers.update"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Valid delegated user token required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Role, scope or record access denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Idempotency key used with a different request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Rate limit exceeded",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "description": "Validation: required|in:active,suspended,completed,removed",
+                                        "enum": [
+                                            "active",
+                                            "suspended",
+                                            "completed",
+                                            "removed"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "status"
+                                ]
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "description": "Validation: required|in:active,suspended,completed,removed",
+                                        "enum": [
+                                            "active",
+                                            "suspended",
+                                            "completed",
+                                            "removed"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "status"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/validation/cohorts/{cohort}/test-cases": {
+            "post": {
+                "operationId": "admin_validation_cohortTestCases_attach",
+                "summary": "Admin Cohort Commands attachTestCase",
+                "description": "Shared application operation: admin.validation.cohortTestCases.attach. Existing role and record policies remain authoritative.",
+                "tags": [
+                    "Validation"
+                ],
+                "security": [
+                    {
+                        "UserOAuth2": [
+                            "validation:write"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "cohort",
+                        "description": "Record identifier or slug from an authorized read response.",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Accept-Language",
+                        "description": "Response language; defaults to English.",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "en",
+                                "fr"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Idempotency-Key",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "minLength": 16,
+                            "maxLength": 128,
+                            "pattern": "^[A-Za-z0-9._:-]+$"
+                        },
+                        "description": "A unique command key. Repeat the same body and key within 24 hours to retrieve the first outcome. A changed body returns 409."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.validation.cohortTestCases.attach"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Valid delegated user token required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Role, scope or record access denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Idempotency key used with a different request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Rate limit exceeded",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "validation_test_case_id": {
+                                        "type": "integer",
+                                        "description": "Validation: required|integer|exists:validation_test_cases,id"
+                                    },
+                                    "due_date": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|date",
+                                        "format": "date"
+                                    }
+                                },
+                                "required": [
+                                    "validation_test_case_id"
+                                ]
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "validation_test_case_id": {
+                                        "type": "integer",
+                                        "description": "Validation: required|integer|exists:validation_test_cases,id"
+                                    },
+                                    "due_date": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ],
+                                        "description": "Validation: sometimes|nullable|date",
+                                        "format": "date"
+                                    }
+                                },
+                                "required": [
+                                    "validation_test_case_id"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/validation/cohorts/{cohort}/test-cases/{testCase}": {
+            "delete": {
+                "operationId": "admin_validation_cohortTestCases_detach",
+                "summary": "Admin Cohort Commands detachTestCase",
+                "description": "Shared application operation: admin.validation.cohortTestCases.detach. Existing role and record policies remain authoritative.",
+                "tags": [
+                    "Validation"
+                ],
+                "security": [
+                    {
+                        "UserOAuth2": [
+                            "validation:write"
+                        ]
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "cohort",
+                        "description": "Record identifier or slug from an authorized read response.",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "testCase",
+                        "description": "Record identifier or slug from an authorized read response.",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Accept-Language",
+                        "description": "Response language; defaults to English.",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "en",
+                                "fr"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "Idempotency-Key",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "minLength": 16,
+                            "maxLength": 128,
+                            "pattern": "^[A-Za-z0-9._:-]+$"
+                        },
+                        "description": "A unique command key. Repeat the same body and key within 24 hours to retrieve the first outcome. A changed body returns 409."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.validation.cohortTestCases.detach"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": [
+                                                "object",
+                                                "array"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Valid delegated user token required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Role, scope or record access denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Idempotency key used with a different request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Rate limit exceeded",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/oauth/user-token": {
             "post": {
                 "operationId": "issueDelegatedUserToken",
@@ -79343,7 +82416,8 @@
                             "communications:read": "communications read",
                             "communications:write": "communications write",
                             "publishing:read": "publishing read",
-                            "publishing:write": "publishing write"
+                            "publishing:write": "publishing write",
+                            "crm:read": "crm read"
                         }
                     }
                 }

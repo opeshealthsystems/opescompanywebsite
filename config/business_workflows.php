@@ -6518,4 +6518,6 @@ $registry['definitions'] += require __DIR__.'/business_admin_catalogue.php';
 $registry['definitions'] += require __DIR__.'/business_admin_council.php';
 $registry['definitions'] += require __DIR__.'/business_admin_email_templates.php';
 $registry['definitions'] += require __DIR__.'/business_admin_blog_posts.php';
+$registry['definitions'] += require __DIR__.'/business_admin_demo_requests.php';
+$registry['definitions'] += require __DIR__.'/business_admin_cohorts.php';
 return $registry;

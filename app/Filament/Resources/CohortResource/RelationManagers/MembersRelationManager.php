@@ -38,7 +38,10 @@ class MembersRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('placed_at')->dateTime(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->action(function (CohortMember $record, array $data): void {
+                    \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.validation.cohortMembers.update', $data,
+                        ['cohort' => $this->getOwnerRecord()->id, 'member' => $record->id]);
+                }),
                 \Filament\Tables\Actions\Action::make('evaluate')
                     ->label('Evaluate')
                     ->icon('heroicon-o-clipboard-document-check')

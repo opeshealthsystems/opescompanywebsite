@@ -1,6 +1,6 @@
-# OHS Platform API — preview 0.48.0
+# OHS Platform API — preview 0.50.0
 
-Owner: OHS platform team. Support: contact@opeshealthsystems.com. Purpose: provide stable, documented access to public enquiry intake, published content, the product catalogue, integration identity and delegated business workflows. OpenAPI `0.48.0` documents 383 business workflow operations across 291 paths (389 total HTTP operations). This release adds delegated blog publishing APIs for protected article administration; public article reads remain available through the existing publishing queries. All blog writes share application commands with Filament, sanitize rich text, calculate reading time server-side and emit domain events. The platform conversion remains in progress; remaining admin actions and lifecycle hooks are tracked in the implementation status document.
+Owner: OHS platform team. Support: contact@opeshealthsystems.com. Purpose: provide stable, documented access to public enquiry intake, published content, CRM demo-request management, validation programmes, the product catalogue, integration identity and delegated business workflows. OpenAPI `0.50.0` documents 396 business workflow operations across 298 paths (402 total HTTP operations). This release adds eight protected validation-cohort operations for cohort CRUD, member status, and test-case assignments under the `validation:read` and `validation:write` scopes. Staff and API operations share application handlers; cohort capacities and lifecycle transitions are enforced, and assigned workflows with recorded sessions cannot be detached. The platform conversion remains in progress; remaining admin actions and lifecycle hooks are tracked in the implementation status document.
 
 Contract: [openapi.json](openapi.json), pinned to OpenAPI 3.1.1. Runtime reference: `/api/v1/openapi.json`. Production base URL: `https://opeshealthsystems.com/api/v1`. No sandbox environment is provisioned yet.
 
@@ -34,6 +34,14 @@ OAuth 2.0 client credentials is available for approved machine integrations, whi
 ## Blog publishing
 
 Administrators with `publishing:read` can list and inspect blog posts at `GET /api/v1/publishing/blog-posts`; `publishing:write` grants create, update and delete. OAuth roles are also checked on every call. Rich-text bodies are sanitized before storage, reading time is calculated on the server, publishing changes are recorded as domain events, and an article must be unpublished before deletion. Public clients can read only currently published articles through `GET /api/v1/public/blog` and `GET /api/v1/public/blog/{slug}`. See the [OpenAPI contract](openapi.json) for filters, request fields and response schemas.
+
+## CRM demo requests
+
+Administrators with `crm:read` can search and filter demo requests at `GET /api/v1/crm/demo-requests` and inspect an individual request. The `crm:write` scope supports admin entry, status/notes updates and deletion. Public demo submissions continue to use the separate write-only intake route; admin record creation does not trigger a customer email. A request cannot be deleted while its contact-mail delivery is pending, failed or uncertain. Event payloads carry record references and changed-field names, never contact or message values.
+
+## Validation cohorts
+
+Administrators with `validation:read` can list cohorts by programme or status and inspect their members and assigned test cases. The `validation:write` scope supports cohort CRUD, member status changes and adding or removing a test case with an optional due date. Cohorts must use validation programmes; member limits cannot be lowered below current enrollment, completed cohorts cannot be reopened, and only empty draft cohorts may be deleted. A test-case assignment cannot be removed after that workflow has recorded member sessions. Application placement remains on the existing practitioner workflow.
 
 ## Verification
 

@@ -225,6 +225,89 @@ class BusinessApiTest extends TestCase
         $this->assertDatabaseMissing('blog_posts', ['id' => $id]);
     }
 
+    public function test_demo_request_admin_api_preserves_mail_recovery_and_uses_shared_workflows(): void
+    {
+        $this->getJson('/api/v1/crm/demo-requests')->assertUnauthorized();
+        $admin = $this->user('admin');
+        $token = $this->access($admin, ['crm:read', 'crm:write']);
+        $body = ['name' => 'Fictional demo contact', 'email' => 'demo-contact@example.test', 'phone' => '+237600000000',
+            'organization_name' => 'Fictional clinic', 'country' => 'CM', 'institution_type' => 'clinic', 'institution_size' => '1-10',
+            'products' => ['OPESCareFinder'], 'message' => 'Fictional test request'];
+        $headers = ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'demo-request-admin-create-1'];
+        $created = $this->postJson('/api/v1/crm/demo-requests', $body, $headers)->assertCreated();
+        $id = $created->json('data.record.id');
+        $this->postJson('/api/v1/crm/demo-requests', $body, $headers)->assertCreated()->assertJsonPath('data.record.id', $id);
+        $this->assertDatabaseCount('demo_requests', 1);
+        $this->assertDatabaseCount('website_form_deliveries', 0);
+        $this->getJson('/api/v1/crm/demo-requests?status=new', ['Authorization' => 'Bearer '.$token])
+            ->assertOk()->assertJsonPath('data.items.0.id', $id);
+
+        $this->actingAs($admin);
+        \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.crm.demoRequests.update',
+            ['status' => 'contacted', 'admin_notes' => 'Fictional follow-up note.'], ['demoRequest' => $id]);
+        $this->getJson('/api/v1/crm/demo-requests/'.$id, ['Authorization' => 'Bearer '.$token])
+            ->assertOk()->assertJsonPath('data.demo_request.status', 'contacted')
+            ->assertJsonPath('data.demo_request.admin_notes', 'Fictional follow-up note.');
+
+        $record = \App\Models\DemoRequest::findOrFail($id);
+        app(\App\Services\WebsiteFormMailer::class)->ensure($record);
+        $this->deleteJson('/api/v1/crm/demo-requests/'.$id, [], [
+            'Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'demo-request-delete-pending-1',
+        ])->assertUnprocessable();
+        \App\Models\WebsiteFormDelivery::query()->where('submission_type', \App\Models\DemoRequest::class)
+            ->where('submission_id', $id)->update(['status' => 'sent']);
+        $this->deleteJson('/api/v1/crm/demo-requests/'.$id, [], [
+            'Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'demo-request-delete-sent-0001',
+        ])->assertOk();
+        $this->assertDatabaseMissing('demo_requests', ['id' => $id]);
+    }
+
+    public function test_validation_cohort_api_shares_program_member_and_test_case_workflows(): void
+    {
+        $this->getJson('/api/v1/validation/cohorts')->assertUnauthorized();
+        $admin = $this->user('admin');
+        $token = $this->access($admin, ['validation:read', 'validation:write']);
+        $program = \App\Models\PractitionerProgram::create(['title' => 'Fictional validation programme', 'program_type' => 'validation', 'status' => 'open']);
+        $headers = ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'validation-cohort-create-001'];
+        $body = ['practitioner_program_id' => $program->id, 'name' => 'Fictional cohort', 'specialty' => 'General',
+            'description' => 'Fictional cohort fixture', 'start_date' => '2026-11-02', 'end_date' => '2026-12-02', 'max_members' => 5];
+        $created = $this->postJson('/api/v1/validation/cohorts', $body, $headers)->assertCreated();
+        $id = $created->json('data.record.id');
+        $this->postJson('/api/v1/validation/cohorts', $body, $headers)->assertCreated()->assertJsonPath('data.record.id', $id);
+        $this->assertDatabaseCount('cohorts', 1);
+
+        $memberUser = $this->user('customer');
+        $member = \App\Models\CohortMember::create(['cohort_id' => $id, 'user_id' => $memberUser->id, 'status' => 'active', 'placed_at' => now()]);
+        $otherMemberUser = $this->user('customer');
+        \App\Models\CohortMember::create(['cohort_id' => $id, 'user_id' => $otherMemberUser->id, 'status' => 'active', 'placed_at' => now()]);
+        $this->putJson('/api/v1/validation/cohorts/'.$id.'/members/'.$member->id, ['status' => 'suspended'], [
+            'Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'validation-member-suspend-001',
+        ])->assertOk()->assertJsonPath('data.member.status', 'suspended');
+        $this->putJson('/api/v1/validation/cohorts/'.$id, ['max_members' => 1], [
+            'Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'validation-cohort-limit-001',
+        ])->assertUnprocessable();
+
+        $product = \App\Models\ValidationProduct::create(['name' => 'Fictional validation product', 'code' => 'FIXTURE-VALIDATION', 'is_active' => true]);
+        $module = \App\Models\ValidationModule::create(['validation_product_id' => $product->id, 'name' => 'Fixture module', 'code' => 'FIXTURE-MODULE', 'is_active' => true]);
+        $workflow = \App\Models\ValidationWorkflow::create(['validation_module_id' => $module->id, 'name' => 'Fixture workflow', 'code' => 'FIXTURE-WORKFLOW', 'is_active' => true]);
+        $testCase = \App\Models\ValidationTestCase::create(['validation_workflow_id' => $workflow->id, 'title' => 'Fictional test case', 'is_active' => true]);
+        $this->postJson('/api/v1/validation/cohorts/'.$id.'/test-cases', ['validation_test_case_id' => $testCase->id, 'due_date' => '2026-11-30'], [
+            'Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'validation-cohort-testcase-001',
+        ])->assertOk()->assertJsonPath('data.validation_test_case_id', $testCase->id);
+        $this->getJson('/api/v1/validation/cohorts/'.$id, ['Authorization' => 'Bearer '.$token])
+            ->assertOk()->assertJsonPath('data.cohort.members_count', 2)->assertJsonPath('data.test_cases.0.id', $testCase->id);
+        $this->deleteJson('/api/v1/validation/cohorts/'.$id.'/test-cases/'.$testCase->id, [], [
+            'Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'validation-cohort-testcase-delete-01',
+        ])->assertOk();
+
+        $this->actingAs($admin);
+        \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.validation.cohorts.update', ['status' => 'active'], ['cohort' => $id]);
+        $this->assertDatabaseHas('cohorts', ['id' => $id, 'status' => 'active']);
+        $this->deleteJson('/api/v1/validation/cohorts/'.$id, [], [
+            'Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'validation-cohort-delete-active-01',
+        ])->assertUnprocessable();
+    }
+
     public function test_finance_approval_transitions_share_services_and_replay_once(): void
     {
         $admin = $this->user('admin');

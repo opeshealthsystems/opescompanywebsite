@@ -68,7 +68,13 @@ class CohortResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->action(function (\Illuminate\Support\Collection $records): void {
+                        \Illuminate\Support\Facades\DB::transaction(function () use ($records): void {
+                            foreach ($records as $record) {
+                                \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.validation.cohorts.delete', parameters: ['cohort' => $record->id]);
+                            }
+                        }, 3);
+                    }),
                 ]),
             ]);
     }
