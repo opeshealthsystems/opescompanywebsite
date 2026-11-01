@@ -1631,6 +1631,157 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "admin_learning_courseLessons_create": {
+        "method": "POST",
+        "path": "/learning/courses/{course}/lessons",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "course"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_learning_courseLessons_delete": {
+        "method": "DELETE",
+        "path": "/learning/courses/{course}/lessons/{lesson}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "course",
+            "lesson"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_learning_courseLessons_index": {
+        "method": "GET",
+        "path": "/learning/courses/{course}/lessons",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "course"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_learning_courseLessons_show": {
+        "method": "GET",
+        "path": "/learning/courses/{course}/lessons/{lesson}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "course",
+            "lesson"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_learning_courseLessons_update": {
+        "method": "PUT",
+        "path": "/learning/courses/{course}/lessons/{lesson}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "course",
+            "lesson"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_learning_courses_create": {
+        "method": "POST",
+        "path": "/learning/courses",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data"
+        ]
+    },
+    "admin_learning_courses_delete": {
+        "method": "DELETE",
+        "path": "/learning/courses/{course}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "course"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_learning_courses_index": {
+        "method": "GET",
+        "path": "/learning/courses",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_learning_courses_show": {
+        "method": "GET",
+        "path": "/learning/courses/{course}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "course"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_learning_courses_update": {
+        "method": "PUT",
+        "path": "/learning/courses/{course}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "course"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data"
+        ]
+    },
     "admin_learning_enrollments_complete": {
         "method": "POST",
         "path": "/learning/enrollments/{enrollment}/complete",

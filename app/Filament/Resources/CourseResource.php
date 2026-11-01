@@ -5,6 +5,7 @@ use App\Filament\Resources\CourseResource\Pages;
 use App\Filament\Resources\CourseResource\RelationManagers\LessonsRelationManager;
 use App\Filament\Resources\CourseResource\RelationManagers\EnrollmentsRelationManager;
 use App\Models\Course;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -69,13 +70,13 @@ class CourseResource extends Resource
                     ->formatStateUsing(fn ($state) => Course::levelOptions()[$state] ?? $state),
                 TextColumn::make('duration_hours')->label('Hours')->suffix('h'),
                 TextColumn::make('enrollments_count')->counts('enrollments')->label('Enrolled'),
-                ToggleColumn::make('is_active'),
+                ToggleColumn::make('is_active')->updateStateUsing(fn (Course $record, $state) => AdminWorkflowAdapter::record('admin.learning.courses.update', ['is_active' => $state], ['course' => $record->id])->is_active),
                 TextColumn::make('sort_order')->label('Order')->sortable(),
             ])
-            ->reorderable('sort_order')
             ->defaultSort('sort_order')
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (Course $record, array $data) => AdminWorkflowAdapter::record('admin.learning.courses.update', $data, ['course' => $record->id])),
+                Tables\Actions\DeleteAction::make()->using(function (Course $record) { AdminWorkflowAdapter::run('admin.learning.courses.delete', parameters: ['course' => $record->id]); return true; }),
             ]);
     }
 

@@ -1,6 +1,8 @@
 <?php
 namespace App\Filament\Resources\CourseResource\RelationManagers;
 
+use App\Models\CourseLesson;
+use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -39,11 +41,10 @@ class LessonsRelationManager extends RelationManager
                 TextColumn::make('duration_minutes')->label('Min')->suffix(' min'),
             ])
             ->defaultSort('sort_order')
-            ->reorderable('sort_order')
-            ->headerActions([Tables\Actions\CreateAction::make()])
+            ->headerActions([Tables\Actions\CreateAction::make()->using(fn (array $data) => AdminWorkflowAdapter::record('admin.learning.courseLessons.create', $data, ['course' => $this->getOwnerRecord()->id]))])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()->using(fn (CourseLesson $record, array $data) => AdminWorkflowAdapter::record('admin.learning.courseLessons.update', $data, ['course' => $this->getOwnerRecord()->id, 'lesson' => $record->id])),
+                Tables\Actions\DeleteAction::make()->using(function (CourseLesson $record) { AdminWorkflowAdapter::run('admin.learning.courseLessons.delete', parameters: ['course' => $this->getOwnerRecord()->id, 'lesson' => $record->id]); return true; }),
             ]);
     }
 }

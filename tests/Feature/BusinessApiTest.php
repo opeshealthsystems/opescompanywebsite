@@ -832,6 +832,41 @@ class BusinessApiTest extends TestCase
         $this->assertDatabaseHas('business_outbox', ['type' => 'workforce.recruitment_application_deleted.v1']);
     }
 
+    public function test_admin_course_and_lesson_crud_are_shared_and_history_is_protected(): void
+    {
+        $admin = $this->user('admin');
+        $token = $this->access($admin, ['learning:read', 'learning:write']);
+        $headers = ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'learning-course-create-01'];
+        $course = $this->postJson('/api/v1/learning/courses', [
+            'title' => 'Fictional API course', 'slug' => 'fictional-api-course', 'level' => 'beginner', 'is_active' => true,
+        ], $headers)->assertCreated()->json('data.record');
+        $courseId = $course['id'];
+        $headers['Idempotency-Key'] = 'learning-lesson-create-01';
+        $this->postJson('/api/v1/learning/courses/'.$courseId.'/lessons', [
+            'title' => 'Fictional lesson', 'duration_minutes' => 20, 'sort_order' => 1,
+        ], $headers)->assertCreated();
+        $lessonId = \App\Models\CourseLesson::query()->where('course_id', $courseId)->value('id');
+        $headers['Idempotency-Key'] = 'learning-lesson-update-01';
+        $this->putJson('/api/v1/learning/courses/'.$courseId.'/lessons/'.$lessonId, ['title_fr' => 'Leçon fictive'], $headers)->assertOk();
+        $this->getJson('/api/v1/learning/courses/'.$courseId.'/lessons', ['Authorization' => 'Bearer '.$token])->assertOk()
+            ->assertJsonPath('data.items.0.title_fr', 'Leçon fictive');
+        $headers['Idempotency-Key'] = 'learning-lesson-delete-01';
+        $this->deleteJson('/api/v1/learning/courses/'.$courseId.'/lessons/'.$lessonId, [], $headers)->assertOk();
+
+        $headers['Idempotency-Key'] = 'learning-course-update-01';
+        $this->putJson('/api/v1/learning/courses/'.$courseId, ['title' => 'Renamed fictional course'], $headers)->assertOk();
+        $this->getJson('/api/v1/learning/courses?search=Renamed', ['Authorization' => 'Bearer '.$token])->assertOk()
+            ->assertJsonPath('data.items.0.title', 'Renamed fictional course');
+        \App\Models\CourseEnrollment::create(['course_id' => $courseId, 'user_id' => $admin->id, 'status' => 'enrolled']);
+        $headers['Idempotency-Key'] = 'learning-course-delete-01';
+        $this->deleteJson('/api/v1/learning/courses/'.$courseId, [], $headers)->assertUnprocessable();
+        $headers['Idempotency-Key'] = 'learning-course-deactivate-01';
+        $this->putJson('/api/v1/learning/courses/'.$courseId, ['is_active' => false], $headers)->assertOk();
+        $this->assertDatabaseHas('courses', ['id' => $courseId, 'is_active' => false]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'learning.course_created.v1']);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'learning.course_lesson_deleted.v1']);
+    }
+
     public function test_document_and_knowledge_article_publishing_are_shared_transitions(): void
     {
         $admin = $this->user('admin');
