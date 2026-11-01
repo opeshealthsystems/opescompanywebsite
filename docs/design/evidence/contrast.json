@@ -2,16 +2,16 @@
   {
     "name": "Action label",
     "fg": "#FFFFFF",
-    "bg": "#1664D4",
-    "ratio": 5.52,
+    "bg": "#315F7D",
+    "ratio": 6.85,
     "required": 4.5,
     "pass": true
   },
   {
     "name": "Hover label",
     "fg": "#FFFFFF",
-    "bg": "#104784",
-    "ratio": 9.31,
+    "bg": "#244A63",
+    "ratio": 9.4,
     "required": 4.5,
     "pass": true
   },

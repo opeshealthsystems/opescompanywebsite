@@ -17,7 +17,7 @@ class SealPaletteTest extends TestCase
 
     public function test_seal_combinations_meet_text_and_control_contrast(): void
     {
-        foreach ([['#FFFFFF', '#1664D4', 4.5], ['#FFFFFF', '#104784', 4.5],
+        foreach ([['#FFFFFF', '#315F7D', 4.5], ['#FFFFFF', '#244A63', 4.5],
             ['#A7B8CC', '#16354F', 4.5], ['#9DB1C7', '#16354F', 4.5],
             ['#69D5F5', '#16354F', 4.5], ['#7890AA', '#16354F', 3],
             ['#102A43', '#FFFFFF', 4.5], ['#425A70', '#F3F6FA', 4.5], ['#075985', '#FFFFFF', 4.5]] as [$fg, $bg, $minimum]) {

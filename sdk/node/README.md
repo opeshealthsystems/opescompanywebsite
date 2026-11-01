@@ -1,8 +1,8 @@
-# OHS server-side Node SDK — preview 0.95.0
+# OHS server-side Node SDK — preview 0.95.1
 
-Requires Node.js 22 or newer. This dependency-free preview package is distributed as a downloadable archive, not published to the npm registry. It is server-side code: never bundle client secrets into a browser or mobile application. This package contains all 611 documented operation identifiers from OpenAPI 0.99.0. The contract adds an authenticated self-profile operation for role-aware clients, a reserved native app callback, and per-user role-scoped authorization.
+Requires Node.js 22 or newer. This dependency-free preview package is distributed as a downloadable archive, not published to the npm registry. It is server-side code: never bundle client secrets into a browser or mobile application. This package contains all 611 documented operation identifiers from OpenAPI 0.99.1. The contract adds server-validated pricing choices for public quote requests and reports requester receipt-delivery status.
 
-Install the reviewed archive with `npm install ./opes-health-api-client-0.95.0.tgz`, then:
+Install the reviewed archive with `npm install ./opes-health-api-client-0.95.1.tgz`, then:
 
 ```js
 import { OpesClient } from '@opes-health/api-client';
@@ -50,7 +50,7 @@ const result = await api.request('admin_finance_expenses_approve', {
 console.log(result.data, result.requestId);
 ```
 
-Operation IDs are generated from OpenAPI 0.99.0 and exported as the `BusinessOperationId` TypeScript union. Path/query names, authentication and idempotency requirements are checked against that registry at runtime. Commands require a stable key; save it with the intended command and reuse it with the same body after an ambiguous network outcome. The SDK never retries a command automatically. `getAccessToken` can refresh your user's token before it expires. Keep access tokens and API data on trusted servers. OIDC and a public sandbox are not available.
+Operation IDs are generated from OpenAPI 0.99.1 and exported as the `BusinessOperationId` TypeScript union. Path/query names, authentication and idempotency requirements are checked against that registry at runtime. Commands require a stable key; save it with the intended command and reuse it with the same body after an ambiguous network outcome. The SDK never retries a command automatically. `getAccessToken` can refresh your user's token before it expires. Keep access tokens and API data on trusted servers. OIDC and a public sandbox are not available.
 
 Administrator payout requests use `admin_practitioners_applications_pay`. They require a reviewed delegated client with `practitioners:write`, an active `admin` or `super_admin` user, and a stable `Idempotency-Key`. A 202 response means the request was durably accepted; read the application record for settlement status before taking further action. An uncertain provider outcome is held for reconciliation and is not automatically retried. The Orange Money driver is not available.
 

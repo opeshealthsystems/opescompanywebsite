@@ -1,10 +1,11 @@
 export type Scope = 'catalogue:read' | 'integration:read';
 export type Locale = 'en' | 'fr';
+export type QuoteOption = 'clinic-saas' | 'clinic-perpetual' | 'hospital-small' | 'hospital-medium-large' | 'specialty-lab' | 'specialty-pharmacy' | 'specialty-radiology' | 'specialty-cardiology' | 'specialty-dental' | 'specialty-dermatology' | 'specialty-pediatrics' | 'specialty-obgyn' | 'care-single-hospital' | 'care-multi-hospital' | 'care-national' | 'health-id-facility' | 'health-id-multi-facility' | 'health-id-national' | 'clinical-cdms-saas' | 'clinical-cdms-perpetual' | 'clinical-triage-saas' | 'clinical-triage-perpetual' | 'clinical-cdss-hospital' | 'clinical-cdss-network' | 'government-insurance' | 'government-public-health' | 'government-national-platform' | 'service-implementation' | 'service-data-migration' | 'service-training' | 'service-custom-integration' | 'maintenance-standard' | 'maintenance-premium' | 'maintenance-enterprise' | 'managed-hosting' | 'custom-proposal';
 export type { BusinessOperationId } from './business-operations.js';
 import type { BusinessOperationId } from './business-operations.js';
 export interface EnquiryInput {
   name: string; email: string; phone?: string | null; facility_type?: string | null;
-  products?: string | null; message?: string | null; product_slug?: string | null; locale?: Locale;
+  products?: string | null; message?: string | null; product_slug?: string | null; locale?: Locale; quote_option?: QuoteOption;
 }
 export interface CatalogueResponse {
   data: Array<{ slug: string; name: string; category: string; url: string }>;
@@ -29,7 +30,7 @@ export class OpesClient {
   catalogue(options?: { page?: number; perPage?: number; locale?: Locale }): Promise<CatalogueResponse>;
   integration(): Promise<IntegrationResponse>;
   submitEnquiry(input: EnquiryInput, options: { idempotencyKey: string }): Promise<{
-    data: { status: 'recorded'; delivery_status: 'sent' | 'pending' };
+    data: { status: 'recorded'; delivery_status: 'sent' | 'pending'; receipt_delivery_status?: 'sent' | 'pending' };
     idempotencyKey: string; replayed: boolean; requestId: string | null;
   }>;
 }

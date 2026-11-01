@@ -31,7 +31,7 @@ export const featureCatalog: Record<FeatureId, Feature> = {
   invoices: { id: 'invoices', title: 'Invoices', description: 'Review invoices issued to your organization.', endpoint: '/customer/invoices', readScope: 'customer:read' },
   customerProfile: { id: 'customerProfile', title: 'Account profile', description: 'Maintain your organization and contact details.', endpoint: '/customer/profile', readScope: 'customer:read', writeScope: 'customer:write', createAction: 'customerProfile' },
   practitionerProfile: { id: 'practitionerProfile', title: 'Professional profile', description: 'Maintain your practitioner profile and workplace details.', endpoint: '/practitioner/profile', readScope: 'practitioner:read', writeScope: 'practitioner:write', createAction: 'practitionerProfile' },
-  courses: { id: 'courses', title: 'Courses', description: 'Browse courses, enroll and mark lessons complete.', endpoint: '/practitioner/courses', readScope: 'practitioner:read' },
+  courses: { id: 'courses', title: 'Courses', description: 'Browse courses, study lessons, save progress and view certificates.', endpoint: '/practitioner/courses', readScope: 'practitioner:read', writeScope: 'practitioner:write' },
   certificates: { id: 'certificates', title: 'Certificates', description: 'View certificates associated with your account.', endpoint: '/practitioner/certificates', readScope: 'practitioner:read' },
   assignments: { id: 'assignments', title: 'Assignments', description: 'Update testing progress and report bugs.', endpoint: '/testing/assignments', readScope: 'testing:read', writeScope: 'testing:write' },
   partnerships: { id: 'partnerships', title: 'Partner directory', description: 'Browse organizations in the OPES partner network.', endpoint: '/public/partnerships' },
@@ -69,8 +69,22 @@ const sampleRows: Partial<Record<FeatureId, ApiRecord[]>> = {
   invoices: [{ id: 'DEMO-I-501', reference: 'DEMO-I-501', description: 'November platform subscription', currency: 'XAF', total: 250000, status: 'due', due_date: '2026-12-01' }, { id: 'DEMO-I-500', reference: 'DEMO-I-500', description: 'Implementation milestone 1', currency: 'XAF', total: 750000, status: 'paid', due_date: '2026-10-25' }],
   customerProfile: [{ id: 'profile', name: 'Maya Clinic Admin', facility_name: 'Example Care Clinic', facility_type: 'Clinic', country: 'Cameroon', city: 'Douala', phone: '+237 600 000 001', address: 'Demo Avenue' }],
   practitionerProfile: [{ id: 'profile', name: 'Dr. Amina Ncube', specialty: 'Family medicine', workplace_name: 'Example Community Hospital', workplace_city: 'Douala', workplace_country: 'Cameroon', years_of_experience: 8, bio: 'Fictional demo profile for mobile workflow preview.' }],
-  courses: [{ id: 'DEMO-COURSE-01', slug: 'safe-digital-records', title: 'Safe digital health records', status: 'available', progress: '0%' }, { id: 'DEMO-COURSE-02', slug: 'clinic-data-quality', title: 'Clinic data quality essentials', status: 'in_progress', progress: '50%' }],
-  certificates: [{ id: 'DEMO-CERT-01', title: 'Digital records orientation', issued_at: '2026-09-12', status: 'issued', reference: 'DEMO-CERT-01' }],
+  courses: [
+    { id: 'DEMO-COURSE-01', slug: 'safe-digital-records', title: 'Safe digital health records', description: 'Learn the everyday practices that keep digital health records accurate, private and useful to care teams.', level: 'Beginner', duration_hours: 1, status: 'available', progress_percent: 0, completed_lesson_ids: [], lessons: [
+      { id: 101, title: 'A reliable patient record', duration_minutes: 8, content: 'A good digital record is accurate, timely and attributable. Record information in the correct patient chart, identify the source, and correct mistakes through the approved amendment process. Never create a second chart to work around a duplicate record.\n\nBefore saving, confirm the patient identity and review the key fields for completeness.' },
+      { id: 102, title: 'Protecting health information', duration_minutes: 9, content: 'Use your own account and keep your sign-in credentials private. Lock the screen when you step away. Access only the records needed for your assigned work, and avoid discussing identifiable information in public spaces.\n\nIf information is sent to the wrong person or device, report it promptly through your organization’s incident process.' },
+      { id: 103, title: 'Safe handover and continuity', duration_minutes: 7, content: 'A useful handover states what changed, what action is needed, who is responsible and when follow-up is due. Use the approved handover fields so the next team member can find the information.\n\nThis learning module supports safe information practice; it does not replace local clinical policy or professional judgement.' },
+    ] },
+    { id: 'DEMO-COURSE-02', slug: 'clinic-data-quality', title: 'Clinic data quality essentials', description: 'Practice simple checks that improve completeness and consistency in clinic reporting.', level: 'Intermediate', duration_hours: 1, status: 'in_progress', progress_percent: 50, completed_lesson_ids: [201], lessons: [
+      { id: 201, title: 'Completeness and consistency', duration_minutes: 10, content: 'Completeness means required fields are present. Consistency means values agree across related records and time periods. Use the same agreed definitions across a team, and resolve unclear entries with the record owner instead of guessing.\n\nA weekly review of missing fields can reveal where a workflow or form needs improvement.' },
+      { id: 202, title: 'Reviewing a data-quality issue', duration_minutes: 12, content: 'Start with the source record, identify the affected field, and determine whether the issue is a one-off or a repeated pattern. Correct individual records through the approved process, then address the underlying cause with training or a workflow change.\n\nKeep an audit trail of meaningful changes and follow your organization’s retention and access rules.' },
+    ] },
+    { id: 'DEMO-COURSE-03', slug: 'respectful-digital-communication', title: 'Respectful digital communication', description: 'Build clear, professional and privacy-aware communication habits for digital care teams.', level: 'Beginner', duration_hours: 1, status: 'completed', progress_percent: 100, completed_lesson_ids: [301, 302], lessons: [
+      { id: 301, title: 'Clear and respectful messages', duration_minutes: 7, content: 'Use concise language, a clear subject and a specific request. Confirm the intended recipient before sending. Keep messages respectful and professional, including when a conversation is time-sensitive.' },
+      { id: 302, title: 'Choosing the right channel', duration_minutes: 8, content: 'Use approved channels for work information. Share only the minimum necessary information with people who need it for their role. Move urgent clinical matters to the escalation channel defined by your workplace.' },
+    ] },
+  ],
+  certificates: [{ id: 'DEMO-CERT-01', title: 'Respectful digital communication', course_id: 'DEMO-COURSE-03', certificate_number: 'OHS-DEMO-2026-014', issued_at: '2026-09-12', status: 'issued', reference: 'DEMO-CERT-01' }],
   assignments: [{ id: 'DEMO-TA-01', title: 'Android sign-in smoke test', status: 'in_progress', due_date: '2026-12-05', product: 'OPES Health mobile' }, { id: 'DEMO-TA-02', title: 'Customer service request flow', status: 'pending', due_date: '2026-12-08', product: 'OPES Health mobile' }],
   partnerships: [{ id: 'DEMO-P-01', name: 'Example Health Network', country: 'Cameroon', type: 'Community health' }, { id: 'DEMO-P-02', name: 'CareLink Group', country: 'Ghana', type: 'Technology partner' }],
 };
@@ -83,7 +97,7 @@ type SessionValue = {
   account: Account | null; audience: Audience | null; token: Token | null; demo: DemoAccount | null; demoRows: Record<string, ApiRecord[]>;
   setAccount: (value: Account) => void; setAccessToken: (value: Token | null) => Promise<void>; startDemo: (id: string) => DemoAccount;
   clearSession: () => Promise<void>; rowsFor: (feature: FeatureId) => Promise<ApiRecord[]>;
-  request: <T = unknown>(path: string, method?: string, body?: unknown) => Promise<T>;
+  request: <T = unknown>(path: string, method?: string, body?: unknown, idempotencyKey?: string) => Promise<T>;
   mutateDemo: (feature: FeatureId, action: string, body?: ApiRecord, recordId?: string) => ApiRecord;
   isAllowed: (feature: Feature, write?: boolean) => boolean;
 };
@@ -142,11 +156,11 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     return refreshInFlight.current;
   };
 
-  const request = async <T,>(path: string, method = 'GET', body?: unknown): Promise<T> => {
+  const request = async <T,>(path: string, method = 'GET', body?: unknown, idempotencyKey?: string): Promise<T> => {
     const active = await refreshToken();
     const headers: Record<string, string> = { Accept: 'application/json' };
     if (active?.access_token) headers.Authorization = `Bearer ${active.access_token}`;
-    if (body !== undefined) { headers['Content-Type'] = 'application/json'; headers['Idempotency-Key'] = `mobile-${Date.now()}-${Math.random().toString(36).slice(2)}`; }
+    if (body !== undefined) { headers['Content-Type'] = 'application/json'; headers['Idempotency-Key'] = idempotencyKey ?? `mobile-${Date.now()}-${Math.random().toString(36).slice(2)}`; }
     const response = await fetch(`${API}${path}`, { method, headers, ...(body !== undefined ? { body: JSON.stringify(body) } : {}) });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data?.detail || data?.message || data?.errors && Object.values(data.errors).flat().join(' ') || `Request failed (${response.status})`);
@@ -183,6 +197,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     }
     setDemoRows(current => {
       const rows = [...(current[feature] ?? [])];
+      let certificates = current.certificates ?? [];
       if (action === 'update-profile') {
         result = { ...rows[0], ...body, id: 'profile', demo: true }; rows[0] = result;
       } else if (action === 'update-status' && recordId) {
@@ -193,14 +208,29 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         if (index >= 0) { const replies = Array.isArray(rows[index].replies) ? rows[index].replies as ApiRecord[] : []; rows[index] = { ...rows[index], replies: [...replies, { body: body.body, author: demo.account.name, demo: true }] }; result = rows[index]; }
       } else if (action === 'enroll' && recordId) {
         const index = rows.findIndex(row => String(row.slug ?? row.id) === recordId);
-        if (index >= 0) { rows[index] = { ...rows[index], status: 'enrolled', progress: '0%' }; result = rows[index]; }
+        if (index >= 0) { rows[index] = { ...rows[index], status: 'enrolled', progress_percent: 0, completed_lesson_ids: rows[index].completed_lesson_ids ?? [] }; result = rows[index]; }
+      } else if (action === 'complete-lesson' && recordId) {
+        const index = rows.findIndex(row => String(row.slug ?? row.id) === recordId);
+        if (index >= 0) {
+          const course = rows[index];
+          const lessonIds = Array.isArray(course.completed_lesson_ids) ? course.completed_lesson_ids as unknown[] : [];
+          const completedLessonIds = [...new Set([...lessonIds.map(String), String(body.lesson_id)])];
+          const lessons = Array.isArray(course.lessons) ? course.lessons as ApiRecord[] : [];
+          const progressPercent = lessons.length ? Math.round(completedLessonIds.length / lessons.length * 100) : 0;
+          rows[index] = { ...course, completed_lesson_ids: completedLessonIds, progress_percent: progressPercent, status: progressPercent === 100 ? 'completed' : 'in_progress' };
+          result = rows[index];
+          if (progressPercent === 100 && !certificates.some(certificate => String(certificate.course_id) === String(course.id))) {
+            const certificate: ApiRecord = { id: `DEMO-CERT-${Date.now()}`, course_id: course.id, title: course.title, certificate_number: `OHS-DEMO-${Date.now()}`, issued_at: new Date().toISOString(), status: 'issued', demo: true };
+            certificates = [certificate, ...certificates];
+          }
+        }
       } else if (action === 'bug-report' && recordId) {
         const index = rows.findIndex(row => String(row.id) === recordId);
         if (index >= 0) { const reports = Array.isArray(rows[index].bug_reports) ? rows[index].bug_reports as ApiRecord[] : []; rows[index] = { ...rows[index], bug_reports: [...reports, result] }; result = rows[index]; }
       } else {
         rows.unshift(result);
       }
-      return { ...current, [feature]: rows };
+      return { ...current, [feature]: rows, ...(feature === 'courses' ? { certificates } : {}) };
     });
     return result;
   };

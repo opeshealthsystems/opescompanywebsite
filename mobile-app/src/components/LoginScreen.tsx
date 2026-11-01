@@ -1,16 +1,18 @@
 import * as AuthSession from 'expo-auth-session';
 import * as SecureStore from 'expo-secure-store';
 import * as WebBrowser from 'expo-web-browser';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { Platform, Pressable, Text, View } from 'react-native';
 import { Account, CLIENT_ID, demoAccounts, discovery, TOKEN_KEY, Token, useSession } from '../context/SessionContext';
 import { ActionButton, Brand, Card, Heading, Notice, Page, colors } from './ui';
+import { AppIcon, getRoleIconName } from './icons';
 
 WebBrowser.maybeCompleteAuthSession();
 
 export default function LoginScreen() {
   const router = useRouter();
+  const { registered } = useLocalSearchParams<{ registered?: string }>();
   const session = useSession();
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState('');
@@ -78,20 +80,24 @@ export default function LoginScreen() {
 
   return <Page>
     <Brand />
-    <Heading eyebrow="Secure account access" title="OPES Health" subtitle="Sign in to your account, or open a working sample workspace to explore the app." />
+    <Heading eyebrow="Secure account access" title="OPES Health" subtitle="Sign in to your OPES account. Your role and permissions open the right workspace automatically." />
+    {registered === '1' && <Notice tone="success">Your account was created on OPES Health. Continue with secure sign-in to open your live workspace.</Notice>}
     <ActionButton label="Sign in securely" onPress={signIn} disabled={busy || (!request && Platform.OS !== 'web')} busy={busy} />
     <Text style={{ color: colors.muted, fontSize: 12, lineHeight: 18, textAlign: 'center', marginBottom: 18 }}>
-      Your account role and permissions open the correct workspace. The sign-in button stays in this app; it never opens the download page.
+      Sign-in uses OAuth 2.0 with PKCE. The secure OPES sign-in sheet returns you to this app after authentication.
     </Text>
+    <Pressable accessibilityRole="button" onPress={() => router.push('/signup' as never)} style={{ alignSelf: 'center', padding: 10, marginBottom: 14 }}>
+      <Text style={{ color: colors.blue, fontSize: 14, fontWeight: '800' }}>Create an OPES account</Text>
+    </Pressable>
     {!!message && <Notice tone={message.startsWith('Completing') ? 'info' : 'error'}>{message}</Notice>}
     <Heading eyebrow="Interactive sample mode" title="Choose a workspace" subtitle="These fictional profiles let you try forms, navigation and sample actions. Nothing is sent to the live API." />
     {demoAccounts.map(demo => <Pressable key={demo.id} onPress={() => chooseDemo(demo.id)} accessibilityRole="button">
       <Card style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-        <View style={{ width: 38, height: 38, borderRadius: 8, backgroundColor: '#E8F1F8', alignItems: 'center', justifyContent: 'center' }}><Text style={{ color: colors.navy, fontWeight: '800', fontSize: 15 }}>{demo.label[0]}</Text></View>
-        <View style={{ flex: 1 }}><Text style={{ color: colors.navy, fontSize: 14, fontWeight: '700' }}>{demo.label}</Text><Text style={{ color: colors.muted, fontSize: 12, marginTop: 3 }}>{demo.account.name} · tap to explore</Text></View>
-        <Text style={{ color: colors.blue, fontSize: 22 }}>›</Text>
+        <View style={{ width: 44, height: 44, borderRadius: 9, backgroundColor: '#E8F1F8', alignItems: 'center', justifyContent: 'center' }}><AppIcon name={getRoleIconName(demo.id)} size={22} color={colors.navy} /></View>
+        <View style={{ flex: 1, minWidth: 0 }}><Text style={{ color: colors.navy, fontSize: 15, fontWeight: '700', flexShrink: 1 }}>{demo.label}</Text><Text style={{ color: colors.muted, fontSize: 13, marginTop: 3, flexShrink: 1 }}>{demo.account.name} · tap to explore</Text></View>
+        <AppIcon name="chevronRight" size={20} color={colors.muted} />
       </Card>
     </Pressable>)}
-    <Text style={{ textAlign: 'center', color: colors.muted, fontSize: 11, marginTop: 10 }}>Demo records are marked clearly and reset when you leave the workspace.</Text>
+    <Text style={{ textAlign: 'center', color: colors.muted, fontSize: 12, lineHeight: 18, marginTop: 10 }}>Demo records are marked clearly and reset when you leave the workspace.</Text>
   </Page>;
 }

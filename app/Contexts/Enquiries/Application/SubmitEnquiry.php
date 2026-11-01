@@ -77,7 +77,11 @@ class SubmitEnquiry
                     ->icon('heroicon-o-user-plus')->iconColor('success')->sendToDatabase($admins);
             }
         } catch (\Throwable $error) { report($error); }
-        $response = ['data' => ['status' => 'recorded', 'delivery_status' => in_array($delivery, ['sent', 'already-sent'], true) ? 'sent' : 'pending']];
+        $responseData = ['status' => 'recorded', 'delivery_status' => in_array($delivery, ['sent', 'already-sent'], true) ? 'sent' : 'pending'];
+        if ($quoteSelection !== null) {
+            $responseData['receipt_delivery_status'] = in_array($receiptDelivery, ['sent', 'already-sent'], true) ? 'sent' : 'pending';
+        }
+        $response = ['data' => $responseData];
         if ($prepared['receipt_id'] !== null) {
             $response = \Illuminate\Support\Facades\DB::transaction(function () use ($prepared, $response) {
                 $receipt = \App\Models\ApiIdempotencyRecord::whereKey($prepared['receipt_id'])->lockForUpdate()->firstOrFail();

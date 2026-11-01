@@ -22,6 +22,20 @@ foreach ($schemaDocs as $schemaName => $documentation) {
     $spec['components']['schemas'][$schemaName]['description'] = $documentation['description'];
     $spec['components']['schemas'][$schemaName]['example'] = $documentation['example'];
 }
+$quoteOptions = \App\Contexts\Enquiries\Application\PricingQuoteSelection::keys();
+$enquiryInput = &$spec['components']['schemas']['EnquiryInput'];
+$enquiryInput['properties']['quote_option'] = [
+    'type' => 'string', 'enum' => $quoteOptions,
+    'description' => 'Optional server-defined pricing-page choice. The API records its canonical displayed product and indicative price; it is not a final commercial offer.',
+];
+$enquiryInput['example']['quote_option'] = 'clinic-saas';
+unset($enquiryInput);
+$enquiryOperation = &$spec['paths']['/enquiries']['post'];
+$enquiryOperation['requestBody']['content']['application/json']['example']['quote_option'] = 'clinic-saas';
+$enquiryOperation['responses']['201']['description'] = 'Enquiry recorded with durable delivery intent. When quote_option is supplied, the selected indicative price is stored and a copy is sent to the requester. receipt_delivery_status reports acceptance by the mail transport, not inbox placement; a replay returns the saved original response.';
+$enquiryResponseData = &$enquiryOperation['responses']['201']['content']['application/json']['schema']['properties']['data']['properties'];
+$enquiryResponseData['receipt_delivery_status'] = ['type' => 'string', 'enum' => ['sent', 'pending'], 'description' => 'Present only for quote requests with quote_option. sent means the email transport accepted the requester copy; pending means delivery was not confirmed.'];
+unset($enquiryResponseData, $enquiryOperation);
 $schemaExamples = static function (array $schema): mixed {
     $type = $schema['type'] ?? 'string';
     if (is_array($type)) {

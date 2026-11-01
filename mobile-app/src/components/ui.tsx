@@ -1,11 +1,14 @@
 import { ReactNode } from 'react';
-import { ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, useWindowDimensions, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-export const colors = { navy: '#082D55', blue: '#2369A6', text: '#183853', muted: '#62778B', border: '#D9E2EC', bg: '#F5F8FC', white: '#FFFFFF', pale: '#EDF3F8', success: '#176644', warning: '#77520B', danger: '#8E3540' };
+export const colors = { navy: '#082D55', blue: '#315F7D', text: '#183853', muted: '#62778B', border: '#D9E2EC', bg: '#F5F8FC', white: '#FFFFFF', pale: '#EDF3F8', success: '#176644', warning: '#77520B', danger: '#8E3540' };
 
 export function Page({ children, scroll = true }: { children: ReactNode; scroll?: boolean }) {
-  const content = <View style={styles.content}>{children}</View>;
-  return <View style={styles.safe}>{scroll ? <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.scroll}>{content}</ScrollView> : content}</View>;
+  const { width } = useWindowDimensions();
+  const horizontalPadding = width <= 340 ? 14 : width <= 380 ? 16 : 20;
+  const content = <View style={[styles.content, { paddingHorizontal: horizontalPadding }]}>{children}</View>;
+  return <SafeAreaView edges={['top', 'right', 'bottom', 'left']} style={styles.safe}>{scroll ? <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.scroll}>{content}</ScrollView> : content}</SafeAreaView>;
 }
 
 export function Brand({ compact = false }: { compact?: boolean }) {
@@ -47,9 +50,9 @@ export function Notice({ children, tone = 'info' }: { children: ReactNode; tone?
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.bg }, scroll: { flexGrow: 1 }, content: { width: '100%', maxWidth: 620, alignSelf: 'center', paddingHorizontal: 20, paddingTop: 18, paddingBottom: 34 },
-  brand: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 22 }, icon: { width: 64, height: 64, resizeMode: 'contain' }, compactIcon: { width: 42, height: 42, resizeMode: 'contain' }, brandText: { color: colors.navy, fontSize: 17, fontWeight: '800', letterSpacing: 0.5 }, brandAccent: { color: colors.blue, fontWeight: '600' }, brandSub: { color: colors.muted, fontSize: 9, fontWeight: '700', letterSpacing: 1.7, marginTop: 2 },
-  heading: { marginTop: 12, marginBottom: 20 }, eyebrow: { color: colors.blue, fontSize: 10, fontWeight: '800', letterSpacing: 1.2, marginBottom: 6 }, title: { color: colors.navy, fontSize: 27, lineHeight: 34, fontWeight: '700' }, subtitle: { color: colors.muted, fontSize: 14, lineHeight: 21, marginTop: 5 },
-  button: { minHeight: 46, borderRadius: 7, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 16, marginBottom: 10, borderWidth: 1 }, primaryButton: { backgroundColor: colors.navy, borderColor: colors.navy }, secondaryButton: { backgroundColor: colors.white, borderColor: '#BBC9D6' }, buttonText: { color: colors.white, fontSize: 14, fontWeight: '700' }, secondaryButtonText: { color: colors.navy }, buttonDisabled: { opacity: 0.55 },
-  card: { backgroundColor: colors.white, borderWidth: 1, borderColor: colors.border, borderRadius: 9, padding: 15, marginBottom: 11 }, sectionRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 18, marginBottom: 10 }, sectionTitle: { color: colors.navy, fontSize: 16, fontWeight: '700' }, fieldWrap: { marginBottom: 14 }, fieldLabel: { color: colors.text, fontSize: 12, fontWeight: '700', marginBottom: 6 }, input: { minHeight: 46, borderWidth: 1, borderColor: '#BBC9D6', borderRadius: 7, paddingHorizontal: 12, paddingVertical: 10, backgroundColor: colors.white, color: colors.text, fontSize: 14 }, textarea: { minHeight: 102, textAlignVertical: 'top' },
-  notice: { borderRadius: 7, borderWidth: 1, padding: 12, marginVertical: 10 }, noticeInfo: { backgroundColor: colors.pale, borderColor: '#C9D9E7' }, noticeSuccess: { backgroundColor: '#EFF8F3', borderColor: '#C4E4D1' }, noticeError: { backgroundColor: '#FFF0F0', borderColor: '#EBC9C9' }, noticeText: { color: colors.text, fontSize: 12, lineHeight: 18 },
+  brand: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 22 }, icon: { width: 64, height: 64, resizeMode: 'contain' }, compactIcon: { width: 42, height: 42, resizeMode: 'contain' }, brandText: { color: colors.navy, fontSize: 17, fontWeight: '800', letterSpacing: 0.5 }, brandAccent: { color: colors.blue, fontWeight: '600' }, brandSub: { color: colors.muted, fontSize: 12, fontWeight: '700', letterSpacing: 1.2, marginTop: 2 },
+  heading: { marginTop: 12, marginBottom: 20 }, eyebrow: { color: colors.blue, fontSize: 12, fontWeight: '800', letterSpacing: 1, marginBottom: 6 }, title: { color: colors.navy, fontSize: 27, lineHeight: 34, fontWeight: '700' }, subtitle: { color: colors.muted, fontSize: 14, lineHeight: 21, marginTop: 5 },
+  button: { minHeight: 48, borderRadius: 7, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 16, marginBottom: 10, borderWidth: 1 }, primaryButton: { backgroundColor: colors.navy, borderColor: colors.navy }, secondaryButton: { backgroundColor: colors.white, borderColor: '#BBC9D6' }, buttonText: { color: colors.white, fontSize: 15, fontWeight: '700' }, secondaryButtonText: { color: colors.navy }, buttonDisabled: { opacity: 0.55 },
+  card: { backgroundColor: colors.white, borderWidth: 1, borderColor: colors.border, borderRadius: 9, padding: 15, marginBottom: 11 }, sectionRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 18, marginBottom: 10 }, sectionTitle: { color: colors.navy, fontSize: 16, fontWeight: '700' }, fieldWrap: { marginBottom: 14 }, fieldLabel: { color: colors.text, fontSize: 14, fontWeight: '700', marginBottom: 6 }, input: { minHeight: 48, borderWidth: 1, borderColor: '#BBC9D6', borderRadius: 7, paddingHorizontal: 12, paddingVertical: 10, backgroundColor: colors.white, color: colors.text, fontSize: 16 }, textarea: { minHeight: 102, textAlignVertical: 'top' },
+  notice: { borderRadius: 7, borderWidth: 1, padding: 12, marginVertical: 10 }, noticeInfo: { backgroundColor: colors.pale, borderColor: '#C9D9E7' }, noticeSuccess: { backgroundColor: '#EFF8F3', borderColor: '#C4E4D1' }, noticeError: { backgroundColor: '#FFF0F0', borderColor: '#EBC9C9' }, noticeText: { color: colors.text, fontSize: 13, lineHeight: 19 },
 });

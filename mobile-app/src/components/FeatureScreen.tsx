@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, Text, View } from 'react-native';
 import { ApiRecord, featureCatalog, FeatureId, useSession } from '../context/SessionContext';
 import { ActionButton, Brand, Card, Heading, Notice, Page, SectionTitle, colors } from './ui';
+import { AppIcon } from './icons';
 
 function display(value: unknown): string {
   if (value === null || value === undefined || value === '') return '—';
@@ -79,7 +80,7 @@ export default function FeatureScreen() {
 
   return <Page>
     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}><Brand compact /><Pressable onPress={() => router.push('/profile')}><Text style={{ color: colors.blue, fontWeight: '700', padding: 8 }}>Profile</Text></Pressable></View>
-    <Pressable onPress={() => router.back()}><Text style={{ color: colors.blue, fontSize: 13, fontWeight: '700', marginTop: 3 }}>‹ Back to workspace</Text></Pressable>
+    <Pressable accessibilityRole="button" onPress={() => router.back()} style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 4 }}><AppIcon name="chevronLeft" size={18} /><Text style={{ color: colors.blue, fontSize: 14, fontWeight: '700' }}>Back to workspace</Text></Pressable>
     {!!session.demo && <Notice>DEMO MODE · All records and actions on this screen are fictional and local to this app.</Notice>}
     <Heading eyebrow="Workspace" title={title} subtitle={feature?.description ?? 'Manage account information and work items.'} />
     {feature?.createAction && mayWrite && <ActionButton label={feature.id === 'partnerApplication' ? 'Start an application' : feature.id === 'contacts' ? 'Add a contact' : `Create ${feature.title.toLowerCase().replace(/s$/, '')}`} onPress={startCreate} />}
@@ -90,22 +91,22 @@ export default function FeatureScreen() {
     {rows.map((row, index) => {
       const key = String(row.id ?? row.slug ?? index); const isOpen = expanded === key;
       const titleValue = String(row.title ?? row.subject ?? row.name ?? row.organization_name ?? row.reference ?? row.product_name ?? `Record ${index + 1}`);
-      const status = String(row.status ?? row.state ?? '');
+      const status = String(row.status ?? row.state ?? row.stage ?? '');
       return <Card key={key}>
         <Pressable accessibilityRole="button" onPress={() => setExpanded(isOpen ? null : key)}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 10 }}><Text style={{ color: colors.navy, fontSize: 14, fontWeight: '700', flex: 1 }}>{titleValue}</Text>{!!status && <Text style={{ color: colors.blue, fontSize: 10, fontWeight: '800', textTransform: 'uppercase' }}>{status.replaceAll('_', ' ')}</Text>}</View>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8 }}><Text style={{ color: colors.navy, fontSize: 15, fontWeight: '700', flex: 1, minWidth: 0, flexShrink: 1 }}>{titleValue}</Text>{!!status && <Text style={{ color: colors.blue, fontSize: 12, fontWeight: '800', textTransform: 'uppercase', flexShrink: 1, textAlign: 'right' }}>{status.replaceAll('_', ' ')}</Text>}</View>
           <Text style={{ color: colors.muted, fontSize: 12, lineHeight: 18, marginTop: 6 }}>{[row.reference, row.description, row.organization_name, row.product, row.due_date].filter(Boolean).map(display).join(' · ') || feature?.description}</Text>
-          <Text style={{ color: colors.blue, fontSize: 11, fontWeight: '700', marginTop: 8 }}>{isOpen ? 'Hide details' : 'View details'}</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 8 }}><Text style={{ color: colors.blue, fontSize: 13, fontWeight: '700' }}>{isOpen ? 'Hide details' : 'View details'}</Text><AppIcon name="chevronRight" size={18} /></View>
         </Pressable>
         {isOpen && <View style={{ borderTopWidth: 1, borderTopColor: colors.border, marginTop: 12, paddingTop: 10 }}>
-          {Object.entries(row).filter(([field]) => !['id','items','replies'].includes(field)).map(([field, value]) => <View key={field} style={{ flexDirection: 'row', paddingVertical: 4, gap: 8 }}><Text style={{ color: colors.muted, fontSize: 11, flex: 0.8 }}>{field.replaceAll('_', ' ')}</Text><Text selectable style={{ color: colors.text, fontSize: 12, flex: 1.2 }}>{display(value)}</Text></View>)}
+          {Object.entries(row).filter(([field]) => !['id','items','replies'].includes(field)).map(([field, value]) => <View key={field} style={{ flexDirection: 'row', paddingVertical: 4, gap: 8 }}><Text style={{ color: colors.muted, fontSize: 12, flex: 0.8, minWidth: 0, flexShrink: 1 }}>{field.replaceAll('_', ' ')}</Text><Text selectable style={{ color: colors.text, fontSize: 12, flex: 1.2, minWidth: 0, flexShrink: 1 }}>{display(value)}</Text></View>)}
           {Array.isArray(row.items) && <View style={{ marginTop: 6 }}>{(row.items as ApiRecord[]).map((item, i) => <Text key={i} style={{ color: colors.text, fontSize: 12, marginTop: 4 }}>{String(item.product_name ?? item.description ?? 'Item')} · {display(item.quantity)} × {display(item.unit_price)}</Text>)}</View>}
           {Array.isArray(row.replies) && <View style={{ marginTop: 8 }}>{(row.replies as ApiRecord[]).map((reply, i) => <Text key={i} style={{ color: colors.muted, fontSize: 12, marginTop: 4 }}>{String(reply.author ?? 'Reply')}: {String(reply.body ?? '')}</Text>)}</View>}
         </View>}
-        {!!mayWrite && feature?.id === 'assignments' && status !== 'completed' && <View style={{ flexDirection: 'row', gap: 8, marginTop: 12 }}>
-          {status === 'pending' && <View style={{ flex: 1 }}><ActionButton label="Start" secondary onPress={() => void action(row, 'start')} busy={acting === key} /></View>}
-          <View style={{ flex: 1 }}><ActionButton label="Mark complete" onPress={() => void action(row, 'complete')} busy={acting === key} /></View>
-          <View style={{ flex: 1 }}><ActionButton label="Report bug" secondary onPress={() => router.push({ pathname: '/action/bugReport', params: { assignmentId: key } } as never)} /></View>
+        {!!mayWrite && feature?.id === 'assignments' && status !== 'completed' && <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 12 }}>
+          {status === 'pending' && <View style={{ flexGrow: 1, flexBasis: 130, minWidth: 130 }}><ActionButton label="Start" secondary onPress={() => void action(row, 'start')} busy={acting === key} /></View>}
+          <View style={{ flexGrow: 1, flexBasis: 130, minWidth: 130 }}><ActionButton label="Mark complete" onPress={() => void action(row, 'complete')} busy={acting === key} /></View>
+          <View style={{ flexGrow: 1, flexBasis: 130, minWidth: 130 }}><ActionButton label="Report bug" secondary onPress={() => router.push({ pathname: '/action/bugReport', params: { assignmentId: key } } as never)} /></View>
         </View>}
         {!!mayWrite && feature?.id === 'contacts' && status !== 'closed' && <ActionButton label={status === 'new' ? 'Mark contacted' : status === 'contacted' ? 'Qualify contact' : 'Close contact'} secondary onPress={() => void action(row, 'contactStatus')} busy={acting === key} />}
         {!!mayWrite && feature?.id === 'partnerApps' && status === 'pending' && <ActionButton label="Start review" secondary onPress={() => void action(row, 'partnerReview')} busy={acting === key} />}

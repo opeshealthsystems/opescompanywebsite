@@ -36,7 +36,11 @@ $accentBg = $isCore ? 'rgba(0,200,150,0.1)' : ($isDiag ? 'rgba(26,111,232,0.1)' 
             </h1>
             <p class="pd-tagline">{{ $product['tagline'] }}</p>
             <div class="pd-hero-ctas">
-                <a href="{{ url($locale.'/contact') }}" class="btn-primary">
+                <a href="{{ route('contact', ['locale' => $locale, 'product_slug' => $product['slug']]) }}" class="btn-primary">
+                    <i data-lucide="file-text" style="width:15px;height:15px"></i>
+                    {{ $locale === 'fr' ? 'Demander un devis' : 'Request a quote' }}
+                </a>
+                <a href="{{ url($locale.'/contact') }}" class="btn-secondary">
                     <i data-lucide="calendar-check" style="width:15px;height:15px"></i>
                     {{ __('products.cta_book_demo') }}
                 </a>

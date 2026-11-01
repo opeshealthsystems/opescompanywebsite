@@ -9,12 +9,21 @@ class ContactController extends Controller
     public function show(Request $request)
     {
         $quoteOption = $request->query('quote_option');
+        $productSlug = $request->query('product_slug');
+        $products = array_merge(config('products', []), config('products_specialist', []));
+        $product = is_string($productSlug) ? ($products[$productSlug] ?? null) : null;
         $quoteSelection = \App\Contexts\Enquiries\Application\PricingQuoteSelection::find(
             is_string($quoteOption) ? $quoteOption : null,
             app()->getLocale(),
         );
+        $productQuoteOptions = $product
+            ? \App\Contexts\Enquiries\Application\PricingQuoteSelection::forProduct($product['slug'], app()->getLocale())
+            : [];
+        if ($product && $quoteSelection && !in_array($quoteSelection['key'], array_column($productQuoteOptions, 'key'), true)) {
+            $quoteSelection = null;
+        }
 
-        return view('pages.contact', compact('quoteSelection'));
+        return view('pages.contact', compact('quoteSelection', 'product', 'productQuoteOptions'));
     }
 
     public function submit(Request $request)
@@ -22,9 +31,16 @@ class ContactController extends Controller
         $quoteOptions = \App\Contexts\Enquiries\Application\PricingQuoteSelection::keys();
         $validated = $request->validate(\App\Contexts\Enquiries\Application\SubmitEnquiry::RULES + [
             'quote_option' => ['nullable', 'string', 'max:60', 'in:'.implode(',', $quoteOptions)],
+            'product_slug' => ['nullable', 'string', 'max:60', 'in:'.implode(',', array_keys(array_merge(config('products', []), config('products_specialist', []))))],
         ]);
         $quoteOption = $validated['quote_option'] ?? null;
         unset($validated['quote_option']);
+        if ($quoteOption !== null && !empty($validated['product_slug'])) {
+            $allowedForProduct = array_column(\App\Contexts\Enquiries\Application\PricingQuoteSelection::forProduct($validated['product_slug'], app()->getLocale()), 'key');
+            if (!in_array($quoteOption, $allowedForProduct, true)) {
+                throw \Illuminate\Validation\ValidationException::withMessages(['quote_option' => ['Choose a published price option for this product.']]);
+            }
+        }
 
         $result = app(\App\Contexts\Enquiries\Application\SubmitEnquiry::class)->handle(
             $validated, app()->getLocale(), $request->ip(), null, $quoteOption

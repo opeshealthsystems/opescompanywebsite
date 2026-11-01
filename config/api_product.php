@@ -1,8 +1,13 @@
 <?php
 
 return [
-    'version' => '0.99.0',
+    'version' => '0.99.1',
     'changelog' => [
+        [
+            'version' => '0.99.1',
+            'released_at' => '2026-11-01',
+            'summary' => 'Added server-validated pricing choices to public enquiries and a quote-request receipt delivery status.',
+        ],
         [
             'version' => '0.99.0',
             'released_at' => '2026-11-01',

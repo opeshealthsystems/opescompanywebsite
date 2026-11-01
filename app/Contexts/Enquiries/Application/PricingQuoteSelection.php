@@ -5,6 +5,24 @@ namespace App\Contexts\Enquiries\Application;
 /** Server-owned descriptions for the public pricing page quote choices. */
 final class PricingQuoteSelection
 {
+    /** Product detail pages may offer only price choices that belong to them. */
+    private const PRODUCT_OPTIONS = [
+        'opescare' => ['care-single-hospital', 'care-multi-hospital', 'care-national'],
+        'opes-emr' => ['clinic-saas', 'clinic-perpetual'],
+        'opes-hospital-his' => ['hospital-small', 'hospital-medium-large'],
+        'uhc-is' => ['government-public-health'],
+        'opes-triage' => ['clinical-triage-saas', 'clinical-triage-perpetual'],
+        'opes-lab' => ['specialty-lab'],
+        'pharmis' => ['specialty-pharmacy'],
+        'radis' => ['specialty-radiology'],
+        'opes-cdms' => ['clinical-cdms-saas', 'clinical-cdms-perpetual'],
+        'cardis' => ['specialty-cardiology'],
+        'dentis' => ['specialty-dental'],
+        'dermis' => ['specialty-dermatology'],
+        'gynobsis' => ['specialty-obgyn'],
+        'paedis' => ['specialty-pediatrics'],
+    ];
+
     private const OPTIONS = [
         'clinic-saas' => ['opes-clinic', 'OPES Clinic', 'SaaS', 'From 150,000 FCFA per month', 'À partir de 150 000 FCFA par mois'],
         'clinic-perpetual' => ['opes-clinic', 'OPES Clinic', 'Perpetual licence', 'From 2,500,000 FCFA plus 15–20% annual maintenance', 'À partir de 2 500 000 FCFA, plus 15–20 % de maintenance annuelle'],
@@ -47,6 +65,14 @@ final class PricingQuoteSelection
     public static function keys(): array
     {
         return array_keys(self::OPTIONS);
+    }
+
+    public static function forProduct(string $productSlug, string $locale = 'en'): array
+    {
+        return array_values(array_filter(array_map(
+            fn (string $key) => self::find($key, $locale),
+            self::PRODUCT_OPTIONS[$productSlug] ?? [],
+        )));
     }
 
     public static function find(?string $key, string $locale = 'en'): ?array

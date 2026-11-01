@@ -73,7 +73,7 @@
         </div>
         @else
         {{-- Guest login link --}}
-        <a href="{{ route('login') }}" class="nav-account-login" title="{{ $locale === 'fr' ? 'Connexion' : 'Sign in' }}">
+        <a href="{{ request()->is($locale.'/mobile-app') ? 'opeshealth://' : route('login') }}" class="nav-account-login" title="{{ request()->is($locale.'/mobile-app') ? ($locale === 'fr' ? 'Ouvrir l’application OPES Health' : 'Open the OPES Health app') : ($locale === 'fr' ? 'Connexion' : 'Sign in') }}">
             <i data-lucide="user-circle" style="width:20px;height:20px"></i>
         </a>
         @endauth

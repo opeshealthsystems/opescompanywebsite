@@ -2,7 +2,7 @@
     "openapi": "3.1.1",
     "info": {
         "title": "OHS Platform API",
-        "version": "0.99.0",
+        "version": "0.99.1",
         "description": "Versioned OHS business APIs. Public enquiries and application intake, partner and tester administration, publishing and catalogues, role-scoped operations and workforce workflows, finance registers, reports and line-item detail reads, customer facility profiles, employee and HR administration, risk and performance management, leave requests, validation, practitioner, recruitment, learning, survey and support workflows, account recovery, machine catalogue access, public sitemap data, protected admin reference data and resource/relationship summaries, with delegated business workflows using authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.",
         "contact": {
             "name": "OHS support",
@@ -49,14 +49,15 @@
                                 "name": "Example sender",
                                 "email": "sender@example.test",
                                 "message": "Please share information about OHS products.",
-                                "locale": "en"
+                                "locale": "en",
+                                "quote_option": "clinic-saas"
                             }
                         }
                     }
                 },
                 "responses": {
                     "201": {
-                        "description": "Enquiry recorded with durable delivery intent. sent means SMTP acceptance, not confirmed inbox placement. pending includes retryable or ambiguous delivery requiring operational recovery. A replay returns the saved original response, not current delivery status. Scheduled recovery requires a hosting scheduler.",
+                        "description": "Enquiry recorded with durable delivery intent. When quote_option is supplied, the selected indicative price is stored and a copy is sent to the requester. receipt_delivery_status reports acceptance by the mail transport, not inbox placement; a replay returns the saved original response.",
                         "headers": {
                             "X-Request-ID": {
                                 "description": "Server-generated correlation identifier.",
@@ -103,6 +104,14 @@
                                                         "sent",
                                                         "pending"
                                                     ]
+                                                },
+                                                "receipt_delivery_status": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "sent",
+                                                        "pending"
+                                                    ],
+                                                    "description": "Present only for quote requests with quote_option. sent means the email transport accepted the requester copy; pending means delivery was not confirmed."
                                                 }
                                             }
                                         }
@@ -136905,7 +136914,7 @@
                                 "example": {
                                     "data": {
                                         "status": "responding",
-                                        "api_version": "0.99.0",
+                                        "api_version": "0.99.1",
                                         "checked_at": "2026-11-01T12:00:00+00:00"
                                     },
                                     "meta": {
@@ -137110,9 +137119,19 @@
                                     "data": {
                                         "items": [
                                             {
+                                                "version": "0.99.1",
+                                                "released_at": "2026-11-01",
+                                                "summary": "Added server-validated pricing choices to public enquiries and a quote-request receipt delivery status."
+                                            },
+                                            {
                                                 "version": "0.99.0",
                                                 "released_at": "2026-11-01",
                                                 "summary": "Added an authenticated self-profile API for role-aware clients and enabled a reviewed native app callback with per-user role-scoped permissions."
+                                            },
+                                            {
+                                                "version": "0.98.0",
+                                                "released_at": "2026-11-01",
+                                                "summary": "Added API application status and a public API release changelog."
                                             },
                                             {
                                                 "version": "0.97.0",
@@ -137592,6 +137611,48 @@
                             "fr"
                         ],
                         "default": "en"
+                    },
+                    "quote_option": {
+                        "type": "string",
+                        "enum": [
+                            "clinic-saas",
+                            "clinic-perpetual",
+                            "hospital-small",
+                            "hospital-medium-large",
+                            "specialty-lab",
+                            "specialty-pharmacy",
+                            "specialty-radiology",
+                            "specialty-cardiology",
+                            "specialty-dental",
+                            "specialty-dermatology",
+                            "specialty-pediatrics",
+                            "specialty-obgyn",
+                            "care-single-hospital",
+                            "care-multi-hospital",
+                            "care-national",
+                            "health-id-facility",
+                            "health-id-multi-facility",
+                            "health-id-national",
+                            "clinical-cdms-saas",
+                            "clinical-cdms-perpetual",
+                            "clinical-triage-saas",
+                            "clinical-triage-perpetual",
+                            "clinical-cdss-hospital",
+                            "clinical-cdss-network",
+                            "government-insurance",
+                            "government-public-health",
+                            "government-national-platform",
+                            "service-implementation",
+                            "service-data-migration",
+                            "service-training",
+                            "service-custom-integration",
+                            "maintenance-standard",
+                            "maintenance-premium",
+                            "maintenance-enterprise",
+                            "managed-hosting",
+                            "custom-proposal"
+                        ],
+                        "description": "Optional server-defined pricing-page choice. The API records its canonical displayed product and indicative price; it is not a final commercial offer."
                     }
                 },
                 "description": "Public website enquiry fields. Do not send patient or other sensitive health information.",
@@ -137599,7 +137660,8 @@
                     "name": "Example sender",
                     "email": "sender@example.test",
                     "message": "Please share information about OHS products.",
-                    "locale": "en"
+                    "locale": "en",
+                    "quote_option": "clinic-saas"
                 }
             },
             "Problem": {

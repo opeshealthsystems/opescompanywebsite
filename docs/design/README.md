@@ -2,7 +2,7 @@
 
 30 October 2026 · deployed to https://opeshealthsystems.com
 
-The corporate colours from the supplied specification are navy **#073656** and blue **#1664D4**. The supplied seal also informs the cyan accent and silver/white neutrals. The seal artwork is unchanged.
+The corporate colours from the supplied specification are navy **#073656** and mature steel blue **#315F7D**. The supplied seal also informs the cyan accent and silver/white neutrals. The seal artwork is unchanged.
 
 ## Combinations
 
@@ -10,8 +10,8 @@ The corporate colours from the supplied specification are navy **#073656** and b
 | --- | --- | --- | --- |
 | Corporate header/footer | #073656 navy | #F1F5F9 white, restrained cyan | Identity and navigation |
 | Dark public/portal canvas | #081B30, #102A43, #16354F | #F1F5F9, #CBD5E1, #A7B8CC | Body, cards and supporting copy |
-| Primary action | #1664D4 blue | #FFFFFF | Buttons; 5.52:1 text contrast |
-| Hover action | #104784 | #FFFFFF | Buttons; 9.31:1 text contrast |
+| Primary action | #315F7D steel blue | #FFFFFF | Buttons; 6.85:1 text contrast |
+| Hover action | #244A63 | #FFFFFF | Buttons; 9.40:1 text contrast |
 | Dark accent | Navy surfaces | #69D5F5 cyan / #8AC5ED blue-silver | Links, icons and limited highlights |
 | Light admin workspace | #F3F6FA silver / #FFFFFF | #102A43 navy, #425A70 secondary, #075985 links | Admin light mode |
 | Status | Appropriate surface | Green, amber or red with text labels | Success, warnings and errors only |
