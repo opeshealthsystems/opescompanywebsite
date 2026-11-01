@@ -7,9 +7,16 @@
     "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "updates": {
+      "url": "https://u.expo.dev/fe0233dc-7a40-44f4-9007-383477435ba0",
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 0
+    },
+    "runtimeVersion": { "policy": "appVersion" },
     "plugins": [
       "expo-router",
       "expo-secure-store",
+      "expo-updates",
       "expo-web-browser"
     ],
     "experiments": {

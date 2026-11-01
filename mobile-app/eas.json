@@ -6,6 +6,7 @@
   "build": {
     "preview": {
       "distribution": "internal",
+      "channel": "preview",
       "env": {
         "EXPO_PUBLIC_OHS_API_URL": "https://opeshealthsystems.com/api/v1",
         "EXPO_PUBLIC_OHS_OAUTH_CLIENT_ID": "01a19790-7454-7170-afcd-d9f9290abfbc"
@@ -14,6 +15,7 @@
     },
     "production": {
       "autoIncrement": true,
+      "channel": "production",
       "env": {
         "EXPO_PUBLIC_OHS_API_URL": "https://opeshealthsystems.com/api/v1",
         "EXPO_PUBLIC_OHS_OAUTH_CLIENT_ID": "01a19790-7454-7170-afcd-d9f9290abfbc"

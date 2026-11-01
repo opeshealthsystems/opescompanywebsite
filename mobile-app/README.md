@@ -7,8 +7,10 @@ Expo app for OPES Health Systems accounts. This is a separate app from OpesCare 
 - App version: `0.1.0` private preview.
 - No demo accounts or business sample data are included.
 - Sign-in uses OAuth 2.0 authorization code with S256 PKCE and the OPES callback `opeshealth://oauth/callback`.
+- Sign-in has no role chooser. The app reads `/me` after OAuth and selects the workspace from the account's RBAC roles and effective API scopes.
 - API access is checked for the signed-in user on every request. The app stores mobile tokens with `expo-secure-store`; browser preview keeps them in memory only.
 - Set `EXPO_PUBLIC_OHS_OAUTH_CLIENT_ID` after an administrator has reviewed and provisioned the public app client. Do not commit client secrets or user tokens.
+- EAS Update is configured with app-version runtime compatibility and `preview`/`production` channels. Native builds check for compatible JavaScript updates on launch; changes to native modules still require a new build.
 - Public partner directory browsing works without sign-in; partner self-service APIs are not yet available in the live API contract.
 - Staff contact-directory management also awaits a published contact endpoint. The current live contract supports CRM deals and partner applications.
 
@@ -16,7 +18,7 @@ Expo app for OPES Health Systems accounts. This is a separate app from OpesCare 
 
 ```sh
 npm install
-npx expo install expo-auth-session expo-crypto expo-secure-store expo-web-browser
+npx expo install expo-auth-session expo-crypto expo-secure-store expo-updates expo-web-browser
 npx expo start
 ```
 

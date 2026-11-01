@@ -18,15 +18,24 @@ const TOKEN_KEY = 'opes.health.session.v1';
 type Audience = 'staff' | 'customer' | 'practitioner' | 'tester' | 'partner';
 type Feature = { label: string; endpoint: string; scope: string; note?: string };
 type Profile = { id: string; name: string; email: string; roles: string[]; scopes: string[] };
-type Token = { access_token: string; refresh_token?: string; expires_in?: number; expires_at?: number; scope?: string; audience?: Audience };
+type Token = { access_token: string; refresh_token?: string; expires_in?: number; expires_at?: number; scope?: string };
 
-const audiences: { id: Audience; title: string; description: string; scopes: string[] }[] = [
-  { id: 'staff', title: 'Staff & administrators', description: 'Quotes, customer profiles and partner applications', scopes: ['identity:read', 'finance:read', 'finance:write', 'administration:read', 'administration:write', 'crm:read', 'crm:write'] },
-  { id: 'customer', title: 'Customers', description: 'Your profile, services, requests and support', scopes: ['identity:read', 'customer:read', 'customer:write'] },
-  { id: 'practitioner', title: 'Health practitioners', description: 'Your practitioner profile and learning services', scopes: ['identity:read', 'practitioner:read', 'practitioner:write'] },
-  { id: 'tester', title: 'Testers', description: 'Assignments, progress and issue reports', scopes: ['identity:read', 'testing:read', 'testing:write'] },
-  { id: 'partner', title: 'Partners', description: 'Public partnership information and account access', scopes: ['identity:read'] },
-];
+const requestedScopes = ['identity:read', 'finance:read', 'finance:write', 'administration:read', 'administration:write', 'crm:read', 'crm:write', 'customer:read', 'customer:write', 'practitioner:read', 'practitioner:write', 'testing:read', 'testing:write'];
+const workspaceTitles: Record<Audience, string> = {
+  staff: 'Staff & administrators', customer: 'Customer account', practitioner: 'Practitioner workspace',
+  tester: 'Testing workspace', partner: 'Partner workspace',
+};
+
+function accountWorkspace(account: Profile): Audience | null {
+  const roles = account.roles.map(role => role.toLowerCase().replace(/[^a-z0-9]+/g, '_'));
+  const has = (...names: string[]) => roles.some(role => names.includes(role));
+  if (has('super_admin', 'admin', 'staff', 'employee', 'manager', 'finance', 'accountant', 'operations', 'hr', 'support')) return 'staff';
+  if (roles.some(role => /(^|_)(practitioner|clinician|health_practitioner|doctor|nurse)(_|$)/.test(role)) || account.scopes.includes('practitioner:read')) return 'practitioner';
+  if (roles.some(role => /(^|_)(tester|quality_assurance|qa_tester)(_|$)/.test(role)) || account.scopes.includes('testing:read')) return 'tester';
+  if (roles.some(role => /(^|_)(partner|vendor|institution)(_|$)/.test(role))) return 'partner';
+  if (has('customer', 'client', 'patient') || account.scopes.includes('customer:read')) return 'customer';
+  return null;
+}
 
 const features: Record<Audience, Feature[]> = {
   staff: [
@@ -69,22 +78,20 @@ function recordCount(value: unknown): string {
 }
 
 export default function App() {
-  const [audience, setAudience] = useState<Audience>('staff');
+  const [audience, setAudience] = useState<Audience | null>(null);
   const [token, setToken] = useState<Token | null>(null);
   const sessionRef = useRef<Token | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [items, setItems] = useState<Record<string, string>>({});
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState('');
-  const audienceConfig = audiences.find(item => item.id === audience)!;
   const discovery = useMemo(() => ({ authorizationEndpoint: 'https://opeshealthsystems.com/oauth/authorize', tokenEndpoint: `${API}/oauth/user-token` }), []);
   const [request, response, promptAsync] = AuthSession.useAuthRequest({
     clientId: CLIENT_ID || 'app-client-not-configured',
     redirectUri: REDIRECT_URI,
     responseType: AuthSession.ResponseType.Code,
-    scopes: audienceConfig.scopes,
+    scopes: requestedScopes,
     usePKCE: true,
-    extraParams: { prompt: 'login' },
   }, discovery);
 
   async function saveToken(value: Token | null) {
@@ -106,7 +113,6 @@ export default function App() {
         expires_in: refreshed.expiresIn,
         expires_at: Date.now() + (refreshed.expiresIn ?? 900) * 1000,
         scope: refreshed.scope,
-        audience: active.audience,
       };
       await saveToken(active);
     }
@@ -116,9 +122,17 @@ export default function App() {
     return data?.data ?? data;
   }
 
-  async function loadAccount(activeToken: Token, workspace: Audience = audience) {
+  async function loadAccount(activeToken: Token) {
     const account = await apiGet('/me', activeToken.access_token) as Profile;
     setProfile(account);
+    const workspace = accountWorkspace(account);
+    setAudience(workspace);
+    if (!workspace) {
+      setItems({});
+      setMessage('Your account is signed in, but it does not have a supported OPES mobile role. Contact support to review your account access.');
+      return;
+    }
+    setMessage('');
     const available = features[workspace].filter(feature => !feature.scope || account.scopes.includes(feature.scope));
     const statuses: Record<string, string> = {};
     for (const feature of available) {
@@ -136,7 +150,7 @@ export default function App() {
     if (Platform.OS === 'web') return;
     SecureStore.getItemAsync(TOKEN_KEY).then(async value => {
       if (!value) return;
-      try { const stored = JSON.parse(value) as Token; const workspace = stored.audience ?? 'staff'; setBusy(true); setAudience(workspace); await saveToken(stored); await loadAccount(stored, workspace); }
+      try { const stored = JSON.parse(value) as Token; setBusy(true); await saveToken(stored); await loadAccount(stored); }
       catch { await saveToken(null); }
       finally { setBusy(false); }
     });
@@ -158,17 +172,15 @@ export default function App() {
         expires_in: result.expiresIn,
         expires_at: Date.now() + ((result.expiresIn ?? 900) * 1000),
         scope: result.scope,
-        audience,
       };
       await saveToken(activeToken);
-      await loadAccount(activeToken, audience);
-      setMessage('');
+      await loadAccount(activeToken);
     }).catch(error => setMessage(error instanceof Error ? error.message : 'Sign in could not be completed.'))
       .finally(() => setBusy(false));
   }, [response]);
 
   async function signIn() {
-    if (Platform.OS === 'web') { setMessage('This browser preview does not use the native app callback. Sign in from an installed development build after the reviewed app client is configured.'); return; }
+    if (Platform.OS === 'web') { setMessage('Sign-in is available in the installed Android preview. Use the download link on the OPES Health app page.'); return; }
     if (!CLIENT_ID) { setMessage('The reviewed OPES app client has not been provisioned yet. The API uses OAuth 2.0 with S256 PKCE; no demo login is available.'); return; }
     setMessage('');
     await promptAsync();
@@ -178,27 +190,29 @@ export default function App() {
     await saveToken(null); setProfile(null); setItems({}); setMessage('You are signed out.');
   }
 
-  const selectedTitle = audiences.find(item => item.id === audience)?.title ?? '';
+  const selectedTitle = audience ? workspaceTitles[audience] : 'Account access';
   return (
     <SafeAreaView style={styles.safe}>
       <StatusBar style="dark" />
       <ScrollView contentContainerStyle={styles.page}>
-        <View style={styles.topline}><Image source={require('./assets/icon.png')} style={{ width: 38, height: 38, borderRadius: 8 }} /><Text style={styles.brand}>OPES <Text style={styles.brandLight}>HEALTH</Text></Text><View style={styles.preview}><Text style={styles.previewText}>PREVIEW</Text></View></View>
-        <View style={styles.heading}><Text style={styles.eyebrow}>OPES HEALTH SYSTEMS</Text><Text style={styles.title}>{profile ? `Hello, ${profile.name.split(' ')[0]}` : 'Your OPES workspace'}</Text><Text style={styles.subtitle}>{profile ? `${selectedTitle} · ${profile.email}` : 'One secure app for your account, services and work with OPES.'}</Text></View>
+        <View style={styles.loginBrand}>
+          <Image source={require('./assets/icon.png')} style={styles.loginIcon} accessibilityLabel="OPES Health app icon" />
+          <Text style={styles.brand}>OPES <Text style={styles.brandLight}>HEALTH</Text></Text>
+          <Text style={styles.brandCaption}>HEALTH SYSTEMS</Text>
+        </View>
+        <View style={styles.heading}><Text style={styles.eyebrow}>{profile ? selectedTitle.toUpperCase() : 'SECURE ACCOUNT ACCESS'}</Text><Text style={styles.title}>{profile ? `Hello, ${profile.name.split(' ')[0]}` : 'Sign in to OPES Health'}</Text><Text style={styles.subtitle}>{profile ? `${selectedTitle} · ${profile.email}` : 'Use your OPES account. Your role and permissions will open the correct workspace automatically.'}</Text></View>
 
         {!profile && <>
-          <Text style={styles.sectionTitle}>Choose your workspace</Text>
-          {audiences.map(item => <Pressable key={item.id} onPress={() => { setAudience(item.id); setMessage(''); }} style={[styles.audience, audience === item.id && styles.audienceSelected]} accessibilityRole="button" accessibilityState={{ selected: audience === item.id }}>
-            <View style={styles.radio}>{audience === item.id && <View style={styles.radioDot} />}</View><View style={styles.audienceCopy}><Text style={styles.audienceTitle}>{item.title}</Text><Text style={styles.audienceDescription}>{item.description}</Text></View>
-          </Pressable>)}
-          <Pressable onPress={signIn} disabled={busy || !request} style={[styles.primary, (busy || !request) && styles.disabled]}>{busy ? <ActivityIndicator color="#fff" /> : <Text style={styles.primaryText}>Continue securely</Text>}</Pressable>
-          <Text style={styles.signinNote}>Sign in on the OPES website. Your role and permissions are checked by the API.</Text>
+          <Pressable onPress={signIn} disabled={busy || !request} style={[styles.primary, (busy || !request) && styles.disabled]}>{busy ? <ActivityIndicator color="#fff" /> : <Text style={styles.primaryText}>Sign in securely</Text>}</Pressable>
+          <Text style={styles.signinNote}>Your account role determines the workspace and available actions. No demo accounts.</Text>
         </>}
 
         {profile && <>
           <View style={styles.profileCard}><Text style={styles.profileLabel}>SIGNED IN AS</Text><Text style={styles.profileName}>{profile.name}</Text><Text style={styles.profileEmail}>{profile.email}</Text><Text style={styles.roleText}>{profile.roles.join(' · ') || 'Account'}</Text></View>
-          <Text style={styles.sectionTitle}>Workspace</Text>
-          {features[audience].map(feature => <View key={feature.label} style={styles.feature}><View style={styles.featureMark}><Text style={styles.featureCheck}>✓</Text></View><View style={styles.featureCopy}><Text style={styles.featureTitle}>{feature.label}</Text><Text style={styles.featureStatus}>{items[feature.label] ?? feature.note ?? 'Loading…'}</Text></View></View>)}
+          {audience && <>
+            <Text style={styles.sectionTitle}>Workspace</Text>
+            {features[audience].map(feature => <View key={feature.label} style={styles.feature}><View style={styles.featureMark}><Text style={styles.featureCheck}>✓</Text></View><View style={styles.featureCopy}><Text style={styles.featureTitle}>{feature.label}</Text><Text style={styles.featureStatus}>{items[feature.label] ?? feature.note ?? 'Loading…'}</Text></View></View>)}
+          </>}
           <Pressable onPress={signOut} style={styles.secondary}><Text style={styles.secondaryText}>Sign out</Text></Pressable>
         </>}
 
@@ -212,9 +226,8 @@ export default function App() {
 const navy = '#082D55';
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: '#F5F8FC' }, page: { width: '100%', maxWidth: 560, alignSelf: 'center', paddingHorizontal: 22, paddingTop: 18, paddingBottom: 42 },
-  topline: { height: 48, flexDirection: 'row', alignItems: 'center', gap: 9 }, brand: { color: navy, fontSize: 15, fontWeight: '800', letterSpacing: 0.6 }, brandLight: { color: '#2977B9', fontWeight: '600' }, preview: { marginLeft: 'auto', borderWidth: 1, borderColor: '#CBD8E7', paddingHorizontal: 9, paddingVertical: 5, borderRadius: 4 }, previewText: { fontSize: 10, color: '#536B84', fontWeight: '700', letterSpacing: 0.8 },
-  heading: { marginTop: 34, marginBottom: 28 }, eyebrow: { color: '#2C6EAA', fontSize: 11, fontWeight: '700', letterSpacing: 1.5 }, title: { color: navy, fontSize: 32, lineHeight: 39, fontWeight: '700', marginTop: 9 }, subtitle: { color: '#52677D', fontSize: 15, lineHeight: 22, marginTop: 8 }, sectionTitle: { color: navy, fontSize: 17, fontWeight: '700', marginBottom: 12 },
-  audience: { minHeight: 68, paddingHorizontal: 14, paddingVertical: 12, borderWidth: 1, borderColor: '#D9E2EC', backgroundColor: '#FFFFFF', borderRadius: 8, flexDirection: 'row', alignItems: 'center', marginBottom: 9, gap: 12 }, audienceSelected: { borderColor: '#1766A7', backgroundColor: '#F1F7FC' }, radio: { width: 19, height: 19, borderRadius: 10, borderWidth: 1.5, borderColor: '#8CA0B5', alignItems: 'center', justifyContent: 'center' }, radioDot: { width: 9, height: 9, borderRadius: 5, backgroundColor: '#1766A7' }, audienceCopy: { flex: 1 }, audienceTitle: { color: '#183853', fontSize: 15, fontWeight: '600' }, audienceDescription: { color: '#62778B', fontSize: 12, lineHeight: 17, marginTop: 3 },
+  loginBrand: { alignItems: 'center', gap: 4 }, loginIcon: { width: 86, height: 86, resizeMode: 'contain', marginBottom: 8 }, brand: { color: navy, fontSize: 20, fontWeight: '800', letterSpacing: 0.7 }, brandLight: { color: '#2977B9', fontWeight: '600' }, brandCaption: { color: '#62778B', fontSize: 10, fontWeight: '700', letterSpacing: 2 },
+  heading: { alignItems: 'center', marginTop: 34, marginBottom: 28 }, eyebrow: { color: '#2C6EAA', fontSize: 11, fontWeight: '700', letterSpacing: 1.5, textAlign: 'center' }, title: { color: navy, fontSize: 30, lineHeight: 37, fontWeight: '700', marginTop: 9, textAlign: 'center' }, subtitle: { color: '#52677D', fontSize: 15, lineHeight: 22, marginTop: 8, textAlign: 'center' }, sectionTitle: { color: navy, fontSize: 17, fontWeight: '700', marginBottom: 12 },
   primary: { marginTop: 13, minHeight: 50, borderRadius: 6, backgroundColor: navy, alignItems: 'center', justifyContent: 'center' }, primaryText: { color: '#FFFFFF', fontSize: 15, fontWeight: '700' }, disabled: { opacity: 0.6 }, signinNote: { textAlign: 'center', color: '#66798B', fontSize: 12, lineHeight: 18, marginTop: 12 },
   profileCard: { marginTop: 4, marginBottom: 24, padding: 18, backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: '#D9E2EC', borderRadius: 8 }, profileLabel: { color: '#59748D', fontSize: 10, letterSpacing: 1.2, fontWeight: '700' }, profileName: { color: navy, fontSize: 21, fontWeight: '700', marginTop: 8 }, profileEmail: { color: '#52677D', fontSize: 14, marginTop: 3 }, roleText: { color: '#2C6EAA', fontSize: 12, fontWeight: '600', marginTop: 12 },
   feature: { minHeight: 66, flexDirection: 'row', alignItems: 'center', backgroundColor: '#FFFFFF', borderBottomWidth: 1, borderBottomColor: '#E6ECF2', paddingHorizontal: 13, gap: 12 }, featureMark: { width: 25, height: 25, borderRadius: 5, backgroundColor: '#E8F1F8', alignItems: 'center', justifyContent: 'center' }, featureCheck: { color: '#1766A7', fontSize: 15, fontWeight: '700' }, featureCopy: { flex: 1 }, featureTitle: { color: '#183853', fontSize: 14, fontWeight: '600' }, featureStatus: { color: '#62778B', fontSize: 12, marginTop: 3 }, secondary: { marginTop: 18, minHeight: 46, borderWidth: 1, borderColor: '#BBC9D6', borderRadius: 6, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF' }, secondaryText: { color: navy, fontSize: 14, fontWeight: '600' },
