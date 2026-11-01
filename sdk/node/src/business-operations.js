@@ -552,6 +552,33 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_finance_purchaseOrders_create": {
+        "method": "POST",
+        "path": "/finance/purchase-orders",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_finance_purchaseOrders_delete": {
+        "method": "DELETE",
+        "path": "/finance/purchase-orders/{purchaseOrder}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "purchaseOrder"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_finance_purchaseOrders_receive": {
         "method": "POST",
         "path": "/finance/purchase-orders/{purchaseOrder}/receive",
@@ -564,6 +591,22 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
+    },
+    "admin_finance_purchaseOrders_update": {
+        "method": "PUT",
+        "path": "/finance/purchase-orders/{purchaseOrder}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "purchaseOrder"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
     },
     "admin_finance_quotes_accept": {
         "method": "POST",
@@ -647,6 +690,33 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_finance_supplierBills_create": {
+        "method": "POST",
+        "path": "/finance/supplier-bills",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_finance_supplierBills_delete": {
+        "method": "DELETE",
+        "path": "/finance/supplier-bills/{supplierBill}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "supplierBill"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_finance_supplierBills_markPaid": {
         "method": "POST",
         "path": "/finance/supplier-bills/{supplierBill}/mark-paid",
@@ -659,6 +729,22 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
+    },
+    "admin_finance_supplierBills_update": {
+        "method": "PUT",
+        "path": "/finance/supplier-bills/{supplierBill}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "supplierBill"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
     },
     "admin_identity_users_sendWelcome": {
         "method": "POST",

@@ -73,12 +73,12 @@ class PurchaseOrderResource extends Resource
                     ->label('Requested By')
                     ->options(fn () => User::orderBy('name')->pluck('name', 'id'))
                     ->default(fn () => auth()->id())
+                    ->disabled()->dehydrated(false)
                     ->searchable()->required(),
             ]),
 
             Forms\Components\Section::make('Line Items')->schema([
                 Forms\Components\Repeater::make('items')
-                    ->relationship('items')
                     ->columns(4)
                     ->schema([
                         Forms\Components\TextInput::make('description')
@@ -179,7 +179,12 @@ class PurchaseOrderResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('deleteDrafts')->label('Delete selected drafts')->requiresConfirmation()
+                        ->action(function (\Illuminate\Database\Eloquent\Collection $records): void {
+                            foreach ($records as $record) {
+                                \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.purchaseOrders.delete', parameters: ['purchaseOrder' => $record->id]);
+                            }
+                        }),
                 ]),
             ]);
     }

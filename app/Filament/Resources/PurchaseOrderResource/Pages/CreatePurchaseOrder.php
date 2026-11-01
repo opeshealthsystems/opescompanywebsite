@@ -5,21 +5,20 @@ namespace App\Filament\Resources\PurchaseOrderResource\Pages;
 use App\Filament\Resources\PurchaseOrderResource;
 use App\Models\PurchaseOrder;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Database\Eloquent\Model;
 
 class CreatePurchaseOrder extends CreateRecord
 {
     protected static string $resource = PurchaseOrderResource::class;
 
-    protected function mutateFormDataBeforeCreate(array $data): array
+    protected function handleRecordCreation(array $data): Model
     {
-        $data['reference']    = PurchaseOrder::generateReference();
-        $data['requested_by'] = $data['requested_by'] ?? auth()->id();
-        return $data;
-    }
+        $result = app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+            'admin.finance.purchaseOrders.create',
+            new \App\Contexts\Shared\Application\WorkflowInput(values: $data, actor: auth()->user(), language: app()->getLocale()),
+        );
 
-    protected function afterCreate(): void
-    {
-        $this->record->recalculateTotals();
+        return PurchaseOrder::query()->findOrFail($result->data['id']);
     }
 
     protected function getRedirectUrl(): string

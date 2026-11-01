@@ -25,6 +25,16 @@ $add = function (string $name, string $method, string $path, array $parameters, 
 $input = ['name' => 'workflowInput', 'kind' => 'input'];
 $model = fn (string $name, string $type) => ['name' => $name, 'kind' => 'model', 'class' => 'App\\Models\\'.$type, 'key' => 'id'];
 
+$add('admin.finance.purchaseOrders.create', 'createPurchaseOrder', 'finance/purchase-orders', [$input], 'PurchaseOrderResource', 'create');
+$add('admin.finance.purchaseOrders.update', 'updatePurchaseOrder', 'finance/purchase-orders/{purchaseOrder}', [$input, $model('purchaseOrder', 'PurchaseOrder')], 'PurchaseOrderResource', 'update');
+$definitions['admin.finance.purchaseOrders.update']['http_methods'] = ['PUT'];
+$add('admin.finance.purchaseOrders.delete', 'deletePurchaseOrder', 'finance/purchase-orders/{purchaseOrder}', [$input, $model('purchaseOrder', 'PurchaseOrder')], 'PurchaseOrderResource', 'delete');
+$definitions['admin.finance.purchaseOrders.delete']['http_methods'] = ['DELETE'];
+$add('admin.finance.supplierBills.create', 'createSupplierBill', 'finance/supplier-bills', [$input], 'SupplierBillResource', 'create');
+$add('admin.finance.supplierBills.update', 'updateSupplierBill', 'finance/supplier-bills/{supplierBill}', [$input, $model('supplierBill', 'SupplierBill')], 'SupplierBillResource', 'update');
+$definitions['admin.finance.supplierBills.update']['http_methods'] = ['PUT'];
+$add('admin.finance.supplierBills.delete', 'deleteSupplierBill', 'finance/supplier-bills/{supplierBill}', [$input, $model('supplierBill', 'SupplierBill')], 'SupplierBillResource', 'delete');
+$definitions['admin.finance.supplierBills.delete']['http_methods'] = ['DELETE'];
 $add('admin.finance.invoices.create', 'createInvoice', 'finance/invoices', [$input], 'InvoiceResource', 'create');
 $add('admin.finance.invoices.update', 'updateInvoice', 'finance/invoices/{invoice}', [$input, $model('invoice', 'Invoice')], 'InvoiceResource', 'update');
 $definitions['admin.finance.invoices.update']['http_methods'] = ['PUT'];

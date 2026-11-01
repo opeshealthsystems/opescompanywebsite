@@ -58,6 +58,7 @@ class SupplierBillResource extends Resource
                     ->label('Recorded By')
                     ->options(fn () => User::orderBy('name')->pluck('name', 'id'))
                     ->default(fn () => auth()->id())
+                    ->disabled()->dehydrated(false)
                     ->searchable()
                     ->required(),
             ]),
@@ -99,7 +100,6 @@ class SupplierBillResource extends Resource
 
             Forms\Components\Section::make('Line Items')->schema([
                 Forms\Components\Repeater::make('items')
-                    ->relationship('items')
                     ->columns(4)
                     ->schema([
                         Forms\Components\TextInput::make('description')
@@ -203,11 +203,17 @@ class SupplierBillResource extends Resource
                     ->requiresConfirmation()
                     ->hidden(fn (SupplierBill $r) => $r->status !== 'approved')
                     ->action(fn (SupplierBill $r) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.supplierBills.markPaid', parameters: ['supplierBill' => $r->id])),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->action(fn (SupplierBill $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.supplierBills.delete', parameters: ['supplierBill' => $record->id])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('deleteReceived')->label('Delete selected unapproved bills')->requiresConfirmation()
+                        ->action(function (\Illuminate\Database\Eloquent\Collection $records): void {
+                            foreach ($records as $record) {
+                                \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.finance.supplierBills.delete', parameters: ['supplierBill' => $record->id]);
+                            }
+                        }),
                 ]),
             ]);
     }

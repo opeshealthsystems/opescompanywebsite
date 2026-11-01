@@ -306,6 +306,70 @@ class BusinessApiTest extends TestCase
         $this->postJson('/api/v1/finance/invoices', $body, ['Idempotency-Key' => 'invoice-anonymous-0001'])->assertUnauthorized();
     }
 
+    public function test_purchase_order_lifecycle_is_api_backed_and_computes_line_totals(): void
+    {
+        $admin = $this->user('admin');
+        $token = $this->access($admin, ['finance:write']);
+        $headers = ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'po-create-00000001'];
+        $body = [
+            'vendor_name' => 'Fictional supplier for test', 'title' => 'Fictional API test order', 'currency' => 'XAF', 'tax_amount' => 10,
+            'items' => [['description' => 'Test order line', 'quantity' => 2, 'unit_price' => 50]],
+            'reference' => 'spoofed', 'status' => 'approved', 'requested_by' => 999, 'total' => 1,
+        ];
+        $this->postJson('/api/v1/finance/purchase-orders', $body, $headers)->assertUnprocessable();
+        unset($body['reference'], $body['status'], $body['requested_by'], $body['total']);
+        $created = $this->postJson('/api/v1/finance/purchase-orders', $body, $headers)->assertCreated()
+            ->assertJsonPath('data.status', 'draft')->assertJsonPath('data.total', '110.00');
+        $this->postJson('/api/v1/finance/purchase-orders', $body, $headers)->assertExactJson($created->json());
+        $order = \App\Models\PurchaseOrder::query()->findOrFail($created->json('data.id'));
+        $this->assertSame($admin->id, $order->requested_by);
+        $this->assertStringStartsWith('PO-'.now()->year.'-', $order->reference);
+
+        $headers['Idempotency-Key'] = 'po-update-000000001';
+        $update = ['title' => 'Updated test order', 'items' => [['description' => 'Updated test line', 'quantity' => 1, 'unit_price' => 80]]];
+        $updated = $this->putJson('/api/v1/finance/purchase-orders/'.$order->id, $update, $headers)->assertOk()->assertJsonPath('data.total', '90.00');
+        $this->putJson('/api/v1/finance/purchase-orders/'.$order->id, $update, $headers)->assertExactJson($updated->json());
+        $headers['Idempotency-Key'] = 'po-delete-000000001';
+        $this->deleteJson('/api/v1/finance/purchase-orders/'.$order->id, [], $headers)->assertOk();
+        $this->assertDatabaseMissing('purchase_orders', ['id' => $order->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'finance.purchase_order_created.v1', 'actor_id' => $admin->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'finance.purchase_order_updated.v1', 'actor_id' => $admin->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'finance.purchase_order_deleted.v1', 'actor_id' => $admin->id]);
+    }
+
+    public function test_supplier_bill_lifecycle_is_api_backed_and_restricts_preapproval_changes(): void
+    {
+        $admin = $this->user('admin');
+        $token = $this->access($admin, ['finance:write']);
+        $headers = ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'supplier-bill-create-01'];
+        $body = [
+            'vendor_name' => 'Fictional supplier for test', 'bill_number' => 'TEST-BILL-001', 'issue_date' => today()->toDateString(),
+            'currency' => 'XAF', 'tax_amount' => 10,
+            'items' => [['description' => 'Fictional test bill item', 'quantity' => 2, 'unit_price' => 50]],
+            'reference' => 'spoofed', 'status' => 'paid', 'created_by' => 999, 'total' => 1,
+        ];
+        $this->postJson('/api/v1/finance/supplier-bills', $body, $headers)->assertUnprocessable();
+        unset($body['reference'], $body['status'], $body['created_by'], $body['total']);
+        $created = $this->postJson('/api/v1/finance/supplier-bills', $body, $headers)->assertCreated()
+            ->assertJsonPath('data.status', 'received')->assertJsonPath('data.total', '110.00');
+        $this->postJson('/api/v1/finance/supplier-bills', $body, $headers)->assertExactJson($created->json());
+        $bill = \App\Models\SupplierBill::query()->findOrFail($created->json('data.id'));
+        $this->assertSame($admin->id, $bill->created_by);
+        $this->assertStringStartsWith('BILL-'.now()->year.'-', $bill->reference);
+
+        $headers['Idempotency-Key'] = 'supplier-bill-update-01';
+        $update = ['bill_number' => 'TEST-BILL-UPDATED', 'tax_amount' => 5, 'items' => [['description' => 'Updated fictional bill line', 'quantity' => 1, 'unit_price' => 80]]];
+        $updated = $this->putJson('/api/v1/finance/supplier-bills/'.$bill->id, $update, $headers)->assertOk()->assertJsonPath('data.total', '85.00');
+        $this->putJson('/api/v1/finance/supplier-bills/'.$bill->id, $update, $headers)->assertExactJson($updated->json());
+        $headers['Idempotency-Key'] = 'supplier-bill-delete-01';
+        $this->deleteJson('/api/v1/finance/supplier-bills/'.$bill->id, [], $headers)->assertOk();
+        $this->assertDatabaseMissing('supplier_bills', ['id' => $bill->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'finance.supplier_bill_created.v1', 'actor_id' => $admin->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'finance.supplier_bill_updated.v1', 'actor_id' => $admin->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'finance.supplier_bill_deleted.v1', 'actor_id' => $admin->id]);
+        $this->postJson('/api/v1/finance/supplier-bills', $body, ['Idempotency-Key' => 'supplier-bill-anon-001'])->assertUnauthorized();
+    }
+
     public function test_payroll_generation_completion_and_payment_are_shared_and_idempotent(): void
     {
         $admin = $this->user('admin');

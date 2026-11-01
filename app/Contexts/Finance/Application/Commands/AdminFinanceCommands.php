@@ -460,6 +460,185 @@ final class AdminFinanceCommands extends WorkflowHandler
         }
     }
 
+    public function createPurchaseOrder(WorkflowInput $input): WorkflowResult
+    {
+        $actor = $this->adminActor($input);
+        $data = $input->validate([
+            'vendor_id' => 'nullable|integer|exists:vendors,id', 'vendor_name' => 'nullable|string|max:150',
+            'title' => 'required|string|max:250', 'description' => 'nullable|string|max:5000',
+            'expected_date' => 'nullable|date', 'currency' => 'required|in:XAF,USD,EUR',
+            'tax_amount' => 'nullable|numeric|min:0', 'notes' => 'nullable|string|max:5000',
+            'items' => 'required|array|min:1|max:100', 'items.*.description' => 'required|string|max:300',
+            'items.*.quantity' => 'required|numeric|gt:0|max:1000000', 'items.*.unit_price' => 'required|numeric|min:0|max:1000000000',
+            'reference' => 'prohibited', 'status' => 'prohibited', 'requested_by' => 'prohibited',
+            'approved_by' => 'prohibited', 'approved_at' => 'prohibited', 'received_date' => 'prohibited',
+            'subtotal' => 'prohibited', 'total' => 'prohibited',
+        ]);
+        if (empty($data['vendor_id']) && empty($data['vendor_name'])) $this->invalid('vendor_name', 'Select a vendor or enter a vendor name.');
+        if (!empty($data['vendor_id']) && !Vendor::query()->whereKey($data['vendor_id'])->where('is_active', true)->exists()) $this->invalid('vendor_id', 'Select an active vendor.');
+        $items = $data['items']; unset($data['items']);
+        $record = DB::transaction(function () use ($data, $items, $actor) {
+            $year = now()->year; $sequenceName = 'purchase-order:'.$year;
+            DB::table('business_sequences')->insertOrIgnore(['name' => $sequenceName, 'last_value' => 0]);
+            $sequence = DB::table('business_sequences')->where('name', $sequenceName)->lockForUpdate()->first();
+            $previous = (int) $sequence->last_value;
+            if ($previous === 0) {
+                $prefix = 'PO-'.$year.'-';
+                $previous = PurchaseOrder::query()->where('reference', 'like', $prefix.'%')->pluck('reference')
+                    ->map(fn ($reference) => ctype_digit(substr($reference, strlen($prefix))) ? (int) substr($reference, strlen($prefix)) : 0)->max() ?? 0;
+            }
+            $next = $previous + 1;
+            DB::table('business_sequences')->where('name', $sequenceName)->update(['last_value' => $next]);
+            $record = PurchaseOrder::create($data + [
+                'reference' => 'PO-'.$year.'-'.str_pad((string) $next, 5, '0', STR_PAD_LEFT),
+                'status' => 'draft', 'requested_by' => $actor->id, 'tax_amount' => $data['tax_amount'] ?? 0,
+            ]);
+            $this->replacePurchaseOrderItems($record, $items); $record->recalculateTotals();
+            DomainOutbox::append('event', 'finance.purchase_order_created.v1', ['references' => [['resource' => 'PurchaseOrder', 'id' => $record->id]], 'changed_fields' => array_keys($data)], $actor->id);
+            return $record;
+        }, 3);
+        return WorkflowResult::payload(['id' => $record->id, 'reference' => $record->reference, 'status' => $record->status, 'subtotal' => $record->subtotal, 'total' => $record->total], 201)->with('success', 'Purchase order created.');
+    }
+
+    public function updatePurchaseOrder(WorkflowInput $input, PurchaseOrder $purchaseOrder): WorkflowResult
+    {
+        $actor = $this->adminActor($input);
+        $data = $input->validate([
+            'vendor_id' => 'sometimes|nullable|integer|exists:vendors,id', 'vendor_name' => 'sometimes|nullable|string|max:150',
+            'title' => 'sometimes|required|string|max:250', 'description' => 'sometimes|nullable|string|max:5000',
+            'expected_date' => 'sometimes|nullable|date', 'currency' => 'sometimes|required|in:XAF,USD,EUR',
+            'tax_amount' => 'sometimes|nullable|numeric|min:0', 'notes' => 'sometimes|nullable|string|max:5000',
+            'items' => 'sometimes|required|array|min:1|max:100', 'items.*.description' => 'required_with:items|string|max:300',
+            'items.*.quantity' => 'required_with:items|numeric|gt:0|max:1000000', 'items.*.unit_price' => 'required_with:items|numeric|min:0|max:1000000000',
+            'reference' => 'prohibited', 'status' => 'prohibited', 'requested_by' => 'prohibited',
+            'approved_by' => 'prohibited', 'approved_at' => 'prohibited', 'received_date' => 'prohibited',
+            'subtotal' => 'prohibited', 'total' => 'prohibited',
+        ]);
+        if ($data === []) $this->invalid('purchase_order', 'Provide at least one purchase order field to update.');
+        if (!empty($data['vendor_id']) && !Vendor::query()->whereKey($data['vendor_id'])->where('is_active', true)->exists()) $this->invalid('vendor_id', 'Select an active vendor.');
+        $items = $data['items'] ?? null; unset($data['items']);
+        $record = DB::transaction(function () use ($purchaseOrder, $data, $items, $actor) {
+            $record = PurchaseOrder::query()->lockForUpdate()->findOrFail($purchaseOrder->id);
+            if ($record->status !== 'draft') $this->invalid('status', 'Only draft purchase orders can be edited.');
+            $record->fill($data)->save(); if ($items !== null) $this->replacePurchaseOrderItems($record, $items); $record->recalculateTotals();
+            DomainOutbox::append('event', 'finance.purchase_order_updated.v1', ['references' => [['resource' => 'PurchaseOrder', 'id' => $record->id]], 'changed_fields' => array_merge(array_keys($data), $items !== null ? ['items'] : [])], $actor->id);
+            return $record;
+        }, 3);
+        return $this->outcome('purchase_order', $record->id, $record->status, 'Purchase order updated.', ['reference' => $record->reference, 'subtotal' => $record->subtotal, 'total' => $record->total]);
+    }
+
+    public function deletePurchaseOrder(WorkflowInput $input, PurchaseOrder $purchaseOrder): WorkflowResult
+    {
+        $actor = $this->adminActor($input);
+        DB::transaction(function () use ($purchaseOrder, $actor) {
+            $record = PurchaseOrder::query()->lockForUpdate()->findOrFail($purchaseOrder->id);
+            if ($record->status !== 'draft') $this->invalid('status', 'Only draft purchase orders can be deleted.');
+            if (SupplierBill::query()->where('purchase_order_id', $record->id)->exists()) $this->invalid('purchase_order', 'A purchase order with supplier bill history cannot be deleted.');
+            DomainOutbox::append('event', 'finance.purchase_order_deleted.v1', ['references' => [['resource' => 'PurchaseOrder', 'id' => $record->id]]], $actor->id);
+            $record->delete();
+        }, 3);
+        return WorkflowResult::payload(['id' => $purchaseOrder->id, 'status' => 'deleted'])->with('success', 'Draft purchase order deleted.');
+    }
+
+    private function replacePurchaseOrderItems(PurchaseOrder $record, array $items): void
+    {
+        $record->items()->delete();
+        foreach ($items as $item) {
+            $quantity = (float) $item['quantity']; $unitPrice = (float) $item['unit_price'];
+            $record->items()->create(['description' => $item['description'], 'quantity' => $quantity, 'unit_price' => $unitPrice, 'total' => round($quantity * $unitPrice, 2)]);
+        }
+    }
+
+    public function createSupplierBill(WorkflowInput $input): WorkflowResult
+    {
+        $actor = $this->adminActor($input);
+        $data = $input->validate([
+            'vendor_id' => 'nullable|integer|exists:vendors,id', 'vendor_name' => 'nullable|string|max:200',
+            'purchase_order_id' => 'nullable|integer|exists:purchase_orders,id', 'bill_number' => 'nullable|string|max:100',
+            'issue_date' => 'required|date', 'due_date' => 'nullable|date', 'currency' => 'required|in:XAF,USD,EUR',
+            'tax_amount' => 'nullable|numeric|min:0', 'notes' => 'nullable|string|max:5000',
+            'items' => 'required|array|min:1|max:100', 'items.*.description' => 'required|string|max:300',
+            'items.*.quantity' => 'required|numeric|gt:0|max:1000000', 'items.*.unit_price' => 'required|numeric|min:0|max:1000000000',
+            'reference' => 'prohibited', 'status' => 'prohibited', 'created_by' => 'prohibited', 'paid_at' => 'prohibited',
+            'subtotal' => 'prohibited', 'total' => 'prohibited',
+        ]);
+        if (empty($data['vendor_id']) && empty($data['vendor_name'])) $this->invalid('vendor_name', 'Select a vendor or enter a vendor name.');
+        if (!empty($data['vendor_id']) && !Vendor::query()->whereKey($data['vendor_id'])->where('is_active', true)->exists()) $this->invalid('vendor_id', 'Select an active vendor.');
+        if (!empty($data['purchase_order_id']) && !PurchaseOrder::query()->whereKey($data['purchase_order_id'])->whereIn('status', ['approved', 'received'])->exists()) $this->invalid('purchase_order_id', 'Choose an approved or received purchase order.');
+        if (!empty($data['purchase_order_id']) && !empty($data['vendor_id']) && PurchaseOrder::query()->whereKey($data['purchase_order_id'])->whereNotNull('vendor_id')->where('vendor_id', '!=', $data['vendor_id'])->exists()) $this->invalid('vendor_id', 'The linked purchase order belongs to a different vendor.');
+        $items = $data['items']; unset($data['items']);
+        $record = DB::transaction(function () use ($data, $items, $actor) {
+            $year = now()->year; $sequenceName = 'supplier-bill:'.$year;
+            DB::table('business_sequences')->insertOrIgnore(['name' => $sequenceName, 'last_value' => 0]);
+            $sequence = DB::table('business_sequences')->where('name', $sequenceName)->lockForUpdate()->first();
+            $previous = (int) $sequence->last_value;
+            if ($previous === 0) {
+                $prefix = 'BILL-'.$year.'-';
+                $previous = SupplierBill::query()->where('reference', 'like', $prefix.'%')->pluck('reference')
+                    ->map(fn ($reference) => ctype_digit(substr($reference, strlen($prefix))) ? (int) substr($reference, strlen($prefix)) : 0)->max() ?? 0;
+            }
+            $next = $previous + 1;
+            DB::table('business_sequences')->where('name', $sequenceName)->update(['last_value' => $next]);
+            $record = SupplierBill::create($data + [
+                'reference' => 'BILL-'.$year.'-'.str_pad((string) $next, 4, '0', STR_PAD_LEFT),
+                'status' => 'received', 'created_by' => $actor->id, 'tax_amount' => $data['tax_amount'] ?? 0,
+            ]);
+            $this->replaceSupplierBillItems($record, $items); $record->recalculateTotals();
+            DomainOutbox::append('event', 'finance.supplier_bill_created.v1', ['references' => [['resource' => 'SupplierBill', 'id' => $record->id]], 'changed_fields' => array_keys($data)], $actor->id);
+            return $record;
+        }, 3);
+        return WorkflowResult::payload(['id' => $record->id, 'reference' => $record->reference, 'status' => $record->status, 'subtotal' => $record->subtotal, 'total' => $record->total], 201)->with('success', 'Supplier bill recorded.');
+    }
+
+    public function updateSupplierBill(WorkflowInput $input, SupplierBill $supplierBill): WorkflowResult
+    {
+        $actor = $this->adminActor($input);
+        $data = $input->validate([
+            'vendor_id' => 'sometimes|nullable|integer|exists:vendors,id', 'vendor_name' => 'sometimes|nullable|string|max:200',
+            'purchase_order_id' => 'sometimes|nullable|integer|exists:purchase_orders,id', 'bill_number' => 'sometimes|nullable|string|max:100',
+            'issue_date' => 'sometimes|required|date', 'due_date' => 'sometimes|nullable|date', 'currency' => 'sometimes|required|in:XAF,USD,EUR',
+            'tax_amount' => 'sometimes|nullable|numeric|min:0', 'notes' => 'sometimes|nullable|string|max:5000',
+            'items' => 'sometimes|required|array|min:1|max:100', 'items.*.description' => 'required_with:items|string|max:300',
+            'items.*.quantity' => 'required_with:items|numeric|gt:0|max:1000000', 'items.*.unit_price' => 'required_with:items|numeric|min:0|max:1000000000',
+            'reference' => 'prohibited', 'status' => 'prohibited', 'created_by' => 'prohibited', 'paid_at' => 'prohibited',
+            'subtotal' => 'prohibited', 'total' => 'prohibited',
+        ]);
+        if ($data === []) $this->invalid('supplier_bill', 'Provide at least one supplier bill field to update.');
+        if (!empty($data['vendor_id']) && !Vendor::query()->whereKey($data['vendor_id'])->where('is_active', true)->exists()) $this->invalid('vendor_id', 'Select an active vendor.');
+        if (!empty($data['purchase_order_id']) && !PurchaseOrder::query()->whereKey($data['purchase_order_id'])->whereIn('status', ['approved', 'received'])->exists()) $this->invalid('purchase_order_id', 'Choose an approved or received purchase order.');
+        if (!empty($data['purchase_order_id']) && !empty($data['vendor_id']) && PurchaseOrder::query()->whereKey($data['purchase_order_id'])->whereNotNull('vendor_id')->where('vendor_id', '!=', $data['vendor_id'])->exists()) $this->invalid('vendor_id', 'The linked purchase order belongs to a different vendor.');
+        $items = $data['items'] ?? null; unset($data['items']);
+        $record = DB::transaction(function () use ($supplierBill, $data, $items, $actor) {
+            $record = SupplierBill::query()->lockForUpdate()->findOrFail($supplierBill->id);
+            if (!in_array($record->status, ['draft', 'received'], true)) $this->invalid('status', 'Only draft or received supplier bills can be edited.');
+            $record->fill($data)->save(); if ($items !== null) $this->replaceSupplierBillItems($record, $items); $record->recalculateTotals();
+            DomainOutbox::append('event', 'finance.supplier_bill_updated.v1', ['references' => [['resource' => 'SupplierBill', 'id' => $record->id]], 'changed_fields' => array_merge(array_keys($data), $items !== null ? ['items'] : [])], $actor->id);
+            return $record;
+        }, 3);
+        return $this->outcome('supplier_bill', $record->id, $record->status, 'Supplier bill updated.', ['reference' => $record->reference, 'subtotal' => $record->subtotal, 'total' => $record->total]);
+    }
+
+    public function deleteSupplierBill(WorkflowInput $input, SupplierBill $supplierBill): WorkflowResult
+    {
+        $actor = $this->adminActor($input);
+        DB::transaction(function () use ($supplierBill, $actor) {
+            $record = SupplierBill::query()->lockForUpdate()->findOrFail($supplierBill->id);
+            if (!in_array($record->status, ['draft', 'received'], true)) $this->invalid('status', 'Only draft or received supplier bills can be deleted.');
+            DomainOutbox::append('event', 'finance.supplier_bill_deleted.v1', ['references' => [['resource' => 'SupplierBill', 'id' => $record->id]]], $actor->id);
+            $record->delete();
+        }, 3);
+        return WorkflowResult::payload(['id' => $supplierBill->id, 'status' => 'deleted'])->with('success', 'Supplier bill deleted.');
+    }
+
+    private function replaceSupplierBillItems(SupplierBill $record, array $items): void
+    {
+        $record->items()->delete();
+        foreach ($items as $item) {
+            $quantity = (float) $item['quantity']; $unitPrice = (float) $item['unit_price'];
+            $record->items()->create(['description' => $item['description'], 'quantity' => $quantity, 'unit_price' => $unitPrice, 'total' => round($quantity * $unitPrice, 2)]);
+        }
+    }
+
     private function validateExpenseReceipt(?string $path): void
     {
         if ($path !== null && $path !== ''
