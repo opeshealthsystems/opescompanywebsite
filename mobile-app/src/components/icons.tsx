@@ -56,7 +56,7 @@ export function AppIcon({
   strokeWidth?: number;
 }) {
   const Icon = icons[name];
-  return <Icon size={size} color={color} strokeWidth={strokeWidth} accessible={false} importantForAccessibility="no" />;
+  return <Icon size={size} color={color} strokeWidth={strokeWidth} />;
 }
 
 export function getFeatureIconName(id: FeatureId): AppIconName {

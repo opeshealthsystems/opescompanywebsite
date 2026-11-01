@@ -13,7 +13,7 @@ export function Page({ children, scroll = true }: { children: ReactNode; scroll?
 
 export function Brand({ compact = false }: { compact?: boolean }) {
   return <View style={styles.brand}>
-    <Image source={require('../../assets/icon.png')} style={compact ? styles.compactIcon : styles.icon} accessibilityLabel="OPES Health app icon" />
+    <Image source={require('../../assets/opes-seal.png')} style={compact ? styles.compactIcon : styles.icon} accessibilityLabel="OPES Health Systems seal" />
     <View><Text style={styles.brandText}>OPES <Text style={styles.brandAccent}>HEALTH</Text></Text><Text style={styles.brandSub}>HEALTH SYSTEMS</Text></View>
   </View>;
 }

@@ -32,7 +32,9 @@
     $robots = $private || $filtered || !$indexable ? 'noindex, follow' : 'index, follow';
 @endphp
 
-<link rel="icon" href="{{ asset('images/opes-seal.png') }}" type="image/png">
+<link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
+<link rel="alternate icon" href="{{ asset('images/opes-seal.png') }}" type="image/png">
+<link rel="apple-touch-icon" href="{{ asset('mobile-app/icon.png') }}">
 <title>{{ $pageTitle }}</title>
 <meta name="description" content="{{ $pageDesc }}">
 <meta name="robots" content="{{ $robots }}">
