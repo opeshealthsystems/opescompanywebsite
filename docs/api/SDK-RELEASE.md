@@ -1,6 +1,6 @@
 # Node SDK preview and contract release checks
 
-SDK 0.37.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations. Download `/downloads/opes-health-api-client-0.37.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
+SDK 0.38.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations. Download `/downloads/opes-health-api-client-0.38.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
 
 The archive contains only package metadata, client sources, the generated business operation registry, type definitions, README and an executable read-only catalogue example. It contains no credentials, test fixtures, environment files or runtime dependencies. Install from the archive URL or a reviewed local download; the README includes machine and delegated business usage.
 
@@ -132,3 +132,7 @@ SDK 0.36.0 archive: 14929 bytes, SHA-256 `858ab23a1d8e57e45dcd897e1e1dea65445cf0
 SDK 0.37.0 adds attendance and timesheet reads and CRUD. Attendance minutes are derived from check-in/out and duplicate employee/day records are rejected; timesheet hours use quarter-hour increments and reference active/planning projects. Filament and API writes share the same workforce commands.
 
 SDK 0.37.0 archive: 15127 bytes, SHA-256 `042609183c562df959dadf06b8424fc19dfe627f2f12d68cee4c3a557c9b7f7c`. It carries all 366 API operation IDs, including the 360 business operations in OpenAPI 0.41.0.
+
+SDK 0.38.0 adds paginated training-record reads and CRUD with certificate upload support. Completion status and date remain server-controlled, and completed or expired records are retained as compliance evidence. The OpenAPI builder now follows shared handler validation helpers so operation schemas include the same field rules used by commands.
+
+SDK 0.38.0 archive: 15237 bytes, SHA-256 `66743a14137c38d4fbc88e731436ff3f63ed4421a186105804e78e65044d60ba`. It carries all 371 API operation IDs, including the 365 business operations in OpenAPI 0.42.0.

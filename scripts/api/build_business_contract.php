@@ -5,7 +5,7 @@ require __DIR__.'/../../vendor/autoload.php';
 $root = dirname(__DIR__, 2);
 $registry = require $root.'/config/business_workflows.php';
 $spec = json_decode(file_get_contents($root.'/docs/api/baselines/0.3.0.json'), true, 512, JSON_THROW_ON_ERROR);
-$spec['info']['version'] = '0.41.0';
+$spec['info']['version'] = '0.42.0';
 $spec['info']['description'] = 'Versioned OHS business APIs. Public enquiries and account recovery, machine catalogue access, and delegated business workflows with authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.';
 $scopes = [];
 foreach ($registry['definitions'] as $definition) if ($definition['authenticated']) $scopes[$definition['scope']] = str_replace(':', ' ', $definition['scope']);
@@ -18,14 +18,52 @@ foreach ($registry['definitions'] as $operation => $definition) {
     $file = $root.'/'.str_replace('\\', '/', lcfirst($definition['handler'])).'.php';
     $ast = $parser->parse(file_get_contents($file));
     $method = $finder->findFirst($ast, fn ($n) => $n instanceof \PhpParser\Node\Stmt\ClassMethod && $n->name->name === $definition['method']);
+    $classMethods = [];
+    foreach ($finder->findInstanceOf($ast, \PhpParser\Node\Stmt\ClassMethod::class) as $classMethod) $classMethods[$classMethod->name->name] = $classMethod;
+    $literal = null;
+    $literal = function ($node, array $scope = []) use (&$literal) {
+        if ($node instanceof \PhpParser\Node\Scalar\String_) return $node->value;
+        if ($node instanceof \PhpParser\Node\Scalar\LNumber || $node instanceof \PhpParser\Node\Scalar\DNumber) return $node->value;
+        if ($node instanceof \PhpParser\Node\Expr\Variable && is_string($node->name)) return $scope[$node->name] ?? null;
+        if ($node instanceof \PhpParser\Node\Expr\ConstFetch) return match (strtolower($node->name->toString())) { 'true' => true, 'false' => false, 'null' => null, default => null };
+        if ($node instanceof \PhpParser\Node\Expr\BinaryOp\Concat) { $left = $literal($node->left, $scope); $right = $literal($node->right, $scope); return is_string($left) && is_string($right) ? $left.$right : null; }
+        if ($node instanceof \PhpParser\Node\Expr\Ternary) { $condition = $literal($node->cond, $scope); return is_bool($condition) ? $literal($condition ? ($node->if ?? $node->cond) : $node->else, $scope) : null; }
+        return null;
+    };
+    $validationCalls = []; $pendingMethods = [['name' => $definition['method'], 'arguments' => []]]; $inspectedMethods = [];
+    while ($pendingMethods) {
+        $pending = array_pop($pendingMethods); $methodName = $pending['name']; $argumentValues = $pending['arguments'];
+        if (!isset($classMethods[$methodName])) continue;
+        $stateKey = $methodName.'|'.json_encode($argumentValues);
+        if (isset($inspectedMethods[$stateKey])) continue;
+        $inspectedMethods[$stateKey] = true; $classMethod = $classMethods[$methodName]; $scope = [];
+        foreach ($classMethod->params as $index => $param) {
+            if (!$param->var instanceof \PhpParser\Node\Expr\Variable || !is_string($param->var->name)) continue;
+            $scope[$param->var->name] = $argumentValues[$index] ?? $literal($param->default, $scope);
+        }
+        foreach ($finder->findInstanceOf($classMethod->stmts ?? [], \PhpParser\Node\Expr\Assign::class) as $assignment) {
+            if ($assignment->var instanceof \PhpParser\Node\Expr\Variable && is_string($assignment->var->name)) $scope[$assignment->var->name] = $literal($assignment->expr, $scope);
+        }
+        foreach ($finder->findInstanceOf($classMethod->stmts ?? [], \PhpParser\Node\Expr\MethodCall::class) as $call) {
+            if ($call->name instanceof \PhpParser\Node\Identifier && $call->name->name === 'validate') $validationCalls[] = ['call' => $call, 'scope' => $scope];
+            if ($call->var instanceof \PhpParser\Node\Expr\Variable && $call->var->name === 'this' && $call->name instanceof \PhpParser\Node\Identifier) {
+                $arguments = [];
+                foreach ($call->args as $argument) $arguments[] = $literal($argument->value, $scope);
+                $pendingMethods[] = ['name' => $call->name->name, 'arguments' => $arguments];
+            }
+        }
+    }
     $properties = []; $required = [];
-    foreach ($finder->findInstanceOf($method->stmts, \PhpParser\Node\Expr\MethodCall::class) as $call) {
+    foreach ($validationCalls as $validation) {
+        $call = $validation['call']; $scope = $validation['scope'];
         if (!$call->name instanceof \PhpParser\Node\Identifier || $call->name->name !== 'validate' || !($call->args[0]->value ?? null) instanceof \PhpParser\Node\Expr\Array_) continue;
         foreach ($call->args[0]->value->items as $item) {
-            if (!$item?->key instanceof \PhpParser\Node\Scalar\String_ || !$item->value instanceof \PhpParser\Node\Scalar\String_) continue;
-            $name = $item->key->value; $rule = $item->value->value;
+            if (!$item?->key instanceof \PhpParser\Node\Scalar\String_) continue;
+            $name = $item->key->value; $rule = $literal($item->value, $scope);
+            if (!is_string($rule)) continue;
             if (str_contains($name, '.')) continue;
             $rules = explode('|', $rule); $schema = ['type' => 'string', 'description' => 'Validation: '.$rule];
+            if (in_array('prohibited', $rules, true)) continue;
             foreach (['integer' => 'integer', 'numeric' => 'number', 'boolean' => 'boolean', 'array' => 'array'] as $r => $type) if (in_array($r, $rules, true)) $schema['type'] = $type;
             if ($schema['type'] === 'array') $schema['items'] = [];
             if (in_array('email', $rules, true)) $schema['format'] = 'email';
@@ -39,7 +77,7 @@ foreach ($registry['definitions'] as $operation => $definition) {
                 }
             }
             if (in_array('nullable', $rules, true)) $schema['type'] = [$schema['type'], 'null'];
-            if (in_array('required', $rules, true)) $required[] = $name;
+            if (in_array('required', $rules, true) && !in_array('sometimes', $rules, true)) $required[] = $name;
             $properties[$name] = $schema;
         }
     }
@@ -71,7 +109,10 @@ foreach ($registry['definitions'] as $operation => $definition) {
         if ($definition['command'] && $properties) {
             $schema = ['type' => 'object', 'properties' => $properties];
             if ($required) $schema['required'] = array_values(array_unique($required));
-            $entry['requestBody'] = ['required' => (bool) $required, 'content' => ['application/json' => ['schema' => $schema], 'multipart/form-data' => ['schema' => $schema]]];
+            $binary = count(array_filter($properties, fn ($property) => ($property['format'] ?? null) === 'binary')) > 0;
+            $content = ['multipart/form-data' => ['schema' => $schema]];
+            if (!$binary) $content['application/json'] = ['schema' => $schema];
+            $entry['requestBody'] = ['required' => true, 'content' => $content];
         }
         if (isset($spec['paths'][$path][$methodName])) throw new RuntimeException('Duplicate contract operation '.$http.' '.$path);
         $spec['paths'][$path][$methodName] = $entry;
@@ -95,5 +136,5 @@ $spec['paths']['/me/activity']['get'] = ['operationId' => 'readOwnBusinessActivi
         'data' => ['type' => 'array', 'items' => ['type' => 'object', 'properties' => ['event_id' => ['type' => 'string', 'format' => 'uuid'], 'operation' => ['type' => 'string'], 'references' => ['type' => 'array', 'items' => ['type' => 'object']], 'occurred_at' => ['type' => 'string']]]], 'meta' => ['type' => 'object']]]]]],
         '401' => ['description' => 'Delegated user authentication required.'], '403' => ['description' => 'identity:read scope required.'], '422' => ['description' => 'Invalid page size.'], '429' => ['description' => 'Rate limit exceeded.']]];
 file_put_contents($root.'/docs/api/openapi.json', json_encode($spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR)."\n");
-echo json_encode(['business_operations' => count($registry['definitions']), 'paths' => count($spec['paths']), 'version' => '0.41.0']).PHP_EOL;
+echo json_encode(['business_operations' => count($registry['definitions']), 'paths' => count($spec['paths']), 'version' => '0.42.0']).PHP_EOL;
 

@@ -150,8 +150,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "accountant_reportcontroller_index": {
@@ -176,8 +176,11 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_communications_announcements_delete": {
         "method": "DELETE",
@@ -232,8 +235,11 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_communications_testimonials_create": {
         "method": "POST",
@@ -243,8 +249,11 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_communications_testimonials_delete": {
         "method": "DELETE",
@@ -299,8 +308,11 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_content_articles_publish": {
         "method": "POST",
@@ -338,8 +350,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_contracts_delete": {
@@ -380,8 +392,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_crm_deals_create": {
@@ -394,8 +406,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_crm_deals_delete": {
@@ -423,8 +435,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_documents_create": {
@@ -437,8 +449,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_documents_delete": {
@@ -477,8 +489,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_documents_templates_delete": {
@@ -536,8 +548,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_documents_update": {
@@ -552,8 +564,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_documents_void": {
@@ -581,8 +593,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_finance_budgets_create": {
@@ -593,8 +605,11 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_finance_budgets_delete": {
         "method": "DELETE",
@@ -649,8 +664,11 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_finance_creditNotes_create": {
         "method": "POST",
@@ -662,8 +680,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_finance_creditNotes_delete": {
@@ -704,8 +722,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_finance_creditNotes_void": {
@@ -744,8 +762,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_finance_expenses_markPaid": {
@@ -773,8 +791,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_finance_invoiceTemplates_generate": {
@@ -800,8 +818,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_finance_invoices_delete": {
@@ -827,8 +845,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_finance_invoices_markOverdue": {
@@ -882,8 +900,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_finance_payrollDeductionTypes_create": {
@@ -894,8 +912,11 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_finance_payrollDeductionTypes_delete": {
         "method": "DELETE",
@@ -950,8 +971,11 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_finance_payrollEntries_markManyPaid": {
         "method": "POST",
@@ -965,8 +989,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_finance_payrollEntries_markPaid": {
@@ -1006,8 +1030,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_finance_payrollRuns_delete": {
@@ -1048,8 +1072,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_finance_purchaseOrders_approve": {
@@ -1075,8 +1099,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_finance_purchaseOrders_delete": {
@@ -1117,8 +1141,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_finance_quotes_accept": {
@@ -1144,8 +1168,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_finance_quotes_delete": {
@@ -1186,8 +1210,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_finance_supplierBills_approve": {
@@ -1213,8 +1237,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_finance_supplierBills_delete": {
@@ -1255,8 +1279,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_finance_vendors_create": {
@@ -1267,8 +1291,11 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_finance_vendors_delete": {
         "method": "DELETE",
@@ -1323,8 +1350,11 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_identity_users_create": {
         "method": "POST",
@@ -1336,8 +1366,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_identity_users_delete": {
@@ -1378,8 +1408,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_learning_enrollments_complete": {
@@ -1405,8 +1435,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_operations_assets_delete": {
@@ -1434,8 +1464,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_practitioners_applications_approve": {
@@ -1463,8 +1493,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_practitioners_applications_reject": {
@@ -1477,10 +1507,10 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
+        "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_practitioners_findings_publish": {
@@ -1534,8 +1564,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_recruitment_applications_hire": {
@@ -1548,8 +1578,11 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_recruitment_applications_makeOffer": {
         "method": "POST",
@@ -1561,8 +1594,11 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_recruitment_applications_reject": {
         "method": "POST",
@@ -1574,8 +1610,11 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_recruitment_applications_scheduleInterview": {
         "method": "POST",
@@ -1587,8 +1626,11 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_recruitment_applications_shortlist": {
         "method": "POST",
@@ -1600,8 +1642,11 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_recruitment_openings_close": {
         "method": "POST",
@@ -1680,8 +1725,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_support_knowledgeArticles_archive": {
@@ -1707,8 +1752,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_support_knowledgeArticles_delete": {
@@ -1766,8 +1811,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_support_knowledgeCategories_create": {
@@ -1780,8 +1825,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_support_knowledgeCategories_delete": {
@@ -1839,8 +1884,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_support_serviceRequests_complete": {
@@ -1868,8 +1913,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_support_slaRules_create": {
@@ -1880,8 +1925,11 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_support_slaRules_delete": {
         "method": "DELETE",
@@ -1936,8 +1984,11 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_support_tickets_reply": {
         "method": "POST",
@@ -1951,8 +2002,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_support_tickets_status": {
@@ -1967,8 +2018,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_testing_assignments_create": {
@@ -1981,8 +2032,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_testing_assignments_delete": {
@@ -2010,8 +2061,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_validation_certificates_inviteToCouncil": {
@@ -2026,8 +2077,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_validation_developerTasks_assign": {
@@ -2042,8 +2093,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_validation_developerTasks_markFixed": {
@@ -2056,10 +2107,10 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
+        "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_validation_developerTasks_reopen": {
@@ -2098,10 +2149,10 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
+        "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_validation_finalEvaluations_create": {
@@ -2114,8 +2165,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_validation_finalEvaluations_issueCertificate": {
@@ -2157,8 +2208,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_validation_issues_clinicalReview": {
@@ -2173,8 +2224,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_validation_issues_close": {
@@ -2202,8 +2253,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_validation_issues_sendToProductReview": {
@@ -2227,8 +2278,11 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_validation_products_delete": {
         "method": "DELETE",
@@ -2283,8 +2337,11 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_validation_weeklyReviews_create": {
         "method": "POST",
@@ -2296,8 +2353,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_validation_weeklyReviews_update": {
@@ -2310,10 +2367,10 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
+        "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_workforce_attendance_create": {
@@ -2324,8 +2381,11 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_workforce_attendance_delete": {
         "method": "DELETE",
@@ -2380,8 +2440,11 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_workforce_departments_create": {
         "method": "POST",
@@ -2391,8 +2454,11 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_workforce_departments_delete": {
         "method": "DELETE",
@@ -2447,8 +2513,11 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_workforce_leaveTypes_create": {
         "method": "POST",
@@ -2458,8 +2527,11 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_workforce_leaveTypes_delete": {
         "method": "DELETE",
@@ -2514,8 +2586,11 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_workforce_leaves_approve": {
         "method": "POST",
@@ -2538,8 +2613,11 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_workforce_leaves_bulkReject": {
         "method": "POST",
@@ -2549,8 +2627,11 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_workforce_leaves_reject": {
         "method": "POST",
@@ -2614,8 +2695,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_workforce_risks_update": {
@@ -2630,8 +2711,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "admin_workforce_salaryGrades_create": {
@@ -2642,8 +2723,11 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_workforce_salaryGrades_delete": {
         "method": "DELETE",
@@ -2698,8 +2782,11 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_workforce_timesheets_create": {
         "method": "POST",
@@ -2709,8 +2796,11 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_workforce_timesheets_delete": {
         "method": "DELETE",
@@ -2765,8 +2855,11 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "admin_workforce_training_complete": {
         "method": "POST",
@@ -2781,6 +2874,77 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_workforce_training_create": {
+        "method": "POST",
+        "path": "/training-records",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data"
+        ]
+    },
+    "admin_workforce_training_delete": {
+        "method": "DELETE",
+        "path": "/training-records/{trainingRecord}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "trainingRecord"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_training_index": {
+        "method": "GET",
+        "path": "/training-records",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_training_show": {
+        "method": "GET",
+        "path": "/training-records/{trainingRecord}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "trainingRecord"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_training_update": {
+        "method": "PUT",
+        "path": "/training-records/{trainingRecord}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "trainingRecord"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data"
+        ]
+    },
     "administration_licenses_create": {
         "method": "POST",
         "path": "/administration/licenses",
@@ -2789,8 +2953,11 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "administration_licenses_delete": {
         "method": "DELETE",
@@ -2871,8 +3038,11 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "administration_projects_create": {
         "method": "POST",
@@ -2882,8 +3052,11 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "administration_projects_delete": {
         "method": "DELETE",
@@ -2938,8 +3111,11 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "blogcontroller_comment": {
         "method": "POST",
@@ -2953,8 +3129,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "blogcontroller_index": {
@@ -3334,8 +3510,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "customer_servicerequestcontroller_create": {
@@ -3392,8 +3568,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "customer_surveycontroller_index": {
@@ -3479,8 +3655,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "customer_ticketcontroller_show": {
@@ -3509,8 +3685,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "demorequestcontroller_show": {
@@ -3537,8 +3713,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "documentcontroller_pdf": {
@@ -3601,8 +3777,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "homecontroller_index": {
@@ -3659,8 +3835,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "hr_employeecontroller_index": {
@@ -3703,10 +3879,10 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
+        "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "hr_leavecontroller_index": {
@@ -3733,10 +3909,10 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
+        "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "hr_payrollcontroller_index": {
@@ -3793,8 +3969,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "hr_profilecontroller_show": {
@@ -3821,8 +3997,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "identity_password_request": {
@@ -3835,8 +4011,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "identity_password_reset": {
@@ -3849,8 +4025,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "identity_register": {
@@ -3956,10 +4132,10 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
+        "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "manager_leavecontroller_index": {
@@ -3986,10 +4162,10 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
+        "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "manager_performancecontroller_index": {
@@ -4016,8 +4192,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "manager_profilecontroller_show": {
@@ -4044,8 +4220,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "manager_reportcontroller_index": {
@@ -4168,8 +4344,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "partnershipscontroller_index": {
@@ -4286,7 +4462,6 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
             "multipart/form-data"
         ]
     },
@@ -4403,9 +4578,8 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
+        "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
             "multipart/form-data"
         ]
     },
@@ -4450,8 +4624,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "practitioner_profilecontroller_show": {
@@ -4478,8 +4652,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "practitioner_programcontroller_apply": {
@@ -4492,10 +4666,10 @@ export const businessOperations = Object.freeze({
         ],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
+        "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "practitioner_programcontroller_index": {
@@ -4566,8 +4740,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "practitioner_surveycontroller_index": {
@@ -4681,8 +4855,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "practitioner_validation_retestcontroller_store": {
@@ -4697,8 +4871,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "practitioner_validation_sessioncontroller_create": {
@@ -4739,8 +4913,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "productcontroller_index": {
@@ -4946,8 +5120,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "support_ticketcontroller_assignToMe": {
@@ -4989,8 +5163,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "support_ticketcontroller_show": {
@@ -5021,8 +5195,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "tester_assignmentcontroller_index": {
@@ -5067,8 +5241,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "tester_assignmentcontroller_updateStatus": {
@@ -5083,8 +5257,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "tester_bugreportcontroller_index": {
@@ -5139,8 +5313,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     },
     "testerapplicationcontroller_show": {
@@ -5167,8 +5341,8 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
-            "application/json",
-            "multipart/form-data"
+            "multipart/form-data",
+            "application/json"
         ]
     }
 });

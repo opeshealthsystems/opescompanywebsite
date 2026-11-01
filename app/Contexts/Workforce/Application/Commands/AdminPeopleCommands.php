@@ -113,6 +113,46 @@ final class AdminPeopleCommands extends WorkflowHandler
         return WorkflowResult::payload(['id' => $record->id, 'reference' => $record->reference, 'status' => $record->status, 'risk_score' => $record->risk_score])->with('success', 'Risk updated.');
     }
 
+    private function trainingValues(WorkflowInput $input, bool $update = false): array
+    {
+        $p = $update ? 'sometimes|' : '';
+        $data = $input->validate(['user_id' => $p.'required|integer|exists:users,id', 'title' => $p.'required|string|max:200', 'provider' => 'sometimes|nullable|string|max:150',
+            'category' => $p.'required|in:compliance,technical,soft_skills,safety,clinical,management,other', 'start_date' => 'sometimes|nullable|date', 'expires_at' => 'sometimes|nullable|date',
+            'certificate_path' => 'sometimes|nullable|string|max:300', 'certificate' => 'sometimes|file|mimes:pdf,jpg,jpeg,png|max:10240', 'notes' => 'sometimes|nullable|string|max:10000',
+            'status' => 'prohibited', 'completed_at' => 'prohibited', 'id' => 'prohibited']);
+        if ($input->hasFile('certificate') && !empty($data['certificate_path'])) throw ValidationException::withMessages(['certificate' => 'Send a certificate file or a previously uploaded certificate path, not both.']);
+        if ($input->hasFile('certificate')) $data['certificate_path'] = $input->file('certificate')->storePublicly('certificates', 'public');
+        elseif (!empty($data['certificate_path'])) {
+            $path = $data['certificate_path'];
+            if (!str_starts_with($path, 'certificates/') || str_contains($path, '..') || str_contains($path, '\\') || !Storage::disk('public')->exists($path)) {
+                throw ValidationException::withMessages(['certificate_path' => 'Select a certificate stored in the certificates directory.']);
+            }
+        }
+        return $data;
+    }
+
+    public function createTraining(WorkflowInput $input): WorkflowResult
+    {
+        $actor = $this->admin($input); $data = $this->trainingValues($input);
+        $record = DB::transaction(function () use ($data, $actor) { $record = TrainingRecord::create($data + ['status' => 'planned']); DomainOutbox::append('event', 'workforce.training_record_created.v1', ['references' => [['resource' => 'TrainingRecord', 'id' => $record->id]]], $actor->id); return $record; }, 3);
+        return WorkflowResult::payload(['record' => $record, 'id' => $record->id], 201);
+    }
+
+    public function updateTraining(WorkflowInput $input, TrainingRecord $trainingRecord): WorkflowResult
+    {
+        $actor = $this->admin($input); $data = $this->trainingValues($input, true);
+        if (!$data) throw ValidationException::withMessages(['training_record' => 'Provide at least one editable training field.']);
+        $record = DB::transaction(function () use ($trainingRecord, $data, $actor) { $record = TrainingRecord::query()->lockForUpdate()->findOrFail($trainingRecord->id); $record->update($data); DomainOutbox::append('event', 'workforce.training_record_updated.v1', ['references' => [['resource' => 'TrainingRecord', 'id' => $record->id]], 'changed_fields' => array_keys($data)], $actor->id); return $record; }, 3);
+        return WorkflowResult::payload(['record' => $record, 'id' => $record->id]);
+    }
+
+    public function deleteTraining(WorkflowInput $input, TrainingRecord $trainingRecord): WorkflowResult
+    {
+        $actor = $this->admin($input);
+        $id = DB::transaction(function () use ($trainingRecord, $actor) { $record = TrainingRecord::query()->lockForUpdate()->findOrFail($trainingRecord->id); if (in_array($record->status, ['completed', 'expired'], true)) throw ValidationException::withMessages(['training_record' => 'Completed or expired training records are retained as compliance evidence.']); $id = $record->id; $record->delete(); DomainOutbox::append('event', 'workforce.training_record_deleted.v1', ['references' => [['resource' => 'TrainingRecord', 'id' => $id]]], $actor->id); return $id; }, 3);
+        return WorkflowResult::payload(['deleted_id' => $id]);
+    }
+
     public function completeTraining(WorkflowInput $input, TrainingRecord $trainingRecord): WorkflowResult
     {
         $actor = $this->admin($input);

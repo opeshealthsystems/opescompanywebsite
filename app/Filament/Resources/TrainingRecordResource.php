@@ -51,7 +51,7 @@ class TrainingRecordResource extends Resource
                 Forms\Components\Select::make('category')->options(TrainingRecord::categoryOptions())->default('other')->required(),
                 Forms\Components\Select::make('status')->options(TrainingRecord::statusOptions())->default('planned')->disabled()->dehydrated(false)->required(),
                 Forms\Components\DatePicker::make('start_date')->nullable()->native(false),
-                Forms\Components\DatePicker::make('completed_at')->label('Completed On')->nullable()->native(false),
+                Forms\Components\DatePicker::make('completed_at')->label('Completed On')->nullable()->native(false)->disabled()->dehydrated(false),
                 Forms\Components\DatePicker::make('expires_at')->label('Expires On')->nullable()->native(false),
                 Forms\Components\FileUpload::make('certificate_path')->label('Certificate')->directory('certificates')->acceptedFileTypes(['application/pdf','image/*'])->nullable(),
                 Forms\Components\Textarea::make('notes')->rows(2)->nullable()->columnSpanFull(),
@@ -89,9 +89,14 @@ class TrainingRecordResource extends Resource
                     ->label('Mark Complete')->icon('heroicon-o-check-circle')->color('success')
                     ->hidden(fn (TrainingRecord $r) => $r->status === 'completed')
                     ->action(fn (TrainingRecord $r) => AdminWorkflowAdapter::run('admin.workforce.training.complete', parameters: ['trainingRecord' => $r])),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()->using(function (TrainingRecord $record) {
+                    AdminWorkflowAdapter::run('admin.workforce.training.delete', parameters: ['trainingRecord' => $record->id]);
+                    return true;
+                }),
             ])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);
+            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()->using(function ($records) {
+                foreach ($records as $record) AdminWorkflowAdapter::run('admin.workforce.training.delete', parameters: ['trainingRecord' => $record->id]);
+            })])]);
     }
 
     public static function infolist(Infolist $infolist): Infolist
