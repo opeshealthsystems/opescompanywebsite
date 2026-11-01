@@ -85,7 +85,10 @@ class AttendanceRecordResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()->using(function (AttendanceRecord $record) {
+                    \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.attendance.delete', parameters: ['attendanceRecord' => $record->id]);
+                    return true;
+                }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -114,7 +117,11 @@ class AttendanceRecordResource extends Resource
                             );
                         }),
 
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->using(function ($records) {
+                        foreach ($records as $record) {
+                            \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.attendance.delete', parameters: ['attendanceRecord' => $record->id]);
+                        }
+                    }),
                 ]),
             ]);
     }

@@ -12,6 +12,9 @@ class ViewTimesheet extends ViewRecord
 
     protected function getHeaderActions(): array
     {
-        return [Actions\EditAction::make(), Actions\DeleteAction::make()];
+        return [Actions\EditAction::make(), Actions\DeleteAction::make()->using(function ($record) {
+            \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.timesheets.delete', parameters: ['timesheet' => $record->id]);
+            return true;
+        })];
     }
 }

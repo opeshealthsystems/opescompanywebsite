@@ -78,9 +78,16 @@ class TimesheetResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()->using(function (Timesheet $record) {
+                    \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.timesheets.delete', parameters: ['timesheet' => $record->id]);
+                    return true;
+                }),
             ])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);
+            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()->using(function ($records) {
+                foreach ($records as $record) {
+                    \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.timesheets.delete', parameters: ['timesheet' => $record->id]);
+                }
+            })])]);
     }
 
     public static function infolist(Infolist $infolist): Infolist

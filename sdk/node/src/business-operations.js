@@ -2316,6 +2316,73 @@ export const businessOperations = Object.freeze({
             "multipart/form-data"
         ]
     },
+    "admin_workforce_attendance_create": {
+        "method": "POST",
+        "path": "/workforce/attendance-records",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_attendance_delete": {
+        "method": "DELETE",
+        "path": "/workforce/attendance-records/{attendanceRecord}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "attendanceRecord"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_attendance_index": {
+        "method": "GET",
+        "path": "/workforce/attendance-records",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_attendance_show": {
+        "method": "GET",
+        "path": "/workforce/attendance-records/{attendanceRecord}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "attendanceRecord"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_attendance_update": {
+        "method": "PUT",
+        "path": "/workforce/attendance-records/{attendanceRecord}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "attendanceRecord"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_workforce_departments_create": {
         "method": "POST",
         "path": "/departments",
@@ -2628,6 +2695,73 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [
             "salaryGrade"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_timesheets_create": {
+        "method": "POST",
+        "path": "/workforce/timesheets",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_timesheets_delete": {
+        "method": "DELETE",
+        "path": "/workforce/timesheets/{timesheet}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "timesheet"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_timesheets_index": {
+        "method": "GET",
+        "path": "/workforce/timesheets",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_timesheets_show": {
+        "method": "GET",
+        "path": "/workforce/timesheets/{timesheet}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "timesheet"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_timesheets_update": {
+        "method": "PUT",
+        "path": "/workforce/timesheets/{timesheet}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "timesheet"
         ],
         "queryParameters": [],
         "acceptLanguage": true,
