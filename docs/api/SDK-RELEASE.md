@@ -1,6 +1,6 @@
 # Node SDK preview and contract release checks
 
-SDK 0.26.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations. Download `/downloads/opes-health-api-client-0.26.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
+SDK 0.27.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations. Download `/downloads/opes-health-api-client-0.27.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
 
 The archive contains only package metadata, client sources, the generated business operation registry, type definitions, README and an executable read-only catalogue example. It contains no credentials, test fixtures, environment files or runtime dependencies. Install from the archive URL or a reviewed local download; the README includes machine and delegated business usage.
 
@@ -88,3 +88,7 @@ SDK 0.25.0 archive: 13231 bytes, SHA-256 `a445adc38da17384587ce8d77d00160562894c
 SDK 0.26.0 adds asset register and CRM deal create/update/delete operations. References are generated server-side, updates and deletes are validated, closed deals remain immutable, and changes are emitted through the transactional domain outbox.
 
 SDK 0.26.0 archive: 13356 bytes, SHA-256 `7d67c182a94a2366342ad7dba96e58ce71dc8fec5259b2fee6a65398d9f72073`. It carries all 276 API operation IDs, including the 270 business operations in OpenAPI 0.30.0.
+
+SDK 0.27.0 adds delegated weekly review snapshots and tester assignment management. Weekly metrics are generated on the server and immutable; assignment transitions validate product ownership, active tester identity, allowed states and report-history deletion rules.
+
+SDK 0.27.0 archive: 13478 bytes, SHA-256 `665e434a217ac734e4d1300cd383684c3288dd9dfcbb81a363660d8db92a7a91`. It carries all 281 API operation IDs, including the 275 business operations in OpenAPI 0.31.0.

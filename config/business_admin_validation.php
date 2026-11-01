@@ -5,6 +5,7 @@ $issue = ['name' => 'issue', 'kind' => 'model', 'class' => 'App\\Models\\IssueRe
 $task = ['name' => 'task', 'kind' => 'model', 'class' => 'App\\Models\\DeveloperTask', 'key' => 'id'];
 $evaluation = ['name' => 'evaluation', 'kind' => 'model', 'class' => 'App\\Models\\FinalEvaluation', 'key' => 'id'];
 $certificate = ['name' => 'certificate', 'kind' => 'model', 'class' => 'App\\Models\\ValidationCertificate', 'key' => 'id'];
+$weeklyReview = ['name' => 'weeklyReview', 'kind' => 'model', 'class' => 'App\\Models\\WeeklyReview', 'key' => 'id'];
 $input = ['name' => 'workflowInput', 'kind' => 'input'];
 $definitions = [];
 $add = function (string $name, string $method, string $path, array $params, string $source, string $action) use (&$definitions, $class): void {
@@ -26,4 +27,11 @@ $add('admin.validation.finalEvaluations.issueCertificate', 'issueCertificate', '
 $add('admin.validation.finalEvaluations.create', 'createEvaluation', 'validation/final-evaluations', [$input], 'FinalEvaluationResource', 'create');
 $add('admin.validation.finalEvaluations.update', 'updateEvaluation', 'validation/final-evaluations/{evaluation}', [$input, $evaluation], 'FinalEvaluationResource', 'update');
 $add('admin.validation.certificates.inviteToCouncil', 'inviteToCouncil', 'validation/certificates/{certificate}/invite-to-council', [$input, $certificate], 'ValidationCertificateResource', 'invite_to_council');
+$weeklyClass = 'App\\Contexts\\Validation\\Application\\Commands\\AdminWeeklyReviewCommands';
+$definitions['admin.validation.weeklyReviews.create'] = ['handler' => $weeklyClass, 'method' => 'create', 'parameters' => [$input], 'command' => true,
+    'context' => 'Validation', 'roles' => ['super_admin', 'admin'], 'authenticated' => true, 'scope' => 'validation:write',
+    'api_path' => 'validation/weekly-reviews', 'http_methods' => ['POST'], 'source_controller' => 'WeeklyReviewResource', 'source_action' => 'create'];
+$definitions['admin.validation.weeklyReviews.update'] = ['handler' => $weeklyClass, 'method' => 'update', 'parameters' => [$input, $weeklyReview], 'command' => true,
+    'context' => 'Validation', 'roles' => ['super_admin', 'admin'], 'authenticated' => true, 'scope' => 'validation:write',
+    'api_path' => 'validation/weekly-reviews/{weeklyReview}', 'http_methods' => ['PUT'], 'source_controller' => 'WeeklyReviewResource', 'source_action' => 'update'];
 return $definitions;

@@ -452,6 +452,61 @@ class BusinessApiTest extends TestCase
         $this->postJson('/api/v1/crm/deals', $body, ['Idempotency-Key' => 'deal-anonymous-000001'])->assertUnauthorized();
     }
 
+    public function test_weekly_reviews_create_immutable_metrics_and_update_narrative_through_commands(): void
+    {
+        $admin = $this->user('admin');
+        $cohort = \App\Models\Cohort::factory()->create();
+        $token = $this->access($admin, ['validation:write']);
+        $headers = ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'weekly-review-create-0001'];
+        $body = ['cohort_id' => $cohort->id, 'week_start' => '2026-10-26', 'summary' => 'Fictional snapshot summary', 'metrics' => ['sessions' => 999]];
+        $this->postJson('/api/v1/validation/weekly-reviews', $body, $headers)->assertUnprocessable();
+        unset($body['metrics']);
+        $created = $this->postJson('/api/v1/validation/weekly-reviews', $body, $headers)->assertCreated()
+            ->assertJsonPath('data.week_end', '2026-11-01')->assertJsonPath('data.metrics.sessions', 0);
+        $this->postJson('/api/v1/validation/weekly-reviews', $body, $headers)->assertExactJson($created->json());
+        $reviewId = $created->json('data.id');
+        $headers['Idempotency-Key'] = 'weekly-review-update-0001';
+        $updated = $this->putJson('/api/v1/validation/weekly-reviews/'.$reviewId, ['summary' => 'Updated fictional summary'], $headers)->assertOk();
+        $this->putJson('/api/v1/validation/weekly-reviews/'.$reviewId, ['summary' => 'Updated fictional summary'], $headers)->assertExactJson($updated->json());
+        $headers['Idempotency-Key'] = 'weekly-review-spoof-0001';
+        $this->putJson('/api/v1/validation/weekly-reviews/'.$reviewId, ['metrics' => ['sessions' => 1000]], $headers)->assertUnprocessable();
+        $this->assertDatabaseHas('business_outbox', ['type' => 'validation.weekly_review_created.v1', 'actor_id' => $admin->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'validation.weekly_review_updated.v1', 'actor_id' => $admin->id]);
+    }
+
+    public function test_tester_assignment_lifecycle_is_api_backed_and_notifies_tester_once(): void
+    {
+        $admin = $this->user('admin');
+        Role::findOrCreate('tester', 'web');
+        $tester = User::factory()->create(['is_active' => true]);
+        $tester->assignRole('tester');
+        $token = $this->access($admin, ['testing:write']);
+        $headers = ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'tester-assignment-create-001'];
+        $body = [
+            'assigned_to' => $tester->id, 'product_slug' => array_key_first(\App\Support\ProductCatalog::options()),
+            'title' => 'Fictional API test assignment', 'description' => 'Test-only assignment instructions', 'due_date' => today()->addDays(7)->toDateString(),
+            'assigned_by' => 999, 'status' => 'completed', 'product_name' => 'Spoofed product name',
+        ];
+        $this->postJson('/api/v1/admin/testing/assignments', $body, $headers)->assertUnprocessable();
+        unset($body['assigned_by'], $body['status'], $body['product_name']);
+        $created = $this->postJson('/api/v1/admin/testing/assignments', $body, $headers)->assertCreated()->assertJsonPath('data.status', 'pending');
+        $this->postJson('/api/v1/admin/testing/assignments', $body, $headers)->assertExactJson($created->json());
+        $assignmentId = $created->json('data.id');
+        $this->assertDatabaseHas('business_outbox', ['kind' => 'notification', 'status' => 'completed']);
+
+        $headers['Idempotency-Key'] = 'tester-assignment-start-001';
+        $this->putJson('/api/v1/admin/testing/assignments/'.$assignmentId, ['status' => 'in_progress'], $headers)->assertOk()->assertJsonPath('data.status', 'in_progress');
+        $headers['Idempotency-Key'] = 'tester-assignment-cancel-01';
+        $this->putJson('/api/v1/admin/testing/assignments/'.$assignmentId, ['status' => 'cancelled'], $headers)->assertOk()->assertJsonPath('data.status', 'cancelled');
+        $headers['Idempotency-Key'] = 'tester-assignment-delete-01';
+        $this->deleteJson('/api/v1/admin/testing/assignments/'.$assignmentId, [], $headers)->assertOk();
+        $this->assertDatabaseMissing('tester_assignments', ['id' => $assignmentId]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'testing.tester_assignment_created.v1', 'actor_id' => $admin->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'testing.tester_assignment_updated.v1', 'actor_id' => $admin->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'testing.tester_assignment_deleted.v1', 'actor_id' => $admin->id]);
+        $this->postJson('/api/v1/admin/testing/assignments', $body, ['Idempotency-Key' => 'tester-assignment-anon-01'])->assertUnauthorized();
+    }
+
     public function test_payroll_generation_completion_and_payment_are_shared_and_idempotent(): void
     {
         $admin = $this->user('admin');

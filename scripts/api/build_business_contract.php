@@ -5,7 +5,7 @@ require __DIR__.'/../../vendor/autoload.php';
 $root = dirname(__DIR__, 2);
 $registry = require $root.'/config/business_workflows.php';
 $spec = json_decode(file_get_contents($root.'/docs/api/baselines/0.3.0.json'), true, 512, JSON_THROW_ON_ERROR);
-$spec['info']['version'] = '0.30.0';
+$spec['info']['version'] = '0.31.0';
 $spec['info']['description'] = 'Versioned OHS business APIs. Public enquiries and account recovery, machine catalogue access, and delegated business workflows with authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.';
 $scopes = [];
 foreach ($registry['definitions'] as $definition) if ($definition['authenticated']) $scopes[$definition['scope']] = str_replace(':', ' ', $definition['scope']);
@@ -95,5 +95,5 @@ $spec['paths']['/me/activity']['get'] = ['operationId' => 'readOwnBusinessActivi
         'data' => ['type' => 'array', 'items' => ['type' => 'object', 'properties' => ['event_id' => ['type' => 'string', 'format' => 'uuid'], 'operation' => ['type' => 'string'], 'references' => ['type' => 'array', 'items' => ['type' => 'object']], 'occurred_at' => ['type' => 'string']]]], 'meta' => ['type' => 'object']]]]]],
         '401' => ['description' => 'Delegated user authentication required.'], '403' => ['description' => 'identity:read scope required.'], '422' => ['description' => 'Invalid page size.'], '429' => ['description' => 'Rate limit exceeded.']]];
 file_put_contents($root.'/docs/api/openapi.json', json_encode($spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR)."\n");
-echo json_encode(['business_operations' => count($registry['definitions']), 'paths' => count($spec['paths']), 'version' => '0.30.0']).PHP_EOL;
+echo json_encode(['business_operations' => count($registry['definitions']), 'paths' => count($spec['paths']), 'version' => '0.31.0']).PHP_EOL;
 

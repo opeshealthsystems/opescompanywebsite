@@ -1208,6 +1208,49 @@ export const businessOperations = Object.freeze({
             "multipart/form-data"
         ]
     },
+    "admin_testing_assignments_create": {
+        "method": "POST",
+        "path": "/admin/testing/assignments",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_testing_assignments_delete": {
+        "method": "DELETE",
+        "path": "/admin/testing/assignments/{testerAssignment}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "testerAssignment"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_testing_assignments_update": {
+        "method": "PUT",
+        "path": "/admin/testing/assignments/{testerAssignment}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "testerAssignment"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
     "admin_validation_certificates_inviteToCouncil": {
         "method": "POST",
         "path": "/validation/certificates/{certificate}/invite-to-council",
@@ -1412,6 +1455,36 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
+    },
+    "admin_validation_weeklyReviews_create": {
+        "method": "POST",
+        "path": "/validation/weekly-reviews",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_validation_weeklyReviews_update": {
+        "method": "PUT",
+        "path": "/validation/weekly-reviews/{weeklyReview}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "weeklyReview"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
     },
     "admin_workforce_leaves_approve": {
         "method": "POST",

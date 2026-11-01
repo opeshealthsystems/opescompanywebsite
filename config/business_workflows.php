@@ -6507,4 +6507,5 @@ $registry['definitions'] += require __DIR__.'/business_admin_enquiries.php';
 $registry['definitions'] += require __DIR__.'/business_admin_settings.php';
 $registry['definitions'] += require __DIR__.'/business_admin_report_queries.php';
 $registry['definitions'] += require __DIR__.'/business_admin_crm.php';
+$registry['definitions'] += require __DIR__.'/business_admin_testing.php';
 return $registry;

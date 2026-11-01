@@ -65,14 +65,7 @@ class TesterAssignmentResource extends Resource
                     ->options($productOptions)
                     ->searchable()
                     ->required()
-                    ->live()
-                    ->afterStateUpdated(function (\Filament\Forms\Set $set, $state) use ($productOptions) {
-                        if ($state && isset($productOptions[$state])) {
-                            $set('product_name', $productOptions[$state]);
-                        }
-                    }),
-
-                Forms\Components\Hidden::make('product_name'),
+                    ->live(),
 
                 Forms\Components\TextInput::make('title')
                     ->required()
@@ -82,7 +75,7 @@ class TesterAssignmentResource extends Resource
                 Forms\Components\Select::make('status')
                     ->options(TesterAssignment::statusOptions())
                     ->default('pending')
-                    ->required(),
+                    ->required()->disabledOn('create')->dehydrated(fn (string $operation) => $operation !== 'create'),
 
                 Forms\Components\DatePicker::make('due_date')
                     ->nullable(),
@@ -149,11 +142,20 @@ class TesterAssignmentResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->action(fn (TesterAssignment $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.testing.assignments.delete', parameters: ['testerAssignment' => $record->id]))
+                    ->hidden(fn (TesterAssignment $record) => !in_array($record->status, ['pending', 'cancelled'], true) || $record->bugReports()->exists()),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('deleteSafeAssignments')->label('Delete selected safe assignments')->requiresConfirmation()
+                        ->action(function (\Illuminate\Database\Eloquent\Collection $records): void {
+                            foreach ($records as $record) {
+                                if (in_array($record->status, ['pending', 'cancelled'], true) && !$record->bugReports()->exists()) {
+                                    \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.testing.assignments.delete', parameters: ['testerAssignment' => $record->id]);
+                                }
+                            }
+                        }),
                 ]),
             ]);
     }

@@ -3,21 +3,21 @@
 namespace App\Filament\Resources\WeeklyReviewResource\Pages;
 
 use App\Filament\Resources\WeeklyReviewResource;
-use App\Models\Cohort;
 use App\Models\WeeklyReview;
-use Carbon\Carbon;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Database\Eloquent\Model;
 
 class CreateWeeklyReview extends CreateRecord
 {
     protected static string $resource = WeeklyReviewResource::class;
 
-    protected function mutateFormDataBeforeCreate(array $data): array
+    protected function handleRecordCreation(array $data): Model
     {
-        $cohort = Cohort::findOrFail($data['cohort_id']);
-        return array_merge(
-            $data,
-            WeeklyReview::snapshotData($cohort, Carbon::parse($data['week_start']), auth()->id())
+        $result = app(\App\Contexts\Shared\Infrastructure\WorkflowDispatcher::class)->execute(
+            'admin.validation.weeklyReviews.create',
+            new \App\Contexts\Shared\Application\WorkflowInput(values: $data, actor: auth()->user(), language: app()->getLocale()),
         );
+
+        return WeeklyReview::query()->findOrFail($result->data['id']);
     }
 }

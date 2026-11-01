@@ -1,8 +1,8 @@
-# OHS server-side Node SDK — preview 0.26.0
+# OHS server-side Node SDK — preview 0.27.0
 
 Requires Node.js 22 or newer. This dependency-free preview package is distributed as a downloadable archive, not published to the npm registry. It is server-side code: never bundle client secrets into a browser or mobile application. The public developer portal and OpenAPI contract describe supported access and preview limitations.
 
-Install the reviewed archive with `npm install ./opes-health-api-client-0.26.0.tgz`, then:
+Install the reviewed archive with `npm install ./opes-health-api-client-0.27.0.tgz`, then:
 
 ```js
 import { OpesClient } from '@opes-health/api-client';
