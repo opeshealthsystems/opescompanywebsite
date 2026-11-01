@@ -116,11 +116,12 @@ class DocumentTemplateResource extends Resource
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make()
-                    ->hidden(fn (DocumentTemplate $record) => $record->loadCount('documents')->documents_count > 0),
+                    ->hidden(fn (DocumentTemplate $record) => $record->loadCount('documents')->documents_count > 0)
+                    ->using(function (DocumentTemplate $record) { \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.documents.templates.delete', parameters: ['template' => $record->id]); return true; }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->using(function ($records) { foreach ($records as $record) \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.documents.templates.delete', parameters: ['template' => $record->id]); }),
                 ]),
             ]);
     }

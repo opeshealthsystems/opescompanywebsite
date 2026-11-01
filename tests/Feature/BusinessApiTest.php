@@ -907,4 +907,26 @@ class BusinessApiTest extends TestCase
         $this->assertDatabaseHas('business_outbox', ['type' => 'documents.document_created.v1', 'actor_id' => $admin->id]);
         $this->postJson('/api/v1/documents', $body, ['Idempotency-Key' => 'document-anon-000001'])->assertUnauthorized();
     }
+
+    public function test_document_template_product_api_is_paginated_and_protects_referenced_templates(): void
+    {
+        $admin = $this->user('admin');
+        $headers = ['Authorization' => 'Bearer '.$this->access($admin, ['documents:read', 'documents:write']), 'Idempotency-Key' => 'template-create-000001'];
+        $this->postJson('/api/v1/document-templates', ['name' => 'Fictional template', 'type' => 'receipt', 'body' => 'Hello {{client_name}}', 'variables' => [], 'is_active' => true], $headers)->assertUnprocessable();
+        $created = $this->postJson('/api/v1/document-templates', ['name' => 'Fictional template', 'type' => 'receipt', 'body' => 'Hello {{client_name}}', 'variables' => ['client_name'], 'is_active' => true], $headers)->assertCreated();
+        $templateId = $created->json('data.id');
+        $this->getJson('/api/v1/document-templates?per_page=5', $headers)->assertOk()->assertJsonPath('data.pagination.per_page', 5)
+            ->assertJsonPath('data.items.0.name', 'Fictional template');
+        $this->getJson('/api/v1/document-templates/'.$templateId, $headers)->assertOk()->assertJsonPath('data.template.variables.0', 'client_name');
+        $headers['Idempotency-Key'] = 'template-update-000001';
+        $this->putJson('/api/v1/document-templates/'.$templateId, ['name' => 'Updated fictional template'], $headers)->assertOk();
+        $headers['Idempotency-Key'] = 'template-document-00001';
+        $doc = $this->postJson('/api/v1/documents', ['document_template_id' => $templateId, 'title' => 'Fictional receipt', 'addressee_name' => 'Example Client', 'requires_signature' => false, 'variable_values' => ['client_name' => 'Example Client']], $headers)->assertCreated();
+        $headers['Idempotency-Key'] = 'template-type-change-001';
+        $this->putJson('/api/v1/document-templates/'.$templateId, ['type' => 'letterhead'], $headers)->assertUnprocessable();
+        $headers['Idempotency-Key'] = 'template-delete-000001';
+        $this->deleteJson('/api/v1/document-templates/'.$templateId, [], $headers)->assertUnprocessable();
+        $this->assertDatabaseHas('business_outbox', ['type' => 'documents.template_created.v1', 'actor_id' => $admin->id]);
+        $this->postJson('/api/v1/document-templates', [], ['Idempotency-Key' => 'template-anon-000001'])->assertUnauthorized();
+    }
 }

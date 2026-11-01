@@ -24,6 +24,67 @@ final class AdminPublishingCommands extends WorkflowHandler
         return $actor;
     }
 
+    public function createDocumentTemplate(WorkflowInput $input): WorkflowResult
+    {
+        $actor = $this->admin($input);
+        $data = $input->validate([
+            'name' => 'required|string|max:150', 'type' => 'required|in:receipt,letterhead,contract_employee,contract_business',
+            'body' => 'required|string|max:100000', 'variables' => 'nullable|array|max:100',
+            'variables.*' => ['required', 'string', 'max:80', 'regex:/^[a-z][a-z0-9_]*$/', 'distinct'], 'is_active' => 'required|boolean',
+        ]);
+        $this->validateTemplateVariables($data['body'], $data['variables'] ?? []);
+        $record = DB::transaction(function () use ($data, $actor) {
+            $record = DocumentTemplate::create($data);
+            DomainOutbox::append('event', 'documents.template_created.v1', ['references' => [['resource' => 'DocumentTemplate', 'id' => $record->id]]], $actor->id);
+            return $record;
+        }, 3);
+        return WorkflowResult::payload(['record' => $record, 'id' => $record->id], 201);
+    }
+
+    public function updateDocumentTemplate(WorkflowInput $input, DocumentTemplate $template): WorkflowResult
+    {
+        $actor = $this->admin($input);
+        $data = $input->validate([
+            'name' => 'sometimes|required|string|max:150', 'type' => 'sometimes|required|in:receipt,letterhead,contract_employee,contract_business',
+            'body' => 'sometimes|required|string|max:100000', 'variables' => 'sometimes|nullable|array|max:100',
+            'variables.*' => ['required', 'string', 'max:80', 'regex:/^[a-z][a-z0-9_]*$/', 'distinct'], 'is_active' => 'sometimes|required|boolean',
+        ]);
+        if ($data === []) throw ValidationException::withMessages(['template' => 'Provide at least one template field to update.']);
+        $record = DB::transaction(function () use ($template, $data, $actor) {
+            $record = DocumentTemplate::query()->lockForUpdate()->findOrFail($template->id);
+            if (isset($data['type']) && $data['type'] !== $record->type && $record->documents()->exists()) {
+                throw ValidationException::withMessages(['type' => 'A template type cannot change after it has been used.']);
+            }
+            $this->validateTemplateVariables($data['body'] ?? $record->body, $data['variables'] ?? $record->variables ?? []);
+            $record->update($data);
+            DomainOutbox::append('event', 'documents.template_updated.v1', ['references' => [['resource' => 'DocumentTemplate', 'id' => $record->id]], 'changed_fields' => array_keys($data)], $actor->id);
+            return $record;
+        }, 3);
+        return WorkflowResult::payload(['record' => $record, 'id' => $record->id]);
+    }
+
+    public function deleteDocumentTemplate(WorkflowInput $input, DocumentTemplate $template): WorkflowResult
+    {
+        $actor = $this->admin($input);
+        $id = DB::transaction(function () use ($template, $actor) {
+            $record = DocumentTemplate::query()->lockForUpdate()->findOrFail($template->id);
+            if ($record->documents()->exists()) throw ValidationException::withMessages(['template' => 'Templates referenced by documents cannot be deleted.']);
+            $id = $record->id;
+            $record->delete();
+            DomainOutbox::append('event', 'documents.template_deleted.v1', ['references' => [['resource' => 'DocumentTemplate', 'id' => $id]]], $actor->id);
+            return $id;
+        }, 3);
+        return WorkflowResult::payload(['deleted_id' => $id]);
+    }
+
+    private function validateTemplateVariables(string $body, array $variables): void
+    {
+        preg_match_all('/\{\{\s*([a-z][a-z0-9_]*)\s*\}\}/', $body, $matches);
+        if (array_diff(array_unique($matches[1] ?? []), $variables)) {
+            throw ValidationException::withMessages(['variables' => 'Declare every placeholder used in the template body.']);
+        }
+    }
+
     public function createDocument(WorkflowInput $input): WorkflowResult
     {
         $actor = $this->admin($input);

@@ -1,6 +1,6 @@
 {
   "name": "@opes-health/api-client",
-  "version": "0.29.0",
+  "version": "0.30.0",
   "description": "Server-side preview client for the OHS Platform API",
   "private": true,
   "license": "UNLICENSED",

@@ -333,6 +333,79 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_documents_templates_create": {
+        "method": "POST",
+        "path": "/document-templates",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_documents_templates_delete": {
+        "method": "DELETE",
+        "path": "/document-templates/{template}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "template"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_documents_templates_index": {
+        "method": "GET",
+        "path": "/document-templates",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_documents_templates_show": {
+        "method": "GET",
+        "path": "/document-templates/{template}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "template"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_documents_templates_update": {
+        "method": "PUT",
+        "path": "/document-templates/{template}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "template"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
     "admin_documents_update": {
         "method": "PUT",
         "path": "/documents/{document}",
