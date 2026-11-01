@@ -122,11 +122,11 @@ class LeaveTypeResource extends Resource
                                 ->send();
                             $action->cancel();
                         }
-                    }),
+                    })->using(function (LeaveType $record) { \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.leaveTypes.delete', parameters: ['leaveType' => $record->id]); return true; }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->using(function ($records) { foreach ($records as $record) \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.leaveTypes.delete', parameters: ['leaveType' => $record->id]); }),
                 ]),
             ]);
     }

@@ -67,17 +67,9 @@ class DepartmentResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()
-                    ->before(function (Department $record, Tables\Actions\DeleteAction $action) {
-                        if ($record->children()->exists()) {
-                            \Filament\Notifications\Notification::make()
-                                ->title('Cannot delete: has sub-departments')
-                                ->danger()->send();
-                            $action->cancel();
-                        }
-                    }),
+                Tables\Actions\DeleteAction::make()->using(function (Department $record) { \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.departments.delete', parameters: ['department' => $record->id]); return true; }),
             ])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);
+            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()->using(function ($records) { foreach ($records as $record) \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.departments.delete', parameters: ['department' => $record->id]); })])]);
     }
 
     public static function infolist(Infolist $infolist): Infolist

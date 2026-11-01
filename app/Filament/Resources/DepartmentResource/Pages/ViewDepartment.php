@@ -12,6 +12,9 @@ class ViewDepartment extends ViewRecord
 
     protected function getHeaderActions(): array
     {
-        return [Actions\EditAction::make(), Actions\DeleteAction::make()];
+        return [Actions\EditAction::make(), Actions\DeleteAction::make()->using(function ($record) {
+            \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.departments.delete', parameters: ['department' => $record->id]);
+            return true;
+        })];
     }
 }

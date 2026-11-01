@@ -33,12 +33,12 @@ GET /api/v1/me/activity</code></pre>
         <p>{{ $fr ? 'Les commandes métiers nécessitent une clé Idempotency-Key de 16 à 128 caractères. Réutilisez la même clé et le même contenu pendant 24 heures en cas de réponse perdue. Les erreurs utilisent application/problem+json.' : 'Business commands require an Idempotency-Key of 16–128 characters. Reuse the same key and body within 24 hours if a response is lost. Errors use application/problem+json.' }}</p>
     </section>
     <section><h2>{{ $fr ? 'SDK Node.js côté serveur' : 'Server-side Node.js SDK' }}</h2>
-        <p>{{ $fr ? 'Le SDK 0.30.0 couvre le catalogue, l’identité machine, les demandes publiques et les opérations métiers déléguées définies dans le contrat OpenAPI.' : 'SDK 0.30.0 covers the catalogue, machine identity, public enquiries and delegated business operations described by the OpenAPI contract.' }}</p>
+        <p>{{ $fr ? 'Le SDK 0.31.0 couvre le catalogue, l’identité machine, les demandes publiques et les opérations métiers déléguées définies dans le contrat OpenAPI.' : 'SDK 0.31.0 covers the catalogue, machine identity, public enquiries and delegated business operations described by the OpenAPI contract.' }}</p>
         <p>{{ $fr ? 'Client préliminaire côté serveur pour Node.js 22 ou ultérieur, avec identifiants TypeScript générés, gestion des clés d’idempotence et diagnostics des limites.' : 'Preview server-side client for Node.js 22 or newer, with generated TypeScript operation IDs, idempotency-key handling and quota diagnostics.' }}</p>
-        <pre><code>npm install https://opeshealthsystems.com/downloads/opes-health-api-client-0.30.0.tgz</code></pre>
+        <pre><code>npm install https://opeshealthsystems.com/downloads/opes-health-api-client-0.31.0.tgz</code></pre>
         <div class="dev-actions">
-            <a download href="{{ url('/downloads/opes-health-api-client-0.30.0.tgz') }}">{{ $fr ? 'Télécharger le SDK (.tgz)' : 'Download SDK (.tgz)' }}</a>
-            <a class="dev-secondary" href="{{ url('/downloads/opes-health-api-client-0.30.0.tgz.sha256') }}">{{ $fr ? 'Empreinte SHA-256' : 'SHA-256 checksum' }}</a>
+            <a download href="{{ url('/downloads/opes-health-api-client-0.31.0.tgz') }}">{{ $fr ? 'Télécharger le SDK (.tgz)' : 'Download SDK (.tgz)' }}</a>
+            <a class="dev-secondary" href="{{ url('/downloads/opes-health-api-client-0.31.0.tgz.sha256') }}">{{ $fr ? 'Empreinte SHA-256' : 'SHA-256 checksum' }}</a>
         </div>
     </section>
     <section><h2>{{ $fr ? '1. Demandez vos identifiants' : '1. Request credentials' }}</h2>

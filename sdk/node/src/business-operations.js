@@ -1688,6 +1688,140 @@ export const businessOperations = Object.freeze({
             "multipart/form-data"
         ]
     },
+    "admin_workforce_departments_create": {
+        "method": "POST",
+        "path": "/departments",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_departments_delete": {
+        "method": "DELETE",
+        "path": "/departments/{department}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "department"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_departments_index": {
+        "method": "GET",
+        "path": "/departments",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_departments_show": {
+        "method": "GET",
+        "path": "/departments/{department}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "department"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_departments_update": {
+        "method": "PUT",
+        "path": "/departments/{department}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "department"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_leaveTypes_create": {
+        "method": "POST",
+        "path": "/leave-types",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_leaveTypes_delete": {
+        "method": "DELETE",
+        "path": "/leave-types/{leaveType}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "leaveType"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_leaveTypes_index": {
+        "method": "GET",
+        "path": "/leave-types",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_leaveTypes_show": {
+        "method": "GET",
+        "path": "/leave-types/{leaveType}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "leaveType"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_workforce_leaveTypes_update": {
+        "method": "PUT",
+        "path": "/leave-types/{leaveType}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "leaveType"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_workforce_leaves_approve": {
         "method": "POST",
         "path": "/admin/leaves/{leave}/approve",

@@ -14,7 +14,10 @@ class ViewLeaveType extends ViewRecord
     {
         return [
             Actions\EditAction::make(),
-            Actions\DeleteAction::make(),
+            Actions\DeleteAction::make()->using(function ($record) {
+                \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.workforce.leaveTypes.delete', parameters: ['leaveType' => $record->id]);
+                return true;
+            }),
         ];
     }
 }

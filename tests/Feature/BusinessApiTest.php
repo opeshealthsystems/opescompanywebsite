@@ -929,4 +929,34 @@ class BusinessApiTest extends TestCase
         $this->assertDatabaseHas('business_outbox', ['type' => 'documents.template_created.v1', 'actor_id' => $admin->id]);
         $this->postJson('/api/v1/document-templates', [], ['Idempotency-Key' => 'template-anon-000001'])->assertUnauthorized();
     }
+
+    public function test_workforce_department_and_leave_type_apis_enforce_hierarchy_and_history_rules(): void
+    {
+        $admin = $this->user('admin');
+        $headers = ['Authorization' => 'Bearer '.$this->access($admin, ['workforce:read', 'workforce:write']), 'Idempotency-Key' => 'department-create-0001'];
+        $this->postJson('/api/v1/departments', [], ['Idempotency-Key' => 'department-anon-0001'])->assertUnauthorized();
+        $parent = $this->postJson('/api/v1/departments', ['name' => 'Fictional Operations', 'code' => 'FOP', 'is_active' => true], $headers)->assertCreated();
+        $parentId = $parent->json('data.id');
+        $headers['Idempotency-Key'] = 'department-child-0001';
+        $child = $this->postJson('/api/v1/departments', ['name' => 'Fictional Digital Unit', 'code' => 'FDU', 'parent_id' => $parentId, 'is_active' => true], $headers)->assertCreated();
+        $childId = $child->json('data.id');
+        $headers['Idempotency-Key'] = 'department-cycle-0001';
+        $this->putJson('/api/v1/departments/'.$parentId, ['parent_id' => $childId], $headers)->assertUnprocessable();
+        $headers['Idempotency-Key'] = 'department-parent-delete';
+        $this->deleteJson('/api/v1/departments/'.$parentId, [], $headers)->assertUnprocessable();
+        $headers['Idempotency-Key'] = 'department-child-delete';
+        $this->deleteJson('/api/v1/departments/'.$childId, [], $headers)->assertOk();
+        $headers['Idempotency-Key'] = 'department-root-delete';
+        $this->deleteJson('/api/v1/departments/'.$parentId, [], $headers)->assertOk();
+
+        $headers['Idempotency-Key'] = 'leave-type-create-0001';
+        $leaveType = $this->postJson('/api/v1/leave-types', ['name' => 'Fictional wellness leave', 'code' => 'FWL', 'days_per_year' => 5, 'max_carry_forward' => 2, 'color' => '#123ABC', 'is_paid' => true, 'requires_approval' => true, 'is_active' => true], $headers)->assertCreated();
+        $leaveTypeId = $leaveType->json('data.id');
+        $this->getJson('/api/v1/leave-types?per_page=10', $headers)->assertOk()->assertJsonPath('data.items.0.code', 'FWL');
+        $headers['Idempotency-Key'] = 'leave-type-history';
+        \Illuminate\Support\Facades\DB::table('leave_requests')->insert(['user_id' => $admin->id, 'leave_type_id' => $leaveTypeId, 'type' => 'annual', 'start_date' => '2026-11-02', 'end_date' => '2026-11-03', 'total_days' => 2, 'status' => 'pending', 'created_at' => now(), 'updated_at' => now()]);
+        $this->deleteJson('/api/v1/leave-types/'.$leaveTypeId, [], $headers)->assertUnprocessable();
+        $this->assertDatabaseHas('business_outbox', ['type' => 'workforce.department_created.v1', 'actor_id' => $admin->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'workforce.leave_type_created.v1', 'actor_id' => $admin->id]);
+    }
 }
