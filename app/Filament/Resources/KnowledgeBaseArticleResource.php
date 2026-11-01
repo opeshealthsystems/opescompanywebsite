@@ -52,7 +52,7 @@ class KnowledgeBaseArticleResource extends Resource
                 Forms\Components\Select::make('author_id')
                     ->label('Author')
                     ->options(fn () => User::orderBy('name')->pluck('name','id'))
-                    ->default(fn () => auth()->id())->searchable()->required(),
+                    ->default(fn () => auth()->id())->searchable()->disabled()->dehydrated(false),
                 Forms\Components\Select::make('status')
                     ->options(KnowledgeBaseArticle::statusOptions())->default('draft')->disabled()->dehydrated(false)->required()
                     ->live()
@@ -62,7 +62,7 @@ class KnowledgeBaseArticleResource extends Resource
                         }
                     }),
                 Forms\Components\Toggle::make('is_public')->label('Public (Customer Portal)')->default(true),
-                Forms\Components\DateTimePicker::make('published_at')->label('Published At')->nullable(),
+                Forms\Components\DateTimePicker::make('published_at')->label('Published At')->nullable()->disabled()->dehydrated(false),
                 Forms\Components\TagsInput::make('tags')->label('Tags')->nullable(),
             ]),
             Forms\Components\Section::make('Content')->schema([
@@ -104,9 +104,18 @@ class KnowledgeBaseArticleResource extends Resource
                     ->requiresConfirmation()
                     ->hidden(fn (KnowledgeBaseArticle $r) => $r->status === 'published')
                     ->action(fn (KnowledgeBaseArticle $r) => AdminWorkflowAdapter::run('admin.content.articles.publish', parameters: ['article' => $r])),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\Action::make('archive')
+                    ->label('Archive')->icon('heroicon-o-archive-box')->color('gray')->requiresConfirmation()
+                    ->hidden(fn (KnowledgeBaseArticle $r) => $r->status === 'archived')
+                    ->action(fn (KnowledgeBaseArticle $r) => AdminWorkflowAdapter::run('admin.support.knowledgeArticles.archive', parameters: ['article' => $r->id])),
+                Tables\Actions\DeleteAction::make()->using(function (KnowledgeBaseArticle $record) {
+                    AdminWorkflowAdapter::run('admin.support.knowledgeArticles.delete', parameters: ['article' => $record->id]);
+                    return true;
+                }),
             ])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);
+            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()->using(function ($records) {
+                foreach ($records as $record) AdminWorkflowAdapter::run('admin.support.knowledgeArticles.delete', parameters: ['article' => $record->id]);
+            })])]);
     }
 
     public static function infolist(Infolist $infolist): Infolist

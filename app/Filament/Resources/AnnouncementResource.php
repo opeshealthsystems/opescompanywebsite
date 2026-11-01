@@ -47,7 +47,7 @@ class AnnouncementResource extends Resource
                     ->options(fn () => User::whereHas('roles', fn ($q) =>
                         $q->whereIn('name', ['super_admin', 'admin'])
                     )->orderBy('name')->pluck('name', 'id'))
-                    ->default(fn () => auth()->id())
+                    ->default(fn () => auth()->id())->disabled()->dehydrated(false)
                     ->required(),
 
                 Forms\Components\Toggle::make('is_pinned')->label('Pin to top')->default(false),
@@ -96,11 +96,18 @@ class AnnouncementResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()->using(function (Announcement $record) {
+                    \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.communications.announcements.delete', parameters: ['announcement' => $record->id]);
+                    return true;
+                }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->using(function ($records) {
+                        foreach ($records as $record) {
+                            \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.communications.announcements.delete', parameters: ['announcement' => $record->id]);
+                        }
+                    }),
                 ]),
             ]);
     }

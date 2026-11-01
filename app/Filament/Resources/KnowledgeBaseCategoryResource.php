@@ -58,15 +58,14 @@ class KnowledgeBaseCategoryResource extends Resource
             ->defaultSort('sort_order')
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()
-                    ->before(function (KnowledgeBaseCategory $record, Tables\Actions\DeleteAction $action) {
-                        if ($record->articles()->exists() || $record->children()->exists()) {
-                            \Filament\Notifications\Notification::make()->title('Cannot delete: has articles or sub-categories')->danger()->send();
-                            $action->cancel();
-                        }
-                    }),
+                Tables\Actions\DeleteAction::make()->using(function (KnowledgeBaseCategory $record) {
+                    \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.support.knowledgeCategories.delete', parameters: ['category' => $record->id]);
+                    return true;
+                }),
             ])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);
+            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()->using(function ($records) {
+                foreach ($records as $record) \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.support.knowledgeCategories.delete', parameters: ['category' => $record->id]);
+            })])]);
     }
 
     public static function infolist(Infolist $infolist): Infolist

@@ -1,6 +1,6 @@
 # Node SDK preview and contract release checks
 
-SDK 0.33.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations. Download `/downloads/opes-health-api-client-0.33.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
+SDK 0.34.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations. Download `/downloads/opes-health-api-client-0.34.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
 
 The archive contains only package metadata, client sources, the generated business operation registry, type definitions, README and an executable read-only catalogue example. It contains no credentials, test fixtures, environment files or runtime dependencies. Install from the archive URL or a reviewed local download; the README includes machine and delegated business usage.
 
@@ -116,3 +116,7 @@ SDK 0.32.0 archive: 14103 bytes, SHA-256 `455721097aaf58a13b7fede6abdb532b60c0b1
 SDK 0.33.0 adds vendor, SLA rule and validation product administration operations. Vendor deletion is blocked when purchase-order history exists; SLA rules with ticket history and validation products with modules are protected from deletion. Filament and API operations share the same application handlers.
 
 SDK 0.33.0 archive: 14395 bytes, SHA-256 `c262bfb0adaae002fa1612ce11041491e535bd346cf7b715aeb13af81d837e0b`. It carries all 330 API operation IDs, including the 324 business operations in OpenAPI 0.37.0.
+
+SDK 0.34.0 adds announcement and Knowledge Base article/category management APIs, including explicit article publish and archive transitions. Article authorship, publication time, view counts and status are server-controlled; articles and categories validate unique slugs and protect category hierarchy and content history.
+
+SDK 0.34.0 archive: 14738 bytes, SHA-256 `c83e308292cf912fabce43009a96f20ae803fffaf7251dc9574165a86efa3307`. It carries all 346 API operation IDs, including the 340 business operations in OpenAPI 0.38.0.

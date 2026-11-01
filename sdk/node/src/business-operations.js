@@ -168,6 +168,73 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_communications_announcements_create": {
+        "method": "POST",
+        "path": "/communications/announcements",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_communications_announcements_delete": {
+        "method": "DELETE",
+        "path": "/communications/announcements/{announcement}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "announcement"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_communications_announcements_index": {
+        "method": "GET",
+        "path": "/communications/announcements",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_communications_announcements_show": {
+        "method": "GET",
+        "path": "/communications/announcements/{announcement}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "announcement"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_communications_announcements_update": {
+        "method": "PUT",
+        "path": "/communications/announcements/{announcement}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "announcement"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_content_articles_publish": {
         "method": "POST",
         "path": "/content/articles/{article}/publish",
@@ -1474,6 +1541,165 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [
             "bugReport"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_support_knowledgeArticles_archive": {
+        "method": "POST",
+        "path": "/support/knowledge-base/articles/{article}/archive",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "article"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_support_knowledgeArticles_create": {
+        "method": "POST",
+        "path": "/support/knowledge-base/articles",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_support_knowledgeArticles_delete": {
+        "method": "DELETE",
+        "path": "/support/knowledge-base/articles/{article}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "article"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_support_knowledgeArticles_index": {
+        "method": "GET",
+        "path": "/support/knowledge-base/articles",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_support_knowledgeArticles_show": {
+        "method": "GET",
+        "path": "/support/knowledge-base/articles/{article}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "article"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_support_knowledgeArticles_update": {
+        "method": "PUT",
+        "path": "/support/knowledge-base/articles/{article}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "article"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_support_knowledgeCategories_create": {
+        "method": "POST",
+        "path": "/support/knowledge-base/categories",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_support_knowledgeCategories_delete": {
+        "method": "DELETE",
+        "path": "/support/knowledge-base/categories/{category}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "category"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_support_knowledgeCategories_index": {
+        "method": "GET",
+        "path": "/support/knowledge-base/categories",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_support_knowledgeCategories_show": {
+        "method": "GET",
+        "path": "/support/knowledge-base/categories/{category}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "category"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_support_knowledgeCategories_update": {
+        "method": "PUT",
+        "path": "/support/knowledge-base/categories/{category}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "category"
         ],
         "queryParameters": [],
         "acceptLanguage": true,

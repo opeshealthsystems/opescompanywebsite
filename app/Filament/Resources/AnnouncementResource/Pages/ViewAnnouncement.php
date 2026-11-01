@@ -14,7 +14,10 @@ class ViewAnnouncement extends ViewRecord
     {
         return [
             Actions\EditAction::make(),
-            Actions\DeleteAction::make(),
+            Actions\DeleteAction::make()->using(function ($record) {
+                \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.communications.announcements.delete', parameters: ['announcement' => $record->id]);
+                return true;
+            }),
         ];
     }
 }
