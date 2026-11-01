@@ -2154,6 +2154,52 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "admin_validation_councilMembers_index": {
+        "method": "GET",
+        "path": "/validation/council-members",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_councilMembers_show": {
+        "method": "GET",
+        "path": "/validation/council-members/{member}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "member"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_validation_councilMembers_update": {
+        "method": "PUT",
+        "path": "/validation/council-members/{member}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "member"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
     "admin_validation_developerTasks_assign": {
         "method": "POST",
         "path": "/validation/developer-tasks/{task}/assign",

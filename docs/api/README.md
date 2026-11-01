@@ -1,6 +1,6 @@
-# OHS Platform API — preview 0.43.0
+# OHS Platform API — preview 0.44.0
 
-Owner: OHS platform team. Support: contact@opeshealthsystems.com. Purpose: provide stable, documented access to public enquiry intake, the published product catalogue, integration identity and delegated business workflows. OpenAPI `0.43.0` documents 370 business workflow operations across 285 paths (376 total HTTP operations). The platform conversion remains in progress; remaining admin actions and lifecycle hooks are tracked in the implementation status document.
+Owner: OHS platform team. Support: contact@opeshealthsystems.com. Purpose: provide stable, documented access to public enquiry intake, the published product catalogue, integration identity and delegated business workflows. OpenAPI `0.44.0` documents 373 business workflow operations across 287 paths (379 total HTTP operations). The platform conversion remains in progress; remaining admin actions and lifecycle hooks are tracked in the implementation status document.
 
 Contract: [openapi.json](openapi.json), pinned to OpenAPI 3.1.1. Runtime reference: `/api/v1/openapi.json`. Production base URL: `https://opeshealthsystems.com/api/v1`. No sandbox environment is provisioned yet.
 
