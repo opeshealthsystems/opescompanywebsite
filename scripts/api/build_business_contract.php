@@ -5,8 +5,8 @@ require __DIR__.'/../../vendor/autoload.php';
 $root = dirname(__DIR__, 2);
 $registry = require $root.'/config/business_workflows.php';
 $spec = json_decode(file_get_contents($root.'/docs/api/baselines/0.3.0.json'), true, 512, JSON_THROW_ON_ERROR);
-$spec['info']['version'] = '0.44.0';
-$spec['info']['description'] = 'Versioned OHS business APIs. Public enquiries and account recovery, machine catalogue access, and delegated business workflows with authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.';
+$spec['info']['version'] = '0.48.0';
+$spec['info']['description'] = 'Versioned OHS business APIs. Public enquiries, published content, account recovery and machine catalogue access, with delegated business workflows using authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.';
 $scopes = [];
 foreach ($registry['definitions'] as $definition) if ($definition['authenticated']) $scopes[$definition['scope']] = str_replace(':', ' ', $definition['scope']);
 $spec['components']['securitySchemes']['UserOAuth2'] = ['type' => 'oauth2', 'description' => 'Authorization code with required S256 PKCE, explicit consent, active account and current role checks.', 'flows' => ['authorizationCode' => [
@@ -27,7 +27,11 @@ foreach ($registry['definitions'] as $operation => $definition) {
         if ($node instanceof \PhpParser\Node\Expr\Variable && is_string($node->name)) return $scope[$node->name] ?? null;
         if ($node instanceof \PhpParser\Node\Expr\ConstFetch) return match (strtolower($node->name->toString())) { 'true' => true, 'false' => false, 'null' => null, default => null };
         if ($node instanceof \PhpParser\Node\Expr\BinaryOp\Concat) { $left = $literal($node->left, $scope); $right = $literal($node->right, $scope); return is_string($left) && is_string($right) ? $left.$right : null; }
-        if ($node instanceof \PhpParser\Node\Expr\Ternary) { $condition = $literal($node->cond, $scope); return is_bool($condition) ? $literal($condition ? ($node->if ?? $node->cond) : $node->else, $scope) : null; }
+        if ($node instanceof \PhpParser\Node\Expr\Ternary) {
+            $condition = $literal($node->cond, $scope);
+            if ($node->cond instanceof \PhpParser\Node\Expr\Variable && is_string($node->cond->name) && array_key_exists($node->cond->name, $scope)) $condition = (bool) $condition;
+            return is_bool($condition) ? $literal($condition ? ($node->if ?? $node->cond) : $node->else, $scope) : null;
+        }
         return null;
     };
     $validationCalls = []; $pendingMethods = [['name' => $definition['method'], 'arguments' => []]]; $inspectedMethods = [];
@@ -59,10 +63,33 @@ foreach ($registry['definitions'] as $operation => $definition) {
         if (!$call->name instanceof \PhpParser\Node\Identifier || $call->name->name !== 'validate' || !($call->args[0]->value ?? null) instanceof \PhpParser\Node\Expr\Array_) continue;
         foreach ($call->args[0]->value->items as $item) {
             if (!$item?->key instanceof \PhpParser\Node\Scalar\String_) continue;
-            $name = $item->key->value; $rule = $literal($item->value, $scope);
-            if (!is_string($rule)) continue;
-            if (str_contains($name, '.')) continue;
-            $rules = explode('|', $rule); $schema = ['type' => 'string', 'description' => 'Validation: '.$rule];
+            $name = $item->key->value; $ruleParts = [];
+            if ($item->value instanceof \PhpParser\Node\Scalar\String_) $ruleParts = explode('|', $item->value->value);
+            elseif (is_string($part = $literal($item->value, $scope))) $ruleParts = explode('|', $part);
+            elseif ($item->value instanceof \PhpParser\Node\Expr\Array_) {
+                foreach ($item->value->items as $ruleItem) {
+                    if (!$ruleItem) continue;
+                    $part = $literal($ruleItem->value, $scope);
+                    if (is_string($part)) array_push($ruleParts, ...explode('|', $part));
+                    elseif ($ruleItem->value instanceof \PhpParser\Node\Expr\StaticCall
+                        && $ruleItem->value->name instanceof \PhpParser\Node\Identifier
+                        && strtolower($ruleItem->value->name->name) === 'in'
+                        && ($ruleItem->value->args[0]->value ?? null) instanceof \PhpParser\Node\Expr\Array_) {
+                        $values = [];
+                        foreach ($ruleItem->value->args[0]->value->items as $allowed) {
+                            $value = $allowed ? $literal($allowed->value, $scope) : null;
+                            if (is_string($value) || is_int($value)) $values[] = (string) $value;
+                        }
+                        if ($values) $ruleParts[] = 'in:'.implode(',', $values);
+                    }
+                }
+            }
+            if (!$ruleParts) continue;
+            $wildcard = str_ends_with($name, '.*');
+            if (str_contains($name, '.') && !$wildcard) continue;
+            $field = $wildcard ? substr($name, 0, -2) : $name;
+            $rule = implode('|', $ruleParts); $rules = $ruleParts;
+            $schema = ['type' => 'string', 'description' => 'Validation: '.$rule];
             if (in_array('prohibited', $rules, true)) continue;
             foreach (['integer' => 'integer', 'numeric' => 'number', 'boolean' => 'boolean', 'array' => 'array'] as $r => $type) if (in_array($r, $rules, true)) $schema['type'] = $type;
             if ($schema['type'] === 'array') $schema['items'] = [];
@@ -71,14 +98,28 @@ foreach ($registry['definitions'] as $operation => $definition) {
             if (in_array('file', $rules, true) || in_array('image', $rules, true)) $schema['format'] = 'binary';
             foreach ($rules as $r) {
                 if (str_starts_with($r, 'in:')) $schema['enum'] = explode(',', substr($r, 3));
+                if (str_starts_with($r, 'regex:')) {
+                    $expression = substr($r, 6);
+                    if (preg_match('/^\/(.*)\/[a-z]*$/s', $expression, $match)) $schema['pattern'] = $match[1];
+                }
                 if (preg_match('/^(min|max):(\d+)$/', $r, $match)) {
                     $key = $schema['type'] === 'string' ? ($match[1] === 'min' ? 'minLength' : 'maxLength') : ($schema['type'] === 'array' ? ($match[1] === 'min' ? 'minItems' : 'maxItems') : ($match[1] === 'min' ? 'minimum' : 'maximum'));
                     $schema[$key] = (int) $match[2];
                 }
             }
             if (in_array('nullable', $rules, true)) $schema['type'] = [$schema['type'], 'null'];
-            if (in_array('required', $rules, true) && !in_array('sometimes', $rules, true)) $required[] = $name;
-            $properties[$name] = $schema;
+            if ($wildcard) {
+                if (!in_array('array', (array) ($properties[$field]['type'] ?? null), true)) continue;
+                $properties[$field]['items'] = $schema;
+                continue;
+            }
+            if (in_array('required', $rules, true) && !in_array('sometimes', $rules, true)) $required[] = $field;
+            $properties[$field] = $schema;
+            if (in_array('confirmed', $rules, true)) {
+                $confirmation = $field.'_confirmation';
+                $properties[$confirmation] = ['type' => 'string', 'description' => 'Required when '.$field.' is supplied (Laravel confirmed rule).'];
+                if (in_array('required', $rules, true) && !in_array('sometimes', $rules, true)) $required[] = $confirmation;
+            }
         }
     }
     $parameters = [];
@@ -136,5 +177,5 @@ $spec['paths']['/me/activity']['get'] = ['operationId' => 'readOwnBusinessActivi
         'data' => ['type' => 'array', 'items' => ['type' => 'object', 'properties' => ['event_id' => ['type' => 'string', 'format' => 'uuid'], 'operation' => ['type' => 'string'], 'references' => ['type' => 'array', 'items' => ['type' => 'object']], 'occurred_at' => ['type' => 'string']]]], 'meta' => ['type' => 'object']]]]]],
         '401' => ['description' => 'Delegated user authentication required.'], '403' => ['description' => 'identity:read scope required.'], '422' => ['description' => 'Invalid page size.'], '429' => ['description' => 'Rate limit exceeded.']]];
 file_put_contents($root.'/docs/api/openapi.json', json_encode($spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR)."\n");
-echo json_encode(['business_operations' => count($registry['definitions']), 'paths' => count($spec['paths']), 'version' => '0.44.0']).PHP_EOL;
+echo json_encode(['business_operations' => count($registry['definitions']), 'paths' => count($spec['paths']), 'version' => '0.48.0']).PHP_EOL;
 

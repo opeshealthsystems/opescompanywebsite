@@ -16,4 +16,14 @@ class EditBlogPost extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    protected function handleRecordUpdate(\Illuminate\Database\Eloquent\Model $record, array $data): \Illuminate\Database\Eloquent\Model
+    {
+        return \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.publishing.blogPosts.update', $data, ['blogPost' => $record->id]);
+    }
+
+    protected function handleRecordDeletion(\Illuminate\Database\Eloquent\Model $record): void
+    {
+        \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.publishing.blogPosts.delete', parameters: ['blogPost' => $record->id]);
+    }
 }

@@ -314,6 +314,79 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "admin_communications_emailTemplates_create": {
+        "method": "POST",
+        "path": "/communications/email-templates",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_communications_emailTemplates_delete": {
+        "method": "DELETE",
+        "path": "/communications/email-templates/{template}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "template"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_communications_emailTemplates_index": {
+        "method": "GET",
+        "path": "/communications/email-templates",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_communications_emailTemplates_show": {
+        "method": "GET",
+        "path": "/communications/email-templates/{template}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "template"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_communications_emailTemplates_update": {
+        "method": "PUT",
+        "path": "/communications/email-templates/{template}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "template"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
     "admin_communications_testimonials_create": {
         "method": "POST",
         "path": "/communications/testimonials",
@@ -1632,6 +1705,79 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [
             "suggestion"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_publishing_blogPosts_create": {
+        "method": "POST",
+        "path": "/publishing/blog-posts",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_publishing_blogPosts_delete": {
+        "method": "DELETE",
+        "path": "/publishing/blog-posts/{blogPost}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "blogPost"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_publishing_blogPosts_index": {
+        "method": "GET",
+        "path": "/publishing/blog-posts",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_publishing_blogPosts_show": {
+        "method": "GET",
+        "path": "/publishing/blog-posts/{blogPost}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "blogPost"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_publishing_blogPosts_update": {
+        "method": "PUT",
+        "path": "/publishing/blog-posts/{blogPost}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "blogPost"
         ],
         "queryParameters": [],
         "acceptLanguage": true,
@@ -3602,8 +3748,11 @@ export const businessOperations = Object.freeze({
         "pathParameters": [],
         "queryParameters": [],
         "acceptLanguage": true,
-        "requestBodyRequired": false,
-        "contentTypes": []
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
     },
     "customer_profilecontroller_show": {
         "method": "GET",

@@ -1,6 +1,8 @@
 # Node SDK preview and contract release checks
 
-SDK 0.40.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations. Download `/downloads/opes-health-api-client-0.40.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
+SDK 0.44.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations, including blog publishing administration. Download `/downloads/opes-health-api-client-0.44.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
+
+SDK 0.44.0 adds the five delegated blog-administration operations. Filament and API writes share the same Publishing commands; rich text is sanitized, reading time is calculated by the server, published articles cannot be deleted, and each lifecycle change emits a domain event. The existing anonymous public blog read operations continue to expose only articles visible under the publishing schedule.
 
 The archive contains only package metadata, client sources, the generated business operation registry, type definitions, README and an executable read-only catalogue example. It contains no credentials, test fixtures, environment files or runtime dependencies. Install from the archive URL or a reviewed local download; the README includes machine and delegated business usage.
 
@@ -140,3 +142,13 @@ SDK 0.38.0 archive: 15237 bytes, SHA-256 `66743a14137c38d4fbc88e731436ff3f63ed44
 SDK 0.39.0 adds product catalogue administration operations for paginated reads, creating configured products, editing catalogue metadata, and archiving products without deleting licence history. Its API writes and Filament create/edit/archive actions use shared Publishing application handlers. Archive size is 15349 bytes, SHA-256 `6432bfced4005b3b2a37e7bfff26eeeea700c8d9db8ead806b4d56f0ab1ff18b`. It carries all 376 API operation IDs, including the 370 business operations in OpenAPI 0.43.0.
 
 SDK 0.40.0 adds delegated Advisory Council member reads and updates. Member creation remains the existing validation-certificate invitation workflow, and Filament edits now share the same Validation command. Archive size is 15428 bytes, SHA-256 `aa52ed5d10487d76b8e85e94fb1dd711f3637ca31053255dce5f39ecb41c479a`. It carries all 379 API operation IDs, including the 373 business operations in OpenAPI 0.44.0.
+
+SDK 0.41.0 adds protected email-template reads and CRUD operations. Template variables and placeholders are validated, active templates must be deactivated before deletion, and Filament writes share the same Communications commands. The archive is 15507 bytes with SHA-256 `db63279c5e87c4a9f7666c028e5f87fcb80a2aba180813de640ca94f03e9719a`. It carries all 384 API operation IDs, including the 378 business operations in OpenAPI 0.45.0.
+
+OpenAPI 0.46.0 and SDK 0.42.0 publish complete field and array-item validation schemas for 34 existing operations. The correction adds contract detail for request fields already accepted or required by the handlers; no endpoint behavior or authorization changed. A narrowly scoped compatibility exception list records each reviewed request-schema addition.
+
+OpenAPI 0.47.0 and SDK 0.43.0 add array item length/pattern constraints and explicit confirmation fields inferred from existing validation rules. Endpoint behavior and authorization are unchanged.
+
+SDK 0.43.0 archive: 15503 bytes, SHA-256 `6f2a9f8dbe4eeea989c8e5b23a339a51e1f477fb80feb4f3e244a76443d61977`. It carries all 384 API operation IDs described by OpenAPI 0.47.0.
+
+SDK 0.42.0 archive: 15502 bytes, SHA-256 `864059425e43cb661a3d71deeac6f3bff15257e6708fcfad9c55277991dcdada`. It carries all 384 API operation IDs described by OpenAPI 0.46.0.

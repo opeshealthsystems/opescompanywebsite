@@ -112,7 +112,11 @@ class BlogPostResource extends Resource
             ])
             ->actions([Tables\Actions\ViewAction::make(), Tables\Actions\EditAction::make()])
             ->bulkActions([Tables\Actions\BulkActionGroup::make([
-                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\DeleteBulkAction::make()->action(function (\Illuminate\Support\Collection $records): void {
+                    foreach ($records as $record) {
+                        \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.publishing.blogPosts.delete', parameters: ['blogPost' => $record->id]);
+                    }
+                }),
             ])]);
     }
 

@@ -41,6 +41,16 @@ class CompatibilityTests(unittest.TestCase):
         self.current["paths"]["/integration"]["get"]["security"][0]["OAuth2"].append("catalogue:read")
         self.assertTrue(check(self.baseline, self.current))
 
+    def test_new_oauth_scope_definition_is_backward_compatible(self):
+        scopes = self.current["components"]["securitySchemes"]["OAuth2"]["flows"]["clientCredentials"]["scopes"]
+        scopes["publishing:read"] = "Read published business content"
+        self.assertEqual([], check(self.baseline, self.current))
+
+    def test_removing_a_released_oauth_scope_is_rejected(self):
+        scopes = self.current["components"]["securitySchemes"]["OAuth2"]["flows"]["clientCredentials"]["scopes"]
+        del scopes["catalogue:read"]
+        self.assertTrue(check(self.baseline, self.current))
+
     def test_token_url_or_base_url_change_is_rejected(self):
         self.current["components"]["securitySchemes"]["OAuth2"]["flows"]["clientCredentials"]["tokenUrl"] = "/other/token"
         self.assertTrue(check(self.baseline, self.current))

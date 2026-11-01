@@ -1,0 +1,20 @@
+[
+  {"method":"POST","path":"/public/book-demo","allow_additive_request_schema":true,"reason":"Publishes existing array-item length and pattern validation."},
+  {"method":"PUT","path":"/customer/profile/password","allow_additive_request_schema":true,"reason":"Publishes the confirmation field required by the existing confirmed rule."},
+  {"method":"POST","path":"/public/join-testers","allow_additive_request_schema":true,"reason":"Publishes existing array-item length and pattern validation."},
+  {"method":"PUT","path":"/practitioner/profile","allow_additive_request_schema":true,"reason":"Publishes existing regular-expression constraints."},
+  {"method":"PUT","path":"/practitioner/profile/password","allow_additive_request_schema":true,"reason":"Publishes the confirmation field required by the existing confirmed rule."},
+  {"method":"POST","path":"/document-templates","allow_additive_request_schema":true,"reason":"Publishes existing template-variable array-item length and pattern validation."},
+  {"method":"PUT","path":"/document-templates/{template}","allow_additive_request_schema":true,"reason":"Publishes existing template-variable array-item length and pattern validation."},
+  {"method":"POST","path":"/documents","allow_additive_request_schema":true,"reason":"Publishes existing document-variable array-item length and pattern validation."},
+  {"method":"POST","path":"/leave-types","allow_additive_request_schema":true,"reason":"Publishes existing supported leave-type enum values."},
+  {"method":"PUT","path":"/leave-types/{leaveType}","allow_additive_request_schema":true,"reason":"Publishes existing supported leave-type enum values."},
+  {"method":"POST","path":"/support/knowledge-base/articles","allow_additive_request_schema":true,"reason":"Publishes existing slug pattern constraints."},
+  {"method":"PUT","path":"/support/knowledge-base/articles/{article}","allow_additive_request_schema":true,"reason":"Publishes existing slug pattern constraints."},
+  {"method":"POST","path":"/support/knowledge-base/categories","allow_additive_request_schema":true,"reason":"Publishes existing slug pattern constraints."},
+  {"method":"PUT","path":"/support/knowledge-base/categories/{category}","allow_additive_request_schema":true,"reason":"Publishes existing slug pattern constraints."},
+  {"method":"POST","path":"/admin/products","allow_additive_request_schema":true,"reason":"Publishes existing configured product slug pattern constraints."},
+  {"method":"PUT","path":"/admin/products/{product}","allow_additive_request_schema":true,"reason":"Publishes existing configured product slug pattern constraints."},
+  {"method":"POST","path":"/communications/email-templates","allow_additive_request_schema":true,"reason":"Publishes existing template slug and variable item patterns and length limits."},
+  {"method":"PUT","path":"/communications/email-templates/{template}","allow_additive_request_schema":true,"reason":"Publishes existing template slug and variable item patterns and length limits."}
+]

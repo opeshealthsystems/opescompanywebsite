@@ -27,7 +27,7 @@ jobs:
           else
             cp docs/api/baselines/0.3.0.json "$RUNNER_TEMP/opes-api-baseline.json"
           fi
-          python scripts/api/check_compatibility.py "$RUNNER_TEMP/opes-api-baseline.json" docs/api/openapi.json
+          python scripts/api/check_compatibility.py "$RUNNER_TEMP/opes-api-baseline.json" docs/api/openapi.json --corrections docs/api/compatibility-exceptions.json --corrections docs/api/compatibility-exceptions-0.47.json
       - uses: actions/setup-node@v4
         with:
           node-version: '22'

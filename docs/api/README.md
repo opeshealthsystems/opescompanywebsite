@@ -1,6 +1,6 @@
-# OHS Platform API — preview 0.44.0
+# OHS Platform API — preview 0.48.0
 
-Owner: OHS platform team. Support: contact@opeshealthsystems.com. Purpose: provide stable, documented access to public enquiry intake, the published product catalogue, integration identity and delegated business workflows. OpenAPI `0.44.0` documents 373 business workflow operations across 287 paths (379 total HTTP operations). The platform conversion remains in progress; remaining admin actions and lifecycle hooks are tracked in the implementation status document.
+Owner: OHS platform team. Support: contact@opeshealthsystems.com. Purpose: provide stable, documented access to public enquiry intake, published content, the product catalogue, integration identity and delegated business workflows. OpenAPI `0.48.0` documents 383 business workflow operations across 291 paths (389 total HTTP operations). This release adds delegated blog publishing APIs for protected article administration; public article reads remain available through the existing publishing queries. All blog writes share application commands with Filament, sanitize rich text, calculate reading time server-side and emit domain events. The platform conversion remains in progress; remaining admin actions and lifecycle hooks are tracked in the implementation status document.
 
 Contract: [openapi.json](openapi.json), pinned to OpenAPI 3.1.1. Runtime reference: `/api/v1/openapi.json`. Production base URL: `https://opeshealthsystems.com/api/v1`. No sandbox environment is provisioned yet.
 
@@ -31,9 +31,13 @@ All four business enquiry forms now commit their contact-mail intent in the same
 
 OAuth 2.0 client credentials is available for approved machine integrations, while business workflows use delegated OAuth authorization code with S256 PKCE and explicit user consent: see [identity operations](IDENTITY-OPERATIONS.md). Protected routes and scopes are defined in OpenAPI and the bilingual `/en/developers` and `/fr/developers` pages. The [server-side Node SDK](SDK-RELEASE.md) includes a generated operation-ID client for delegated business calls and a downloadable archive with checksum. OIDC, public consumer registration, a metering dashboard and a sandbox remain pending. See [delivery operations](DELIVERY-OPERATIONS.md) for recovery and hosting setup.
 
+## Blog publishing
+
+Administrators with `publishing:read` can list and inspect blog posts at `GET /api/v1/publishing/blog-posts`; `publishing:write` grants create, update and delete. OAuth roles are also checked on every call. Rich-text bodies are sanitized before storage, reading time is calculated on the server, publishing changes are recorded as domain events, and an article must be unpublished before deletion. Public clients can read only currently published articles through `GET /api/v1/public/blog` and `GET /api/v1/public/blog/{slug}`. See the [OpenAPI contract](openapi.json) for filters, request fields and response schemas.
+
 ## Verification
 
-The feature suite covers web and API email behavior, validation, field injection, write-only access, rate limiting, safe errors and SMTP failure recovery. CI validates the OpenAPI document using `openapi-spec-validator==0.7.2` and runs the enquiry/mail regression suites. CI must run on the remote before a remote passing status can be claimed. Breaking-change detection and generated-client checks are subsequent gates, not implemented by this workflow.
+Focused feature tests cover API identity, the blog and email-template lifecycles, shared admin adapters, validation, field injection, write-only access, rate limiting, safe errors and SMTP failure recovery. CI validates the OpenAPI document using `openapi-spec-validator==0.7.2`, checks published operation shapes, and permits only reviewed additive request-schema corrections in [compatibility-exceptions.json](compatibility-exceptions.json) and [compatibility-exceptions-0.47.json](compatibility-exceptions-0.47.json). It also runs the enquiry/mail regression suites. CI must run on the remote before a remote passing status can be claimed.
 
 Standards: [OpenAPI 3.1.1](https://spec.openapis.org/oas/v3.1.1.html), [HTTP Problem Details](https://www.rfc-editor.org/rfc/rfc9457.html).
 

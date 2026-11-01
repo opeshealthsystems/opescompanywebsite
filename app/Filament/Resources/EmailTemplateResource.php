@@ -71,9 +71,18 @@ class EmailTemplateResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()->action(fn (EmailTemplate $record) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.communications.emailTemplates.delete', parameters: ['template' => $record->id])),
             ])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()])]);
+            ->bulkActions([Tables\Actions\BulkActionGroup::make([
+                Tables\Actions\BulkAction::make('delete')
+                    ->requiresConfirmation()
+                    ->action(function (\Illuminate\Support\Collection $records): void {
+                        foreach ($records as $record) {
+                            \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.communications.emailTemplates.delete', parameters: ['template' => $record->id]);
+                        }
+                    })
+                    ->deselectRecordsAfterCompletion(),
+            ])]);
     }
 
     public static function infolist(Infolist $infolist): Infolist

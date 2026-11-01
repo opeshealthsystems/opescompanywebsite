@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\{User, Ticket};
+use App\Models\{User, Ticket, EmailTemplate};
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\{Mail, Notification};
 use Laravel\Passport\{ClientRepository, Passport};
@@ -135,6 +135,94 @@ class BusinessApiTest extends TestCase
         $this->assertTrue($user->hasRole('customer'));
         $this->assertFalse($user->hasRole('admin'));
         $this->assertDatabaseCount('users', 1);
+    }
+
+    public function test_email_template_api_shares_validated_workflows_with_admin_and_requires_scopes(): void
+    {
+        $this->getJson('/api/v1/communications/email-templates')->assertUnauthorized();
+
+        $admin = $this->user('admin');
+        $token = $this->access($admin, ['communications:read', 'communications:write']);
+        $headers = ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'email-template-create-0001'];
+        $body = ['name' => 'Fictional welcome template', 'slug' => 'fictional-welcome-template', 'type' => 'welcome',
+            'subject' => 'Welcome {{first_name}}', 'body' => 'Hello {{first_name}}', 'variables' => ['first_name'], 'is_active' => true];
+
+        $created = $this->postJson('/api/v1/communications/email-templates', $body, $headers)->assertCreated();
+        $id = $created->json('data.record.id');
+        $this->postJson('/api/v1/communications/email-templates', $body, $headers)->assertCreated()->assertJsonPath('data.record.id', $id);
+        $this->postJson('/api/v1/communications/email-templates', $body, [
+            'Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'email-template-duplicate-slug-1',
+        ])->assertUnprocessable();
+        $this->assertDatabaseCount('email_templates', 1);
+        $this->getJson('/api/v1/communications/email-templates', ['Authorization' => 'Bearer '.$token])
+            ->assertOk()->assertJsonPath('data.items.0.id', $id);
+
+        $this->putJson('/api/v1/communications/email-templates/'.$id, ['subject' => 'Welcome {{undeclared}}'], [
+            'Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'email-template-invalid-0001',
+        ])->assertUnprocessable();
+
+        // The Filament adapter dispatches through the same command registry as the public API.
+        $this->actingAs($admin);
+        \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.communications.emailTemplates.update',
+            ['subject' => 'Welcome {{first_name}} to OPES'], ['template' => $id]);
+        $this->getJson('/api/v1/communications/email-templates/'.$id, ['Authorization' => 'Bearer '.$token])
+            ->assertOk()->assertJsonPath('data.email_template.subject', 'Welcome {{first_name}} to OPES');
+
+        $this->deleteJson('/api/v1/communications/email-templates/'.$id, [], [
+            'Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'email-template-delete-active-1',
+        ])->assertUnprocessable();
+
+        $this->putJson('/api/v1/communications/email-templates/'.$id, ['is_active' => false], [
+            'Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'email-template-deactivate-0001',
+        ])->assertOk();
+        $deleted = $this->deleteJson('/api/v1/communications/email-templates/'.$id, [], [
+            'Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'email-template-delete-inactive-1',
+        ]);
+        $deleted->assertOk();
+        $this->assertDatabaseMissing('email_templates', ['id' => $id]);
+
+        $customer = $this->user('customer');
+        $customerToken = $this->access($customer, ['customer:read']);
+        $this->getJson('/api/v1/communications/email-templates', ['Authorization' => 'Bearer '.$customerToken])->assertForbidden();
+    }
+
+    public function test_blog_post_api_sanitizes_content_and_shares_publish_lifecycle_with_filament(): void
+    {
+        $this->getJson('/api/v1/publishing/blog-posts')->assertUnauthorized();
+        $admin = $this->user('admin');
+        $token = $this->access($admin, ['publishing:read', 'publishing:write']);
+        $headers = ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'blog-post-create-00001'];
+        $body = ['title' => 'Fictional API article', 'slug' => 'fictional-api-article', 'title_fr' => 'Article API fictif',
+            'excerpt' => 'A fictional excerpt', 'body' => '<p>Fictional <strong>article</strong> body.</p><script>alert(1)</script><a href="javascript:alert(2)">unsafe link</a>',
+            'category' => 'Fictional category', 'author' => 'OPES Health Systems', 'published' => true];
+
+        $created = $this->postJson('/api/v1/publishing/blog-posts', $body, $headers)->assertCreated();
+        $id = $created->json('data.record.id');
+        $this->postJson('/api/v1/publishing/blog-posts', $body, $headers)->assertCreated()->assertJsonPath('data.record.id', $id);
+        $this->postJson('/api/v1/publishing/blog-posts', $body, [
+            'Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'blog-post-duplicate-slug-01',
+        ])->assertUnprocessable();
+        $post = \App\Models\BlogPost::findOrFail($id);
+        $this->assertStringNotContainsString('<script', strtolower($post->body));
+        $this->assertStringNotContainsString('javascript:', strtolower($post->body));
+        $this->assertSame(1, $post->reading_time);
+        $this->getJson('/api/v1/public/blog/fictional-api-article')->assertOk()
+            ->assertJsonPath('data.post.slug', 'fictional-api-article');
+
+        $this->deleteJson('/api/v1/publishing/blog-posts/'.$id, [], [
+            'Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'blog-post-delete-published-1',
+        ])->assertUnprocessable();
+
+        $this->actingAs($admin);
+        \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.publishing.blogPosts.update',
+            ['published' => false, 'body' => '<p>Updated <em>through Filament workflow</em>.</p><script>bad()</script>'], ['blogPost' => $id]);
+        $this->assertDatabaseHas('blog_posts', ['id' => $id, 'published' => false, 'reading_time' => 1]);
+        $this->getJson('/api/v1/public/blog/fictional-api-article')->assertNotFound();
+
+        $this->deleteJson('/api/v1/publishing/blog-posts/'.$id, [], [
+            'Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'blog-post-delete-draft-0001',
+        ])->assertOk();
+        $this->assertDatabaseMissing('blog_posts', ['id' => $id]);
     }
 
     public function test_finance_approval_transitions_share_services_and_replay_once(): void

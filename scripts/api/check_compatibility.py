@@ -5,6 +5,7 @@ existing operation require review; this is intentionally stricter than semantic
 OpenAPI compatibility. Unsupported/recursive references fail closed.
 """
 import argparse
+import copy
 import json
 from pathlib import Path
 
@@ -52,8 +53,72 @@ def shape(spec, path, method):
     return expand(operation, spec)
 
 
-def check(baseline, current):
+def additive(old, new):
+    """Return true when a schema only adds keys, enum members, or required fields."""
+    if old == [] and isinstance(new, dict):
+        return True
+    if isinstance(old, dict):
+        if not isinstance(new, dict) or not old.keys() <= new.keys():
+            return False
+        for key, value in old.items():
+            if key == "type" and isinstance(new[key], list):
+                prior = value if isinstance(value, list) else [value]
+                if not all(item in new[key] for item in prior):
+                    return False
+            elif not additive(value, new[key]):
+                return False
+        return True
+    if isinstance(old, list):
+        return isinstance(new, list) and all(value in new for value in old)
+    return old == new
+
+
+def request_schema_correction_is_additive(before, after):
+    old = shape(before[0], before[1], before[2])
+    new = shape(after[0], after[1], after[2])
+    old_body = old.pop("requestBody", None)
+    new_body = new.pop("requestBody", None)
+    return old == new and new_body is not None and (old_body is None or additive(old_body, new_body))
+
+
+def oauth_scope_additions_only(old, new):
+    """Allow new named scopes while preserving every released scope and flow."""
+    old = copy.deepcopy(old)
+    new = copy.deepcopy(new)
+    old_schemes = old.pop("__security_definitions", {})
+    new_schemes = new.pop("__security_definitions", {})
+    if old_schemes.keys() != new_schemes.keys():
+        return False
+    added_scope = False
+    for name, old_scheme in old_schemes.items():
+        new_scheme = new_schemes[name]
+        if old_scheme.get("type") != "oauth2" or new_scheme.get("type") != "oauth2":
+            if old_scheme != new_scheme:
+                return False
+            continue
+        old_flows = old_scheme.get("flows", {})
+        new_flows = new_scheme.get("flows", {})
+        if old_flows.keys() != new_flows.keys():
+            return False
+        for flow_name, old_flow in old_flows.items():
+            old_scopes = old_flow.get("scopes", {})
+            new_scopes = new_flows[flow_name].get("scopes", {})
+            if not old_scopes.keys() <= new_scopes.keys():
+                return False
+            if any(new_scopes[key] != value for key, value in old_scopes.items()):
+                return False
+            added_scope = added_scope or bool(new_scopes.keys() - old_scopes.keys())
+            old_flow.pop("scopes", None)
+            new_flows[flow_name].pop("scopes", None)
+        if old_scheme != new_scheme:
+            return False
+    return added_scope and old == new
+
+
+def check(baseline, current, corrections=None):
     differences = []
+    corrections = {f"{entry['method'].lower()} {entry['path']}": entry for entry in (corrections or [])}
+    used_corrections = set()
     if baseline.get("openapi") != current.get("openapi") or baseline.get("jsonSchemaDialect") != current.get("jsonSchemaDialect"):
         differences.append("Changed contract dialect requires review")
     for path, item in baseline.get("paths", {}).items():
@@ -63,7 +128,22 @@ def check(baseline, current):
             if method not in current.get("paths", {}).get(path, {}):
                 differences.append(f"Removed released operation: {method.upper()} {path}")
             elif shape(baseline, path, method) != shape(current, path, method):
-                differences.append(f"Changed released operation: {method.upper()} {path}")
+                key = f"{method} {path}"
+                entry = corrections.get(key)
+                before = (baseline, path, method)
+                after = (current, path, method)
+                old_shape = shape(*before)
+                new_shape = shape(*after)
+                if oauth_scope_additions_only(old_shape, new_shape):
+                    continue
+                if entry and entry.get("allow_additive_request_schema") is True and entry.get("reason") and request_schema_correction_is_additive(before, after):
+                    used_corrections.add(key)
+                else:
+                    differences.append(f"Changed released operation: {method.upper()} {path}")
+    for key in corrections.keys() - used_corrections:
+        method, path = key.split(" ", 1)
+        if path in baseline.get("paths", {}) and method in baseline["paths"][path]:
+            differences.append(f"Unused or unsafe request-schema correction: {key.upper()}")
     return differences
 
 
@@ -71,11 +151,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("baseline")
     parser.add_argument("current")
+    parser.add_argument("--corrections", action="append", help="JSON list of reviewed additive request-schema corrections")
     args = parser.parse_args()
     baseline = json.loads(Path(args.baseline).read_text(encoding="utf-8"))
     current = json.loads(Path(args.current).read_text(encoding="utf-8"))
     try:
-        differences = check(baseline, current)
+        corrections = []
+        for path in args.corrections or []:
+            corrections.extend(json.loads(Path(path).read_text(encoding="utf-8")))
+        differences = check(baseline, current, corrections)
     except CompatibilityError as error:
         differences = [str(error)]
     if differences:
