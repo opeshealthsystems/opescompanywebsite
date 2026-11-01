@@ -92,8 +92,9 @@ export default function ActionFormScreen() {
         default: throw new Error('This action is not supported.');
       }
       if (session.demo) {
-        const demoAction = type === 'customerProfile' || type === 'practitionerProfile' ? 'update-profile' : type === 'reply' ? 'reply' : 'create';
-        session.mutateDemo(target, demoAction, body, params.recordId);
+        const demoAction = type === 'customerProfile' || type === 'practitionerProfile' ? 'update-profile' : type === 'reply' ? 'reply' : type === 'bugReport' ? 'bug-report' : 'create';
+        const recordId = type === 'bugReport' ? String(params.assignmentId ?? 'DEMO-TA-01') : params.recordId;
+        session.mutateDemo(target, demoAction, body, recordId);
       } else {
         const feature = featureCatalog[target];
         const needsWrite = type !== 'partnerApplication';

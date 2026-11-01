@@ -62,7 +62,7 @@ const sampleRows: Partial<Record<FeatureId, ApiRecord[]>> = {
   ],
   customers: [{ id: 'DEMO-C-021', name: 'Example Care Clinic', email: 'office@example.test', facility_name: 'Example Care Clinic', country: 'Cameroon', city: 'Douala', status: 'active' }, { id: 'DEMO-C-022', name: 'Northside Diagnostics', email: 'team@example.test', facility_name: 'Northside Diagnostics', country: 'Cameroon', city: 'Yaoundé', status: 'pending' }],
   contacts: [{ id: 'DEMO-L-101', name: 'Maya Nfor', email: 'maya@example.test', phone: '+237 600 000 010', facility_type: 'clinic', products: 'OPES EMR', message: 'Interested in a clinic onboarding discussion.', status: 'new' }, { id: 'DEMO-L-102', name: 'Kwame Owusu', email: 'kwame@example.test', phone: '+233 200 000 010', facility_type: 'hospital', products: 'OPES Hospital', message: 'Requested follow-up about a regional deployment.', status: 'contacted' }],
-  partnerApps: [{ id: 'DEMO-PA-011', organization_name: 'Example Health Network', contact_name: 'Sam Okoro', email: 'partner@example.test', partner_type: 'referral', status: 'pending' }, { id: 'DEMO-PA-010', organization_name: 'CareLink Group', contact_name: 'Nia Mensah', email: 'carelink@example.test', partner_type: 'technology', status: 'under_review' }],
+  partnerApps: [{ id: 'DEMO-PA-011', organization_name: 'Example Health Network', contact_name: 'Sam Okoro', email: 'partner@example.test', partner_type: 'referral', status: 'pending' }, { id: 'DEMO-PA-010', organization_name: 'CareLink Group', contact_name: 'Nia Mensah', email: 'carelink@example.test', partner_type: 'technology', status: 'reviewing' }],
   deals: [{ id: 'DEMO-D-041', title: 'Regional hospital group rollout', value: 12500000, currency: 'XAF', probability: 60, status: 'open' }, { id: 'DEMO-D-040', title: 'Clinic network support agreement', value: 4200000, currency: 'XAF', probability: 35, status: 'qualification' }],
   serviceRequests: [{ id: 'DEMO-SR-201', product_slug: 'opes-emr', description: 'Onboarding for our new clinic location', preferred_date: '2026-12-10', status: 'scheduled' }],
   tickets: [{ id: 'DEMO-T-301', subject: 'Help with user access', description: 'We need to invite two additional staff members.', type: 'support', priority: 'medium', status: 'open', replies: [{ body: 'Your support request is in the queue.', author: 'OPES support' }] }],
@@ -170,7 +170,17 @@ export function SessionProvider({ children }: { children: ReactNode }) {
 
   const mutateDemo = (feature: FeatureId, action: string, body: ApiRecord = {}, recordId?: string): ApiRecord => {
     if (!demo) throw new Error('This action is only available in a demo workspace.');
-    let result: ApiRecord = { ...body, id: recordId ?? `DEMO-${Date.now()}`, demo: true };
+    const id = recordId ?? `DEMO-${Date.now()}`;
+    const defaults: Partial<Record<FeatureId, ApiRecord>> = {
+      quotes: { status: 'draft' }, customers: { status: 'pending' }, contacts: { status: 'new' },
+      deals: { stage: 'qualification' }, serviceRequests: { status: 'submitted' }, tickets: { status: 'open', replies: [] },
+      partnerApps: { status: 'pending' }, partnerApplication: { status: 'submitted' }, assignments: { status: 'open' },
+    };
+    let result: ApiRecord = { ...(defaults[feature] ?? {}), ...body, id, demo: true };
+    if (feature === 'quotes' && Array.isArray(body.items)) {
+      const total = (body.items as ApiRecord[]).reduce((sum, item) => sum + Number(item.quantity ?? 0) * Number(item.unit_price ?? 0), 0);
+      result = { ...result, subtotal: total, total };
+    }
     setDemoRows(current => {
       const rows = [...(current[feature] ?? [])];
       if (action === 'update-profile') {
@@ -184,6 +194,9 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       } else if (action === 'enroll' && recordId) {
         const index = rows.findIndex(row => String(row.slug ?? row.id) === recordId);
         if (index >= 0) { rows[index] = { ...rows[index], status: 'enrolled', progress: '0%' }; result = rows[index]; }
+      } else if (action === 'bug-report' && recordId) {
+        const index = rows.findIndex(row => String(row.id) === recordId);
+        if (index >= 0) { const reports = Array.isArray(rows[index].bug_reports) ? rows[index].bug_reports as ApiRecord[] : []; rows[index] = { ...rows[index], bug_reports: [...reports, result] }; result = rows[index]; }
       } else {
         rows.unshift(result);
       }
