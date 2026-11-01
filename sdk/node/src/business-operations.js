@@ -235,6 +235,73 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_communications_testimonials_create": {
+        "method": "POST",
+        "path": "/communications/testimonials",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_communications_testimonials_delete": {
+        "method": "DELETE",
+        "path": "/communications/testimonials/{testimonial}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "testimonial"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_communications_testimonials_index": {
+        "method": "GET",
+        "path": "/communications/testimonials",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_communications_testimonials_show": {
+        "method": "GET",
+        "path": "/communications/testimonials/{testimonial}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "testimonial"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_communications_testimonials_update": {
+        "method": "PUT",
+        "path": "/communications/testimonials/{testimonial}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "testimonial"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_content_articles_publish": {
         "method": "POST",
         "path": "/content/articles/{article}/publish",

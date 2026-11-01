@@ -113,11 +113,18 @@ class TestimonialResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()->using(function (Testimonial $record) {
+                    \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.communications.testimonials.delete', parameters: ['testimonial' => $record->id]);
+                    return true;
+                }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->using(function ($records) {
+                        foreach ($records as $record) {
+                            \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.communications.testimonials.delete', parameters: ['testimonial' => $record->id]);
+                        }
+                    }),
                 ]),
             ]);
     }

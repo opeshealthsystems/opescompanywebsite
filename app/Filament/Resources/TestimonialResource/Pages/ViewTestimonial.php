@@ -12,6 +12,9 @@ class ViewTestimonial extends ViewRecord
 
     protected function getHeaderActions(): array
     {
-        return [Actions\EditAction::make()];
+        return [Actions\EditAction::make(), Actions\DeleteAction::make()->using(function ($record) {
+            \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::run('admin.communications.testimonials.delete', parameters: ['testimonial' => $record->id]);
+            return true;
+        })];
     }
 }
