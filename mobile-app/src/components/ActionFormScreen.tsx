@@ -1,5 +1,5 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { ApiRecord, FeatureId, featureCatalog, useSession } from '../context/SessionContext';
 import { ActionButton, Brand, Field, Heading, Notice, Page, colors } from './ui';
@@ -11,7 +11,7 @@ const initial: Record<string, Values> = {
   customer: { userId: '', facility: '', facilityType: 'clinic', country: 'Cameroon', city: '', address: '' },
   contact: { name: '', email: '', phone: '', facility_type: 'clinic', products: '', message: '', source: 'contact' },
   deal: { title: '', stage: 'qualification', value: '', currency: 'XAF', probability: '25', expectedClose: '', notes: '' },
-  serviceRequest: { product: '', description: '', date: tomorrow(), time: '', location: '' },
+  serviceRequest: { type: 'installation', product: '', description: '', date: tomorrow(), time: '', location: '' },
   ticket: { subject: '', description: '', type: 'support', priority: 'medium' },
   customerProfile: { name: '', facility_name: '', facility_type: '', country: '', city: '', phone: '', address: '' },
   practitionerProfile: { name: '', phone: '', specialty: '', workplace_name: '', workplace_city: '', workplace_country: '', years_of_experience: '', bio: '' },
@@ -33,6 +33,8 @@ export default function ActionFormScreen() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [saved, setSaved] = useState(false);
+  const [serviceTypes, setServiceTypes] = useState(['installation', 'maintenance', 'training', 'other']);
+  const idempotency = useRef({ fingerprint: '', key: '' });
   const profileFeature = useMemo(() => type === 'customerProfile' ? 'customerProfile' : type === 'practitionerProfile' ? 'practitionerProfile' : null, [type]);
 
   useEffect(() => {
@@ -40,13 +42,21 @@ export default function ActionFormScreen() {
     session.rowsFor(profileFeature).then(rows => { if (rows[0]) setValues(current => ({ ...current, ...Object.fromEntries(Object.entries(rows[0]).map(([k,v]) => [k, v == null ? '' : String(v)])) })); }).catch(e => setError(e instanceof Error ? e.message : 'Could not load the current profile.'));
   }, [profileFeature, session]);
 
+  useEffect(() => {
+    if (type !== 'serviceRequest' || session.demo || !session.isAllowed(featureCatalog.serviceRequests)) return;
+    session.request<Record<string, unknown>>('/customer/service-requests/options').then(result => {
+      const options = result.typeOptions;
+      if (options && typeof options === 'object' && !Array.isArray(options)) setServiceTypes(Object.keys(options as Record<string, unknown>));
+    }).catch(() => undefined);
+  }, [session, type]);
+
   const set = (field: string, value: string) => setValues(current => ({ ...current, [field]: value }));
   const validate = () => {
     if (type === 'quote' && (!values.title.trim() || !values.product.trim() || Number(values.quantity) <= 0 || Number(values.price) < 0)) return 'Enter a quote title, an item, a positive quantity and a valid price.';
-    if (type === 'customer' && (!values.userId.trim() || !values.facility.trim())) return 'Enter the customer account ID and facility name.';
+    if (type === 'customer' && (!/^\d+$/.test(values.userId.trim()) || Number(values.userId) < 1 || !values.facility.trim())) return 'Enter a valid customer account ID and facility name.';
     if (type === 'contact' && (!values.name.trim() || !values.email.trim())) return 'Enter the contact name and email address.';
     if (type === 'deal' && (!values.title.trim() || !values.value.trim() || Number(values.probability) < 0 || Number(values.probability) > 100)) return 'Enter the deal title, value and a probability from 0 to 100.';
-    if (type === 'serviceRequest' && !values.date.trim()) return 'Choose a preferred service date.';
+    if (type === 'serviceRequest' && (!serviceTypes.includes(values.type) || !values.description.trim() || !values.date.trim())) return 'Choose a service type, describe what you need and select a preferred date.';
     if (type === 'ticket' && (!values.subject.trim() || !values.description.trim())) return 'Enter both a subject and a description.';
     if ((type === 'customerProfile' || type === 'practitionerProfile') && !values.name?.trim()) return 'Your name is required.';
     if (type === 'bugReport' && (!values.subject.trim() || !values.description.trim())) return 'Enter both a bug title and the steps or details.';
@@ -69,10 +79,10 @@ export default function ActionFormScreen() {
           target = 'contacts'; body = { name: values.name.trim(), email: values.email.trim(), phone: values.phone || null, facility_type: values.facility_type || null, products: values.products || null, message: values.message || null, source: values.source || 'contact' }; path = '/admin/enquiries/leads'; break;
         case 'deal': {
           target = 'deals'; const ownerId = Number(session.account?.id); if (!Number.isInteger(ownerId)) throw new Error('The account ID from the API is not a numeric user ID, so the deal cannot be assigned safely.');
-          body = { title: values.title.trim(), value: Number(values.value), currency: values.currency, probability: Number(values.probability), expected_close_date: values.expectedClose || null, owner_id: ownerId, notes: values.notes || null }; path = '/crm/deals'; break;
+          body = { title: values.title.trim(), stage: values.stage, value: Number(values.value), currency: values.currency, probability: Number(values.probability), expected_close_date: values.expectedClose || null, owner_id: ownerId, notes: values.notes || null }; path = '/crm/deals'; break;
         }
         case 'serviceRequest':
-          target = 'serviceRequests'; body = { product_slug: values.product || null, description: values.description || null, preferred_date: values.date, preferred_time: values.time || null, location: values.location || null }; path = '/customer/service-requests'; break;
+          target = 'serviceRequests'; body = { type: values.type, product_slug: values.product || null, description: values.description.trim(), preferred_date: values.date, preferred_time: values.time || null, location: values.location || null }; path = '/customer/service-requests'; break;
         case 'ticket':
           target = 'tickets'; body = { subject: values.subject.trim(), description: values.description.trim(), type: values.type, priority: values.priority }; path = '/customer/tickets'; break;
         case 'customerProfile':
@@ -99,7 +109,9 @@ export default function ActionFormScreen() {
         const feature = featureCatalog[target];
         const needsWrite = type !== 'partnerApplication';
         if (needsWrite && !session.isAllowed(feature, true)) throw new Error(`This account does not have ${feature.writeScope ?? 'write'} access.`);
-        await session.request(path, method, body);
+        const fingerprint = `${method}:${path}:${JSON.stringify(body)}`;
+        if (idempotency.current.fingerprint !== fingerprint) idempotency.current = { fingerprint, key: `mobile-${Date.now()}-${Math.random().toString(36).slice(2)}` };
+        await session.request(path, method, body, idempotency.current.key);
       }
       setSaved(true);
     } catch (e) { setError(e instanceof Error ? e.message : 'Could not save your changes.'); }
@@ -122,7 +134,7 @@ export default function ActionFormScreen() {
     {type === 'customer' && <><Field label="Customer account ID" value={values.userId} onChangeText={v => set('userId',v)} keyboardType="numeric" /><Field label="Facility name" value={values.facility} onChangeText={v => set('facility',v)} /><Choice label="Facility type" value={values.facilityType} choices={['clinic','hospital','laboratory','pharmacy','specialist_centre','ngos','government','other']} onChange={v => set('facilityType',v)} /><Field label="Country" value={values.country} onChangeText={v => set('country',v)} /><Field label="City" value={values.city} onChangeText={v => set('city',v)} /><Field label="Address" value={values.address} onChangeText={v => set('address',v)} /></>}
     {type === 'contact' && <><Field label="Contact name" value={values.name} onChangeText={v => set('name',v)} /><Field label="Email" value={values.email} onChangeText={v => set('email',v)} keyboardType="email-address" autoCapitalize="none" /><Field label="Phone" value={values.phone} onChangeText={v => set('phone',v)} keyboardType="phone-pad" /><Choice label="Facility type" value={values.facility_type} choices={['clinic','hospital','laboratory','pharmacy','government','ngo','other']} onChange={v => set('facility_type',v)} /><Field label="Products of interest" value={values.products} onChangeText={v => set('products',v)} /><Field label="Notes and enquiry" value={values.message} onChangeText={v => set('message',v)} multiline /></>}
     {type === 'deal' && <><Field label="Deal title" value={values.title} onChangeText={v => set('title',v)} /><Choice label="Pipeline stage" value={values.stage} choices={['qualification','discovery','proposal','negotiation','closed_won','closed_lost']} onChange={v => set('stage',v)} /><View style={{ flexDirection: 'row', gap: 10 }}><View style={{ flex: 1 }}><Field label="Value" value={values.value} onChangeText={v => set('value',v)} keyboardType="decimal-pad" /></View><View style={{ flex: 1 }}><Field label="Probability (%)" value={values.probability} onChangeText={v => set('probability',v)} keyboardType="numeric" /></View></View><CurrencyPicker value={values.currency} onChange={v => set('currency',v)} /><Field label="Expected close date (YYYY-MM-DD)" value={values.expectedClose} onChangeText={v => set('expectedClose',v)} /><Field label="Notes" value={values.notes} onChangeText={v => set('notes',v)} multiline /></>}
-    {type === 'serviceRequest' && <><Field label="Product slug (optional)" value={values.product} onChangeText={v => set('product',v)} autoCapitalize="none" /><Field label="What service do you need?" value={values.description} onChangeText={v => set('description',v)} multiline /><Field label="Preferred date (YYYY-MM-DD)" value={values.date} onChangeText={v => set('date',v)} /><Field label="Preferred time" value={values.time} onChangeText={v => set('time',v)} placeholder="09:00" /><Field label="Location" value={values.location} onChangeText={v => set('location',v)} /></>}
+    {type === 'serviceRequest' && <><Choice label="Service type" value={values.type} choices={serviceTypes} onChange={v => set('type',v)} /><Field label="Product slug (optional)" value={values.product} onChangeText={v => set('product',v)} autoCapitalize="none" /><Field label="What service do you need?" value={values.description} onChangeText={v => set('description',v)} multiline /><Field label="Preferred date (YYYY-MM-DD)" value={values.date} onChangeText={v => set('date',v)} /><Field label="Preferred time" value={values.time} onChangeText={v => set('time',v)} placeholder="09:00" /><Field label="Location" value={values.location} onChangeText={v => set('location',v)} /></>}
     {type === 'ticket' && <><Field label="Subject" value={values.subject} onChangeText={v => set('subject',v)} /><Field label="Describe the issue" value={values.description} onChangeText={v => set('description',v)} multiline /><Choice label="Type" value={values.type} choices={['support','billing','technical','bug_report','other']} onChange={v => set('type',v)} /><Choice label="Priority" value={values.priority} choices={['low','medium','high','urgent']} onChange={v => set('priority',v)} /></>}
     {type === 'customerProfile' && <><Field label="Your name" value={values.name} onChangeText={v => set('name',v)} /><Field label="Facility" value={values.facility_name} onChangeText={v => set('facility_name',v)} /><Field label="Facility type" value={values.facility_type} onChangeText={v => set('facility_type',v)} /><Field label="Phone" value={values.phone} onChangeText={v => set('phone',v)} keyboardType="phone-pad" /><Field label="Country" value={values.country} onChangeText={v => set('country',v)} /><Field label="City" value={values.city} onChangeText={v => set('city',v)} /><Field label="Address" value={values.address} onChangeText={v => set('address',v)} /></>}
     {type === 'practitionerProfile' && <><Field label="Full name" value={values.name} onChangeText={v => set('name',v)} /><Field label="Phone" value={values.phone} onChangeText={v => set('phone',v)} keyboardType="phone-pad" /><Field label="Specialty" value={values.specialty} onChangeText={v => set('specialty',v)} /><Field label="Workplace" value={values.workplace_name} onChangeText={v => set('workplace_name',v)} /><Field label="Workplace city" value={values.workplace_city} onChangeText={v => set('workplace_city',v)} /><Field label="Workplace country" value={values.workplace_country} onChangeText={v => set('workplace_country',v)} /><Field label="Years of experience" value={values.years_of_experience} onChangeText={v => set('years_of_experience',v)} keyboardType="numeric" /><Field label="Professional bio" value={values.bio} onChangeText={v => set('bio',v)} multiline /></>}

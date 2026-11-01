@@ -1,7 +1,7 @@
 import { useLocalSearchParams } from 'expo-router';
-import LearningCatalogScreen from '../../components/LearningCatalogScreen';
-import PractitionerCertificatesScreen from '../../components/PractitionerCertificatesScreen';
-import FeatureScreen from '../../components/FeatureScreen';
+import LearningCatalogScreen from '../../../components/LearningCatalogScreen';
+import PractitionerCertificatesScreen from '../../../components/PractitionerCertificatesScreen';
+import FeatureScreen from '../../../components/FeatureScreen';
 
 export default function FeatureRoute() {
   const { id } = useLocalSearchParams<{ id: string }>();

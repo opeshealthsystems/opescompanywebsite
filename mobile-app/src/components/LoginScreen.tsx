@@ -22,7 +22,7 @@ export default function LoginScreen() {
   const expoGo = redirectUri.startsWith('exp://');
   const [request, response, promptAsync] = AuthSession.useAuthRequest({
     clientId: CLIENT_ID || 'app-client-not-configured', redirectUri,
-    responseType: AuthSession.ResponseType.Code, scopes: ['identity:read','finance:read','finance:write','administration:read','administration:write','crm:read','crm:write','enquiries:read','enquiries:write','customer:read','customer:write','practitioner:read','practitioner:write','testing:read','testing:write'],
+    responseType: AuthSession.ResponseType.Code, scopes: ['identity:read','identity:write','finance:read','finance:write','administration:read','administration:write','crm:read','crm:write','enquiries:read','enquiries:write','customer:read','customer:write','practitioner:read','practitioner:write','testing:read','testing:write'],
     usePKCE: true,
   }, discovery);
 
@@ -88,6 +88,9 @@ export default function LoginScreen() {
     </Text>
     <Pressable accessibilityRole="button" onPress={() => router.push('/signup' as never)} style={{ alignSelf: 'center', padding: 10, marginBottom: 14 }}>
       <Text style={{ color: colors.blue, fontSize: 14, fontWeight: '800' }}>Create an OPES account</Text>
+    </Pressable>
+    <Pressable accessibilityRole="button" onPress={() => router.push('/forgot-password' as never)} style={{ alignSelf: 'center', padding: 10, marginBottom: 14 }}>
+      <Text style={{ color: colors.blue, fontSize: 14, fontWeight: '700' }}>Forgot your password?</Text>
     </Pressable>
     {!!message && <Notice tone={message.startsWith('Completing') ? 'info' : 'error'}>{message}</Notice>}
     <Heading eyebrow="Interactive sample mode" title="Choose a workspace" subtitle="These fictional profiles let you try forms, navigation and sample actions. Nothing is sent to the live API." />

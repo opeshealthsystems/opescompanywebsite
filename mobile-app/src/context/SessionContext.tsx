@@ -7,7 +7,7 @@ export type Audience = 'staff' | 'customer' | 'practitioner' | 'tester' | 'partn
 export type Account = { id: string; name: string; email: string; roles: string[]; scopes: string[] };
 export type ApiRecord = Record<string, unknown>;
 export type Token = { access_token: string; refresh_token?: string; expires_at?: number; scope?: string };
-export type FeatureId = 'quotes' | 'customers' | 'contacts' | 'partnerApps' | 'deals' | 'serviceRequests' | 'tickets' | 'invoices' | 'customerProfile' | 'practitionerProfile' | 'courses' | 'certificates' | 'assignments' | 'partnerships' | 'partnerApplication';
+export type FeatureId = 'quotes' | 'customers' | 'contacts' | 'partnerApps' | 'deals' | 'serviceRequests' | 'tickets' | 'invoices' | 'customerProfile' | 'practitionerProfile' | 'courses' | 'certificates' | 'assignments' | 'bugReports' | 'partnerships' | 'partnerApplication' | 'notifications';
 export type Feature = { id: FeatureId; title: string; description: string; endpoint: string; readScope?: string; writeScope?: string; createAction?: string; demoOnly?: boolean };
 export type DemoAccount = { id: string; label: string; audience: Audience; account: Account; organization: string; reference: string };
 
@@ -34,15 +34,17 @@ export const featureCatalog: Record<FeatureId, Feature> = {
   courses: { id: 'courses', title: 'Courses', description: 'Browse courses, study lessons, save progress and view certificates.', endpoint: '/practitioner/courses', readScope: 'practitioner:read', writeScope: 'practitioner:write' },
   certificates: { id: 'certificates', title: 'Certificates', description: 'View certificates associated with your account.', endpoint: '/practitioner/certificates', readScope: 'practitioner:read' },
   assignments: { id: 'assignments', title: 'Assignments', description: 'Update testing progress and report bugs.', endpoint: '/testing/assignments', readScope: 'testing:read', writeScope: 'testing:write' },
+  bugReports: { id: 'bugReports', title: 'Bug reports', description: 'Review issues reported from your assigned product tests.', endpoint: '/testing/bug-reports', readScope: 'testing:read' },
   partnerships: { id: 'partnerships', title: 'Partner directory', description: 'Browse organizations in the OPES partner network.', endpoint: '/public/partnerships' },
   partnerApplication: { id: 'partnerApplication', title: 'Apply to partner', description: 'Send a partnership application to OPES Health Systems.', endpoint: '/public/become-a-partner', createAction: 'partnerApplication' },
+  notifications: { id: 'notifications', title: 'Notifications', description: 'Review account updates and mark alerts as read.', endpoint: '/notifications', readScope: 'identity:read', writeScope: 'identity:write' },
 };
 
 export const featureIds: Record<Audience, FeatureId[]> = {
   staff: ['quotes', 'customers', 'contacts', 'partnerApps', 'deals'],
   customer: ['serviceRequests', 'tickets', 'invoices', 'customerProfile'],
   practitioner: ['practitionerProfile', 'courses', 'certificates'],
-  tester: ['assignments'],
+  tester: ['assignments', 'bugReports'],
   partner: ['partnerships', 'partnerApplication'],
 };
 
@@ -86,6 +88,8 @@ const sampleRows: Partial<Record<FeatureId, ApiRecord[]>> = {
   ],
   certificates: [{ id: 'DEMO-CERT-01', title: 'Respectful digital communication', course_id: 'DEMO-COURSE-03', certificate_number: 'OHS-DEMO-2026-014', issued_at: '2026-09-12', status: 'issued', reference: 'DEMO-CERT-01' }],
   assignments: [{ id: 'DEMO-TA-01', title: 'Android sign-in smoke test', status: 'in_progress', due_date: '2026-12-05', product: 'OPES Health mobile' }, { id: 'DEMO-TA-02', title: 'Customer service request flow', status: 'pending', due_date: '2026-12-08', product: 'OPES Health mobile' }],
+  bugReports: [{ id: 'DEMO-BR-01', subject: 'Sample display issue', description: 'Fictional issue used to preview tester workflows.', priority: 'low', status: 'triaged', product: 'OPES Health mobile' }],
+  notifications: [{ id: 'DEMO-N-01', title: 'Welcome to your OPES workspace', body: 'Your account workspace is ready to explore.', read_at: null, created_at: '2026-11-01T09:00:00Z' }],
   partnerships: [{ id: 'DEMO-P-01', name: 'Example Health Network', country: 'Cameroon', type: 'Community health' }, { id: 'DEMO-P-02', name: 'CareLink Group', country: 'Ghana', type: 'Technology partner' }],
 };
 
@@ -163,7 +167,15 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     if (body !== undefined) { headers['Content-Type'] = 'application/json'; headers['Idempotency-Key'] = idempotencyKey ?? `mobile-${Date.now()}-${Math.random().toString(36).slice(2)}`; }
     const response = await fetch(`${API}${path}`, { method, headers, ...(body !== undefined ? { body: JSON.stringify(body) } : {}) });
     const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(data?.detail || data?.message || data?.errors && Object.values(data.errors).flat().join(' ') || `Request failed (${response.status})`);
+    if (response.status === 401) {
+      await clearSession();
+      throw new Error('Your session has expired. Sign in again to continue.');
+    }
+    if (!response.ok) {
+      const fieldErrors = data?.errors && typeof data.errors === 'object' ? Object.values(data.errors).flat().filter(value => typeof value === 'string').join(' ') : '';
+      const requestId = typeof data?.request_id === 'string' ? ` Reference: ${data.request_id}` : '';
+      throw new Error(`${data?.detail || data?.message || fieldErrors || data?.title || `Request failed (${response.status})`}${requestId}`);
+    }
     return (data?.data ?? data) as T;
   };
 
@@ -175,7 +187,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     if (Array.isArray(result)) return result as ApiRecord[];
     if (result && typeof result === 'object') {
       const obj = result as Record<string, unknown>;
-      for (const key of ['items','data','results','records','quotes','profiles','profile','applications','deals','assignments','invoices','courses','certificates']) if (Array.isArray(obj[key])) return obj[key] as ApiRecord[];
+      for (const key of ['items','data','results','records','quotes','profiles','profile','customerProfiles','leads','applications','partnerApplications','deals','serviceRequests','tickets','reports','assignments','bug_reports','bugReports','invoices','courses','certificates','notifications']) if (Array.isArray(obj[key])) return obj[key] as ApiRecord[];
       if (obj.profile && typeof obj.profile === 'object') return [obj.profile as ApiRecord];
       if (id.endsWith('Profile') || id === 'practitionerProfile') return [obj as ApiRecord];
     }
@@ -226,11 +238,11 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         }
       } else if (action === 'bug-report' && recordId) {
         const index = rows.findIndex(row => String(row.id) === recordId);
-        if (index >= 0) { const reports = Array.isArray(rows[index].bug_reports) ? rows[index].bug_reports as ApiRecord[] : []; rows[index] = { ...rows[index], bug_reports: [...reports, result] }; result = rows[index]; }
+        if (index >= 0) { const reports = Array.isArray(rows[index].bug_reports) ? rows[index].bug_reports as ApiRecord[] : []; rows[index] = { ...rows[index], bug_reports: [...reports, result] }; }
       } else {
         rows.unshift(result);
       }
-      return { ...current, [feature]: rows, ...(feature === 'courses' ? { certificates } : {}) };
+      return { ...current, [feature]: rows, ...(action === 'bug-report' ? { bugReports: [result, ...(current.bugReports ?? [])] } : {}), ...(feature === 'courses' ? { certificates } : {}) };
     });
     return result;
   };

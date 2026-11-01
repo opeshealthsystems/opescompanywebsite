@@ -11,10 +11,11 @@ function display(value: unknown): string {
   return String(value);
 }
 
-export default function FeatureScreen() {
+export function FeatureContent({ featureId, inTab = false }: { featureId?: FeatureId; inTab?: boolean }) {
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const feature = featureCatalog[id as FeatureId];
+  const selectedId = featureId ?? id as FeatureId;
+  const feature = featureCatalog[selectedId];
   const session = useSession();
   const [rows, setRows] = useState<ApiRecord[]>([]);
   const [busy, setBusy] = useState(true);
@@ -26,6 +27,7 @@ export default function FeatureScreen() {
 
   const load = useCallback(async () => {
     if (!feature) { setBusy(false); setError('This app section is not available.'); return; }
+    if (feature.id === 'partnerApplication') { setRows([]); setBusy(false); setError(''); return; }
     setBusy(true); setError('');
     try { setRows(await session.rowsFor(feature.id)); }
     catch (e) { setError(e instanceof Error ? e.message : 'Could not load these records.'); }
@@ -79,15 +81,16 @@ export default function FeatureScreen() {
   const title = feature?.title ?? 'Workspace';
 
   return <Page>
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}><Brand compact /><Pressable onPress={() => router.push('/profile')}><Text style={{ color: colors.blue, fontWeight: '700', padding: 8 }}>Profile</Text></Pressable></View>
-    <Pressable accessibilityRole="button" onPress={() => router.back()} style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 4 }}><AppIcon name="chevronLeft" size={18} /><Text style={{ color: colors.blue, fontSize: 14, fontWeight: '700' }}>Back to workspace</Text></Pressable>
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}><Brand compact />{!inTab && <Pressable onPress={() => router.push('/profile')}><Text style={{ color: colors.blue, fontWeight: '700', padding: 8 }}>Profile</Text></Pressable>}</View>
+    {!inTab && <Pressable accessibilityRole="button" onPress={() => router.back()} style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 4 }}><AppIcon name="chevronLeft" size={18} /><Text style={{ color: colors.blue, fontSize: 14, fontWeight: '700' }}>Back to workspace</Text></Pressable>}
     {!!session.demo && <Notice>DEMO MODE · All records and actions on this screen are fictional and local to this app.</Notice>}
     <Heading eyebrow="Workspace" title={title} subtitle={feature?.description ?? 'Manage account information and work items.'} />
     {feature?.createAction && mayWrite && <ActionButton label={feature.id === 'partnerApplication' ? 'Start an application' : feature.id === 'contacts' ? 'Add a contact' : `Create ${feature.title.toLowerCase().replace(/s$/, '')}`} onPress={startCreate} />}
     {!!error && <Notice tone="error">{error}</Notice>}{!!message && <Notice tone="success">{message}</Notice>}
     <SectionTitle title={feature?.id === 'partnerApplication' ? 'Application information' : `Records · ${rows.length}`} trailing={<Pressable onPress={() => void load()}><Text style={{ color: colors.blue, fontWeight: '700' }}>Refresh</Text></Pressable>} />
     {busy ? <ActivityIndicator color={colors.blue} style={{ marginVertical: 24 }} /> : null}
-    {!busy && rows.length === 0 && !error && <Card><Text style={{ color: colors.text, fontSize: 14, fontWeight: '700' }}>Nothing here yet</Text><Text style={{ color: colors.muted, fontSize: 12, lineHeight: 18, marginTop: 5 }}>Use the action above to create your first item, or pull down Refresh to check again.</Text></Card>}
+    {!busy && rows.length === 0 && !error && feature?.id !== 'partnerApplication' && <Card><Text style={{ color: colors.text, fontSize: 14, fontWeight: '700' }}>Nothing here yet</Text><Text style={{ color: colors.muted, fontSize: 12, lineHeight: 18, marginTop: 5 }}>Use the action above to create your first item, or pull down Refresh to check again.</Text></Card>}
+    {!busy && feature?.id === 'partnerApplication' && <Card><Text style={{ color: colors.navy, fontSize: 15, fontWeight: '800' }}>Build a partnership with OPES</Text><Text style={{ color: colors.muted, fontSize: 13, lineHeight: 20, marginTop: 7 }}>Tell us about your organization, the communities you serve and the kind of collaboration you have in mind. The partnerships team will review your application and follow up using your contact details.</Text><Text style={{ color: colors.text, fontSize: 12, lineHeight: 19, marginTop: 10 }}>Have your organization details, country, contact email and a short partnership proposal ready.</Text></Card>}
     {rows.map((row, index) => {
       const key = String(row.id ?? row.slug ?? index); const isOpen = expanded === key;
       const titleValue = String(row.title ?? row.subject ?? row.name ?? row.organization_name ?? row.reference ?? row.product_name ?? `Record ${index + 1}`);
@@ -118,6 +121,10 @@ export default function FeatureScreen() {
     })}
     {!session.demo && feature?.writeScope && !mayWrite && <Notice>This account has read access only. Ask your administrator for the {feature.writeScope} permission to submit changes.</Notice>}
     {!!feature?.demoOnly && <Notice>Live API actions for this feature have not been published yet.</Notice>}
-    <ActionButton label="Home" secondary onPress={() => router.replace('/workspace')} />
+    {!inTab && <ActionButton label="Home" secondary onPress={() => router.replace('/workspace')} />}
   </Page>;
+}
+
+export default function FeatureScreen() {
+  return <FeatureContent />;
 }

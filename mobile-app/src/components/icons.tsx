@@ -1,5 +1,6 @@
 import {
   Award,
+  Bell,
   BookOpen,
   BriefcaseBusiness,
   ChevronLeft,
@@ -23,6 +24,7 @@ import { colors } from './ui';
 
 const icons = {
   award: Award,
+  bell: Bell,
   book: BookOpen,
   briefcase: BriefcaseBusiness,
   check: CircleCheck,
@@ -81,6 +83,10 @@ export function getFeatureIconName(id: FeatureId): AppIconName {
       return 'award';
     case 'assignments':
       return 'flask';
+    case 'bugReports':
+      return 'clipboard';
+    case 'notifications':
+      return 'bell';
     case 'quotes':
     case 'tickets':
     case 'invoices':

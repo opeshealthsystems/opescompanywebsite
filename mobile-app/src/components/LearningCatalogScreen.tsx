@@ -19,7 +19,7 @@ function ProgressBar({ value }: { value: number }) {
   </View>;
 }
 
-export default function LearningCatalogScreen() {
+export default function LearningCatalogScreen({ inTab = false }: { inTab?: boolean }) {
   const router = useRouter();
   const session = useSession();
   const [courses, setCourses] = useState<CourseCard[]>([]);
@@ -64,9 +64,9 @@ export default function LearningCatalogScreen() {
   return <Page>
     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
       <Brand compact />
-      <Pressable accessibilityRole="button" accessibilityLabel="Open profile" onPress={() => router.push('/profile')}><Text style={{ color: colors.blue, fontWeight: '700', padding: 8 }}>Profile</Text></Pressable>
+      {!inTab && <Pressable accessibilityRole="button" accessibilityLabel="Open profile" onPress={() => router.push('/profile')}><Text style={{ color: colors.blue, fontWeight: '700', padding: 8 }}>Profile</Text></Pressable>}
     </View>
-    <Pressable accessibilityRole="button" onPress={() => router.back()} style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 4 }}><AppIcon name="chevronLeft" size={18} /><Text style={{ color: colors.blue, fontSize: 14, fontWeight: '700' }}>Back to workspace</Text></Pressable>
+    {!inTab && <Pressable accessibilityRole="button" onPress={() => router.back()} style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 4 }}><AppIcon name="chevronLeft" size={18} /><Text style={{ color: colors.blue, fontSize: 14, fontWeight: '700' }}>Back to workspace</Text></Pressable>}
     {session.demo && <Notice>DEMO MODE · Study progress and course actions are saved locally in this sample workspace.</Notice>}
     <Heading eyebrow="Learning" title="Courses & study" subtitle="Study practical lessons at your pace. Mark each lesson complete to keep your progress and earn course certificates." />
     <Card>
@@ -105,6 +105,6 @@ export default function LearningCatalogScreen() {
       </Pressable>;
     })}
     <Pressable accessibilityRole="button" onPress={() => router.push('/feature/certificates' as never)} style={{ minHeight: 48, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6 }}><Text style={{ color: colors.blue, fontSize: 14, fontWeight: '800' }}>View certificates and awards</Text><AppIcon name="chevronRight" size={18} /></Pressable>
-    <Pressable accessibilityRole="button" onPress={() => router.replace('/workspace')}><Text style={{ color: colors.muted, fontSize: 12, textAlign: 'center', paddingVertical: 8 }}>Back to your dashboard</Text></Pressable>
+    {!inTab && <Pressable accessibilityRole="button" onPress={() => router.replace('/workspace')}><Text style={{ color: colors.muted, fontSize: 12, textAlign: 'center', paddingVertical: 8 }}>Back to your dashboard</Text></Pressable>}
   </Page>;
 }

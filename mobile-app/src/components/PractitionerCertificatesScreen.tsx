@@ -15,7 +15,7 @@ function issuedDate(value: unknown): string {
   return Number.isNaN(date.getTime()) ? value : date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
 }
 
-export default function PractitionerCertificatesScreen() {
+export default function PractitionerCertificatesScreen({ inTab = false }: { inTab?: boolean }) {
   const router = useRouter();
   const session = useSession();
   const [courseCertificates, setCourseCertificates] = useState<ApiRecord[]>([]);
@@ -48,8 +48,8 @@ export default function PractitionerCertificatesScreen() {
 
   useEffect(() => { void Promise.resolve().then(load); }, [load]);
   return <Page>
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}><Brand compact /><Pressable accessibilityRole="button" onPress={() => router.push('/profile')}><Text style={{ color: colors.blue, fontWeight: '700', padding: 8 }}>Profile</Text></Pressable></View>
-    <Pressable accessibilityRole="button" onPress={() => router.back()} style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 4 }}><AppIcon name="chevronLeft" size={18} /><Text style={{ color: colors.blue, fontSize: 14, fontWeight: '700' }}>Back to learning</Text></Pressable>
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}><Brand compact />{!inTab && <Pressable accessibilityRole="button" onPress={() => router.push('/profile')}><Text style={{ color: colors.blue, fontWeight: '700', padding: 8 }}>Profile</Text></Pressable>}</View>
+    {!inTab && <Pressable accessibilityRole="button" onPress={() => router.back()} style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 4 }}><AppIcon name="chevronLeft" size={18} /><Text style={{ color: colors.blue, fontSize: 14, fontWeight: '700' }}>Back to learning</Text></Pressable>}
     {session.demo && <Notice>DEMO MODE · Sample certificate details are fictional and stay in this app.</Notice>}
     <Heading eyebrow="Learning record" title="Certificates" subtitle="Review course awards and professional validation certificates associated with your account." />
     {!!error && <Notice tone="error">{error}</Notice>}
