@@ -6,6 +6,12 @@ $risk = ['name' => 'risk', 'kind' => 'model', 'class' => 'App\\Models\\Risk', 'k
 $trainingRecord = ['name' => 'trainingRecord', 'kind' => 'model', 'class' => 'App\\Models\\TrainingRecord', 'key' => 'id'];
 $user = ['name' => 'user', 'kind' => 'model', 'class' => 'App\\Models\\User', 'key' => 'id'];
 return [
+    'admin.workforce.risks.create' => ['handler' => $class, 'method' => 'createRisk', 'parameters' => [$input], 'command' => true,
+        'context' => 'Risk', 'roles' => ['super_admin', 'admin'], 'authenticated' => true, 'scope' => 'risk:write',
+        'api_path' => 'risk', 'http_methods' => ['POST'], 'source_controller' => 'RiskResource', 'source_action' => 'create'],
+    'admin.workforce.risks.update' => ['handler' => $class, 'method' => 'updateRisk', 'parameters' => [$input, $risk], 'command' => true,
+        'context' => 'Risk', 'roles' => ['super_admin', 'admin'], 'authenticated' => true, 'scope' => 'risk:write',
+        'api_path' => 'risk/{risk}', 'http_methods' => ['PUT'], 'source_controller' => 'RiskResource', 'source_action' => 'update'],
     'admin.risk.mitigate' => ['handler' => $class, 'method' => 'mitigateRisk', 'parameters' => [$input, $risk], 'command' => true,
         'context' => 'Risk', 'roles' => ['super_admin', 'admin'], 'authenticated' => true, 'scope' => 'risk:write',
         'api_path' => 'risk/{risk}/mitigate', 'http_methods' => ['POST'], 'source_controller' => 'RiskResource', 'source_action' => 'mitigate'],

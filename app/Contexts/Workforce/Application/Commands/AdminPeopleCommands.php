@@ -37,6 +37,81 @@ final class AdminPeopleCommands extends WorkflowHandler
         return WorkflowResult::payload(['id' => $record->id, 'status' => $record->status])->with('success', 'Risk marked mitigated.');
     }
 
+    public function createRisk(WorkflowInput $input): WorkflowResult
+    {
+        $actor = $this->admin($input);
+        $data = $input->validate([
+            'title' => 'required|string|max:250',
+            'description' => 'nullable|string|max:5000',
+            'category' => 'required|in:'.implode(',', array_keys(Risk::categoryOptions())),
+            'owner_id' => 'required|integer|exists:users,id',
+            'likelihood' => 'required|in:'.implode(',', array_keys(Risk::likelihoodOptions())),
+            'impact' => 'required|in:'.implode(',', array_keys(Risk::impactOptions())),
+            'review_date' => 'nullable|date',
+            'mitigation_plan' => 'nullable|string|max:5000',
+            'reference' => 'prohibited', 'status' => 'prohibited', 'risk_score' => 'prohibited',
+        ]);
+
+        $record = DB::transaction(function () use ($data, $actor) {
+            $year = now()->year;
+            $sequenceName = 'risk:'.$year;
+            DB::table('business_sequences')->insertOrIgnore(['name' => $sequenceName, 'last_value' => 0]);
+            $sequence = DB::table('business_sequences')->where('name', $sequenceName)->lockForUpdate()->first();
+            $previous = (int) $sequence->last_value;
+            if ($previous === 0) {
+                $prefix = 'RISK-'.$year.'-';
+                $previous = Risk::query()->where('reference', 'like', $prefix.'%')->pluck('reference')
+                    ->map(fn ($reference) => ctype_digit(substr($reference, strlen($prefix))) ? (int) substr($reference, strlen($prefix)) : 0)->max() ?? 0;
+            }
+            $next = $previous + 1;
+            DB::table('business_sequences')->where('name', $sequenceName)->update(['last_value' => $next]);
+            $record = Risk::create($data + [
+                'reference' => 'RISK-'.$year.'-'.str_pad((string) $next, 3, '0', STR_PAD_LEFT),
+                'risk_score' => Risk::computeScore($data['likelihood'], $data['impact']),
+                'status' => 'open',
+            ]);
+            DomainOutbox::append('event', 'risk.created.v1', [
+                'references' => [['resource' => 'Risk', 'id' => $record->id]],
+                'changed_fields' => array_keys($data),
+            ], $actor->id);
+            return $record;
+        }, 3);
+
+        return WorkflowResult::payload(['id' => $record->id, 'reference' => $record->reference, 'status' => $record->status, 'risk_score' => $record->risk_score], 201)->with('success', 'Risk recorded.');
+    }
+
+    public function updateRisk(WorkflowInput $input, Risk $risk): WorkflowResult
+    {
+        $actor = $this->admin($input);
+        $data = $input->validate([
+            'title' => 'sometimes|required|string|max:250',
+            'description' => 'sometimes|nullable|string|max:5000',
+            'category' => 'sometimes|required|in:'.implode(',', array_keys(Risk::categoryOptions())),
+            'owner_id' => 'sometimes|required|integer|exists:users,id',
+            'likelihood' => 'sometimes|required|in:'.implode(',', array_keys(Risk::likelihoodOptions())),
+            'impact' => 'sometimes|required|in:'.implode(',', array_keys(Risk::impactOptions())),
+            'review_date' => 'sometimes|nullable|date',
+            'mitigation_plan' => 'sometimes|nullable|string|max:5000',
+            'reference' => 'prohibited', 'status' => 'prohibited', 'risk_score' => 'prohibited',
+        ]);
+        if ($data === []) throw ValidationException::withMessages(['risk' => 'Provide at least one risk field to update.']);
+
+        $record = DB::transaction(function () use ($risk, $data, $actor) {
+            $record = Risk::query()->lockForUpdate()->findOrFail($risk->id);
+            if ($record->status !== 'open') throw ValidationException::withMessages(['status' => 'Only open risks can be edited.']);
+            $record->fill($data);
+            $record->risk_score = Risk::computeScore($record->likelihood, $record->impact);
+            $record->save();
+            DomainOutbox::append('event', 'risk.updated.v1', [
+                'references' => [['resource' => 'Risk', 'id' => $record->id]],
+                'changed_fields' => array_keys($data),
+            ], $actor->id);
+            return $record;
+        }, 3);
+
+        return WorkflowResult::payload(['id' => $record->id, 'reference' => $record->reference, 'status' => $record->status, 'risk_score' => $record->risk_score])->with('success', 'Risk updated.');
+    }
+
     public function completeTraining(WorkflowInput $input, TrainingRecord $trainingRecord): WorkflowResult
     {
         $actor = $this->admin($input);

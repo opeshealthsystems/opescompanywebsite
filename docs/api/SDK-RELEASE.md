@@ -1,6 +1,6 @@
 # Node SDK preview and contract release checks
 
-SDK 0.19.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations. Download `/downloads/opes-health-api-client-0.19.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
+SDK 0.20.0 is a server-side Node.js 22+ package with TypeScript definitions. It includes the current generated operation IDs and a generic, contract-checked client for delegated business operations. Download `/downloads/opes-health-api-client-0.20.0.tgz` and verify its adjacent `.sha256` file. Machine-readable release metadata is `/downloads/opes-api-sdk.json`. It is a downloadable preview, not an npm registry publication.
 
 The archive contains only package metadata, client sources, the generated business operation registry, type definitions, README and an executable read-only catalogue example. It contains no credentials, test fixtures, environment files or runtime dependencies. Install from the archive URL or a reviewed local download; the README includes machine and delegated business usage.
 
@@ -60,3 +60,7 @@ SDK 0.18.0 archive: 12885 bytes, SHA-256 `794f05294ea4677f1fb0ed3d08bdc51b60094d
 SDK 0.19.0 includes admin finance expense create and update commands. Both Filament forms dispatch through the same validated, role-protected application operations; updates are limited to pending expenses and references use a locked business sequence.
 
 SDK 0.19.0 archive: 12911 bytes, SHA-256 `4607c714bf7c04cf93fb8f58d99f96456f976705303e7f3545f4bdf3536bef1b`. It carries all 250 API operation IDs, including the 244 business operations in OpenAPI 0.23.0.
+
+SDK 0.20.0 adds delegated risk-register create and update operations. The shared application commands generate risk references and scores, enforce open-only updates, and publish transactional domain events; the admin forms use the same commands.
+
+SDK 0.20.0 archive: 12955 bytes, SHA-256 `34819519a1c74267975079d1b5174313991febedc03530d385d948bf35ef8102`. It carries all 252 API operation IDs, including the 246 business operations in OpenAPI 0.24.0.

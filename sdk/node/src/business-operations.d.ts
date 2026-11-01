@@ -83,6 +83,8 @@ export type BusinessOperationId =
   | 'admin_workforce_milestones_complete'
   | 'admin_workforce_performanceReviews_acknowledge'
   | 'admin_workforce_performanceReviews_submit'
+  | 'admin_workforce_risks_create'
+  | 'admin_workforce_risks_update'
   | 'admin_workforce_training_complete'
   | 'administration_licenses_create'
   | 'administration_licenses_delete'

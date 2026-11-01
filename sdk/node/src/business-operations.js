@@ -1156,6 +1156,36 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_workforce_risks_create": {
+        "method": "POST",
+        "path": "/risk",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
+    "admin_workforce_risks_update": {
+        "method": "PUT",
+        "path": "/risk/{risk}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "risk"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json",
+            "multipart/form-data"
+        ]
+    },
     "admin_workforce_training_complete": {
         "method": "POST",
         "path": "/training-records/{trainingRecord}/complete",

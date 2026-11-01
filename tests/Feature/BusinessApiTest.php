@@ -413,6 +413,36 @@ class BusinessApiTest extends TestCase
         $this->assertDatabaseHas('business_outbox', ['type' => 'workforce.training_completed.v1']);
     }
 
+    public function test_risk_create_and_update_are_shared_idempotent_commands(): void
+    {
+        $admin = $this->user('admin');
+        $token = $this->access($admin, ['risk:write']);
+        $headers = ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'risk-create-000001'];
+        $body = [
+            'title' => 'Fictional API test risk', 'description' => 'Test-only risk description', 'category' => 'operational',
+            'owner_id' => $admin->id, 'likelihood' => 'medium', 'impact' => 'high', 'mitigation_plan' => 'Test-only mitigation',
+            'reference' => 'spoofed-reference', 'status' => 'mitigated', 'risk_score' => 1,
+        ];
+        $this->postJson('/api/v1/risk', $body, $headers)->assertUnprocessable();
+
+        unset($body['reference'], $body['status'], $body['risk_score']);
+        $created = $this->postJson('/api/v1/risk', $body, $headers)->assertCreated()->assertJsonPath('data.status', 'open');
+        $this->postJson('/api/v1/risk', $body, $headers)->assertExactJson($created->json());
+        $riskId = $created->json('data.id');
+        $this->assertSame(12, $created->json('data.risk_score'));
+        $risk = \App\Models\Risk::query()->findOrFail($riskId);
+        $this->assertStringStartsWith('RISK-'.now()->year.'-', $risk->reference);
+
+        $headers['Idempotency-Key'] = 'risk-update-000001';
+        $update = ['likelihood' => 'high', 'impact' => 'high'];
+        $updated = $this->putJson('/api/v1/risk/'.$riskId, $update, $headers)->assertOk()->assertJsonPath('data.risk_score', 16);
+        $this->putJson('/api/v1/risk/'.$riskId, $update, $headers)->assertExactJson($updated->json());
+        $this->putJson('/api/v1/risk/'.$riskId, ['status' => 'mitigated'], ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'risk-update-spoof-0001'])->assertUnprocessable();
+        $this->assertDatabaseHas('business_outbox', ['type' => 'risk.created.v1', 'actor_id' => $admin->id]);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'risk.updated.v1', 'actor_id' => $admin->id]);
+        $this->postJson('/api/v1/risk', $body, ['Idempotency-Key' => 'risk-anonymous-0001'])->assertUnauthorized();
+    }
+
     public function test_practitioner_reviews_and_publication_share_api_commands(): void
     {
         $admin = $this->user('admin');
