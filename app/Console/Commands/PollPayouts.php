@@ -2,61 +2,19 @@
 
 namespace App\Console\Commands;
 
-use App\Contexts\Programmes\Application\Commands\PayoutLifecycleCommands;
-use App\Mail\PayoutSettled;
-use App\Models\PractitionerApplication;
-use App\Services\Payouts\PayoutGatewayManager;
-use App\Support\AdminNotifier;
+use App\Contexts\Programmes\Application\Commands\ReconcilePendingPayouts;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail;
 
 class PollPayouts extends Command
 {
     protected $signature = 'payouts:poll';
-
     protected $description = 'Poll pending mobile-money payouts and update their status.';
 
-    public function handle(PayoutGatewayManager $manager, PayoutLifecycleCommands $lifecycle): int
+    public function handle(ReconcilePendingPayouts $reconciliation): int
     {
-        $pending = PractitionerApplication::query()
-            ->where('payout_status', 'pending')
-            ->whereNotNull('payout_reference')
-            ->whereIn('payout_provider', ['mtn', 'orange'])
-            ->get();
-
-        foreach ($pending as $application) {
-            try {
-                $status = $manager->driverFor($application->payout_provider)->status($application);
-            } catch (\Throwable $e) {
-                $this->warn("Payout {$application->id}: {$e->getMessage()}");
-                continue;
-            }
-
-            if ($status === 'paid') {
-                if (! $lifecycle->markPaid($application->id)) continue;
-                $application->refresh();
-                if ($application->practitioner?->email) Mail::to($application->practitioner->email)->queue(new PayoutSettled($application));
-                $application->practitioner?->notify(new \App\Notifications\FeedEntry(
-                    'practitioner.payout_settled',
-                    'Payout settled',
-                    'Your payout of ' . $application->payout_amount . ' ' . $application->payout_currency . ' has been settled.',
-                    'banknotes',
-                    route('practitioner.dashboard', ['locale' => 'en']),
-                ));
-                AdminNotifier::notify(
-                    'Payout settled',
-                    $application->practitioner->name.' was paid '.$application->payout_amount.' '.$application->payout_currency,
-                    null,
-                );
-            } elseif ($status === 'failed') {
-                if (! $lifecycle->markFailed($application->id, $application->payout_failure_reason ?: 'Provider reported FAILED')) continue;
-                AdminNotifier::notify(
-                    'Payout failed',
-                    'Payout for '.$application->practitioner->name.' failed.',
-                    null,
-                    ['super_admin', 'admin', 'support'],
-                );
-            }
+        $result = $reconciliation->execute();
+        foreach ($result['warnings'] as $warning) {
+            $this->warn('Payout ' . $warning['application_id'] . ': ' . $warning['message']);
         }
 
         return self::SUCCESS;
