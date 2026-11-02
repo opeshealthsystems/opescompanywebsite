@@ -152,7 +152,7 @@ export function FeatureContent({ featureId, inTab = false }: { featureId?: Featu
         </Pressable>
         {feature?.id === 'quotes' && <View style={{ flexDirection: 'row', gap: 8, marginTop: 12 }}>
           <View style={{ flex: 1, minWidth: 0 }}><ActionButton label={isOpen ? 'Hide quote' : 'View quote'} secondary onPress={() => setExpanded(isOpen ? null : key)} /></View>
-          <View style={{ flex: 1, minWidth: 0 }}><ActionButton label={status === 'draft' || !status ? 'Mark as sent' : status.replaceAll('_', ' ')} secondary={status !== 'draft' && !!status} onPress={() => { if (status === 'draft' && mayWrite) void action(row, 'sent'); }} disabled={status !== 'draft' || !mayWrite} busy={acting === key && status === 'draft'} /></View>
+          <View style={{ flex: 1, minWidth: 0 }}><ActionButton label="Mark as sent" secondary={status !== 'draft'} onPress={() => { if (status === 'draft' && mayWrite) void action(row, 'sent'); }} disabled={status !== 'draft' || !mayWrite} busy={acting === key && status === 'draft'} /></View>
         </View>}
         {isOpen && <View style={{ borderTopWidth: 1, borderTopColor: colors.border, marginTop: 12, paddingTop: 10 }}>
           {feature?.id === 'quotes' ? <QuoteDetails row={row} /> : <>
