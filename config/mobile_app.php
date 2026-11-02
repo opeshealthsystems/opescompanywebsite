@@ -11,6 +11,19 @@ return [
     'eas_build_url' => 'https://expo.dev/accounts/opesware/projects/opes-health/builds/772f3b9b-0a13-4509-8d39-ba70520ce413',
     'ota_updates' => [
         [
+            'group' => '8a1a680d-4beb-4255-8b63-5e3c3b7f4913',
+            'date' => '2026-11-02',
+            'runtime' => '0.1.0',
+            'title' => [
+                'en' => 'Health workspace demos restored; hotel profiles removed',
+                'fr' => 'Démos des espaces santé rétablies ; profils hôteliers supprimés',
+            ],
+            'summary' => [
+                'en' => 'Restored the five OPES Health sample profiles: staff, customer, health practitioner, tester, and partner. These fictional previews remain local and do not call the live API.',
+                'fr' => 'Rétablissement des cinq profils de démonstration OPES Health : personnel, client, professionnel de santé, testeur et partenaire. Ces aperçus fictifs restent locaux et n’appellent pas l’API en production.',
+            ],
+        ],
+        [
             'group' => '42ada363-a3f3-4620-a640-50a045b9a775',
             'date' => '2026-11-02',
             'runtime' => '0.1.0',

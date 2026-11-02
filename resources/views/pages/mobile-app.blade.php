@@ -62,7 +62,11 @@
                         <p class="ohs-app-ota-label">{{ $fr ? 'Mises à jour OTA publiées pour le runtime' : 'OTA updates published for runtime' }} {{ $appRelease['runtime_version'] }}</p>
                         <ul class="ohs-app-ota-list">
                             @foreach($appRelease['ota_updates'] as $ota)
-                                <li>{{ $ota['date'] }} · {{ $fr ? 'Runtime' : 'Runtime' }} {{ $ota['runtime'] }} · {{ $ota['title'][$fr ? 'fr' : 'en'] }} <code>{{ $ota['group'] }}</code></li>
+                                <li>
+                                    <strong>{{ $ota['date'] }} · {{ $fr ? 'Runtime' : 'Runtime' }} {{ $ota['runtime'] }} · {{ $ota['title'][$fr ? 'fr' : 'en'] }}</strong>
+                                    @if(!empty($ota['summary'][$fr ? 'fr' : 'en']))<p>{{ $ota['summary'][$fr ? 'fr' : 'en'] }}</p>@endif
+                                    <code>{{ $ota['group'] }}</code>
+                                </li>
                             @endforeach
                         </ul>
                         <a class="ohs-app-build-link" href="{{ $appRelease['eas_build_url'] }}" target="_blank" rel="noopener noreferrer">{{ $fr ? 'Détails de compilation EAS' : 'EAS build details' }}</a>
