@@ -2,7 +2,7 @@
     "openapi": "3.1.1",
     "info": {
         "title": "OHS Platform API",
-        "version": "0.99.1",
+        "version": "0.100.0",
         "description": "Versioned OHS business APIs. Public enquiries and application intake, partner and tester administration, publishing and catalogues, role-scoped operations and workforce workflows, finance registers, reports and line-item detail reads, customer facility profiles, employee and HR administration, risk and performance management, leave requests, validation, practitioner, recruitment, learning, survey and support workflows, account recovery, machine catalogue access, public sitemap data, protected admin reference data and resource/relationship summaries, with delegated business workflows using authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.",
         "contact": {
             "name": "OHS support",
@@ -136914,7 +136914,7 @@
                                 "example": {
                                     "data": {
                                         "status": "responding",
-                                        "api_version": "0.99.1",
+                                        "api_version": "0.100.0",
                                         "checked_at": "2026-11-01T12:00:00+00:00"
                                     },
                                     "meta": {
@@ -137119,6 +137119,11 @@
                                     "data": {
                                         "items": [
                                             {
+                                                "version": "0.100.0",
+                                                "released_at": "2026-11-02",
+                                                "summary": "Added client-scoped daily API request usage for the trailing 30 UTC calendar days."
+                                            },
+                                            {
                                                 "version": "0.99.1",
                                                 "released_at": "2026-11-01",
                                                 "summary": "Added server-validated pricing choices to public enquiries and a quote-request receipt delivery status."
@@ -137317,6 +137322,279 @@
                     },
                     "429": {
                         "description": "Rate limit exceeded."
+                    }
+                }
+            }
+        },
+        "/integration/usage": {
+            "get": {
+                "operationId": "readIntegrationUsage",
+                "summary": "Read daily usage for the current integration",
+                "tags": [
+                    "Identity"
+                ],
+                "description": "Returns only the authenticated machine client\u2019s daily API request counts for the trailing 30 UTC calendar days, including today. The count is limited to approved client-credentials requests on machine API routes and includes this request. It excludes public traffic, delegated-user OAuth requests, route-level breakdowns and other clients. Requires the integration:read scope.",
+                "security": [
+                    {
+                        "OAuth2": [
+                            "integration:read"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Client-scoped daily usage series with exactly 30 UTC date buckets.",
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated results are not stored by shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data"
+                                    ],
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "additionalProperties": false,
+                                            "required": [
+                                                "period_start",
+                                                "period_end",
+                                                "requests_today",
+                                                "requests_last_30_days",
+                                                "daily_usage"
+                                            ],
+                                            "properties": {
+                                                "period_start": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "description": "First included UTC date; 29 calendar days before period_end."
+                                                },
+                                                "period_end": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "description": "Current UTC date."
+                                                },
+                                                "requests_today": {
+                                                    "type": "integer",
+                                                    "minimum": 0
+                                                },
+                                                "requests_last_30_days": {
+                                                    "type": "integer",
+                                                    "minimum": 0
+                                                },
+                                                "daily_usage": {
+                                                    "type": "array",
+                                                    "minItems": 30,
+                                                    "maxItems": 30,
+                                                    "items": {
+                                                        "type": "object",
+                                                        "additionalProperties": false,
+                                                        "required": [
+                                                            "date",
+                                                            "requests"
+                                                        ],
+                                                        "properties": {
+                                                            "date": {
+                                                                "type": "string",
+                                                                "format": "date"
+                                                            },
+                                                            "requests": {
+                                                                "type": "integer",
+                                                                "minimum": 0
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "data": {
+                                        "period_start": "2026-10-04",
+                                        "period_end": "2026-11-02",
+                                        "requests_today": 1,
+                                        "requests_last_30_days": 12,
+                                        "daily_usage": [
+                                            {
+                                                "date": "2026-10-04",
+                                                "requests": 9
+                                            },
+                                            {
+                                                "date": "2026-10-05",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-06",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-07",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-08",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-09",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-10",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-11",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-12",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-13",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-14",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-15",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-16",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-17",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-18",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-19",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-20",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-21",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-22",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-23",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-24",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-25",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-26",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-27",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-28",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-29",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-30",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-10-31",
+                                                "requests": 0
+                                            },
+                                            {
+                                                "date": "2026-11-01",
+                                                "requests": 2
+                                            },
+                                            {
+                                                "date": "2026-11-02",
+                                                "requests": 1
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing, invalid, revoked or expired machine access; disabled owner or revoked client.",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Required integration:read scope is absent from the token or current client approval.",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "60 authenticated attempts per minute per client exceeded.",
+                        "headers": {
+                            "Retry-After": {
+                                "schema": {
+                                    "type": "integer",
+                                    "minimum": 0
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
                     }
                 }
             }

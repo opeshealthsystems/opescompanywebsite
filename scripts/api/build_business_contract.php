@@ -447,6 +447,40 @@ $spec['paths']['/catalogue/products']['get']['summary'] = 'List published softwa
 $spec['paths']['/catalogue/products']['get']['description'] = 'Returns published software catalogue metadata only, with bounded pagination and English or French labels. Requires an approved server client and the catalogue:read scope. This endpoint does not expose clinical or customer records.';
 $spec['paths']['/integration']['get']['summary'] = 'Read the current integration client';
 $spec['paths']['/integration']['get']['description'] = 'Returns the authenticated machine client identity, its approved scopes and its UTC daily authenticated-request count. Requires the integration:read scope. A caller cannot select another client.';
+$usageOperation = [
+    'operationId' => 'readIntegrationUsage', 'summary' => 'Read daily usage for the current integration', 'tags' => ['Identity'],
+    'description' => 'Returns only the authenticated machine client’s daily API request counts for the trailing 30 UTC calendar days, including today. The count is limited to approved client-credentials requests on machine API routes and includes this request. It excludes public traffic, delegated-user OAuth requests, route-level breakdowns and other clients. Requires the integration:read scope.',
+    'security' => [['OAuth2' => ['integration:read']]],
+    'responses' => [
+        '200' => ['description' => 'Client-scoped daily usage series with exactly 30 UTC date buckets.', 'headers' => [
+            'Cache-Control' => ['description' => 'Authenticated results are not stored by shared caches.', 'schema' => ['type' => 'string', 'const' => 'no-store']],
+            'X-Request-ID' => ['description' => 'Identifier used when contacting support.', 'schema' => ['type' => 'string', 'format' => 'uuid']],
+        ], 'content' => ['application/json' => ['schema' => ['type' => 'object', 'required' => ['data'], 'additionalProperties' => false, 'properties' => ['data' => null]]]]],
+        '401' => ['description' => 'Missing, invalid, revoked or expired machine access; disabled owner or revoked client.', 'content' => ['application/problem+json' => ['schema' => ['$ref' => '#/components/schemas/Problem']]]],
+        '403' => ['description' => 'Required integration:read scope is absent from the token or current client approval.', 'content' => ['application/problem+json' => ['schema' => ['$ref' => '#/components/schemas/Problem']]]],
+        '429' => ['description' => '60 authenticated attempts per minute per client exceeded.', 'headers' => ['Retry-After' => ['schema' => ['type' => 'integer', 'minimum' => 0]]], 'content' => ['application/problem+json' => ['schema' => ['$ref' => '#/components/schemas/Problem']]]],
+    ],
+];
+$integrationData = ['type' => 'object', 'additionalProperties' => false,
+    'required' => ['period_start', 'period_end', 'requests_today', 'requests_last_30_days', 'daily_usage'],
+    'properties' => [
+        'period_start' => ['type' => 'string', 'format' => 'date', 'description' => 'First included UTC date; 29 calendar days before period_end.'],
+        'period_end' => ['type' => 'string', 'format' => 'date', 'description' => 'Current UTC date.'],
+        'requests_today' => ['type' => 'integer', 'minimum' => 0],
+        'requests_last_30_days' => ['type' => 'integer', 'minimum' => 0],
+        'daily_usage' => ['type' => 'array', 'minItems' => 30, 'maxItems' => 30, 'items' => ['type' => 'object', 'additionalProperties' => false,
+            'required' => ['date', 'requests'], 'properties' => ['date' => ['type' => 'string', 'format' => 'date'], 'requests' => ['type' => 'integer', 'minimum' => 0]]]],
+    ]];
+$usageOperation['responses']['200']['content']['application/json']['schema']['properties']['data'] = $integrationData;
+$usageExampleStart = \Carbon\CarbonImmutable::parse('2026-10-04', 'UTC');
+$usageExample = [];
+for ($day = 0; $day < 30; $day++) $usageExample[] = ['date' => $usageExampleStart->addDays($day)->toDateString(), 'requests' => $day === 0 ? 9 : ($day === 28 ? 2 : ($day === 29 ? 1 : 0))];
+$usageOperation['responses']['200']['content']['application/json']['example'] = ['data' => [
+    'period_start' => '2026-10-04', 'period_end' => '2026-11-02', 'requests_today' => 1, 'requests_last_30_days' => 12,
+    'daily_usage' => $usageExample,
+]];
+$spec['paths']['/integration/usage']['get'] = $usageOperation;
+unset($usageOperation);
 $userToken = $spec['paths']['/oauth/token']['post'];
 $userToken['operationId'] = 'issueDelegatedUserToken';
 $userToken['summary'] = 'Exchange an authorization code or refresh token';

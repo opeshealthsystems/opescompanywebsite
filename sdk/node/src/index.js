@@ -91,6 +91,8 @@ export class OpesClient {
 
   integration() { return this.#authenticated('/integration'); }
 
+  integrationUsage() { return this.#authenticated('/integration/usage'); }
+
   async submitEnquiry(input, { idempotencyKey } = {}) {
     if (typeof idempotencyKey !== 'string' || idempotencyKey.trim() !== idempotencyKey || !/^[A-Za-z0-9._:-]{16,128}$/.test(idempotencyKey)) throw new TypeError('Supply and retain a valid Idempotency-Key for this intended enquiry.');
     const result = await this.#request('/enquiries', {
@@ -124,6 +126,7 @@ export class OpesBusinessApiClient {
   async request(operationId, { path = {}, query = {}, body, idempotencyKey, locale, signal } = {}) {
     const operation = businessOperations[operationId];
     if (!operation) throw new TypeError('Unknown OHS business operation. Use an operation ID in the OpenAPI contract.');
+    if (operation.machineClientOnly) throw new TypeError('This operation requires a client-credentials token. Use OpesClient with integration:read.');
     if (operation.idempotencyRequired && (typeof idempotencyKey !== 'string' || !/^[A-Za-z0-9._:-]{16,128}$/.test(idempotencyKey))) {
       throw new TypeError('Supply and retain a valid Idempotency-Key for this command.');
     }

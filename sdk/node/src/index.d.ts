@@ -14,6 +14,12 @@ export interface CatalogueResponse {
 export interface IntegrationResponse {
   data: { client_id: string; name: string; scopes: Scope[]; requests_today: number };
 }
+export interface IntegrationUsageResponse {
+  data: {
+    period_start: string; period_end: string; requests_today: number; requests_last_30_days: number;
+    daily_usage: Array<{ date: string; requests: number }>;
+  };
+}
 export class OpesApiError extends Error {
   constructor(status: number, details?: {
     requestId?: string | null; code?: string | null; retryAfter?: number | null; idempotencyKey?: string | null;
@@ -29,6 +35,7 @@ export class OpesClient {
   });
   catalogue(options?: { page?: number; perPage?: number; locale?: Locale }): Promise<CatalogueResponse>;
   integration(): Promise<IntegrationResponse>;
+  integrationUsage(): Promise<IntegrationUsageResponse>;
   submitEnquiry(input: EnquiryInput, options: { idempotencyKey: string }): Promise<{
     data: { status: 'recorded'; delivery_status: 'sent' | 'pending'; receipt_delivery_status?: 'sent' | 'pending' };
     idempotencyKey: string; replayed: boolean; requestId: string | null;

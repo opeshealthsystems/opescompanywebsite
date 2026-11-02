@@ -1,8 +1,8 @@
-# OHS server-side Node SDK — preview 0.95.1
+# OHS server-side Node SDK — preview 0.96.0
 
-Requires Node.js 22 or newer. This dependency-free preview package is distributed as a downloadable archive, not published to the npm registry. It is server-side code: never bundle client secrets into a browser or mobile application. This package contains all 611 documented operation identifiers from OpenAPI 0.99.1. The contract adds server-validated pricing choices for public quote requests and reports requester receipt-delivery status.
+Requires Node.js 22 or newer. This dependency-free preview package is distributed as a downloadable archive, not published to the npm registry. It is server-side code: never bundle client secrets into a browser or mobile application. This package contains all documented operation identifiers from OpenAPI 0.100.0. The machine-client usage operation returns the caller's own daily request totals for the trailing 30 UTC calendar days; it does not expose route-level or user-delegated traffic. The contract also adds server-validated pricing choices for public quote requests and reports requester receipt-delivery status.
 
-Install the reviewed archive with `npm install ./opes-health-api-client-0.95.1.tgz`, then:
+Install the reviewed archive with `npm install ./opes-health-api-client-0.96.0.tgz`, then:
 
 ```js
 import { OpesClient } from '@opes-health/api-client';
@@ -14,6 +14,8 @@ const client = new OpesClient({ oauth: {
 } });
 const catalogue = await client.catalogue({ perPage: 10, locale: 'en' });
 const identity = await client.integration();
+const usage = await client.integrationUsage();
+console.log(usage.data.requests_last_30_days, usage.data.daily_usage);
 ```
 
 Request reviewed credentials from OHS. Specify only scopes granted to your client. Tokens are cached with an early-refresh margin; concurrent calls share one issuance request. A GET rejected with 401 refreshes once. Quota/scope/network failures are returned to the caller, not retried in a loop. Redirects are refused and each request has a configurable 15-second timeout (maximum 60 seconds). Plain HTTP is accepted only for localhost development.
@@ -50,7 +52,7 @@ const result = await api.request('admin_finance_expenses_approve', {
 console.log(result.data, result.requestId);
 ```
 
-Operation IDs are generated from OpenAPI 0.99.1 and exported as the `BusinessOperationId` TypeScript union. Path/query names, authentication and idempotency requirements are checked against that registry at runtime. Commands require a stable key; save it with the intended command and reuse it with the same body after an ambiguous network outcome. The SDK never retries a command automatically. `getAccessToken` can refresh your user's token before it expires. Keep access tokens and API data on trusted servers. OIDC and a public sandbox are not available.
+Operation IDs are generated from OpenAPI 0.100.0 and exported as the `BusinessOperationId` TypeScript union. Path/query names, authentication and idempotency requirements are checked against that registry at runtime. Commands require a stable key; save it with the intended command and reuse it with the same body after an ambiguous network outcome. The SDK never retries a command automatically. `getAccessToken` can refresh your user's token before it expires. Keep access tokens and API data on trusted servers. OIDC and a public sandbox are not available.
 
 Administrator payout requests use `admin_practitioners_applications_pay`. They require a reviewed delegated client with `practitioners:write`, an active `admin` or `super_admin` user, and a stable `Idempotency-Key`. A 202 response means the request was durably accepted; read the application record for settlement status before taking further action. An uncertain provider outcome is held for reconciliation and is not automatically retried. The Orange Money driver is not available.
 

@@ -1,10 +1,10 @@
 # OPES Health API-first and API-as-a-service plan
 
-**Review basis:** local and live OpenAPI contract `0.99.1`, inspected 1 November 2026. This document distinguishes shipped API capabilities from the remaining service product work.
+**Review basis:** live OpenAPI `0.99.1` and current branch candidate `0.100.0`, inspected 2 November 2026. This document distinguishes deployed API capabilities from branch-only changes and remaining service product work.
 
 ## Current evidence
 
-- The live site and repository both serve OpenAPI `0.99.1`: 431 paths and 611 operations.
+- The live site serves OpenAPI `0.99.1`: 431 paths and 611 operations. The current branch candidate `0.100.0` retains released operation shapes and adds `/integration/usage`, bringing the candidate contract to 432 paths and 612 operations.
 - The API design linter reports 611 operations, 0 errors, 379 warnings and 845 informational findings. Every warning is the linter's preference for camelCase/kebab-case over the platform's established `snake_case` query names; do not rename those in place because that would break clients.
 - The API scorecard is **B / 81.36**. Contract documentation scores A / 90.25 and security B / 85. The heuristic rates usability D / 68.73 and performance D / 61.53, chiefly recommending stronger onboarding/examples, cache strategy and field selection.
 - Comparing the `0.94.0` live baseline with `0.99.1` finds 17 additions or changes, no confirmed removals, and one potential security-scheme change. Manual comparison shows the OAuth endpoints are unchanged; two management scopes were added. Keep the finding in the compatibility review until the release gate verifies generated clients and consumers.
@@ -13,6 +13,8 @@
 - The live app has role-scoped API reads and writes for supported workspaces. Five explicitly labelled fictional profiles (staff, customer, practitioner, tester and partner) use local sample records only; there is no administrator demo. Partner private self-service is absent from the API contract. Course lesson/progress APIs exist; an exams/assessment API is not currently published.
 
 ## Progress update — 2 November 2026
+
+- Branch candidate OpenAPI `0.100.0` exposes the caller's own 30-day UTC request-usage series through `GET /api/v1/integration/usage` with `integration:read`. The Node SDK adds `integrationUsage()` and prevents delegated-user clients from invoking machine-only operations. The meter remains client-scoped and reports authenticated machine-client attempts for the machine API routes only; it is not complete route analytics, user OAuth metering, quota billing, or production evidence until deployed and observed.
 
 - The mobile app now uses role-specific home screens and four persistent, role-adaptive tabs. Real accounts sign in through the registered public OAuth client using authorization-code PKCE; `/api/v1/me` roles and scopes select the workspace. The administrator sample profile has been removed.
 - Customer service-request and CRM-deal forms now send the required API fields. Account recovery, notifications, profile actions, course progress and certificates have app screens backed by their published APIs where those operations exist.

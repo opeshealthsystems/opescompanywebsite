@@ -7688,7 +7688,8 @@ export const businessOperations = Object.freeze({
         "queryParameters": [],
         "acceptLanguage": false,
         "requestBodyRequired": false,
-        "contentTypes": []
+        "contentTypes": [],
+        "machineClientOnly": true
     },
     "invoicecontroller_pdf": {
         "method": "GET",
@@ -7745,7 +7746,8 @@ export const businessOperations = Object.freeze({
         ],
         "acceptLanguage": false,
         "requestBodyRequired": false,
-        "contentTypes": []
+        "contentTypes": [],
+        "machineClientOnly": true
     },
     "manager_dashboardcontroller_index": {
         "method": "GET",
@@ -8691,6 +8693,18 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
+    },
+    "readIntegrationUsage": {
+        "method": "GET",
+        "path": "/integration/usage",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": false,
+        "requestBodyRequired": false,
+        "contentTypes": [],
+        "machineClientOnly": true
     },
     "readOwnBusinessActivity": {
         "method": "GET",

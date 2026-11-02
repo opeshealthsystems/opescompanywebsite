@@ -15,7 +15,7 @@ final class MachineIntegrationQueries
             'name' => $client->name,
             'scopes' => $scopes,
             'requests_today' => (int) DB::table('api_client_usage')->where('client_id', $client->id)
-                ->where('usage_date', now()->toDateString())->value('requests'),
+                ->where('usage_date', now('UTC')->toDateString())->value('requests'),
         ]);
     }
 }

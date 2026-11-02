@@ -588,6 +588,7 @@ export type BusinessOperationId =
   | 'publiccoursecontroller_show'
   | 'purchaseordercontroller_pdf'
   | 'quotecontroller_pdf'
+  | 'readIntegrationUsage'
   | 'readOwnBusinessActivity'
   | 'readOwnProfile'
   | 'submitEnquiry'

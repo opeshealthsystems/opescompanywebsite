@@ -315,6 +315,8 @@ SDK 0.94.0 adds public API status and release changelog operation identifiers. O
 
 SDK 0.94.0 adds public API status and release changelog operation identifiers. OpenAPI 0.98.0 explicitly limits status claims to the API application responding to the current request; it does not claim dependency health or service-level availability. The archive contains all 610 operation IDs and remains a downloadable server-side preview.
 
+SDK candidate 0.96.0 aligns with OpenAPI candidate 0.100.0 and adds `integrationUsage()` for the machine client's 30-day UTC request-usage series. It remains a downloadable server-side preview and is not published to npm.
+
 SDK 0.95.0 adds the authenticated self-profile operation for role-aware mobile clients. OpenAPI 0.99.0 documents the reserved OPES native callback and per-user role-derived scopes. The archive contains all 611 operation IDs and remains a downloadable server-side preview.
 
 SDK 0.95.0 adds the authenticated self-profile operation for role-aware mobile clients. OpenAPI 0.99.0 documents the reserved OPES native callback and per-user role-derived scopes. The archive contains all 611 operation IDs and remains a downloadable server-side preview.

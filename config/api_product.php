@@ -1,8 +1,13 @@
 <?php
 
 return [
-    'version' => '0.99.1',
+    'version' => '0.100.0',
     'changelog' => [
+        [
+            'version' => '0.100.0',
+            'released_at' => '2026-11-02',
+            'summary' => 'Added client-scoped daily API request usage for the trailing 30 UTC calendar days.',
+        ],
         [
             'version' => '0.99.1',
             'released_at' => '2026-11-01',

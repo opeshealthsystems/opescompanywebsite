@@ -10,7 +10,7 @@ foreach ($spec['paths'] as $path => $pathItem) {
         if (!isset($operation['operationId']) || !in_array(strtoupper($method), ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], true)) continue;
         $parameters = $operation['parameters'] ?? [];
         preg_match_all('/\{([^}]+)\}/', $path, $matches);
-        $operations[$operation['operationId']] = [
+        $entry = [
             'method' => strtoupper($method), 'path' => $path,
             'authenticated' => !empty($operation['security']),
             'idempotencyRequired' => count(array_filter($parameters, fn ($p) => ($p['name'] ?? null) === 'Idempotency-Key' && ($p['required'] ?? false))) > 0,
@@ -20,6 +20,9 @@ foreach ($spec['paths'] as $path => $pathItem) {
             'requestBodyRequired' => (bool) ($operation['requestBody']['required'] ?? false),
             'contentTypes' => array_keys($operation['requestBody']['content'] ?? []),
         ];
+        $schemes = array_merge(...array_map('array_keys', $operation['security'] ?? []));
+        if (in_array('OAuth2', $schemes, true) && !in_array('UserOAuth2', $schemes, true)) $entry['machineClientOnly'] = true;
+        $operations[$operation['operationId']] = $entry;
     }
 }
 ksort($operations);
