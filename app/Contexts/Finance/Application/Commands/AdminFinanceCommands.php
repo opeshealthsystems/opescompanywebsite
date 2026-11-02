@@ -944,18 +944,8 @@ final class AdminFinanceCommands extends WorkflowHandler
     public function generateInvoiceFromTemplate(WorkflowInput $input, InvoiceTemplate $invoiceTemplate): WorkflowResult
     {
         $actor = $this->adminActor($input);
-        $invoice = DB::transaction(function () use ($invoiceTemplate, $actor) {
-            $template = InvoiceTemplate::query()->lockForUpdate()->findOrFail($invoiceTemplate->id);
-            if (!$template->is_active || ($template->end_date && $template->end_date->isBefore(today())) || $template->next_due_date->isAfter(today())) {
-                $this->invalid('template', 'This invoice template is inactive, not yet due, or past its end date.');
-            }
-            $invoice = $template->generateInvoice();
-            if (!$invoice) $this->invalid('template', 'Invoice generation is unavailable for this template.');
-            DomainOutbox::append('event', 'finance.invoice_generated.v1', ['references' => [
-                ['resource' => 'InvoiceTemplate', 'id' => $template->id], ['resource' => 'Invoice', 'id' => $invoice->id],
-            ]], $actor->id);
-            return $invoice;
-        }, 3);
+        $invoice = app(GenerateRecurringInvoice::class)->execute($invoiceTemplate->id, $actor->id);
+        if (!$invoice) $this->invalid('template', 'This invoice template is inactive, not yet due, or past its end date.');
         return WorkflowResult::payload(['id' => $invoice->id, 'invoice_number' => $invoice->invoice_number, 'status' => $invoice->status], 201)->with('success', 'Invoice generated.');
     }
 

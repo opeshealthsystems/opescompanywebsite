@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Contexts\Finance\Application\Commands\GenerateRecurringInvoice;
 use App\Models\InvoiceTemplate;
 use Illuminate\Console\Command;
 
@@ -10,7 +11,7 @@ class GenerateRecurringInvoices extends Command
     protected $signature   = 'invoices:generate-recurring {--dry-run : Preview without creating}';
     protected $description = 'Generate invoices from active recurring templates that are due today or overdue';
 
-    public function handle(): int
+    public function handle(GenerateRecurringInvoice $generator): int
     {
         $due = InvoiceTemplate::where('is_active', true)
             ->where('next_due_date', '<=', now()->toDateString())
@@ -34,7 +35,7 @@ class GenerateRecurringInvoices extends Command
                 continue;
             }
 
-            $invoice = $template->generateInvoice();
+            $invoice = $generator->execute($template->id);
 
             if ($invoice) {
                 $this->line("  \u{2713} Generated {$invoice->invoice_number} from: {$template->name}");
