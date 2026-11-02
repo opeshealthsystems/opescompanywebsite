@@ -112,12 +112,12 @@ test('business operation client refuses missing keys, path values and unknown qu
   await assert.rejects(client.request('unknown_operation'), /Unknown OHS business operation/);
 });
 
-test('business API token provider supplies delegated credentials without SDK-managed retries', async () => {
-  let tokenCalls = 0; let resourceCalls = 0;
-  const client = new OpesBusinessApiClient({ getAccessToken: async () => { tokenCalls++; return 'fictional-user-token'; }, fetch: async (url, options) => {
-    if (url.endsWith('/integration')) { resourceCalls++; assert.equal(options.headers.Authorization, 'Bearer fictional-user-token'); return json({ data: { client_id: 'fictional', name: 'test', scopes: ['integration:read'], requests_today: 1 } }); }
-    throw new Error('unexpected call');
+test('business API client rejects machine-client operations before requesting a delegated token', async () => {
+  let tokenCalls = 0;
+  const client = new OpesBusinessApiClient({ getAccessToken: async () => { tokenCalls++; return 'fictional-user-token'; }, fetch: async () => {
+    throw new Error('machine-client operations must not use delegated transport');
   } });
-  await client.request('inspectIntegration');
-  assert.equal(tokenCalls, 1); assert.equal(resourceCalls, 1);
+  await assert.rejects(client.request('inspectIntegration'), /client-credentials token/);
+  await assert.rejects(client.request('readIntegrationUsage'), /client-credentials token/);
+  assert.equal(tokenCalls, 0);
 });
