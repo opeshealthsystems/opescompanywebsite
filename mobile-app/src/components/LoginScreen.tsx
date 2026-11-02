@@ -68,9 +68,9 @@ export default function LoginScreen() {
 
   const signIn = async () => {
     setMessage('');
-    if (Platform.OS === 'web') { setMessage('Secure OAuth sign-in requires the installed OPES Health app. This web preview does not redirect you to another page. Use a demo workspace below to explore the app.'); return; }
-    if (expoGo) { setMessage('Expo Go cannot receive the OPES Health sign-in callback. Install the OPES Health build to use your account. Demo workspaces below are available in this preview.'); return; }
-    if (!CLIENT_ID) { setMessage('Secure sign-in is not configured in this build. You can still open the demo workspaces below.'); return; }
+    if (Platform.OS === 'web') { setMessage('Secure account sign-in opens in the installed OPES Health app. This web preview stays on this screen.'); return; }
+    if (expoGo) { setMessage('Expo Go cannot receive the OPES Health sign-in callback. Install the OPES Health app build to sign in to your account.'); return; }
+    if (!CLIENT_ID) { setMessage('Secure sign-in is not provisioned in this app build. Please contact OPES Health support.'); return; }
     handledResponse.current = false;
     setBusy(true);
     try { await promptAsync(); } catch (error) { setMessage(error instanceof Error ? error.message : 'Could not open secure sign-in.'); setBusy(false); }
@@ -86,6 +86,9 @@ export default function LoginScreen() {
     <Text style={{ color: colors.muted, fontSize: 12, lineHeight: 18, textAlign: 'center', marginBottom: 18 }}>
       Sign-in uses OAuth 2.0 with PKCE. The secure OPES sign-in sheet returns you to this app after authentication.
     </Text>
+    <Text style={{ color: colors.navy, fontSize: 13, lineHeight: 19, textAlign: 'center', marginBottom: 14 }}>
+      Administrators use this same secure sign-in. Your OPES account role opens the administrator workspace automatically; no administrator demo account is used.
+    </Text>
     <Pressable accessibilityRole="button" onPress={() => router.push('/signup' as never)} style={{ alignSelf: 'center', padding: 10, marginBottom: 14 }}>
       <Text style={{ color: colors.blue, fontSize: 14, fontWeight: '800' }}>Create an OPES account</Text>
     </Pressable>
@@ -93,7 +96,7 @@ export default function LoginScreen() {
       <Text style={{ color: colors.blue, fontSize: 14, fontWeight: '700' }}>Forgot your password?</Text>
     </Pressable>
     {!!message && <Notice tone={message.startsWith('Completing') ? 'info' : 'error'}>{message}</Notice>}
-    <Heading eyebrow="Interactive sample mode" title="Choose a workspace" subtitle="These fictional profiles let you try forms, navigation and sample actions. Nothing is sent to the live API." />
+    <Heading eyebrow="Interactive sample mode" title="Explore sample workspaces" subtitle="Fictional staff, customer, practitioner, tester and partner profiles let you try navigation and sample actions. Nothing is sent to the live API." />
     {demoAccounts.map(demo => <Pressable key={demo.id} onPress={() => chooseDemo(demo.id)} accessibilityRole="button">
       <Card style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
         <View style={{ width: 44, height: 44, borderRadius: 9, backgroundColor: '#E8F1F8', alignItems: 'center', justifyContent: 'center' }}><AppIcon name={getRoleIconName(demo.id)} size={22} color={colors.navy} /></View>
