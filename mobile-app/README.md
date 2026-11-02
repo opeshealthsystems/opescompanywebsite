@@ -5,7 +5,7 @@ Expo app for OPES Health Systems accounts. This is a separate app from OpesCare 
 ## Current state
 
 - App version: `0.1.0` private preview.
-- The sign-in screen offers local-only demo previews for administrator, staff, customer, practitioner, tester and partner workspaces. They use fictional `example.test` identities, make no API calls and cannot modify real accounts.
+- Five local-only demo previews are available for staff, customer, practitioner, tester and partner workspaces. The administrator demo was removed. Demo previews use fictional `example.test` identities, make no API calls and cannot modify real accounts.
 - Sign-in uses OAuth 2.0 authorization code with S256 PKCE and the OPES callback `opeshealth://oauth/callback`.
 - Sign-in has no role chooser. The app reads `/me` after OAuth and selects the workspace from the account's RBAC roles and effective API scopes.
 - API access is checked for the signed-in user on every request. The app stores mobile tokens with `expo-secure-store`; browser preview keeps them in memory only.
@@ -39,3 +39,5 @@ All demo accounts are fictional and local only. They demonstrate the same naviga
 ## Release history
 
 See [OPES Health app versions and updates](https://opeshealthsystems.com/en/mobile-app#updates).
+
+For every successful EAS build that is distributed, add a release entry to `config/mobile_app.php` with the app version, Android build number, release date, current/superseded status, English and French summary, and user-facing changes. Update the current build number and SHA-256 there, then replace `public/mobile-app/opes-health-0.1.0.apk` and its `.sha256` file with the verified APK. Add each published OTA group separately under `ota_updates`, with its runtime, release date, group ID and changes; OTA groups do not increment the native Android build number. The public page renders both lists from this manifest, so the download card and history stay aligned.
