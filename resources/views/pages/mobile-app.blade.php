@@ -5,7 +5,7 @@
         '@context' => 'https://schema.org', '@type' => 'SoftwareApplication',
         'name' => 'OPES Health', 'applicationCategory' => 'BusinessApplication',
         'operatingSystem' => 'Android', 'softwareVersion' => $appRelease['version'],
-        'downloadUrl' => asset($appRelease['download_path']),
+        'downloadUrl' => $appRelease['download_url'] ?? asset($appRelease['download_path']),
         'description' => $fr
             ? 'Application OPES Health en aperçu privé pour les équipes, clients, praticiens et testeurs, avec des cours à étudier, le suivi de progression et les certificats.'
             : 'OPES Health app private preview for staff, customers, practitioners and testers, with study lessons, learning progress and certificates.',
