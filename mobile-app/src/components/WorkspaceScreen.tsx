@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { ApiRecord, FeatureId, featureCatalog, featureIds, useSession, workspaceTitles } from '../context/SessionContext';
 import { ActionButton, Brand, Card, Heading, Notice, Page, SectionTitle, colors } from './ui';
@@ -11,6 +11,7 @@ const overviewByAudience: Record<string, { id: FeatureId; label: string }[]> = {
   practitioner: [{ id: 'courses', label: 'Courses' }, { id: 'certificates', label: 'Certificates' }],
   tester: [{ id: 'assignments', label: 'Assignments' }, { id: 'bugReports', label: 'Bug reports' }],
   partner: [{ id: 'partnerships', label: 'Organizations' }],
+  hotel: [],
 };
 
 function rowCount(value: unknown): number {
@@ -27,7 +28,9 @@ export default function WorkspaceScreen() {
   const router = useRouter();
   const session = useSession();
   const audience = session.audience;
-  const items = audience ? featureIds[audience].map(id => featureCatalog[id]).filter(feature => session.isAllowed(feature)) : [];
+  const visibleFeatureIds = session.demo?.features ?? (audience ? featureIds[audience] : []);
+  const overviewFeatures = useMemo(() => session.demo?.overview ?? (audience ? overviewByAudience[audience] ?? [] : []), [session.demo?.overview, audience]);
+  const items = visibleFeatureIds.map(id => featureCatalog[id]).filter(feature => session.isAllowed(feature));
   const [overviewSnapshot, setOverviewSnapshot] = useState<{ audience: string; accountId: string; values: Record<string, number | null> } | null>(null);
   const overviewMatches = !!audience && !!session.account && overviewSnapshot?.audience === audience && overviewSnapshot.accountId === session.account.id;
   const overview = overviewMatches ? overviewSnapshot.values : {};
@@ -36,7 +39,7 @@ export default function WorkspaceScreen() {
     if (!audience || !session.account) return;
     let active = true;
     const accountId = session.account.id;
-    const features = (overviewByAudience[audience] ?? []).filter(item => session.isAllowed(featureCatalog[item.id]));
+      const features = overviewFeatures.filter(item => session.isAllowed(featureCatalog[item.id]));
     void Promise.allSettled(features.map(async item => [item.id, rowCount(await session.rowsFor(item.id))] as const)).then(results => {
       if (!active) return;
       const values: Record<string, number | null> = {};
@@ -44,7 +47,7 @@ export default function WorkspaceScreen() {
       setOverviewSnapshot({ audience, accountId, values });
     });
     return () => { active = false; };
-  }, [audience, session]);
+  }, [audience, session, overviewFeatures]);
   if (!session.account) return <Page><Brand /><Heading title="Your session ended" subtitle="Sign in again to open your account." /><ActionButton label="Return to sign in" onPress={() => router.replace('/')} /></Page>;
 
   const demo = session.demo;
@@ -52,7 +55,7 @@ export default function WorkspaceScreen() {
     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 15 }}>
       <Brand compact />
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
-        {session.isAllowed(featureCatalog.notifications) && <Pressable accessibilityRole="button" accessibilityLabel="Open notifications" onPress={() => router.push('/notifications' as never)} style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }}><AppIcon name="bell" size={19} /></Pressable>}
+        {session.demo?.category !== 'hotel' && session.isAllowed(featureCatalog.notifications) && <Pressable accessibilityRole="button" accessibilityLabel="Open notifications" onPress={() => router.push('/notifications' as never)} style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }}><AppIcon name="bell" size={19} /></Pressable>}
         <Pressable accessibilityRole="button" accessibilityLabel="Open my profile" onPress={() => router.push('/profile')} style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 7, paddingHorizontal: 8 }}><AppIcon name="profile" size={18} /><Text style={{ color: colors.blue, fontWeight: '700' }}>Account</Text></Pressable>
       </View>
     </View>
@@ -60,14 +63,14 @@ export default function WorkspaceScreen() {
     <Card style={{ backgroundColor: colors.navy, borderColor: colors.navy, padding: 18, marginBottom: 16 }}>
       <Text style={{ color: '#C8DAE9', fontSize: 11, fontWeight: '800', letterSpacing: 1.1 }}>{demo ? 'INTERACTIVE DEMO' : 'YOUR OPES WORKSPACE'}</Text>
       <Text style={{ color: colors.white, fontSize: 25, lineHeight: 31, fontWeight: '800', marginTop: 7 }}>Hello, {session.account.name.split(' ')[0]}</Text>
-      <Text style={{ color: '#E0EAF2', fontSize: 13, lineHeight: 19, marginTop: 5 }}>{audience ? workspaceTitles[audience] : 'Account'} · {session.account.email}</Text>
+      <Text style={{ color: '#E0EAF2', fontSize: 13, lineHeight: 19, marginTop: 5 }}>{demo?.label ?? (audience ? workspaceTitles[audience] : 'Account')} · {session.account.email}</Text>
     </Card>
     {demo && <Card><Text style={{ color: colors.navy, fontSize: 12, fontWeight: '800', letterSpacing: 0.6 }}>SAMPLE ACCOUNT</Text><Text style={{ color: colors.text, fontSize: 14, fontWeight: '700', marginTop: 8 }}>{demo.organization}</Text><Text style={{ color: colors.muted, fontSize: 12, marginTop: 4 }}>Reference: {demo.reference} · Role: {demo.account.roles.join(', ')}</Text></Card>}
 
     {!!audience && <>
       <SectionTitle title="At a glance" trailing={overviewLoading ? <Text style={{ color: colors.muted, fontSize: 12 }}>Updating…</Text> : undefined} />
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
-        {(overviewByAudience[audience] ?? []).filter(item => session.isAllowed(featureCatalog[item.id])).map(item => <Pressable key={item.id} accessibilityRole="button" accessibilityLabel={`Open ${item.label}`} onPress={() => router.push({ pathname: '/feature/[id]', params: { id: item.id } } as never)} style={{ flexGrow: 1, flexBasis: 92, minWidth: 88, backgroundColor: colors.white, borderWidth: 1, borderColor: colors.border, borderRadius: 8, padding: 12 }}>
+        {overviewFeatures.filter(item => session.isAllowed(featureCatalog[item.id])).map(item => <Pressable key={item.id} accessibilityRole="button" accessibilityLabel={`Open ${item.label}`} onPress={() => router.push({ pathname: '/feature/[id]', params: { id: item.id } } as never)} style={{ flexGrow: 1, flexBasis: 92, minWidth: 88, backgroundColor: colors.white, borderWidth: 1, borderColor: colors.border, borderRadius: 8, padding: 12 }}>
           <Text numberOfLines={2} style={{ color: colors.muted, fontSize: 12, lineHeight: 16, fontWeight: '700' }}>{item.label.toUpperCase()}</Text>
           <Text style={{ color: colors.navy, fontSize: 22, lineHeight: 27, fontWeight: '800', marginTop: 5 }}>{overview[item.id] ?? (overviewLoading ? '—' : '0')}</Text>
         </Pressable>)}
@@ -90,6 +93,6 @@ export default function WorkspaceScreen() {
       </Card>
     </Pressable>)}
     <ActionButton label={demo ? 'Exit demo workspace' : 'Sign out'} secondary onPress={async () => { await session.clearSession(); router.replace('/'); }} />
-    <Text style={{ color: colors.muted, fontSize: 12, textAlign: 'center', marginTop: 4 }}>Account access and write actions follow your live API permissions.</Text>
+    <Text style={{ color: colors.muted, fontSize: 12, textAlign: 'center', marginTop: 4 }}>{demo ? 'Hotel operations sample only. All records and actions are fictional and stay in this app.' : 'Account access and write actions follow your live API permissions.'}</Text>
   </Page>;
 }

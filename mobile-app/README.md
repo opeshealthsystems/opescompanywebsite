@@ -5,7 +5,7 @@ Expo app for OPES Health Systems accounts. This is a separate app from OpesCare 
 ## Current state
 
 - App version: `0.1.0` private preview.
-- Five local-only demo previews are available for staff, customer, practitioner, tester and partner workspaces. The administrator demo was removed. Demo previews use fictional `example.test` identities, make no API calls and cannot modify real accounts.
+- Five health-role and eleven hotel-operations sample profiles are available as one-tap local previews. The Super admin and hotel roles are fictional demonstration profiles, not privileged sessions or server accounts. All samples use `example.test` identities, clear any stored sign-in token, make no API calls and cannot modify real accounts.
 - Sign-in uses OAuth 2.0 authorization code with S256 PKCE and the OPES callback `opeshealth://oauth/callback`.
 - Sign-in has no role chooser. The app reads `/me` after OAuth and selects the workspace from the account's RBAC roles and effective API scopes.
 - API access is checked for the signed-in user on every request. The app stores mobile tokens with `expo-secure-store`; browser preview keeps them in memory only.
@@ -34,7 +34,7 @@ For the native OAuth callback, use a development build or installed app with the
 - Testers: assigned tests and issue reporting.
 - Partners: public directory and application submission; private account management awaits partner self-service API operations.
 
-All demo accounts are fictional and local only. They demonstrate the same navigation and forms, while live sign-in routes every operation to the published API. The app does not create demo logins on the server.
+All demo accounts are fictional and local only. Health-role demos use sample health workflows; hotel-role demos show simulated properties, reservations, room readiness, stock, finance and food-service workflows. Sample actions stay in local app state and reset when the demo is exited. No hotel API or live hotel account integration is published by this preview. Real account sign-in routes supported OPES operations to the published API; the app does not create demo logins on the server.
 
 ## Release history
 
