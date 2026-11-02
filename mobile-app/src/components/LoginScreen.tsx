@@ -76,9 +76,7 @@ export default function LoginScreen() {
     try { await promptAsync(); } catch (error) { setMessage(error instanceof Error ? error.message : 'Could not open secure sign-in.'); setBusy(false); }
   };
 
-  const chooseDemo = async (id: string) => { await session.startDemo(id); router.replace('/workspace'); };
-  const healthDemos = demoAccounts.filter(demo => demo.category !== 'hotel');
-  const hotelDemos = demoAccounts.filter(demo => demo.category === 'hotel');
+  const chooseDemo = (id: string) => { session.startDemo(id); router.replace('/workspace'); };
 
   return <Page>
     <Brand />
@@ -89,7 +87,7 @@ export default function LoginScreen() {
       Sign-in uses OAuth 2.0 with PKCE. The secure OPES sign-in sheet returns you to this app after authentication.
     </Text>
     <Text style={{ color: colors.navy, fontSize: 13, lineHeight: 19, textAlign: 'center', marginBottom: 14 }}>
-      Real administrators use secure sign-in and their server-assigned permissions. The super admin below is a fictional sample profile with no access to real accounts or data.
+      Administrators use this same secure sign-in. Your OPES account role opens the administrator workspace automatically; no administrator demo account is used.
     </Text>
     <Pressable accessibilityRole="button" onPress={() => router.push('/signup' as never)} style={{ alignSelf: 'center', padding: 10, marginBottom: 14 }}>
       <Text style={{ color: colors.blue, fontSize: 14, fontWeight: '800' }}>Create an OPES account</Text>
@@ -98,23 +96,14 @@ export default function LoginScreen() {
       <Text style={{ color: colors.blue, fontSize: 14, fontWeight: '700' }}>Forgot your password?</Text>
     </Pressable>
     {!!message && <Notice tone={message.startsWith('Completing') ? 'info' : 'error'}>{message}</Notice>}
-    <Heading eyebrow="Interactive sample mode" title="Explore health workspaces" subtitle="Tap a sample role to open its workspace. These fictional profiles never sign in to or change live OPES accounts." />
-    {healthDemos.map(demo => <Pressable key={demo.id} onPress={() => void chooseDemo(demo.id)} accessibilityRole="button">
+    <Heading eyebrow="Interactive sample mode" title="Explore sample workspaces" subtitle="Fictional staff, customer, practitioner, tester and partner profiles let you try navigation and sample actions. Nothing is sent to the live API." />
+    {demoAccounts.map(demo => <Pressable key={demo.id} onPress={() => chooseDemo(demo.id)} accessibilityRole="button">
       <Card style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
         <View style={{ width: 44, height: 44, borderRadius: 9, backgroundColor: '#E8F1F8', alignItems: 'center', justifyContent: 'center' }}><AppIcon name={getRoleIconName(demo.id)} size={22} color={colors.navy} /></View>
         <View style={{ flex: 1, minWidth: 0 }}><Text style={{ color: colors.navy, fontSize: 15, fontWeight: '700', flexShrink: 1 }}>{demo.label}</Text><Text style={{ color: colors.muted, fontSize: 13, marginTop: 3, flexShrink: 1 }}>{demo.account.name} · tap to explore</Text></View>
         <AppIcon name="chevronRight" size={20} color={colors.muted} />
       </Card>
     </Pressable>)}
-    <Heading eyebrow="Interactive hotel sample mode" title="Explore hotel operations roles" subtitle="One tap opens a role-specific hotel dashboard with fictional reservations, rooms, stock and service records. Sample actions stay on this device." />
-    {hotelDemos.map(demo => <Pressable key={demo.id} onPress={() => void chooseDemo(demo.id)} accessibilityRole="button">
-      <Card style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-        <View style={{ width: 44, height: 44, borderRadius: 9, backgroundColor: '#E8F1F8', alignItems: 'center', justifyContent: 'center' }}><AppIcon name={getRoleIconName(demo.id)} size={22} color={colors.navy} /></View>
-        <View style={{ flex: 1, minWidth: 0 }}><Text style={{ color: colors.navy, fontSize: 15, fontWeight: '700', flexShrink: 1 }}>{demo.label}</Text><Text style={{ color: colors.muted, fontSize: 13, marginTop: 3, flexShrink: 1 }}>{demo.account.name} · sample only</Text></View>
-        <AppIcon name="chevronRight" size={20} color={colors.muted} />
-      </Card>
-    </Pressable>)}
-    <Notice>Sample roles, including Super admin, are simulated previews only. Demo actions cannot contact the live API or grant real permissions.</Notice>
-    <Text style={{ textAlign: 'center', color: colors.muted, fontSize: 12, lineHeight: 18, marginTop: 10 }}>Demo records reset when you leave the sample workspace.</Text>
+    <Text style={{ textAlign: 'center', color: colors.muted, fontSize: 12, lineHeight: 18, marginTop: 10 }}>Demo records are marked clearly and reset when you leave the workspace.</Text>
   </Page>;
 }

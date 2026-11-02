@@ -11,27 +11,6 @@ function display(value: unknown): string {
   return String(value);
 }
 
-function hotelDemoAction(featureId: FeatureId, row: ApiRecord): { label: string; changes: ApiRecord } | null {
-  const status = String(row.status ?? '');
-  const transitions: Partial<Record<FeatureId, Record<string, { label: string; next: string }>>> = {
-    hotelReservations: { confirmed: { label: 'Check in guest', next: 'checked_in' }, checked_in: { label: 'Check out guest', next: 'checked_out' } },
-    hotelRooms: { available: { label: 'Mark occupied', next: 'occupied' }, occupied: { label: 'Send to cleaning', next: 'cleaning' }, cleaning: { label: 'Mark room ready', next: 'available' } },
-    hotelGuests: { in_house: { label: 'Check out guest', next: 'checked_out' } },
-    hotelHousekeeping: { assigned: { label: 'Start task', next: 'in_progress' }, in_progress: { label: 'Complete task', next: 'completed' } },
-    hotelMaintenance: { open: { label: 'Start work order', next: 'in_progress' }, in_progress: { label: 'Resolve work order', next: 'resolved' } },
-    hotelPurchaseOrders: { submitted: { label: 'Receive order', next: 'received' }, approved: { label: 'Receive order', next: 'received' } },
-    hotelInvoices: { due: { label: 'Mark paid', next: 'paid' } },
-    hotelExpenses: { submitted: { label: 'Approve expense', next: 'approved' } },
-    hotelRestaurantOrders: { new: { label: 'Start preparation', next: 'preparing' }, preparing: { label: 'Mark served', next: 'served' } },
-    hotelShifts: { scheduled: { label: 'Clock in', next: 'in_progress' }, in_progress: { label: 'Clock out', next: 'completed' } },
-  };
-  if (featureId === 'hotelInventory') {
-    return { label: 'Receive 5 units', changes: { quantity: Number(row.quantity ?? 0) + 5 } };
-  }
-  const transition = transitions[featureId]?.[status];
-  return transition ? { label: transition.label, changes: { status: transition.next } } : null;
-}
-
 export function FeatureContent({ featureId, inTab = false }: { featureId?: FeatureId; inTab?: boolean }) {
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -138,12 +117,6 @@ export function FeatureContent({ featureId, inTab = false }: { featureId?: Featu
         {!!mayWrite && feature?.id === 'courses' && !['enrolled','in_progress','completed'].includes(status) && <ActionButton label="Enroll in course" onPress={() => void action(row, 'enroll')} busy={acting === key} />}
         {!!mayWrite && feature?.id === 'quotes' && status === 'draft' && <ActionButton label="Mark as sent" onPress={() => void action(row, 'sent')} busy={acting === key} />}
         {!!mayWrite && feature?.id === 'tickets' && <ActionButton label="Reply to ticket" secondary onPress={() => router.push({ pathname: '/action/reply', params: { recordId: key } } as never)} />}
-      {!!session.demo && feature?.id.startsWith('hotel') && hotelDemoAction(feature.id, row) && <ActionButton label={hotelDemoAction(feature.id, row)!.label} secondary onPress={() => {
-        const changes = hotelDemoAction(feature.id, row)!.changes;
-        session.mutateDemo(feature.id, 'update-status', changes, key);
-        setRows(current => current.map(item => String(item.id) === key ? { ...item, ...changes } : item));
-        setMessage(`Sample workflow updated: ${titleValue}.`);
-      }} />}
       </Card>;
     })}
     {!session.demo && feature?.writeScope && !mayWrite && <Notice>This account has read access only. Ask your administrator for the {feature.writeScope} permission to submit changes.</Notice>}

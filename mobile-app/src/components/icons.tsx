@@ -90,27 +90,7 @@ export function getFeatureIconName(id: FeatureId): AppIconName {
     case 'quotes':
     case 'tickets':
     case 'invoices':
-    case 'hotelReservations':
-    case 'hotelInvoices':
-    case 'hotelExpenses':
-    case 'hotelReports':
       return 'file';
-    case 'hotelNetwork':
-    case 'hotelProperties':
-    case 'hotelRooms':
-      return 'home';
-    case 'hotelStaff':
-    case 'hotelGuests':
-      return 'users';
-    case 'hotelHousekeeping':
-    case 'hotelShifts':
-      return 'clipboard';
-    case 'hotelMaintenance':
-    case 'hotelInventory':
-    case 'hotelPurchaseOrders':
-    case 'hotelAccounting':
-    case 'hotelRestaurantOrders':
-      return 'briefcase';
   }
 }
 
@@ -127,23 +107,6 @@ export function getRoleIconName(role: string): AppIconName {
       return 'flask';
     case 'partner':
       return 'handshake';
-    case 'super-admin':
-    case 'hotel-network-admin':
-      return 'shield';
-    case 'hotel-owner':
-    case 'hotel-manager':
-    case 'receptionist':
-      return 'home';
-    case 'warehouse':
-    case 'maintenance':
-      return 'briefcase';
-    case 'accountant':
-      return 'file';
-    case 'restaurant-bar-manager':
-    case 'restaurant-bar-team':
-      return 'users';
-    case 'housekeeping':
-      return 'clipboard';
     default:
       return 'profile';
   }

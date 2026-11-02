@@ -3,17 +3,13 @@ import * as SecureStore from 'expo-secure-store';
 import { createContext, ReactNode, useContext, useMemo, useRef, useState } from 'react';
 import { Platform } from 'react-native';
 
-export type Audience = 'staff' | 'customer' | 'practitioner' | 'tester' | 'partner' | 'hotel';
+export type Audience = 'staff' | 'customer' | 'practitioner' | 'tester' | 'partner';
 export type Account = { id: string; name: string; email: string; roles: string[]; scopes: string[] };
 export type ApiRecord = Record<string, unknown>;
 export type Token = { access_token: string; refresh_token?: string; expires_at?: number; scope?: string };
-export type FeatureId = 'quotes' | 'customers' | 'contacts' | 'partnerApps' | 'deals' | 'serviceRequests' | 'tickets' | 'invoices' | 'customerProfile' | 'practitionerProfile' | 'courses' | 'certificates' | 'assignments' | 'bugReports' | 'partnerships' | 'partnerApplication' | 'notifications' | 'hotelNetwork' | 'hotelProperties' | 'hotelStaff' | 'hotelReservations' | 'hotelRooms' | 'hotelGuests' | 'hotelHousekeeping' | 'hotelMaintenance' | 'hotelInventory' | 'hotelPurchaseOrders' | 'hotelAccounting' | 'hotelInvoices' | 'hotelExpenses' | 'hotelRestaurantOrders' | 'hotelReports' | 'hotelShifts';
+export type FeatureId = 'quotes' | 'customers' | 'contacts' | 'partnerApps' | 'deals' | 'serviceRequests' | 'tickets' | 'invoices' | 'customerProfile' | 'practitionerProfile' | 'courses' | 'certificates' | 'assignments' | 'bugReports' | 'partnerships' | 'partnerApplication' | 'notifications';
 export type Feature = { id: FeatureId; title: string; description: string; endpoint: string; readScope?: string; writeScope?: string; createAction?: string; demoOnly?: boolean };
-export type DemoAccount = {
-  id: string; label: string; audience: Audience; account: Account; organization: string; reference: string;
-  category?: 'health' | 'hotel'; features?: FeatureId[]; overview?: { id: FeatureId; label: string }[];
-  tabs?: { work: FeatureId; focus: FeatureId }; tabLabels?: { work: string; focus: string };
-};
+export type DemoAccount = { id: string; label: string; audience: Audience; account: Account; organization: string; reference: string };
 
 const API = process.env.EXPO_PUBLIC_OHS_API_URL ?? 'https://opeshealthsystems.com/api/v1';
 const CLIENT_ID = process.env.EXPO_PUBLIC_OHS_OAUTH_CLIENT_ID ?? '';
@@ -21,7 +17,7 @@ const TOKEN_KEY = 'opes.health.session.v1';
 const discovery = { authorizationEndpoint: 'https://opeshealthsystems.com/oauth/authorize', tokenEndpoint: `${API}/oauth/user-token` };
 
 export const workspaceTitles: Record<Audience, string> = {
-  staff: 'Staff & administration', customer: 'Customer workspace', practitioner: 'Practitioner workspace', tester: 'Testing workspace', partner: 'Partner workspace', hotel: 'Hotel operations sample',
+  staff: 'Staff & administration', customer: 'Customer workspace', practitioner: 'Practitioner workspace', tester: 'Testing workspace', partner: 'Partner workspace',
 };
 
 export const featureCatalog: Record<FeatureId, Feature> = {
@@ -42,22 +38,6 @@ export const featureCatalog: Record<FeatureId, Feature> = {
   partnerships: { id: 'partnerships', title: 'Partner directory', description: 'Browse organizations in the OPES partner network.', endpoint: '/public/partnerships' },
   partnerApplication: { id: 'partnerApplication', title: 'Apply to partner', description: 'Send a partnership application to OPES Health Systems.', endpoint: '/public/become-a-partner', createAction: 'partnerApplication' },
   notifications: { id: 'notifications', title: 'Notifications', description: 'Review account updates and mark alerts as read.', endpoint: '/notifications', readScope: 'identity:read', writeScope: 'identity:write' },
-  hotelNetwork: { id: 'hotelNetwork', title: 'Network overview', description: 'Review a fictional multi-property portfolio and operational alerts.', endpoint: '', demoOnly: true },
-  hotelProperties: { id: 'hotelProperties', title: 'Properties', description: 'Review sample hotels, occupancy and operating status.', endpoint: '', demoOnly: true },
-  hotelStaff: { id: 'hotelStaff', title: 'Staff & access', description: 'Review sample staff roles, shifts and account status.', endpoint: '', demoOnly: true },
-  hotelReservations: { id: 'hotelReservations', title: 'Reservations', description: 'Review sample arrivals, departures and booking status.', endpoint: '', demoOnly: true },
-  hotelRooms: { id: 'hotelRooms', title: 'Rooms', description: 'Review room availability and readiness.', endpoint: '', demoOnly: true },
-  hotelGuests: { id: 'hotelGuests', title: 'Guest services', description: 'Review fictional guest stays and service requests.', endpoint: '', demoOnly: true },
-  hotelHousekeeping: { id: 'hotelHousekeeping', title: 'Housekeeping', description: 'Review room-turnover tasks and update their sample status.', endpoint: '', demoOnly: true },
-  hotelMaintenance: { id: 'hotelMaintenance', title: 'Maintenance', description: 'Review fictional maintenance tickets and progress.', endpoint: '', demoOnly: true },
-  hotelInventory: { id: 'hotelInventory', title: 'Inventory', description: 'Review sample stock levels and update a local stock count.', endpoint: '', demoOnly: true },
-  hotelPurchaseOrders: { id: 'hotelPurchaseOrders', title: 'Purchasing', description: 'Review fictional purchase orders and their receipt status.', endpoint: '', demoOnly: true },
-  hotelAccounting: { id: 'hotelAccounting', title: 'Accounting', description: 'Review sample revenue, expenses and operating balances.', endpoint: '', demoOnly: true },
-  hotelInvoices: { id: 'hotelInvoices', title: 'Invoices', description: 'Review fictional hotel invoices and update sample payment status.', endpoint: '', demoOnly: true },
-  hotelExpenses: { id: 'hotelExpenses', title: 'Expenses', description: 'Review sample expense submissions and approvals.', endpoint: '', demoOnly: true },
-  hotelRestaurantOrders: { id: 'hotelRestaurantOrders', title: 'Restaurant & bar', description: 'Review sample orders and move them through service.', endpoint: '', demoOnly: true },
-  hotelReports: { id: 'hotelReports', title: 'Reports', description: 'Review fictional occupancy, revenue and service summaries.', endpoint: '', demoOnly: true },
-  hotelShifts: { id: 'hotelShifts', title: 'Shift handover', description: 'Review sample shifts and local clock-in status.', endpoint: '', demoOnly: true },
 };
 
 export const featureIds: Record<Audience, FeatureId[]> = {
@@ -66,71 +46,7 @@ export const featureIds: Record<Audience, FeatureId[]> = {
   practitioner: ['practitionerProfile', 'courses', 'certificates'],
   tester: ['assignments', 'bugReports'],
   partner: ['partnerships', 'partnerApplication'],
-  hotel: ['hotelNetwork','hotelProperties','hotelStaff','hotelReservations','hotelRooms','hotelGuests','hotelHousekeeping','hotelMaintenance','hotelInventory','hotelPurchaseOrders','hotelAccounting','hotelInvoices','hotelExpenses','hotelRestaurantOrders','hotelReports','hotelShifts'],
 };
-
-const makeHotelDemo = (
-  id: string,
-  label: string,
-  name: string,
-  role: string,
-  features: FeatureId[],
-  overview: { id: FeatureId; label: string }[],
-  tabs: { work: FeatureId; focus: FeatureId },
-  tabLabels: { work: string; focus: string },
-): DemoAccount => ({
-  id, label, audience: 'hotel', category: 'hotel',
-  account: { id: `demo-${id}`, name, email: `${id}.preview@example.test`, roles: [role], scopes: [] },
-  organization: 'Example Hospitality Group · Fictional demo', reference: `DEMO-HOT-${id.toUpperCase()}`,
-  features, overview, tabs, tabLabels,
-});
-
-const hotelDemoAccounts: DemoAccount[] = [
-  makeHotelDemo('super-admin', 'Super admin · hotel network', 'Alex Morgan', 'super_admin',
-    ['hotelNetwork','hotelProperties','hotelStaff','hotelReports'],
-    [{ id: 'hotelProperties', label: 'Properties' }, { id: 'hotelStaff', label: 'Staff' }, { id: 'hotelReports', label: 'Reports' }],
-    { work: 'hotelNetwork', focus: 'hotelReports' }, { work: 'Network', focus: 'Reports' }),
-  makeHotelDemo('hotel-network-admin', 'Hotel network admin', 'Jordan Blake', 'hotel_network_admin',
-    ['hotelNetwork','hotelProperties','hotelStaff','hotelReports','hotelInventory'],
-    [{ id: 'hotelProperties', label: 'Properties' }, { id: 'hotelStaff', label: 'Staff' }, { id: 'hotelInventory', label: 'Stock alerts' }],
-    { work: 'hotelProperties', focus: 'hotelStaff' }, { work: 'Properties', focus: 'Staff' }),
-  makeHotelDemo('hotel-owner', 'Hotel owner', 'Morgan Ellis', 'hotel_owner',
-    ['hotelProperties','hotelRooms','hotelAccounting','hotelReports'],
-    [{ id: 'hotelProperties', label: 'Properties' }, { id: 'hotelRooms', label: 'Rooms' }, { id: 'hotelAccounting', label: 'Accounting' }],
-    { work: 'hotelProperties', focus: 'hotelAccounting' }, { work: 'Properties', focus: 'Finance' }),
-  makeHotelDemo('hotel-manager', 'Hotel manager', 'Casey Taylor', 'hotel_manager',
-    ['hotelReservations','hotelRooms','hotelGuests','hotelHousekeeping','hotelMaintenance','hotelReports'],
-    [{ id: 'hotelReservations', label: 'Reservations' }, { id: 'hotelRooms', label: 'Rooms' }, { id: 'hotelHousekeeping', label: 'Room tasks' }],
-    { work: 'hotelReservations', focus: 'hotelHousekeeping' }, { work: 'Arrivals', focus: 'Housekeeping' }),
-  makeHotelDemo('receptionist', 'Receptionist · front desk', 'Riley Carter', 'receptionist',
-    ['hotelReservations','hotelGuests','hotelRooms','hotelShifts'],
-    [{ id: 'hotelReservations', label: 'Reservations' }, { id: 'hotelGuests', label: 'In-house guests' }, { id: 'hotelRooms', label: 'Room status' }],
-    { work: 'hotelReservations', focus: 'hotelGuests' }, { work: 'Bookings', focus: 'Guests' }),
-  makeHotelDemo('warehouse', 'Warehouse officer', 'Sam Rivera', 'warehouse',
-    ['hotelInventory','hotelPurchaseOrders','hotelShifts'],
-    [{ id: 'hotelInventory', label: 'Stock items' }, { id: 'hotelPurchaseOrders', label: 'Purchase orders' }],
-    { work: 'hotelInventory', focus: 'hotelPurchaseOrders' }, { work: 'Stock', focus: 'Orders' }),
-  makeHotelDemo('accountant', 'Hotel accountant', 'Avery Brooks', 'accountant',
-    ['hotelAccounting','hotelInvoices','hotelExpenses','hotelReports'],
-    [{ id: 'hotelInvoices', label: 'Invoices' }, { id: 'hotelExpenses', label: 'Expenses' }, { id: 'hotelReports', label: 'Reports' }],
-    { work: 'hotelAccounting', focus: 'hotelInvoices' }, { work: 'Finance', focus: 'Invoices' }),
-  makeHotelDemo('restaurant-bar-manager', 'Restaurant & bar manager', 'Jamie Quinn', 'restaurant_bar_manager',
-    ['hotelRestaurantOrders','hotelInventory','hotelAccounting','hotelShifts'],
-    [{ id: 'hotelRestaurantOrders', label: 'Open orders' }, { id: 'hotelInventory', label: 'Stock items' }, { id: 'hotelShifts', label: 'Team shifts' }],
-    { work: 'hotelRestaurantOrders', focus: 'hotelInventory' }, { work: 'Service', focus: 'Stock' }),
-  makeHotelDemo('restaurant-bar-team', 'Restaurant & bar team', 'Drew Parker', 'restaurant_bar_staff',
-    ['hotelRestaurantOrders','hotelShifts'],
-    [{ id: 'hotelRestaurantOrders', label: 'Open orders' }, { id: 'hotelShifts', label: 'Team shifts' }],
-    { work: 'hotelRestaurantOrders', focus: 'hotelShifts' }, { work: 'Orders', focus: 'Shifts' }),
-  makeHotelDemo('housekeeping', 'Housekeeping', 'Robin Hayes', 'housekeeping',
-    ['hotelHousekeeping','hotelRooms','hotelShifts'],
-    [{ id: 'hotelHousekeeping', label: 'Room tasks' }, { id: 'hotelRooms', label: 'Room status' }],
-    { work: 'hotelHousekeeping', focus: 'hotelRooms' }, { work: 'My tasks', focus: 'Rooms' }),
-  makeHotelDemo('maintenance', 'Maintenance technician', 'Cameron Lane', 'maintenance',
-    ['hotelMaintenance','hotelRooms','hotelInventory','hotelShifts'],
-    [{ id: 'hotelMaintenance', label: 'Work orders' }, { id: 'hotelRooms', label: 'Room status' }, { id: 'hotelInventory', label: 'Parts stock' }],
-    { work: 'hotelMaintenance', focus: 'hotelRooms' }, { work: 'Work orders', focus: 'Rooms' }),
-];
 
 export const demoAccounts: DemoAccount[] = [
   { id: 'staff', label: 'Staff member', audience: 'staff', account: { id: 'demo-staff', name: 'Taylor Kim', email: 'staff.preview@example.test', roles: ['staff'], scopes: ['finance:read','finance:write','administration:read','crm:read'] }, organization: 'OPES Health Systems · Demo', reference: 'DEMO-STF-001' },
@@ -138,7 +54,6 @@ export const demoAccounts: DemoAccount[] = [
   { id: 'practitioner', label: 'Health practitioner', audience: 'practitioner', account: { id: 'demo-practitioner', name: 'Dr. Amina Ncube', email: 'practitioner.preview@example.test', roles: ['practitioner'], scopes: ['practitioner:read','practitioner:write'] }, organization: 'Example Community Hospital', reference: 'DEMO-PRA-001' },
   { id: 'tester', label: 'Tester', audience: 'tester', account: { id: 'demo-tester', name: 'Jordan Bell', email: 'tester.preview@example.test', roles: ['tester'], scopes: ['testing:read','testing:write'] }, organization: 'OPES Product Testing · Demo', reference: 'DEMO-TST-001' },
   { id: 'partner', label: 'Partner', audience: 'partner', account: { id: 'demo-partner', name: 'Sam Okoro', email: 'partner.preview@example.test', roles: ['partner'], scopes: [] }, organization: 'Example Health Network', reference: 'DEMO-PAR-001' },
-  ...hotelDemoAccounts,
 ];
 
 const sampleRows: Partial<Record<FeatureId, ApiRecord[]>> = {
@@ -175,22 +90,6 @@ const sampleRows: Partial<Record<FeatureId, ApiRecord[]>> = {
   bugReports: [{ id: 'DEMO-BR-01', subject: 'Sample display issue', description: 'Fictional issue used to preview tester workflows.', priority: 'low', status: 'triaged', product: 'OPES Health mobile' }],
   notifications: [{ id: 'DEMO-N-01', title: 'Welcome to your OPES workspace', body: 'Your account workspace is ready to explore.', read_at: null, created_at: '2026-11-01T09:00:00Z' }],
   partnerships: [{ id: 'DEMO-P-01', name: 'Example Health Network', country: 'Cameroon', type: 'Community health' }, { id: 'DEMO-P-02', name: 'CareLink Group', country: 'Ghana', type: 'Technology partner' }],
-  hotelNetwork: [{ id: 'DEMO-HN-01', name: 'Example Hospitality Group', properties: 4, occupied_rooms: 186, available_rooms: 74, open_alerts: 6, status: 'operational' }],
-  hotelProperties: [{ id: 'DEMO-HP-01', name: 'Harbor View Hotel', city: 'Douala', rooms: 120, occupancy: '82%', manager: 'Casey Taylor', status: 'active' }, { id: 'DEMO-HP-02', name: 'Highlands Lodge', city: 'Bamenda', rooms: 64, occupancy: '67%', manager: 'Morgan Ellis', status: 'active' }],
-  hotelStaff: [{ id: 'DEMO-HS-01', name: 'Riley Carter', role: 'Receptionist', property: 'Harbor View Hotel', shift: '07:00–15:00', status: 'active' }, { id: 'DEMO-HS-02', name: 'Robin Hayes', role: 'Housekeeping', property: 'Harbor View Hotel', shift: '08:00–16:00', status: 'active' }],
-  hotelReservations: [{ id: 'DEMO-HR-01', guest: 'Morgan Lee', room: '804', arrival: '2026-11-02', departure: '2026-11-05', property: 'Harbor View Hotel', status: 'confirmed' }, { id: 'DEMO-HR-02', guest: 'Jamie Chen', room: '512', arrival: '2026-11-02', departure: '2026-11-04', property: 'Harbor View Hotel', status: 'confirmed' }],
-  hotelRooms: [{ id: 'DEMO-ROOM-804', name: 'Room 804 · King', property: 'Harbor View Hotel', floor: 8, status: 'available' }, { id: 'DEMO-ROOM-512', name: 'Room 512 · Twin', property: 'Harbor View Hotel', floor: 5, status: 'occupied' }, { id: 'DEMO-ROOM-207', name: 'Room 207 · Queen', property: 'Highlands Lodge', floor: 2, status: 'cleaning' }],
-  hotelGuests: [{ id: 'DEMO-HG-01', name: 'Morgan Lee', room: '804', property: 'Harbor View Hotel', request: 'Extra towels', status: 'in_house' }, { id: 'DEMO-HG-02', name: 'Jamie Chen', room: '512', property: 'Harbor View Hotel', request: 'Airport transfer · 17:30', status: 'in_house' }],
-  hotelHousekeeping: [{ id: 'DEMO-HK-01', title: 'Turnover · Room 207', property: 'Highlands Lodge', assigned_to: 'Robin Hayes', priority: 'high', status: 'assigned' }, { id: 'DEMO-HK-02', title: 'Restock · Room 804', property: 'Harbor View Hotel', assigned_to: 'Jordan Bell', priority: 'normal', status: 'in_progress' }],
-  hotelMaintenance: [{ id: 'DEMO-HM-01', title: 'Air conditioning inspection', location: 'Room 319 · Harbor View Hotel', assigned_to: 'Cameron Lane', priority: 'normal', status: 'open' }, { id: 'DEMO-HM-02', title: 'Replace corridor light', location: 'Floor 5 · Harbor View Hotel', assigned_to: 'Cameron Lane', priority: 'low', status: 'in_progress' }],
-  hotelInventory: [{ id: 'DEMO-HI-01', name: 'Bath towels · standard', property: 'Harbor View Hotel', location: 'Store room A', quantity: 42, reorder_level: 30, unit: 'pieces', status: 'in_stock' }, { id: 'DEMO-HI-02', name: 'Filtered water · 500ml', property: 'Harbor View Hotel', location: 'Kitchen store', quantity: 18, reorder_level: 24, unit: 'cases', status: 'reorder' }],
-  hotelPurchaseOrders: [{ id: 'DEMO-HPO-01', supplier: 'Example Linen Supply', item: 'Bath towels · standard', quantity: 60, expected_date: '2026-11-04', status: 'submitted' }, { id: 'DEMO-HPO-02', supplier: 'Fictional Foods Ltd', item: 'Breakfast provisions', quantity: 12, expected_date: '2026-11-03', status: 'approved' }],
-  hotelAccounting: [{ id: 'DEMO-HA-01', title: 'Harbor View Hotel · November summary', currency: 'XAF', revenue: 42800000, operating_expenses: 26100000, net_operating_income: 16700000, period: 'November 2026', status: 'sample' }],
-  hotelInvoices: [{ id: 'DEMO-HI-INV-01', reference: 'DEMO-INV-2026-018', supplier: 'Example Linen Supply', amount: 840000, currency: 'XAF', due_date: '2026-11-08', status: 'due' }, { id: 'DEMO-HI-INV-02', reference: 'DEMO-INV-2026-017', supplier: 'Fictional Foods Ltd', amount: 425000, currency: 'XAF', due_date: '2026-11-01', status: 'paid' }],
-  hotelExpenses: [{ id: 'DEMO-HE-01', title: 'Guest transport · morning shift', submitted_by: 'Riley Carter', amount: 38000, currency: 'XAF', status: 'submitted' }, { id: 'DEMO-HE-02', title: 'Room amenity restock', submitted_by: 'Robin Hayes', amount: 62500, currency: 'XAF', status: 'approved' }],
-  hotelRestaurantOrders: [{ id: 'DEMO-FO-01', table: 'Table 6', items: [{ product_name: 'Grilled fish', quantity: 1 }, { product_name: 'Plantain', quantity: 1 }], server: 'Drew Parker', opened_at: '12:42', status: 'new' }, { id: 'DEMO-FO-02', table: 'Room service · 512', items: [{ product_name: 'Vegetable soup', quantity: 1 }], server: 'Jamie Quinn', opened_at: '12:35', status: 'preparing' }],
-  hotelReports: [{ id: 'DEMO-REP-01', title: 'Daily operations · Harbor View Hotel', occupancy: '82%', arrivals: 18, departures: 11, open_service_items: 6, status: 'sample' }, { id: 'DEMO-REP-02', title: 'Weekly revenue snapshot · Example Group', revenue: 286400000, currency: 'XAF', property_count: 4, period: '26 Oct–1 Nov 2026', status: 'sample' }],
-  hotelShifts: [{ id: 'DEMO-SH-01', name: 'Front desk · morning shift', property: 'Harbor View Hotel', start: '07:00', end: '15:00', assigned_to: 'Riley Carter', status: 'scheduled' }, { id: 'DEMO-SH-02', name: 'Restaurant · lunch service', property: 'Harbor View Hotel', start: '11:00', end: '19:00', assigned_to: 'Drew Parker', status: 'in_progress' }],
 };
 
 function cloneSamples(): Record<string, ApiRecord[]> {
@@ -199,7 +98,7 @@ function cloneSamples(): Record<string, ApiRecord[]> {
 
 type SessionValue = {
   account: Account | null; audience: Audience | null; token: Token | null; demo: DemoAccount | null; demoRows: Record<string, ApiRecord[]>;
-  setAccount: (value: Account) => void; setAccessToken: (value: Token | null) => Promise<void>; startDemo: (id: string) => Promise<DemoAccount>;
+  setAccount: (value: Account) => void; setAccessToken: (value: Token | null) => Promise<void>; startDemo: (id: string) => DemoAccount;
   clearSession: () => Promise<void>; rowsFor: (feature: FeatureId) => Promise<ApiRecord[]>;
   request: <T = unknown>(path: string, method?: string, body?: unknown, idempotencyKey?: string) => Promise<T>;
   mutateDemo: (feature: FeatureId, action: string, body?: ApiRecord, recordId?: string) => ApiRecord;
@@ -236,11 +135,10 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const startDemo = async (id: string) => {
+  const startDemo = (id: string) => {
     const next = demoAccounts.find(item => item.id === id);
     if (!next) throw new Error('Demo workspace not found.');
-    await setAccessToken(null);
-    setDemo(next); setAccountState(next.account); setAudience(next.audience); setDemoRows(cloneSamples());
+    setDemo(next); setAccountState(next.account); setAudience(next.audience); setTokenState(null); tokenRef.current = null; setDemoRows(cloneSamples());
     return next;
   };
 
@@ -262,7 +160,6 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   };
 
   const request = async <T,>(path: string, method = 'GET', body?: unknown, idempotencyKey?: string): Promise<T> => {
-    if (demo) throw new Error('Demo mode is isolated. Demo accounts cannot contact the OPES API.');
     const active = await refreshToken();
     const headers: Record<string, string> = { Accept: 'application/json' };
     if (active?.access_token) headers.Authorization = `Bearer ${active.access_token}`;

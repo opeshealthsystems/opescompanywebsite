@@ -9,12 +9,11 @@ const destinations: Record<string, { work: FeatureId; focus: FeatureId }> = {
   practitioner: { work: 'courses', focus: 'certificates' },
   tester: { work: 'assignments', focus: 'bugReports' },
   partner: { work: 'partnerships', focus: 'partnerApplication' },
-  hotel: { work: 'hotelReservations', focus: 'hotelRooms' },
 };
 
 export function AdaptiveFeatureTab({ slot }: { slot: 'work' | 'focus' }) {
-  const { audience, demo } = useSession();
-  const feature = demo?.tabs?.[slot] ?? destinations[audience ?? '']?.[slot];
+  const { audience } = useSession();
+  const feature = destinations[audience ?? '']?.[slot];
   if (feature === 'courses') return <LearningCatalogScreen inTab />;
   if (feature === 'certificates') return <PractitionerCertificatesScreen inTab />;
   return <FeatureContent featureId={feature} inTab />;
@@ -26,7 +25,6 @@ export const adaptiveTabLabels = {
   practitioner: { work: 'Courses', focus: 'Awards' },
   tester: { work: 'Assignments', focus: 'Bugs' },
   partner: { work: 'Directory', focus: 'Apply' },
-  hotel: { work: 'Operations', focus: 'Service' },
 } as const;
 
 export const adaptiveTabFeatures: Record<string, { work: FeatureId; focus: FeatureId }> = destinations;

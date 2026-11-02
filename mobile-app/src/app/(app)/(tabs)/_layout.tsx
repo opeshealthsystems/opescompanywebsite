@@ -5,10 +5,10 @@ import { useSession } from '../../../context/SessionContext';
 import { colors } from '../../../components/ui';
 
 export default function AppTabsLayout() {
-  const { audience, demo } = useSession();
+  const { audience } = useSession();
   const role = audience ?? 'customer';
-  const labels = demo?.tabLabels ?? adaptiveTabLabels[role];
-  const features = demo?.tabs ?? adaptiveTabFeatures[role];
+  const labels = adaptiveTabLabels[role];
+  const features = adaptiveTabFeatures[role];
   const icons: Record<'work' | 'focus', AppIconName> = {
     work: getFeatureIconName(features.work),
     focus: getFeatureIconName(features.focus),
