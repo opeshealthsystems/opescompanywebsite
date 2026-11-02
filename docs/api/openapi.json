@@ -7781,7 +7781,7 @@
                 }
             }
         },
-        "/public/courses/{course:slug}": {
+        "/public/courses/{course}": {
             "get": {
                 "operationId": "publiccoursecontroller_show",
                 "summary": "Retrieve Courses",
@@ -7792,7 +7792,7 @@
                 "security": [],
                 "parameters": [
                     {
-                        "name": "course:slug",
+                        "name": "course",
                         "description": "Record identifier or slug from an authorized read response.",
                         "in": "path",
                         "required": true,
@@ -8337,7 +8337,7 @@
                 }
             }
         },
-        "/customer/courses/{course:slug}": {
+        "/customer/courses/{course}": {
             "get": {
                 "operationId": "customer_coursecontroller_show",
                 "summary": "Retrieve Courses",
@@ -8354,7 +8354,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "course:slug",
+                        "name": "course",
                         "description": "Record identifier or slug from an authorized read response.",
                         "in": "path",
                         "required": true,
@@ -8531,7 +8531,7 @@
                 }
             }
         },
-        "/customer/courses/{course:slug}/enroll": {
+        "/customer/courses/{course}/enroll": {
             "post": {
                 "operationId": "customer_coursecontroller_enroll",
                 "summary": "Submit Enroll",
@@ -8548,7 +8548,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "course:slug",
+                        "name": "course",
                         "description": "Record identifier or slug from an authorized read response.",
                         "in": "path",
                         "required": true,
@@ -8716,7 +8716,7 @@
                 }
             }
         },
-        "/customer/courses/{course:slug}/lessons/{lesson}": {
+        "/customer/courses/{course}/lessons/{lesson}": {
             "get": {
                 "operationId": "customer_lessoncontroller_show",
                 "summary": "Retrieve Lessons",
@@ -8733,7 +8733,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "course:slug",
+                        "name": "course",
                         "description": "Record identifier or slug from an authorized read response.",
                         "in": "path",
                         "required": true,
@@ -8920,7 +8920,7 @@
                 }
             }
         },
-        "/customer/courses/{course:slug}/lessons/{lesson}/done": {
+        "/customer/courses/{course}/lessons/{lesson}/done": {
             "post": {
                 "operationId": "customer_lessoncontroller_markDone",
                 "summary": "Submit Done",
@@ -8937,7 +8937,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "course:slug",
+                        "name": "course",
                         "description": "Record identifier or slug from an authorized read response.",
                         "in": "path",
                         "required": true,
@@ -23185,7 +23185,7 @@
                 }
             }
         },
-        "/practitioner/courses/{course:slug}": {
+        "/practitioner/courses/{course}": {
             "get": {
                 "operationId": "practitioner_coursecontroller_show",
                 "summary": "Retrieve Courses",
@@ -23202,7 +23202,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "course:slug",
+                        "name": "course",
                         "description": "Record identifier or slug from an authorized read response.",
                         "in": "path",
                         "required": true,
@@ -23379,7 +23379,7 @@
                 }
             }
         },
-        "/practitioner/courses/{course:slug}/enroll": {
+        "/practitioner/courses/{course}/enroll": {
             "post": {
                 "operationId": "practitioner_coursecontroller_enroll",
                 "summary": "Submit Enroll",
@@ -23396,7 +23396,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "course:slug",
+                        "name": "course",
                         "description": "Record identifier or slug from an authorized read response.",
                         "in": "path",
                         "required": true,
@@ -23564,7 +23564,7 @@
                 }
             }
         },
-        "/practitioner/courses/{course:slug}/lessons/{lesson}": {
+        "/practitioner/courses/{course}/lessons/{lesson}": {
             "get": {
                 "operationId": "practitioner_lessoncontroller_show",
                 "summary": "Retrieve Lessons",
@@ -23581,7 +23581,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "course:slug",
+                        "name": "course",
                         "description": "Record identifier or slug from an authorized read response.",
                         "in": "path",
                         "required": true,
@@ -23768,7 +23768,7 @@
                 }
             }
         },
-        "/practitioner/courses/{course:slug}/lessons/{lesson}/done": {
+        "/practitioner/courses/{course}/lessons/{lesson}/done": {
             "post": {
                 "operationId": "practitioner_lessoncontroller_markDone",
                 "summary": "Submit Done",
@@ -23785,7 +23785,7 @@
                 ],
                 "parameters": [
                     {
-                        "name": "course:slug",
+                        "name": "course",
                         "description": "Record identifier or slug from an authorized read response.",
                         "in": "path",
                         "required": true,
@@ -137121,7 +137121,7 @@
                                             {
                                                 "version": "0.100.0",
                                                 "released_at": "2026-11-02",
-                                                "summary": "Added client-scoped daily API request usage for the trailing 30 UTC calendar days."
+                                                "summary": "Added client-scoped 30-day UTC API usage and normalized slug-bound course parameters in OpenAPI."
                                             },
                                             {
                                                 "version": "0.99.1",

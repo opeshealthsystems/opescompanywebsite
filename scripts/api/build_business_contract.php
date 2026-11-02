@@ -57,7 +57,10 @@ $spec['components']['securitySchemes']['UserOAuth2'] = ['type' => 'oauth2', 'des
 $parser = (new \PhpParser\ParserFactory)->createForNewestSupportedVersion();
 $finder = new \PhpParser\NodeFinder();
 foreach ($registry['definitions'] as $operation => $definition) {
-    $path = '/'.$definition['api_path'];
+    // Laravel's `{resource:field}` route binding is an implementation detail;
+    // OpenAPI path parameters contain only the externally visible parameter name.
+    $apiPath = preg_replace_callback('/\{([^}:]+):[^}]+\}/', fn ($match) => '{'.$match[1].'}', $definition['api_path']);
+    $path = '/'.$apiPath;
     $file = $root.'/'.str_replace('\\', '/', lcfirst($definition['handler'])).'.php';
     $ast = $parser->parse(file_get_contents($file));
     $method = $finder->findFirst($ast, fn ($n) => $n instanceof \PhpParser\Node\Stmt\ClassMethod && $n->name->name === $definition['method']);

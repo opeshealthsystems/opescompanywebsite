@@ -6,7 +6,7 @@ return [
         [
             'version' => '0.100.0',
             'released_at' => '2026-11-02',
-            'summary' => 'Added client-scoped daily API request usage for the trailing 30 UTC calendar days.',
+            'summary' => 'Added client-scoped 30-day UTC API usage and normalized slug-bound course parameters in OpenAPI.',
         ],
         [
             'version' => '0.99.1',

@@ -7,6 +7,7 @@ OpenAPI compatibility. Unsupported/recursive references fail closed.
 import argparse
 import copy
 import json
+import re
 from pathlib import Path
 
 METHODS = {"get", "post", "put", "patch", "delete", "head", "options", "trace"}
@@ -16,6 +17,24 @@ NAME_MAPS = {"properties", "patternProperties", "headers", "content", "responses
 
 class CompatibilityError(ValueError):
     pass
+
+
+def normalize_route_binding_paths(spec):
+    """Treat Laravel `{name:field}` bindings as the same wire path as `{name}`."""
+    normalized = copy.deepcopy(spec)
+    paths = {}
+    for path, item in normalized.get("paths", {}).items():
+        key = re.sub(r"\{([^}:]+):[^}]+\}", r"{\1}", path)
+        if key in paths:
+            raise CompatibilityError(f"Multiple operations normalize to the same path: {key}")
+        parameter_lists = [item.get("parameters", [])] + [operation.get("parameters", []) for method, operation in item.items() if method in METHODS]
+        for parameters in parameter_lists:
+            for parameter in parameters:
+                if parameter.get("in") == "path":
+                    parameter["name"] = re.sub(r":.+$", "", parameter["name"])
+        paths[key] = item
+    normalized["paths"] = paths
+    return normalized
 
 
 def expand(value, spec, trail=(), parent=None):
@@ -117,6 +136,8 @@ def oauth_scope_additions_only(old, new):
 
 def check(baseline, current, corrections=None):
     differences = []
+    baseline = normalize_route_binding_paths(baseline)
+    current = normalize_route_binding_paths(current)
     corrections = {f"{entry['method'].lower()} {entry['path']}": entry for entry in (corrections or [])}
     used_corrections = set()
     if baseline.get("openapi") != current.get("openapi") or baseline.get("jsonSchemaDialect") != current.get("jsonSchemaDialect"):

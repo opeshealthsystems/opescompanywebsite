@@ -6889,11 +6889,11 @@ export const businessOperations = Object.freeze({
     },
     "customer_coursecontroller_enroll": {
         "method": "POST",
-        "path": "/customer/courses/{course:slug}/enroll",
+        "path": "/customer/courses/{course}/enroll",
         "authenticated": true,
         "idempotencyRequired": true,
         "pathParameters": [
-            "course:slug"
+            "course"
         ],
         "queryParameters": [],
         "acceptLanguage": true,
@@ -6916,11 +6916,11 @@ export const businessOperations = Object.freeze({
     },
     "customer_coursecontroller_show": {
         "method": "GET",
-        "path": "/customer/courses/{course:slug}",
+        "path": "/customer/courses/{course}",
         "authenticated": true,
         "idempotencyRequired": false,
         "pathParameters": [
-            "course:slug"
+            "course"
         ],
         "queryParameters": [
             "page",
@@ -7052,11 +7052,11 @@ export const businessOperations = Object.freeze({
     },
     "customer_lessoncontroller_markDone": {
         "method": "POST",
-        "path": "/customer/courses/{course:slug}/lessons/{lesson}/done",
+        "path": "/customer/courses/{course}/lessons/{lesson}/done",
         "authenticated": true,
         "idempotencyRequired": true,
         "pathParameters": [
-            "course:slug",
+            "course",
             "lesson"
         ],
         "queryParameters": [],
@@ -7066,11 +7066,11 @@ export const businessOperations = Object.freeze({
     },
     "customer_lessoncontroller_show": {
         "method": "GET",
-        "path": "/customer/courses/{course:slug}/lessons/{lesson}",
+        "path": "/customer/courses/{course}/lessons/{lesson}",
         "authenticated": true,
         "idempotencyRequired": false,
         "pathParameters": [
-            "course:slug",
+            "course",
             "lesson"
         ],
         "queryParameters": [
@@ -8138,11 +8138,11 @@ export const businessOperations = Object.freeze({
     },
     "practitioner_coursecontroller_enroll": {
         "method": "POST",
-        "path": "/practitioner/courses/{course:slug}/enroll",
+        "path": "/practitioner/courses/{course}/enroll",
         "authenticated": true,
         "idempotencyRequired": true,
         "pathParameters": [
-            "course:slug"
+            "course"
         ],
         "queryParameters": [],
         "acceptLanguage": true,
@@ -8165,11 +8165,11 @@ export const businessOperations = Object.freeze({
     },
     "practitioner_coursecontroller_show": {
         "method": "GET",
-        "path": "/practitioner/courses/{course:slug}",
+        "path": "/practitioner/courses/{course}",
         "authenticated": true,
         "idempotencyRequired": false,
         "pathParameters": [
-            "course:slug"
+            "course"
         ],
         "queryParameters": [
             "page",
@@ -8226,11 +8226,11 @@ export const businessOperations = Object.freeze({
     },
     "practitioner_lessoncontroller_markDone": {
         "method": "POST",
-        "path": "/practitioner/courses/{course:slug}/lessons/{lesson}/done",
+        "path": "/practitioner/courses/{course}/lessons/{lesson}/done",
         "authenticated": true,
         "idempotencyRequired": true,
         "pathParameters": [
-            "course:slug",
+            "course",
             "lesson"
         ],
         "queryParameters": [],
@@ -8240,11 +8240,11 @@ export const businessOperations = Object.freeze({
     },
     "practitioner_lessoncontroller_show": {
         "method": "GET",
-        "path": "/practitioner/courses/{course:slug}/lessons/{lesson}",
+        "path": "/practitioner/courses/{course}/lessons/{lesson}",
         "authenticated": true,
         "idempotencyRequired": false,
         "pathParameters": [
-            "course:slug",
+            "course",
             "lesson"
         ],
         "queryParameters": [
@@ -8648,11 +8648,11 @@ export const businessOperations = Object.freeze({
     },
     "publiccoursecontroller_show": {
         "method": "GET",
-        "path": "/public/courses/{course:slug}",
+        "path": "/public/courses/{course}",
         "authenticated": false,
         "idempotencyRequired": false,
         "pathParameters": [
-            "course:slug"
+            "course"
         ],
         "queryParameters": [
             "page",
