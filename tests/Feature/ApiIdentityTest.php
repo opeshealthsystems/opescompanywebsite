@@ -185,7 +185,8 @@ class ApiIdentityTest extends TestCase
     public function test_developer_pages_are_bilingual_and_link_the_public_contract(): void
     {
         $this->get('/en/developers')->assertOk()->assertSee('Build with OPES APIs')->assertSee('/api/v1/openapi.json')
-            ->assertSee('/downloads/opes-health-api-client-0.3.0.tgz')->assertSee('SHA-256 checksum');
+            ->assertSee('/downloads/opes-health-api-client-0.96.0.tgz')->assertSee('SHA-256 checksum');
         $this->get('/fr/developers')->assertOk()->assertSee('Intégrez les API OPES');
     }
 }
+
