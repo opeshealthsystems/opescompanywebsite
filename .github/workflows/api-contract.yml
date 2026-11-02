@@ -43,4 +43,11 @@ jobs:
       - run: composer audit --no-dev --no-interaction
       - run: cp .env.example .env
       - run: php artisan key:generate
+      - name: Keep OpenAPI and SDK operations generated from the workflow registry
+        run: |
+          php scripts/api/build_business_contract.php
+          php scripts/api/generate_business_sdk_operations.php
+          git diff --exit-code -- docs/api/openapi.json sdk/node/src/business-operations.js sdk/node/src/business-operations.d.ts
+      - name: Require shared application workflows for named web routes
+        run: php scripts/api/audit_web_adapters.php
       - run: php artisan test --compact tests/Feature/EnquiriesApiTest.php tests/Feature/WebsiteFormDeliveryTest.php tests/Feature/EnquiryReliabilityTest.php tests/Feature/ApiIdentityTest.php
