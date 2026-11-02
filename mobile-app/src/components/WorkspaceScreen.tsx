@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { ApiRecord, FeatureId, featureCatalog, featureIds, useSession, workspaceTitles } from '../context/SessionContext';
 import { ActionButton, Brand, Card, Heading, Notice, Page, SectionTitle, colors } from './ui';
+import { AppHeader } from './AppHeader';
 import { AppIcon, getFeatureIconName } from './icons';
 
 const overviewByAudience: Record<string, { id: FeatureId; label: string }[]> = {
@@ -48,14 +49,7 @@ export default function WorkspaceScreen() {
   if (!session.account) return <Page><Brand /><Heading title="Your session ended" subtitle="Sign in again to open your account." /><ActionButton label="Return to sign in" onPress={() => router.replace('/')} /></Page>;
 
   const demo = session.demo;
-  return <Page>
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 15 }}>
-      <Brand compact />
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
-        {session.isAllowed(featureCatalog.notifications) && <Pressable accessibilityRole="button" accessibilityLabel="Open notifications" onPress={() => router.push('/notifications' as never)} style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }}><AppIcon name="bell" size={19} /></Pressable>}
-        <Pressable accessibilityRole="button" accessibilityLabel="Open my profile" onPress={() => router.push('/profile')} style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 7, paddingHorizontal: 8 }}><AppIcon name="profile" size={18} /><Text style={{ color: colors.blue, fontWeight: '700' }}>Account</Text></Pressable>
-      </View>
-    </View>
+  return <Page fixedHeader={<AppHeader />}>
     {demo && <Notice>DEMO MODE · Fictional sample account. Changes stay in this app and are reset when you leave this workspace.</Notice>}
     <Card style={{ backgroundColor: colors.navy, borderColor: colors.navy, padding: 18, marginBottom: 16 }}>
       <Text style={{ color: '#C8DAE9', fontSize: 11, fontWeight: '800', letterSpacing: 1.1 }}>{demo ? 'INTERACTIVE DEMO' : 'YOUR OPES WORKSPACE'}</Text>

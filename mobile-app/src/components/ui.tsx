@@ -1,20 +1,22 @@
 import { ReactNode } from 'react';
-import { ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, useWindowDimensions, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, TextInput, useWindowDimensions, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export const colors = { navy: '#082D55', blue: '#315F7D', text: '#183853', muted: '#62778B', border: '#D9E2EC', bg: '#F5F8FC', white: '#FFFFFF', pale: '#EDF3F8', success: '#176644', warning: '#77520B', danger: '#8E3540' };
 
-export function Page({ children, scroll = true }: { children: ReactNode; scroll?: boolean }) {
+export function Page({ children, scroll = true, fixedHeader }: { children: ReactNode; scroll?: boolean; fixedHeader?: ReactNode }) {
   const { width } = useWindowDimensions();
   const horizontalPadding = width <= 340 ? 14 : width <= 380 ? 16 : 20;
   const content = <View style={[styles.content, { paddingHorizontal: horizontalPadding }]}>{children}</View>;
-  return <SafeAreaView edges={['top', 'right', 'bottom', 'left']} style={styles.safe}>{scroll ? <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.scroll}>{content}</ScrollView> : content}</SafeAreaView>;
+  return <SafeAreaView edges={['top', 'right', 'bottom', 'left']} style={styles.safe}>
+    {!!fixedHeader && <View style={styles.fixedHeader}><View style={[styles.fixedHeaderContent, { paddingHorizontal: horizontalPadding }]}>{fixedHeader}</View></View>}
+    {scroll ? <ScrollView style={styles.body} keyboardShouldPersistTaps="handled" contentContainerStyle={styles.scroll}>{content}</ScrollView> : content}
+  </SafeAreaView>;
 }
 
 export function Brand({ compact = false }: { compact?: boolean }) {
   return <View style={styles.brand}>
-    <Image source={require('../../assets/opes-seal.png')} style={compact ? styles.compactIcon : styles.icon} accessibilityLabel="OPES Health Systems seal" />
-    <View><Text style={styles.brandText}>OPES <Text style={styles.brandAccent}>HEALTH</Text></Text><Text style={styles.brandSub}>HEALTH SYSTEMS</Text></View>
+    <View accessibilityLabel="OPES Health Systems"><Text style={[styles.brandText, compact && styles.compactBrandText]}>OPES <Text style={styles.brandAccent}>HEALTH</Text></Text><Text style={[styles.brandSub, compact && styles.compactBrandSub]}>SYSTEMS</Text></View>
   </View>;
 }
 
@@ -49,8 +51,8 @@ export function Notice({ children, tone = 'info' }: { children: ReactNode; tone?
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: colors.bg }, scroll: { flexGrow: 1 }, content: { width: '100%', maxWidth: 620, alignSelf: 'center', paddingHorizontal: 20, paddingTop: 18, paddingBottom: 34 },
-  brand: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 22 }, icon: { width: 64, height: 64, resizeMode: 'contain' }, compactIcon: { width: 42, height: 42, resizeMode: 'contain' }, brandText: { color: colors.navy, fontSize: 17, fontWeight: '800', letterSpacing: 0.5 }, brandAccent: { color: colors.blue, fontWeight: '600' }, brandSub: { color: colors.muted, fontSize: 12, fontWeight: '700', letterSpacing: 1.2, marginTop: 2 },
+  safe: { flex: 1, backgroundColor: colors.bg }, body: { flex: 1 }, scroll: { flexGrow: 1 }, content: { width: '100%', maxWidth: 620, alignSelf: 'center', paddingHorizontal: 20, paddingTop: 18, paddingBottom: 34 }, fixedHeader: { width: '100%', backgroundColor: colors.white, borderBottomWidth: 1, borderBottomColor: colors.border }, fixedHeaderContent: { width: '100%', maxWidth: 620, alignSelf: 'center', paddingTop: 4, paddingBottom: 4 },
+  brand: { alignItems: 'flex-start', justifyContent: 'center', marginBottom: 0 }, brandText: { color: colors.navy, fontSize: 17, fontWeight: '800', letterSpacing: 0.5 }, compactBrandText: { fontSize: 15 }, brandAccent: { color: colors.blue, fontWeight: '600' }, brandSub: { color: colors.muted, fontSize: 11, fontWeight: '700', letterSpacing: 1.2, marginTop: 1 }, compactBrandSub: { fontSize: 10 },
   heading: { marginTop: 12, marginBottom: 20 }, eyebrow: { color: colors.blue, fontSize: 12, fontWeight: '800', letterSpacing: 1, marginBottom: 6 }, title: { color: colors.navy, fontSize: 27, lineHeight: 34, fontWeight: '700' }, subtitle: { color: colors.muted, fontSize: 14, lineHeight: 21, marginTop: 5 },
   button: { minHeight: 48, borderRadius: 7, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 16, marginBottom: 10, borderWidth: 1 }, primaryButton: { backgroundColor: colors.navy, borderColor: colors.navy }, secondaryButton: { backgroundColor: colors.white, borderColor: '#BBC9D6' }, buttonText: { color: colors.white, fontSize: 15, fontWeight: '700' }, secondaryButtonText: { color: colors.navy }, buttonDisabled: { opacity: 0.55 },
   card: { backgroundColor: colors.white, borderWidth: 1, borderColor: colors.border, borderRadius: 9, padding: 15, marginBottom: 11 }, sectionRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 18, marginBottom: 10 }, sectionTitle: { color: colors.navy, fontSize: 16, fontWeight: '700' }, fieldWrap: { marginBottom: 14 }, fieldLabel: { color: colors.text, fontSize: 14, fontWeight: '700', marginBottom: 6 }, input: { minHeight: 48, borderWidth: 1, borderColor: '#BBC9D6', borderRadius: 7, paddingHorizontal: 12, paddingVertical: 10, backgroundColor: colors.white, color: colors.text, fontSize: 16 }, textarea: { minHeight: 102, textAlignVertical: 'top' },

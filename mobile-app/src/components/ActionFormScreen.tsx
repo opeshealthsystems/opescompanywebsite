@@ -2,7 +2,8 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { ApiRecord, FeatureId, featureCatalog, useSession } from '../context/SessionContext';
-import { ActionButton, Brand, Field, Heading, Notice, Page, colors } from './ui';
+import { ActionButton, Field, Heading, Notice, Page, colors } from './ui';
+import { AppHeader } from './AppHeader';
 
 type Values = Record<string, string>;
 const tomorrow = () => { const date = new Date(); date.setDate(date.getDate() + 1); return date.toISOString().slice(0, 10); };
@@ -120,8 +121,8 @@ export default function ActionFormScreen() {
 
   const targetFeature: FeatureId = type === 'quote' ? 'quotes' : type === 'customer' ? 'customers' : type === 'contact' ? 'contacts' : type === 'deal' ? 'deals' : type === 'serviceRequest' ? 'serviceRequests' : type === 'ticket' || type === 'reply' ? 'tickets' : type === 'customerProfile' ? 'customerProfile' : type === 'practitionerProfile' ? 'practitionerProfile' : type === 'bugReport' ? 'assignments' : type === 'partnerApplication' ? 'partnerships' : 'quotes';
 
-  return <Page>
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}><Brand compact /><Pressable onPress={() => router.back()}><Text style={{ color: colors.blue, fontWeight: '700', padding: 8 }}>Cancel</Text></Pressable></View>
+  return <Page fixedHeader={<AppHeader />}>
+    <Pressable accessibilityRole="button" onPress={() => router.back()} style={{ minHeight: 44, alignSelf: 'flex-start', justifyContent: 'center', paddingRight: 12 }}><Text style={{ color: colors.blue, fontWeight: '700' }}>Cancel</Text></Pressable>
     {!!session.demo && <Notice>DEMO MODE · Submitting here changes only fictional sample data on this device.</Notice>}
     <Heading eyebrow={session.demo ? 'Demo action' : 'Account action'} title={titles[type] ?? 'Complete action'} subtitle={session.demo ? 'Try this workflow with sample information; nothing is sent to OPES.' : 'This form submits through your account’s authorized OPES API.'} />
     {type === 'quote' && <>

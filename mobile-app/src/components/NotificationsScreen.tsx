@@ -2,8 +2,9 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, Pressable, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { ApiRecord, featureCatalog, useSession } from '../context/SessionContext';
-import { ActionButton, Brand, Card, Heading, Notice, Page, SectionTitle, colors } from './ui';
+import { ActionButton, Card, Heading, Notice, Page, SectionTitle, colors } from './ui';
 import { AppIcon } from './icons';
+import { AppHeader } from './AppHeader';
 
 function notificationRows(value: unknown): ApiRecord[] {
   if (Array.isArray(value)) return value.filter((row): row is ApiRecord => !!row && typeof row === 'object');
@@ -85,8 +86,7 @@ export default function NotificationsScreen() {
   };
 
   const visible = unreadOnly ? rows.filter(row => !row.read_at && String(row.status ?? '').toLowerCase() !== 'read') : rows;
-  return <Page>
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}><Brand compact /><Pressable accessibilityRole="button" onPress={() => router.back()} style={{ minHeight: 44, justifyContent: 'center', paddingHorizontal: 8 }}><Text style={{ color: colors.blue, fontWeight: '700' }}>Back</Text></Pressable></View>
+  return <Page fixedHeader={<AppHeader />}>
     {session.demo && <Notice>DEMO MODE · Sample notifications are fictional and remain on this device.</Notice>}
     <Heading eyebrow="Account updates" title="Notifications" subtitle={`${unreadCount} unread ${unreadCount === 1 ? 'notification' : 'notifications'}`} />
     {!!error && <Notice tone="error">{error}</Notice>}

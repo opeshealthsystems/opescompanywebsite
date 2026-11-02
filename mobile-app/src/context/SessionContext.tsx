@@ -49,7 +49,7 @@ export const featureIds: Record<Audience, FeatureId[]> = {
 };
 
 export const demoAccounts: DemoAccount[] = [
-  { id: 'staff', label: 'Staff member', audience: 'staff', account: { id: 'demo-staff', name: 'Taylor Kim', email: 'staff.preview@example.test', roles: ['staff'], scopes: ['finance:read','finance:write','administration:read','crm:read'] }, organization: 'OPES Health Systems · Demo', reference: 'DEMO-STF-001' },
+  { id: 'staff', label: 'Staff member', audience: 'staff', account: { id: 'demo-staff', name: 'Taylor Kim', email: 'staff.preview@example.test', roles: ['staff'], scopes: ['finance:read','finance:write','administration:read','crm:read','enquiries:read','enquiries:write'] }, organization: 'OPES Health Systems · Demo', reference: 'DEMO-STF-001' },
   { id: 'customer', label: 'Customer', audience: 'customer', account: { id: 'demo-customer', name: 'Maya Clinic Admin', email: 'customer.preview@example.test', roles: ['customer'], scopes: ['customer:read','customer:write'] }, organization: 'Example Care Clinic', reference: 'DEMO-CUS-001' },
   { id: 'practitioner', label: 'Health practitioner', audience: 'practitioner', account: { id: 'demo-practitioner', name: 'Dr. Amina Ncube', email: 'practitioner.preview@example.test', roles: ['practitioner'], scopes: ['practitioner:read','practitioner:write'] }, organization: 'Example Community Hospital', reference: 'DEMO-PRA-001' },
   { id: 'tester', label: 'Tester', audience: 'tester', account: { id: 'demo-tester', name: 'Jordan Bell', email: 'tester.preview@example.test', roles: ['tester'], scopes: ['testing:read','testing:write'] }, organization: 'OPES Product Testing · Demo', reference: 'DEMO-TST-001' },

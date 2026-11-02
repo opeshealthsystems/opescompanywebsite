@@ -2,13 +2,63 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, Text, View } from 'react-native';
 import { ApiRecord, featureCatalog, FeatureId, useSession } from '../context/SessionContext';
-import { ActionButton, Brand, Card, Heading, Notice, Page, SectionTitle, colors } from './ui';
+import { ActionButton, Card, Heading, Notice, Page, SectionTitle, colors } from './ui';
 import { AppIcon } from './icons';
+import { AppHeader } from './AppHeader';
 
 function display(value: unknown): string {
   if (value === null || value === undefined || value === '') return '—';
-  if (typeof value === 'object') return Array.isArray(value) ? `${value.length} items` : JSON.stringify(value);
+  if (typeof value === 'object') return JSON.stringify(value, null, 2);
   return String(value);
+}
+
+function DetailRow({ label, value }: { label: string; value: unknown }) {
+  if (value === null || value === undefined || value === '') return null;
+  return <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingVertical: 6, gap: 6, borderBottomWidth: 1, borderBottomColor: '#EEF2F5' }}>
+    <Text style={{ color: colors.muted, fontSize: 12, lineHeight: 18, flex: 0.8, minWidth: 92 }}>{label.replaceAll('_', ' ')}</Text>
+    <Text selectable style={{ color: colors.text, fontSize: 13, lineHeight: 19, flex: 1.2, minWidth: 120 }}>{display(value)}</Text>
+  </View>;
+}
+
+function QuoteDetails({ row }: { row: ApiRecord }) {
+  const knownFields = ['id', 'reference', 'title', 'status', 'created_at', 'valid_until', 'currency', 'subtotal', 'tax_rate', 'tax_amount', 'total', 'notes', 'lead', 'creator', 'items'];
+  const extras = Object.entries(row).filter(([field]) => !knownFields.includes(field));
+  const lead = row.lead && typeof row.lead === 'object' ? row.lead as ApiRecord : null;
+  const creator = row.creator && typeof row.creator === 'object' ? row.creator as ApiRecord : null;
+  const items = Array.isArray(row.items) ? row.items as ApiRecord[] : [];
+  const money = (value: unknown) => value === null || value === undefined || value === '' ? '—' : `${String(row.currency ?? '')} ${Number(value).toLocaleString()}`.trim();
+
+  return <View>
+    <Text style={{ color: colors.navy, fontSize: 14, fontWeight: '800', marginBottom: 4 }}>Quote summary</Text>
+    <DetailRow label="quote_id" value={row.id} />
+    <DetailRow label="reference" value={row.reference} />
+    <DetailRow label="title" value={row.title} />
+    <DetailRow label="status" value={row.status} />
+    <DetailRow label="created_at" value={row.created_at} />
+    <DetailRow label="valid_until" value={row.valid_until} />
+    <DetailRow label="subtotal" value={money(row.subtotal)} />
+    <DetailRow label="tax_rate" value={row.tax_rate == null ? null : `${row.tax_rate}%`} />
+    <DetailRow label="tax_amount" value={money(row.tax_amount)} />
+    <DetailRow label="total" value={money(row.total)} />
+    <DetailRow label="notes" value={row.notes} />
+    {lead && <>
+      <Text style={{ color: colors.navy, fontSize: 14, fontWeight: '800', marginTop: 14, marginBottom: 4 }}>Customer / enquiry</Text>
+      {Object.entries(lead).filter(([field]) => field !== 'id').map(([field, value]) => <DetailRow key={`lead-${field}`} label={field} value={value} />)}
+    </>}
+    {creator && <>
+      <Text style={{ color: colors.navy, fontSize: 14, fontWeight: '800', marginTop: 14, marginBottom: 4 }}>Prepared by</Text>
+      {Object.entries(creator).filter(([field]) => ['name', 'email'].includes(field)).map(([field, value]) => <DetailRow key={`creator-${field}`} label={field} value={value} />)}
+    </>}
+    <Text style={{ color: colors.navy, fontSize: 14, fontWeight: '800', marginTop: 14, marginBottom: 4 }}>Line items · {items.length}</Text>
+    {items.length === 0 && <Text style={{ color: colors.muted, fontSize: 13, lineHeight: 19, paddingVertical: 6 }}>No line item detail was included in this response.</Text>}
+    {items.map((item, index) => <View key={String(item.id ?? index)} style={{ backgroundColor: '#F5F8FC', borderRadius: 7, padding: 10, marginTop: 6 }}>
+      <Text style={{ color: colors.navy, fontSize: 13, fontWeight: '800' }}>{String(item.product_name ?? item.title ?? item.description ?? `Item ${index + 1}`)}</Text>
+      {item.description != null && String(item.description).length > 0 && !!item.product_name && <Text style={{ color: colors.muted, fontSize: 12, lineHeight: 17, marginTop: 3 }}>{String(item.description)}</Text>}
+      <Text style={{ color: colors.text, fontSize: 12, lineHeight: 18, marginTop: 5 }}>Quantity {display(item.quantity)} · Unit {money(item.unit_price)} · Line total {money(item.total ?? (Number(item.quantity ?? 0) * Number(item.unit_price ?? 0)))}</Text>
+      {Object.entries(item).filter(([field]) => !['id', 'product_name', 'title', 'description', 'quantity', 'unit_price', 'total', 'quote_id', 'created_at', 'updated_at'].includes(field)).map(([field, value]) => <DetailRow key={`item-${index}-${field}`} label={field} value={value} />)}
+    </View>)}
+    {extras.map(([field, value]) => <DetailRow key={`extra-${field}`} label={field} value={value} />)}
+  </View>;
 }
 
 export function FeatureContent({ featureId, inTab = false }: { featureId?: FeatureId; inTab?: boolean }) {
@@ -80,8 +130,7 @@ export function FeatureContent({ featureId, inTab = false }: { featureId?: Featu
   };
   const title = feature?.title ?? 'Workspace';
 
-  return <Page>
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}><Brand compact />{!inTab && <Pressable onPress={() => router.push('/profile')}><Text style={{ color: colors.blue, fontWeight: '700', padding: 8 }}>Profile</Text></Pressable>}</View>
+  return <Page fixedHeader={<AppHeader />}>
     {!inTab && <Pressable accessibilityRole="button" onPress={() => router.back()} style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 4 }}><AppIcon name="chevronLeft" size={18} /><Text style={{ color: colors.blue, fontSize: 14, fontWeight: '700' }}>Back to workspace</Text></Pressable>}
     {!!session.demo && <Notice>DEMO MODE · All records and actions on this screen are fictional and local to this app.</Notice>}
     <Heading eyebrow="Workspace" title={title} subtitle={feature?.description ?? 'Manage account information and work items.'} />
@@ -99,12 +148,18 @@ export function FeatureContent({ featureId, inTab = false }: { featureId?: Featu
         <Pressable accessibilityRole="button" onPress={() => setExpanded(isOpen ? null : key)}>
           <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8 }}><Text style={{ color: colors.navy, fontSize: 15, fontWeight: '700', flex: 1, minWidth: 0, flexShrink: 1 }}>{titleValue}</Text>{!!status && <Text style={{ color: colors.blue, fontSize: 12, fontWeight: '800', textTransform: 'uppercase', flexShrink: 1, textAlign: 'right' }}>{status.replaceAll('_', ' ')}</Text>}</View>
           <Text style={{ color: colors.muted, fontSize: 12, lineHeight: 18, marginTop: 6 }}>{[row.reference, row.description, row.organization_name, row.product, row.due_date].filter(Boolean).map(display).join(' · ') || feature?.description}</Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 8 }}><Text style={{ color: colors.blue, fontSize: 13, fontWeight: '700' }}>{isOpen ? 'Hide details' : 'View details'}</Text><AppIcon name="chevronRight" size={18} /></View>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 8 }}><Text style={{ color: colors.blue, fontSize: 13, fontWeight: '700' }}>{isOpen ? (feature?.id === 'quotes' ? 'Hide quote details' : feature?.id === 'customers' ? 'Hide customer details' : 'Hide details') : (feature?.id === 'quotes' ? 'View quote' : feature?.id === 'customers' ? 'View customer details' : 'View details')}</Text><AppIcon name="chevronRight" size={18} /></View>
         </Pressable>
+        {feature?.id === 'quotes' && <View style={{ flexDirection: 'row', gap: 8, marginTop: 12 }}>
+          <View style={{ flex: 1, minWidth: 0 }}><ActionButton label={isOpen ? 'Hide quote' : 'View quote'} secondary onPress={() => setExpanded(isOpen ? null : key)} /></View>
+          <View style={{ flex: 1, minWidth: 0 }}><ActionButton label={status === 'draft' || !status ? 'Mark as sent' : status.replaceAll('_', ' ')} secondary={status !== 'draft' && !!status} onPress={() => { if (status === 'draft' && mayWrite) void action(row, 'sent'); }} disabled={status !== 'draft' || !mayWrite} busy={acting === key && status === 'draft'} /></View>
+        </View>}
         {isOpen && <View style={{ borderTopWidth: 1, borderTopColor: colors.border, marginTop: 12, paddingTop: 10 }}>
-          {Object.entries(row).filter(([field]) => !['id','items','replies'].includes(field)).map(([field, value]) => <View key={field} style={{ flexDirection: 'row', paddingVertical: 4, gap: 8 }}><Text style={{ color: colors.muted, fontSize: 12, flex: 0.8, minWidth: 0, flexShrink: 1 }}>{field.replaceAll('_', ' ')}</Text><Text selectable style={{ color: colors.text, fontSize: 12, flex: 1.2, minWidth: 0, flexShrink: 1 }}>{display(value)}</Text></View>)}
-          {Array.isArray(row.items) && <View style={{ marginTop: 6 }}>{(row.items as ApiRecord[]).map((item, i) => <Text key={i} style={{ color: colors.text, fontSize: 12, marginTop: 4 }}>{String(item.product_name ?? item.description ?? 'Item')} · {display(item.quantity)} × {display(item.unit_price)}</Text>)}</View>}
-          {Array.isArray(row.replies) && <View style={{ marginTop: 8 }}>{(row.replies as ApiRecord[]).map((reply, i) => <Text key={i} style={{ color: colors.muted, fontSize: 12, marginTop: 4 }}>{String(reply.author ?? 'Reply')}: {String(reply.body ?? '')}</Text>)}</View>}
+          {feature?.id === 'quotes' ? <QuoteDetails row={row} /> : <>
+            {Object.entries(row).filter(([field]) => !(feature?.id !== 'customers' && field === 'id') && !['items','replies'].includes(field)).map(([field, value]) => <DetailRow key={field} label={field} value={value} />)}
+            {Array.isArray(row.items) && <View style={{ marginTop: 6 }}>{(row.items as ApiRecord[]).map((item, i) => <Text key={i} style={{ color: colors.text, fontSize: 12, marginTop: 4 }}>{String(item.product_name ?? item.description ?? 'Item')} · {display(item.quantity)} × {display(item.unit_price)}</Text>)}</View>}
+            {Array.isArray(row.replies) && <View style={{ marginTop: 8 }}>{(row.replies as ApiRecord[]).map((reply, i) => <Text key={i} style={{ color: colors.muted, fontSize: 12, marginTop: 4 }}>{String(reply.author ?? 'Reply')}: {String(reply.body ?? '')}</Text>)}</View>}
+          </>}
         </View>}
         {!!mayWrite && feature?.id === 'assignments' && status !== 'completed' && <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 12 }}>
           {status === 'pending' && <View style={{ flexGrow: 1, flexBasis: 130, minWidth: 130 }}><ActionButton label="Start" secondary onPress={() => void action(row, 'start')} busy={acting === key} /></View>}
@@ -115,7 +170,6 @@ export function FeatureContent({ featureId, inTab = false }: { featureId?: Featu
         {!!mayWrite && feature?.id === 'partnerApps' && status === 'pending' && <ActionButton label="Start review" secondary onPress={() => void action(row, 'partnerReview')} busy={acting === key} />}
         {!!mayWrite && feature?.id === 'partnerApps' && ['pending','reviewing'].includes(status) && <View style={{ flexDirection: 'row', gap: 8 }}><View style={{ flex: 1 }}><ActionButton label="Approve" onPress={() => void action(row, 'partnerApprove')} busy={acting === key} /></View><View style={{ flex: 1 }}><ActionButton label="Reject" secondary onPress={() => void action(row, 'partnerReject')} busy={acting === key} /></View></View>}
         {!!mayWrite && feature?.id === 'courses' && !['enrolled','in_progress','completed'].includes(status) && <ActionButton label="Enroll in course" onPress={() => void action(row, 'enroll')} busy={acting === key} />}
-        {!!mayWrite && feature?.id === 'quotes' && status === 'draft' && <ActionButton label="Mark as sent" onPress={() => void action(row, 'sent')} busy={acting === key} />}
         {!!mayWrite && feature?.id === 'tickets' && <ActionButton label="Reply to ticket" secondary onPress={() => router.push({ pathname: '/action/reply', params: { recordId: key } } as never)} />}
       </Card>;
     })}

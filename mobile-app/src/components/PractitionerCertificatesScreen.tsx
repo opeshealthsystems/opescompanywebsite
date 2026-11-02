@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, Pressable, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, Text } from 'react-native';
 import { useRouter } from 'expo-router';
 import { ApiRecord, useSession } from '../context/SessionContext';
-import { Brand, Card, Heading, Notice, Page, SectionTitle, colors } from './ui';
+import { Card, Heading, Notice, Page, SectionTitle, colors } from './ui';
 import { AppIcon } from './icons';
+import { AppHeader } from './AppHeader';
 
 function records(value: unknown): ApiRecord[] {
   return Array.isArray(value) ? value.filter((item): item is ApiRecord => !!item && typeof item === 'object') : [];
@@ -47,8 +48,7 @@ export default function PractitionerCertificatesScreen({ inTab = false }: { inTa
   }, [session]);
 
   useEffect(() => { void Promise.resolve().then(load); }, [load]);
-  return <Page>
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}><Brand compact />{!inTab && <Pressable accessibilityRole="button" onPress={() => router.push('/profile')}><Text style={{ color: colors.blue, fontWeight: '700', padding: 8 }}>Profile</Text></Pressable>}</View>
+  return <Page fixedHeader={<AppHeader />}>
     {!inTab && <Pressable accessibilityRole="button" onPress={() => router.back()} style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 4 }}><AppIcon name="chevronLeft" size={18} /><Text style={{ color: colors.blue, fontSize: 14, fontWeight: '700' }}>Back to learning</Text></Pressable>}
     {session.demo && <Notice>DEMO MODE · Sample certificate details are fictional and stay in this app.</Notice>}
     <Heading eyebrow="Learning record" title="Certificates" subtitle="Review course awards and professional validation certificates associated with your account." />

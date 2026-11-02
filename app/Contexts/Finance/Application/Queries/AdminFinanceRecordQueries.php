@@ -52,7 +52,7 @@ final class AdminFinanceRecordQueries extends WorkflowHandler
     public function quoteQuery(WorkflowInput $input): Builder
     {
         $this->admin($input);
-        return Quote::query()->with(['lead', 'creator'])->orderByDesc('created_at');
+        return Quote::query()->with(['lead', 'creator', 'items'])->orderByDesc('created_at');
     }
 
     public function quotes(WorkflowInput $input): WorkflowResult

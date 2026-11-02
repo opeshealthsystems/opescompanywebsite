@@ -2,8 +2,9 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, Linking, Pressable, Text, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ApiRecord, featureCatalog, useSession } from '../context/SessionContext';
-import { ActionButton, Brand, Card, Heading, Notice, Page, SectionTitle, colors } from './ui';
+import { ActionButton, Card, Heading, Notice, Page, SectionTitle, colors } from './ui';
 import { AppIcon } from './icons';
+import { AppHeader } from './AppHeader';
 
 type Course = ApiRecord & { slug: string; title: string; lessons?: ApiRecord[] };
 type CourseDetail = { course: Course; enrollment: ApiRecord | null; completed_lesson_ids: (number | string)[] };
@@ -65,8 +66,7 @@ export default function StudyLessonScreen() {
 
   const goToLesson = (target: ApiRecord) => router.replace({ pathname: '/course/[slug]/lesson/[id]', params: { slug: String(slug), id: String(target.id) } } as never);
 
-  return <Page>
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}><Brand compact /><Pressable accessibilityRole="button" onPress={() => router.push('/profile')}><Text style={{ color: colors.blue, fontWeight: '700', padding: 8 }}>Profile</Text></Pressable></View>
+  return <Page fixedHeader={<AppHeader />}>
     <Pressable accessibilityRole="button" onPress={() => router.replace({ pathname: '/course/[slug]', params: { slug: String(slug) } } as never)} style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 4 }}><AppIcon name="chevronLeft" size={18} /><Text style={{ color: colors.blue, fontSize: 14, fontWeight: '700' }}>Back to course</Text></Pressable>
     {session.demo && <Notice>DEMO MODE · Completing this lesson changes only the sample account’s progress.</Notice>}
     {busy && <ActivityIndicator color={colors.blue} style={{ marginVertical: 28 }} />}

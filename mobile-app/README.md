@@ -12,7 +12,7 @@ Expo app for OPES Health Systems accounts. This is a separate app from OpesCare 
 - Set `EXPO_PUBLIC_OHS_OAUTH_CLIENT_ID` after an administrator has reviewed and provisioned the public app client. Do not commit client secrets or user tokens.
 - EAS Update is configured with app-version runtime compatibility and `preview`/`production` channels. Native builds check for compatible JavaScript updates on launch; changes to native modules still require a new build.
 - Preview builds and OTA updates use the same EAS `preview` environment for the public API URL and reviewed OAuth app client ID. Compatible updates download on launch and apply after the next restart.
-- The native Android splash screen uses the OPES app icon on the platform background color; splash configuration changes require a new APK.
+- The installed app icon uses the rounded OPES shield mark in `assets/icon.png`; the native splash screen alone uses the full OPES Health Systems seal from `assets/splash-icon.png`. Changes to either native icon require a new APK.
 - Public partner directory browsing and partner applications work without sign-in; private partner account management is not yet in the live API contract.
 - Staff/admin contact and enquiry management uses the published `/admin/enquiries/leads` API and requires both the account's admin role and effective `enquiries:read` or `enquiries:write` scope.
 

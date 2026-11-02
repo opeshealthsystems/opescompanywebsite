@@ -2,8 +2,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { ApiRecord, useSession } from '../context/SessionContext';
-import { Brand, Card, Heading, Notice, Page, SectionTitle, colors } from './ui';
+import { Card, Heading, Notice, Page, SectionTitle, colors } from './ui';
 import { AppIcon } from './icons';
+import { AppHeader } from './AppHeader';
 
 type CourseCard = ApiRecord & { slug: string; title: string; status: string; progress_percent: number; total_lessons?: number };
 type Enrollment = ApiRecord & { course_id: number | string; status: string; progress_percent?: number; total_lessons?: number };
@@ -61,11 +62,7 @@ export default function LearningCatalogScreen({ inTab = false }: { inTab?: boole
   const activeCount = courses.filter(course => ['enrolled', 'in_progress'].includes(course.status)).length;
   const completedCount = courses.filter(course => course.status === 'completed').length;
 
-  return <Page>
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-      <Brand compact />
-      {!inTab && <Pressable accessibilityRole="button" accessibilityLabel="Open profile" onPress={() => router.push('/profile')}><Text style={{ color: colors.blue, fontWeight: '700', padding: 8 }}>Profile</Text></Pressable>}
-    </View>
+  return <Page fixedHeader={<AppHeader />}>
     {!inTab && <Pressable accessibilityRole="button" onPress={() => router.back()} style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 4 }}><AppIcon name="chevronLeft" size={18} /><Text style={{ color: colors.blue, fontSize: 14, fontWeight: '700' }}>Back to workspace</Text></Pressable>}
     {session.demo && <Notice>DEMO MODE · Study progress and course actions are saved locally in this sample workspace.</Notice>}
     <Heading eyebrow="Learning" title="Courses & study" subtitle="Study practical lessons at your pace. Mark each lesson complete to keep your progress and earn course certificates." />

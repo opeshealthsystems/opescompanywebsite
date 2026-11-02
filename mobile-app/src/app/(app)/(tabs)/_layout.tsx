@@ -3,9 +3,11 @@ import { AppIcon, AppIconName, getFeatureIconName } from '../../../components/ic
 import { adaptiveTabFeatures, adaptiveTabLabels } from '../../../components/AdaptiveFeatureTab';
 import { useSession } from '../../../context/SessionContext';
 import { colors } from '../../../components/ui';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function AppTabsLayout() {
   const { audience } = useSession();
+  const insets = useSafeAreaInsets();
   const role = audience ?? 'customer';
   const labels = adaptiveTabLabels[role];
   const features = adaptiveTabFeatures[role];
@@ -18,8 +20,8 @@ export default function AppTabsLayout() {
     tabBarActiveTintColor: colors.navy,
     tabBarInactiveTintColor: colors.muted,
     tabBarLabelStyle: { fontSize: 11, fontWeight: '700', marginTop: 1 },
-    tabBarItemStyle: { minHeight: 56, paddingTop: 4, paddingBottom: 4 },
-    tabBarStyle: { height: 62, paddingTop: 2, paddingBottom: 2, backgroundColor: colors.white, borderTopColor: colors.border, borderTopWidth: 1, elevation: 0 },
+    tabBarItemStyle: { minHeight: 54, paddingTop: 3, paddingBottom: 3 },
+    tabBarStyle: { height: 58 + insets.bottom, paddingTop: 3, paddingBottom: Math.max(insets.bottom, 4), backgroundColor: colors.white, borderTopColor: colors.border, borderTopWidth: 1, elevation: 0 },
     tabBarHideOnKeyboard: true,
     sceneStyle: { backgroundColor: colors.bg },
   }}>

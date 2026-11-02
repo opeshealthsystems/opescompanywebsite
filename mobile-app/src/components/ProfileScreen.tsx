@@ -1,10 +1,11 @@
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { ApiRecord, FeatureId, useSession } from '../context/SessionContext';
 import { ActionButton, Brand, Card, Heading, Notice, Page, SectionTitle, colors } from './ui';
 import Constants from 'expo-constants';
 import * as Updates from 'expo-updates';
+import { AppHeader } from './AppHeader';
 
 export default function ProfileScreen({ inTab = false }: { inTab?: boolean }) {
   const router = useRouter();
@@ -37,8 +38,7 @@ export default function ProfileScreen({ inTab = false }: { inTab?: boolean }) {
   };
 
   if (!session.account) return <Page><Brand /><Heading title="Not signed in" subtitle="Sign in to view your account." /><ActionButton label="Sign in" onPress={() => router.replace('/')} /></Page>;
-  return <Page>
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}><Brand compact />{!inTab && <Pressable onPress={() => router.back()}><Text style={{ color: colors.blue, fontWeight: '700', padding: 8 }}>Back</Text></Pressable>}</View>
+  return <Page fixedHeader={<AppHeader />}>
     {!!session.demo && <Notice>DEMO ACCOUNT · Fictional data. Changes stay local to this sample workspace.</Notice>}
     <Heading eyebrow="Account & profile" title={session.account.name} subtitle={session.account.email} />
     <Card><Text style={{ color: colors.muted, fontSize: 12, fontWeight: '800', letterSpacing: 1 }}>ROLE AND ACCESS</Text><Text style={{ color: colors.navy, fontSize: 14, fontWeight: '700', marginTop: 8 }}>{session.account.roles.join(' · ') || 'Account'}</Text><Text style={{ color: colors.muted, fontSize: 12, lineHeight: 18, marginTop: 7 }}>Your workspace and available actions are determined from the current account roles and API permissions.</Text></Card>
