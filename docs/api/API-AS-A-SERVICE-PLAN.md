@@ -10,7 +10,15 @@
 - Comparing the `0.94.0` live baseline with `0.99.1` finds 17 additions or changes, no confirmed removals, and one potential security-scheme change. Manual comparison shows the OAuth endpoints are unchanged; two management scopes were added. Keep the finding in the compatibility review until the release gate verifies generated clients and consumers.
 - User OAuth uses authorization code with S256 PKCE, consent, role-derived scopes and server-side checks. Machine clients use client credentials restricted to catalogue/integration reads. Public registration and password recovery use versioned endpoints and idempotency keys.
 - The Node SDK is downloadable as a preview and covers the operation identifiers, but it is not published to npm. Developer docs explicitly say there is no public sandbox, automatic client registration, organization tenancy, or full API conversion of every internal/admin action.
-- The live app has role-scoped API reads and writes for supported workspaces. Partner private self-service is absent from the API contract. Course lesson/progress APIs exist; an exams/assessment API is not currently published.
+- The live app has role-scoped API reads and writes for supported workspaces. Five explicitly labelled fictional profiles (staff, customer, practitioner, tester and partner) use local sample records only; there is no administrator demo. Partner private self-service is absent from the API contract. Course lesson/progress APIs exist; an exams/assessment API is not currently published.
+
+## Progress update — 2 November 2026
+
+- The mobile app now uses role-specific home screens and four persistent, role-adaptive tabs. Real accounts sign in through the registered public OAuth client using authorization-code PKCE; `/api/v1/me` roles and scopes select the workspace. The administrator sample profile has been removed.
+- Customer service-request and CRM-deal forms now send the required API fields. Account recovery, notifications, profile actions, course progress and certificates have app screens backed by their published APIs where those operations exist.
+- The live code-level web adapter audit reports 61 named mutations (52 shared application workflows, one shared application-service adapter, eight framework/protocol adapters) and 144 named reads (108 shared application queries, 36 content/view/transport adapters), with zero unmapped routes. This is evidence for the inspected web route boundary, not a claim that every platform capability is API-complete.
+- Android preview OTA group `c0ec69f7-ce49-4c0a-bc2d-d8f683fb2d04` is published for runtime `0.1.0`. Build 6 completed on EAS from commit `4c6b851`; physical-device and real-account sign-in were not exercised.
+- The remaining API product work is still material: isolated sandbox tenants and fictional test data, a registry-published SDK, customer-visible integration usage and support tooling, organization ownership, private partner-account APIs, and exams/assessment APIs. Do not advertise these as shipped.
 
 ## What “API as a service” means for OPES
 

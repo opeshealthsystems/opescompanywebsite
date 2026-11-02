@@ -1,6 +1,6 @@
 # OHS target architecture
 
-Date: 30 October 2026. Status: target design recorded at the owner's direction; implementation and production verification remain pending. This document does not claim that the existing application already implements these capabilities.
+Date: 30 October 2026. Status: target design recorded at the owner's direction; implementation is progressing incrementally. See [IMPLEMENTATION-STATUS.md](IMPLEMENTATION-STATUS.md) for current code and deployment evidence. This target does not claim that the existing application already implements every capability.
 
 ## Mandatory foundation
 
