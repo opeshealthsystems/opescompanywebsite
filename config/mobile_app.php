@@ -12,6 +12,32 @@ return [
     'eas_build_url' => 'https://expo.dev/accounts/opesware/projects/opes-health/builds/46dbe3e7-ee7e-461c-9bca-f067afb6189a',
     'ota_updates' => [
         [
+            'group' => '5180b9a2-3b9c-4037-966b-9f42a697d334',
+            'date' => '2026-11-02',
+            'runtime' => '0.1.0',
+            'title' => [
+                'en' => 'Keep Mark as sent visible on every quote',
+                'fr' => 'Garder l’action Marquer comme envoyé visible sur chaque devis',
+            ],
+            'summary' => [
+                'en' => 'Every quote now shows View quote and Mark as sent side by side. Mark as sent is enabled only for drafts when the account has finance write access. Compatible with existing 0.1.0 preview installs.',
+                'fr' => 'Chaque devis affiche Voir le devis et Marquer comme envoyé côte à côte. L’action n’est active que pour les brouillons si le compte possède les droits d’écriture financière. Compatible avec les installations d’aperçu 0.1.0.',
+            ],
+        ],
+        [
+            'group' => '24512695-225f-4428-870d-a303545098df',
+            'date' => '2026-11-02',
+            'runtime' => '0.2.0',
+            'title' => [
+                'en' => 'Keep Mark as sent visible on every quote',
+                'fr' => 'Garder l’action Marquer comme envoyé visible sur chaque devis',
+            ],
+            'summary' => [
+                'en' => 'Every quote now shows View quote and Mark as sent side by side. Mark as sent is enabled only for drafts when the account has finance write access.',
+                'fr' => 'Chaque devis affiche Voir le devis et Marquer comme envoyé côte à côte. L’action n’est active que pour les brouillons si le compte possède les droits d’écriture financière.',
+            ],
+        ],
+        [
             'group' => '10b96eb6-77da-4c5f-aa61-cccb10691dba',
             'date' => '2026-11-02',
             'runtime' => '0.1.0',
