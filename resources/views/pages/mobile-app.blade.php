@@ -80,7 +80,7 @@
         <h2>{{ $fr ? 'Télécharger la dernière version Android' : 'Download the latest Android app' }}</h2>
         <p>{{ $fr ? 'Version' : 'Version' }} {{ $appRelease['version'] }} · {{ $fr ? 'Build Android' : 'Android build' }} {{ $appRelease['android_build'] }} · {{ $fr ? 'Aperçu privé' : 'Private preview' }} · {{ $fr ? 'Runtime OTA' : 'OTA runtime' }} {{ $appRelease['runtime_version'] }}</p>
         <p>{{ $fr ? 'Cette version remplace les anciens builds d’aperçu. Connectez-vous avec votre compte OPES ; votre rôle détermine votre espace.' : 'This build supersedes earlier preview builds. Sign in with your OPES account; your role determines your workspace.' }}</p>
-        <a href="{{ asset($appRelease['download_path']) }}" download>{{ $fr ? 'Télécharger l’application Android' : 'Download Android app' }}</a>
+        <a href="{{ $appRelease['download_url'] ?? asset($appRelease['download_path']) }}" @if(empty($appRelease['download_url'])) download @endif>{{ $fr ? 'Télécharger l’application Android' : 'Download Android app' }}</a>
         <p class="ohs-app-checksum"><strong>SHA-256:</strong> <code>{{ $appRelease['sha256'] }}</code></p>
         <p><a href="{{ $appRelease['eas_build_url'] }}" target="_blank" rel="noopener noreferrer">{{ $fr ? 'Voir les détails de cette compilation' : 'View this build on EAS' }}</a></p>
         <p>{{ $fr ? 'Besoin d’aide ?' : 'Need help?' }} <a href="mailto:contact@opeshealthsystems.com">contact@opeshealthsystems.com</a></p>

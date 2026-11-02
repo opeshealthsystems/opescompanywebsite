@@ -1,15 +1,29 @@
 <?php
 
 return [
-    'version' => '0.1.0',
-    'android_build' => 6,
-    'runtime_version' => '0.1.0',
+    'version' => '0.2.0',
+    'android_build' => 7,
+    'runtime_version' => '0.2.0',
     'channel' => 'preview',
     'released_at' => '2026-11-02',
-    'download_path' => 'mobile-app/opes-health-0.1.0.apk',
-    'sha256' => '453c7e0e0f79958037438ce63c91ffaf15d27562e3883cd57d857cb7921f95ac',
-    'eas_build_url' => 'https://expo.dev/accounts/opesware/projects/opes-health/builds/772f3b9b-0a13-4509-8d39-ba70520ce413',
+    'download_path' => 'mobile-app/opes-health-0.2.0.apk',
+    'download_url' => 'https://expo.dev/artifacts/eas/lVMzsNQheWsAZce0qWhAz0ALiD7hUNpTnRlOfNjTWM8.apk',
+    'sha256' => '47ccb50a9b9f826ef3fa3f53030e201658f818edb39c85276fa6b77b9814b535',
+    'eas_build_url' => 'https://expo.dev/accounts/opesware/projects/opes-health/builds/46dbe3e7-ee7e-461c-9bca-f067afb6189a',
     'ota_updates' => [
+        [
+            'group' => '10b96eb6-77da-4c5f-aa61-cccb10691dba',
+            'date' => '2026-11-02',
+            'runtime' => '0.1.0',
+            'title' => [
+                'en' => 'Quote details, customer records and safe mobile navigation',
+                'fr' => 'Détails des devis, fiches clients et navigation mobile sûre',
+            ],
+            'summary' => [
+                'en' => 'Added quote and customer detail actions, expanded quote line-item and tax details, fixed sticky app headers and phone-safe bottom tabs, and added role-aware messages access. Existing 0.1.0 installs can receive this compatible update.',
+                'fr' => 'Ajout des actions et détails des devis et clients, des lignes et taxes des devis, correction des en-têtes fixes et onglets adaptés aux zones sûres du téléphone, et accès aux messages selon le rôle. Les installations 0.1.0 peuvent recevoir cette mise à jour compatible.',
+            ],
+        ],
         [
             'group' => '8a1a680d-4beb-4255-8b63-5e3c3b7f4913',
             'date' => '2026-11-02',
@@ -44,7 +58,36 @@ return [
     ],
     'releases' => [
         [
-            'version' => '0.1.0', 'build' => 6, 'date' => '2026-11-02', 'current' => true,
+            'version' => '0.2.0', 'build' => 7, 'date' => '2026-11-02', 'current' => true,
+            'title' => [
+                'en' => 'Detailed quotes, customer profiles and safer navigation',
+                'fr' => 'Devis détaillés, profils clients et navigation plus sûre',
+            ],
+            'summary' => [
+                'en' => 'Current private Android preview. Quote cards include view and send-status actions with detailed line items, customer and tax data; customer cards open full profiles. The app header stays fixed, bottom tabs respect phone safe areas, and the new rounded shield icon is used on device while the full seal remains on the splash screen.',
+                'fr' => 'Aperçu Android privé actuel. Les devis affichent des actions de consultation et d’envoi avec les lignes, données client et taxes ; les fiches clients ouvrent les profils détaillés. L’en-tête reste fixe, les onglets respectent les zones sûres du téléphone, et le nouvel icône bouclier arrondi apparaît sur l’appareil tandis que le sceau complet reste sur l’écran de lancement.',
+            ],
+            'changes' => [
+                'en' => [
+                    'Added side-by-side View quote and Mark as sent actions; details now include customer enquiry, quote dates, line items, taxes, totals and notes.',
+                    'Added explicit customer-detail access with all returned profile fields.',
+                    'Pinned the app header and made the bottom navigation account for Android and iOS safe-area insets.',
+                    'Added a role-aware messages shortcut beside notifications for staff and customer accounts.',
+                    'Changed in-app branding to OPES Health Systems text; the seal is reserved for the splash screen.',
+                    'Applied the supplied rounded shield app icon. App version 0.2.0, Android build 7.',
+                ],
+                'fr' => [
+                    'Ajout des actions Voir le devis et Marquer comme envoyé côte à côte ; les détails incluent le client, les dates, les lignes, les taxes, les totaux et les notes.',
+                    'Ajout d’un accès explicite aux fiches clients avec tous les champs renvoyés par le profil.',
+                    'En-tête fixe et navigation basse adaptée aux zones sûres Android et iOS.',
+                    'Ajout d’un raccourci messages adapté au rôle, à côté des notifications pour le personnel et les clients.',
+                    'Identité textuelle OPES Health Systems dans l’app ; le sceau est réservé à l’écran de lancement.',
+                    'Application de l’icône bouclier arrondie fournie. Version 0.2.0, build Android 7.',
+                ],
+            ],
+        ],
+        [
+            'version' => '0.1.0', 'build' => 6, 'date' => '2026-11-02', 'current' => false,
             'title' => [
                 'en' => 'Secure account sign-in and role workspaces',
                 'fr' => 'Connexion sécurisée et espaces par rôle',
