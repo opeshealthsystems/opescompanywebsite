@@ -2,7 +2,8 @@ import { useRouter } from 'expo-router';
 import { Pressable, View } from 'react-native';
 import { FeatureId, featureCatalog, useSession } from '../context/SessionContext';
 import { AppIcon } from './icons';
-import { Brand, colors } from './ui';
+import { Brand, colors, radius } from './ui';
+import { t } from '../i18n';
 
 export function AppHeader() {
   const router = useRouter();
@@ -18,13 +19,13 @@ export function AppHeader() {
   return <View style={{ minHeight: 48, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
     <Brand compact />
     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
-      {canOpenMessages && messageDestination && <Pressable accessibilityRole="button" accessibilityLabel="Open messages" hitSlop={4} onPress={() => router.push({ pathname: '/feature/[id]', params: { id: messageDestination } } as never)} style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center', borderRadius: 8 }}>
+      {canOpenMessages && messageDestination && <Pressable accessibilityRole="button" accessibilityLabel={t('Open messages')} hitSlop={4} onPress={() => router.push({ pathname: '/feature/[id]', params: { id: messageDestination } } as never)} style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center', borderRadius: radius.md }}>
         <AppIcon name="message" size={20} color={colors.navy} />
       </Pressable>}
-      {canOpenNotifications && <Pressable accessibilityRole="button" accessibilityLabel="Open notifications" hitSlop={4} onPress={() => router.push('/notifications' as never)} style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center', borderRadius: 8 }}>
+      {canOpenNotifications && <Pressable accessibilityRole="button" accessibilityLabel={t('Open notifications')} hitSlop={4} onPress={() => router.push('/notifications' as never)} style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center', borderRadius: radius.md }}>
         <AppIcon name="bell" size={19} color={colors.navy} />
       </Pressable>}
-      <Pressable accessibilityRole="button" accessibilityLabel="Open my account" hitSlop={4} onPress={() => router.push('/profile' as never)} style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center', borderRadius: 8 }}>
+      <Pressable accessibilityRole="button" accessibilityLabel={t('Open my account')} hitSlop={4} onPress={() => router.push('/profile' as never)} style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center', borderRadius: radius.md }}>
         <AppIcon name="profile" size={19} color={colors.navy} />
       </Pressable>
     </View>

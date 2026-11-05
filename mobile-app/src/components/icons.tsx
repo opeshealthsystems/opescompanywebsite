@@ -74,6 +74,7 @@ export function getFeatureIconName(id: FeatureId): AppIconName {
     case 'partnerApps':
     case 'partnerships':
     case 'partnerApplication':
+    case 'partnerAccounts':
       return 'handshake';
     case 'deals':
       return 'briefcase';

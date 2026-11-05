@@ -4,16 +4,18 @@ Expo app for OPES Health Systems accounts. This is a separate app from OpesCare 
 
 ## Current state
 
-- App version: `0.1.0` private preview.
+- App version: `0.3.0` private preview (native build required: Expo SDK 58 patch updates change the runtime).
 - Five local-only demo previews are available for staff, customer, practitioner, tester and partner workspaces. The administrator demo was removed. Demo previews use fictional `example.test` identities, make no API calls and cannot modify real accounts.
 - Sign-in uses OAuth 2.0 authorization code with S256 PKCE and the OPES callback `opeshealth://oauth/callback`.
-- Sign-in has no role chooser. The app reads `/me` after OAuth and selects the workspace from the account's RBAC roles and effective API scopes.
+- Sign-in has no role chooser. The app requests the reviewed client's full scope list; the server trims each token to the scopes the user's roles allow (`ApprovedScopeRepository`), then the app reads `/me` and selects the workspace. The registered mobile OAuth client must include every scope the app requests, including `partner:read` and `partner:write`, or every sign-in fails with `invalid_scope`.
 - API access is checked for the signed-in user on every request. The app stores mobile tokens with `expo-secure-store`; browser preview keeps them in memory only.
 - Set `EXPO_PUBLIC_OHS_OAUTH_CLIENT_ID` after an administrator has reviewed and provisioned the public app client. Do not commit client secrets or user tokens.
 - EAS Update is configured with app-version runtime compatibility and `preview`/`production` channels. Native builds check for compatible JavaScript updates on launch; changes to native modules still require a new build.
 - Preview builds and OTA updates use the same EAS `preview` environment for the public API URL and reviewed OAuth app client ID. Compatible updates download on launch and apply after the next restart.
 - The installed app icon uses the rounded OPES shield mark in `assets/icon.png`; the native splash screen alone uses the full OPES Health Systems seal from `assets/splash-icon.png`. Changes to either native icon require a new APK.
-- Public partner directory browsing and partner applications work without sign-in; private partner account management is not yet in the live API contract.
+- Public partner directory browsing and partner applications work without sign-in. Linked partner owners can edit their organization profile and manage members.
+- English and French: the app follows the device language, with an override on the Account tab. Strings live in `src/i18n.fr.ts` keyed by the English text; run `npm run i18n:check` after changing any user-facing text.
+- Design tokens (`colors`, `radius`, `space`) live in `src/components/ui.tsx`; screens should not hard-code colours.
 - Staff/admin contact and enquiry management uses the published `/admin/enquiries/leads` API and requires both the account's admin role and effective `enquiries:read` or `enquiries:write` scope.
 
 ## Run locally

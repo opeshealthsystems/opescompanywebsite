@@ -4,10 +4,12 @@ import { adaptiveTabFeatures, adaptiveTabLabels } from '../../../components/Adap
 import { useSession } from '../../../context/SessionContext';
 import { colors } from '../../../components/ui';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { t } from '../../../i18n';
 
 export default function AppTabsLayout() {
   const { audience } = useSession();
   const insets = useSafeAreaInsets();
+  // Accounts without a recognised workspace get Home and Account only, never another role's tabs.
   const role = audience ?? 'customer';
   const labels = adaptiveTabLabels[role];
   const features = adaptiveTabFeatures[role];
@@ -25,9 +27,9 @@ export default function AppTabsLayout() {
     tabBarHideOnKeyboard: true,
     sceneStyle: { backgroundColor: colors.bg },
   }}>
-    <Tabs.Screen name="workspace" options={{ title: 'Home', tabBarIcon: ({ focused }) => <AppIcon name="home" color={focused ? colors.navy : colors.muted} size={20} /> }} />
-    <Tabs.Screen name="work" options={{ title: labels.work, tabBarIcon: ({ focused }) => <AppIcon name={icons.work} color={focused ? colors.navy : colors.muted} size={20} /> }} />
-    <Tabs.Screen name="focus" options={{ title: labels.focus, tabBarIcon: ({ focused }) => <AppIcon name={icons.focus} color={focused ? colors.navy : colors.muted} size={20} /> }} />
-    <Tabs.Screen name="profile" options={{ title: 'Account', tabBarIcon: ({ focused }) => <AppIcon name="profile" color={focused ? colors.navy : colors.muted} size={20} /> }} />
+    <Tabs.Screen name="workspace" options={{ title: t('Home'), tabBarIcon: ({ focused }) => <AppIcon name="home" color={focused ? colors.navy : colors.muted} size={20} /> }} />
+    <Tabs.Screen name="work" options={{ href: audience ? undefined : null, title: t(labels.work), tabBarIcon: ({ focused }) => <AppIcon name={icons.work} color={focused ? colors.navy : colors.muted} size={20} /> }} />
+    <Tabs.Screen name="focus" options={{ href: audience ? undefined : null, title: t(labels.focus), tabBarIcon: ({ focused }) => <AppIcon name={icons.focus} color={focused ? colors.navy : colors.muted} size={20} /> }} />
+    <Tabs.Screen name="profile" options={{ title: t('Account'), tabBarIcon: ({ focused }) => <AppIcon name="profile" color={focused ? colors.navy : colors.muted} size={20} /> }} />
   </Tabs>;
 }

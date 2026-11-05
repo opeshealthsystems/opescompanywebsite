@@ -8,7 +8,7 @@ const destinations: Record<string, { work: FeatureId; focus: FeatureId }> = {
   customer: { work: 'serviceRequests', focus: 'tickets' },
   practitioner: { work: 'courses', focus: 'certificates' },
   tester: { work: 'assignments', focus: 'bugReports' },
-  partner: { work: 'partnerships', focus: 'partnerApplication' },
+  partner: { work: 'partnerAccounts', focus: 'partnerApplication' },
 };
 
 export function AdaptiveFeatureTab({ slot }: { slot: 'work' | 'focus' }) {
@@ -22,9 +22,9 @@ export function AdaptiveFeatureTab({ slot }: { slot: 'work' | 'focus' }) {
 export const adaptiveTabLabels = {
   staff: { work: 'Quotes', focus: 'Contacts' },
   customer: { work: 'Services', focus: 'Support' },
-  practitioner: { work: 'Courses', focus: 'Awards' },
-  tester: { work: 'Assignments', focus: 'Bugs' },
-  partner: { work: 'Directory', focus: 'Apply' },
+  practitioner: { work: 'Courses', focus: 'Certificates' },
+  tester: { work: 'Assignments', focus: 'Bug reports' },
+  partner: { work: 'Organizations', focus: 'Apply' },
 } as const;
 
 export const adaptiveTabFeatures: Record<string, { work: FeatureId; focus: FeatureId }> = destinations;

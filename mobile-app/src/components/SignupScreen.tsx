@@ -2,7 +2,8 @@ import { useRef, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSession } from '../context/SessionContext';
-import { ActionButton, Brand, Card, Field, Heading, Notice, Page, colors } from './ui';
+import { ActionButton, Brand, Card, Field, Heading, Notice, Page, colors, radius } from './ui';
+import { getLang, t } from '../i18n';
 
 type AccountType = 'individual' | 'facility' | 'practitioner';
 type SignupValues = {
@@ -31,11 +32,11 @@ export default function SignupScreen() {
 
   const set = (key: keyof SignupValues, value: string) => setValues(current => ({ ...current, [key]: value }));
   const validate = () => {
-    if (!values.name.trim() || !values.email.trim()) return 'Enter your name and email address.';
-    if (values.password.length < 8) return 'Choose a password with at least 8 characters.';
-    if (values.password !== values.password_confirmation) return 'The passwords do not match.';
-    if (accountType === 'facility' && (!values.facility_name.trim() || !values.facility_type.trim() || !values.country.trim())) return 'Enter your facility name, facility type and country.';
-    if (accountType === 'individual' && !values.country.trim()) return 'Enter your country.';
+    if (!values.name.trim() || !values.email.trim()) return t('Enter your name and email address.');
+    if (values.password.length < 8) return t('Choose a password with at least 8 characters.');
+    if (values.password !== values.password_confirmation) return t('The passwords do not match.');
+    if (accountType === 'facility' && (!values.facility_name.trim() || !values.facility_type.trim() || !values.country.trim())) return t('Enter your facility name, facility type and country.');
+    if (accountType === 'individual' && !values.country.trim()) return t('Enter your country.');
     return '';
   };
 
@@ -47,7 +48,7 @@ export default function SignupScreen() {
       const payload: Record<string, string> = {
         account_type: accountType, name: values.name.trim(), email: values.email.trim(),
         password: values.password, password_confirmation: values.password_confirmation,
-        phone: values.phone.trim(), locale: 'en',
+        phone: values.phone.trim(), locale: getLang(),
       };
       if (accountType === 'facility') Object.assign(payload, {
         facility_name: values.facility_name.trim(), facility_type: values.facility_type.trim(),
@@ -66,55 +67,55 @@ export default function SignupScreen() {
       await session.request('/public/accounts', 'POST', payload, idempotency.current.key);
       router.replace({ pathname: '/', params: { registered: '1' } });
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Your account could not be created. Please try again.');
+      setError(e instanceof Error ? e.message : t('Your account could not be created. Please try again.'));
     } finally { setBusy(false); }
   };
 
   return <Page>
     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
       <Brand compact />
-      <Pressable accessibilityRole="button" onPress={() => router.replace('/')}><Text style={{ color: colors.blue, fontWeight: '700', padding: 8 }}>Sign in</Text></Pressable>
+      <Pressable accessibilityRole="button" onPress={() => router.replace('/')}><Text style={{ color: colors.blue, fontWeight: '700', padding: 8 }}>{t('Sign in')}</Text></Pressable>
     </View>
-    <Heading eyebrow="Create an account" title="Join OPES Health" subtitle="Create your account in the app. Your account type and permissions are assigned by OPES based on this registration." />
-    <Text style={{ color: colors.text, fontSize: 13, fontWeight: '700', marginBottom: 8 }}>Account type</Text>
+    <Heading eyebrow={t('Create an account')} title={t('Join OPES Health')} subtitle={t('Create your account in the app. Your account type and permissions are assigned by OPES based on this registration.')} />
+    <Text style={{ color: colors.text, fontSize: 13, fontWeight: '700', marginBottom: 8 }}>{t('Account type')}</Text>
     <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 14 }}>
-      {([['individual', 'Individual'], ['facility', 'Health facility'], ['practitioner', 'Practitioner']] as const).map(([value, label]) => {
+      {([['individual', t('Individual')], ['facility', t('Health facility')], ['practitioner', t('Practitioner')]] as const).map(([value, label]) => {
         const selected = accountType === value;
-        return <Pressable key={value} accessibilityRole="button" accessibilityState={{ selected }} onPress={() => setAccountType(value)} style={{ borderRadius: 7, paddingHorizontal: 12, paddingVertical: 10, borderWidth: 1, borderColor: selected ? colors.navy : colors.border, backgroundColor: selected ? colors.navy : colors.white }}>
+        return <Pressable key={value} accessibilityRole="button" accessibilityState={{ selected }} onPress={() => setAccountType(value)} style={{ borderRadius: radius.sm, paddingHorizontal: 12, paddingVertical: 10, borderWidth: 1, borderColor: selected ? colors.navy : colors.border, backgroundColor: selected ? colors.navy : colors.white }}>
           <Text style={{ color: selected ? colors.white : colors.text, fontSize: 12, fontWeight: '700' }}>{label}</Text>
         </Pressable>;
       })}
     </View>
-    <Field label="Full name" value={values.name} onChangeText={value => set('name', value)} autoCapitalize="words" />
-    <Field label="Email address" value={values.email} onChangeText={value => set('email', value)} keyboardType="email-address" autoCapitalize="none" />
-    <Field label="Phone (optional)" value={values.phone} onChangeText={value => set('phone', value)} keyboardType="phone-pad" />
+    <Field label={t('Full name')} value={values.name} onChangeText={value => set('name', value)} autoCapitalize="words" />
+    <Field label={t('Email address')} value={values.email} onChangeText={value => set('email', value)} keyboardType="email-address" autoCapitalize="none" />
+    <Field label={t('Phone (optional)')} value={values.phone} onChangeText={value => set('phone', value)} keyboardType="phone-pad" />
     {(accountType === 'individual' || accountType === 'facility') && <>
       {accountType === 'facility' && <>
-        <Field label="Facility name" value={values.facility_name} onChangeText={value => set('facility_name', value)} />
-        <Field label="Facility type" value={values.facility_type} onChangeText={value => set('facility_type', value)} placeholder="Clinic, hospital, laboratory…" />
+        <Field label={t('Facility name')} value={values.facility_name} onChangeText={value => set('facility_name', value)} />
+        <Field label={t('Facility type')} value={values.facility_type} onChangeText={value => set('facility_type', value)} placeholder={t('Clinic, hospital, laboratory…')} />
       </>}
-      <Field label="Country" value={values.country} onChangeText={value => set('country', value)} />
-      <Field label="City (optional)" value={values.city} onChangeText={value => set('city', value)} />
+      <Field label={t('Country')} value={values.country} onChangeText={value => set('country', value)} />
+      <Field label={t('City (optional)')} value={values.city} onChangeText={value => set('city', value)} />
     </>}
     {accountType === 'practitioner' && <>
-      <Text style={{ color: colors.text, fontSize: 12, fontWeight: '700', marginBottom: 7 }}>Profession</Text>
+      <Text style={{ color: colors.text, fontSize: 12, fontWeight: '700', marginBottom: 7 }}>{t('Profession')}</Text>
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 7, marginBottom: 14 }}>
         {professions.map(([value, label]) => {
           const selected = values.profession === value;
-          return <Pressable key={value} accessibilityRole="button" accessibilityState={{ selected }} onPress={() => set('profession', value)} style={{ borderRadius: 6, paddingHorizontal: 10, paddingVertical: 8, borderWidth: 1, borderColor: selected ? colors.navy : colors.border, backgroundColor: selected ? '#E8F1F8' : colors.white }}>
-            <Text style={{ color: colors.navy, fontSize: 12, fontWeight: selected ? '800' : '600' }}>{label}</Text>
+          return <Pressable key={value} accessibilityRole="button" accessibilityState={{ selected }} onPress={() => set('profession', value)} style={{ borderRadius: radius.sm, paddingHorizontal: 10, paddingVertical: 8, borderWidth: 1, borderColor: selected ? colors.navy : colors.border, backgroundColor: selected ? colors.tile : colors.white }}>
+            <Text style={{ color: colors.navy, fontSize: 12, fontWeight: selected ? '800' : '600' }}>{t(label)}</Text>
           </Pressable>;
         })}
       </View>
-      <Field label="Specialty (optional)" value={values.specialty} onChangeText={value => set('specialty', value)} />
-      <Field label="Workplace (optional)" value={values.workplace_name} onChangeText={value => set('workplace_name', value)} />
-      <Field label="Workplace country" value={values.workplace_country} onChangeText={value => set('workplace_country', value)} />
+      <Field label={t('Specialty (optional)')} value={values.specialty} onChangeText={value => set('specialty', value)} />
+      <Field label={t('Workplace (optional)')} value={values.workplace_name} onChangeText={value => set('workplace_name', value)} />
+      <Field label={t('Workplace country')} value={values.workplace_country} onChangeText={value => set('workplace_country', value)} />
     </>}
-    <Field label="Password (minimum 8 characters)" value={values.password} onChangeText={value => set('password', value)} secureTextEntry autoCapitalize="none" />
-    <Field label="Confirm password" value={values.password_confirmation} onChangeText={value => set('password_confirmation', value)} secureTextEntry autoCapitalize="none" />
-    {accountType === 'practitioner' && <Card style={{ backgroundColor: '#F1F6FA' }}><Text style={{ color: colors.muted, fontSize: 12, lineHeight: 18 }}>Practitioner accounts can access learning, study progress and certificates after you sign in. Public registration does not grant staff or administrator permissions.</Text></Card>}
+    <Field label={t('Password (minimum 8 characters)')} value={values.password} onChangeText={value => set('password', value)} secureTextEntry autoCapitalize="none" />
+    <Field label={t('Confirm password')} value={values.password_confirmation} onChangeText={value => set('password_confirmation', value)} secureTextEntry autoCapitalize="none" />
+    {accountType === 'practitioner' && <Card style={{ backgroundColor: colors.surfaceAlt }}><Text style={{ color: colors.muted, fontSize: 12, lineHeight: 18 }}>{t('Practitioner accounts can access learning, study progress and certificates after you sign in. Public registration does not grant staff or administrator permissions.')}</Text></Card>}
     {!!error && <Notice tone="error">{error}</Notice>}
-    <ActionButton label={busy ? 'Creating account…' : 'Create account'} onPress={() => void createAccount()} busy={busy} />
+    <ActionButton label={busy ? t('Creating account…') : t('Create account')} onPress={() => void createAccount()} busy={busy} />
     <Text style={{ color: colors.muted, fontSize: 12, lineHeight: 17, textAlign: 'center', marginTop: 4 }}>Already have an account? Use secure sign-in. Your role and app access come from your OPES account.</Text>
   </Page>;
 }
