@@ -1179,6 +1179,70 @@ $certificateIndex['responses']['200']['content']['application/json']['schema'] =
 ]], 'practitioner.certificatecontroller.index');
 unset($certificateIndex['responses']['200']['content']['application/pdf']);
 unset($certificateIndex);
+$examChoice = ['type' => 'object', 'required' => ['id', 'label'], 'properties' => ['id' => ['type' => 'string'], 'label' => ['type' => 'string']]];
+$examQuestion = ['type' => 'object', 'required' => ['id', 'prompt', 'choices', 'points'], 'properties' => [
+    'id' => ['type' => 'string'], 'prompt' => ['type' => 'string'], 'choices' => ['type' => 'array', 'minItems' => 2, 'items' => $examChoice], 'points' => ['type' => 'integer', 'minimum' => 1],
+]];
+$learnerAssessment = ['type' => 'object', 'required' => ['id', 'course_id', 'course_slug', 'title', 'instructions', 'pass_mark', 'attempt_limit', 'duration_minutes', 'questions'], 'properties' => [
+    'id' => ['type' => 'integer'], 'course_id' => ['type' => 'integer'], 'course_slug' => ['type' => ['string', 'null']], 'title' => ['type' => 'string'], 'instructions' => ['type' => ['string', 'null']],
+    'pass_mark' => ['type' => 'integer', 'minimum' => 1, 'maximum' => 100], 'attempt_limit' => ['type' => ['integer', 'null']], 'duration_minutes' => ['type' => ['integer', 'null']],
+    'questions' => ['type' => 'array', 'items' => $examQuestion],
+]];
+$assessmentAttemptSummary = ['type' => 'object', 'required' => ['id', 'status', 'score', 'passed', 'started_at', 'submitted_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'enum' => ['in_progress', 'submitted', 'expired']], 'score' => ['type' => ['number', 'string', 'null']],
+    'passed' => ['type' => ['boolean', 'null']], 'started_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'submitted_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+]];
+$attemptsRemaining = ['type' => ['integer', 'null'], 'minimum' => 0];
+$examList = &$spec['paths']['/practitioner/courses/{course}/assessments']['get'];
+$examList['responses']['200']['description'] = 'Published exams for an enrolled practitioner, with attempt counts and the latest result. Correct answers are not returned.';
+$examList['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['assessments'], 'properties' => ['assessments' => ['type' => 'array', 'items' => [
+    'type' => 'object', 'required' => ['id', 'course_id', 'title', 'instructions', 'pass_mark', 'attempt_limit', 'duration_minutes', 'attempts_used', 'attempts_remaining', 'latest_attempt'], 'properties' => [
+        'id' => ['type' => 'integer'], 'course_id' => ['type' => 'integer'], 'title' => ['type' => 'string'], 'instructions' => ['type' => ['string', 'null']],
+        'pass_mark' => ['type' => 'integer'], 'attempt_limit' => ['type' => ['integer', 'null']], 'duration_minutes' => ['type' => ['integer', 'null']],
+        'attempts_used' => ['type' => 'integer', 'minimum' => 0], 'attempts_remaining' => $attemptsRemaining,
+        'latest_attempt' => ['oneOf' => [$assessmentAttemptSummary, ['type' => 'null']]],
+    ],
+]]]], 'practitioner.assessments.index');
+unset($examList);
+$examShow = &$spec['paths']['/practitioner/assessments/{assessment}']['get'];
+$examShow['responses']['200']['description'] = 'Published exam questions and this practitioner’s attempts. Learner question data excludes correct choice identifiers.';
+$examShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['assessment', 'attempts', 'attempts_used', 'attempts_remaining'], 'properties' => [
+    'assessment' => $learnerAssessment, 'attempts' => ['type' => 'array', 'items' => $assessmentAttemptSummary], 'attempts_used' => ['type' => 'integer', 'minimum' => 0], 'attempts_remaining' => $attemptsRemaining,
+]], 'practitioner.assessments.show');
+unset($examShow);
+$examAttempt = &$spec['paths']['/practitioner/assessments/{assessment}/attempts/{attempt}']['get'];
+$examAttempt['responses']['200']['description'] = 'Reads only the authenticated practitioner’s attempt. Correct answer review appears only after submission.';
+$examAttempt['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['attempt'], 'properties' => [
+    'attempt' => $assessmentAttemptSummary, 'answers' => ['type' => 'object', 'additionalProperties' => ['type' => 'string']],
+    'deadline' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'review' => ['type' => 'array', 'items' => ['type' => 'object', 'required' => ['question_id', 'prompt', 'selected_choice_id', 'selected_choice_label', 'correct_choice_id', 'correct_choice_label', 'correct', 'explanation'], 'properties' => [
+        'question_id' => ['type' => 'string'], 'prompt' => ['type' => 'string'], 'selected_choice_id' => ['type' => ['string', 'null']], 'selected_choice_label' => ['type' => ['string', 'null']],
+        'correct_choice_id' => ['type' => 'string'], 'correct_choice_label' => ['type' => ['string', 'null']], 'correct' => ['type' => 'boolean'], 'explanation' => ['type' => ['string', 'null']],
+    ]]],
+]], 'practitioner.assessments.attempt');
+unset($examAttempt);
+$saveAnswers = &$spec['paths']['/practitioner/assessments/{assessment}/attempts/{attempt}']['patch'];
+$saveAnswers['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['attempt', 'answered_count', 'question_count'], 'properties' => [
+    'attempt' => ['type' => 'object', 'required' => ['id', 'status', 'started_at'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'in_progress'], 'started_at' => ['type' => 'string', 'format' => 'date-time']]],
+    'answered_count' => ['type' => 'integer', 'minimum' => 0], 'question_count' => ['type' => 'integer', 'minimum' => 0],
+]], 'practitioner.assessments.answers.save');
+unset($saveAnswers);
+$startAttempt = &$spec['paths']['/practitioner/assessments/{assessment}/attempts']['post'];
+$startAttempt['responses']['201']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['attempt', 'assessment', 'deadline'], 'properties' => [
+    'attempt' => ['type' => 'object', 'required' => ['id', 'status', 'started_at', 'answers'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'in_progress'], 'started_at' => ['type' => 'string', 'format' => 'date-time'], 'answers' => ['type' => 'object', 'additionalProperties' => ['type' => 'string']]]],
+    'assessment' => $learnerAssessment, 'deadline' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+]], 'practitioner.assessments.attempts.start');
+unset($startAttempt['responses']['200']);
+unset($startAttempt);
+$submitAttempt = &$spec['paths']['/practitioner/assessments/{assessment}/attempts/{attempt}/submit']['post'];
+$submitAttempt['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['attempt', 'review', 'score', 'passed', 'pass_mark'], 'properties' => [
+    'attempt' => $assessmentAttemptSummary,
+    'review' => ['type' => 'array', 'items' => ['type' => 'object', 'required' => ['question_id', 'selected_choice_id', 'correct_choice_id', 'correct', 'explanation'], 'properties' => [
+        'question_id' => ['type' => 'string'], 'selected_choice_id' => ['type' => 'string'], 'correct_choice_id' => ['type' => 'string'], 'correct' => ['type' => 'boolean'], 'explanation' => ['type' => ['string', 'null']],
+    ]]],
+    'score' => ['type' => 'number', 'minimum' => 0, 'maximum' => 100], 'passed' => ['type' => 'boolean'], 'pass_mark' => ['type' => 'integer', 'minimum' => 1, 'maximum' => 100],
+]], 'practitioner.assessments.attempts.submit');
+unset($submitAttempt);
 $contractPath = $root.'/docs/api/openapi.json';
 $contractTemp = $contractPath.'.tmp';
 if (file_put_contents($contractTemp, json_encode($spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR)."\n") === false || !rename($contractTemp, $contractPath)) {

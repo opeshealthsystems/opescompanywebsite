@@ -1,3 +1,7 @@
+## SDK 0.121.0 — typed practitioner exam workflows (6 November 2026)
+
+Adds field-specific responses for exam lists and details, attempt start and resume, autosaved answers, and server-scored submission review. Learner question types intentionally omit correct-choice fields; the review type exposes scoring details only after submission. OpenAPI remains 0.118.0 because this documents existing behavior. This is a private downloadable preview, not an npm registry release. Archive size is 47080 bytes; SHA-256 is `b1bf1bc549818b8b6042c9f15a99e32cfa5f67d9f90ae4c4e37e70ef17d89f19`.
+
 ## SDK 0.120.0 — practitioner learning and certificate response contracts (6 November 2026)
 
 Adds field-specific success schemas for practitioners’ active course catalogue and enrollment progress, course detail and lesson navigation, and course/validation certificates. The generated TypeScript results expose progress percentages, completed lesson references, lesson content and certificate identifiers from the existing API projections. OpenAPI remains 0.118.0 because runtime behavior is unchanged. This private preview remains unpublished to npm. The 46,996-byte downloadable preview SHA-256 is `d3ea1ed928e6343c3d9d8d9f54963bb36e7c87962489282f7c67021b7dc079bf`; it remains unpublished to npm.

@@ -65349,7 +65349,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Published exams for an enrolled practitioner, with attempt counts and the latest result. Correct answers are not returned.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -65369,117 +65369,120 @@
                                                 "assessments": {
                                                     "type": "array",
                                                     "items": {
-                                                        "allOf": [
-                                                            {
-                                                                "type": "object",
-                                                                "required": [
-                                                                    "id",
-                                                                    "course_id",
-                                                                    "title",
-                                                                    "pass_mark",
-                                                                    "questions"
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "course_id",
+                                                            "title",
+                                                            "instructions",
+                                                            "pass_mark",
+                                                            "attempt_limit",
+                                                            "duration_minutes",
+                                                            "attempts_used",
+                                                            "attempts_remaining",
+                                                            "latest_attempt"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "course_id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "title": {
+                                                                "type": "string"
+                                                            },
+                                                            "instructions": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "pass_mark": {
+                                                                "type": "integer"
+                                                            },
+                                                            "attempt_limit": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "duration_minutes": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "attempts_used": {
+                                                                "type": "integer",
+                                                                "minimum": 0
+                                                            },
+                                                            "attempts_remaining": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
                                                                 ],
-                                                                "properties": {
-                                                                    "id": {
-                                                                        "type": "integer"
-                                                                    },
-                                                                    "course_id": {
-                                                                        "type": "integer"
-                                                                    },
-                                                                    "course_slug": {
-                                                                        "type": "string"
-                                                                    },
-                                                                    "title": {
-                                                                        "type": "string"
-                                                                    },
-                                                                    "instructions": {
-                                                                        "type": [
-                                                                            "string",
-                                                                            "null"
-                                                                        ]
-                                                                    },
-                                                                    "pass_mark": {
-                                                                        "type": "integer"
-                                                                    },
-                                                                    "attempt_limit": {
-                                                                        "type": [
-                                                                            "integer",
-                                                                            "null"
-                                                                        ]
-                                                                    },
-                                                                    "duration_minutes": {
-                                                                        "type": [
-                                                                            "integer",
-                                                                            "null"
-                                                                        ]
-                                                                    },
-                                                                    "questions": {
-                                                                        "type": "array",
-                                                                        "items": {
-                                                                            "type": "object",
-                                                                            "required": [
-                                                                                "id",
-                                                                                "prompt",
-                                                                                "choices"
-                                                                            ],
-                                                                            "properties": {
-                                                                                "id": {
-                                                                                    "type": "string"
-                                                                                },
-                                                                                "prompt": {
-                                                                                    "type": "string"
-                                                                                },
-                                                                                "choices": {
-                                                                                    "type": "array",
-                                                                                    "minItems": 2,
-                                                                                    "maxItems": 8,
-                                                                                    "items": {
-                                                                                        "type": "object",
-                                                                                        "required": [
-                                                                                            "id",
-                                                                                            "label"
-                                                                                        ],
-                                                                                        "properties": {
-                                                                                            "id": {
-                                                                                                "type": "string"
-                                                                                            },
-                                                                                            "label": {
-                                                                                                "type": "string"
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                },
-                                                                                "points": {
-                                                                                    "type": "integer",
-                                                                                    "minimum": 1,
-                                                                                    "maximum": 100
-                                                                                }
+                                                                "minimum": 0
+                                                            },
+                                                            "latest_attempt": {
+                                                                "oneOf": [
+                                                                    {
+                                                                        "type": "object",
+                                                                        "required": [
+                                                                            "id",
+                                                                            "status",
+                                                                            "score",
+                                                                            "passed",
+                                                                            "started_at",
+                                                                            "submitted_at"
+                                                                        ],
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "status": {
+                                                                                "type": "string",
+                                                                                "enum": [
+                                                                                    "in_progress",
+                                                                                    "submitted",
+                                                                                    "expired"
+                                                                                ]
+                                                                            },
+                                                                            "score": {
+                                                                                "type": [
+                                                                                    "number",
+                                                                                    "string",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "passed": {
+                                                                                "type": [
+                                                                                    "boolean",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "started_at": {
+                                                                                "type": [
+                                                                                    "string",
+                                                                                    "null"
+                                                                                ],
+                                                                                "format": "date-time"
+                                                                            },
+                                                                            "submitted_at": {
+                                                                                "type": [
+                                                                                    "string",
+                                                                                    "null"
+                                                                                ],
+                                                                                "format": "date-time"
                                                                             }
                                                                         }
-                                                                    }
-                                                                }
-                                                            },
-                                                            {
-                                                                "type": "object",
-                                                                "properties": {
-                                                                    "attempts_used": {
-                                                                        "type": "integer"
                                                                     },
-                                                                    "attempts_remaining": {
-                                                                        "type": [
-                                                                            "integer",
-                                                                            "null"
-                                                                        ]
-                                                                    },
-                                                                    "latest_attempt": {
-                                                                        "type": [
-                                                                            "object",
-                                                                            "null"
-                                                                        ]
+                                                                    {
+                                                                        "type": "null"
                                                                     }
-                                                                }
+                                                                ]
                                                             }
-                                                        ]
+                                                        }
                                                     }
                                                 }
                                             }
@@ -65658,7 +65661,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Published exam questions and this practitioner\u2019s attempts. Learner question data excludes correct choice identifiers.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -65683,8 +65686,12 @@
                                                     "required": [
                                                         "id",
                                                         "course_id",
+                                                        "course_slug",
                                                         "title",
+                                                        "instructions",
                                                         "pass_mark",
+                                                        "attempt_limit",
+                                                        "duration_minutes",
                                                         "questions"
                                                     ],
                                                     "properties": {
@@ -65695,7 +65702,10 @@
                                                             "type": "integer"
                                                         },
                                                         "course_slug": {
-                                                            "type": "string"
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
                                                         },
                                                         "title": {
                                                             "type": "string"
@@ -65707,7 +65717,9 @@
                                                             ]
                                                         },
                                                         "pass_mark": {
-                                                            "type": "integer"
+                                                            "type": "integer",
+                                                            "minimum": 1,
+                                                            "maximum": 100
                                                         },
                                                         "attempt_limit": {
                                                             "type": [
@@ -65728,7 +65740,8 @@
                                                                 "required": [
                                                                     "id",
                                                                     "prompt",
-                                                                    "choices"
+                                                                    "choices",
+                                                                    "points"
                                                                 ],
                                                                 "properties": {
                                                                     "id": {
@@ -65740,7 +65753,6 @@
                                                                     "choices": {
                                                                         "type": "array",
                                                                         "minItems": 2,
-                                                                        "maxItems": 8,
                                                                         "items": {
                                                                             "type": "object",
                                                                             "required": [
@@ -65759,8 +65771,7 @@
                                                                     },
                                                                     "points": {
                                                                         "type": "integer",
-                                                                        "minimum": 1,
-                                                                        "maximum": 100
+                                                                        "minimum": 1
                                                                     }
                                                                 }
                                                             }
@@ -65770,17 +65781,67 @@
                                                 "attempts": {
                                                     "type": "array",
                                                     "items": {
-                                                        "type": "object"
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "status",
+                                                            "score",
+                                                            "passed",
+                                                            "started_at",
+                                                            "submitted_at"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "status": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "in_progress",
+                                                                    "submitted",
+                                                                    "expired"
+                                                                ]
+                                                            },
+                                                            "score": {
+                                                                "type": [
+                                                                    "number",
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "passed": {
+                                                                "type": [
+                                                                    "boolean",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "started_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            },
+                                                            "submitted_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            }
+                                                        }
                                                     }
                                                 },
                                                 "attempts_used": {
-                                                    "type": "integer"
+                                                    "type": "integer",
+                                                    "minimum": 0
                                                 },
                                                 "attempts_remaining": {
                                                     "type": [
                                                         "integer",
                                                         "null"
-                                                    ]
+                                                    ],
+                                                    "minimum": 0
                                                 }
                                             }
                                         },
@@ -65968,7 +66029,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Reads only the authenticated practitioner\u2019s attempt. Correct answer review appears only after submission.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -65982,17 +66043,125 @@
                                         "data": {
                                             "type": "object",
                                             "required": [
-                                                "attempt",
-                                                "review"
+                                                "attempt"
                                             ],
                                             "properties": {
                                                 "attempt": {
-                                                    "type": "object"
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "status",
+                                                        "score",
+                                                        "passed",
+                                                        "started_at",
+                                                        "submitted_at"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "in_progress",
+                                                                "submitted",
+                                                                "expired"
+                                                            ]
+                                                        },
+                                                        "score": {
+                                                            "type": [
+                                                                "number",
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "passed": {
+                                                            "type": [
+                                                                "boolean",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "started_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "submitted_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        }
+                                                    }
+                                                },
+                                                "answers": {
+                                                    "type": "object",
+                                                    "additionalProperties": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "deadline": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ],
+                                                    "format": "date-time"
                                                 },
                                                 "review": {
                                                     "type": "array",
                                                     "items": {
-                                                        "type": "object"
+                                                        "type": "object",
+                                                        "required": [
+                                                            "question_id",
+                                                            "prompt",
+                                                            "selected_choice_id",
+                                                            "selected_choice_label",
+                                                            "correct_choice_id",
+                                                            "correct_choice_label",
+                                                            "correct",
+                                                            "explanation"
+                                                        ],
+                                                        "properties": {
+                                                            "question_id": {
+                                                                "type": "string"
+                                                            },
+                                                            "prompt": {
+                                                                "type": "string"
+                                                            },
+                                                            "selected_choice_id": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "selected_choice_label": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "correct_choice_id": {
+                                                                "type": "string"
+                                                            },
+                                                            "correct_choice_label": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "correct": {
+                                                                "type": "boolean"
+                                                            },
+                                                            "explanation": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            }
+                                                        }
                                                     }
                                                 }
                                             }
@@ -66190,7 +66359,25 @@
                                             ],
                                             "properties": {
                                                 "attempt": {
-                                                    "type": "object"
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "status",
+                                                        "started_at"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "const": "in_progress"
+                                                        },
+                                                        "started_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        }
+                                                    }
                                                 },
                                                 "answered_count": {
                                                     "type": "integer",
@@ -66198,7 +66385,7 @@
                                                 },
                                                 "question_count": {
                                                     "type": "integer",
-                                                    "minimum": 1
+                                                    "minimum": 0
                                                 }
                                             }
                                         },
@@ -66423,80 +66610,6 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "required": [
-                                        "data",
-                                        "meta",
-                                        "messages"
-                                    ],
-                                    "properties": {
-                                        "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
-                                        },
-                                        "meta": {
-                                            "type": "object",
-                                            "properties": {
-                                                "operation": {
-                                                    "type": "string",
-                                                    "const": "practitioner.assessments.attempts.start"
-                                                }
-                                            }
-                                        },
-                                        "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
-                                        }
-                                    }
-                                },
-                                "examples": {
-                                    "envelope": {
-                                        "summary": "Response envelope",
-                                        "description": "The data fields depend on the operation and its resource contract.",
-                                        "value": {
-                                            "data": {},
-                                            "meta": {
-                                                "operation": "practitioner.assessments.attempts.start"
-                                            },
-                                            "messages": []
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "headers": {
-                            "Cache-Control": {
-                                "description": "Authenticated and command results are not stored in shared caches.",
-                                "schema": {
-                                    "type": "string",
-                                    "const": "no-store"
-                                }
-                            },
-                            "X-Request-ID": {
-                                "description": "Identifier used when contacting support.",
-                                "schema": {
-                                    "type": "string",
-                                    "format": "uuid"
-                                }
-                            },
-                            "Idempotency-Replayed": {
-                                "description": "Present with value true when this response replays the saved outcome for the supplied Idempotency-Key; absent on the first execution.",
-                                "schema": {
-                                    "type": "string",
-                                    "const": "true"
-                                }
-                            }
-                        }
-                    },
                     "401": {
                         "description": "Valid delegated user token required",
                         "content": {
@@ -66582,14 +66695,16 @@
                                                     "required": [
                                                         "id",
                                                         "status",
-                                                        "started_at"
+                                                        "started_at",
+                                                        "answers"
                                                     ],
                                                     "properties": {
                                                         "id": {
                                                             "type": "integer"
                                                         },
                                                         "status": {
-                                                            "type": "string"
+                                                            "type": "string",
+                                                            "const": "in_progress"
                                                         },
                                                         "started_at": {
                                                             "type": "string",
@@ -66608,8 +66723,12 @@
                                                     "required": [
                                                         "id",
                                                         "course_id",
+                                                        "course_slug",
                                                         "title",
+                                                        "instructions",
                                                         "pass_mark",
+                                                        "attempt_limit",
+                                                        "duration_minutes",
                                                         "questions"
                                                     ],
                                                     "properties": {
@@ -66620,7 +66739,10 @@
                                                             "type": "integer"
                                                         },
                                                         "course_slug": {
-                                                            "type": "string"
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
                                                         },
                                                         "title": {
                                                             "type": "string"
@@ -66632,7 +66754,9 @@
                                                             ]
                                                         },
                                                         "pass_mark": {
-                                                            "type": "integer"
+                                                            "type": "integer",
+                                                            "minimum": 1,
+                                                            "maximum": 100
                                                         },
                                                         "attempt_limit": {
                                                             "type": [
@@ -66653,7 +66777,8 @@
                                                                 "required": [
                                                                     "id",
                                                                     "prompt",
-                                                                    "choices"
+                                                                    "choices",
+                                                                    "points"
                                                                 ],
                                                                 "properties": {
                                                                     "id": {
@@ -66665,7 +66790,6 @@
                                                                     "choices": {
                                                                         "type": "array",
                                                                         "minItems": 2,
-                                                                        "maxItems": 8,
                                                                         "items": {
                                                                             "type": "object",
                                                                             "required": [
@@ -66684,8 +66808,7 @@
                                                                     },
                                                                     "points": {
                                                                         "type": "integer",
-                                                                        "minimum": 1,
-                                                                        "maximum": 100
+                                                                        "minimum": 1
                                                                     }
                                                                 }
                                                             }
@@ -66809,22 +66932,101 @@
                                             ],
                                             "properties": {
                                                 "attempt": {
-                                                    "type": "object"
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "status",
+                                                        "score",
+                                                        "passed",
+                                                        "started_at",
+                                                        "submitted_at"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "in_progress",
+                                                                "submitted",
+                                                                "expired"
+                                                            ]
+                                                        },
+                                                        "score": {
+                                                            "type": [
+                                                                "number",
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "passed": {
+                                                            "type": [
+                                                                "boolean",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "started_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "submitted_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        }
+                                                    }
                                                 },
                                                 "review": {
                                                     "type": "array",
                                                     "items": {
-                                                        "type": "object"
+                                                        "type": "object",
+                                                        "required": [
+                                                            "question_id",
+                                                            "selected_choice_id",
+                                                            "correct_choice_id",
+                                                            "correct",
+                                                            "explanation"
+                                                        ],
+                                                        "properties": {
+                                                            "question_id": {
+                                                                "type": "string"
+                                                            },
+                                                            "selected_choice_id": {
+                                                                "type": "string"
+                                                            },
+                                                            "correct_choice_id": {
+                                                                "type": "string"
+                                                            },
+                                                            "correct": {
+                                                                "type": "boolean"
+                                                            },
+                                                            "explanation": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            }
+                                                        }
                                                     }
                                                 },
                                                 "score": {
-                                                    "type": "number"
+                                                    "type": "number",
+                                                    "minimum": 0,
+                                                    "maximum": 100
                                                 },
                                                 "passed": {
                                                     "type": "boolean"
                                                 },
                                                 "pass_mark": {
-                                                    "type": "integer"
+                                                    "type": "integer",
+                                                    "minimum": 1,
+                                                    "maximum": 100
                                                 }
                                             }
                                         },

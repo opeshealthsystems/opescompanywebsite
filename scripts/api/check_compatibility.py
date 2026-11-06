@@ -107,9 +107,11 @@ def response_schema_refinement_only(before, after):
     if old == new:
         return False
 
-    def without_response_schemas(operation):
+    def without_response_schemas(operation, removed_statuses=()):
         operation = copy.deepcopy(operation)
         responses = operation.get("responses", {})
+        for status in removed_statuses:
+            responses.pop(status, None)
         for response in responses.values():
             content = response.get("content", {})
             for media in content.values():
@@ -122,9 +124,13 @@ def response_schema_refinement_only(before, after):
     old_responses = old.get("responses", {})
     new_responses = new.get("responses", {})
     schema_changed = False
-    if old_responses.keys() != new_responses.keys():
+    if not new_responses.keys() <= old_responses.keys():
         return False
+    removed_statuses = old_responses.keys() - new_responses.keys()
+    schema_changed = bool(removed_statuses)
     for status in old_responses:
+        if status not in new_responses:
+            continue
         old_content = old_responses[status].get("content", {})
         new_content = new_responses[status].get("content", {})
         if not new_content.keys() <= old_content.keys():
@@ -137,7 +143,7 @@ def response_schema_refinement_only(before, after):
             new_schema = new_content[media_type].get("schema")
             if old_schema != new_schema:
                 schema_changed = True
-    return schema_changed and without_response_schemas(old) == without_response_schemas(new)
+    return schema_changed and without_response_schemas(old, removed_statuses) == without_response_schemas(new)
 
 
 def oauth_scope_additions_only(old, new):

@@ -48,6 +48,20 @@ lesson.data.data.next_lesson?.title.toUpperCase();
 const certificates = await client.request('practitioner_certificatecontroller_index');
 certificates.data.data.certificates[0]!.certificate_number.toUpperCase();
 certificates.data.data.validation_certificates[0]!.tier.toUpperCase();
+const exams = await client.request('practitioner_assessments_index', { path: { course: 'example-course' } });
+exams.data.data.assessments[0]!.attempts_remaining?.toFixed();
+const exam = await client.request('practitioner_assessments_show', { path: { assessment: 7 } });
+exam.data.data.assessment.questions[0]!.choices[0]!.label.toUpperCase();
+// @ts-expect-error Learner exam projections never reveal correct choices before submission.
+exam.data.data.assessment.questions[0]!.correct_choice_id;
+const startedAttempt = await client.request('practitioner_assessments_attempts_start', {
+  path: { assessment: 7 }, idempotencyKey: key,
+});
+startedAttempt.data.data.assessment.questions[0]!.prompt.toUpperCase();
+const submittedAttempt = await client.request('practitioner_assessments_attempts_submit', {
+  path: { assessment: 7, attempt: 12 }, body: { answers: { question: 'choice' } }, idempotencyKey: key,
+});
+submittedAttempt.data.data.review[0]!.correct.toString();
 // @ts-expect-error Quote result fields are constrained by the published response schema.
 quotes.data.data.items[0]!.invented_field;
 // @ts-expect-error Customer profile detail must use its declared resource key.

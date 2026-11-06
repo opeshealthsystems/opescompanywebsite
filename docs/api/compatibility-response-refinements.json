@@ -40,5 +40,41 @@
     "path": "/practitioner/certificates",
     "allow_response_schema_refinement": true,
     "reason": "Documents the existing course, validation and council certificate projection from PractitionerCertificateQueries and removes an incorrectly advertised PDF representation from this JSON-only list operation. Runtime response bytes, request shape, authorization and status behavior do not change."
+  },
+  {
+    "method": "GET",
+    "path": "/practitioner/courses/{course}/assessments",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents published exams, attempt availability and the latest result from CourseAssessmentQueries. Learner payloads omit correct answers. No runtime behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/practitioner/assessments/{assessment}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the enrolled practitioner’s exam questions and attempt history from CourseAssessmentQueries; question projections omit correct choice identifiers. No runtime behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/practitioner/assessments/{assessment}/attempts/{attempt}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents an owned in-progress attempt or the review unlocked after submission. Correct answers remain absent while the attempt is in progress. No runtime behavior changes."
+  },
+  {
+    "method": "PATCH",
+    "path": "/practitioner/assessments/{assessment}/attempts/{attempt}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing answer-save acknowledgement from CourseAssessmentCommands. No request, state, authorization or status behavior changes."
+  },
+  {
+    "method": "POST",
+    "path": "/practitioner/assessments/{assessment}/attempts",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the actual 201 attempt-start response and learner-safe question projection from CourseAssessmentCommands, removing a generic 200 success the handler never returns. Correct choices are omitted until submission; runtime behavior does not change."
+  },
+  {
+    "method": "POST",
+    "path": "/practitioner/assessments/{assessment}/attempts/{attempt}/submit",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents server-scored results and correct-choice review revealed after successful submission from CourseAssessmentCommands. No request, scoring, authorization or status behavior changes."
   }
 ]
