@@ -35,6 +35,11 @@ class Course extends Model
         return $this->hasMany(CourseCertificate::class);
     }
 
+    public function assessments(): HasMany
+    {
+        return $this->hasMany(CourseAssessment::class);
+    }
+
     public static function levelOptions(): array
     {
         return [

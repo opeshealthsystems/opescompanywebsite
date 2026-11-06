@@ -2,17 +2,17 @@
 
 return [
     // Hero
-    'hero_eyebrow'       => 'Digital Health Infrastructure · Cameroon · CEMAC · Africa',
+    'hero_eyebrow'       => 'Digital Health Infrastructure · Cameroon · Africa · Global Partnerships',
     'hero_title_1'       => "Healthcare Software",
     'hero_title_gradient'=> 'Engineered for Care Teams',
-    'hero_tagline'       => 'Explore our software catalogue — from EMR to specialist clinics, laboratory, pharmacy, radiology, and a unified Health ID layer. Built bilingual for Cameroon and the entire CEMAC region.',
+    'hero_tagline'       => 'Explore our health software catalogue — from EMR and specialist care to laboratory, pharmacy, radiology, and a connected health identity layer. Developed in Cameroon for African health systems and collaboration worldwide.',
     'cta_explore'        => 'Explore Our Products',
     'cta_watch_demo'     => 'Request a Demo',
 
     // Trust strip
     'trust_22'           => 'Software Systems',
     'trust_bilingual'    => 'Fully Bilingual',
-    'trust_cemac'        => 'Regional Focus',
+    'trust_cemac'        => 'Cameroon · Africa · Global',
     'trust_moh'          => 'Designed in Cameroon',
 
     // Slide 2 — Company Overview

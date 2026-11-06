@@ -311,7 +311,7 @@
                    ['2027','#8AC5ED','Expansion','Croissance du réseau de prestataires'],
                    ['2028','#00A87B','Réseau inter.','Connexions HIE actives entre établissements'],
                    ['2029','#69D5F5','Prog. nationaux','Premiers contrats gouvernementaux'],
-                   ['2030–31','#FFB020','Expansion rég.','Déploiement dans la région CEMAC et au-delà']]
+                   ['2030–31','#FFB020','Expansion Afrique & monde','Partenariats et déploiements multi-pays adaptés au contexte local']]
                 : [['2026','var(--text-faint)','Foundation','First clinics and hospitals deployed'],
                    ['2027','#8AC5ED','Expansion','Growing provider network'],
                    ['2028','#00A87B','Interoperability network','Active HIE connections between facilities'],
@@ -406,13 +406,13 @@
                    ['#69D5F5','server','Infrastructure','Renforcement de l\'infrastructure cloud et technique.'],
                    ['#8AC5ED','graduation-cap','Expansion de l\'académie','Programmes de formation et certifications supplémentaires.'],
                    ['#69D5F5','building-2','Programmes gouvernementaux','Financer les déploiements au niveau national.'],
-                   ['#8AC5ED','globe','Croissance régionale','Extension dans la région CEMAC et toute l\'Afrique.']]
+                   ['#8AC5ED','globe','Croissance en Afrique et à l’international','Partenariats et projets adaptés à chaque contexte local.']]
                 : [['#69D5F5','code','Product development','Accelerate OPES Health OS platform development.'],
                    ['#8AC5ED','map','Market expansion','Deployments across new African markets.'],
                    ['#69D5F5','server','Infrastructure','Cloud and technical infrastructure strengthening.'],
                    ['#8AC5ED','graduation-cap','Academy expansion','Additional training programmes and certifications.'],
                    ['#69D5F5','building-2','Government programmes','Fund national-level deployments.'],
-                   ['#8AC5ED','globe','Regional growth','Expansion across the CEMAC region and all of Africa.']]
+                   ['#8AC5ED','globe','Growth across Africa and internationally','Partnerships and projects adapted to each local context.']]
             as $inv)
             <div style="display:flex;gap:10px;padding:10px 12px;background:#0F172A;border-radius:8px;border:1px solid #1e293b;margin-bottom:6px">
                 <i data-lucide="{{ $inv[1] }}" style="width:12px;height:12px;color:{{ $inv[0] }};flex-shrink:0;margin-top:1px"></i>

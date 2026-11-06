@@ -2,17 +2,17 @@
 
 return [
     // Héros
-    'hero_eyebrow'       => 'Infrastructure de santé numérique · Cameroun · CEMAC · Afrique',
+    'hero_eyebrow'       => 'Infrastructure de santé numérique · Cameroun · Afrique · Partenariats internationaux',
     'hero_title_1'       => "Des logiciels de santé",
     'hero_title_gradient'=> "conçus pour les soignants",
-    'hero_tagline'       => "Découvrez notre catalogue — des dossiers médicaux aux cliniques spécialisées, laboratoire, pharmacie, radiologie et une couche d'identité santé unifiée. Conçu bilingue pour le Cameroun et toute la région CEMAC.",
+    'hero_tagline'       => "Découvrez notre catalogue de santé numérique — du dossier médical aux soins spécialisés, au laboratoire, à la pharmacie, à la radiologie et à l'identité santé connectée. Développé au Cameroun pour les systèmes de santé africains et les partenariats internationaux.",
     'cta_explore'        => 'Découvrir nos produits',
     'cta_watch_demo'     => 'Demander une démo',
 
     // Bandeau de confiance
     'trust_22'           => 'Systèmes logiciels',
     'trust_bilingual'    => 'Entièrement bilingue',
-    'trust_cemac'        => 'Ancrage régional',
+    'trust_cemac'        => 'Cameroun · Afrique · Monde',
     'trust_moh'          => 'Conçu au Cameroun',
 
     // Diapositive 2 — Présentation de l'entreprise

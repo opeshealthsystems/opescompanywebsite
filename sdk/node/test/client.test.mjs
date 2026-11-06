@@ -26,14 +26,16 @@ test('concurrent resource calls share token issuance and keep secrets out of URL
 
 test('enquiry requires a stable key and sends no OAuth credentials', async () => {
   const key = createIdempotencyKey(); let sent = 0;
+  const integrationApplication = { application_name: 'Fictional scheduler', access_type: 'delegated', redirect_uri: 'https://client.example/callback', requested_scopes: ['crm:read'], use_case: 'Read the fictional account schedule.' };
   const client = new OpesClient({ oauth, fetch: async (url, options) => {
     sent++; assert.ok(url.endsWith('/enquiries')); assert.equal(options.headers['Idempotency-Key'], key);
     assert.equal(options.headers.Authorization, undefined); assert.equal(options.method, 'POST');
+    assert.deepEqual(JSON.parse(options.body).integration_application, integrationApplication);
     return json({ data: { status: 'recorded', delivery_status: 'sent' } }, 201, { 'Idempotency-Replayed': 'true' });
   } });
   await assert.rejects(client.submitEnquiry({}), TypeError);
   await assert.rejects(client.submitEnquiry({}, { idempotencyKey: key + '\n' }), TypeError);
-  const response = await client.submitEnquiry({ name: 'Fictional', email: 'fictional@example.test' }, { idempotencyKey: key });
+  const response = await client.submitEnquiry({ name: 'Fictional', email: 'fictional@example.test', integration_application: integrationApplication }, { idempotencyKey: key });
   assert.equal(sent, 1); assert.equal(response.idempotencyKey, key); assert.equal(response.replayed, true);
 });
 
@@ -89,6 +91,36 @@ test('OAuth credential rejection is not blindly retried', async () => {
   assert.equal(calls, 1);
 });
 
+test('machine client exposes its own quota snapshot', async () => {
+  let requests = 0;
+  const client = new OpesClient({ oauth, fetch: async url => {
+    if (url.endsWith('/oauth/token')) return token();
+    requests++;
+    assert.ok(url.endsWith('/integration/quota'));
+    return json({ data: { requests_today: 7, requests_this_month: 27, daily_limit: 10, daily_remaining: 2,
+      monthly_limit: 100, monthly_remaining: 72, period: 'UTC calendar day and calendar month' } });
+  } });
+  const result = await client.integrationQuota();
+  assert.equal(result.data.daily_remaining, 2);
+  assert.equal(requests, 1);
+});
+
+test('public service catalogue selects the requested locale without OAuth credentials', async () => {
+  let calls = 0;
+  const client = new OpesClient({ fetch: async (url, options) => {
+    calls++;
+    assert.equal(url, 'https://opeshealthsystems.com/api/v1/service-offerings');
+    assert.equal(options.headers['Accept-Language'], 'fr');
+    assert.equal(options.headers.Authorization, undefined);
+    return json({ data: { locale: 'fr', items: [{ id: 'cdss', name: 'Systèmes d’aide à la décision clinique (CDSS)' }] } });
+  } });
+  const result = await client.serviceOfferings({ locale: 'fr' });
+  assert.equal(result.data.items[0].id, 'cdss');
+  assert.equal(calls, 1);
+  await assert.rejects(client.serviceOfferings({ locale: 'es' }), TypeError);
+  assert.equal(calls, 1);
+});
+
 test('business operation client uses generated paths, delegated auth and command keys', async () => {
   const key = createIdempotencyKey(); const requestId = '8a8bced2-2135-462f-82af-5b083a90632f'; let calls = 0;
   const client = new OpesBusinessApiClient({ accessToken: 'fictional-delegated-token', fetch: async (url, options) => {
@@ -102,6 +134,15 @@ test('business operation client uses generated paths, delegated auth and command
   } });
   const result = await client.request('admin_finance_expenses_approve', { path: { expense: 123 }, idempotencyKey: key });
   assert.equal(calls, 1); assert.equal(result.data.data.status, 'approved'); assert.equal(result.requestId, requestId);
+
+  const usageClient = new OpesBusinessApiClient({ accessToken: 'fictional-delegated-token', fetch: async (url, options) => {
+    assert.equal(url, 'https://opeshealthsystems.com/api/v1/me/usage');
+    assert.equal(options.method, 'GET');
+    assert.equal(options.headers.Authorization, 'Bearer fictional-delegated-token');
+    return json({ data: { requests_today: 2, requests_last_30_days: 9, daily_usage: [] } });
+  } });
+  const usage = await usageClient.request('readOwnBusinessUsage');
+  assert.equal(usage.data.data.requests_last_30_days, 9);
 });
 
 test('business operation client refuses missing keys, path values and unknown query fields', async () => {
@@ -120,4 +161,29 @@ test('business API client rejects machine-client operations before requesting a 
   await assert.rejects(client.request('inspectIntegration'), /client-credentials token/);
   await assert.rejects(client.request('readIntegrationUsage'), /client-credentials token/);
   assert.equal(tokenCalls, 0);
+});
+
+test('business SDK manages owner-scoped machine clients with delegated auth and replay metadata', async () => {
+  const calls = [];
+  const client = new OpesBusinessApiClient({ accessToken: 'delegated-user-token', fetch: async (url, options) => {
+    calls.push({ url, options });
+    assert.equal(options.headers.Authorization, 'Bearer delegated-user-token');
+    if (url.endsWith('/developer/machine-clients') && options.method === 'POST') {
+      assert.equal(options.headers['Idempotency-Key'], 'machine-client-sdk-create-01');
+      assert.deepEqual(JSON.parse(options.body), { name: 'Catalogue sync', scopes: ['catalogue:read'] });
+      return json({ data: { client_id: 'machine-1', name: 'Catalogue sync', client_secret: 'one-time',
+        token_url: 'https://opeshealthsystems.com/api/v1/oauth/token', scopes: ['catalogue:read'], secret_shown_once: true },
+        meta: { operation: 'developer.machine_clients.create' }, messages: {} }, 201,
+      { 'Idempotency-Replayed': 'true' });
+    }
+    return json({ data: { items: [], pagination: { current_page: 1, per_page: 20, total: 0, last_page: 1 },
+      meta: { operation: 'developer.machine_clients.index' }, messages: {} } });
+  } });
+
+  const result = await client.registerDeveloperMachineClient({ name: 'Catalogue sync', scopes: ['catalogue:read'] },
+    { idempotencyKey: 'machine-client-sdk-create-01' });
+  assert.equal(result.data.data.client_secret, 'one-time');
+  assert.equal(result.replayed, true);
+  await client.listDeveloperMachineClients();
+  assert.equal(calls[1].url, 'https://opeshealthsystems.com/api/v1/developer/machine-clients?page=1&per_page=20');
 });

@@ -105,7 +105,7 @@
             <div class="cf-field">
                 <label class="cf-label" for="contact-products">{{ __('contact.label_products') }}</label>
                 <input id="contact-products" class="cf-input" type="text" name="products"
-                       value="{{ old('products', $quoteSelection['product'] ?? ($product['name'] ?? '')) }}" maxlength="255" placeholder="{{ __('contact.placeholder_products') }}">
+                       value="{{ old('products', $quoteSelection['product'] ?? ($product['name'] ?? ($serviceInterest ?? ''))) }}" maxlength="255" placeholder="{{ __('contact.placeholder_products') }}">
             </div>
 
             <div class="cf-field">

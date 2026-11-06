@@ -68,7 +68,7 @@ final class AdminCourseQueries extends WorkflowHandler
     {
         $this->admin($input);
 
-        return $course->lessons()->orderBy('sort_order')->orderBy('id');
+        return $course->lessons()->getQuery()->orderBy('sort_order')->orderBy('id');
     }
 
     public function lesson(WorkflowInput $input, Course $course, CourseLesson $lesson): WorkflowResult

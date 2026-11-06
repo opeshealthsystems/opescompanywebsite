@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CourseResource\Pages;
 use App\Filament\Resources\CourseResource\RelationManagers\LessonsRelationManager;
 use App\Filament\Resources\CourseResource\RelationManagers\EnrollmentsRelationManager;
+use App\Filament\Resources\CourseResource\RelationManagers\AssessmentsRelationManager;
 use App\Models\Course;
 use App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter;
 use Filament\Forms\Components\FileUpload;
@@ -85,6 +86,7 @@ class CourseResource extends Resource
         return [
             LessonsRelationManager::class,
             EnrollmentsRelationManager::class,
+            AssessmentsRelationManager::class,
         ];
     }
 

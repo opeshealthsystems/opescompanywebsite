@@ -7,7 +7,7 @@ $registry = require $root.'/config/business_workflows.php';
 $product = require $root.'/config/api_product.php';
 $spec = json_decode(file_get_contents($root.'/docs/api/baselines/0.3.0.json'), true, 512, JSON_THROW_ON_ERROR);
 $spec['info']['version'] = $product['version'];
-$spec['info']['description'] = 'Versioned OHS business APIs. Public enquiries and application intake, partner and tester administration, publishing and catalogues, role-scoped operations and workforce workflows, finance registers, reports and line-item detail reads, customer facility profiles, employee and HR administration, risk and performance management, leave requests, validation, practitioner, recruitment, learning, survey and support workflows, account recovery, machine catalogue access, public sitemap data, protected admin reference data and resource/relationship summaries, with delegated business workflows using authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.';
+$spec['info']['description'] = 'Versioned OHS business APIs. Public enquiries and application intake, partner and tester administration, publishing and catalogues, role-scoped operations and workforce workflows, finance registers, reports and line-item detail reads, customer facility profiles, employee and HR administration, risk and performance management, leave requests, validation, practitioner, recruitment, learning, survey and support workflows, account recovery, machine catalogue access and owner-managed public-scope machine clients, public sitemap data, protected admin reference data and resource/relationship summaries, with delegated business workflows using authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.';
 $scopes = [];
 foreach ($registry['definitions'] as $definition) if ($definition['authenticated']) $scopes[$definition['scope']] = str_replace(':', ' ', $definition['scope']);
 $schemaDocs = [
@@ -29,9 +29,28 @@ $enquiryInput['properties']['quote_option'] = [
     'description' => 'Optional server-defined pricing-page choice. The API records its canonical displayed product and indicative price; it is not a final commercial offer.',
 ];
 $enquiryInput['example']['quote_option'] = 'clinic-saas';
+$enquiryInput['properties']['integration_application'] = [
+    'type' => 'object',
+    'description' => 'Structured API developer access request. The request is reviewed before credentials are provisioned. Do not include secrets or patient information.',
+    'additionalProperties' => false,
+    'required' => ['application_name', 'access_type', 'use_case'],
+    'properties' => [
+        'application_name' => ['type' => 'string', 'maxLength' => 100],
+        'access_type' => ['type' => 'string', 'enum' => ['machine', 'delegated', 'both']],
+        'redirect_uri' => ['type' => ['string', 'null'], 'maxLength' => 255, 'description' => 'Delegated access requires an exact HTTPS callback or opeshealth://oauth/callback.'],
+        'requested_scopes' => ['type' => 'array', 'maxItems' => 20, 'uniqueItems' => true, 'items' => ['type' => 'string', 'maxLength' => 80]],
+        'use_case' => ['type' => 'string', 'minLength' => 10, 'maxLength' => 1200],
+    ],
+];
+$enquiryInput['example']['integration_application'] = [
+    'application_name' => 'Clinic scheduling integration', 'access_type' => 'delegated',
+    'redirect_uri' => 'https://clinic.example/callback', 'requested_scopes' => ['customer:read'],
+    'use_case' => 'Allow clinic staff to review their licensed OHS services.',
+];
 unset($enquiryInput);
 $enquiryOperation = &$spec['paths']['/enquiries']['post'];
 $enquiryOperation['requestBody']['content']['application/json']['example']['quote_option'] = 'clinic-saas';
+$enquiryOperation['requestBody']['content']['application/json']['example']['integration_application'] = $spec['components']['schemas']['EnquiryInput']['example']['integration_application'];
 $enquiryOperation['responses']['201']['description'] = 'Enquiry recorded with durable delivery intent. When quote_option is supplied, the selected indicative price is stored and a copy is sent to the requester. receipt_delivery_status reports acceptance by the mail transport, not inbox placement; a replay returns the saved original response.';
 $enquiryResponseData = &$enquiryOperation['responses']['201']['content']['application/json']['schema']['properties']['data']['properties'];
 $enquiryResponseData['receipt_delivery_status'] = ['type' => 'string', 'enum' => ['sent', 'pending'], 'description' => 'Present only for quote requests with quote_option. sent means the email transport accepted the requester copy; pending means delivery was not confirmed.'];
@@ -205,6 +224,10 @@ foreach ($registry['definitions'] as $operation => $definition) {
     if (str_contains(file_get_contents($file), 'WorkflowResult::download(')) $response['content']['application/pdf'] = ['schema' => ['type' => 'string', 'format' => 'binary']];
     $response['headers'] = ['Cache-Control' => ['description' => 'Authenticated and command results are not stored in shared caches.', 'schema' => ['type' => 'string', 'const' => 'no-store']],
         'X-Request-ID' => ['description' => 'Identifier used when contacting support.', 'schema' => ['type' => 'string', 'format' => 'uuid']]];
+    if ($definition['command']) $response['headers']['Idempotency-Replayed'] = [
+        'description' => 'Present with value true when this response replays the saved outcome for the supplied Idempotency-Key; absent on the first execution.',
+        'schema' => ['type' => 'string', 'const' => 'true'],
+    ];
     $humanize = static function (string $value): string {
         $value = preg_replace('/([a-z0-9])([A-Z])/', '$1 $2', $value);
         return trim(preg_replace('/[_-]+/', ' ', $value));
@@ -249,7 +272,7 @@ foreach ($registry['definitions'] as $operation => $definition) {
             'description' => $description, 'tags' => [$definition['context']],
             'security' => $definition['authenticated'] ? [['UserOAuth2' => [$definition['scope']]]] : [], 'parameters' => $parameters,
             'responses' => ['200' => $response, '401' => ['description' => 'Valid delegated user token required'], '403' => ['description' => 'Role, scope or record access denied'], '404' => ['description' => 'Resource not found'], '409' => ['description' => 'Idempotency key used with a different request'], '422' => ['description' => 'Validation failed'], '429' => ['description' => 'Rate limit exceeded']]];
-        if ($operation === 'identity.register' || in_array($operation, ['admin.support.tickets.create', 'admin.finance.invoiceTemplates.create', 'admin.apiClients.create', 'admin.oauthClients.create'], true) || ($definition['command'] && ($definition['method'] === 'create'
+        if ($operation === 'identity.register' || in_array($operation, ['admin.support.tickets.create', 'admin.finance.invoiceTemplates.create', 'admin.apiClients.create', 'admin.oauthClients.create', 'developer.oauth_applications.create', 'partnerapplicationcontroller.submit'], true) || ($definition['command'] && ($definition['method'] === 'create'
             || in_array($operation, ['admin.recruitment.openings.create', 'admin.recruitment.applications.create'], true)))) {
             $entry['responses']['201'] = $entry['responses']['200']; unset($entry['responses']['200']);
         }
@@ -330,6 +353,118 @@ $successEnvelope = static fn (array $data, string $operation) => ['type' => 'obj
     'data' => $data, 'meta' => ['type' => 'object', 'properties' => ['operation' => ['type' => 'string', 'const' => $operation]]],
     'messages' => ['type' => 'object'],
 ]];
+$developerApplication = ['type' => 'object', 'additionalProperties' => false,
+    'required' => ['client_id', 'name', 'redirect_uris', 'scopes', 'revoked'], 'properties' => [
+        'client_id' => ['type' => 'string', 'format' => 'uuid'], 'name' => ['type' => 'string'],
+        'redirect_uris' => ['type' => 'array', 'items' => ['type' => 'string', 'format' => 'uri']],
+        'scopes' => ['type' => 'array', 'items' => ['type' => 'string']], 'revoked' => ['type' => 'boolean'],
+        'created_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    ]];
+$developerApplicationInput = ['type' => 'object', 'additionalProperties' => false,
+    'required' => ['name', 'redirect_uris', 'scopes'], 'properties' => [
+        'name' => ['type' => 'string', 'minLength' => 3, 'maxLength' => 150],
+        'redirect_uris' => ['type' => 'array', 'minItems' => 1, 'maxItems' => 10, 'items' => ['type' => 'string', 'maxLength' => 255],
+            'description' => 'Exact HTTPS callbacks, localhost/loopback HTTP for development, or opeshealth://oauth/callback. User information and fragments are prohibited.'],
+        'scopes' => ['type' => 'array', 'minItems' => 1, 'maxItems' => 100, 'uniqueItems' => true, 'items' => ['type' => 'string'],
+            'description' => 'Must be a subset of the currently active roles and scopes available to the signed-in user.'],
+    ]];
+$developerApplications = &$spec['paths']['/developer/applications'];
+$developerApplications['get']['summary'] = 'List your registered public OAuth applications';
+$developerApplications['get']['description'] = 'Lists only authorization-code applications owned by the authenticated user. Client secrets are never issued for public clients. Results are paginated.';
+$developerApplications['get']['responses']['200']['description'] = 'The authenticated user’s own public OAuth applications.';
+$developerApplications['get']['responses']['200']['content']['application/json']['schema'] = $successEnvelope([
+    'type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+        'items' => ['type' => 'array', 'items' => $developerApplication],
+        'pagination' => ['type' => 'object', 'required' => ['current_page', 'per_page', 'total', 'last_page'], 'properties' => [
+            'current_page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+        ]],
+    ],
+], 'developer.oauth_applications.index');
+$developerApplications['get']['responses']['200']['content']['application/json']['example'] = ['data' => [
+    'items' => [['client_id' => '00000000-0000-4000-8000-000000000001', 'name' => 'Example learning app',
+        'redirect_uris' => ['https://app.example.test/oauth/callback'], 'scopes' => ['identity:read', 'learning:read'], 'revoked' => false,
+        'created_at' => '2026-11-05T12:00:00Z']],
+    'pagination' => ['current_page' => 1, 'per_page' => 20, 'total' => 1, 'last_page' => 1],
+], 'meta' => ['operation' => 'developer.oauth_applications.index'], 'messages' => []];
+$developerApplications['post']['summary'] = 'Register a public OAuth application for your account';
+$developerApplications['post']['description'] = 'Creates a non-confidential authorization-code client owned by the authenticated user. Redirects must exactly match approved HTTPS, loopback-development, or reserved OPES callback values. Requested scopes must currently be available to the owner. The account is limited to five active applications. Authorization requires user consent and S256 PKCE; no client secret is issued.';
+$developerApplications['post']['requestBody'] = ['required' => true, 'content' => ['application/json' => ['schema' => $developerApplicationInput,
+    'example' => ['name' => 'Example learning app', 'redirect_uris' => ['https://app.example.test/oauth/callback'], 'scopes' => ['identity:read', 'learning:read']]]]];
+$developerApplications['post']['responses']['201']['description'] = 'Public OAuth application registered without a client secret.';
+$developerApplications['post']['responses']['201']['content']['application/json']['schema'] = $successEnvelope([
+    'type' => 'object', 'required' => ['client_id', 'name', 'redirect_uris', 'scopes', 'revoked', 'authorization_url', 'token_url', 'pkce_method', 'client_secret_issued'],
+    'properties' => array_merge($developerApplication['properties'], [
+        'authorization_url' => ['type' => 'string', 'format' => 'uri'], 'token_url' => ['type' => 'string', 'format' => 'uri'],
+        'pkce_method' => ['type' => 'string', 'const' => 'S256'], 'client_secret_issued' => ['type' => 'boolean', 'const' => false],
+    ]),
+], 'developer.oauth_applications.create');
+$developerApplicationUpdate = &$spec['paths']['/developer/applications/{client}']['patch'];
+$developerApplicationUpdate['summary'] = 'Update one of your public OAuth applications';
+$developerApplicationUpdate['description'] = 'Replaces the application name, exact redirect URI allowlist and approved scopes. Every existing access/refresh token is revoked so old grants cannot outlive the new configuration. Ownership is checked against the authenticated account.';
+$developerApplicationUpdate['requestBody'] = ['required' => true, 'content' => ['application/json' => ['schema' => $developerApplicationInput]]];
+$developerApplicationUpdate['responses']['200']['description'] = 'Updated public OAuth application; prior tokens have been revoked.';
+$developerApplicationUpdate['responses']['200']['content']['application/json']['schema'] = $successEnvelope([
+    'type' => 'object', 'required' => ['client_id', 'name', 'redirect_uris', 'scopes', 'revoked', 'authorization_url', 'token_url', 'pkce_method', 'client_secret_issued'],
+    'properties' => array_merge($developerApplication['properties'], [
+        'authorization_url' => ['type' => 'string', 'format' => 'uri'], 'token_url' => ['type' => 'string', 'format' => 'uri'],
+        'pkce_method' => ['type' => 'string', 'const' => 'S256'], 'client_secret_issued' => ['type' => 'boolean', 'const' => false],
+    ]),
+], 'developer.oauth_applications.update');
+$developerApplicationDelete = &$spec['paths']['/developer/applications/{client}']['delete'];
+$developerApplicationDelete['summary'] = 'Revoke one of your public OAuth applications';
+$developerApplicationDelete['description'] = 'Revokes the authenticated user’s own application and all its existing tokens. Other owners’ applications and machine clients cannot be revoked through this operation.';
+$developerApplicationDelete['responses']['200']['description'] = 'Application and all tokens revoked.';
+$developerApplicationDelete['responses']['200']['content']['application/json']['schema'] = $successEnvelope([
+    'type' => 'object', 'required' => ['client_id', 'revoked'], 'properties' => ['client_id' => ['type' => 'string', 'format' => 'uuid'], 'revoked' => ['type' => 'boolean', 'const' => true]],
+], 'developer.oauth_applications.revoke');
+unset($developerApplications, $developerApplicationUpdate, $developerApplicationDelete);
+$partnerApplication = &$spec['paths']['/public/become-a-partner']['post'];
+$partnerApplication['summary'] = 'Submit a partner application, including health AI partnership proposals';
+$partnerApplication['description'] = 'Creates a partner application for OHS review. The request is idempotent and returns a minimal submission acknowledgement without returning contact or application content. Do not include patient information. Healthcare AI companies may propose integration or evaluation; universities, research labs, teaching hospitals and health-training institutions may propose academic programmes and Medical Informatics collaborations. Data availability and access require separate assessment and approval.';
+$partnerRequestContent = &$partnerApplication['requestBody']['content'];
+foreach ($partnerRequestContent as &$media) {
+    if (!isset($media['schema']['properties']['partner_type'])) continue;
+    $media['schema']['properties']['partner_type']['enum'] = array_keys(\App\Models\PartnerApplication::$partnerTypes);
+    $media['schema']['properties']['partner_type']['description'] = 'Choose the collaboration type. Use health_ai for healthcare AI proposals or academic for a university, research, teaching-hospital or health-training partnership.';
+    if (isset($media['example'])) $media['example']['partner_type'] = 'health_ai';
+}
+unset($media, $partnerRequestContent);
+$partnerApplication['responses']['201']['description'] = 'Partner application recorded; the response contains only a receipt reference.';
+$partnerApplication['responses']['201']['content']['application/json']['schema'] = $successEnvelope([
+    'type' => 'object', 'additionalProperties' => false, 'required' => ['status', 'received_at'],
+    'properties' => [
+        'status' => ['type' => 'string', 'const' => 'submitted'],
+        'received_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    ],
+], 'partnerapplicationcontroller.submit');
+unset($partnerApplication);
+$payrollRunShow = &$spec['paths']['/finance/payroll-runs/{run}']['get'];
+$payrollRunShow['summary'] = 'Retrieve a payroll run and its aggregate totals';
+$payrollRunShow['description'] = 'Returns the administrator-authorized payroll run projection, including total deductions aggregated from its entries. Employee entry details are available separately through the paginated entries operation.';
+$payrollRunShow['responses']['200']['description'] = 'Allowlisted payroll run detail and aggregate totals.';
+$payrollRunShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope([
+    'type' => 'object', 'required' => ['run'], 'properties' => ['run' => [
+        'type' => 'object', 'additionalProperties' => false,
+        'required' => ['id', 'reference', 'period_start', 'period_end', 'status', 'total_gross', 'total_deductions', 'total_net', 'currency'],
+        'properties' => [
+            'id' => ['type' => 'integer'], 'reference' => ['type' => 'string'],
+            'period_start' => ['type' => 'string', 'format' => 'date'], 'period_end' => ['type' => 'string', 'format' => 'date'],
+            'status' => ['type' => 'string', 'enum' => array_keys(\App\Models\PayrollRun::statusOptions())],
+            'total_gross' => ['type' => 'number', 'minimum' => 0], 'total_deductions' => ['type' => 'number', 'minimum' => 0],
+            'total_net' => ['type' => 'number', 'minimum' => 0], 'currency' => ['type' => 'string'],
+            'notes' => ['type' => ['string', 'null']], 'processed_by' => ['type' => ['integer', 'null']],
+            'processor_name' => ['type' => ['string', 'null']], 'completed_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+            'created_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'updated_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+        ],
+    ]],
+], 'admin.finance.payrollRuns.show');
+$payrollRunShow['responses']['200']['content']['application/json']['example'] = ['data' => ['run' => [
+    'id' => 321, 'reference' => 'PAY-2026-0042', 'period_start' => '2026-10-01', 'period_end' => '2026-10-31',
+    'status' => 'processing', 'total_gross' => 450000, 'total_deductions' => 18000, 'total_net' => 432000,
+    'currency' => 'XAF', 'notes' => null, 'processed_by' => 12, 'processor_name' => 'Example Admin',
+    'completed_at' => null, 'created_at' => '2026-10-01T08:00:00+00:00', 'updated_at' => '2026-10-02T08:00:00+00:00',
+]], 'meta' => ['operation' => 'admin.finance.payrollRuns.show'], 'messages' => []];
+unset($payrollRunShow);
 $noStoreHeader = ['description' => 'Responses containing credentials are not stored by caches.', 'schema' => ['type' => 'string', 'const' => 'no-store']];
 $clientList = &$spec['paths']['/admin/api-clients']['get'];
 $clientList['summary'] = 'List approved machine API clients';
@@ -367,7 +502,67 @@ $clientRevoke['description'] = 'Revokes the client and all existing access token
 $clientRevoke['responses']['200']['content']['application/json']['schema'] = $successEnvelope([
     'type' => 'object', 'required' => ['client_id', 'revoked'], 'properties' => ['client_id' => ['type' => 'string', 'format' => 'uuid'], 'revoked' => ['type' => 'boolean', 'const' => true]],
 ], 'admin.apiClients.revoke');
-unset($clientList, $clientCreate, $clientRotate, $clientRevoke);
+$quotaHeaders = [
+    'X-Quota-Daily-Limit' => ['description' => 'Configured UTC daily request limit.', 'schema' => ['type' => 'integer', 'minimum' => 1]],
+    'X-Quota-Daily-Remaining' => ['description' => 'Requests remaining before the UTC daily limit.', 'schema' => ['type' => 'integer', 'minimum' => 0]],
+    'X-Quota-Daily-Reset' => ['description' => 'Unix timestamp when the UTC daily quota resets.', 'schema' => ['type' => 'integer']],
+    'X-Quota-Monthly-Limit' => ['description' => 'Configured UTC calendar-month request limit.', 'schema' => ['type' => 'integer', 'minimum' => 1]],
+    'X-Quota-Monthly-Remaining' => ['description' => 'Requests remaining before the UTC calendar-month limit.', 'schema' => ['type' => 'integer', 'minimum' => 0]],
+    'X-Quota-Monthly-Reset' => ['description' => 'Unix timestamp when the UTC calendar-month quota resets.', 'schema' => ['type' => 'integer']],
+];
+$machineQuotaSchema = ['type' => 'object', 'additionalProperties' => false,
+    'required' => ['period', 'requests_today', 'requests_this_month', 'daily_limit', 'daily_remaining', 'daily_resets_at', 'monthly_limit', 'monthly_remaining', 'monthly_resets_at'],
+    'properties' => [
+        'period' => ['type' => 'string', 'const' => 'UTC calendar day and calendar month'],
+        'requests_today' => ['type' => 'integer', 'minimum' => 0], 'requests_this_month' => ['type' => 'integer', 'minimum' => 0],
+        'daily_limit' => ['type' => ['integer', 'null'], 'minimum' => 1], 'daily_remaining' => ['type' => ['integer', 'null'], 'minimum' => 0],
+        'daily_resets_at' => ['type' => 'string', 'format' => 'date-time'],
+        'monthly_limit' => ['type' => ['integer', 'null'], 'minimum' => 1], 'monthly_remaining' => ['type' => ['integer', 'null'], 'minimum' => 0],
+        'monthly_resets_at' => ['type' => 'string', 'format' => 'date-time'],
+    ]];
+$spec['components']['schemas']['MachineClientQuota'] = $machineQuotaSchema;
+$clientQuota = &$spec['paths']['/admin/api-clients/{client}/quota']['get'];
+$clientQuota['summary'] = 'Inspect a machine client quota';
+$clientQuota['description'] = 'Returns configured UTC daily and calendar-month limits and current usage for an administrator-managed machine client. Requires api-clients:read.';
+$clientQuota['responses']['200']['content']['application/json']['schema'] = $successEnvelope([
+    'type' => 'object', 'required' => ['client', 'quota'], 'properties' => [
+        'client' => ['type' => 'object', 'required' => ['client_id', 'name', 'revoked'], 'properties' => [
+            'client_id' => ['type' => 'string', 'format' => 'uuid'], 'name' => ['type' => 'string'], 'revoked' => ['type' => 'boolean'],
+        ]],
+        'quota' => ['$ref' => '#/components/schemas/MachineClientQuota'],
+    ],
+], 'admin.apiClients.quota');
+$clientQuota['responses']['404'] = ['description' => 'No managed machine client has this identifier.'];
+$setClientQuota = &$spec['paths']['/admin/api-clients/{client}/quota']['patch'];
+$setClientQuota['summary'] = 'Set or clear machine client quotas';
+$setClientQuota['description'] = 'Sets the per-client UTC daily and calendar-month request quotas. Existing clients remain unlimited until an administrator sets a limit. Send null to clear a limit. The command is idempotent with an Idempotency-Key.';
+$quotaInput = ['type' => 'object', 'additionalProperties' => false, 'required' => ['daily_request_limit', 'monthly_request_limit'], 'properties' => [
+    'daily_request_limit' => ['type' => ['integer', 'null'], 'minimum' => 1, 'maximum' => 1000000000],
+    'monthly_request_limit' => ['type' => ['integer', 'null'], 'minimum' => 1, 'maximum' => 1000000000],
+]];
+$setClientQuota['requestBody'] = ['required' => true, 'content' => ['application/json' => ['schema' => $quotaInput, 'example' => ['daily_request_limit' => 5000, 'monthly_request_limit' => 100000]]]];
+$setClientQuota['responses']['200']['content']['application/json']['schema'] = $successEnvelope([
+    'type' => 'object', 'required' => ['client_id', 'daily_request_limit', 'monthly_request_limit'], 'properties' => [
+        'client_id' => ['type' => 'string', 'format' => 'uuid'],
+        'daily_request_limit' => ['type' => ['integer', 'null'], 'minimum' => 1],
+        'monthly_request_limit' => ['type' => ['integer', 'null'], 'minimum' => 1],
+    ],
+], 'admin.apiClients.setQuota');
+$setClientQuota['responses']['404'] = ['description' => 'No managed machine client has this identifier.'];
+$spec['paths']['/integration/quota']['get'] = [
+    'operationId' => 'readIntegrationQuota', 'summary' => 'Read the current machine client quota', 'tags' => ['Identity'],
+    'description' => 'Returns the authenticated machine client’s UTC daily and calendar-month request totals, configured limits and remaining requests. The quota is scoped to this client only. Unconfigured limits are null and mean unlimited. This request is included in the counters.',
+    'security' => [['OAuth2' => ['integration:read']]],
+    'responses' => [
+        '200' => ['description' => 'Current client-only request usage and quota windows.', 'headers' => ['Cache-Control' => $noStoreHeader, 'X-Request-ID' => ['schema' => ['type' => 'string', 'format' => 'uuid']]] + $quotaHeaders,
+            'content' => ['application/json' => ['schema' => ['type' => 'object', 'required' => ['data'], 'properties' => ['data' => ['$ref' => '#/components/schemas/MachineClientQuota']]]]]],
+        '401' => ['description' => 'Missing, invalid, revoked or expired machine access.', 'content' => ['application/problem+json' => ['schema' => ['$ref' => '#/components/schemas/Problem']]]],
+        '403' => ['description' => 'integration:read scope is required.', 'content' => ['application/problem+json' => ['schema' => ['$ref' => '#/components/schemas/Problem']]]],
+        '429' => ['description' => 'Per-client daily or monthly quota, or the 60-per-minute request limit, was reached.', 'headers' => ['Retry-After' => ['schema' => ['type' => 'integer', 'minimum' => 1]]] + $quotaHeaders,
+            'content' => ['application/problem+json' => ['schema' => ['$ref' => '#/components/schemas/Problem']]]],
+    ],
+];
+unset($clientList, $clientCreate, $clientRotate, $clientRevoke, $clientQuota, $setClientQuota, $quotaHeaders, $quotaInput, $machineQuotaSchema);
 $oauthClientSummary = ['type' => 'object', 'required' => ['client_id', 'name', 'redirect_uris', 'scopes', 'revoked'], 'properties' => [
     'client_id' => ['type' => 'string', 'format' => 'uuid'], 'name' => ['type' => 'string'],
     'owner_id' => ['type' => ['integer', 'null']], 'owner_name' => ['type' => ['string', 'null']],
@@ -445,7 +640,282 @@ $changelogOperation['responses']['200']['content']['application/json']['schema']
 ], 'api.product.changelog');
 $changelogOperation['responses']['200']['content']['application/json']['example'] = ['data' => ['items' => $product['changelog']], 'meta' => ['operation' => 'api.product.changelog'], 'messages' => []];
 $changelogOperation['responses']['429'] = ['description' => 'Public read rate limit exceeded.'];
-unset($statusOperation, $changelogOperation);
+$productCatalogueOperation = &$spec['paths']['/api-products']['get'];
+$productCatalogueOperation['summary'] = 'Discover available API products and their access boundaries';
+$productCatalogueOperation['description'] = 'Lists the currently offered API product families, preview status, authentication model, scopes, access paths and data boundaries. This catalogue describes API availability; it does not grant access or promise service availability. Accept-Language selects English or French labels. Public read limit: 60 requests per minute per IP address.';
+$productCatalogueOperation['responses']['200']['description'] = 'Localized API product catalogue.';
+$productCatalogueOperation['responses']['200']['content']['application/json']['schema'] = $successEnvelope([
+    'type' => 'object', 'required' => ['api_version', 'locale', 'items'], 'properties' => [
+        'api_version' => ['type' => 'string'], 'locale' => ['type' => 'string', 'enum' => ['en', 'fr']],
+        'items' => ['type' => 'array', 'items' => ['type' => 'object', 'additionalProperties' => false,
+            'required' => ['id', 'name', 'availability', 'authentication', 'access', 'summary', 'data_boundary'],
+            'properties' => [
+                'id' => ['type' => 'string'], 'name' => ['type' => 'string'], 'availability' => ['type' => 'string', 'enum' => ['preview', 'available', 'deprecated']],
+                'authentication' => ['type' => 'string'], 'scope' => ['type' => 'string'], 'access' => ['type' => 'string'],
+                'summary' => ['type' => 'string'], 'data_boundary' => ['type' => 'string'],
+            ],
+        ]],
+    ],
+], 'api.product.catalogue');
+$productCatalogueExampleItems = array_map(static function (array $item): array {
+    unset($item['name_fr'], $item['summary_fr'], $item['data_boundary_fr']);
+    return $item;
+}, $product['products']);
+$productCatalogueOperation['responses']['200']['content']['application/json']['example'] = ['data' => [
+    'api_version' => $product['version'], 'locale' => 'en', 'items' => $productCatalogueExampleItems,
+], 'meta' => ['operation' => 'api.product.catalogue'], 'messages' => []];
+$productCatalogueOperation['responses']['429'] = ['description' => 'Public read rate limit exceeded.'];
+$serviceOfferingsOperation = &$spec['paths']['/service-offerings']['get'];
+$serviceOfferingsOperation['operationId'] = 'publishing_service_offerings_catalogue';
+$serviceOfferingsOperation['summary'] = 'Discover OPES Health data and clinical decision support services';
+$serviceOfferingsOperation['description'] = 'Returns the public service offerings shown on the OPES Health website, with English or French labels selected by Accept-Language. This describes services available for discussion and enquiry; it is not a clinical decision API or a promise of clinical availability. Public read limit: 60 requests per minute per IP address.';
+$serviceOfferingsOperation['responses']['200']['description'] = 'Localized public service offerings and enquiry links.';
+$serviceOfferingsOperation['responses']['200']['content']['application/json']['schema'] = $successEnvelope([
+    'type' => 'object', 'required' => ['locale', 'items'], 'properties' => [
+        'locale' => ['type' => 'string', 'enum' => ['en', 'fr']],
+        'items' => ['type' => 'array', 'items' => ['type' => 'object', 'additionalProperties' => false,
+            'required' => ['id', 'name', 'summary', 'icon', 'cta', 'data_boundary', 'contact_url'],
+            'properties' => [
+                'id' => ['type' => 'string'], 'name' => ['type' => 'string'], 'summary' => ['type' => 'string'],
+                'icon' => ['type' => 'string'], 'cta' => ['type' => 'string'], 'data_boundary' => ['type' => 'string'],
+                'contact_url' => ['type' => 'string'],
+            ],
+        ]],
+    ],
+], 'publishing.service_offerings.catalogue');
+$serviceOfferingsOperation['responses']['200']['content']['application/json']['example'] = ['data' => [
+    'locale' => 'en', 'items' => array_map(static function (array $offering): array {
+        unset($offering['name_fr'], $offering['summary_fr'], $offering['cta_fr'], $offering['data_boundary_fr']);
+        $offering['contact_url'] = '/en/contact?service='.rawurlencode($offering['id']);
+        return $offering;
+    }, require $root.'/config/service_offerings.php'),
+], 'meta' => ['operation' => 'publishing.service_offerings.catalogue'], 'messages' => []];
+$serviceOfferingsOperation['responses']['429'] = ['description' => 'Public read rate limit exceeded.'];
+unset($statusOperation, $changelogOperation, $productCatalogueOperation, $serviceOfferingsOperation);
+$assessmentQuestionAdmin = ['type' => 'object', 'required' => ['id', 'prompt', 'choices', 'correct_choice_id'], 'properties' => [
+    'id' => ['type' => 'string'], 'prompt' => ['type' => 'string'], 'choices' => ['type' => 'array', 'minItems' => 2, 'maxItems' => 8, 'items' => ['type' => 'object', 'required' => ['id', 'label'], 'properties' => ['id' => ['type' => 'string'], 'label' => ['type' => 'string']]]],
+    'correct_choice_id' => ['type' => 'string'], 'points' => ['type' => 'integer', 'minimum' => 1, 'maximum' => 100], 'explanation' => ['type' => ['string', 'null']],
+]];
+$assessmentAdmin = ['type' => 'object', 'required' => ['id', 'course_id', 'title', 'pass_mark', 'is_published', 'questions'], 'properties' => [
+    'id' => ['type' => 'integer'], 'course_id' => ['type' => 'integer'], 'title' => ['type' => 'string'], 'instructions' => ['type' => ['string', 'null']],
+    'pass_mark' => ['type' => 'integer', 'minimum' => 1, 'maximum' => 100], 'attempt_limit' => ['type' => ['integer', 'null']],
+    'duration_minutes' => ['type' => ['integer', 'null']], 'is_published' => ['type' => 'boolean'], 'questions' => ['type' => 'array', 'items' => $assessmentQuestionAdmin],
+    'attempts_count' => ['type' => 'integer'], 'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+]];
+$assessmentQuestionLearner = $assessmentQuestionAdmin;
+$assessmentQuestionLearner['required'] = array_values(array_diff($assessmentQuestionLearner['required'], ['correct_choice_id']));
+unset($assessmentQuestionLearner['properties']['correct_choice_id']);
+unset($assessmentQuestionLearner['properties']['explanation']);
+$assessmentLearner = ['type' => 'object', 'required' => ['id', 'course_id', 'title', 'pass_mark', 'questions'], 'properties' => [
+    'id' => ['type' => 'integer'], 'course_id' => ['type' => 'integer'], 'course_slug' => ['type' => 'string'], 'title' => ['type' => 'string'],
+    'instructions' => ['type' => ['string', 'null']], 'pass_mark' => ['type' => 'integer'], 'attempt_limit' => ['type' => ['integer', 'null']],
+    'duration_minutes' => ['type' => ['integer', 'null']], 'questions' => ['type' => 'array', 'items' => $assessmentQuestionLearner],
+]];
+$assessmentAdminCollection = &$spec['paths']['/learning/courses/{course}/assessments']['get'];
+$assessmentAdminCollection['summary'] = 'List course assessments for administrators';
+$assessmentAdminCollection['description'] = 'Returns paginated assessment configuration, including answer keys, for active administrators with learning:read.';
+$assessmentAdminCollection['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => $assessmentAdmin], 'pagination' => ['type' => 'object', 'properties' => ['current_page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer']]],
+]], 'admin.learning.assessments.index');
+$assessmentAdminCollection['responses']['200']['content']['application/json']['example'] = ['data' => ['items' => [], 'pagination' => ['current_page' => 1, 'per_page' => 15, 'total' => 0, 'last_page' => 1]], 'meta' => ['operation' => 'admin.learning.assessments.index'], 'messages' => []];
+$assessmentAdminCreate = &$spec['paths']['/learning/courses/{course}/assessments']['post'];
+$assessmentAdminCreate['summary'] = 'Create and optionally publish a course assessment';
+$assessmentAdminCreate['description'] = 'Creates a course assessment. Drafts are private. Publishing requires an active course and at least one valid question. Questions are immutable after the first learner attempt. Requires learning:write and an Idempotency-Key.';
+$assessmentWriteSchema = ['type' => 'object', 'required' => ['title', 'questions'], 'additionalProperties' => false, 'properties' => [
+    'title' => ['type' => 'string', 'maxLength' => 200], 'instructions' => ['type' => ['string', 'null'], 'maxLength' => 10000],
+    'pass_mark' => ['type' => 'integer', 'minimum' => 1, 'maximum' => 100], 'attempt_limit' => ['type' => ['integer', 'null'], 'minimum' => 1, 'maximum' => 100],
+    'duration_minutes' => ['type' => ['integer', 'null'], 'minimum' => 1, 'maximum' => 1440], 'is_published' => ['type' => 'boolean'],
+    'questions' => ['type' => 'array', 'minItems' => 1, 'maxItems' => 100, 'items' => $assessmentQuestionAdmin],
+]];
+$assessmentAdminCreate['requestBody']['content'] = ['application/json' => ['schema' => $assessmentWriteSchema]];
+$assessmentAdminCreate['responses']['201']['description'] = 'Assessment created.';
+$assessmentAdminCreate['responses']['201']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['assessment', 'id'], 'properties' => ['assessment' => $assessmentAdmin, 'id' => ['type' => 'integer']]], 'admin.learning.assessments.create');
+$assessmentAdminShow = &$spec['paths']['/learning/courses/{course}/assessments/{assessment}'];
+$assessmentAdminShow['get']['summary'] = 'Read an assessment configuration';
+$assessmentAdminShow['get']['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['assessment'], 'properties' => ['assessment' => $assessmentAdmin]], 'admin.learning.assessments.show');
+$assessmentAdminShow['get']['responses']['200']['description'] = 'Assessment details for an authorized administrator.';
+$assessmentAdminShow['put']['summary'] = 'Update or publish a course assessment';
+$assessmentAdminShow['put']['description'] = 'Updates an assessment. Question/scoring changes are rejected after any learner attempt. Unpublish instead of deleting records with attempt history. Requires learning:write and an Idempotency-Key.';
+$assessmentAdminUpdateSchema = $assessmentWriteSchema; unset($assessmentAdminUpdateSchema['required']); $assessmentAdminUpdateSchema['minProperties'] = 1;
+$assessmentAdminShow['put']['requestBody']['content'] = ['application/json' => ['schema' => $assessmentAdminUpdateSchema]];
+$assessmentAdminShow['put']['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['assessment'], 'properties' => ['assessment' => $assessmentAdmin]], 'admin.learning.assessments.update');
+$assessmentAdminShow['delete']['summary'] = 'Delete an assessment without learner attempt history';
+$assessmentAdminShow['delete']['description'] = 'Assessments with learner attempts cannot be deleted. Unpublish them to retain the learning record.';
+$assessmentPractitionerList = &$spec['paths']['/practitioner/courses/{course}/assessments']['get'];
+$assessmentPractitionerList['summary'] = 'List published assessments for an enrolled practitioner';
+$assessmentPractitionerList['description'] = 'Returns only published assessments for the active course and signed-in practitioner’s enrollment. Correct answers and explanations are omitted.';
+$assessmentPractitionerList['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['assessments'], 'properties' => ['assessments' => ['type' => 'array', 'items' => ['allOf' => [$assessmentLearner, ['type' => 'object', 'properties' => [
+    'attempts_used' => ['type' => 'integer'], 'attempts_remaining' => ['type' => ['integer', 'null']], 'latest_attempt' => ['type' => ['object', 'null']],
+]]]]]]], 'practitioner.assessments.index');
+$assessmentPractitionerShow = &$spec['paths']['/practitioner/assessments/{assessment}']['get'];
+$assessmentPractitionerShow['summary'] = 'Read an available assessment without answer keys';
+$assessmentPractitionerShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['assessment', 'attempts', 'attempts_used', 'attempts_remaining'], 'properties' => [
+    'assessment' => $assessmentLearner, 'attempts' => ['type' => 'array', 'items' => ['type' => 'object']], 'attempts_used' => ['type' => 'integer'], 'attempts_remaining' => ['type' => ['integer', 'null']],
+]], 'practitioner.assessments.show');
+$assessmentStart = &$spec['paths']['/practitioner/assessments/{assessment}/attempts']['post'];
+$assessmentStart['summary'] = 'Start or resume an assessment attempt';
+$assessmentStart['description'] = 'Requires a current enrollment in the course. Starting again resumes an unexpired attempt. Attempt limits and optional duration are enforced by the server. Requires practitioner:write and an Idempotency-Key.';
+$assessmentStart['responses']['201']['description'] = 'A new attempt was started or the caller’s existing in-progress attempt was resumed.';
+$assessmentStart['responses']['201']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['attempt', 'assessment', 'deadline'], 'properties' => [
+    'attempt' => ['type' => 'object', 'required' => ['id', 'status', 'started_at'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string'], 'started_at' => ['type' => 'string', 'format' => 'date-time'], 'answers' => ['type' => 'object', 'additionalProperties' => ['type' => 'string']]]],
+    'assessment' => $assessmentLearner, 'deadline' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+]], 'practitioner.assessments.attempts.start');
+$assessmentSubmit = &$spec['paths']['/practitioner/assessments/{assessment}/attempts/{attempt}/submit']['post'];
+$assessmentSubmit['summary'] = 'Submit answers and receive the scored result';
+$assessmentSubmit['description'] = 'Submits exactly one choice per question. The server scores the attempt once, records a passed/failed domain event, and reveals correct answers/explanations only after submission. Expired and submitted attempts cannot be changed.';
+$assessmentSubmit['requestBody']['content']['application/json']['schema'] = ['type' => 'object', 'required' => ['answers'], 'additionalProperties' => false, 'properties' => ['answers' => ['type' => 'object', 'minProperties' => 1, 'additionalProperties' => ['type' => 'string']]]];
+$assessmentSubmit['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['attempt', 'review', 'score', 'passed', 'pass_mark'], 'properties' => [
+    'attempt' => ['type' => 'object'], 'review' => ['type' => 'array', 'items' => ['type' => 'object']], 'score' => ['type' => 'number'], 'passed' => ['type' => 'boolean'], 'pass_mark' => ['type' => 'integer'],
+]], 'practitioner.assessments.attempts.submit');
+$assessmentAttempt = &$spec['paths']['/practitioner/assessments/{assessment}/attempts/{attempt}']['get'];
+$assessmentAttempt['summary'] = 'Review a submitted assessment attempt';
+$assessmentAttempt['description'] = 'Returns only the signed-in practitioner’s submitted attempt, with selected/correct answers and explanations. In-progress results are not exposed.';
+$assessmentAttempt['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['attempt', 'review'], 'properties' => ['attempt' => ['type' => 'object'], 'review' => ['type' => 'array', 'items' => ['type' => 'object']]]], 'practitioner.assessments.attempt');
+$assessmentSave = &$spec['paths']['/practitioner/assessments/{assessment}/attempts/{attempt}']['patch'];
+$assessmentSave['summary'] = 'Save in-progress assessment answers';
+$assessmentSave['description'] = 'Saves a partial answer map for the authenticated practitioner’s in-progress attempt so work survives app restarts. Only valid question/choice pairs are accepted. Submitted or expired attempts cannot be changed. Requires practitioner:write and an Idempotency-Key.';
+$assessmentSave['requestBody']['content']['application/json']['schema'] = ['type' => 'object', 'required' => ['answers'], 'additionalProperties' => false,
+    'properties' => ['answers' => ['type' => 'object', 'minProperties' => 1, 'additionalProperties' => ['type' => 'string']]]];
+$assessmentSave['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['attempt', 'answered_count', 'question_count'], 'properties' => [
+    'attempt' => ['type' => 'object'], 'answered_count' => ['type' => 'integer', 'minimum' => 0], 'question_count' => ['type' => 'integer', 'minimum' => 1],
+]], 'practitioner.assessments.answers.save');
+$assessmentSave['responses']['422']['description'] = 'Attempt has ended, timer expired, or one or more answers are invalid.';
+unset($assessmentAdminCollection, $assessmentAdminCreate, $assessmentAdminShow, $assessmentPractitionerList, $assessmentPractitionerShow, $assessmentStart, $assessmentSubmit, $assessmentAttempt, $assessmentSave);
+$eligiblePartnerMembers = &$spec['paths']['/crm/partner-member-options']['get'];
+$eligiblePartnerMembers['summary'] = 'Find eligible partner accounts for an organization membership';
+$eligiblePartnerMembers['description'] = 'Administrator-only directory of active, email-verified accounts with the partner role. Returns only identity fields needed to grant organization membership; search is bounded and paginated. Requires crm:read.';
+$eligiblePartnerMembers['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => ['type' => 'object', 'required' => ['id', 'name', 'email'], 'properties' => ['id' => ['type' => 'integer'], 'name' => ['type' => 'string'], 'email' => ['type' => 'string', 'format' => 'email']]]],
+    'pagination' => ['type' => 'object', 'required' => ['current_page', 'per_page', 'total', 'last_page'], 'properties' => ['current_page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer']]],
+]], 'admin.enquiries.partnerApplications.members.eligible');
+$eligiblePartnerMembers['responses']['200']['content']['application/json']['example'] = ['data' => ['items' => [['id' => 101, 'name' => 'Partner User', 'email' => 'partner@example.test']], 'pagination' => ['current_page' => 1, 'per_page' => 15, 'total' => 1, 'last_page' => 1]], 'meta' => ['operation' => 'admin.enquiries.partnerApplications.members.eligible'], 'messages' => []];
+unset($eligiblePartnerMembers);
+$partnerAccounts = &$spec['paths']['/partner/accounts']['get'];
+$partnerAccounts['summary'] = 'List the authenticated partner’s approved organizations';
+$partnerAccounts['description'] = 'Returns only approved partner applications explicitly linked to the current active partner account. Membership is granted and revoked by an administrator; matching by email is never used. Sensitive application notes and other applicants are excluded. Requires identity:read and the partner role.';
+$partnerAccounts['responses']['200']['description'] = 'Approved partner organizations linked to the authenticated partner account.';
+$partnerAccounts['responses']['200']['content']['application/json']['schema'] = $successEnvelope([
+    'type' => 'object', 'required' => ['accounts'], 'properties' => ['accounts' => ['type' => 'array', 'items' => [
+        'type' => 'object', 'required' => ['application_id', 'organization_name', 'partner_type', 'country', 'member_since'], 'properties' => [
+            'application_id' => ['type' => 'integer', 'minimum' => 1], 'organization_name' => ['type' => 'string'],
+            'partner_type' => ['type' => 'string'], 'organization_type' => ['type' => ['string', 'null']],
+            'country' => ['type' => 'string'], 'city' => ['type' => ['string', 'null']],
+            'website' => ['type' => ['string', 'null'], 'format' => 'uri'], 'membership_role' => ['type' => 'string', 'enum' => ['owner', 'member']],
+            'member_since' => ['type' => 'string', 'format' => 'date-time'],
+        ],
+    ]]]], 'partner.accounts.index');
+$partnerAccounts['responses']['200']['content']['application/json']['example'] = ['data' => ['accounts' => [[
+    'application_id' => 123, 'organization_name' => 'Example Health Network', 'partner_type' => 'technology',
+    'organization_type' => 'hospital_network', 'country' => 'CM', 'city' => 'Yaounde',
+    'website' => 'https://partner.example', 'membership_role' => 'owner', 'member_since' => '2026-11-02T15:00:00+00:00',
+]]], 'meta' => ['operation' => 'partner.accounts.index'], 'messages' => []];
+$partnerMembers = &$spec['paths']['/crm/partner-applications/{partnerApplication}/members'];
+$partnerMemberList = &$partnerMembers['get'];
+$partnerMemberList['summary'] = 'List authorized accounts for an approved partner organization';
+$partnerMemberList['description'] = 'Administrator-only member directory for one approved partner application. Only active, email-verified users with the partner role are returned.';
+$partnerMemberSchema = ['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => ['type' => 'object', 'required' => ['id', 'user_id', 'name', 'email', 'member_since'], 'properties' => [
+        'id' => ['type' => 'integer', 'minimum' => 1], 'user_id' => ['type' => 'integer', 'minimum' => 1],
+        'name' => ['type' => 'string'], 'email' => ['type' => 'string', 'format' => 'email'], 'member_since' => ['type' => 'string', 'format' => 'date-time'],
+    ]]],
+    'pagination' => ['type' => 'object', 'required' => ['current_page', 'per_page', 'total', 'last_page'], 'properties' => [
+        'current_page' => ['type' => 'integer', 'minimum' => 1], 'per_page' => ['type' => 'integer', 'minimum' => 1, 'maximum' => 100],
+        'total' => ['type' => 'integer', 'minimum' => 0], 'last_page' => ['type' => 'integer', 'minimum' => 1],
+    ]],
+]];
+$partnerMemberList['responses']['200']['description'] = 'Paginated partner members with safe identity fields.';
+$partnerMemberList['responses']['200']['content']['application/json']['schema'] = $successEnvelope($partnerMemberSchema, 'admin.enquiries.partnerApplications.members.index');
+$partnerMemberCreate = &$partnerMembers['post'];
+$partnerMemberCreate['summary'] = 'Grant an approved partner account membership';
+$partnerMemberCreate['description'] = 'Administrator-only. Links an existing active, email-verified user with the partner role to an approved partner application. It does not create users or grant roles. Requires an Idempotency-Key.';
+$partnerMemberCreate['responses']['201'] = $partnerMemberCreate['responses']['200'];
+unset($partnerMemberCreate['responses']['200']);
+$partnerMemberCreate['responses']['201']['description'] = 'Partner account membership created or already exists.';
+$partnerMemberCreate['responses']['201']['content']['application/json']['schema'] = $successEnvelope([
+    'type' => 'object', 'required' => ['membership_id', 'application_id', 'user_id'], 'properties' => [
+        'membership_id' => ['type' => 'integer', 'minimum' => 1], 'application_id' => ['type' => 'integer', 'minimum' => 1],
+        'user_id' => ['type' => 'integer', 'minimum' => 1],
+    ],
+], 'admin.enquiries.partnerApplications.members.add');
+$partnerMemberCreate['requestBody']['content']['application/json']['schema'] = [
+    'type' => 'object', 'additionalProperties' => false, 'required' => ['user_id', 'membership_role'], 'properties' => [
+        'user_id' => ['type' => 'integer', 'minimum' => 1, 'description' => 'Existing active, verified partner account.'],
+        'membership_role' => ['type' => 'string', 'enum' => ['owner', 'member']],
+    ],
+];
+$spec['paths']['/crm/partner-applications/{partnerApplication}/members']['get']['responses']['200']['content']['application/json']['schema']['properties']['data']['properties']['items']['items']['required'][] = 'membership_role';
+$spec['paths']['/crm/partner-applications/{partnerApplication}/members']['get']['responses']['200']['content']['application/json']['schema']['properties']['data']['properties']['items']['items']['properties']['membership_role'] = ['type' => 'string', 'enum' => ['owner', 'member']];
+$partnerAccountUpdate = &$spec['paths']['/partner/accounts/{partnerApplication}']['patch'];
+$partnerAccountUpdate['summary'] = 'Update an approved partner organization profile';
+$partnerAccountUpdate['description'] = 'Organization owners may update only operational contact and description fields on an explicitly linked, approved partner account. Organization name, approval status, partner type, email and administrator notes cannot be changed through this operation. Requires partner:write.';
+$partnerAccountUpdate['requestBody']['content']['application/json']['schema'] = [
+    'type' => 'object', 'additionalProperties' => false, 'minProperties' => 1, 'properties' => [
+        'phone' => ['type' => ['string', 'null'], 'maxLength' => 40],
+        'country' => ['type' => 'string', 'maxLength' => 100], 'city' => ['type' => ['string', 'null'], 'maxLength' => 100],
+        'organization_type' => ['type' => ['string', 'null'], 'maxLength' => 120],
+        'target_market' => ['type' => ['string', 'null'], 'maxLength' => 1000],
+        'description' => ['type' => 'string', 'maxLength' => 5000],
+        'website' => ['type' => ['string', 'null'], 'format' => 'uri', 'maxLength' => 255],
+    ],
+];
+$partnerAccountUpdate['responses']['200']['description'] = 'Updated approved organization profile.';
+$partnerAccountUpdate['responses']['200']['content']['application/json']['schema'] = $successEnvelope([
+    'type' => 'object', 'required' => ['account'], 'properties' => ['account' => [
+        'type' => 'object', 'required' => ['application_id', 'organization_name', 'partner_type', 'country'], 'properties' => [
+            'application_id' => ['type' => 'integer'], 'organization_name' => ['type' => 'string'], 'partner_type' => ['type' => 'string'],
+            'organization_type' => ['type' => ['string', 'null']], 'country' => ['type' => 'string'], 'city' => ['type' => ['string', 'null']],
+            'website' => ['type' => ['string', 'null'], 'format' => 'uri'], 'target_market' => ['type' => ['string', 'null']],
+            'description' => ['type' => 'string'], 'phone' => ['type' => ['string', 'null']],
+        ],
+    ]],
+], 'partner.accounts.update');
+$partnerAccountUpdate['responses']['403'] = ['description' => 'Caller is not an owner of this approved organization.'];
+$partnerAccountUpdate['responses']['404'] = ['description' => 'Approved organization not found.'];
+$partnerAccountUpdate['responses']['422'] = ['description' => 'Invalid or empty update.'];
+$partnerMemberRemove = &$spec['paths']['/crm/partner-applications/{partnerApplication}/members/{member}']['delete'];
+$partnerMemberRemove['summary'] = 'Revoke partner account membership';
+$partnerMemberRemove['description'] = 'Administrator-only and idempotent. Revokes only the selected user’s membership in the selected partner application. It does not deactivate the user or change roles.';
+$partnerMemberRemove['responses']['204'] = ['description' => 'Membership was removed or was already absent.'];
+unset($partnerMemberRemove['responses']['200']);
+unset($partnerAccounts, $partnerMembers, $partnerMemberList, $partnerMemberCreate, $partnerMemberRemove, $partnerAccountUpdate);
+$integrationRequestItem = [
+    'type' => 'object', 'additionalProperties' => false,
+    'required' => ['id', 'status', 'applicant', 'application', 'received_at'],
+    'properties' => [
+        'id' => ['type' => 'integer', 'minimum' => 1],
+        'status' => ['type' => 'string', 'enum' => ['new', 'contacted', 'qualified', 'closed']],
+        'applicant' => ['type' => 'object', 'additionalProperties' => false, 'required' => ['name', 'email', 'phone'], 'properties' => [
+            'name' => ['type' => 'string'], 'email' => ['type' => 'string', 'format' => 'email'], 'phone' => ['type' => ['string', 'null']],
+        ]],
+        'application' => ['type' => 'object', 'additionalProperties' => false, 'required' => ['name', 'access_type', 'redirect_uri', 'requested_scopes', 'use_case'], 'properties' => [
+            'name' => ['type' => 'string'], 'access_type' => ['type' => 'string', 'enum' => ['machine', 'delegated', 'both']],
+            'redirect_uri' => ['type' => ['string', 'null'], 'format' => 'uri'],
+            'requested_scopes' => ['type' => 'array', 'items' => ['type' => 'string']], 'use_case' => ['type' => 'string'],
+        ]],
+        'received_at' => ['type' => 'string', 'format' => 'date-time'],
+    ],
+];
+$integrationRequestIndex = &$spec['paths']['/admin/enquiries/integration-requests']['get'];
+$integrationRequestIndex['summary'] = 'Review API integration access requests';
+$integrationRequestIndex['description'] = 'Lists structured developer access requests with applicant contact, requested access type, callbacks, requested scopes and intended use. Requires an active administrator with the enquiries:read scope. Requests are reviewed before credentials are provisioned.';
+$integrationRequestIndex['responses']['200']['description'] = 'Paginated integration access requests. No credentials or secrets are included.';
+$integrationRequestIndex['responses']['200']['content']['application/json']['schema'] = $successEnvelope([
+    'type' => 'object', 'additionalProperties' => false, 'required' => ['items', 'pagination'], 'properties' => [
+        'items' => ['type' => 'array', 'items' => $integrationRequestItem],
+        'pagination' => ['type' => 'object', 'required' => ['current_page', 'per_page', 'total', 'last_page'], 'properties' => [
+            'current_page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+        ]],
+    ],
+], 'admin.enquiries.integrationRequests.index');
+$integrationRequestShow = &$spec['paths']['/admin/enquiries/integration-requests/{lead}']['get'];
+$integrationRequestShow['summary'] = 'Inspect a developer access request';
+$integrationRequestShow['description'] = 'Returns the structured application request only when the selected enquiry is an integration request. Requires an active administrator with the enquiries:read scope.';
+$integrationRequestShow['responses']['200']['description'] = 'Allowlisted application and applicant details; no credentials, patient data or internal delivery metadata.';
+$integrationRequestShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope([
+    'type' => 'object', 'additionalProperties' => false, 'required' => ['integration_request'],
+    'properties' => ['integration_request' => $integrationRequestItem],
+], 'admin.enquiries.integrationRequests.show');
+unset($integrationRequestIndex, $integrationRequestShow, $integrationRequestItem);
 $spec['paths']['/catalogue/products']['get']['summary'] = 'List published software products';
 $spec['paths']['/catalogue/products']['get']['description'] = 'Returns published software catalogue metadata only, with bounded pagination and English or French labels. Requires an approved server client and the catalogue:read scope. This endpoint does not expose clinical or customer records.';
 $spec['paths']['/integration']['get']['summary'] = 'Read the current integration client';
@@ -501,6 +971,19 @@ $spec['paths']['/me/activity']['get'] = ['operationId' => 'readOwnBusinessActivi
     'responses' => ['200' => ['description' => 'Actor-owned event references and pagination.', 'content' => ['application/json' => ['schema' => ['type' => 'object', 'required' => ['data', 'meta'], 'properties' => [
         'data' => ['type' => 'array', 'items' => ['type' => 'object', 'properties' => ['event_id' => ['type' => 'string', 'format' => 'uuid'], 'operation' => ['type' => 'string'], 'references' => ['type' => 'array', 'items' => ['type' => 'object']], 'occurred_at' => ['type' => 'string']]]], 'meta' => ['type' => 'object']]]]]],
         '401' => ['description' => 'Delegated user authentication required.'], '403' => ['description' => 'identity:read scope required.'], '422' => ['description' => 'Invalid page size.'], '429' => ['description' => 'Rate limit exceeded.']]];
+$spec['paths']['/me/usage']['get'] = ['operationId' => 'readOwnBusinessUsage', 'summary' => 'Read your own API usage for this application', 'tags' => ['Identity'],
+    'description' => 'Returns exactly 30 UTC daily request totals for the authenticated user and this OAuth application. It excludes requests made by other users or other applications; no clinical or business record data is included.',
+    'security' => [['UserOAuth2' => ['identity:read']]], 'responses' => [
+        '200' => ['description' => 'Authenticated user and OAuth-client scoped daily usage.', 'content' => ['application/json' => ['schema' => $successEnvelope([
+            'type' => 'object', 'required' => ['period_start', 'period_end', 'requests_today', 'requests_last_30_days', 'daily_usage'], 'properties' => [
+                'period_start' => ['type' => 'string', 'format' => 'date'], 'period_end' => ['type' => 'string', 'format' => 'date'],
+                'requests_today' => ['type' => 'integer', 'minimum' => 0], 'requests_last_30_days' => ['type' => 'integer', 'minimum' => 0],
+                'daily_usage' => ['type' => 'array', 'minItems' => 30, 'maxItems' => 30, 'items' => ['type' => 'object', 'required' => ['date', 'requests'], 'properties' => [
+                    'date' => ['type' => 'string', 'format' => 'date'], 'requests' => ['type' => 'integer', 'minimum' => 0],
+                ]]],
+            ],
+        ], 'identity.me.usage')]]],
+        '401' => ['description' => 'Delegated user authentication required.'], '403' => ['description' => 'identity:read scope required.'], '429' => ['description' => 'Rate limit exceeded.']]];
 $spec['paths']['/me']['get'] = ['operationId' => 'readOwnProfile', 'summary' => 'Read your own account and granted roles', 'tags' => ['Identity'],
     'description' => 'Returns the authenticated active user’s own account name, email, current roles and the intersection of role-approved and token-granted business scopes. Intended for role-aware client navigation; it does not grant additional access.',
     'security' => [['UserOAuth2' => ['identity:read']]], 'responses' => [

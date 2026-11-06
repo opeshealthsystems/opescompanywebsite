@@ -13,6 +13,13 @@ class SubmitEnquiry
         'phone' => 'nullable|string|max:30', 'facility_type' => 'nullable|string|max:60',
         'products' => 'nullable|string|max:255', 'message' => 'nullable|string|max:2000',
         'product_slug' => 'nullable|string|max:60',
+        'integration_application' => 'sometimes|array:application_name,access_type,redirect_uri,requested_scopes,use_case',
+        'integration_application.application_name' => 'required_with:integration_application|string|max:100',
+        'integration_application.access_type' => 'required_with:integration_application|in:machine,delegated,both',
+        'integration_application.redirect_uri' => 'nullable|string|max:255',
+        'integration_application.requested_scopes' => 'sometimes|array|max:20',
+        'integration_application.requested_scopes.*' => 'required|string|distinct|max:80',
+        'integration_application.use_case' => 'required_with:integration_application|string|min:10|max:1200',
     ];
 
     public function __construct(private WebsiteFormMailer $mailer) {}
@@ -20,9 +27,37 @@ class SubmitEnquiry
     public function handle(array $fields, string $locale, ?string $ip, ?string $idempotencyKey = null, ?string $quoteOption = null): array
     {
         $payload = array_replace(array_fill_keys(array_keys(self::RULES), null), array_intersect_key($fields, self::RULES));
+        if (is_array($payload['integration_application'])) {
+            $application = $payload['integration_application'];
+            $machineScopes = ['catalogue:read', 'integration:read'];
+            $delegatedScopes = [...$machineScopes, ...array_keys(\App\Contexts\ApiIdentity\Application\BusinessScopes::definitions())];
+            $allowedScopes = $application['access_type'] === 'machine' ? $machineScopes : $delegatedScopes;
+            $requestedScopes = array_values(array_unique($application['requested_scopes'] ?? []));
+            if (array_diff($requestedScopes, $allowedScopes)) {
+                throw \Illuminate\Validation\ValidationException::withMessages(['integration_application.requested_scopes' => ['One or more requested scopes are not available.']]);
+            }
+            $redirectUri = $application['redirect_uri'] ?? null;
+            if (in_array($application['access_type'], ['delegated', 'both'], true)) {
+                $nativeCallback = $redirectUri === 'opeshealth://oauth/callback';
+                $parts = is_string($redirectUri) ? parse_url($redirectUri) : false;
+                $secureHttpsCallback = is_array($parts) && ($parts['scheme'] ?? null) === 'https'
+                    && !empty($parts['host']) && !isset($parts['user'], $parts['pass'], $parts['fragment']);
+                if (!$nativeCallback && !$secureHttpsCallback) {
+                    throw \Illuminate\Validation\ValidationException::withMessages(['integration_application.redirect_uri' => ['Delegated access requires an HTTPS callback or the reserved OPES Health native callback.']]);
+                }
+            } elseif ($redirectUri !== null) {
+                throw \Illuminate\Validation\ValidationException::withMessages(['integration_application.redirect_uri' => ['Machine-only access does not use a redirect URI.']]);
+            }
+            $payload['message'] = trim($application['use_case']);
+            $payload['products'] = 'API integration access: '.$application['access_type'];
+            $payload['facility_type'] = 'API integration';
+        }
         $quoteSelection = PricingQuoteSelection::find($quoteOption, $locale);
         if ($quoteOption !== null && $quoteSelection === null) {
             throw \Illuminate\Validation\ValidationException::withMessages(['quote_option' => ['The selected quote option is invalid.']]);
+        }
+        if ($quoteOption !== null && is_array($payload['integration_application'])) {
+            throw \Illuminate\Validation\ValidationException::withMessages(['quote_option' => ['Quote requests and API access requests must be submitted separately.']]);
         }
         if ($quoteSelection !== null) {
             $payload['product_slug'] = $quoteSelection['product_slug'];
@@ -58,7 +93,7 @@ class SubmitEnquiry
                 }
             }
             $lead = Lead::create(array_merge($payload, [
-                'source' => ($quoteSelection !== null || !empty($payload['product_slug'])) ? 'product-page' : 'contact', 'locale' => $locale, 'ip_address' => $ip,
+                'source' => is_array($payload['integration_application']) ? 'integration-request' : (($quoteSelection !== null || !empty($payload['product_slug'])) ? 'product-page' : 'contact'), 'locale' => $locale, 'ip_address' => $ip, 'status' => 'new',
             ]));
             $this->mailer->ensure($lead);
             if ($receipt) { $receipt->lead_id = $lead->id; $receipt->save(); }

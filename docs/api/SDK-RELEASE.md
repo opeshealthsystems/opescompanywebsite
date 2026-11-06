@@ -17,6 +17,56 @@ SDK 0.84.0 adds the validated rating enum for final-evaluation reads and reflect
 SDK 0.82.0 adds the protected credit-note register operation with validated status, invoice and text-search filters. It carries all 579 API operation IDs, including 573 business operations in OpenAPI 0.86.0. Archive size is 20100 bytes with SHA-256 `50646a42b25508a7dd8bbfa8c20fc32145b569f718c72e9d1c0727b2023b0024`. The package remains a downloadable preview and is not published to a registry.
 # Node SDK preview and contract release checks
 
+## SDK 0.111.0 — owner-managed machine API clients and OpenAPI 0.115.0 (6 November 2026)
+
+Adds developer self-service create, list, rotate and revoke operations for up to five owner-scoped machine clients. Issued clients are restricted to `catalogue:read` and `integration:read`, which permit public catalogue access and the calling client’s own usage/quota snapshot; they do not permit patient records or delegated business data. Secrets are shown only at creation or rotation, writes require idempotency keys, and rotation/revocation invalidates existing tokens. API command responses document `Idempotency-Replayed` for safe retry handling. The candidate contains 653 operation identifiers. The server-side download is a preview and is not published to npm.
+
+The downloadable archive is 25,506 bytes with SHA-256 `8c5af7104759176c3119cad88fb9a316ebe37831d8dcba5747049be9c21cc505`; its release metadata and adjacent `.sha256` file are generated from the same artifact.
+
+## SDK 0.110.2 — Medical Informatics partner type and OpenAPI 0.114.2 (5 November 2026)
+
+Documents the `academic` partner application type for university, research, teaching-hospital and health-training collaborations. No operation identifier or runtime method changed. The downloadable package is a server-side preview and is not published to npm.
+
+## SDK 0.110.1 — install instructions corrected and deployed (5 November 2026)
+
+Corrects the archive README to match the current versioned download filename and OpenAPI 0.114.1. No runtime code or API operation changed. All 649 operation IDs remain available. The 25,067-byte archive SHA-256 is `b6c7024a9d37c6e0b4079809872a0193bc27eb249b9a1b1d03cf834e84d0524e`. The package remains a downloadable server-side preview and is not published to npm; registry authentication is not configured in this environment.
+
+
+
+## SDK 0.110.0 — deployed and live-verified with OpenAPI 0.114.0 (5 November 2026)
+
+Adds a typed `submitPartnerApplication()` helper for idempotent partner intake, including the `health_ai` collaboration type. It requires no OAuth token, returns a minimal acknowledgement, and warns callers not to include patient data. All 649 operation IDs remain in the generated contract registry. The live 25,071-byte archive matches SHA-256 `0656cc919abbddbaf80842b5d1ef9209fa86f75b1973d520232def8f71bc0ec8`. The preview remains unpublished to npm. OpenAPI validation, PHP syntax checks, production route/contract checks, English/French page checks and the live SDK checksum passed; the Laravel and Node test suites were not rerun for this increment.
+
+## SDK 0.109.1 — deployed and live-verified with OpenAPI 0.113.1 (5 November 2026)
+
+Repackages the developer application lifecycle helpers with the OpenAPI 0.113.1 contract after removing an undocumented duplicate collection PATCH. The generated operation registry retains the valid client-specific `PATCH /api/v1/developer/applications/{client}` operation and all 649 operation identifiers. Public clients use S256 PKCE and receive no client secret; callbacks, account scopes, ownership and token revocation are enforced by the API. The 24,787-byte live archive matches SHA-256 `c05e33d88f1e57c0942963fe4fce7943b9520ae9879ab792a8a423b753c37b37`. It remains an unpublished server-side preview. OpenAPI 3.1 validation, PHP syntax and route registration checks passed; the full Laravel and Node test suites were not rerun for this increment. Live checks confirmed version 0.113.1, the API product catalogue, the Health Data/CDSS catalogue, anonymous denial on developer app listing, and the published SDK checksum.
+
+## SDK 0.109.0 — initial developer application lifecycle helpers (5 November 2026)
+
+Introduced developer-owned public OAuth application lifecycle helpers. The valid client-specific update operation was included; the 0.113.1 patch removes an additional undocumented operation at the collection URL. The immutable 0.109.0 archive remains available; current metadata points to 0.109.1.
+
+## SDK 0.108.0 — deployed and live-verified with OpenAPI 0.112.0 (5 November 2026)
+
+Adds the public localized `serviceOfferings()` read and all 645 operation identifiers from the OpenAPI contract. Website Health Data Services and CDSS cards render from the same query/configuration as `GET /api/v1/service-offerings`; service enquiries retain a whitelisted, localized prefill. The live 24,157-byte archive matches SHA-256 `97f57204e0e6ee8b3488175feec3124f9fb7e8d570c69c95cb6e914cc0524445`. It remains an unpublished server-side preview. Node tests 13/13, full Laravel tests 668/11,141, OpenAPI validation, registry coverage and compatibility against live OpenAPI 0.111.0 passed.
+
+## SDK 0.107.0 — deployed and live-verified with OpenAPI 0.111.0 (5 November 2026)
+
+Adds `integrationQuota()` and all 644 generated OpenAPI operation identifiers. Machine clients can inspect their own quota and request totals. Administrators can assign or clear daily/monthly limits through an idempotent, role- and scope-checked operation. The server returns documented quota headers and a problem response on 429; existing machine clients remain unlimited unless an administrator sets a limit. The live archive is 23,872 bytes with SHA-256 `4ca5db936ec753b4ace5ae0784f40e1d8214a9d6afe3d37399b012b9d94f4eb2`. This downloadable server-side package is unpublished to npm. Node tests 12/12, OpenAPI validation, and compatibility against the current repository baseline pass. Anonymous quota reads were verified to return 401 in production.
+
+SDK 0.105.0 aligns with live OpenAPI 0.109.0 and carries all 640 operation IDs. Its enquiry input includes typed developer application requests; these remain pending review before credentials are provisioned. The packaged 23,400-byte archive has SHA-256 `e3cc54308f74c8c7c36cce92137adfe7cdba6f8543f1b6bc8b303de6edf6303a`. Deployed to production on 3 November 2026 as OpenAPI 0.109.0. Live metadata reports 23,400 bytes and SHA-256 `e3cc54308f74c8c7c36cce92137adfe7cdba6f8543f1b6bc8b303de6edf6303a`, matching the downloaded archive. The package remains an unpublished server-side preview.
+
+SDK 0.104.0 aligns with live OpenAPI 0.108.0 and adds the finance-scoped payroll run detail operation. It includes all 638 generated operation IDs. The 23,147-byte live archive has SHA-256 `f15dcc9f05ae5b0e3d736ee2971658669d1996e15d26a47a027cf1c36a839ff1`. It remains an unpublished server-side preview; npm publication, a public sandbox and customer-managed application onboarding remain open product work.
+
+SDK 0.102.0 aligns with live OpenAPI 0.106.0 and includes administrator website-form delivery queries and confirmed-receipt reconciliation operations. Delivery results omit form content; confirmation is restricted to uncertain events and never resends mail. The 23,090-byte archive has SHA-256 `8135788d2fd73f3ad2de279ac175720b6ed01695dea952ea4fbb3526797d9ca4`. The 23,090-byte archive was live-verified against its SHA-256 metadata on 3 November. It remains an unpublished preview; sandbox onboarding and registry publication remain open product work.
+
+SDK 0.101.0 aligns with candidate OpenAPI 0.105.0 and includes runnable, read-only examples for machine-client self-usage and administrator support usage. The latter uses the least-privilege `api-clients:read` scope, returns 30 UTC daily buckets for the selected machine client, and excludes secrets. The 22,929-byte archive has SHA-256 `a83e845e52cc461f93a2e0d051d71393a4c762ce69a4eb87a0d15ccdc015c6aa`. It remains an unpublished preview; a public sandbox, customer usage dashboard and registry publication remain open product work.
+
+SDK 0.100.0 aligns with candidate OpenAPI 0.104.0 and adds partner owner-managed member list, add, and remove operations. Membership writes require idempotency keys; the API validates active, email-verified partner accounts, checks organization ownership, emits versioned membership events, and protects the final owner. The 22,342-byte downloadable preview has SHA-256 `ffe10e68b0e75e14c29d21abd7ec8c67a7017f097d7ddf8283f0ee52e747663c`; it is not published to npm. The pending migration for partner memberships and assessment data means the candidate is not deployed.
+
+SDK 0.99.0 aligns with candidate OpenAPI 0.103.0 and adds course assessment administration, answer autosave, and practitioner attempt operations. Learner reads omit answer keys; timing, attempt limits, scoring, and result review are server-enforced. Partner owner/member, eligible-member lookup, and profile operations from the same candidate are included. The archive is 22,172 bytes with SHA-256 `4e2713876d057b4c639fb7b88244f508dfa71caed61529b5cd1c0c1bab8cf553`. This candidate depends on pending assessment and partner membership migrations and is not deployed.
+
+SDK 0.98.0 aligns with candidate OpenAPI 0.102.0. It adds the partner-owner organization-profile update operation and documents owner/member roles in partner account membership. The archive is 21,827 bytes with SHA-256 `a00df57aaf0b9fcf5a3d77fe6d0062b81d463b2cfadc227ecc8b4afa4adf1965`. This candidate has not been deployed, and partner membership depends on the pending schema migration.
+
 SDK 0.77.0 adds protected detail queries for invoice, quote, supplier-bill, purchase-order and credit-note line items. The five Filament edit forms now load their line items through the same query handlers offered to API clients.
 SDK 0.77.0 archive: 19537 bytes, SHA-256 `c8aad2bd1e6570a947dc9f9f16a45fc8e4087e5acab83533dabf991025f532a2`. It carries all 574 API operation IDs, including 568 business operations in OpenAPI 0.81.0. The package remains a downloadable preview and is not published to a registry.
 
@@ -322,3 +372,9 @@ SDK 0.95.0 adds the authenticated self-profile operation for role-aware mobile c
 SDK 0.95.0 adds the authenticated self-profile operation for role-aware mobile clients. OpenAPI 0.99.0 documents the reserved OPES native callback and per-user role-derived scopes. The archive contains all 611 operation IDs and remains a downloadable server-side preview.
 
 SDK 0.96.0 downloadable archive: 21672 bytes, SHA-256 `9f8ed89cfee74e82d36d492a9d500a03550f82dc1a1b9f790ecb6799458e494e`. It carries all 612 operation IDs documented by OpenAPI 0.100.0, including the machine-client-only 30-day usage reader. The registry remains unpublished.
+
+SDK 0.97.0 adds the generated partner account operations from OpenAPI 0.101.0. Partner users can read only approved applications explicitly linked to their verified account; administrator CRM operations grant and revoke these links. The archive remains a server-side downloadable preview and is not an npm registry release.
+
+SDK 0.97.0 downloadable archive: 21752 bytes, SHA-256 `b88cff9695f9ea9a5586ba6be9573ce17d29b13d2ef1dfd8bca0cb9fbcff757d`. It carries all 616 operation IDs documented by OpenAPI 0.101.0. The package registry remains unpublished.
+
+SDK 0.106.0 aligns with live OpenAPI 0.110.0 and adds the delegated-user usage operation. `/me/usage` returns 30 UTC daily buckets scoped to the authenticated user and current OAuth application; it requires `identity:read` and does not expose other users' or applications' usage. The SDK includes a read-only example. The 23,596-byte archive is live and matches SHA-256 `e30eb95a731898b84ce9b44457d4960f03443a1240203c0c6e391a80c7c61340`. The npm registry remains unpublished.

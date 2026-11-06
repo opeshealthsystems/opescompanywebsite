@@ -2,7 +2,7 @@
 
 <x-layouts.app
     title="{{ $isFr ? 'Plan stratégique 2026–2031 — OPES Health Systems' : 'Strategic Plan 2026–2031 — OPES Health Systems' }}"
-    description="{{ $isFr ? 'Feuille de route 2026–2031 d\'OPES : 5 thèmes stratégiques, 500+ établissements, interopérabilité nationale, leadership régional.' : 'OPES 2026–2031 roadmap: 5 strategic themes, 500+ facilities, national interoperability, and regional digital health leadership.' }}">
+    description="{{ $isFr ? 'Feuille de route d’OPES : solutions de santé conçues au Cameroun pour des partenariats et projets à travers l’Afrique et à l’international.' : 'OPES roadmap: health solutions developed in Cameroon for projects and partnerships across Africa and internationally.' }}">
 
 {{-- ── HERO ─────────────────────────────────────────────────────── --}}
 <div class="about-hero">
@@ -74,13 +74,13 @@
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:28px">
         @php $themes = $isFr ? [
             ['1','hospital','#69D5F5','Digitalisation des établissements','Accélérer la numérisation des soins à travers toute l\'Afrique.',['500+ cliniques','100+ hôpitaux','25+ réseaux hospitaliers']],
-            ['2','share-2','#8AC5ED','Interopérabilité de la santé','Construire le plus grand écosystème d\'interopérabilité de santé en Afrique centrale.',['Identifiant national de santé','Infrastructure HIE','Réseau de référencement','Connectivité assurance']],
+            ['2','share-2','#8AC5ED','Interopérabilité de la santé','Faire progresser l’interopérabilité de santé entre les pays africains, selon les cadres nationaux et les partenariats locaux.',['Identité de santé','Échange d’informations de santé','Réseaux de référence','Connectivité assurance']],
             ['3','brain','#69D5F5','Intelligence clinique','Développer des capacités avancées d\'intelligence clinique.',['CDSS mature','Plateforme de triage nationale','Plateforme d\'analytique clinique']],
             ['4','building-2','#8AC5ED','Programmes nationaux de santé numérique','Soutenir les initiatives gouvernementales de santé numérique.',['Registres nationaux','Plateformes de santé publique','Programmes CSU','Surveillance des maladies']],
             ['5','graduation-cap','#69D5F5','Développement des capacités humaines','Développer une main-d\'œuvre en technologie de la santé.',['10 000 utilisateurs certifiés','1 000 administrateurs certifiés','500 implémenteurs certifiés','100 formateurs certifiés']],
         ] : [
             ['1','hospital','#69D5F5','Healthcare facility digitization','Accelerate healthcare digitization across the continent.',['500+ clinics','100+ hospitals','25+ hospital networks']],
-            ['2','share-2','#8AC5ED','Healthcare interoperability','Build the largest healthcare interoperability ecosystem in Central Africa.',['National Health ID','HIE infrastructure','Referral exchange network','Insurance connectivity']],
+            ['2','share-2','#8AC5ED','Healthcare interoperability','Advance healthcare interoperability across African countries through national frameworks and local partnerships.',['Health identity','Health information exchange','Referral networks','Insurance connectivity']],
             ['3','brain','#69D5F5','Clinical intelligence','Develop advanced clinical intelligence capabilities.',['Mature CDSS','National triage platform','Clinical analytics platform']],
             ['4','building-2','#8AC5ED','National digital health programs','Support government digital health initiatives.',['National registries','Public health platforms','UHC programs','Disease surveillance']],
             ['5','graduation-cap','#69D5F5','Human capacity development','Build a healthcare technology workforce through OPES Academy.',['10,000 certified users','1,000 certified administrators','500 certified implementers','100 certified trainers']],
@@ -113,20 +113,20 @@
         <i data-lucide="milestone" style="width:12px;height:12px"></i>
         {{ $isFr ? 'Feuille de route sur 5 ans' : '5-year growth roadmap' }}
     </div>
-    <h2 class="section-title">{{ $isFr ? 'De la fondation au leadership régional' : 'From foundation to regional leadership' }}</h2>
+    <h2 class="section-title">{{ $isFr ? 'Des bases solides aux partenariats en Afrique et dans le monde' : 'From a strong foundation to partnerships across Africa and worldwide' }}</h2>
     <div style="margin-top:28px">
         @php $years = $isFr ? [
             ['2026','var(--text-faint)','Fondation','Stabilisation produit, déploiements pilotes, mise en place de la gouvernance.',['10 établissements','2 hôpitaux phares'],'pen-line'],
-            ['2027','#8AC5ED','Expansion','Croissance commerciale, visibilité régionale, montée en échelle.',['50 établissements','10 hôpitaux'],'trending-up'],
+            ['2027','#8AC5ED','Expansion','Croissance commerciale et développement de partenariats à travers l’Afrique.',['50 établissements','10 hôpitaux'],'trending-up'],
             ['2028','#00A87B','Interopérabilité','Déploiement Health ID, mise en service de l\'HIE, réseau connecté.',['Réseau d\'établissements connectés'],'share-2'],
             ['2029','#69D5F5','Programmes nationaux','Engagement gouvernemental, registres nationaux, santé publique.',['Projets de santé publique'],'building-2'],
-            ['2030–31','#FFB020','Leadership régional','Expansion multi-pays, infrastructure de santé numérique régionale.',['Infrastructure régionale déployée'],'globe'],
+            ['2030–31','#FFB020','Expansion Afrique & monde','Partenariats et projets multi-pays adaptés au contexte local.',['Projets multi-pays'],'globe'],
         ] : [
             ['2026','var(--text-faint)','Foundation','Product stabilization, pilot deployments, governance implementation.',['10 facilities','2 flagship hospitals'],'pen-line'],
-            ['2027','#8AC5ED','Expansion','Commercial growth, regional visibility, scale-up.',['50 facilities','10 hospitals'],'trending-up'],
+            ['2027','#8AC5ED','Expansion','Commercial growth and partnership development across Africa.',['50 facilities','10 hospitals'],'trending-up'],
             ['2028','#00A87B','Interoperability','Health ID rollout, HIE deployment, connected facility network.',['Connected facility network'],'share-2'],
             ['2029','#69D5F5','National programs','Government engagement, national registries, public health projects.',['Public health projects launched'],'building-2'],
-            ['2030–31','#FFB020','Regional leadership','Multi-country expansion, regional digital health infrastructure.',['Regional infrastructure live'],'globe'],
+            ['2030–31','#FFB020','Africa and global partnerships','Multi-country projects scoped to local requirements.',['Multi-country projects'],'globe'],
         ]; @endphp
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0;position:relative">
             {{-- connecting line --}}

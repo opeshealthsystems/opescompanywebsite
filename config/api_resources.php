@@ -491,6 +491,12 @@ return [
         'private' => ['id', 'cohort_id', 'week_start', 'week_end', 'metrics', 'summary', 'action_items', 'author_id', 'generated_at', 'created_at', 'updated_at'],
         'relations' => [],
     ],
+    \App\Models\WebsiteFormDelivery::class => [
+        'public' => ['id'],
+        'private' => ['event_id', 'event_type', 'submission_type', 'submission_id', 'recipient', 'status', 'attempts',
+            'next_attempt_at', 'sent_at', 'message_id', 'error_type', 'created_at', 'updated_at'],
+        'relations' => [],
+    ],
     \Illuminate\Notifications\DatabaseNotification::class => [
         'public' => [], 'private' => ['id', 'data', 'read_at', 'created_at'], 'relations' => [],
     ],

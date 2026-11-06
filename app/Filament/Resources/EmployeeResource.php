@@ -30,7 +30,7 @@ class EmployeeResource extends Resource
 
     public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
     {
-        return app(\App\Contexts\Workforce\Application\Commands\AdminEmployeeCommands::class)->employeeQuery(
+        return app(\App\Contexts\Workforce\Application\Queries\AdminEmployeeQueries::class)->employeeQuery(
             new \App\Contexts\Shared\Application\WorkflowInput(actor: auth()->user(), language: app()->getLocale())
         );
     }

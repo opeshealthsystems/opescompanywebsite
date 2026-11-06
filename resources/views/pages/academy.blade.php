@@ -28,6 +28,9 @@
         <a href="{{ url($locale.'/contact') }}" class="btn-secondary">
             {{ $isFr ? 'Formations pour établissements' : 'Facility training packages' }} <i data-lucide="building-2" style="width:15px;height:15px;color:var(--text-muted)"></i>
         </a>
+        <a href="{{ url($locale.'/medical-informatics') }}" class="btn-secondary">
+            {{ $isFr ? 'Partenariat en informatique médicale' : 'Medical Informatics partnership' }} <i data-lucide="book-open-check" style="width:15px;height:15px;color:var(--text-muted)"></i>
+        </a>
     </div>
 </div>
 

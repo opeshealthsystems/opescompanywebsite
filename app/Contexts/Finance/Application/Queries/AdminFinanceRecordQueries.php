@@ -111,6 +111,32 @@ final class AdminFinanceRecordQueries extends WorkflowHandler
         return $this->respond($input, $query);
     }
 
+    public function payrollRun(WorkflowInput $input, PayrollRun $run): WorkflowResult
+    {
+        $this->admin($input);
+        $run = $this->payrollRunQuery($input)->whereKey($run->id)->firstOrFail();
+
+        return WorkflowResult::payload([
+            'run' => [
+                'id' => $run->id,
+                'reference' => $run->reference,
+                'period_start' => $run->period_start?->toDateString(),
+                'period_end' => $run->period_end?->toDateString(),
+                'status' => $run->status,
+                'total_gross' => (float) $run->total_gross,
+                'total_deductions' => (float) PayrollEntry::query()->where('payroll_run_id', $run->id)->sum('total_deductions'),
+                'total_net' => (float) $run->total_net,
+                'currency' => $run->currency,
+                'notes' => $run->notes,
+                'processed_by' => $run->processed_by,
+                'processor_name' => $run->processor?->name,
+                'completed_at' => $run->completed_at?->toIso8601String(),
+                'created_at' => $run->created_at?->toIso8601String(),
+                'updated_at' => $run->updated_at?->toIso8601String(),
+            ],
+        ]);
+    }
+
     public function invoiceRegisterQuery(WorkflowInput $input): Builder
     {
         $this->admin($input);

@@ -10,7 +10,13 @@ class Lead extends Model
     protected $fillable = [
         'name', 'email', 'phone', 'facility_type', 'products',
         'message', 'source', 'product_slug', 'locale', 'status', 'ip_address',
+        'integration_application',
     ];
+
+    protected function casts(): array
+    {
+        return ['integration_application' => 'array'];
+    }
 
     public function quotes(): HasMany
     {

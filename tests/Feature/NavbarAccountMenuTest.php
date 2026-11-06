@@ -84,6 +84,39 @@ class NavbarAccountMenuTest extends TestCase
         $this->assertStringNotContainsString('/en/customer/dashboard', $nav);
     }
 
+    public function test_homepage_presents_data_and_cdss_services_in_english_and_french(): void
+    {
+        $this->get('/en')->assertOk()
+            ->assertSee('Health Data Services')->assertSee('Clinical Decision Support Systems (CDSS)')
+            ->assertSee('Discuss your data needs')->assertSee('/en/contact?service=health-data')->assertSee('/en/contact?service=cdss');
+        $this->get('/fr')->assertOk()
+            ->assertSee('Services de données de santé')->assertSee('Systèmes d’aide à la décision clinique (CDSS)')
+            ->assertSee('/fr/contact?service=health-data')->assertSee('/fr/contact?service=cdss');
+    }
+
+    public function test_service_offering_api_is_the_localized_source_for_public_service_cards(): void
+    {
+        $this->getJson('/api/v1/service-offerings', ['Accept-Language' => 'en'])
+            ->assertOk()->assertJsonPath('data.locale', 'en')
+            ->assertJsonPath('data.items.0.id', 'health-data')
+            ->assertJsonPath('data.items.0.name', 'Health Data Services')
+            ->assertJsonPath('data.items.0.contact_url', '/en/contact?service=health-data');
+        $this->getJson('/api/v1/service-offerings', ['Accept-Language' => 'fr'])
+            ->assertOk()->assertJsonPath('data.locale', 'fr')
+            ->assertJsonPath('data.items.1.name', 'Systèmes d’aide à la décision clinique (CDSS)')
+            ->assertJsonPath('data.items.1.contact_url', '/fr/contact?service=cdss');
+    }
+
+    public function test_service_contact_links_prefill_only_known_service_interests(): void
+    {
+        $this->get('/en/contact?service=health-data')->assertOk()
+            ->assertSee('value="Health Data Services"', false);
+        $this->get('/fr/contact?service=cdss')->assertOk()
+            ->assertSee('value="Systèmes d’aide à la décision clinique (CDSS)"', false);
+        $this->get('/en/contact?service=https://attacker.example')->assertOk()
+            ->assertDontSee('attacker.example');
+    }
+
     public function test_admin_sees_confidential_strategy_and_risk_links_in_page(): void
     {
         $page = $this->pageFor('super_admin');
@@ -120,16 +153,17 @@ class NavbarAccountMenuTest extends TestCase
         $page = $this->pageFor(null);
         $this->assertStringContainsString('/en/developers', $page);
         $this->assertStringContainsString('/en/academy', $page);
+        $this->assertStringContainsString('/en/medical-informatics', $page);
     }
 
-    public function test_primary_navigation_links_to_six_public_sections(): void
+    public function test_primary_navigation_links_to_the_reorganized_audience_and_product_sections(): void
     {
         $nav = $this->navFor(null);
-        foreach (['products', 'solutions', 'about', 'blog', 'compliance', 'contact'] as $path) {
-            $this->assertStringContainsString('/en/'.$path, $nav);
+        foreach (['/en/products', '/en/solutions', '/en/products/opescare', '/en/medical-informatics', '/en/partnerships', '/en/mobile-app', '/en/about'] as $path) {
+            $this->assertStringContainsString($path, $nav);
         }
         preg_match('/<div class="nav-links">(.*?)<\/div>/s', $nav, $links);
-        $this->assertSame(6, substr_count($links[1] ?? '', '<a '));
+        $this->assertSame(8, substr_count($links[1] ?? '', '<a '));
     }
 
     public function test_footer_confidential_links_hidden_from_guests_and_non_admin_roles(): void

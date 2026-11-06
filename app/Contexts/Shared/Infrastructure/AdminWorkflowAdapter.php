@@ -44,13 +44,15 @@ final class AdminWorkflowAdapter
     public static function record(string $operation, array $values = [], array $parameters = []): Model
     {
         $result = app(WorkflowDispatcher::class)->execute($operation, new WorkflowInput(values: $values, parameters: $parameters, actor: Auth::user()));
-        if (($record = $result->data['record'] ?? null) instanceof Model) {
-            return $record;
+        foreach (['record', 'employee', 'assessment', 'user'] as $recordKey) {
+            if (($record = $result->data[$recordKey] ?? null) instanceof Model) {
+                return $record;
+            }
         }
         // Some commands return a named read model (for example `employee`) instead of
         // exposing their Eloquent model in the API response. For Filament's record
         // actions, resolve the route model from the operation contract after dispatch.
-        $definitions = config('business_workflows', []);
+        $definitions = config('business_workflows.definitions', []);
         $definition = $definitions[$operation] ?? [];
         $recordModel = null;
         $recordClass = null;
@@ -76,7 +78,7 @@ final class AdminWorkflowAdapter
             }
         }
 
-        $recordData = $result->data['employee'] ?? $result->data['record'] ?? $result->data;
+        $recordData = $result->data['employee'] ?? $result->data['assessment'] ?? $result->data['record'] ?? $result->data;
         if ($recordModel instanceof Model) {
             $attributes = is_array($recordData) ? array_intersect_key($recordData, array_flip($recordModel->getFillable())) : [];
             if ($attributes) $recordModel->fill($attributes);

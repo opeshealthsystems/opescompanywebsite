@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 final class AdminDashboardReadQueries extends WorkflowHandler
 {
-    private function actor(WorkflowInput $input): User
+    private function authorizedActor(WorkflowInput $input): User
     {
         $actor = $input->user();
         abort_unless($actor instanceof User && $actor->is_active, 403);
@@ -23,7 +23,7 @@ final class AdminDashboardReadQueries extends WorkflowHandler
 
     public function ticketQuery(WorkflowInput $input): Builder
     {
-        abort_unless($this->actor($input)->hasAnyRole(['super_admin', 'admin', 'support']), 403);
+        abort_unless($this->authorizedActor($input)->hasAnyRole(['super_admin', 'admin', 'support']), 403);
         return Ticket::with('customer')->whereIn('status', ['open', 'in_progress', 'pending_customer'])->orderByDesc('created_at');
     }
 
@@ -37,7 +37,7 @@ final class AdminDashboardReadQueries extends WorkflowHandler
 
     public function leadQuery(WorkflowInput $input): Builder
     {
-        abort_unless($this->actor($input)->hasAnyRole(['super_admin', 'admin']), 403);
+        abort_unless($this->authorizedActor($input)->hasAnyRole(['super_admin', 'admin']), 403);
         return Lead::whereIn('status', ['new', 'contacted'])->orderByDesc('created_at');
     }
 
@@ -51,7 +51,7 @@ final class AdminDashboardReadQueries extends WorkflowHandler
 
     public function invoiceQuery(WorkflowInput $input): Builder
     {
-        $actor = $this->actor($input);
+        $actor = $this->authorizedActor($input);
         abort_unless($actor->hasPermissionTo('manage_accounting'), 403);
         return Invoice::with('customer')->whereIn('status', ['sent', 'overdue'])->orderByDesc('created_at');
     }
@@ -66,7 +66,7 @@ final class AdminDashboardReadQueries extends WorkflowHandler
 
     public function announcementQuery(WorkflowInput $input): Builder
     {
-        $roles = $this->actor($input)->getRoleNames()->all();
+        $roles = $this->authorizedActor($input)->getRoleNames()->all();
         return Announcement::with('author:id,name')->where('is_active', true)
             ->where(fn (Builder $query) => $query->where('audience', 'all')->orWhereIn('audience', $roles))
             ->orderByDesc('is_pinned')->orderByDesc('published_at');

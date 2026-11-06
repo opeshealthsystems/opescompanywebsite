@@ -114,7 +114,7 @@
         @foreach([
             ['value'=>\App\Models\Product::publicCatalogue()->count(),'label'=>__('about.stat_0_label')],
             ['value'=>'EN/FR','label'=>__('about.stat_1_label')],
-            ['value'=>'CEMAC','label'=>__('about.stat_2_label')],
+            ['value'=>'Africa + Global','label'=>__('about.stat_2_label')],
             ['value'=>'HL7 FHIR','label'=>__('about.stat_3_label')],
         ] as $s)
         <div class="stat-item">
@@ -158,7 +158,7 @@
 <section class="section" style="max-width:960px;margin:auto">
     <img src="{{ asset('images/opes-seal.png') }}" alt="OPES Health Systems seal" width="160" height="160" style="object-fit:contain;margin-bottom:24px">
     <h2 class="section-title">{{ $isFr ? 'Une démarche d’ingénierie centrée sur les équipes de soins' : 'An engineering approach centred on care teams' }}</h2>
-    <p>{{ $isFr ? 'OPES Health Systems développe des logiciels de santé au Cameroun. Notre catalogue distingue les outils de travail clinique, les services de diagnostic et la sécurité du médicament. Un projet doit commencer par les processus de votre établissement, ses contraintes et des critères de réception mesurables.' : 'OPES Health Systems develops healthcare software in Cameroon. Our catalogue distinguishes clinical workflow tools, diagnostic systems and medicine safety. A project should begin with your facility’s workflows, constraints and measurable acceptance criteria.' }}</p>
+    <p>{{ $isFr ? 'OPES Health Systems développe des logiciels de santé au Cameroun pour les organisations de santé en Afrique et les collaborations internationales. Notre catalogue distingue les outils de travail clinique, les services de diagnostic et la sécurité du médicament. Chaque projet commence par les processus, contraintes locales et critères de réception mesurables de l’établissement.' : 'OPES Health Systems develops healthcare software in Cameroon for health organizations across Africa and international collaborations. Our catalogue covers clinical workflows, diagnostic services and medicine safety. Each project starts with the facility’s workflows, local requirements and measurable acceptance criteria.' }}</p>
     <h3>{{ $isFr ? 'Évaluer une solution' : 'Evaluate a solution' }}</h3>
     <p>{{ $isFr ? 'Demandez une démonstration des processus pertinents, le périmètre de la version proposée, les interfaces et les résultats de tests disponibles. Confirmez la formation, les responsabilités, l’hébergement et le support avant un déploiement.' : 'Request a demonstration of the relevant workflows, the offered version’s scope, interfaces and available test results. Confirm training, responsibilities, hosting and support before deployment.' }}</p>
     <h3>{{ $isFr ? 'Échanger avec notre équipe' : 'Talk with our team' }}</h3>

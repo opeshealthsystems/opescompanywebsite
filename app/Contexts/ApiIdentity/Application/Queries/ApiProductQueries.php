@@ -22,4 +22,25 @@ final class ApiProductQueries extends WorkflowHandler
     {
         return WorkflowResult::payload(['items' => config('api_product.changelog', [])]);
     }
+
+    public function catalogue(WorkflowInput $input): WorkflowResult
+    {
+        $products = array_map(static function (array $product) use ($input): array {
+            if ($input->locale() === 'fr') {
+                foreach (['name', 'summary', 'data_boundary'] as $field) {
+                    $localized = $field.'_fr';
+                    if (isset($product[$localized])) $product[$field] = $product[$localized];
+                }
+            }
+            unset($product['name_fr'], $product['summary_fr'], $product['data_boundary_fr']);
+
+            return $product;
+        }, config('api_product.products', []));
+
+        return WorkflowResult::payload([
+            'api_version' => (string) config('api_product.version'),
+            'locale' => $input->locale(),
+            'items' => $products,
+        ]);
+    }
 }

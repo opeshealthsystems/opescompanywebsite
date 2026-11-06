@@ -45,9 +45,11 @@ class PayNowActionTest extends TestCase
         ]);
 
         $app = $this->paidApp();
+        $app->update(['payout_amount' => 50000, 'payout_currency' => 'XAF', 'payout_reference' => (string) \Illuminate\Support\Str::uuid(),
+            'payout_provider' => 'mtn', 'payout_initiated_at' => now()]);
         $manager = app(PayoutGatewayManager::class);
         $network = $manager->resolveNetwork($app);
-        $result  = $manager->driverFor($network)->disburse($app, 50000, 'XAF');
+        $result  = $manager->driverFor($network)->disburse($app, 50000, 'XAF', ['reference' => (string) \Illuminate\Support\Str::uuid()]);
 
         $this->assertSame('mtn', $network);
         $this->assertSame('pending', $result->status);

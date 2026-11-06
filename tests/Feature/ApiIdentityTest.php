@@ -155,7 +155,7 @@ class ApiIdentityTest extends TestCase
         );
 
         $this->artisan('api:client', ['action' => 'rotate', '--client' => $client->id])
-            ->expectsOutput('Only confidential machine clients can be rotated')
+            ->expectsOutput('Only confidential machine clients can be managed')
             ->assertFailed();
 
         $this->assertSame([], glob(storage_path('app/private/api-credentials/*.json')) ?: []);
@@ -174,6 +174,26 @@ class ApiIdentityTest extends TestCase
         $this->getJson('/api/v1/integration', ['Authorization' => 'Bearer '.$tokenB])->assertOk()->assertJsonPath('data.client_id', $b->id);
     }
 
+    public function test_configured_machine_quota_enforces_daily_limit_and_reports_headers(): void
+    {
+        $client = $this->client();
+        $client->forceFill(['daily_request_limit' => 2, 'monthly_request_limit' => 10])->save();
+        $token = $this->token($client)->assertOk()->json('access_token');
+        $headers = ['Authorization' => 'Bearer '.$token];
+
+        $this->getJson('/api/v1/integration', $headers)->assertOk()
+            ->assertHeader('X-Quota-Daily-Limit', '2')->assertHeader('X-Quota-Daily-Remaining', '1')
+            ->assertHeader('X-Quota-Monthly-Limit', '10')->assertHeader('X-Quota-Monthly-Remaining', '9');
+        $this->getJson('/api/v1/integration', $headers)->assertOk()->assertHeader('X-Quota-Daily-Remaining', '0');
+        $this->getJson('/api/v1/integration', $headers)->assertStatus(429)
+            ->assertHeader('Retry-After')->assertHeader('X-Quota-Daily-Remaining', '0')
+            ->assertHeader('Content-Type', 'application/problem+json');
+
+        $this->assertDatabaseHas('api_client_usage', [
+            'client_id' => $client->id, 'usage_date' => now('UTC')->toDateString(), 'requests' => 2,
+        ]);
+    }
+
     public function test_provisioning_requires_active_admin_and_supported_explicit_scopes(): void
     {
         $this->artisan('api:client', ['action' => 'create', '--owner' => $this->owner->email, '--name' => 'Example', '--scope' => ['*']])->assertFailed();
@@ -184,9 +204,10 @@ class ApiIdentityTest extends TestCase
 
     public function test_developer_pages_are_bilingual_and_link_the_public_contract(): void
     {
+        $sdk = json_decode(file_get_contents(public_path('downloads/opes-api-sdk.json')), true, 512, JSON_THROW_ON_ERROR);
         $this->get('/en/developers')->assertOk()->assertSee('Build with OPES APIs')->assertSee('/api/v1/openapi.json')
-            ->assertSee('/downloads/opes-health-api-client-0.96.0.tgz')->assertSee('SHA-256 checksum');
-        $this->get('/fr/developers')->assertOk()->assertSee('Intégrez les API OPES');
+            ->assertSee($sdk['url'])->assertSee('SHA-256 checksum')->assertSee('/api/v1/me/usage')->assertSee('identity:read');
+        $this->get('/fr/developers')->assertOk()->assertSee('Intégrez les API OPES')->assertSee('/api/v1/me/usage');
     }
 }
 

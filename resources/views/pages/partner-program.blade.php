@@ -173,8 +173,8 @@
 <div class="demo-section">
     <h2>{{ $isFr ? 'Devenir partenaire OPES ?' : 'Become an OPES partner?' }}</h2>
     <p>{{ $isFr
-        ? 'Rejoignez l\'écosystème OPES et contribuez à la transformation numérique de la santé en Afrique centrale et au-delà.'
-        : 'Join the OPES ecosystem and contribute to the digital transformation of healthcare across Central Africa and beyond.' }}</p>
+        ? 'Rejoignez l\'écosystème OPES et contribuez à la transformation numérique de la santé partout en Afrique et à l’international.'
+        : 'Join the OPES ecosystem and contribute to digital health transformation across Africa and through international collaboration.' }}</p>
     <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:12px">
         <a href="{{ url($locale.'/contact') }}" class="btn-primary">
             {{ $isFr ? 'Rejoindre le programme' : 'Join the programme' }}

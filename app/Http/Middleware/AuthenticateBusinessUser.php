@@ -33,6 +33,13 @@ final class AuthenticateBusinessUser
         $request->setUserResolver(fn () => $user);
         $request->attributes->set('api_client', $client);
         $request->attributes->set('api_scopes', $scopes);
+        $usageDate = now('UTC')->toDateString();
+        \Illuminate\Support\Facades\DB::table('api_user_usage')->insertOrIgnore([
+            'client_id' => $client->id, 'user_id' => $user->id, 'usage_date' => $usageDate, 'requests' => 0,
+        ]);
+        \Illuminate\Support\Facades\DB::table('api_user_usage')
+            ->where('client_id', $client->id)->where('user_id', $user->id)->where('usage_date', $usageDate)
+            ->increment('requests');
         try { return $next($request); }
         finally { $request->setUserResolver($resolver); }
     }

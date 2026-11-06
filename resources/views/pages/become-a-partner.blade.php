@@ -4,14 +4,14 @@ $isFr   = $locale === 'fr';
 @endphp
 
 <x-layouts.app :title="$isFr ? 'Devenir Partenaire — OPES Health Systems' : 'Become a Partner — OPES Health Systems'"
-               :description="$isFr ? 'Rejoignez l\'écosystème OPES et contribuez à la transformation de la santé numérique en Afrique.' : 'Join the OPES ecosystem and help transform digital health across Africa.'">
+               :description="$isFr ? 'Entreprises d’IA en santé et institutions de recherche : explorez avec OPES des partenariats autour des données de santé et du CDSS.' : 'Healthcare AI companies and research institutions: explore partnerships with OPES in health data services and clinical decision support.'">
 
 <style>
 .partner-page-hero { background: var(--surface); padding: 72px 48px 56px; text-align: center; border-bottom: 1px solid #1e293b; }
 .partner-page-hero h1 { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 800; color: #f1f5f9; margin-bottom: 14px; }
 .partner-page-hero p  { color: var(--text-muted); font-size: 1.05rem; max-width: 580px; margin: 0 auto; line-height: 1.7; }
 
-.partner-type-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; max-width: 900px; margin: 40px auto 0; padding: 0 24px; }
+.partner-type-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; max-width: 1040px; margin: 40px auto 0; padding: 0 24px; }
 .ptype-card { background: #080e1a; border: 1px solid #1e293b; border-radius: 12px; padding: 18px; text-align: center; transition: border-color .2s; }
 .ptype-card:hover { border-color: #69D5F5; }
 .ptype-card svg { margin: 0 auto 10px; color: var(--brand-accent); display: block; }
@@ -58,8 +58,8 @@ $isFr   = $locale === 'fr';
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8AC5ED" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         {{ $isFr ? 'Programme Partenaires' : 'Partner Programme' }}
     </div>
-    <h1>{{ $isFr ? 'Construisons l\'avenir de la santé africaine ensemble' : 'Let\'s build Africa\'s health future together' }}</h1>
-    <p>{{ $isFr ? 'Rejoignez le réseau de partenaires OPES et co-construisez l\'infrastructure de santé numérique de demain pour plus de 500 millions de personnes.' : 'Join the OPES partner network and co-build tomorrow\'s digital health infrastructure for 500M+ people across Africa.' }}</p>
+    <h1>{{ $isFr ? 'Partenaires en IA santé et recherche : collaborons' : 'Healthcare AI and research partners: let’s work together' }}</h1>
+    <p>{{ $isFr ? 'OPES fournit des services de données de santé et des systèmes d’aide à la décision clinique. Nous sommes prêts à étudier des intégrations, évaluations et projets pilotes avec des entreprises d’IA en santé, laboratoires et institutions.' : 'OPES provides health data services and clinical decision support systems. We are ready to explore integrations, evaluations and pilots with healthcare AI companies, research labs and institutions.' }}</p>
 </div>
 
 <div class="partner-type-grid">
@@ -68,6 +68,8 @@ $isFr   = $locale === 'fr';
         ['icon' => 'M12 2L2 7l10 5 10-5-10-5z M2 17l10 5 10-5 M2 12l10 5 10-5', 'title_en' => 'Technology', 'title_fr' => 'Technologie', 'desc_en' => 'Integrate your tech with OPES APIs', 'desc_fr' => 'Intégrez votre tech aux APIs OPES'],
         ['icon' => 'M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z', 'title_en' => 'Hospital', 'title_fr' => 'Hôpital', 'desc_en' => 'Clinical validation & pilot partnership', 'desc_fr' => 'Validation clinique & pilote'],
         ['icon' => 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', 'title_en' => 'NGO / Dev', 'title_fr' => 'ONG / Dev', 'desc_en' => 'Community health & funding partnership', 'desc_fr' => 'Santé communautaire & financement'],
+        ['icon' => 'M12 8V4H8 M4 12h4l2-3 4 6 2-3h4 M12 20v-4', 'title_en' => 'Healthcare AI', 'title_fr' => 'IA en santé', 'desc_en' => 'Explore partner AI integrations with OPES data services and CDSS workflows', 'desc_fr' => 'Étudier l’intégration des outils partenaires aux données et flux CDSS OPES'],
+        ['icon' => 'M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z', 'title_en' => 'Research & Institutions', 'title_fr' => 'Recherche et institutions', 'desc_en' => 'Scope studies, evaluations and governed data collaborations', 'desc_fr' => 'Définir des études, évaluations et collaborations encadrées sur les données'],
     ] as $pt)
     <div class="ptype-card">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -81,10 +83,10 @@ $isFr   = $locale === 'fr';
 
 <div class="partner-layout">
 
-    <div class="partner-form-card">
+    <div class="partner-form-card" id="partnership-form">
         <h2>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8AC5ED" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            {{ $isFr ? 'Formulaire de candidature' : 'Partnership Application' }}
+            {{ $isFr ? 'Proposer un partenariat' : 'Propose a partnership' }}
         </h2>
 
         @if(session('success'))
@@ -114,6 +116,9 @@ $isFr   = $locale === 'fr';
                             <option value="public">{{ $isFr ? 'Secteur public' : 'Public sector' }}</option>
                             <option value="ngo">NGO / ONG</option>
                             <option value="startup">Startup</option>
+                            <option value="university">{{ $isFr ? 'Université / école de santé' : 'University / health school' }}</option>
+                            <option value="research_institution">{{ $isFr ? 'Institution de recherche' : 'Research institution' }}</option>
+                            <option value="teaching_hospital">{{ $isFr ? 'Hôpital d’enseignement' : 'Teaching hospital' }}</option>
                         </select>
                     </div>
                     <div class="pf-group">
@@ -162,7 +167,7 @@ $isFr   = $locale === 'fr';
                     <select name="partner_type" required>
                         <option value="">{{ $isFr ? 'Sélectionner...' : 'Select...' }}</option>
                         @foreach(\App\Models\PartnerApplication::$partnerTypes as $val => $labels)
-                        <option value="{{ $val }}" {{ old('partner_type') === $val ? 'selected' : '' }}>
+                        <option value="{{ $val }}" {{ old('partner_type', request()->query('partner_type')) === $val ? 'selected' : '' }}>
                             {{ $labels[$locale] ?? $labels['en'] }}
                         </option>
                         @endforeach
@@ -183,7 +188,7 @@ $isFr   = $locale === 'fr';
                     </div>
                     <div class="pf-group">
                         <label>{{ $isFr ? 'Marché cible' : 'Target market' }}</label>
-                        <input type="text" name="target_market" maxlength="100" value="{{ old('target_market') }}" placeholder="{{ $isFr ? 'Ex: Yaoundé, Douala, CEMAC' : 'e.g. Cameroon, CEMAC region' }}">
+                        <input type="text" name="target_market" maxlength="100" value="{{ old('target_market') }}" placeholder="{{ $isFr ? 'Ex. Cameroun, Afrique de l’Ouest, international' : 'e.g. Cameroon, West Africa, international' }}">
                     </div>
                 </div>
             </div>
@@ -193,8 +198,9 @@ $isFr   = $locale === 'fr';
                 <div class="pf-group">
                     <label>{{ $isFr ? 'Décrivez comment vous souhaitez collaborer' : 'Describe how you\'d like to collaborate' }} *</label>
                     <textarea name="description" required maxlength="3000"
-                              placeholder="{{ $isFr ? 'Décrivez votre organisation, vos atouts, et comment vous voyez ce partenariat bénéficier aux deux parties...' : 'Describe your organisation, your strengths, and how you see this partnership benefiting both sides...' }}">{{ old('description') }}</textarea>
+                              placeholder="{{ $isFr ? 'Pour un partenariat en IA santé, décrivez votre solution, le besoin clinique ou opérationnel, l’intégration envisagée et les preuves ou validations déjà disponibles...' : 'For a healthcare AI partnership, describe your solution, the clinical or operational need, the proposed integration, and any evidence or validation already available...' }}">{{ old('description') }}</textarea>
                     @error('description')<span style="color:#ef4444;font-size:.75rem">{{ $message }}</span>@enderror
+                    <p class="text-xs text-slate-500">{{ $isFr ? 'N’incluez aucune donnée patient. La disponibilité, l’accès et l’usage des données sont évalués et convenus séparément pour chaque projet.' : 'Do not include patient data. Data availability, access and permitted use are assessed and agreed separately for each project.' }}</p>
                 </div>
             </div>
 
@@ -208,14 +214,14 @@ $isFr   = $locale === 'fr';
 
     <div class="partner-sidebar">
         <div class="partner-info-card">
-            <h3>{{ $isFr ? 'Avantages partenaires' : 'Partner benefits' }}</h3>
+            <h3>{{ $isFr ? 'Points à définir ensemble' : 'What we scope together' }}</h3>
             @foreach([
-                ['en' => 'Revenue sharing & commissions', 'fr' => 'Partage de revenus & commissions'],
-                ['en' => 'Technical training & certification', 'fr' => 'Formation technique & certification'],
-                ['en' => 'Co-marketing & brand visibility', 'fr' => 'Co-marketing & visibilité de marque'],
-                ['en' => 'API access & sandbox environment', 'fr' => 'Accès API & environnement sandbox'],
-                ['en' => 'Dedicated partner success manager', 'fr' => 'Gestionnaire partenaire dédié'],
-                ['en' => 'Priority product roadmap input', 'fr' => 'Influence prioritaire sur la feuille de route'],
+                ['en' => 'Use case, partner roles and intended outcomes', 'fr' => 'Cas d’usage, rôles du partenaire et résultats visés'],
+                ['en' => 'Integration approach and technical requirements', 'fr' => 'Approche d’intégration et exigences techniques'],
+                ['en' => 'Data availability, permissions and governance', 'fr' => 'Disponibilité, autorisations et gouvernance des données'],
+                ['en' => 'Evaluation plan and success criteria', 'fr' => 'Plan d’évaluation et critères de réussite'],
+                ['en' => 'Clinical, privacy and security review needs', 'fr' => 'Besoins de revue clinique, de confidentialité et de sécurité'],
+                ['en' => 'Commercial and publication terms, if applicable', 'fr' => 'Conditions commerciales et de publication, le cas échéant'],
             ] as $b)
             <div class="partner-benefit">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>

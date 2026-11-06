@@ -88,7 +88,7 @@ final class AdminValidationCatalogQueries extends WorkflowHandler
     {
         $this->admin($input);
 
-        return $workflow->testCases()->orderBy('id');
+        return $workflow->testCases()->getQuery()->orderBy('id');
     }
 
     public function testCase(WorkflowInput $input, ValidationWorkflow $workflow, ValidationTestCase $testCase): WorkflowResult

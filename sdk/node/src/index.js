@@ -93,6 +93,14 @@ export class OpesClient {
 
   integrationUsage() { return this.#authenticated('/integration/usage'); }
 
+  integrationQuota() { return this.#authenticated('/integration/quota'); }
+
+  async serviceOfferings({ locale = 'en' } = {}) {
+    if (!['en', 'fr'].includes(locale)) throw new TypeError('Locale must be en or fr.');
+    const result = await this.#request('/service-offerings', { headers: { 'Accept-Language': locale } });
+    return result.data;
+  }
+
   async submitEnquiry(input, { idempotencyKey } = {}) {
     if (typeof idempotencyKey !== 'string' || idempotencyKey.trim() !== idempotencyKey || !/^[A-Za-z0-9._:-]{16,128}$/.test(idempotencyKey)) throw new TypeError('Supply and retain a valid Idempotency-Key for this intended enquiry.');
     const result = await this.#request('/enquiries', {
@@ -182,5 +190,41 @@ export class OpesBusinessApiClient {
       throw new OpesApiError(response.status, { requestId, code, retryAfter: Number.isFinite(seconds) ? seconds : null, idempotencyKey: idempotencyKey ?? null });
     }
     return { data, requestId, replayed: response.headers.get('idempotency-replayed') === 'true' };
+  }
+
+  listDeveloperApplications({ page = 1, perPage = 20 } = {}) {
+    return this.request('developer_oauth_applications_index', { query: { page, per_page: perPage } });
+  }
+
+  registerDeveloperApplication(input, { idempotencyKey } = {}) {
+    return this.request('developer_oauth_applications_create', { body: input, idempotencyKey });
+  }
+
+  updateDeveloperApplication(clientId, input, { idempotencyKey } = {}) {
+    return this.request('developer_oauth_applications_update', { path: { client: clientId }, body: input, idempotencyKey });
+  }
+
+  revokeDeveloperApplication(clientId, { idempotencyKey } = {}) {
+    return this.request('developer_oauth_applications_revoke', { path: { client: clientId }, idempotencyKey });
+  }
+
+  listDeveloperMachineClients({ page = 1, perPage = 20 } = {}) {
+    return this.request('developer_machine_clients_index', { query: { page, per_page: perPage } });
+  }
+
+  registerDeveloperMachineClient(input, { idempotencyKey } = {}) {
+    return this.request('developer_machine_clients_create', { body: input, idempotencyKey });
+  }
+
+  rotateDeveloperMachineClient(clientId, { idempotencyKey } = {}) {
+    return this.request('developer_machine_clients_rotate', { path: { client: clientId }, idempotencyKey });
+  }
+
+  revokeDeveloperMachineClient(clientId, { idempotencyKey } = {}) {
+    return this.request('developer_machine_clients_revoke', { path: { client: clientId }, idempotencyKey });
+  }
+
+  submitPartnerApplication(input, { idempotencyKey } = {}) {
+    return this.request('partnerapplicationcontroller_submit', { body: input, idempotencyKey });
   }
 }

@@ -1,16 +1,29 @@
 <?php
 
 return [
-    'version' => '0.2.0',
-    'android_build' => 7,
-    'runtime_version' => '0.2.0',
+    'version' => '0.3.0',
+    'android_build' => 8,
+    'runtime_version' => '0.3.0',
     'channel' => 'preview',
-    'released_at' => '2026-11-02',
-    'download_path' => 'mobile-app/opes-health-0.2.0.apk',
-    'download_url' => 'https://expo.dev/artifacts/eas/lVMzsNQheWsAZce0qWhAz0ALiD7hUNpTnRlOfNjTWM8.apk',
-    'sha256' => '47ccb50a9b9f826ef3fa3f53030e201658f818edb39c85276fa6b77b9814b535',
-    'eas_build_url' => 'https://expo.dev/accounts/opesware/projects/opes-health/builds/46dbe3e7-ee7e-461c-9bca-f067afb6189a',
+    'released_at' => '2026-11-06',
+    'download_path' => 'mobile-app/opes-health-0.3.0.apk',
+    'download_url' => 'https://expo.dev/artifacts/eas/wpw_TUZEa4YDtj6-bI-384qhoFSs14_GExlvYhoktI0.apk',
+    'sha256' => 'EE1FD8C03954CD4947ABDF544225D49120300790890EC823078E8D34527E9231',
+    'eas_build_url' => 'https://expo.dev/accounts/opesware/projects/opes-health/builds/8e8b12ec-ea72-406c-acbf-1d723650e652',
     'ota_updates' => [
+        [
+            'group' => '911604e1-d930-4468-b706-b322c870fda6',
+            'date' => '2026-11-06',
+            'runtime' => '0.3.0',
+            'title' => [
+                'en' => 'OPES Health 0.3.0: session safety, role workflows and bilingual UI',
+                'fr' => 'OPES Health 0.3.0 : sessions sécurisées, workflows par rôle et interface bilingue',
+            ],
+            'summary' => [
+                'en' => 'Published Android OTA for runtime 0.3.0. Improves session restoration and expiry handling, confirms sensitive actions, refreshes live records after changes, and includes English/French localization. Install Android build 8 (app/runtime 0.3.0) to receive this update.',
+                'fr' => 'Mise à jour OTA Android publiée pour le runtime 0.3.0. Améliore la restauration et l’expiration des sessions, confirme les actions sensibles, actualise les données après modification et ajoute les interfaces anglaise et française. Installer le build Android 8 (application/runtime 0.3.0) pour recevoir cette mise à jour.',
+            ],
+        ],
         [
             'group' => '5180b9a2-3b9c-4037-966b-9f42a697d334',
             'date' => '2026-11-02',
@@ -84,7 +97,36 @@ return [
     ],
     'releases' => [
         [
-            'version' => '0.2.0', 'build' => 7, 'date' => '2026-11-02', 'current' => true,
+            'version' => '0.3.0', 'build' => 8, 'date' => '2026-11-06', 'current' => true,
+            'title' => [
+                'en' => 'Safer sessions, smoother workflows and bilingual UI',
+                'fr' => 'Sessions plus sûres, workflows améliorés et interface bilingue',
+            ],
+            'summary' => [
+                'en' => 'Current private Android preview. Uses OAuth 2.0 with S256 PKCE and server RBAC; adds stronger session recovery, confirmed high-impact actions, live-record refresh and English/French support. Includes OTA group 911604e1-d930-4468-b706-b322c870fda6 for runtime 0.3.0.',
+                'fr' => 'Aperçu Android privé actuel. Utilise OAuth 2.0 avec PKCE S256 et le RBAC serveur ; améliore la récupération de session, confirme les actions importantes, actualise les données et prend en charge l’anglais et le français. Inclut le groupe OTA 911604e1-d930-4468-b706-b322c870fda6 pour le runtime 0.3.0.',
+            ],
+            'changes' => [
+                'en' => [
+                    'Protected signed-in routes, handled expired sessions clearly, and refreshed once after an authentication failure while reusing the same idempotency key.',
+                    'Added confirmations for sign-out and sensitive partner, assignment and lead actions; refreshed live records before full updates.',
+                    'Kept demo workspace previews local and removed all sample records and administrator demo access.',
+                    'Added English/French language selection, readable form labels, a clearer profile and an updated home screen with mobile-safe navigation.',
+                    'App icon remains the rounded shield; the full OPES seal remains the splash-screen mark.',
+                    'App version 0.3.0, Android build 8, OTA runtime 0.3.0.',
+                ],
+                'fr' => [
+                    'Protection des écrans connectés, gestion claire des sessions expirées et nouvel essai après erreur d’authentification en conservant la même clé d’idempotence.',
+                    'Ajout de confirmations pour la déconnexion et les actions sensibles des partenaires, affectations et prospects ; actualisation des données avant remplacement complet.',
+                    'Aperçus des espaces de démonstration conservés localement ; suppression des données fictives et de l’accès administrateur de démonstration.',
+                    'Ajout du choix anglais/français, de libellés de formulaire lisibles, d’un profil amélioré et d’un nouvel accueil avec navigation adaptée au mobile.',
+                    'L’icône reste le bouclier arrondi ; le sceau OPES complet reste réservé à l’écran de lancement.',
+                    'Version 0.3.0, build Android 8, runtime OTA 0.3.0.',
+                ],
+            ],
+        ],
+        [
+            'version' => '0.2.0', 'build' => 7, 'date' => '2026-11-02', 'current' => false,
             'title' => [
                 'en' => 'Detailed quotes, customer profiles and safer navigation',
                 'fr' => 'Devis détaillés, profils clients et navigation plus sûre',

@@ -3,7 +3,7 @@
 return [
     // Bandeau accroche héros
     'eyebrow'               => "Actualités des technologies de santé",
-    'eyebrow_region'        => 'Cameroun & Région CEMAC',
+    'eyebrow_region'        => 'Cameroun · Afrique · Santé numérique mondiale',
     'all_articles_count'    => 'Tous les :count articles',
 
     // Badge vedette
@@ -25,7 +25,7 @@ return [
 
     // Barre latérale — widget CTA
     'cta_heading'           => 'Numérisez votre établissement',
-    'cta_body'              => 'OPES HMS est conçu pour les hôpitaux et les cliniques du Cameroun et de la région CEMAC.',
+    'cta_body'              => 'Basée au Cameroun, OPES Health Systems accueille les hôpitaux, cliniques et partenaires de santé d’Afrique et de l’international. L’adéquation du projet et les exigences locales sont évaluées pays par pays.',
     'cta_btn'               => 'Demander une démo',
 
     // Barre latérale — Liens rapides

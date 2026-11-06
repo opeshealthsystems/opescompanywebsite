@@ -69,7 +69,7 @@ final class AdminSurveyQueries extends WorkflowHandler
     {
         $this->admin($input);
 
-        return $survey->questions()->orderBy('sort_order')->orderBy('id');
+        return $survey->questions()->getQuery()->orderBy('sort_order')->orderBy('id');
     }
 
     public function question(WorkflowInput $input, Survey $survey, SurveyQuestion $question): WorkflowResult

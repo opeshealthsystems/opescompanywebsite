@@ -6,10 +6,8 @@ use App\Contexts\Shared\Application\WorkflowHandler;
 use App\Contexts\Shared\Application\WorkflowInput;
 use App\Contexts\Shared\Application\WorkflowResult;
 use App\Contexts\Shared\Infrastructure\DomainOutbox;
-use App\Models\EmployeeProfile;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
@@ -59,48 +57,6 @@ final class AdminEmployeeCommands extends WorkflowHandler
         if ($values !== []) $employee->employeeProfile()->updateOrCreate([], $values);
     }
 
-    private function employeeView(User $employee): array
-    {
-        $employee->loadMissing(['roles', 'department', 'salaryGrade', 'employeeProfile']);
-        return [
-            'id' => $employee->id, 'name' => $employee->name, 'email' => $employee->email, 'phone' => $employee->phone,
-            'employee_id' => $employee->employee_id, 'department' => $employee->department, 'department_id' => $employee->department_id,
-            'position' => $employee->position, 'hire_date' => $employee->hire_date?->toDateString(), 'is_active' => $employee->is_active,
-            'roles' => $employee->getRoleNames()->values()->all(), 'salary_grade_id' => $employee->salary_grade_id,
-            'base_salary' => $employee->base_salary, 'salary_currency' => $employee->salary_currency,
-            'employee_profile' => $employee->employeeProfile?->only(['employment_type', 'contract_end_date', 'salary', 'currency', 'bank_name', 'bank_account', 'tax_id', 'emergency_contact_name', 'emergency_contact_phone', 'emergency_contact_relation']),
-            'created_at' => $employee->created_at?->toISOString(), 'updated_at' => $employee->updated_at?->toISOString(),
-        ];
-    }
-
-    public function employeeQuery(WorkflowInput $input): Builder
-    {
-        $this->admin($input);
-
-        return User::query()->with(['roles', 'department', 'salaryGrade', 'employeeProfile'])
-            ->whereHas('roles', fn ($roles) => $roles->whereIn('name', ['super_admin', 'admin', 'support', 'tester']))
-            ->orderBy('name');
-    }
-
-    public function index(WorkflowInput $input): WorkflowResult
-    {
-        $this->admin($input);
-        $filters = $input->validate(['search' => 'sometimes|nullable|string|max:150', 'active' => 'sometimes|boolean']);
-        $query = $this->employeeQuery($input);
-        if (isset($filters['active'])) $query->where('is_active', $filters['active']);
-        if (!empty($filters['search'])) { $term = trim($filters['search']); $query->where(fn ($q) => $q->where('name', 'like', '%'.$term.'%')->orWhere('email', 'like', '%'.$term.'%')->orWhere('employee_id', 'like', '%'.$term.'%')); }
-        $page = $input->paginate($query);
-        return WorkflowResult::payload(['items' => $page->getCollection()->map(fn (User $employee) => $this->employeeView($employee))->all(),
-            'pagination' => ['current_page' => $page->currentPage(), 'per_page' => $page->perPage(), 'total' => $page->total(), 'last_page' => $page->lastPage()]]);
-    }
-
-    public function show(WorkflowInput $input, User $employee): WorkflowResult
-    {
-        $this->admin($input);
-        abort_unless($employee->hasAnyRole(['super_admin', 'admin', 'support', 'tester']), 404);
-        return WorkflowResult::payload(['employee' => $this->employeeView($employee)]);
-    }
-
     public function create(WorkflowInput $input): WorkflowResult
     {
         $actor = $this->admin($input);
@@ -118,7 +74,7 @@ final class AdminEmployeeCommands extends WorkflowHandler
             DomainOutbox::append('event', 'workforce.employee_created.v1', ['references' => [['resource' => 'User', 'id' => $employee->id]]], $actor->id);
             return $employee;
         }, 3);
-        return WorkflowResult::payload(['employee' => $this->employeeView($employee)], 201)->with('success', 'Employee created.');
+        return WorkflowResult::payload(['employee' => app(\App\Contexts\Workforce\Application\Queries\AdminEmployeeQueries::class)->present($employee)], 201)->with('success', 'Employee created.');
     }
 
     public function update(WorkflowInput $input, User $employee): WorkflowResult
@@ -145,6 +101,6 @@ final class AdminEmployeeCommands extends WorkflowHandler
                 'changed_fields' => array_merge(array_keys($data), $roles !== null ? ['roles'] : [], $profile !== [] ? ['employee_profile'] : [])], $actor->id);
             return $record;
         }, 3);
-        return WorkflowResult::payload(['employee' => $this->employeeView($record)])->with('success', 'Employee updated.');
+        return WorkflowResult::payload(['employee' => app(\App\Contexts\Workforce\Application\Queries\AdminEmployeeQueries::class)->present($record)])->with('success', 'Employee updated.');
     }
 }

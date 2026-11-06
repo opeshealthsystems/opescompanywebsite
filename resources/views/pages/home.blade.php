@@ -41,7 +41,7 @@
                     <div class="hero-trust">
                         <div class="trust-item"><div class="num">{{ $products->count() }}</div><div class="label">{{ __('home.trust_22') }}</div></div>
                         <div class="trust-item"><div class="num">EN/FR</div><div class="label">{{ __('home.trust_bilingual') }}</div></div>
-                        <div class="trust-item"><div class="num">CEMAC</div><div class="label">{{ __('home.trust_cemac') }}</div></div>
+                        <div class="trust-item"><div class="num">{{ $isFr ? 'AFRIQUE' : 'AFRICA' }}</div><div class="label">{{ $isFr ? 'Priorité régionale · partenariats mondiaux' : 'Regional focus · global partnerships' }}</div></div>
                         <div class="trust-item"><div class="num">OPES</div><div class="label">{{ __('home.trust_moh') }}</div></div>
                     </div>
                 </div>
@@ -276,7 +276,7 @@
                 <i data-lucide="globe-2" style="width:26px;height:26px;color:var(--brand-accent)"></i>
             </div>
             <h3>{{ $isFr ? 'Conçu pour l\'Afrique' : 'Built for Africa' }}</h3>
-            <p>{{ $isFr ? 'Conçu depuis le début pour le Cameroun, la région CEMAC et toute l\'Afrique. Entièrement bilingue en anglais et en français. Comprend les flux de travail locaux, les réglementations et les réalités des soins de santé.' : 'Designed from the ground up for Cameroon, the CEMAC region and all of Africa. Fully bilingual in English and French. Understands local workflows, regulations, and healthcare realities.' }}</p>
+            <p>{{ $isFr ? 'Développé au Cameroun pour accompagner les systèmes de santé africains et les collaborations internationales. Les parcours, langues, normes et règles locales sont étudiés avec chaque partenaire.' : 'Developed in Cameroon to support African health systems and international collaboration. Workflows, languages, standards and local requirements are considered with each partner.' }}</p>
         </div>
         <div class="pillar">
             <div class="pillar-icon-wrap" style="background:rgba(26,111,232,0.1)">
@@ -345,8 +345,8 @@
         </div>
         <div class="stat-item">
             <div class="stat-icon-wrap"><i data-lucide="map" style="width:22px;height:22px;color:var(--brand-accent)"></i></div>
-            <div class="stat-num">CEMAC</div>
-            <div class="stat-label">{{ $isFr ? 'Destiné à la région CEMAC' : 'Designed for the CEMAC region' }}</div>
+            <div class="stat-num">{{ $isFr ? 'AFRIQUE' : 'AFRICA' }}</div>
+            <div class="stat-label">{{ $isFr ? 'Depuis le Cameroun, pour l’Afrique et le monde' : 'From Cameroon to Africa and the world' }}</div>
         </div>
         <div class="stat-item">
             <div class="stat-icon-wrap"><i data-lucide="landmark" style="width:22px;height:22px;color:var(--brand-accent)"></i></div>
@@ -418,6 +418,27 @@
 
 <div class="divider"></div>
 
+{{-- ── DATA AND CLINICAL DECISION SUPPORT SERVICES ──────────────── --}}
+<section class="section" aria-labelledby="health-services-title">
+    <div class="section-label"><i data-lucide="briefcase-medical" style="width:12px;height:12px"></i> {{ $isFr ? 'Nos services' : 'Our Services' }}</div>
+    <h2 class="section-title" id="health-services-title">{{ $isFr ? 'Des services de données et d’aide clinique' : 'Data and clinical decision support services' }}</h2>
+    <p class="section-sub">{{ $isFr ? 'Des services conçus pour aider les organisations de santé à utiliser leurs données et à soutenir les équipes de soins.' : 'Services designed to help health organisations make practical use of their data and support care teams.' }}</p>
+    <div class="featured-grid">
+        @foreach($healthServiceOfferings as $offering)
+        <a href="{{ url($offering['contact_url']) }}" class="featured-card" style="border-color:rgba(18,58,99,0.2)">
+            <div class="featured-icon" style="background:rgba(18,58,99,0.08)">
+                <i data-lucide="{{ $offering['icon'] }}" style="width:22px;height:22px;color:#123a63"></i>
+            </div>
+            <h3>{{ $offering['name'] }}</h3>
+            <p>{{ $offering['summary'] }}</p>
+            <div class="featured-link">{{ $offering['cta'] }} <i data-lucide="arrow-right" style="width:13px;height:13px"></i></div>
+        </a>
+        @endforeach
+    </div>
+</section>
+
+<div class="divider"></div>
+
 {{-- ── DEMO CTA ─────────────────────────────────────────────────── --}}
 <div class="demo-section">
     <div class="section-label" style="justify-content:center;color:var(--brand-accent);margin-bottom:12px">
@@ -451,7 +472,7 @@
 <div class="section">
     <div class="section-label"><i data-lucide="handshake" style="width:12px;height:12px"></i> {{ $isFr ? 'Collaborer' : 'Collaborate' }}</div>
     <h2 class="section-title">{{ $isFr ? 'Devenez partenaire OPES' : 'Partner With OPES' }}</h2>
-    <p class="section-sub">{{ $isFr ? 'Nous construisons l\'infrastructure de santé numérique de l\'Afrique. Rejoignez-nous.' : 'We\'re building Africa\'s digital health infrastructure. Join us.' }}</p>
+    <p class="section-sub">{{ $isFr ? 'OPES fournit des services de données de santé et des systèmes d’aide à la décision clinique. Nous sommes prêts à collaborer avec des entreprises développant des solutions d’IA pour la santé.' : 'OPES provides health data services and clinical decision support systems. We are ready to partner with companies developing healthcare AI.' }}</p>
     <div class="partner-grid">
         <div class="partner-card" style="border-color:rgba(0,200,150,0.18)">
             <div class="partner-icon" style="background:rgba(0,200,150,0.08)">
@@ -465,37 +486,41 @@
                 <i data-lucide="trending-up" style="width:20px;height:20px;color:var(--brand-accent)"></i>
             </div>
             <h3>{{ $isFr ? 'Investisseurs' : 'Investors' }}</h3>
-            <p>{{ $isFr ? 'Rejoignez une entreprise qui construit une infrastructure de santé évolutive pour plus de 500 millions de personnes en CEMAC et en Afrique.' : 'Join a venture building scalable health infrastructure for 500M+ people across CEMAC and Africa.' }}</p>
+            <p>{{ $isFr ? 'Échangeons sur les opportunités d’investissement et de déploiement adaptées aux besoins des systèmes de santé de la région.' : 'Discuss investment and deployment opportunities shaped around the needs of health systems in the region.' }}</p>
         </div>
         <div class="partner-card">
             <div class="partner-icon" style="background:rgba(255,255,255,0.05)">
                 <i data-lucide="landmark" style="width:20px;height:20px;color:var(--text-muted)"></i>
             </div>
             <h3>{{ $isFr ? 'Gouvernement & ONG' : 'Government & NGOs' }}</h3>
-            <p>{{ $isFr ? 'Alignez-vous sur les objectifs nationaux de CSU. Intégrez OPES aux rapports de santé publique et aux systèmes de surveillance des maladies.' : 'Align with national UHC goals. Integrate OPES with public health reporting and disease surveillance systems.' }}</p>
+            <p>{{ $isFr ? 'Définissons ensemble les priorités, les exigences de gouvernance et les intégrations pertinentes pour votre programme.' : 'Scope programme priorities, governance requirements and relevant integrations together.' }}</p>
         </div>
         <div class="partner-card">
             <div class="partner-icon" style="background:rgba(255,255,255,0.05)">
                 <i data-lucide="flask-conical" style="width:20px;height:20px;color:var(--text-muted)"></i>
             </div>
             <h3>{{ $isFr ? 'Pharma & Assurance' : 'Pharma & Insurance' }}</h3>
-            <p>{{ $isFr ? 'Accédez à des analyses de santé populationnelle anonymisées et intégrez le financement assurantiel dans les plateformes OPES.' : 'Access anonymised population health analytics and integrate insurance financing into OPES platforms.' }}</p>
+            <p>{{ $isFr ? 'Étudions les besoins en données, les autorisations et les intégrations de financement ou d’assurance adaptés à chaque projet.' : 'Explore project-specific data needs, permissions and insurance or financing integrations.' }}</p>
         </div>
         <div class="partner-card">
             <div class="partner-icon" style="background:rgba(255,255,255,0.05)">
                 <i data-lucide="graduation-cap" style="width:20px;height:20px;color:var(--text-muted)"></i>
             </div>
             <h3>{{ $isFr ? 'Académique & Recherche' : 'Academic & Research' }}</h3>
-            <p>{{ $isFr ? 'Co-publiez des recherches en technologie de la santé et formez la prochaine génération de professionnels africains de l\'informatique de santé.' : 'Co-publish health technology research and train the next generation of African health informatics professionals.' }}</p>
+            <p>{{ $isFr ? 'Évaluons les possibilités de recherche et de formation après accord sur le protocole, l’éthique, les données et les rôles.' : 'Explore research and training opportunities after agreeing the protocol, ethics, data access and partner roles.' }}</p>
         </div>
         <div class="partner-card">
             <div class="partner-icon" style="background:rgba(255,255,255,0.05)">
                 <i data-lucide="plug-zap" style="width:20px;height:20px;color:var(--text-muted)"></i>
             </div>
-            <h3>{{ $isFr ? 'Partenaires technologiques' : 'Technology Partners' }}</h3>
-            <p>{{ $isFr ? 'Intégrez vos solutions à l\'écosystème OPES via notre couche d\'interopérabilité et les API développeurs.' : 'Integrate your solutions with the OPES ecosystem through our interoperability layer and developer APIs.' }}</p>
+            <h3>{{ $isFr ? 'Entreprises d’IA en santé' : 'Healthcare AI Companies' }}</h3>
+            <p>{{ $isFr ? 'OPES apporte ses services de données de santé et ses flux CDSS ; nos partenaires apportent leurs solutions d’IA en santé. Nous sommes prêts à étudier ensemble des intégrations et évaluations. Les accès aux données, la gouvernance et la validation sont définis pour chaque projet.' : 'OPES brings health data services and CDSS workflows; our partners bring healthcare AI solutions. We are ready to explore integrations and evaluations together. Data access, governance and validation are scoped for each project.' }}</p>
         </div>
     </div>
+    <a href="{{ url($locale.'/partnerships') }}" class="btn-secondary" style="display:inline-flex;margin-top:24px">
+        {{ $isFr ? 'Discuter d’un partenariat en IA santé' : 'Discuss a healthcare AI partnership' }}
+        <i data-lucide="arrow-right" style="width:15px;height:15px"></i>
+    </a>
 </div>
 
 <div class="divider"></div>

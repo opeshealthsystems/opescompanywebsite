@@ -3,7 +3,7 @@
 return [
     // Méta
     'meta_title'         => "À propos d'OPES Health Systems — Bâtir l'infrastructure de santé numérique de l'Afrique",
-    'meta_desc'          => "OPES Health Systems est une entreprise healthtech basée au Cameroun, avec un catalogue de logiciels de santé pour la région CEMAC. Découvrez notre mission, notre vision et notre histoire.",
+    'meta_desc'          => "OPES Health Systems est une entreprise de santé numérique basée au Cameroun, qui développe des solutions interopérables pour les organisations en Afrique et les partenaires internationaux. Découvrez notre mission, notre vision et notre histoire.",
 
     // Héros
     'hero_eyebrow'       => 'À propos d\'OPES Health Systems',
@@ -13,16 +13,16 @@ return [
 
     // Mission & Vision
     'mission_title'      => 'Notre Mission',
-    'mission_body'       => "Éliminer les informations de santé fragmentées, améliorer la continuité des soins et autonomiser les professionnels de santé en Afrique avec des outils numériques modernes et interopérables qui améliorent les résultats cliniques et l'efficacité opérationnelle — en commençant par le Cameroun et la région CEMAC.",
+    'mission_body'       => "Réduire la fragmentation des informations de santé, améliorer la continuité des soins et fournir aux professionnels et organisations de santé des outils numériques interopérables — développés au Cameroun, conçus pour la diversité des systèmes de santé africains et ouverts à la collaboration internationale.",
     'vision_title'       => 'Notre Vision',
-    'vision_body'        => "Une région CEMAC où chaque patient dispose d'un identifiant santé universel et où son dossier médical complet le suit de manière transparente — du premier contact dans un poste de santé villageois jusqu'aux soins spécialisés dans un hôpital universitaire — le tout connecté via la couche d'interopérabilité OPES Care.",
+    'vision_body'        => "Des systèmes de santé connectés en Afrique et dans le monde, où chacun peut bénéficier de soins plus continus et où les organisations autorisées échangent les informations de manière responsable grâce à des services interopérables tels qu'OPESCare, adaptés aux priorités, à la gouvernance et aux lois locales.",
 
     // Histoire
     'story_eyebrow'      => 'Notre Histoire',
     'story_title'        => 'Née des réalités sanitaires du Cameroun',
     'story_p1'           => "OPES Health Systems est née d'une expérience directe des défis de la prestation de soins de santé au Cameroun : doublons de dossiers patients entre établissements, historiques d'ordonnances perdus, registres de laboratoire manuels et fuites de revenus dues à des systèmes de facturation déconnectés.",
     'story_p2'           => "Nous avons entrepris de construire ce que nous ne trouvions pas — un écosystème de santé complet, bilingue et conçu pour l'Afrique. Non pas un portage d'un DME occidental avec le français activé, mais un logiciel conçu de zéro pour le flux de travail clinique camerounais, les exigences de facturation CNPS et les normes d'interopérabilité HL7 FHIR.",
-    'story_p3'           => "Basée à Bonamousadi, Douala, notre équipe allie connaissances cliniques, ingénierie logicielle et compréhension approfondie du secteur de la santé CEMAC. OPES est alignée sur le plan national de numérisation 2026–2030 du Ministère de la Santé du Cameroun et soutient le mandat de la Couverture Santé Universelle.",
+    'story_p3'           => "Basée à Bonamousadi, Douala, notre équipe associe connaissances cliniques et ingénierie logicielle à une expérience des systèmes de santé camerounais et africains, notamment de la région CEMAC. Le Cameroun est notre point de départ ; notre ambition est de collaborer avec des organisations de santé et des partenaires en Afrique et à l’international. Toute contribution aux programmes nationaux se fait avec les autorités et institutions concernées.",
     'story_p4'           => "Aujourd'hui, la plateforme OPES Health comprend plus de vingt solutions spécialisées — des Dossiers Médicaux Électroniques et Systèmes d'Information Hospitalière aux plateformes de Laboratoire et de Pharmacie, en passant par des applications cliniques spécialisées et une couche d'Échange d'Informations de Santé — au service d'établissements allant des cliniques indépendantes aux grands réseaux hospitaliers et aux programmes nationaux de santé.",
 
     // Plateforme
@@ -50,7 +50,7 @@ return [
     'stats_eyebrow'      => "L'écosystème OPES",
     'stat_0_label'       => 'Systèmes logiciels intégrés',
     'stat_1_label'       => 'Entièrement bilingue',
-    'stat_2_label'       => 'Couverture régionale',
+    'stat_2_label'       => 'Marchés visés',
     'stat_3_label'       => "Norme d'interopérabilité",
 
     // Valeurs
@@ -70,7 +70,7 @@ return [
 
     // CTA
     'cta_title'          => 'Travailler avec nous',
-    'cta_body'           => "Nous travaillons avec des établissements de santé, des partenaires gouvernementaux et des ONG qui partagent notre vision d'un écosystème de santé numérique connecté au Cameroun et en Afrique.",
+    'cta_body'           => "Nous accueillons les établissements de santé, gouvernements, universités, organismes de recherche et partenaires technologiques au Cameroun, partout en Afrique et dans le monde. Chaque collaboration est définie selon les besoins, la gouvernance et les exigences applicables.",
     'cta_contact'        => 'Nous contacter',
     'cta_partnership'    => 'Opportunités de partenariat',
 ];

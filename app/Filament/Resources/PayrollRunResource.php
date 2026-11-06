@@ -193,7 +193,10 @@ class PayrollRunResource extends Resource
                 Infolists\Components\TextEntry::make('total_deductions')
                     ->label('Total Deductions')
                     ->getStateUsing(function (PayrollRun $record) {
-                        $sum = $record->entries()->sum('total_deductions');
+                        $sum = \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::read(
+                            'admin.finance.payrollRuns.show',
+                            parameters: ['run' => $record->id],
+                        )['run']['total_deductions'];
                         return $sum > 0
                             ? $record->currency . ' ' . number_format((float) $sum, 0)
                             : '—';

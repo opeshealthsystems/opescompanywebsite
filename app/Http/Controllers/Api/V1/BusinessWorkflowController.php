@@ -26,6 +26,6 @@ final class BusinessWorkflowController
             'request_id' => $request->attributes->get('request_id'), 'errors' => $result->errors ?: ['operation' => [$result->messages['error']]]], 422, ['Content-Type' => 'application/problem+json']);
         $data = $definition['command'] ? $serializer->references($result->data) : $result->data;
         return response()->json(['data' => $serializer->serialize($data, $input), 'meta' => ['operation' => $operation],
-            'messages' => $result->messages], $result->status);
+            'messages' => $result->messages], $result->status, $result->replayed ? ['Idempotency-Replayed' => 'true'] : []);
     }
 }

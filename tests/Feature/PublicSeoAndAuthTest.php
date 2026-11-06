@@ -60,7 +60,8 @@ class PublicSeoAndAuthTest extends TestCase
             preg_match_all('/<script type="application\/ld\+json">(.*?)<\/script>/s', $response->getContent(), $blocks);
             $schema = collect($blocks[1])->map(fn ($json) => json_decode($json, true))->firstWhere('@type', 'FAQPage');
             $this->assertSame('https://schema.org', $schema['@context']);
-            $this->assertCount(10, $schema['mainEntity']);
+            $this->assertCount(11, $schema['mainEntity']);
+            $response->assertSee($locale === 'fr' ? 'ambition panafricaine' : 'Africa-wide ambition');
             foreach ($schema['mainEntity'] as $answer) {
                 $response->assertSee($answer['name'])->assertSee($answer['acceptedAnswer']['text']);
             }

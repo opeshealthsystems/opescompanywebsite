@@ -2,14 +2,30 @@
 
 return [
     // Méta
-    'meta_title' => 'Solutions de santé — Logiciels pour hôpitaux, cliniques, laboratoires et pharmacies en Afrique',
-    'meta_desc'  => "OPES propose des solutions de santé numérique configurées pour les hôpitaux, cliniques, laboratoires, pharmacies et programmes gouvernementaux au Cameroun et dans la région CEMAC.",
+    'meta_title' => 'Solutions de santé numérique pour gouvernements, organisations de santé et partenaires IA — OPES',
+    'meta_desc'  => "Découvrez les solutions OPES pour le Cameroun, les systèmes de santé africains et les partenaires internationaux : gouvernements, organisations de santé, réseau OPESCare et collaborations avec des entreprises d’IA en santé.",
 
     // Héros
     'hero_eyebrow'       => 'Solutions',
-    'hero_title_1'       => 'La santé numérique pour chaque',
-    'hero_title_gradient'=> "type d'établissement",
-    'hero_sub'           => "Que vous soyez une clinique de district, un hôpital de référence, une pharmacie autonome ou un programme du Ministère de la Santé — OPES dispose d'une solution configurée prête à déployer.",
+    'hero_title_1'       => 'Des solutions numériques pour',
+    'hero_title_gradient'=> 'les gouvernements, les organisations de santé et les partenaires IA',
+    'hero_sub'           => 'Depuis le Cameroun, OPES développe des solutions pour les systèmes de santé africains et accueille des partenaires internationaux. Découvrez nos plateformes, produits et voies de collaboration.',
+
+    'audience_government' => 'Gouvernement et santé publique',
+    'audience_health' => 'Organisations de santé',
+    'audience_ai' => 'Partenaires IA en santé',
+    'audience_academic' => 'Informatique médicale et formation',
+    'audience_intro' => 'Du Cameroun aux systèmes de santé africains et aux partenariats internationaux, partons des besoins de votre organisation. Échangez avec notre équipe sur le contexte local, le périmètre, les autorisations et la mise en œuvre.',
+    'opescare_title' => 'Réseau de santé OPESCare',
+    'opescare_body' => 'OPESCare est le concept de réseau de santé qui relie les personnes aux organisations participantes grâce à une identité de santé et aux services interopérables OPES. Il relie l’identité et les parcours de soins entre établissements participants. La participation au réseau, l’accès aux dossiers et le partage des données dépendent de chaque déploiement, accord de gouvernance et consentement applicable.',
+    'opescare_link' => 'Découvrir OPESCare',
+    'ai_title' => 'Collaborer avec OPES sur l’IA en santé',
+    'ai_body' => 'OPES fournit des services de données de santé et des parcours d’aide à la décision clinique ; notre rôle est de collaborer avec les entreprises d’IA en santé, pas de développer leurs produits d’IA. Nous invitons les entreprises et laboratoires du monde entier à proposer des intégrations, évaluations et pilotes encadrés avec leurs propres modèles et outils. La disponibilité des données et leur usage autorisé sont étudiés pour chaque projet.',
+    'ai_link' => 'Proposer un partenariat IA',
+    'academic_title' => 'Informatique médicale et apprentissage institutionnel',
+    'academic_body' => 'Les établissements de santé et de soins infirmiers, universités et hôpitaux d’enseignement au Cameroun, en Afrique et à l’international peuvent s’associer à OPES pour une formation pratique en informatique médicale. Les cohortes participantes bénéficient d’un accès institutionnel gratuit aux plateformes OPES et apprennent par des parcours numériques adaptés à chaque rôle.',
+    'academic_link' => 'Découvrir le programme',
+    'more_partnerships' => 'Voir les parcours de partenariat',
 
     // Cartes des solutions par type d'établissement (6)
     'facility_0_title' => 'Hôpitaux de référence et universitaires',
@@ -25,15 +41,15 @@ return [
     'facility_3_desc'  => "PHARMIS couvre la gestion des stocks, les ordonnances, la facturation CNPS, le suivi des péremptions et les transferts inter-agences. S'intègre nativement avec OPES EMR.",
 
     'facility_4_title' => 'Programmes gouvernementaux et ministériels',
-    'facility_4_desc'  => "OPES prend en charge UHC-IS pour le suivi de la couverture santé universelle, CDMS pour les documents cliniques, et des tableaux de bord à l'échelle de la population pour le plan 2026–2030 du Ministère de la Santé.",
+    'facility_4_desc'  => "Collaborez avec OPES sur l’infrastructure de santé numérique, l’échange d’informations sanitaires, le suivi des programmes et les rapports de santé populationnelle. Le périmètre, les normes, la gouvernance et le déploiement sont définis avec chaque gouvernement ou programme de santé publique.",
 
     'facility_5_title' => 'Réseaux et groupes hospitaliers',
-    'facility_5_desc'  => "Les déploiements multi-sites avec l'identifiant santé OPESCare centralisé permettent à un patient enregistré à Douala d'être pris en charge à Yaoundé avec son historique complet — sans nouvelle inscription.",
+    'facility_5_desc'  => "Planifiez les parcours multi-sites et interrégionaux autour des établissements participants, de l’identité partagée et d’échanges gouvernés. La couverture du réseau et l’accès aux dossiers sont définis pour chaque déploiement.",
 
     // Section Pourquoi OPES
     'why_eyebrow' => 'Pourquoi OPES',
     'why_title'   => "Conçu pour les réalités de la santé en Afrique",
-    'why_sub'     => "Contrairement aux logiciels de santé génériques adaptés pour l'Afrique, OPES a été conçu de zéro pour les flux cliniques camerounais, les interfaces bilingues et les exigences réglementaires de la CEMAC.",
+    'why_sub'     => "OPES s’appuie sur l’expérience du Cameroun et se développe pour la diversité des systèmes de santé africains, tout en accueillant des institutions et partenaires technologiques du monde entier. Chaque déploiement tient compte des parcours, langues, normes et règles de gouvernance du pays concerné.",
 
     // Cartes Pourquoi OPES (6)
     'why_0_title' => 'Entièrement bilingue (FR/EN)',
@@ -46,7 +62,7 @@ return [
     'why_2_desc'  => "Le mode de faible connectivité maintient votre établissement opérationnel lors des coupures. Les données se synchronisent automatiquement au retour de la connexion.",
 
     'why_3_title' => 'Aligné MoH 2026–2030',
-    'why_3_desc'  => "Conçu en parallèle avec la feuille de route nationale de numérisation du Ministère de la Santé du Cameroun pour la conformité UHC et HMIS.",
+    'why_3_desc'  => "Les exigences locales et les priorités de santé publique sont étudiées avec chaque pays, ministère et programme avant la mise en œuvre.",
 
     'why_4_title' => 'Cloud et sur site',
     'why_4_desc'  => "Déployez sur notre cloud sécurisé ou installez sur vos propres serveurs. Les deux options bénéficient d'une assistance complète et de mises à jour.",

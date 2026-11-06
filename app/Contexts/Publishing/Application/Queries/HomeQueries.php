@@ -11,6 +11,7 @@ class HomeQueries extends \App\Contexts\Shared\Application\WorkflowHandler
         $products = \App\Models\Product::publicCatalogue();
         $testimonials = $workflowInput->collect(\App\Models\PractitionerFinding::where('is_published', true)->whereHas('practitioner', fn($q) => $q->where('email', 'not like', '%@demo.opes')->where('email', 'not like', '%.test'))->whereNotNull('findings_text')->with(['practitioner.practitionerProfile', 'application.program'])->latest());
         $articles = $workflowInput->collect(\App\Models\BlogPost::published()->limit(3));
-        return \App\Contexts\Shared\Application\WorkflowResult::read('homecontroller_index_1', compact('products', 'testimonials', 'articles'));
+        $healthServiceOfferings = app(PublicServiceOfferingQueries::class)->catalogue($workflowInput)->data['items'];
+        return \App\Contexts\Shared\Application\WorkflowResult::read('homecontroller_index_1', compact('products', 'testimonials', 'articles', 'healthServiceOfferings'));
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PartnerApplicationResource\Pages;
+use App\Filament\Resources\PartnerApplicationResource\RelationManagers\MembersRelationManager;
 use App\Models\PartnerApplication;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -72,6 +73,11 @@ class PartnerApplicationResource extends Resource
                 Tables\Filters\SelectFilter::make('partner_type')->options(collect(PartnerApplication::$partnerTypes)->map(fn($v) => $v['en'])),
             ])
             ->actions([Tables\Actions\EditAction::make()->using(fn (\App\Models\PartnerApplication $record, array $data) => \App\Contexts\Shared\Infrastructure\AdminWorkflowAdapter::record('admin.enquiries.partnerApplications.update', $data, ['partnerApplication' => $record->id]))]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [MembersRelationManager::class];
     }
 
     public static function getPages(): array

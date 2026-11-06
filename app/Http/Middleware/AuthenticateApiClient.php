@@ -29,11 +29,10 @@ class AuthenticateApiClient
         $token = Passport::token()->newQuery()->find($psr->getAttribute('oauth_access_token_id'));
         if (!$token || $token->client_id !== $client->id || $token->revoked || !$token->expires_at || $token->expires_at->isPast()) throw new UnauthorizedHttpException('Bearer');
         abort_unless(in_array($scope, $psr->getAttribute('oauth_scopes', []), true) && in_array($scope, $client->scopes, true), 403);
+        $quota = app(\App\Contexts\ApiIdentity\Application\Services\MachineClientQuota::class)->consume($client);
+        if (!$quota['allowed']) return app(\App\Contexts\ApiIdentity\Application\Services\MachineClientQuota::class)->reject($request, $quota);
         $request->attributes->set('api_client', $client);
         $request->attributes->set('api_scopes', $psr->getAttribute('oauth_scopes', []));
-        $usageDate = now('UTC')->toDateString();
-        DB::table('api_client_usage')->insertOrIgnore(['client_id' => $client->id, 'usage_date' => $usageDate, 'requests' => 0]);
-        DB::table('api_client_usage')->where('client_id', $client->id)->where('usage_date', $usageDate)->increment('requests');
-        return $next($request);
+        return app(\App\Contexts\ApiIdentity\Application\Services\MachineClientQuota::class)->attach($next($request), $quota);
     }
 }

@@ -1,0 +1,16 @@
+[
+  {
+    "method": "POST",
+    "path": "/enquiries",
+    "introduced_in": "0.109.0",
+    "allow_additive_request_schema": true,
+    "reason": "Adds optional structured API access request fields while preserving all existing enquiry inputs and behavior."
+  },
+  {
+    "method": "POST",
+    "path": "/public/become-a-partner",
+    "introduced_in": "0.114.2",
+    "allow_additive_request_schema": true,
+    "reason": "Adds the academic partner type for universities, research labs, teaching hospitals and health-training institutions; existing partner types and submission behavior remain unchanged."
+  }
+]

@@ -3,7 +3,7 @@
 return [
     // Hero eyebrow bar
     'eyebrow'               => 'Health Technology Headlines',
-    'eyebrow_region'        => 'Cameroon & CEMAC Region',
+    'eyebrow_region'        => 'Cameroon · Africa · Global Health Technology',
     'all_articles_count'    => 'All :count articles',
 
     // Featured badge
@@ -25,7 +25,7 @@ return [
 
     // Sidebar — CTA widget
     'cta_heading'           => 'Digitise Your Facility',
-    'cta_body'              => 'OPES HMS is built for hospitals and clinics in Cameroon and the CEMAC region.',
+    'cta_body'              => 'OPES Health Systems is based in Cameroon and welcomes hospitals, clinics and health partners across Africa and internationally. Project fit and local requirements are assessed country by country.',
     'cta_btn'               => 'Request a demo',
 
     // Sidebar — Quick links widget

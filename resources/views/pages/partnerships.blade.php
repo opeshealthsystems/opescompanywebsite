@@ -48,7 +48,7 @@
 <div class="demo-section">
     <h2>{{ __('partnerships.cta_title') }}</h2>
     <p>{{ __('partnerships.cta_sub') }}</p>
-    <a href="{{ url($locale.'/contact') }}" class="btn-primary" style="display:inline-flex;margin-top:8px">
+    <a href="{{ url($locale.'/become-a-partner') }}?partner_type=health_ai#partnership-form" class="btn-primary" style="display:inline-flex;margin-top:8px">
         {{ __('partnerships.cta_button') }}
         <i data-lucide="arrow-right" style="width:15px;height:15px"></i>
     </a>

@@ -9,6 +9,7 @@ final class WorkflowResult
     public array $errors = [];
     public bool $retainInput = false;
     public array $retainedKeys = [];
+    public bool $replayed = false;
 
     private function __construct(
         public readonly string $kind, public array $data = [], public readonly ?string $variant = null,

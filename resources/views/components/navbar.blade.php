@@ -16,8 +16,8 @@
 
     <div class="nav-collapse" id="site-navigation">
     <div class="nav-links">
-        @foreach(['products' => ['Products','Produits'], 'solutions' => ['Solutions','Solutions'], 'mobile-app' => ['Download app','Télécharger l’application'], 'about' => ['Company','Entreprise'], 'blog' => ['Resources','Ressources'], 'compliance' => ['Trust','Confiance'], 'contact' => ['Contact','Contact']] as $path => $labels)
-        <a href="{{ $path === 'mobile-app' ? url($locale.'/mobile-app#download') : url($locale.'/'.$path) }}">{{ $labels[$locale === 'fr' ? 1 : 0] }}</a>
+        @foreach(['products' => ['Products','Produits'], 'solutions' => ['Solutions','Solutions'], 'opescare-network' => ['OPESCare Network','Réseau OPESCare'], 'medical-informatics' => ['Medical Informatics','Informatique médicale'], 'partnerships' => ['Partnerships','Partenariats'], 'mobile-app' => ['Download app','Télécharger l’application'], 'about' => ['Company','Entreprise'], 'resources' => ['Resources','Ressources']] as $path => $labels)
+        <a href="{{ match($path) { 'mobile-app' => url($locale.'/mobile-app#download'), 'opescare-network' => url($locale.'/products/opescare'), 'resources' => url($locale.'/blog'), default => url($locale.'/'.$path) } }}">{{ $labels[$locale === 'fr' ? 1 : 0] }}</a>
         @endforeach
     </div>
 
@@ -42,6 +42,9 @@
                     <div class="nav-account-drop-email">{{ auth()->user()->email }}</div>
                 </div>
                 <div class="nav-account-drop-divider"></div>
+                <a href="{{ url($locale.'/developers/console') }}" class="nav-account-drop-item">
+                    <i data-lucide="key-round" style="width:14px;height:14px"></i> {{ $locale === 'fr' ? 'Applications développeur' : 'Developer applications' }}
+                </a>
                 @if($acctIsAdmin)
                 <a href="{{ url('admin') }}" class="nav-account-drop-item">
                     <i data-lucide="layout-dashboard" style="width:14px;height:14px"></i> {{ $locale === 'fr' ? 'Console admin' : 'Admin panel' }}

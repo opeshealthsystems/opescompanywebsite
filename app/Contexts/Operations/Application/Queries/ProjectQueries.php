@@ -50,7 +50,7 @@ final class ProjectQueries
         $actor = $input->user();
         abort_unless($actor instanceof User && $actor->is_active && $actor->hasAnyRole(['super_admin', 'admin']), 403);
 
-        return $project->milestones()->orderBy('due_date')->orderBy('id');
+        return $project->milestones()->getQuery()->orderBy('due_date')->orderBy('id');
     }
 
     public function milestone(WorkflowInput $input, Project $project, Milestone $milestone): WorkflowResult

@@ -50,14 +50,14 @@ class UserResourceRbacTest extends TestCase
         $target = User::factory()->create();
         $target->assignRole('customer');
 
-        $superAdminRoleId = Role::where('name', 'super_admin')->value('id');
+        Role::findOrCreate('super_admin', 'web');
 
         $this->actingAs($admin);
 
         // The roles field is hidden for non-super_admins; forcing the underlying
         // Livewire state must NOT result in a super_admin grant.
         Livewire::test(EditUser::class, ['record' => $target->getRouteKey()])
-            ->set('data.roles', [$superAdminRoleId])
+            ->set('data.roles', ['super_admin'])
             ->call('save');
 
         $this->assertFalse($target->fresh()->hasRole('super_admin'));
@@ -70,12 +70,12 @@ class UserResourceRbacTest extends TestCase
 
         $target = User::factory()->create();
 
-        $supportRoleId = Role::where('name', 'support')->value('id');
+        Role::findOrCreate('support', 'web');
 
         $this->actingAs($super);
 
         Livewire::test(EditUser::class, ['record' => $target->getRouteKey()])
-            ->fillForm(['roles' => [$supportRoleId]])
+            ->fillForm(['roles' => ['support']])
             ->call('save')
             ->assertHasNoFormErrors();
 

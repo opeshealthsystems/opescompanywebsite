@@ -103,4 +103,29 @@ final class AdminApiClientCommands extends WorkflowHandler
         return WorkflowResult::payload(['client_id' => (string) $client->getKey(), 'revoked' => true])
             ->with('success', 'Client and its existing tokens are revoked.');
     }
+
+    public function setQuota(WorkflowInput $input, string $clientId): WorkflowResult
+    {
+        $actor = $this->admin($input);
+        $data = $input->validate([
+            'daily_request_limit' => 'present|nullable|integer|min:1|max:1000000000',
+            'monthly_request_limit' => 'present|nullable|integer|min:1|max:1000000000',
+        ]);
+        $client = $this->client($clientId, true);
+        $client->daily_request_limit = $data['daily_request_limit'];
+        $client->monthly_request_limit = $data['monthly_request_limit'];
+        $client->save();
+
+        DomainOutbox::append('event', 'api_identity.machine_client_quota_updated.v1', [
+            'references' => [['resource' => 'OAuthClient', 'id' => (string) $client->getKey()]],
+            'daily_request_limit' => $data['daily_request_limit'],
+            'monthly_request_limit' => $data['monthly_request_limit'],
+        ], $actor->id);
+
+        return WorkflowResult::payload([
+            'client_id' => (string) $client->getKey(),
+            'daily_request_limit' => $client->daily_request_limit,
+            'monthly_request_limit' => $client->monthly_request_limit,
+        ])->with('success', 'Machine API client quotas updated. Null removes a limit.');
+    }
 }

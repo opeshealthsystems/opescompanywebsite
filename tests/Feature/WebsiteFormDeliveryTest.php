@@ -40,6 +40,28 @@ class WebsiteFormDeliveryTest extends TestCase
         $this->assertCount(4, array_filter(app(WebsiteFormMailer::class)->records(), fn ($r) => $r['status'] === 'sent'));
     }
 
+    public function test_health_data_and_cdss_service_interests_reach_the_shared_enquiry_record_and_contact_email(): void
+    {
+        foreach ([
+            ['Health Data Services', 'data-sender@example.test'],
+            ['Clinical Decision Support Systems (CDSS)', 'cdss-sender@example.test'],
+        ] as [$service, $email]) {
+            $this->post('/en/contact', [
+                'name' => 'Service Enquiry',
+                'email' => $email,
+                'products' => $service,
+                'message' => 'Please contact me about this service.',
+            ])->assertRedirect();
+        }
+
+        $this->assertDatabaseHas('leads', ['email' => 'data-sender@example.test', 'products' => 'Health Data Services']);
+        $this->assertDatabaseHas('leads', ['email' => 'cdss-sender@example.test', 'products' => 'Clinical Decision Support Systems (CDSS)']);
+        Mail::assertSent(WebsiteSubmissionReceived::class, 2);
+        foreach (['data-sender@example.test', 'cdss-sender@example.test'] as $email) {
+            Mail::assertSent(WebsiteSubmissionReceived::class, fn ($mail) => $mail->hasTo('contact@opeshealthsystems.com') && $mail->submission->email === $email);
+        }
+    }
+
     public function test_recovery_does_not_resend_successful_deliveries(): void
     {
         $lead = Lead::create(['name' => 'Original enquiry', 'email' => 'sender@example.test', 'source' => 'contact', 'message' => 'Preserve this message']);

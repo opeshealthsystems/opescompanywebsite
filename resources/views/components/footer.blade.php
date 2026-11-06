@@ -26,7 +26,7 @@ $current = $locale;
                 <i data-lucide="layers" style="width:12px;height:12px"></i>OPES Health OS →
             </a>
             <a href="{{ url($locale.'/products/opescare') }}">
-                <i data-lucide="fingerprint" style="width:12px;height:12px"></i>OPESCare · Health ID
+                <i data-lucide="fingerprint" style="width:12px;height:12px"></i>OPESCare Health Network
             </a>
             <a href="{{ url($locale.'/products/opes-emr') }}">
                 <i data-lucide="stethoscope" style="width:12px;height:12px"></i>OPES EMR
@@ -44,7 +44,7 @@ $current = $locale;
 
         <div class="footer-col">
             <h2>{{ $isFr ? 'Plateforme' : 'Platform' }}</h2>
-            <a href="{{ url($locale.'/markets') }}">{{ $isFr ? 'Marchés CEMAC' : 'CEMAC Markets' }}</a>
+            <a href="{{ url($locale.'/markets') }}">{{ $isFr ? 'Marchés · Afrique et au-delà' : 'Markets · Africa and beyond' }}</a>
             <a href="{{ url($locale.'/developers') }}">{{ $isFr ? 'API et développeurs' : 'APIs and developers' }}</a>
             <a href="{{ url($locale.'/mobile-app') }}">{{ $isFr ? 'Application mobile OPES' : 'OPES mobile app' }}</a>
             <a href="{{ url($locale.'/architecture') }}">
@@ -61,6 +61,15 @@ $current = $locale;
             </a>
             <a href="{{ url($locale.'/academy') }}">
                 <i data-lucide="graduation-cap" style="width:12px;height:12px"></i>OPES Academy
+            </a>
+            <a href="{{ url($locale.'/hands-on-learning') }}">
+                <i data-lucide="book-open-check" style="width:12px;height:12px"></i>{{ $isFr ? 'Projet Hands-On Learning' : 'Project Hands-On Learning' }}
+            </a>
+            <a href="{{ url($locale.'/medical-informatics') }}">
+                <i data-lucide="stethoscope" style="width:12px;height:12px"></i>{{ $isFr ? 'Informatique médicale' : 'Medical Informatics' }}
+            </a>
+            <a href="{{ url($locale.'/medical-informatics') }}">
+                <i data-lucide="book-open-check" style="width:12px;height:12px"></i>{{ $isFr ? 'Informatique médicale' : 'Medical Informatics' }}
             </a>
             <a href="{{ url($locale.'/clinical-governance') }}">
                 <i data-lucide="heart-pulse" style="width:12px;height:12px"></i>{{ $isFr ? 'Gouvernance clinique' : 'Clinical Governance' }}

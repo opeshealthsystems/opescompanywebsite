@@ -46,7 +46,7 @@ return [
     // Office info
     'office_title'       => 'Our office',
     'office_city'        => 'Bonamousadi, Douala',
-    'office_region'      => 'Cameroon · CEMAC Region',
+    'office_region'      => 'Cameroon · Serving Africa and global partners',
     'office_email_note'  => 'Response within 1 business day',
     'office_phone_hours' => 'Mon–Fri · 8h–18h WAT',
 

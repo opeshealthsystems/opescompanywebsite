@@ -54,6 +54,7 @@ final class WorkflowDispatcher
                         };
                         $result->status = $saved['status'];
                         $result->messages = $saved['messages']; $result->errors = $saved['errors'];
+                        $result->replayed = true;
                         return $result;
                     }
                 }

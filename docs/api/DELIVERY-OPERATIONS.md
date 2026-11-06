@@ -14,11 +14,19 @@ php artisan website-forms:deliver --retry-only --limit=100
 
 It skips successes and future retries, and returns a nonzero exit code when the processed batch contains failed/uncertain outcomes. Investigate these results; do not assume every failed command should be blindly repeated with force options. Historical source reconciliation remains `website-forms:deliver --recover`.
 
-Each new delivery has a stable `X-OHS-Event-ID` mail header and a Message-ID derived from that UUID. Inspect an ambiguous event with `php artisan website-forms:resolve EVENT_UUID`. If its message is confirmed in the contact inbox, record that fact without resending:
+Each new delivery has a stable `X-OHS-Event-ID` mail header and a Message-ID derived from that UUID. Administrators can inspect delivery status through the API with `GET /api/v1/admin/enquiries/deliveries` and `GET /api/v1/admin/enquiries/deliveries/{event}`, using a delegated token with `enquiries:read`. These responses include delivery metadata only; they do not include form content. The CLI remains available as an adapter and requires an active administrator identity:
 
 ```sh
-php artisan website-forms:resolve EVENT_UUID --sent
+php artisan website-forms:resolve EVENT_UUID --owner="admin@opeshealthsystems.com"
 ```
+
+If the message is confirmed in the contact inbox, record that fact without resending. This operation is available as `POST /api/v1/admin/enquiries/deliveries/{event}/resolve` with `enquiries:write`, an `Idempotency-Key`, and `{"confirmed_received":true}`. CLI users can perform the same explicit reconciliation with:
+
+```sh
+php artisan website-forms:resolve EVENT_UUID --owner="admin@opeshealthsystems.com" --sent
+```
+
+Only `uncertain` events may be confirmed. The command/API updates the delivery state and records a versioned audit event; neither sends another email.
 
 If mailbox/transport investigation confirms a resend is needed, `website-forms:deliver --retry-uncertain` explicitly permits ambiguous deliveries to be attempted again. This batch command can resend multiple ambiguous messages and can produce duplicates; review its scope first. A stable Message-ID supports investigation but is not a provider deduplication guarantee.
 

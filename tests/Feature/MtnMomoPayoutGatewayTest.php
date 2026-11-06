@@ -48,7 +48,10 @@ class MtnMomoPayoutGatewayTest extends TestCase
         ]);
 
         $app = $this->paidApplication();
-        $result = (new MtnMomoPayoutGateway())->disburse($app, 50000, 'XAF');
+        $reference = (string) \Illuminate\Support\Str::uuid();
+        $app->update(['payout_amount' => 50000, 'payout_currency' => 'XAF', 'payout_reference' => $reference,
+            'payout_provider' => 'mtn', 'payout_initiated_at' => now()]);
+        $result = (new MtnMomoPayoutGateway())->disburse($app, 50000, 'XAF', ['reference' => $reference]);
 
         $this->assertTrue($result->success);
         $this->assertSame('pending', $result->status);
@@ -57,12 +60,12 @@ class MtnMomoPayoutGatewayTest extends TestCase
         $fresh = $app->fresh();
         $this->assertSame('pending', $fresh->payout_status);
         $this->assertSame('mtn', $fresh->payout_provider);
-        $this->assertSame($result->reference, $fresh->payout_reference);
+        $this->assertSame($reference, $fresh->payout_reference);
         $this->assertNotNull($fresh->payout_initiated_at);
 
         Http::assertSent(fn ($request) =>
             str_contains($request->url(), '/disbursement/v1_0/transfer')
-            && $request->hasHeader('X-Reference-Id', $result->reference)
+            && $request->hasHeader('X-Reference-Id', $reference)
             && $request->hasHeader('X-Target-Environment', 'sandbox')
             && $request['payee']['partyId'] === '237677123456'
         );

@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\DB;
 
 final class AdminOperationalReportQueries extends WorkflowHandler
 {
-    private function authorize(WorkflowInput $input): void
+    private function authorizeAdministrator(WorkflowInput $input): void
     {
         $actor = $input->user();
         abort_unless($actor instanceof User && $actor->is_active && $actor->hasAnyRole(['super_admin', 'admin']), 403);
@@ -28,7 +28,7 @@ final class AdminOperationalReportQueries extends WorkflowHandler
 
     public function overview(WorkflowInput $input): WorkflowResult
     {
-        $this->authorize($input);
+        $this->authorizeAdministrator($input);
 
         $invoicedTotal = DB::table('invoice_items')->join('invoices', 'invoice_items.invoice_id', '=', 'invoices.id')
             ->whereIn('invoices.status', ['sent', 'paid', 'overdue'])->sum('invoice_items.total');
@@ -53,7 +53,7 @@ final class AdminOperationalReportQueries extends WorkflowHandler
 
     public function dashboard(WorkflowInput $input): WorkflowResult
     {
-        $this->authorize($input);
+        $this->authorizeAdministrator($input);
         $now = now();
         $monthStart = $now->copy()->startOfMonth();
         $metrics = [
@@ -79,7 +79,7 @@ final class AdminOperationalReportQueries extends WorkflowHandler
 
     public function contractsExpiry(WorkflowInput $input): WorkflowResult
     {
-        $this->authorize($input);
+        $this->authorizeAdministrator($input);
         $today = Carbon::today();
         $rows = Contract::whereIn('status', ['active', 'pending_renewal'])->whereNotNull('end_date')->orderBy('end_date')->get()
             ->map(function (Contract $contract) use ($today): array {
@@ -102,7 +102,7 @@ final class AdminOperationalReportQueries extends WorkflowHandler
 
     public function crmSummary(WorkflowInput $input): WorkflowResult
     {
-        $this->authorize($input);
+        $this->authorizeAdministrator($input);
         return WorkflowResult::payload([
             'open_leads' => Lead::whereNotIn('status', ['converted', 'lost', 'disqualified'])->count(),
             'pipeline_value' => (float) \App\Models\Deal::whereNotIn('stage', ['closed_won', 'closed_lost'])->sum('value'),
@@ -113,7 +113,7 @@ final class AdminOperationalReportQueries extends WorkflowHandler
 
     public function peopleSummary(WorkflowInput $input): WorkflowResult
     {
-        $this->authorize($input);
+        $this->authorizeAdministrator($input);
         return WorkflowResult::payload([
             'headcount' => User::whereHas('roles', fn ($query) => $query->where('name', '!=', 'customer'))->count(),
             'pending_leave' => LeaveRequest::where('status', 'pending')->count(),

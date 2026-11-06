@@ -24,10 +24,10 @@ jobs:
         run: |
           if git cat-file -e "$BASE_REVISION:docs/api/openapi.json" 2>/dev/null; then
             git show "$BASE_REVISION:docs/api/openapi.json" > "$RUNNER_TEMP/opes-api-baseline.json"
-            correction_args=()
+            correction_args=(--corrections docs/api/compatibility-exceptions-0.109.json)
           else
             cp docs/api/baselines/0.3.0.json "$RUNNER_TEMP/opes-api-baseline.json"
-            correction_args=(--corrections docs/api/compatibility-exceptions.json --corrections docs/api/compatibility-exceptions-0.47.json)
+            correction_args=(--corrections docs/api/compatibility-exceptions.json --corrections docs/api/compatibility-exceptions-0.47.json --corrections docs/api/compatibility-exceptions-0.109.json)
           fi
           python scripts/api/check_compatibility.py "$RUNNER_TEMP/opes-api-baseline.json" docs/api/openapi.json "${correction_args[@]}"
       - uses: actions/setup-node@v4
@@ -52,4 +52,10 @@ jobs:
           git diff --exit-code -- docs/api/openapi.json sdk/node/src/business-operations.js sdk/node/src/business-operations.d.ts
       - name: Require shared application workflows for named web routes
         run: php scripts/api/audit_web_adapters.php
-      - run: php artisan test --compact tests/Feature/EnquiriesApiTest.php tests/Feature/WebsiteFormDeliveryTest.php tests/Feature/EnquiryReliabilityTest.php tests/Feature/ApiIdentityTest.php
+      - name: Require shared application queries for Filament reads
+        run: php scripts/api/audit_filament_query_adapters.php
+      - name: Require application command adapters for Filament writes
+        run: php scripts/api/audit_filament_command_adapters.php
+      - name: Require shared application workflows for API identity CLI commands
+        run: php scripts/api/audit_console_api_identity_adapters.php
+      - run: php artisan test --compact tests/Feature/EnquiriesApiTest.php tests/Feature/WebsiteFormDeliveryTest.php tests/Feature/EnquiryReliabilityTest.php tests/Feature/ApiIdentityTest.php tests/Feature/BusinessApiRegistryCoverageTest.php

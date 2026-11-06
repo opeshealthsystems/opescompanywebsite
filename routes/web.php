@@ -81,6 +81,15 @@ Route::prefix('{locale}')
         Route::get('/',               [HomeController::class,    'index'])->name('home');
         Route::get('/products',       [ProductController::class, 'index'])->name('products.index');
         Route::view('/developers', 'pages.developers')->name('developers');
+        Route::middleware('auth')->prefix('/developers/console')->name('developers.console.')->group(function () {
+            Route::get('/', [\App\Http\Controllers\DeveloperOAuthConsoleController::class, 'index'])->name('index');
+            Route::post('/applications', [\App\Http\Controllers\DeveloperOAuthConsoleController::class, 'create'])->name('applications.create');
+            Route::post('/applications/{client}/update', [\App\Http\Controllers\DeveloperOAuthConsoleController::class, 'update'])->name('applications.update');
+            Route::post('/applications/{client}/revoke', [\App\Http\Controllers\DeveloperOAuthConsoleController::class, 'revoke'])->name('applications.revoke');
+              Route::post('/machine-clients', [\App\Http\Controllers\DeveloperOAuthConsoleController::class, 'createMachineClient'])->name('machine-clients.create');
+              Route::post('/machine-clients/{client}/rotate', [\App\Http\Controllers\DeveloperOAuthConsoleController::class, 'rotateMachineClient'])->name('machine-clients.rotate');
+              Route::post('/machine-clients/{client}/revoke', [\App\Http\Controllers\DeveloperOAuthConsoleController::class, 'revokeMachineClient'])->name('machine-clients.revoke');
+        });
         Route::view('/mobile-app', 'pages.mobile-app')->name('mobile-app');
         Route::get('/products/{slug}',[ProductController::class, 'show'])->name('product.show');
         Route::get('/products/{slug}/brochure', [\App\Http\Controllers\BrochureController::class, 'download'])->name('product.brochure');
@@ -109,6 +118,8 @@ Route::prefix('{locale}')
         Route::get('/implementation',   fn () => view('pages.implementation'))->name('implementation');
         Route::get('/support',          fn () => view('pages.support'))->name('support');
         Route::get('/academy',              fn () => view('pages.academy'))->name('academy');
+        Route::get('/hands-on-learning',    fn () => view('pages.hands-on-learning'))->name('hands-on-learning');
+        Route::get('/medical-informatics',  fn () => view('pages.medical-informatics'))->name('medical-informatics');
         Route::get('/clinical-governance',  fn () => view('pages.clinical-governance'))->name('clinical-governance');
         Route::get('/interoperability',     fn () => view('pages.interoperability'))->name('interoperability');
         Route::get('/quality',              fn () => view('pages.quality'))->name('quality');

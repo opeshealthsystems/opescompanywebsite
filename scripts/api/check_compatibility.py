@@ -134,11 +134,64 @@ def oauth_scope_additions_only(old, new):
     return added_scope and old == new
 
 
+def response_headers_additive_only(old, new):
+    """Allow new response headers while preserving every released operation shape."""
+    added = False
+
+    def same(left, right, parent=None):
+        nonlocal added
+        if isinstance(left, dict) and isinstance(right, dict):
+            if parent == "response":
+                old_headers = left.get("headers", {})
+                new_headers = right.get("headers", {})
+                if not isinstance(old_headers, dict) or not isinstance(new_headers, dict):
+                    return False
+                if not old_headers.keys() <= new_headers.keys():
+                    return False
+                if any(old_headers[name] != new_headers[name] for name in old_headers):
+                    return False
+                if new_headers.keys() - old_headers.keys():
+                    added = True
+                left = {key: value for key, value in left.items() if key != "headers"}
+                right = {key: value for key, value in right.items() if key != "headers"}
+            if left.keys() != right.keys():
+                return False
+            for key in left:
+                if key == "responses":
+                    if not isinstance(left[key], dict) or not isinstance(right[key], dict) or left[key].keys() != right[key].keys():
+                        return False
+                    if any(not same(left[key][status], right[key][status], "response") for status in left[key]):
+                        return False
+                elif not same(left[key], right[key], key):
+                    return False
+            return True
+        if isinstance(left, list) and isinstance(right, list):
+            return len(left) == len(right) and all(same(a, b) for a, b in zip(left, right))
+        return left == right
+
+    return same(old, new) and added
+
+
 def check(baseline, current, corrections=None):
     differences = []
     baseline = normalize_route_binding_paths(baseline)
     current = normalize_route_binding_paths(current)
-    corrections = {f"{entry['method'].lower()} {entry['path']}": entry for entry in (corrections or [])}
+    def version(value):
+        try:
+            return tuple(int(part) for part in value.split('.'))
+        except (AttributeError, ValueError):
+            raise CompatibilityError(f"Invalid API contract version: {value!r}")
+    baseline_version = version(baseline.get('info', {}).get('version'))
+    current_version = version(current.get('info', {}).get('version'))
+    active_corrections = []
+    for entry in corrections or []:
+        introduced = entry.get('introduced_in')
+        if introduced is not None:
+            introduced_version = version(introduced)
+            if not baseline_version < introduced_version <= current_version:
+                continue
+        active_corrections.append(entry)
+    corrections = {f"{entry['method'].lower()} {entry['path']}": entry for entry in active_corrections}
     used_corrections = set()
     if baseline.get("openapi") != current.get("openapi") or baseline.get("jsonSchemaDialect") != current.get("jsonSchemaDialect"):
         differences.append("Changed contract dialect requires review")
@@ -156,6 +209,8 @@ def check(baseline, current, corrections=None):
                 old_shape = shape(*before)
                 new_shape = shape(*after)
                 if oauth_scope_additions_only(old_shape, new_shape):
+                    continue
+                if response_headers_additive_only(old_shape, new_shape):
                     continue
                 if entry and entry.get("allow_additive_request_schema") is True and entry.get("reason") and request_schema_correction_is_additive(before, after):
                     used_corrections.add(key)

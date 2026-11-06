@@ -83,7 +83,7 @@ final class AdminCourseCommands extends WorkflowHandler
         $actor = $this->admin($input);
         $id = DB::transaction(function () use ($course, $actor) {
             $record = Course::query()->lockForUpdate()->findOrFail($course->id);
-            if ($record->enrollments()->exists() || $record->certificates()->exists()) throw ValidationException::withMessages(['course' => 'Courses with enrollment or certificate history cannot be deleted. Deactivate the course instead.']);
+            if ($record->enrollments()->exists() || $record->certificates()->exists() || $record->assessments()->whereHas('attempts')->exists()) throw ValidationException::withMessages(['course' => 'Courses with enrollment, certificate or assessment attempt history cannot be deleted. Deactivate the course instead.']);
             $id = $record->id;
             $record->delete();
             DomainOutbox::append('event', 'learning.course_deleted.v1', ['references' => [['resource' => 'Course', 'id' => $id]]], $actor->id);

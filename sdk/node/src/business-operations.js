@@ -196,6 +196,22 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_apiClients_quota": {
+        "method": "GET",
+        "path": "/admin/api-clients/{client}/quota",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "client"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_apiClients_revoke": {
         "method": "DELETE",
         "path": "/admin/api-clients/{client}",
@@ -218,6 +234,37 @@ export const businessOperations = Object.freeze({
             "client"
         ],
         "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_apiClients_setQuota": {
+        "method": "PATCH",
+        "path": "/admin/api-clients/{client}/quota",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "client"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json"
+        ]
+    },
+    "admin_apiClients_usage": {
+        "method": "GET",
+        "path": "/admin/api-clients/{client}/usage",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "client"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1110,6 +1157,88 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_enquiries_deliveries_confirmReceived": {
+        "method": "POST",
+        "path": "/admin/enquiries/deliveries/{event}/resolve",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "event"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_enquiries_deliveries_index": {
+        "method": "GET",
+        "path": "/admin/enquiries/deliveries",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "status",
+            "event_type",
+            "from",
+            "to"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_enquiries_deliveries_show": {
+        "method": "GET",
+        "path": "/admin/enquiries/deliveries/{event}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "event"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_enquiries_integrationRequests_index": {
+        "method": "GET",
+        "path": "/admin/enquiries/integration-requests",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "status",
+            "search"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_enquiries_integrationRequests_show": {
+        "method": "GET",
+        "path": "/admin/enquiries/integration-requests/{lead}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "lead"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_enquiries_leads_create": {
         "method": "POST",
         "path": "/admin/enquiries/leads",
@@ -1215,6 +1344,67 @@ export const businessOperations = Object.freeze({
             "partner_type",
             "search"
         ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_enquiries_partnerApplications_members_add": {
+        "method": "POST",
+        "path": "/crm/partner-applications/{partnerApplication}/members",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "partnerApplication"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_enquiries_partnerApplications_members_eligible": {
+        "method": "GET",
+        "path": "/crm/partner-member-options",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page",
+            "search"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_enquiries_partnerApplications_members_index": {
+        "method": "GET",
+        "path": "/crm/partner-applications/{partnerApplication}/members",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "partnerApplication"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_enquiries_partnerApplications_members_remove": {
+        "method": "DELETE",
+        "path": "/crm/partner-applications/{partnerApplication}/members/{member}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "partnerApplication",
+            "member"
+        ],
+        "queryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1967,6 +2157,22 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "admin_finance_payrollRuns_show": {
+        "method": "GET",
+        "path": "/finance/payroll-runs/{run}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "run"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "admin_finance_payrollRuns_update": {
         "method": "PUT",
         "path": "/finance/payroll-runs/{run}",
@@ -2572,6 +2778,84 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": true,
         "contentTypes": [
             "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "admin_learning_assessments_create": {
+        "method": "POST",
+        "path": "/learning/courses/{course}/assessments",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "course"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json"
+        ]
+    },
+    "admin_learning_assessments_delete": {
+        "method": "DELETE",
+        "path": "/learning/courses/{course}/assessments/{assessment}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "course",
+            "assessment"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_learning_assessments_index": {
+        "method": "GET",
+        "path": "/learning/courses/{course}/assessments",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "course"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_learning_assessments_show": {
+        "method": "GET",
+        "path": "/learning/courses/{course}/assessments/{assessment}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "course",
+            "assessment"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "admin_learning_assessments_update": {
+        "method": "PUT",
+        "path": "/learning/courses/{course}/assessments/{assessment}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "course",
+            "assessment"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
             "application/json"
         ]
     },
@@ -6725,6 +7009,20 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "api_product_catalogue": {
+        "method": "GET",
+        "path": "/api-products",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "api_product_changelog": {
         "method": "GET",
         "path": "/changelog",
@@ -7356,6 +7654,115 @@ export const businessOperations = Object.freeze({
             "application/json"
         ]
     },
+    "developer_machine_clients_create": {
+        "method": "POST",
+        "path": "/developer/machine-clients",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "developer_machine_clients_index": {
+        "method": "GET",
+        "path": "/developer/machine-clients",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "developer_machine_clients_revoke": {
+        "method": "DELETE",
+        "path": "/developer/machine-clients/{client}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "client"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "developer_machine_clients_rotate": {
+        "method": "POST",
+        "path": "/developer/machine-clients/{client}/rotate",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "client"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "developer_oauth_applications_create": {
+        "method": "POST",
+        "path": "/developer/applications",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json"
+        ]
+    },
+    "developer_oauth_applications_index": {
+        "method": "GET",
+        "path": "/developer/applications",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "developer_oauth_applications_revoke": {
+        "method": "DELETE",
+        "path": "/developer/applications/{client}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "client"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "developer_oauth_applications_update": {
+        "method": "PATCH",
+        "path": "/developer/applications/{client}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "client"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "application/json"
+        ]
+    },
     "documentcontroller_pdf": {
         "method": "GET",
         "path": "/files/documents/{document}/pdf",
@@ -7961,6 +8368,82 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "partner_accounts_index": {
+        "method": "GET",
+        "path": "/partner/accounts",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "partner_accounts_members_add": {
+        "method": "POST",
+        "path": "/partner/accounts/{partnerApplication}/members",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "partnerApplication"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "partner_accounts_members_index": {
+        "method": "GET",
+        "path": "/partner/accounts/{partnerApplication}/members",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "partnerApplication"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "partner_accounts_members_remove": {
+        "method": "DELETE",
+        "path": "/partner/accounts/{partnerApplication}/members/{member}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "partnerApplication",
+            "member"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "partner_accounts_update": {
+        "method": "PATCH",
+        "path": "/partner/accounts/{partnerApplication}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "partnerApplication"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
     "partnerapplicationcontroller_show": {
         "method": "GET",
         "path": "/public/become-a-partner",
@@ -8040,6 +8523,101 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": false,
         "pathParameters": [
             "application"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_assessments_answers_save": {
+        "method": "PATCH",
+        "path": "/practitioner/assessments/{assessment}/attempts/{attempt}",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "assessment",
+            "attempt"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": true,
+        "contentTypes": [
+            "multipart/form-data",
+            "application/json"
+        ]
+    },
+    "practitioner_assessments_attempt": {
+        "method": "GET",
+        "path": "/practitioner/assessments/{assessment}/attempts/{attempt}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "assessment",
+            "attempt"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_assessments_attempts_start": {
+        "method": "POST",
+        "path": "/practitioner/assessments/{assessment}/attempts",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "assessment"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_assessments_attempts_submit": {
+        "method": "POST",
+        "path": "/practitioner/assessments/{assessment}/attempts/{attempt}/submit",
+        "authenticated": true,
+        "idempotencyRequired": true,
+        "pathParameters": [
+            "assessment",
+            "attempt"
+        ],
+        "queryParameters": [],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": [
+            "application/json"
+        ]
+    },
+    "practitioner_assessments_index": {
+        "method": "GET",
+        "path": "/practitioner/courses/{course}/assessments",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "course"
+        ],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "practitioner_assessments_show": {
+        "method": "GET",
+        "path": "/practitioner/assessments/{assessment}",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [
+            "assessment"
         ],
         "queryParameters": [
             "page",
@@ -8662,6 +9240,20 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "publishing_service_offerings_catalogue": {
+        "method": "GET",
+        "path": "/service-offerings",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "purchaseordercontroller_pdf": {
         "method": "GET",
         "path": "/files/purchase-orders/{purchaseOrder}/pdf",
@@ -8694,6 +9286,18 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "readIntegrationQuota": {
+        "method": "GET",
+        "path": "/integration/quota",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": false,
+        "requestBodyRequired": false,
+        "contentTypes": [],
+        "machineClientOnly": true
+    },
     "readIntegrationUsage": {
         "method": "GET",
         "path": "/integration/usage",
@@ -8716,6 +9320,17 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "acceptLanguage": false,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
+    "readOwnBusinessUsage": {
+        "method": "GET",
+        "path": "/me/usage",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [],
         "acceptLanguage": false,
         "requestBodyRequired": false,
         "contentTypes": []

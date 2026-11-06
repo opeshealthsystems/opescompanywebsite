@@ -3,7 +3,7 @@
 return [
     // Meta
     'meta_title'         => 'About OPES Health Systems — Building Africa\'s Digital Health Infrastructure',
-    'meta_desc'          => 'OPES Health Systems is a Cameroon-based healthtech company with a healthcare software catalogue for the CEMAC region. Learn our mission, vision and story.',
+    'meta_desc'          => 'OPES Health Systems is a Cameroon-based health technology company building interoperable healthcare solutions for organizations across Africa and international partners. Learn our mission, vision and story.',
 
     // Hero
     'hero_eyebrow'       => 'About OPES Health Systems',
@@ -13,16 +13,16 @@ return [
 
     // Mission & Vision
     'mission_title'      => 'Our Mission',
-    'mission_body'       => 'To eliminate fragmented healthcare information, improve continuity of care, and empower healthcare professionals across Africa with modern, interoperable digital tools that improve clinical outcomes and operational efficiency — starting from Cameroon and the CEMAC region.',
+    'mission_body'       => 'To reduce fragmented healthcare information, improve continuity of care, and equip health professionals and organizations with interoperable digital tools — built from Cameroon, designed for the varied needs of African health systems, and available for international collaboration.',
     'vision_title'       => 'Our Vision',
-    'vision_body'        => 'A CEMAC region where every patient has a universal Health ID and their complete medical record follows them seamlessly — from first contact at a village health post through specialist care at a teaching hospital — all connected through the OPES Care interoperability layer.',
+    'vision_body'        => 'Connected health systems across Africa and the world, where people can receive more continuous care and authorized organizations can exchange information responsibly through interoperable services such as OPESCare — shaped by local health priorities, governance and laws.',
 
     // Story
     'story_eyebrow'      => 'Our Story',
     'story_title'        => "Born from Cameroon's healthcare realities",
     'story_p1'           => 'OPES Health Systems grew out of direct experience with the challenges of healthcare delivery in Cameroon: duplicate patient records across facilities, lost prescription histories, manual laboratory logbooks, and revenue leakage from disconnected billing systems.',
     'story_p2'           => 'We set out to build what we couldn\'t find — a comprehensive, bilingual, Africa-first healthcare ecosystem. Not a port of a Western EMR with French toggled on, but software designed from the ground up for the Cameroonian clinical workflow, CNPS billing requirements, and HL7 FHIR interoperability standards.',
-    'story_p3'           => 'Based in Bonamousadi, Douala, our team combines clinical knowledge, software engineering, and deep understanding of the CEMAC health sector. OPES is aligned with the Cameroon Ministry of Health 2026–2030 national digitalization plan and supports the Universal Health Coverage mandate.',
+    'story_p3'           => 'Based in Bonamousadi, Douala, our team combines clinical knowledge and software engineering with experience of Cameroon and African health systems, including the CEMAC region. Our starting point is Cameroon; our ambition is to work with health organizations and partners across Africa and internationally. Any alignment with national programmes is pursued with the relevant authorities and institutions.',
     'story_p4'           => 'Today, the OPES Health Platform comprises more than twenty specialized solutions — from Electronic Medical Records and Hospital Information Systems to Laboratory and Pharmacy platforms, specialty clinical applications, and a Health Information Exchange layer — serving facilities ranging from independent clinics to large hospital networks and national health programs.',
 
     // Platform
@@ -50,7 +50,7 @@ return [
     'stats_eyebrow'      => 'The OPES Ecosystem',
     'stat_0_label'       => 'Integrated Software Systems',
     'stat_1_label'       => 'Fully Bilingual',
-    'stat_2_label'       => 'Regional Coverage',
+    'stat_2_label'       => 'Target markets',
     'stat_3_label'       => 'Interoperability Standard',
 
     // Values
@@ -70,7 +70,7 @@ return [
 
     // CTA
     'cta_title'          => 'Work with us',
-    'cta_body'           => 'We work with healthcare facilities, government partners, and NGOs who share our vision for a connected digital health ecosystem across Cameroon and Africa.',
+    'cta_body'           => 'We welcome healthcare facilities, governments, universities, research organizations and technology partners in Cameroon, across Africa and worldwide. Each collaboration is scoped to local needs, governance and applicable requirements.',
     'cta_contact'        => 'Get in Touch',
     'cta_partnership'    => 'Partnership Opportunities',
 ];

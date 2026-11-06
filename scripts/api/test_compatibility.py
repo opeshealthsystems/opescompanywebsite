@@ -21,6 +21,20 @@ class CompatibilityTests(unittest.TestCase):
         self.current["paths"]["/new-resource"] = {"get": {"responses": {"200": {"description": "Example"}}}}
         self.assertEqual([], check(self.baseline, self.current))
 
+    def test_versioned_additive_request_correction_expires_after_introduction(self):
+        old = copy.deepcopy(self.baseline)
+        old["components"]["schemas"]["EnquiryInput"]["properties"]["quote_option"] = {"type": "string"}
+        old["info"]["version"] = "0.108.0"
+        current = copy.deepcopy(old)
+        current["info"]["version"] = "0.109.0"
+        current["components"]["schemas"]["EnquiryInput"]["properties"]["integration_application"] = {"type": "object", "properties": {"application_name": {"type": "string"}}}
+        correction = {"method": "POST", "path": "/enquiries", "introduced_in": "0.109.0", "allow_additive_request_schema": True, "reason": "Add a typed optional access request."}
+        self.assertEqual([], check(old, current, [correction]))
+        released = copy.deepcopy(current)
+        next_release = copy.deepcopy(released)
+        next_release["info"]["version"] = "0.110.0"
+        self.assertEqual([], check(released, next_release, [correction]))
+
     def test_removed_operation_is_rejected(self):
         del self.current["paths"]["/enquiries"]
         self.assertTrue(check(self.baseline, self.current))
@@ -45,6 +59,22 @@ class CompatibilityTests(unittest.TestCase):
         scopes = self.current["components"]["securitySchemes"]["OAuth2"]["flows"]["clientCredentials"]["scopes"]
         scopes["publishing:read"] = "Read published business content"
         self.assertEqual([], check(self.baseline, self.current))
+
+    def test_additive_success_response_header_is_backward_compatible(self):
+        response = self.current["paths"]["/catalogue/products"]["get"]["responses"]["200"]
+        response.setdefault("headers", {})["Idempotency-Replayed"] = {"schema": {"type": "string", "const": "true"}}
+        self.assertEqual([], check(self.baseline, self.current))
+
+    def test_changed_or_removed_released_response_header_is_rejected(self):
+        response = self.baseline["paths"]["/catalogue/products"]["get"]["responses"]["200"]
+        response["headers"] = {"X-Request-ID": {"schema": {"type": "string"}}}
+        self.current = copy.deepcopy(self.baseline)
+        self.current["paths"]["/catalogue/products"]["get"]["responses"]["200"]["headers"] = {
+            "X-Request-ID": {"schema": {"type": "integer"}},
+        }
+        self.assertTrue(check(self.baseline, self.current))
+        self.current["paths"]["/catalogue/products"]["get"]["responses"]["200"]["headers"] = {}
+        self.assertTrue(check(self.baseline, self.current))
 
     def test_removing_a_released_oauth_scope_is_rejected(self):
         scopes = self.current["components"]["securitySchemes"]["OAuth2"]["flows"]["clientCredentials"]["scopes"]

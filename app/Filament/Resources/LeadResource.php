@@ -19,7 +19,7 @@ class LeadResource extends Resource
     protected static ?string $model = Lead::class;
     protected static ?string $navigationIcon = 'heroicon-o-inbox';
     protected static ?string $navigationGroup = 'CRM';
-    protected static ?string $navigationLabel = 'Demo Requests';
+    protected static ?string $navigationLabel = 'Enquiries & Integration Requests';
     protected static ?int $navigationSort = 1;
 
     public static function canAccess(): bool
@@ -41,13 +41,19 @@ class LeadResource extends Resource
                     'pharmacy'    => 'Pharmacy',
                     'government'  => 'Government / Ministry',
                     'ngo'         => 'NGO / International',
+                    'API integration' => 'API integration',
                     'other'       => 'Other',
-                ]),
+                ])->disabled(fn (?Lead $record) => $record?->source === 'integration-request')
+                    ->dehydrated(fn (?Lead $record) => $record?->source !== 'integration-request'),
             ])->columns(2),
 
             Forms\Components\Section::make('Inquiry')->schema([
                 Forms\Components\TextInput::make('products')->label('Products of interest')->maxLength(255),
                 Forms\Components\Textarea::make('message')->rows(4)->columnSpanFull(),
+                Forms\Components\Placeholder::make('integration_application.application_name')->label('Integration application')->content(fn (?Lead $record) => data_get($record?->integration_application, 'application_name', '—')),
+                Forms\Components\Placeholder::make('integration_application.access_type')->label('Requested access')->content(fn (?Lead $record) => data_get($record?->integration_application, 'access_type', '—')),
+                Forms\Components\Placeholder::make('integration_application.redirect_uri')->label('OAuth callback')->content(fn (?Lead $record) => data_get($record?->integration_application, 'redirect_uri', '—')),
+                Forms\Components\Placeholder::make('integration_application.requested_scopes')->label('Requested scopes')->content(fn (?Lead $record) => implode(', ', data_get($record?->integration_application, 'requested_scopes', []))),
             ]),
 
             Forms\Components\Section::make('Meta')->schema([
@@ -57,11 +63,7 @@ class LeadResource extends Resource
                     'qualified' => 'Qualified',
                     'closed'    => 'Closed / Won',
                 ])->required(),
-                Forms\Components\Select::make('source')->options([
-                    'contact'      => 'Contact page',
-                    'product-page' => 'Product page',
-                    'demo'         => 'Demo CTA',
-                ]),
+                Forms\Components\Placeholder::make('source')->label('Source')->content(fn (?Lead $record) => $record?->source ?? 'Created in admin'),
                 Forms\Components\TextInput::make('product_slug')->label('Product slug'),
                 Forms\Components\TextInput::make('locale')->label('Language'),
             ])->columns(2),
@@ -119,11 +121,16 @@ class LeadResource extends Resource
                             'contact'      => 'Contact page',
                             'product-page' => 'Product page',
                             'demo'         => 'Demo CTA',
+                            'integration-request' => 'Developer access request',
                             default        => $state ?? '—',
                         }),
                     Infolists\Components\TextEntry::make('product_slug')->label('Product')->placeholder('—'),
                     Infolists\Components\TextEntry::make('locale')->label('Language')->badge()->placeholder('—'),
                     Infolists\Components\TextEntry::make('message')->placeholder('No message provided')->columnSpanFull(),
+                    Infolists\Components\TextEntry::make('integration_application.application_name')->label('Application')->placeholder('—'),
+                    Infolists\Components\TextEntry::make('integration_application.access_type')->label('Requested access')->badge()->placeholder('—'),
+                    Infolists\Components\TextEntry::make('integration_application.redirect_uri')->label('OAuth callback')->copyable()->placeholder('—')->columnSpanFull(),
+                    Infolists\Components\TextEntry::make('integration_application.requested_scopes')->label('Requested scopes')->formatStateUsing(fn ($state) => is_array($state) ? implode(', ', $state) : '—')->placeholder('—')->columnSpanFull(),
                     Infolists\Components\TextEntry::make('created_at')->label('Received')->dateTime('d M Y H:i'),
                     Infolists\Components\TextEntry::make('updated_at')->label('Last Updated')->dateTime('d M Y H:i'),
                 ]),
@@ -166,6 +173,11 @@ class LeadResource extends Resource
                     'pharmacy'   => 'Pharmacy',
                     'government' => 'Government',
                     'ngo'        => 'NGO',
+                    'API integration' => 'API integration',
+                ]),
+                Tables\Filters\SelectFilter::make('source')->options([
+                    'contact' => 'Contact page', 'product-page' => 'Product page', 'demo' => 'Demo CTA',
+                    'integration-request' => 'Developer access request',
                 ]),
             ])
             ->actions([

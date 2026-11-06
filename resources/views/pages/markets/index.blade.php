@@ -1,23 +1,23 @@
 @php $locale = app()->getLocale(); $isFr = $locale === 'fr'; @endphp
 
 <x-layouts.app
-    title="{{ $isFr ? 'Marchés CEMAC — Logiciel hospitalier par pays' : 'CEMAC Markets — Hospital Software by Country' }}"
-    description="{{ $isFr ? 'OPES Health Systems à travers la CEMAC : pages dédiées par pays — Gabon, Congo, Tchad, RCA et Guinée équatoriale — avec le contexte local et la facturation adaptée.' : 'OPES Health Systems across CEMAC: dedicated country pages — Gabon, Congo, Chad, CAR and Equatorial Guinea — with local context and payer-ready billing.' }}">
+    title="{{ $isFr ? 'Guides pays CEMAC et projets de santé en Afrique | OPES' : 'CEMAC Country Guides and African Health Projects | OPES' }}"
+    description="{{ $isFr ? 'Guides pays initiaux pour le Cameroun et la CEMAC. OPES Health Systems accueille aussi des projets de santé dans toute l’Afrique et des partenariats internationaux, selon le contexte local.' : 'Initial country guides for Cameroon and CEMAC. OPES Health Systems also welcomes health projects across Africa and international partnerships, scoped to local context.' }}">
 
 {{-- ── HERO ─────────────────────────────────────────────────────── --}}
 <div class="about-hero">
     <div class="section-label" style="justify-content:center;margin-bottom:16px">
         <i data-lucide="globe" style="width:12px;height:12px"></i>
-        {{ $isFr ? 'Couverture régionale CEMAC' : 'CEMAC regional coverage' }}
+        {{ $isFr ? 'Guides pays · Point de départ : Cameroun et CEMAC' : 'Country guides · Starting with Cameroon and CEMAC' }}
     </div>
     <h1 class="about-title">
-        {{ $isFr ? 'Solutions hospitalières par' : 'Hospital solutions across' }}
-        <span class="gradient-text">{{ $isFr ? 'pays CEMAC' : 'CEMAC' }}</span>
+        {{ $isFr ? 'Des solutions de santé pour' : 'Health solutions for' }}
+        <span class="gradient-text">{{ $isFr ? 'l’Afrique et au-delà' : 'Africa and beyond' }}</span>
     </h1>
     <p class="about-sub" style="max-width:740px">
         {{ $isFr
-            ? 'OPES Health Systems est conçu pour le Cameroun et l\'ensemble de la zone CEMAC. Chaque marché a ses payeurs, ses langues et ses réalités d\'infrastructure — voici comment OPES s\'adapte, pays par pays.'
-            : 'OPES Health Systems is built for Cameroon and the wider CEMAC zone. Every market has its own payers, languages, and infrastructure realities — here is how OPES fits, country by country.' }}
+            ? 'Le Cameroun est notre point de départ et les pages ci-dessous sont nos premiers guides pays CEMAC. Notre marché cible est l’Afrique dans son ensemble, avec des partenariats possibles dans le monde entier. Chaque projet est défini selon les langues, les règles, les priorités et les réalités d’infrastructure locales.'
+            : 'Cameroon is our starting point, and the pages below are our initial CEMAC country guides. Our target market is Africa as a whole, with partnership opportunities worldwide. Each project is scoped to local languages, rules, priorities and infrastructure realities.' }}
     </p>
 </div>
 
@@ -65,12 +65,20 @@
     </div>
 </div>
 
+<div class="section" style="max-width:960px;margin:0 auto">
+    <div style="padding:24px;background:var(--surface);border:1px solid #29445e;border-radius:14px">
+        <div class="section-label" style="margin-bottom:10px"><i data-lucide="globe-2" style="width:12px;height:12px"></i>{{ $isFr ? 'Au-delà des guides CEMAC' : 'Beyond the CEMAC guides' }}</div>
+        <h2 style="margin:0 0 10px;color:#eaf2f8;font-size:clamp(1.2rem,2.6vw,1.6rem)">{{ $isFr ? 'Afrique entière. Collaboration internationale.' : 'Across Africa. Open to global collaboration.' }}</h2>
+        <p style="margin:0;color:var(--text-muted);line-height:1.7">{{ $isFr ? 'Nous invitons les gouvernements, établissements de santé, universités, organismes de recherche et partenaires technologiques de tous les pays africains et d’autres régions du monde à nous présenter leurs besoins. La disponibilité, la conformité, les intégrations et le déploiement sont évalués pour chaque pays et chaque projet.' : 'We invite governments, health organizations, universities, research institutions and technology partners in every African country and other regions to discuss their needs. Availability, compliance, integrations and deployment are assessed for each country and project.' }}</p>
+    </div>
+</div>
+
 {{-- ── CTA ──────────────────────────────────────────────────────── --}}
 <div class="demo-section">
-    <h2>{{ $isFr ? 'Un projet dans la zone CEMAC ?' : 'A project in the CEMAC zone?' }}</h2>
+    <h2>{{ $isFr ? 'Un projet de santé au Cameroun, en Afrique ou ailleurs ?' : 'A health project in Cameroon, Africa or elsewhere?' }}</h2>
     <p>{{ $isFr
-        ? 'Notre équipe peut adapter une démonstration à votre pays, vos payeurs et votre contexte d\'infrastructure.'
-        : 'Our team can tailor a demonstration to your country, your payers, and your infrastructure context.' }}</p>
+        ? 'Présentez-nous votre pays, vos objectifs et votre contexte. Nous discuterons de l’adéquation, des exigences locales et des prochaines étapes.'
+        : 'Tell us about your country, goals and operating context. We will discuss fit, local requirements and possible next steps.' }}</p>
     <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:12px">
         <a href="{{ url($locale.'/book-demo') }}" class="btn-primary">
             {{ $isFr ? 'Demander une démo' : 'Book a demo' }}

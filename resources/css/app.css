@@ -1830,7 +1830,7 @@ h1, h2, h3, h4, h5 { font-family: 'Plus Jakarta Sans', sans-serif; }
 }
 .nav-toggle-close { display: none; }
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
     .site-nav { padding: 0 18px; }
     .nav-toggle { display: inline-flex; }
     .nav-logo-tagline { display: none; }

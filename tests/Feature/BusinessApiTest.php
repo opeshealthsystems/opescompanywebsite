@@ -2,10 +2,12 @@
 
 namespace Tests\Feature;
 
-use App\Models\{User, Ticket, EmailTemplate};
+use App\Models\{User, Ticket, EmailTemplate, Lead, PayrollRun, PayrollEntry};
+use App\Models\WebsiteFormDelivery;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\{Mail, Notification};
 use Laravel\Passport\{ClientRepository, Passport};
+use App\Services\WebsiteFormMailer;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
@@ -66,6 +68,83 @@ class BusinessApiTest extends TestCase
     public function test_missing_token_never_uses_browser_session(): void
     {
         $this->actingAs($this->user('customer'))->getJson('/api/v1/customer/tickets')->assertUnauthorized();
+    }
+
+    public function test_delegated_usage_requires_identity_scope_and_returns_only_own_daily_totals(): void
+    {
+        $user = $this->user('customer');
+        $headers = ['Authorization' => 'Bearer '.$this->access($user, ['identity:read'])];
+        $clientId = \Illuminate\Support\Facades\DB::table('oauth_access_tokens')->where('user_id', $user->id)->value('client_id');
+        $today = now('UTC')->toDateString();
+        \Illuminate\Support\Facades\DB::table('api_user_usage')->insert([
+            ['client_id' => $clientId, 'user_id' => $user->id, 'usage_date' => $today, 'requests' => 7],
+            ['client_id' => $clientId, 'user_id' => $this->user('customer')->id, 'usage_date' => $today, 'requests' => 11],
+            ['client_id' => (string) \Illuminate\Support\Str::uuid(), 'user_id' => $user->id, 'usage_date' => $today, 'requests' => 13],
+        ]);
+        $response = $this->getJson('/api/v1/me/usage', $headers)->assertOk();
+        $response->assertJsonPath('data.requests_today', 8);
+        $this->assertSame(8, $response->json('data.requests_last_30_days'));
+        $this->assertCount(30, $response->json('data.daily_usage'));
+        $this->assertDatabaseCount('api_user_usage', 3);
+    }
+
+    public function test_machine_client_quota_admin_api_is_scoped_and_idempotent(): void
+    {
+        $admin = $this->user('admin');
+        $machine = app(ClientRepository::class)->createClientCredentialsGrantClient('Fictional quota integration');
+        $machine->owner()->associate($admin);
+        $machine->scopes = ['integration:read'];
+        $machine->save();
+
+        $token = $this->access($admin, ['api-clients:read', 'api-clients:manage']);
+        $headers = ['Authorization' => 'Bearer '.$token];
+        $path = '/api/v1/admin/api-clients/'.$machine->id.'/quota';
+        $this->getJson($path, $headers)->assertOk()
+            ->assertJsonPath('data.quota.daily_limit', null)
+            ->assertJsonPath('data.quota.monthly_limit', null);
+
+        $body = ['daily_request_limit' => 100, 'monthly_request_limit' => 2000];
+        $headers['Idempotency-Key'] = 'machine-quota-limit-0001';
+        $first = $this->patchJson($path, $body, $headers)->assertOk()
+            ->assertJsonPath('data.daily_request_limit', 100)
+            ->assertJsonPath('data.monthly_request_limit', 2000);
+        $this->patchJson($path, $body, $headers)->assertOk()->assertExactJson($first->json());
+        $this->patchJson($path, ['daily_request_limit' => 101, 'monthly_request_limit' => 2000], $headers)->assertConflict();
+        $this->getJson($path, $headers)->assertOk()
+            ->assertJsonPath('data.quota.daily_limit', 100)
+            ->assertJsonPath('data.quota.monthly_limit', 2000);
+        $this->getJson($path)->assertUnauthorized();
+    }
+
+    public function test_delegated_usage_requires_identity_read_scope(): void
+    {
+        $headers = ['Authorization' => 'Bearer '.$this->access($this->user('customer'), ['customer:read'])];
+        $this->getJson('/api/v1/me/usage', $headers)->assertForbidden();
+    }
+
+    public function test_administrator_can_filter_and_inspect_structured_integration_requests(): void
+    {
+        $admin = $this->user('admin');
+        $token = $this->access($admin, ['enquiries:read']);
+        $headers = ['Authorization' => 'Bearer '.$token];
+        $lead = Lead::create([
+            'name' => 'Fictional developer', 'email' => 'developer@example.test',
+            'facility_type' => 'API integration', 'source' => 'integration-request',
+            'message' => 'A fictional, non-clinical use case.', 'integration_application' => [
+                'application_name' => 'Fictional scheduling client', 'access_type' => 'delegated',
+                'redirect_uri' => 'https://client.example/callback', 'requested_scopes' => ['crm:read'],
+                'use_case' => 'Allow staff to view their own non-clinical schedule.',
+            ],
+        ]);
+
+        $this->getJson('/api/v1/admin/enquiries/integration-requests', $headers)
+            ->assertOk()->assertJsonPath('data.pagination.total', 1)
+            ->assertJsonPath('data.items.0.application.name', 'Fictional scheduling client');
+        $this->getJson('/api/v1/admin/enquiries/integration-requests/'.$lead->id, $headers)
+            ->assertOk()->assertJsonPath('data.integration_request.application.access_type', 'delegated')
+            ->assertJsonPath('data.integration_request.application.requested_scopes.0', 'crm:read');
+        $this->getJson('/api/v1/admin/enquiries/integration-requests')
+            ->assertUnauthorized();
     }
 
     public function test_commands_require_keys_replay_once_and_reject_changed_payloads(): void
@@ -184,6 +263,37 @@ class BusinessApiTest extends TestCase
         $customer = $this->user('customer');
         $customerToken = $this->access($customer, ['customer:read']);
         $this->getJson('/api/v1/communications/email-templates', ['Authorization' => 'Bearer '.$customerToken])->assertForbidden();
+    }
+
+    public function test_admin_delivery_api_lists_safe_metadata_and_confirms_received_idempotently(): void
+    {
+        $lead = Lead::create(['name' => 'Fictional delivery contact', 'email' => 'delivery@example.test', 'message' => 'Test-only message']);
+        $delivery = app(WebsiteFormMailer::class)->ensure($lead);
+        $delivery->update(['status' => 'uncertain', 'error_type' => 'transport_exception']);
+        $admin = $this->user('admin');
+        $token = $this->access($admin, ['enquiries:read', 'enquiries:write']);
+        $headers = ['Authorization' => 'Bearer '.$token];
+
+        $this->getJson('/api/v1/admin/enquiries/deliveries?status=uncertain', $headers)
+            ->assertOk()->assertJsonPath('data.items.0.event_id', $delivery->event_id)
+            ->assertJsonPath('data.items.0.status', 'uncertain')
+            ->assertJsonMissingPath('data.items.0.message')
+            ->assertDontSee('delivery@example.test');
+        $this->getJson('/api/v1/admin/enquiries/deliveries/'.$delivery->event_id, $headers)
+            ->assertOk()->assertJsonPath('data.delivery.event_id', $delivery->event_id);
+
+        $body = ['confirmed_received' => true];
+        $this->postJson('/api/v1/admin/enquiries/deliveries/'.$delivery->event_id.'/resolve', $body, $headers)
+            ->assertUnprocessable();
+        $headers['Idempotency-Key'] = 'delivery-confirmed-000001';
+        $first = $this->postJson('/api/v1/admin/enquiries/deliveries/'.$delivery->event_id.'/resolve', $body, $headers)
+            ->assertOk()->assertJsonPath('data.status', 'sent');
+        $this->postJson('/api/v1/admin/enquiries/deliveries/'.$delivery->event_id.'/resolve', $body, $headers)
+            ->assertOk()->assertExactJson($first->json());
+        $this->assertSame('sent', $delivery->fresh()->status);
+        $this->assertNull($delivery->fresh()->claim_token);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'enquiries.website_form_delivery_confirmed_received.v1']);
+        Mail::assertNothingSent();
     }
 
     public function test_blog_post_api_sanitizes_content_and_shares_publish_lifecycle_with_filament(): void
@@ -575,6 +685,32 @@ class BusinessApiTest extends TestCase
         $this->postJson('/api/v1/admin/users', $body, ['Idempotency-Key' => 'identity-user-anon-001'])->assertUnauthorized();
     }
 
+    public function test_admin_can_inspect_only_machine_client_usage_for_support(): void
+    {
+        $admin = $this->user('admin');
+        $machine = app(ClientRepository::class)->createClientCredentialsGrantClient('Fictional usage test integration');
+        $machine->scopes = ['integration:read'];
+        $machine->save();
+        $today = now('UTC')->toDateString();
+        $yesterday = now('UTC')->subDay()->toDateString();
+        \Illuminate\Support\Facades\DB::table('api_client_usage')->insert([
+            ['client_id' => $machine->id, 'usage_date' => $today, 'requests' => 12],
+            ['client_id' => $machine->id, 'usage_date' => $yesterday, 'requests' => 8],
+        ]);
+
+        $token = $this->access($admin, ['api-clients:read']);
+        $headers = ['Authorization' => 'Bearer '.$token];
+        $this->getJson('/api/v1/admin/api-clients/'.$machine->id.'/usage', $headers)
+            ->assertOk()
+            ->assertJsonPath('data.client.client_id', (string) $machine->id)
+            ->assertJsonPath('data.client.name', 'Fictional usage test integration')
+            ->assertJsonPath('data.usage.requests_today', 12)
+            ->assertJsonPath('data.usage.requests_last_30_days', 20)
+            ->assertJsonPath('data.usage.daily_usage.29.requests', 12)
+            ->assertDontSee('client_secret');
+        $this->getJson('/api/v1/admin/api-clients/'.$machine->id.'/usage')->assertUnauthorized();
+    }
+
     public function test_asset_lifecycle_is_api_backed_and_server_generates_references(): void
     {
         $admin = $this->user('admin');
@@ -707,6 +843,29 @@ class BusinessApiTest extends TestCase
         $this->postJson('/api/v1/finance/payroll-runs/'.$run->id.'/entries/'.$entry->id.'/mark-paid', [], $headers)->assertOk();
         $this->assertSame('paid', $entry->fresh()->status);
         $this->assertDatabaseHas('business_outbox', ['type' => 'finance.payroll_completed.v1', 'actor_id' => $admin->id]);
+    }
+
+    public function test_payroll_run_detail_returns_allowlisted_totals_through_scoped_api(): void
+    {
+        $admin = $this->user('admin');
+        $run = PayrollRun::create([
+            'reference' => 'PAY-'.now()->year.'-DETAIL01', 'period_start' => today()->startOfMonth(), 'period_end' => today(),
+            'status' => 'processing', 'total_gross' => 250000, 'total_net' => 249000, 'currency' => 'XAF', 'processed_by' => $admin->id,
+        ]);
+        PayrollEntry::create([
+            'payroll_run_id' => $run->id, 'user_id' => $admin->id, 'gross_salary' => 250000,
+            'deductions' => ['tax' => 1000], 'total_deductions' => 1000, 'net_salary' => 249000, 'currency' => 'XAF', 'status' => 'pending',
+        ]);
+        $headers = ['Authorization' => 'Bearer '.$this->access($admin, ['finance:read'])];
+
+        $this->getJson('/api/v1/finance/payroll-runs/'.$run->id, $headers)->assertOk()
+            ->assertJsonPath('data.run.reference', $run->reference)
+            ->assertJsonPath('data.run.total_deductions', 1000)
+            ->assertJsonPath('data.run.processor_name', $admin->name)
+            ->assertJsonMissingPath('data.run.deductions')
+            ->assertJsonMissingPath('data.run.client_secret');
+        $this->getJson('/api/v1/finance/payroll-runs/'.$run->id)->assertUnauthorized();
+        $this->getJson('/api/v1/finance/payroll-runs/999999', $headers)->assertNotFound();
     }
 
     public function test_contract_transitions_are_shared_guarded_and_replay_safe(): void

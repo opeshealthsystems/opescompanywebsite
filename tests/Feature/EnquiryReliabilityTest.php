@@ -6,6 +6,7 @@ use App\Contexts\Enquiries\Application\SubmitEnquiry;
 use App\Mail\WebsiteSubmissionReceived;
 use App\Models\ApiIdempotencyRecord;
 use App\Models\Lead;
+use App\Models\User;
 use App\Models\WebsiteFormDelivery;
 use App\Services\WebsiteFormMailer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -19,6 +20,7 @@ use Tests\TestCase;
 class EnquiryReliabilityTest extends TestCase
 {
     use RefreshDatabase;
+
 
     private const INPUT = ['name' => 'Reliability test', 'email' => 'fictional@example.test', 'message' => 'A fictional enquiry'];
     private const KEY = 'fictional-enquiry-key-123456';
@@ -172,7 +174,9 @@ class EnquiryReliabilityTest extends TestCase
         $lead = Lead::create(self::INPUT);
         $row = app(WebsiteFormMailer::class)->ensure($lead);
         $row->update(['status' => 'uncertain']);
-        $this->artisan('website-forms:resolve', ['event' => $row->event_id, '--sent' => true])->assertSuccessful();
+        $admin = User::factory()->create(['is_active' => true]);
+        $admin->assignRole('admin');
+        $this->artisan('website-forms:resolve', ['event' => $row->event_id, '--owner' => $admin->email, '--sent' => true])->assertSuccessful();
         $this->assertSame('already-sent', app(WebsiteFormMailer::class)->deliver($lead));
         Mail::assertNothingSent();
     }
@@ -218,6 +222,58 @@ class EnquiryReliabilityTest extends TestCase
         $this->submit(key: 'another-fictional-key-123456')->assertCreated();
         $this->assertDatabaseCount('leads', 2);
         Mail::assertSent(WebsiteSubmissionReceived::class, 2);
+    }
+
+    public function test_developer_access_request_is_typed_reviewable_and_idempotent(): void
+    {
+        $payload = [
+            'name' => 'Integration applicant',
+            'email' => 'developer@example.test',
+            'integration_application' => [
+                'application_name' => 'Clinic scheduling',
+                'access_type' => 'delegated',
+                'redirect_uri' => 'https://clinic.example/callback',
+                'requested_scopes' => ['crm:read'],
+                'use_case' => 'Allow clinic staff to review their licensed OHS services.',
+            ],
+        ];
+
+        $first = $this->submit($payload, 'developer-access-request-key-1234')
+            ->assertCreated()->assertJsonPath('data.status', 'recorded');
+        $this->submit($payload, 'developer-access-request-key-1234')
+            ->assertCreated()->assertHeader('Idempotency-Replayed', 'true')->assertExactJson($first->json());
+
+        $lead = Lead::query()->where('source', 'integration-request')->firstOrFail();
+        $this->assertSame('integration-request', $lead->source);
+        $this->assertSame('API integration', $lead->facility_type);
+        $this->assertSame('Clinic scheduling', $lead->integration_application['application_name']);
+        $this->assertSame(['crm:read'], $lead->integration_application['requested_scopes']);
+        $this->assertSame('Allow clinic staff to review their licensed OHS services.', $lead->message);
+        $this->assertDatabaseCount('leads', 1);
+        Mail::assertSent(WebsiteSubmissionReceived::class, 1);
+    }
+
+    public function test_developer_access_requests_reject_insecure_callbacks_and_machine_business_scopes(): void
+    {
+        $delegated = [
+            'application_name' => 'Clinic scheduler', 'access_type' => 'delegated',
+            'redirect_uri' => 'http://clinic.example/callback', 'requested_scopes' => ['crm:read'],
+            'use_case' => 'Allow clinic staff to review their licensed OHS services.',
+        ];
+        $this->submit(['name' => 'Applicant', 'email' => 'developer@example.test', 'integration_application' => $delegated], 'insecure-callback-key-123456')
+            ->assertStatus(422);
+
+        $machine = [
+            'application_name' => 'Server integration', 'access_type' => 'machine',
+            'requested_scopes' => ['crm:read'],
+            'use_case' => 'Read only public catalogue metadata for a server integration.',
+        ];
+        $this->submit(['name' => 'Applicant', 'email' => 'developer@example.test', 'integration_application' => $machine], 'machine-scope-rejected-key-1234')
+            ->assertStatus(422);
+
+        $this->assertDatabaseCount('leads', 0);
+        $this->assertDatabaseCount('api_idempotency_records', 0);
+        Mail::assertNothingSent();
     }
 
     public function test_other_public_forms_rollback_when_intent_cannot_be_saved(): void

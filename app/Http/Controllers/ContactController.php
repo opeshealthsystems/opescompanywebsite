@@ -19,11 +19,17 @@ class ContactController extends Controller
         $productQuoteOptions = $product
             ? \App\Contexts\Enquiries\Application\PricingQuoteSelection::forProduct($product['slug'], app()->getLocale())
             : [];
+        $service = is_string($request->query('service'))
+            ? collect(config('service_offerings', []))->firstWhere('id', $request->query('service'))
+            : null;
+        $serviceInterest = $service
+            ? ($service[app()->getLocale() === 'fr' ? 'name_fr' : 'name'] ?? null)
+            : null;
         if ($product && $quoteSelection && !in_array($quoteSelection['key'], array_column($productQuoteOptions, 'key'), true)) {
             $quoteSelection = null;
         }
 
-        return view('pages.contact', compact('quoteSelection', 'product', 'productQuoteOptions'));
+        return view('pages.contact', compact('quoteSelection', 'product', 'productQuoteOptions', 'serviceInterest'));
     }
 
     public function submit(Request $request)

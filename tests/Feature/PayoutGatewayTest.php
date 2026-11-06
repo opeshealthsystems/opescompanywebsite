@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Services\Payouts\ManualPayoutGateway;
 use App\Services\Payouts\MtnMomoPayoutGateway;
 use App\Services\Payouts\PayoutGateway;
+use App\Contexts\Programmes\Application\Commands\PayoutLifecycleCommands;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -42,11 +43,16 @@ class PayoutGatewayTest extends TestCase
     public function test_manual_gateway_settles_payout_on_the_application(): void
     {
         $application = $this->paidApplication();
+        $application->update(['payout_amount' => 50000, 'payout_currency' => 'XAF', 'payout_reference' => 'MOMO-9001',
+            'payout_provider' => 'manual', 'payout_initiated_at' => now()]);
 
         $result = (new ManualPayoutGateway())->disburse($application, 50000, 'XAF', ['reference' => 'MOMO-9001']);
 
         $this->assertTrue($result->success);
         $this->assertSame('paid', $result->status);
+
+        // Production dispatch records settlement through the shared lifecycle handler.
+        app(PayoutLifecycleCommands::class)->markPaid($application->id);
 
         $fresh = $application->fresh();
         $this->assertSame('paid', $fresh->payout_status);

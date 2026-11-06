@@ -44,4 +44,22 @@ final class AdminApiClientQueries extends WorkflowHandler
             'total' => $page->total(), 'last_page' => $page->lastPage(),
         ]]);
     }
+
+    public function usage(WorkflowInput $input, string $clientId): WorkflowResult
+    {
+        $this->admin($input);
+        $client = Passport::client()->newQuery()->whereKey($clientId)
+            ->where('grant_types', 'like', '%client_credentials%')->firstOrFail();
+        $usage = app(MachineIntegrationUsageQueries::class)->execute($client)->data;
+
+        return WorkflowResult::payload([
+            'client' => [
+                'client_id' => (string) $client->getKey(),
+                'name' => $client->name,
+                'revoked' => (bool) $client->revoked,
+                'scopes' => array_values(array_intersect($client->scopes ?? [], ['catalogue:read', 'integration:read'])),
+            ],
+            'usage' => $usage,
+        ]);
+    }
 }
