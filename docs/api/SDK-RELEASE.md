@@ -1,3 +1,7 @@
+## SDK 0.152.0 — accountant dashboard (6 November 2026)
+
+Types accountant dashboard finance totals, the latest completed payroll run, and up to five overdue and recently paid invoice summaries. Invoice resource fields follow the existing accountant-visible serialization and calculations are unchanged. OpenAPI is 0.139.0. This downloadable preview remains unpublished to npm. Archive size is 52355 bytes; SHA-256 is `ff8633ea8f21f1d6442a6fbaeb994c9960842271a037d0c72e62357ba93f1162`.
+
 ## SDK 0.151.0 — accountant finance reads (6 November 2026)
 
 Types the accountant expense register and payroll-run detail, including pagination, department totals and bounded employee summaries. Payroll detail now maps grouped query rows and loaded employees into an explicit API response projection. Salary values retain decimal string precision. OpenAPI is 0.138.0. This downloadable preview remains unpublished to npm. Archive size is 52161 bytes; SHA-256 is `db48348086f52ad196841c3d2eff11b327e6f8e91276c8146bd6d675dab77a6d`.

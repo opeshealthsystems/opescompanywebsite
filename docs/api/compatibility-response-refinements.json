@@ -1,6 +1,12 @@
 [
   {
     "method": "GET",
+    "path": "/accountant/dashboard",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing accountant dashboard totals, latest payroll run and bounded five-item invoice summaries without changing calculations or visibility."
+  },
+  {
+    "method": "GET",
     "path": "/accountant/expenses",
     "allow_response_schema_refinement": true,
     "reason": "Documents the existing paginated expense projection and bounded submitter/approver identifiers returned by the accountant expense query."

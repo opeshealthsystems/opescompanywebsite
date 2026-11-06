@@ -2622,7 +2622,35 @@ $accountantPayrollShow['responses']['200']['content']['application/json']['schem
     'run' => $accountantPayrollRun, 'by_dept' => ['type' => 'array', 'items' => $accountantDepartmentTotal],
     'entries' => ['type' => 'object', 'required' => ['items', 'meta'], 'properties' => ['items' => ['type' => 'array', 'items' => $accountantPayrollEntry], 'meta' => $accountantPagination]],
 ]], 'accountant.payrollcontroller.show');
-unset($accountantPayrollShow, $accountantPagination, $accountantExpense, $accountantPayrollRun, $accountantDepartmentTotal, $accountantPayrollEntry);
+unset($accountantPayrollShow, $accountantPagination, $accountantExpense, $accountantDepartmentTotal, $accountantPayrollEntry);
+$accountantDashboardAmount = ['type' => ['number', 'string']];
+$accountantInvoiceSummary = ['type' => 'object', 'required' => ['id', 'status', 'currency', 'grand_total', 'amount_paid', 'amount_outstanding', 'customer'], 'properties' => [
+    'id' => ['type' => 'integer'], 'customer_id' => ['type' => ['integer', 'null']], 'issued_by' => ['type' => ['integer', 'null']],
+    'license_id' => ['type' => ['integer', 'null']], 'status' => ['type' => 'string'], 'currency' => ['type' => 'string'],
+    'tax_rate' => ['type' => ['number', 'string']], 'notes' => ['type' => ['string', 'null']],
+    'due_date' => ['type' => ['string', 'null'], 'format' => 'date'], 'paid_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'created_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'updated_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'invoice_number' => ['type' => ['string', 'null']], 'subtotal' => ['type' => ['number', 'string']],
+    'tax_amount' => ['type' => ['number', 'string']], 'grand_total' => ['type' => ['number', 'string']],
+    'amount_paid' => ['type' => ['number', 'string']], 'amount_outstanding' => ['type' => ['number', 'string']],
+    'customer' => ['type' => ['object', 'null'], 'properties' => ['id' => ['type' => 'integer'], 'name' => ['type' => 'string']], 'additionalProperties' => true],
+]];
+$accountantDashboardPayrollRun = ['type' => 'object', 'required' => ['id', 'reference', 'period_start', 'period_end', 'status', 'total_gross', 'total_net', 'currency', 'processed_by', 'completed_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'reference' => ['type' => 'string'], 'period_start' => ['type' => 'string', 'format' => 'date'],
+    'period_end' => ['type' => 'string', 'format' => 'date'], 'status' => ['type' => 'string', 'enum' => ['draft', 'processing', 'completed', 'cancelled']],
+    'total_gross' => ['type' => 'string'], 'total_net' => ['type' => 'string'], 'currency' => ['type' => 'string'],
+    'notes' => ['type' => ['string', 'null']], 'processed_by' => ['type' => ['integer', 'null']], 'completed_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'created_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'updated_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+]];
+$accountantDashboard = &$spec['paths']['/accountant/dashboard']['get'];
+$accountantDashboard['responses']['200']['description'] = 'Returns accountant finance totals, the latest completed payroll run, up to five overdue invoices and up to five recently paid invoices. Invoice fields follow the existing accountant-visible invoice resource projection.';
+$accountantDashboard['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['revenue_this_month', 'outstanding', 'overdue_count', 'last_payroll', 'expenses_mtd', 'overdue_invoices', 'recent_payments'], 'properties' => [
+    'revenue_this_month' => $accountantDashboardAmount, 'outstanding' => $accountantDashboardAmount,
+    'overdue_count' => ['type' => 'integer', 'minimum' => 0], 'last_payroll' => ['oneOf' => [$accountantDashboardPayrollRun, ['type' => 'null']]],
+    'expenses_mtd' => $accountantDashboardAmount, 'overdue_invoices' => ['type' => 'array', 'maxItems' => 5, 'items' => $accountantInvoiceSummary],
+    'recent_payments' => ['type' => 'array', 'maxItems' => 5, 'items' => $accountantInvoiceSummary],
+]], 'accountant.dashboardcontroller.index');
+unset($accountantDashboard, $accountantDashboardAmount, $accountantInvoiceSummary, $accountantDashboardPayrollRun, $accountantPayrollRun);
 foreach ([
     ['/accountant/expenses/{id}/approve', 'approve', 'accountant.expensecontroller.approve', 'approved'],
     ['/accountant/expenses/{id}/reject', 'reject', 'accountant.expensecontroller.reject', 'rejected'],

@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version' => '0.138.0',
+    'version' => '0.139.0',
     'products' => [
         [
             'id' => 'public-enquiries',
@@ -93,6 +93,11 @@ return [
         ],
     ],
     'changelog' => [
+        [
+            'version' => '0.139.0',
+            'released_at' => '2026-11-06',
+            'summary' => 'Added a typed accountant dashboard response for finance totals, recent invoice summaries, and the latest payroll run.',
+        ],
         [
             'version' => '0.138.0',
             'released_at' => '2026-11-06',
