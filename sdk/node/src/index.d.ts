@@ -10,6 +10,7 @@ export interface IntegrationApplicationRequest {
 }
 export type { BusinessOperationId } from './business-operations.js';
 import type { BusinessOperationId } from './business-operations.js';
+import type { BusinessOperationRequestOptions } from './business-operations.js';
 export interface EnquiryInput {
   name: string; email: string; phone?: string | null; facility_type?: string | null;
   products?: string | null; message?: string | null; product_slug?: string | null; locale?: Locale; quote_option?: QuoteOption;
@@ -169,9 +170,8 @@ export class OpesBusinessApiClient {
     baseUrl?: string; timeoutMs?: number; fetch?: typeof globalThis.fetch;
     accessToken?: string; getAccessToken?: () => string | Promise<string>;
   });
-  request<T = unknown>(operationId: BusinessOperationId, options?: {
-    path?: Record<string, string | number>; query?: Record<string, string | number | boolean>;
-    body?: unknown; idempotencyKey?: string; locale?: Locale; signal?: AbortSignal;
+  request<I extends BusinessOperationId, T = unknown>(operationId: I, options: BusinessOperationRequestOptions<I> & {
+    locale?: Locale; signal?: AbortSignal;
   }): Promise<{ data: T; requestId: string | null; replayed: boolean }>;
   listDeveloperApplications(options?: { page?: number; perPage?: number }): Promise<BusinessApiResult<{
     items: DeveloperOAuthApplication[];

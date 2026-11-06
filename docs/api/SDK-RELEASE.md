@@ -1,3 +1,7 @@
+## SDK 0.116.0 — generated TypeScript request contracts (6 November 2026)
+
+The Node SDK now generates TypeScript request types for all 656 OpenAPI operations, including required path and query fields, JSON request bodies, multipart `FormData`, URL-encoded form bodies, and required idempotency keys. Runtime checks also reject missing required query fields. `URLSearchParams` requests use the contract's `application/x-www-form-urlencoded` content type. Operation response data remains `unknown` when the OpenAPI contract does not provide a response schema; this release does not claim complete typed response coverage. TypeScript 6 positive/negative compile fixtures and the Node runtime suite verify the request contract. The 40,079-byte package SHA-256 is `ca2f2324d34505fba99a37d5bfb78a436cd1e9e30fa2776d326a8ccc2cca78da`; matching metadata is at `/downloads/opes-api-sdk.json`. The package remains a private downloadable preview, not an npm registry release.
+
 ## SDK 0.115.0 — typed discovery helper (6 November 2026)
 
 Adds `OpesClient.discovery({ locale })` and a typed response for the public API discovery document, keeping this entry point unauthenticated while validating the requested English or French locale. The downloadable Node package includes `examples/discovery.mjs`. It aligns with OpenAPI 0.118.0 and is a private, unpublished server-side preview. The 26,307-byte archive SHA-256 is `062dae708d23f8fea9cd89b9a2f1e4ee5fb9a1130938b199c7b175ee9bfab9f9`, also recorded in `/downloads/opes-api-sdk.json`.

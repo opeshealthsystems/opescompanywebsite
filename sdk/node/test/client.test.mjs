@@ -194,7 +194,21 @@ test('business operation client refuses missing keys, path values and unknown qu
   await assert.rejects(client.request('admin_finance_expenses_approve', { path: { expense: 1 } }), TypeError);
   await assert.rejects(client.request('admin_finance_expenses_approve', { idempotencyKey: createIdempotencyKey() }), /Missing path parameter/);
   await assert.rejects(client.request('admin_finance_expenses_approve', { path: { expense: 1 }, idempotencyKey: createIdempotencyKey(), query: { unexpected: 'value' } }), /Unexpected query parameter/);
+  await assert.rejects(client.request('admin_resourceSummaries_metric'), /Missing query parameter: metric/);
   await assert.rejects(client.request('unknown_operation'), /Unknown OHS business operation/);
+});
+
+test('business API client serializes URL-encoded operations using their declared content type', async () => {
+  const client = new OpesBusinessApiClient({ fetch: async (url, options) => {
+    assert.equal(url, 'https://opeshealthsystems.com/api/v1/oauth/user-token');
+    assert.equal(options.method, 'POST');
+    assert.equal(options.headers['Content-Type'], 'application/x-www-form-urlencoded');
+    assert.equal(options.body, 'grant_type=authorization_code&code=sample-code');
+    return json({ access_token: 'fictional-token' });
+  } });
+  await client.request('issueDelegatedUserToken', {
+    body: new URLSearchParams({ grant_type: 'authorization_code', code: 'sample-code' }),
+  });
 });
 
 test('business API client rejects machine-client operations before requesting a delegated token', async () => {

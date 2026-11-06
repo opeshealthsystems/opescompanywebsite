@@ -155,6 +155,9 @@ export class OpesBusinessApiClient {
     const route = operation.path.replace(/\{([^}]+)\}/g, (_, name) => encodeURIComponent(String(path[name])));
     const url = new URL(this.#base + route);
     const acceptedQuery = new Set(operation.queryParameters);
+    for (const name of operation.requiredQueryParameters ?? []) {
+      if (query[name] === undefined || query[name] === null) throw new TypeError(`Missing query parameter: ${name}`);
+    }
     for (const [name, value] of Object.entries(query)) {
       if (!acceptedQuery.has(name)) throw new TypeError(`Unexpected query parameter: ${name}`);
       if (!['string', 'number', 'boolean'].includes(typeof value)) throw new TypeError(`Query parameter ${name} must be a scalar.`);
@@ -173,6 +176,10 @@ export class OpesBusinessApiClient {
     let requestBody;
     if (body !== undefined) {
       if (typeof FormData !== 'undefined' && body instanceof FormData) requestBody = body;
+      else if (typeof URLSearchParams !== 'undefined' && body instanceof URLSearchParams) {
+        headers['Content-Type'] = 'application/x-www-form-urlencoded';
+        requestBody = body.toString();
+      }
       else { headers['Content-Type'] = 'application/json'; requestBody = JSON.stringify(body); }
     }
     const requestSignal = signal ? AbortSignal.any([AbortSignal.timeout(this.#timeout), signal]) : AbortSignal.timeout(this.#timeout);
