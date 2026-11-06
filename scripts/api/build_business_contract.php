@@ -1258,6 +1258,20 @@ $customerProfileResponse = $successEnvelope(['type' => 'object', 'required' => [
 $customerProfileShow = &$spec['paths']['/customer/profile']['get'];
 $customerProfileShow['responses']['200']['content']['application/json']['schema'] = $customerProfileResponse;
 unset($customerProfileShow);
+$customerProfileUpdate = &$spec['paths']['/customer/profile']['put'];
+$customerPasswordUpdate = &$spec['paths']['/customer/profile/password']['put'];
+$customerCommandResponse = static function (string $operation): array { return [
+    'type' => 'object', 'required' => ['data', 'meta', 'messages'], 'properties' => [
+        'data' => ['type' => 'object', 'required' => ['locale'], 'properties' => ['locale' => ['type' => 'string', 'enum' => ['en', 'fr']]]],
+        'meta' => ['type' => 'object', 'required' => ['operation'], 'properties' => ['operation' => ['type' => 'string', 'const' => $operation]]],
+        'messages' => ['type' => 'object', 'required' => ['success'], 'properties' => ['success' => ['type' => 'string']]],
+    ],
+]; };
+$customerProfileUpdate['responses']['200']['description'] = 'Returns the locale and success acknowledgement after updating the authenticated customer profile.';
+$customerProfileUpdate['responses']['200']['content']['application/json']['schema'] = $customerCommandResponse('customer.profilecontroller.update');
+$customerPasswordUpdate['responses']['200']['description'] = 'Returns the locale and success acknowledgement after changing the authenticated customer password.';
+$customerPasswordUpdate['responses']['200']['content']['application/json']['schema'] = $customerCommandResponse('customer.profilecontroller.changePassword');
+unset($customerProfileUpdate, $customerPasswordUpdate, $customerCommandResponse);
 $customerDashboard = &$spec['paths']['/customer/dashboard']['get'];
 $dashboardTicket = ['type' => 'object', 'required' => ['id', 'user_id', 'assigned_to', 'subject', 'description', 'type', 'status', 'priority', 'resolution', 'resolved_at', 'closed_at', 'tester_assignment_id', 'sla_rule_id', 'sla_response_due_at', 'sla_resolution_due_at', 'created_at', 'updated_at'], 'properties' => [
     'id' => ['type' => 'integer'], 'user_id' => ['type' => ['integer', 'null']], 'assigned_to' => ['type' => ['integer', 'null']],

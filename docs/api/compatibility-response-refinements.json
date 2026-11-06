@@ -78,6 +78,18 @@
     "reason": "Documents server-scored results and correct-choice review revealed after successful submission from CourseAssessmentCommands. No request, scoring, authorization or status behavior changes."
   },
   {
+    "method": "PUT",
+    "path": "/customer/profile",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing locale and success acknowledgement returned by CustomerProfileCommands. No request validation, profile write, authorization, idempotency or status behavior changes."
+  },
+  {
+    "method": "PUT",
+    "path": "/customer/profile/password",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing locale and success acknowledgement returned by CustomerProfileCommands after password validation and update. No password, authorization, idempotency or status behavior changes."
+  },
+  {
     "method": "GET",
     "path": "/customer/dashboard",
     "allow_response_schema_refinement": true,

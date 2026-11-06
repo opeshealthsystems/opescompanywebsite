@@ -1,3 +1,6 @@
+## SDK 0.125.0 — customer profile command responses (6 November 2026)
+
+Adds typed success acknowledgements for customer facility-profile updates and password changes. The response contract documents the existing locale, operation identifier and success message; the input contract already reflects the server validation rules. No runtime behavior changes. OpenAPI remains 0.118.0. The private downloadable preview is not published to npm. Archive size is 47503 bytes; SHA-256 is `c29a542949b28091be9204b233ad191b76e4f2891aa38befdd17cbfd9b0c24e9`.
 ## SDK 0.124.0 — customer dashboard response contract (6 November 2026)
 
 Types the existing customer dashboard account, facility profile, operational counts, recent customer tickets and configured catalogue item response. Ticket fields are restricted to the allowlisted customer-safe resource. This is a schema-only refinement; response bytes and authorization are unchanged. OpenAPI remains 0.118.0. The package remains a private downloadable preview and is not published to npm. Archive size is 47491 bytes; SHA-256 is `65631561bd0611e26c499e80830ff29035bb85ac5a0545e4c2f5c6ce72164a1a`.
