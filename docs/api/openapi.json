@@ -2,7 +2,7 @@
     "openapi": "3.1.1",
     "info": {
         "title": "OHS Platform API",
-        "version": "0.119.0",
+        "version": "0.120.0",
         "description": "Versioned OHS business APIs. Public enquiries and application intake, partner and tester administration, publishing and catalogues, role-scoped operations and workforce workflows, finance registers, reports and line-item detail reads, customer facility profiles, employee and HR administration, risk and performance management, leave requests, validation, practitioner, recruitment, learning, survey and support workflows, account recovery, machine catalogue access and owner-managed public-scope machine clients, public sitemap data, protected admin reference data and resource/relationship summaries, with delegated business workflows using authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.",
         "contact": {
             "name": "OHS support",
@@ -47799,7 +47799,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns the administrator invoice register with current computed totals, customer summary and pagination metadata.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -47811,10 +47811,261 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items",
+                                                "pagination"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "customer_id",
+                                                            "issued_by",
+                                                            "license_id",
+                                                            "status",
+                                                            "currency",
+                                                            "tax_rate",
+                                                            "notes",
+                                                            "due_date",
+                                                            "paid_at",
+                                                            "created_at",
+                                                            "updated_at",
+                                                            "invoice_number",
+                                                            "subtotal",
+                                                            "tax_amount",
+                                                            "grand_total",
+                                                            "amount_paid",
+                                                            "amount_outstanding"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "customer_id": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "issued_by": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "license_id": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "status": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "draft",
+                                                                    "sent",
+                                                                    "paid",
+                                                                    "overdue",
+                                                                    "cancelled"
+                                                                ]
+                                                            },
+                                                            "currency": {
+                                                                "type": "string"
+                                                            },
+                                                            "tax_rate": {
+                                                                "type": "string"
+                                                            },
+                                                            "notes": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "due_date": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            },
+                                                            "paid_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            },
+                                                            "invoice_number": {
+                                                                "type": "string"
+                                                            },
+                                                            "subtotal": {
+                                                                "type": "integer"
+                                                            },
+                                                            "tax_amount": {
+                                                                "type": "integer"
+                                                            },
+                                                            "grand_total": {
+                                                                "type": "integer"
+                                                            },
+                                                            "amount_paid": {
+                                                                "type": "number"
+                                                            },
+                                                            "amount_outstanding": {
+                                                                "type": "number"
+                                                            },
+                                                            "items": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "object",
+                                                                    "required": [
+                                                                        "id",
+                                                                        "invoice_id",
+                                                                        "description",
+                                                                        "quantity",
+                                                                        "unit_price",
+                                                                        "created_at",
+                                                                        "updated_at"
+                                                                    ],
+                                                                    "properties": {
+                                                                        "id": {
+                                                                            "type": "integer"
+                                                                        },
+                                                                        "invoice_id": {
+                                                                            "type": "integer"
+                                                                        },
+                                                                        "description": {
+                                                                            "type": "string"
+                                                                        },
+                                                                        "quantity": {
+                                                                            "type": "integer"
+                                                                        },
+                                                                        "unit_price": {
+                                                                            "type": "integer"
+                                                                        },
+                                                                        "created_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time"
+                                                                        },
+                                                                        "updated_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            "customer": {
+                                                                "type": [
+                                                                    "object",
+                                                                    "null"
+                                                                ],
+                                                                "required": [
+                                                                    "id",
+                                                                    "name"
+                                                                ],
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "name": {
+                                                                        "type": "string"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "issuer": {
+                                                                "type": [
+                                                                    "object",
+                                                                    "null"
+                                                                ],
+                                                                "required": [
+                                                                    "id",
+                                                                    "name"
+                                                                ],
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "name": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "email": {
+                                                                        "type": "string",
+                                                                        "format": "email"
+                                                                    },
+                                                                    "phone": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "employee_id": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "position": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "hire_date": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ],
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "is_active": {
+                                                                        "type": "boolean"
+                                                                    },
+                                                                    "department_id": {
+                                                                        "type": [
+                                                                            "integer",
+                                                                            "null"
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "current_page",
+                                                        "per_page",
+                                                        "total",
+                                                        "last_page"
+                                                    ],
+                                                    "properties": {
+                                                        "current_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "total": {
+                                                            "type": "integer"
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -47826,10 +48077,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -54292,7 +54540,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns paginated invoice payments with currency, recorder summary and reference number; internal payment notes are not returned.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -54304,10 +54552,95 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items",
+                                                "pagination"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "invoice_id",
+                                                            "amount",
+                                                            "currency",
+                                                            "payment_method",
+                                                            "payment_date",
+                                                            "reference_number",
+                                                            "recorded_by",
+                                                            "recorder_name"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "invoice_id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "amount": {
+                                                                "type": "number"
+                                                            },
+                                                            "currency": {
+                                                                "type": "string"
+                                                            },
+                                                            "payment_method": {
+                                                                "type": "string"
+                                                            },
+                                                            "payment_date": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date"
+                                                            },
+                                                            "reference_number": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "recorded_by": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "recorder_name": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "current_page",
+                                                        "per_page",
+                                                        "total",
+                                                        "last_page"
+                                                    ],
+                                                    "properties": {
+                                                        "current_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "total": {
+                                                            "type": "integer"
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -54319,10 +54652,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -149821,7 +150151,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns invoice line item descriptions, quantities and unit prices through the existing finance detail query.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -149833,10 +150163,34 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "description",
+                                                            "quantity",
+                                                            "unit_price"
+                                                        ],
+                                                        "properties": {
+                                                            "description": {
+                                                                "type": "string"
+                                                            },
+                                                            "quantity": {
+                                                                "type": "integer"
+                                                            },
+                                                            "unit_price": {
+                                                                "type": "integer"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -149848,10 +150202,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -155915,7 +156266,7 @@
                                 "example": {
                                     "data": {
                                         "name": "OPES Health Systems API",
-                                        "api_version": "0.119.0",
+                                        "api_version": "0.120.0",
                                         "openapi_version": "3.1.1",
                                         "authentication": {
                                             "machine": "OAuth 2.0 client credentials with approved scopes",
@@ -156139,7 +156490,7 @@
                                 "example": {
                                     "data": {
                                         "status": "responding",
-                                        "api_version": "0.119.0",
+                                        "api_version": "0.120.0",
                                         "checked_at": "2026-11-01T12:00:00+00:00"
                                     },
                                     "meta": {
@@ -156343,6 +156694,11 @@
                                 "example": {
                                     "data": {
                                         "items": [
+                                            {
+                                                "version": "0.120.0",
+                                                "released_at": "2026-11-06",
+                                                "summary": "Added typed administrator invoice register, payment history, and line-item read contracts."
+                                            },
                                             {
                                                 "version": "0.119.0",
                                                 "released_at": "2026-11-06",
@@ -156726,7 +157082,7 @@
                                 },
                                 "example": {
                                     "data": {
-                                        "api_version": "0.119.0",
+                                        "api_version": "0.120.0",
                                         "locale": "en",
                                         "items": [
                                             {

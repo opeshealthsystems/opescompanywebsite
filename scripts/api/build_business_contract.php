@@ -1492,7 +1492,38 @@ $accountantInvoiceShow['responses']['200']['description'] = 'Returns one invoice
 $accountantInvoiceShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['invoice'], 'properties' => [
     'invoice' => $accountantInvoiceResource,
 ]], 'accountant.invoicecontroller.show');
-unset($accountantInvoiceShow, $accountantInvoiceResource);
+unset($accountantInvoiceShow);
+$adminInvoiceList = &$spec['paths']['/finance/invoices']['get'];
+$adminInvoiceList['responses']['200']['description'] = 'Returns the administrator invoice register with current computed totals, customer summary and pagination metadata.';
+$adminInvoiceList['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => $accountantInvoiceResource],
+    'pagination' => ['type' => 'object', 'required' => ['current_page', 'per_page', 'total', 'last_page'], 'properties' => [
+        'current_page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+    ]],
+]], 'admin.finance.invoices.index');
+unset($adminInvoiceList, $accountantInvoiceResource);
+$invoicePaymentResource = ['type' => 'object', 'required' => ['id', 'invoice_id', 'amount', 'currency', 'payment_method', 'payment_date', 'reference_number', 'recorded_by', 'recorder_name'], 'properties' => [
+    'id' => ['type' => 'integer'], 'invoice_id' => ['type' => 'integer'], 'amount' => ['type' => 'number'], 'currency' => ['type' => 'string'],
+    'payment_method' => ['type' => 'string'], 'payment_date' => ['type' => ['string', 'null'], 'format' => 'date'],
+    'reference_number' => ['type' => ['string', 'null']], 'recorded_by' => ['type' => ['integer', 'null']], 'recorder_name' => ['type' => ['string', 'null']],
+]];
+$adminInvoicePayments = &$spec['paths']['/finance/invoices/{invoice}/payments']['get'];
+$adminInvoicePayments['responses']['200']['description'] = 'Returns paginated invoice payments with currency, recorder summary and reference number; internal payment notes are not returned.';
+$adminInvoicePayments['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => $invoicePaymentResource],
+    'pagination' => ['type' => 'object', 'required' => ['current_page', 'per_page', 'total', 'last_page'], 'properties' => [
+        'current_page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+    ]],
+]], 'admin.finance.invoicePayments.index');
+unset($adminInvoicePayments);
+$adminInvoiceItems = &$spec['paths']['/admin/finance/invoices/{invoice}/items']['get'];
+$adminInvoiceItems['responses']['200']['description'] = 'Returns invoice line item descriptions, quantities and unit prices through the existing finance detail query.';
+$adminInvoiceItems['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => ['type' => 'object', 'required' => ['description', 'quantity', 'unit_price'], 'properties' => [
+        'description' => ['type' => 'string'], 'quantity' => ['type' => 'integer'], 'unit_price' => ['type' => 'integer'],
+    ]]],
+]], 'admin.finance.invoiceItems');
+unset($adminInvoiceItems, $invoicePaymentResource);
 $customerDocumentResource = ['type' => 'object', 'required' => ['id', 'document_template_id', 'type', 'title', 'reference_number', 'body_rendered', 'issued_by', 'addressee_user_id', 'addressee_name', 'addressee_email', 'status', 'requires_signature', 'signed_at', 'signed_by_name', 'valid_until', 'notes', 'created_at', 'updated_at'], 'properties' => [
     'id' => ['type' => 'integer'], 'document_template_id' => ['type' => ['integer', 'null']],
     'type' => ['type' => 'string', 'enum' => ['receipt', 'letterhead', 'contract_employee', 'contract_business']], 'title' => ['type' => 'string'],

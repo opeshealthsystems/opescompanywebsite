@@ -1,3 +1,7 @@
+## SDK 0.133.0 — administrator invoice reads (6 November 2026)
+
+Types the administrator invoice register, paginated payment history and invoice line-item read. Payment notes are excluded from the payment history projection. Existing handlers, roles, scopes and response behavior are unchanged. OpenAPI is 0.120.0. This downloadable preview remains unpublished to npm. Archive size is 48822 bytes; SHA-256 is `7a7db0e1323ac56e1c25d571e154512f82cdc5b4d51eb285a3491954b1c05d14`.
+
 ## SDK 0.132.0 — accountant invoice responses (6 November 2026)
 
 Types the accountant invoice register and invoice detail, including current totals, loaded line items, customer summary and issuer summary where present. The existing reads, roles, scopes and payload behavior are unchanged. OpenAPI is 0.119.0. This downloadable preview remains unpublished to npm. Archive size is 48608 bytes; SHA-256 is `73e4361ae81e5bc9a5aeab440d7284d9ccc3b17a397a6a1fd09a30f5362203b6`.

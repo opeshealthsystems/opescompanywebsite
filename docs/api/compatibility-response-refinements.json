@@ -163,6 +163,24 @@
   },
   {
     "method": "GET",
+    "path": "/finance/invoices",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator invoice register, current totals, customer summaries and pagination returned by AdminFinanceRecordQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/finance/invoices/{invoice}/payments",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing paginated invoice payment projection from AdminFinanceRecordQueries, excluding internal payment notes. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/finance/invoices/{invoice}/items",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing allowlisted description, quantity and unit-price projection from AdminFinanceLineItemQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
     "path": "/customer/tickets",
     "allow_response_schema_refinement": true,
     "reason": "Documents paginated tickets belonging to the authenticated customer from CustomerTicketQueries and ApiWorkflowSerializer. No response bytes, request shape, authorization or status behavior changes."
