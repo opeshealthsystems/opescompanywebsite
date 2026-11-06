@@ -1929,6 +1929,87 @@ $serviceRequestCreate['responses']['200']['content']['application/json']['schema
     'locale' => ['type' => 'string', 'enum' => ['en', 'fr']], 'service_request' => $serviceRequestSchema,
 ]], 'customer.servicerequestcontroller.store');
 unset($serviceRequestCreate);
+$adminLeadResource = ['type' => 'object', 'required' => ['id', 'name', 'email', 'phone', 'facility_type', 'products', 'message', 'source', 'product_slug', 'locale', 'status', 'created_at', 'updated_at', 'deal_count', 'quote_count'], 'properties' => [
+    'id' => ['type' => 'integer'], 'name' => ['type' => 'string'], 'email' => ['type' => 'string', 'format' => 'email'], 'phone' => ['type' => ['string', 'null']],
+    'facility_type' => ['type' => ['string', 'null'], 'enum' => ['clinic', 'hospital', 'laboratory', 'pharmacy', 'government', 'ngo', 'other', null]],
+    'products' => ['type' => ['string', 'null']], 'message' => ['type' => ['string', 'null']], 'source' => ['type' => ['string', 'null']],
+    'product_slug' => ['type' => ['string', 'null']], 'locale' => ['type' => ['string', 'null']], 'status' => ['type' => 'string', 'enum' => ['new', 'contacted', 'qualified', 'closed']],
+    'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+    'deal_count' => ['type' => 'integer'], 'quote_count' => ['type' => 'integer'],
+]];
+$adminLeadList = &$spec['paths']['/admin/enquiries/leads']['get'];
+$adminLeadList['responses']['200']['description'] = 'Returns filtered lead records with deal and quote counts and pagination. IP addresses and structured integration-application data are excluded.';
+$adminLeadList['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => $adminLeadResource],
+    'pagination' => ['type' => 'object', 'required' => ['current_page', 'per_page', 'total', 'last_page'], 'properties' => [
+        'current_page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+    ]],
+]], 'admin.enquiries.leads.index');
+unset($adminLeadList);
+$adminLeadShow = &$spec['paths']['/admin/enquiries/leads/{lead}']['get'];
+$adminLeadShow['responses']['200']['description'] = 'Returns one lead and its deal/quote counts without network addresses or structured integration details.';
+$adminLeadShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['lead'], 'properties' => ['lead' => $adminLeadResource]], 'admin.enquiries.leads.show');
+unset($adminLeadShow);
+$integrationRequestResource = ['type' => 'object', 'required' => ['id', 'status', 'applicant', 'application', 'received_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'enum' => ['new', 'contacted', 'qualified', 'closed']],
+    'applicant' => ['type' => 'object', 'required' => ['name', 'email', 'phone'], 'properties' => ['name' => ['type' => 'string'], 'email' => ['type' => 'string', 'format' => 'email'], 'phone' => ['type' => ['string', 'null']]]],
+    'application' => ['type' => 'object', 'required' => ['name', 'access_type', 'redirect_uri', 'requested_scopes', 'use_case'], 'properties' => [
+        'name' => ['type' => ['string', 'null']], 'access_type' => ['type' => ['string', 'null'], 'enum' => ['machine', 'delegated', 'both', null]],
+        'redirect_uri' => ['type' => ['string', 'null']], 'requested_scopes' => ['type' => 'array', 'items' => ['type' => 'string']], 'use_case' => ['type' => ['string', 'null']],
+    ]],
+    'received_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+]];
+$integrationRequestList = &$spec['paths']['/admin/enquiries/integration-requests']['get'];
+$integrationRequestList['responses']['200']['description'] = 'Returns paginated structured API integration requests, applicant contacts and requested access details for administrator review.';
+$integrationRequestList['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => $integrationRequestResource],
+    'pagination' => ['type' => 'object', 'required' => ['current_page', 'per_page', 'total', 'last_page'], 'properties' => [
+        'current_page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+    ]],
+]], 'admin.enquiries.integrationRequests.index');
+unset($integrationRequestList);
+$integrationRequestShow = &$spec['paths']['/admin/enquiries/integration-requests/{lead}']['get'];
+$integrationRequestShow['responses']['200']['description'] = 'Returns one structured API integration request for administrator review.';
+$integrationRequestShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['integration_request'], 'properties' => ['integration_request' => $integrationRequestResource]], 'admin.enquiries.integrationRequests.show');
+unset($integrationRequestShow);
+$leadCommandResponse = static function (string $operation, array $fields): array { return [
+    'type' => 'object', 'required' => ['data', 'meta', 'messages'], 'properties' => [
+        'data' => ['type' => 'object', 'required' => array_keys($fields), 'properties' => $fields],
+        'meta' => ['type' => 'object', 'properties' => ['operation' => ['type' => 'string', 'const' => $operation]]],
+        'messages' => ['type' => 'object', 'required' => ['success'], 'properties' => ['success' => ['type' => 'string']]],
+    ],
+]; };
+foreach ([
+    ['path' => '/admin/enquiries/leads', 'method' => 'post', 'status' => '201', 'operation' => 'admin.enquiries.leads.create', 'fields' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'enum' => ['new', 'contacted', 'qualified', 'closed']]], 'description' => 'Returns the created lead identifier, initial status and acknowledgement.'],
+    ['path' => '/admin/enquiries/leads/{lead}', 'method' => 'put', 'status' => '200', 'operation' => 'admin.enquiries.leads.update', 'fields' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'enum' => ['new', 'contacted', 'qualified', 'closed']]], 'description' => 'Returns the updated lead identifier, current status and acknowledgement.'],
+    ['path' => '/admin/enquiries/leads/{lead}/follow-up', 'method' => 'post', 'status' => '200', 'operation' => 'admin.enquiries.leads.sendFollowUp', 'fields' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'queued']], 'description' => 'Returns the lead identifier and queued follow-up status; this acknowledges queue submission, not inbox delivery.'],
+] as $command) {
+    $target = &$spec['paths'][$command['path']][$command['method']];
+    $target['responses'][$command['status']]['description'] = $command['description'];
+    $target['responses'][$command['status']]['content']['application/json']['schema'] = $leadCommandResponse($command['operation'], $command['fields']);
+    unset($target);
+}
+foreach ([
+    ['/admin/enquiries/leads/{lead}', 'delete'],
+    ['/partner/accounts/{partnerApplication}/members/{member}', 'delete'],
+    ['/crm/partner-applications/{partnerApplication}/members/{member}', 'delete'],
+] as [$path, $method]) {
+    $target = &$spec['paths'][$path][$method];
+    if (isset($target['responses']['200'])) {
+        $emptyResponse = $target['responses']['200'];
+        unset($emptyResponse['content']);
+        $emptyResponse['description'] = 'The command completed successfully with no response body.';
+        $target['responses']['204'] = $emptyResponse;
+        unset($target['responses']['200']);
+    } elseif (isset($target['responses']['204'])) {
+        unset($target['responses']['204']['content']);
+        $target['responses']['204']['description'] = 'The command completed successfully with no response body.';
+    } else {
+        throw new RuntimeException('Empty command response is missing from '.$path);
+    }
+    unset($target);
+}
+unset($adminLeadResource, $integrationRequestResource, $leadCommandResponse);
 $contractPath = $root.'/docs/api/openapi.json';
 $contractTemp = $contractPath.'.tmp';
 if (file_put_contents($contractTemp, json_encode($spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR)."\n") === false || !rename($contractTemp, $contractPath)) {

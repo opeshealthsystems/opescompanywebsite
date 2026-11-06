@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version' => '0.124.0',
+    'version' => '0.125.0',
     'products' => [
         [
             'id' => 'public-enquiries',
@@ -93,6 +93,11 @@ return [
         ],
     ],
     'changelog' => [
+        [
+            'version' => '0.125.0',
+            'released_at' => '2026-11-06',
+            'summary' => 'Added typed administrator lead and integration-request workflows, and corrected empty DELETE responses to 204 with idempotent replay signaling.',
+        ],
         [
             'version' => '0.124.0',
             'released_at' => '2026-11-06',

@@ -65,6 +65,24 @@ class CompatibilityTests(unittest.TestCase):
         response.setdefault("headers", {})["Idempotency-Replayed"] = {"schema": {"type": "string", "const": "true"}}
         self.assertEqual([], check(self.baseline, self.current))
 
+    def test_reviewed_no_content_status_correction_matches_runtime(self):
+        old = copy.deepcopy(self.baseline)
+        old["paths"]["/empty-result"] = {"delete": {"responses": {"200": {
+            "description": "Generic response",
+            "content": {"application/json": {"schema": {"type": "object", "properties": {"data": {"type": "object"}}}}},
+            "headers": {"X-Request-ID": {"schema": {"type": "string"}}},
+        }}}}
+        new = copy.deepcopy(old)
+        new["paths"]["/empty-result"]["delete"]["responses"] = {"204": {
+            "description": "No content",
+            "headers": {"X-Request-ID": {"schema": {"type": "string"}}},
+        }}
+        correction = {"method": "DELETE", "path": "/empty-result", "allow_no_content_status_correction": True,
+                      "reason": "The handler returns an empty 204 response."}
+        self.assertEqual([], check(old, new, [correction]))
+        new["paths"]["/empty-result"]["delete"]["responses"]["204"]["content"] = {"application/json": {"schema": {"type": "object"}}}
+        self.assertTrue(check(old, new, [correction]))
+
     def test_bounded_cache_policy_is_allowed_only_for_anonymous_gets(self):
         self.baseline["paths"]["/public-catalogue"] = {"get": {"security": [], "responses": {"200": {"headers": {"Cache-Control": {"schema": {"type": "string", "const": "no-store"}}}}}}}
         self.current = copy.deepcopy(self.baseline)

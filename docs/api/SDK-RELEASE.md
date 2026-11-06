@@ -1,3 +1,7 @@
+## SDK 0.138.0 — administrator enquiries and empty commands (6 November 2026)
+
+Types administrator lead lists/details, structured integration requests and lead create/update/follow-up acknowledgements. Corrected lead/member deletion contracts to actual 204 no-content responses; empty idempotent command replays now carry the documented Idempotency-Replayed header. OpenAPI is 0.125.0. This downloadable preview remains unpublished to npm. Archive size is 50177 bytes; SHA-256 is `f952f60474b401faca5da80e16f4c5a8b56b4cd37f1ca27c63aed37e19921028`.
+
 ## SDK 0.137.0 — CRM deal workflows (6 November 2026)
 
 Types deal search, owner/lead summaries, deal detail, stage pipeline aggregates, and create/update/delete acknowledgements. Closed-deal mutation rules and command state behavior remain unchanged. OpenAPI is 0.124.0. This downloadable preview remains unpublished to npm. Archive size is 50105 bytes; SHA-256 is `c8d04dac65474c0dd93c6ab8b0736faef69c3800052f42aa76afa0e099d7828c`.

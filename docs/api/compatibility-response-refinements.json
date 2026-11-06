@@ -313,6 +313,66 @@
   },
   {
     "method": "GET",
+    "path": "/admin/enquiries/leads",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing filtered administrator lead projection and deal/quote counts from AdminLeadQueries. IP addresses and structured integration details remain excluded."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/enquiries/leads/{lead}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator lead detail and relationship counts from AdminLeadQueries without network addresses or structured integration details."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/enquiries/integration-requests",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the structured applicant and requested integration details assembled by AdminLeadQueries. No secrets or patient records are returned."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/enquiries/integration-requests/{lead}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents one structured API integration request assembled by AdminLeadQueries for administrator review. No secrets or patient records are returned."
+  },
+  {
+    "method": "POST",
+    "path": "/admin/enquiries/leads",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the lead identifier and status acknowledgement returned by AdminLeadCommands. Request validation, idempotency, authorization and runtime status are unchanged."
+  },
+  {
+    "method": "PUT",
+    "path": "/admin/enquiries/leads/{lead}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the lead identifier and current status acknowledgement returned by AdminLeadCommands. Request validation, idempotency and runtime behavior are unchanged."
+  },
+  {
+    "method": "POST",
+    "path": "/admin/enquiries/leads/{lead}/follow-up",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the queued follow-up acknowledgement from AdminLeadCommands; queue acceptance does not guarantee inbox delivery. Mail queueing and idempotency behavior are unchanged."
+  },
+  {
+    "method": "DELETE",
+    "path": "/admin/enquiries/leads/{lead}",
+    "allow_no_content_status_correction": true,
+    "reason": "Corrects the generated generic 200 placeholder to the empty 204 response returned by AdminLeadCommands and BusinessWorkflowController."
+  },
+  {
+    "method": "DELETE",
+    "path": "/partner/accounts/{partnerApplication}/members/{member}",
+    "allow_no_content_status_correction": true,
+    "reason": "Corrects the generated generic 200 placeholder to the empty 204 response returned by PartnerAccountMembershipCommands and BusinessWorkflowController."
+  },
+  {
+    "method": "DELETE",
+    "path": "/crm/partner-applications/{partnerApplication}/members/{member}",
+    "allow_no_content_status_correction": true,
+    "reason": "Corrects the generated generic 200 placeholder to the empty 204 response returned by PartnerAccountMembershipCommands and BusinessWorkflowController."
+  },
+  {
+    "method": "GET",
     "path": "/customer/tickets",
     "allow_response_schema_refinement": true,
     "reason": "Documents paginated tickets belonging to the authenticated customer from CustomerTicketQueries and ApiWorkflowSerializer. No response bytes, request shape, authorization or status behavior changes."

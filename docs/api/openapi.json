@@ -2,7 +2,7 @@
     "openapi": "3.1.1",
     "info": {
         "title": "OHS Platform API",
-        "version": "0.124.0",
+        "version": "0.125.0",
         "description": "Versioned OHS business APIs. Public enquiries and application intake, partner and tester administration, publishing and catalogues, role-scoped operations and workforce workflows, finance registers, reports and line-item detail reads, customer facility profiles, employee and HR administration, risk and performance management, leave requests, validation, practitioner, recruitment, learning, survey and support workflows, account recovery, machine catalogue access and owner-managed public-scope machine clients, public sitemap data, protected admin reference data and resource/relationship summaries, with delegated business workflows using authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.",
         "contact": {
             "name": "OHS support",
@@ -96687,7 +96687,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns filtered lead records with deal and quote counts and pagination. IP addresses and structured integration-application data are excluded.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -96699,10 +96699,146 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items",
+                                                "pagination"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "name",
+                                                            "email",
+                                                            "phone",
+                                                            "facility_type",
+                                                            "products",
+                                                            "message",
+                                                            "source",
+                                                            "product_slug",
+                                                            "locale",
+                                                            "status",
+                                                            "created_at",
+                                                            "updated_at",
+                                                            "deal_count",
+                                                            "quote_count"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            },
+                                                            "email": {
+                                                                "type": "string",
+                                                                "format": "email"
+                                                            },
+                                                            "phone": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "facility_type": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "enum": [
+                                                                    "clinic",
+                                                                    "hospital",
+                                                                    "laboratory",
+                                                                    "pharmacy",
+                                                                    "government",
+                                                                    "ngo",
+                                                                    "other",
+                                                                    null
+                                                                ]
+                                                            },
+                                                            "products": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "message": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "source": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "product_slug": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "locale": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "status": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "new",
+                                                                    "contacted",
+                                                                    "qualified",
+                                                                    "closed"
+                                                                ]
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            },
+                                                            "deal_count": {
+                                                                "type": "integer"
+                                                            },
+                                                            "quote_count": {
+                                                                "type": "integer"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "current_page",
+                                                        "per_page",
+                                                        "total",
+                                                        "last_page"
+                                                    ],
+                                                    "properties": {
+                                                        "current_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "total": {
+                                                            "type": "integer"
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -96714,10 +96850,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -96920,7 +97053,7 @@
                         }
                     },
                     "201": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns the created lead identifier, initial status and acknowledgement.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -96932,10 +97065,25 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "id",
+                                                "status"
+                                            ],
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "new",
+                                                        "contacted",
+                                                        "qualified",
+                                                        "closed"
+                                                    ]
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -96947,10 +97095,15 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "success"
+                                            ],
+                                            "properties": {
+                                                "success": {
+                                                    "type": "string"
+                                                }
+                                            }
                                         }
                                     }
                                 },
@@ -97290,7 +97443,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns one lead and its deal/quote counts without network addresses or structured integration details.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -97302,10 +97455,119 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "lead"
+                                            ],
+                                            "properties": {
+                                                "lead": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "name",
+                                                        "email",
+                                                        "phone",
+                                                        "facility_type",
+                                                        "products",
+                                                        "message",
+                                                        "source",
+                                                        "product_slug",
+                                                        "locale",
+                                                        "status",
+                                                        "created_at",
+                                                        "updated_at",
+                                                        "deal_count",
+                                                        "quote_count"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "format": "email"
+                                                        },
+                                                        "phone": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "facility_type": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "enum": [
+                                                                "clinic",
+                                                                "hospital",
+                                                                "laboratory",
+                                                                "pharmacy",
+                                                                "government",
+                                                                "ngo",
+                                                                "other",
+                                                                null
+                                                            ]
+                                                        },
+                                                        "products": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "message": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "source": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "product_slug": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "locale": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "new",
+                                                                "contacted",
+                                                                "qualified",
+                                                                "closed"
+                                                            ]
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        },
+                                                        "deal_count": {
+                                                            "type": "integer"
+                                                        },
+                                                        "quote_count": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -97317,10 +97579,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -97473,7 +97732,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns the updated lead identifier, current status and acknowledgement.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -97485,10 +97744,25 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "id",
+                                                "status"
+                                            ],
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "new",
+                                                        "contacted",
+                                                        "qualified",
+                                                        "closed"
+                                                    ]
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -97500,10 +97774,15 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "success"
+                                            ],
+                                            "properties": {
+                                                "success": {
+                                                    "type": "string"
+                                                }
+                                            }
                                         }
                                     }
                                 },
@@ -97893,80 +98172,6 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "required": [
-                                        "data",
-                                        "meta",
-                                        "messages"
-                                    ],
-                                    "properties": {
-                                        "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
-                                        },
-                                        "meta": {
-                                            "type": "object",
-                                            "properties": {
-                                                "operation": {
-                                                    "type": "string",
-                                                    "const": "admin.enquiries.leads.delete"
-                                                }
-                                            }
-                                        },
-                                        "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
-                                        }
-                                    }
-                                },
-                                "examples": {
-                                    "envelope": {
-                                        "summary": "Response envelope",
-                                        "description": "The data fields depend on the operation and its resource contract.",
-                                        "value": {
-                                            "data": {},
-                                            "meta": {
-                                                "operation": "admin.enquiries.leads.delete"
-                                            },
-                                            "messages": []
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "headers": {
-                            "Cache-Control": {
-                                "description": "Authenticated and command results are not stored in shared caches.",
-                                "schema": {
-                                    "type": "string",
-                                    "const": "no-store"
-                                }
-                            },
-                            "X-Request-ID": {
-                                "description": "Identifier used when contacting support.",
-                                "schema": {
-                                    "type": "string",
-                                    "format": "uuid"
-                                }
-                            },
-                            "Idempotency-Replayed": {
-                                "description": "Present with value true when this response replays the saved outcome for the supplied Idempotency-Key; absent on the first execution.",
-                                "schema": {
-                                    "type": "string",
-                                    "const": "true"
-                                }
-                            }
-                        }
-                    },
                     "401": {
                         "description": "Valid delegated user token required",
                         "content": {
@@ -98023,6 +98228,32 @@
                             "application/problem+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "The command completed successfully with no response body.",
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            },
+                            "Idempotency-Replayed": {
+                                "description": "Present with value true when this response replays the saved outcome for the supplied Idempotency-Key; absent on the first execution.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "true"
                                 }
                             }
                         }
@@ -98115,7 +98346,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Paginated integration access requests. No credentials or secrets are included.",
+                        "description": "Returns paginated structured API integration requests, applicant contacts and requested access details for administrator review.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -98128,7 +98359,6 @@
                                     "properties": {
                                         "data": {
                                             "type": "object",
-                                            "additionalProperties": false,
                                             "required": [
                                                 "items",
                                                 "pagination"
@@ -98138,7 +98368,6 @@
                                                     "type": "array",
                                                     "items": {
                                                         "type": "object",
-                                                        "additionalProperties": false,
                                                         "required": [
                                                             "id",
                                                             "status",
@@ -98148,8 +98377,7 @@
                                                         ],
                                                         "properties": {
                                                             "id": {
-                                                                "type": "integer",
-                                                                "minimum": 1
+                                                                "type": "integer"
                                                             },
                                                             "status": {
                                                                 "type": "string",
@@ -98162,7 +98390,6 @@
                                                             },
                                                             "applicant": {
                                                                 "type": "object",
-                                                                "additionalProperties": false,
                                                                 "required": [
                                                                     "name",
                                                                     "email",
@@ -98186,7 +98413,6 @@
                                                             },
                                                             "application": {
                                                                 "type": "object",
-                                                                "additionalProperties": false,
                                                                 "required": [
                                                                     "name",
                                                                     "access_type",
@@ -98196,22 +98422,28 @@
                                                                 ],
                                                                 "properties": {
                                                                     "name": {
-                                                                        "type": "string"
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ]
                                                                     },
                                                                     "access_type": {
-                                                                        "type": "string",
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ],
                                                                         "enum": [
                                                                             "machine",
                                                                             "delegated",
-                                                                            "both"
+                                                                            "both",
+                                                                            null
                                                                         ]
                                                                     },
                                                                     "redirect_uri": {
                                                                         "type": [
                                                                             "string",
                                                                             "null"
-                                                                        ],
-                                                                        "format": "uri"
+                                                                        ]
                                                                     },
                                                                     "requested_scopes": {
                                                                         "type": "array",
@@ -98220,12 +98452,18 @@
                                                                         }
                                                                     },
                                                                     "use_case": {
-                                                                        "type": "string"
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ]
                                                                     }
                                                                 }
                                                             },
                                                             "received_at": {
-                                                                "type": "string",
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
                                                                 "format": "date-time"
                                                             }
                                                         }
@@ -98430,7 +98668,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Allowlisted application and applicant details; no credentials, patient data or internal delivery metadata.",
+                        "description": "Returns one structured API integration request for administrator review.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -98443,14 +98681,12 @@
                                     "properties": {
                                         "data": {
                                             "type": "object",
-                                            "additionalProperties": false,
                                             "required": [
                                                 "integration_request"
                                             ],
                                             "properties": {
                                                 "integration_request": {
                                                     "type": "object",
-                                                    "additionalProperties": false,
                                                     "required": [
                                                         "id",
                                                         "status",
@@ -98460,8 +98696,7 @@
                                                     ],
                                                     "properties": {
                                                         "id": {
-                                                            "type": "integer",
-                                                            "minimum": 1
+                                                            "type": "integer"
                                                         },
                                                         "status": {
                                                             "type": "string",
@@ -98474,7 +98709,6 @@
                                                         },
                                                         "applicant": {
                                                             "type": "object",
-                                                            "additionalProperties": false,
                                                             "required": [
                                                                 "name",
                                                                 "email",
@@ -98498,7 +98732,6 @@
                                                         },
                                                         "application": {
                                                             "type": "object",
-                                                            "additionalProperties": false,
                                                             "required": [
                                                                 "name",
                                                                 "access_type",
@@ -98508,22 +98741,28 @@
                                                             ],
                                                             "properties": {
                                                                 "name": {
-                                                                    "type": "string"
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ]
                                                                 },
                                                                 "access_type": {
-                                                                    "type": "string",
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ],
                                                                     "enum": [
                                                                         "machine",
                                                                         "delegated",
-                                                                        "both"
+                                                                        "both",
+                                                                        null
                                                                     ]
                                                                 },
                                                                 "redirect_uri": {
                                                                     "type": [
                                                                         "string",
                                                                         "null"
-                                                                    ],
-                                                                    "format": "uri"
+                                                                    ]
                                                                 },
                                                                 "requested_scopes": {
                                                                     "type": "array",
@@ -98532,12 +98771,18 @@
                                                                     }
                                                                 },
                                                                 "use_case": {
-                                                                    "type": "string"
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ]
                                                                 }
                                                             }
                                                         },
                                                         "received_at": {
-                                                            "type": "string",
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
                                                             "format": "date-time"
                                                         }
                                                     }
@@ -98709,7 +98954,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns the lead identifier and queued follow-up status; this acknowledges queue submission, not inbox delivery.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -98721,10 +98966,20 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "id",
+                                                "status"
+                                            ],
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "const": "queued"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -98736,10 +98991,15 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "success"
+                                            ],
+                                            "properties": {
+                                                "success": {
+                                                    "type": "string"
+                                                }
+                                            }
                                         }
                                     }
                                 },
@@ -143806,80 +144066,6 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "required": [
-                                        "data",
-                                        "meta",
-                                        "messages"
-                                    ],
-                                    "properties": {
-                                        "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
-                                        },
-                                        "meta": {
-                                            "type": "object",
-                                            "properties": {
-                                                "operation": {
-                                                    "type": "string",
-                                                    "const": "partner.accounts.members.remove"
-                                                }
-                                            }
-                                        },
-                                        "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
-                                        }
-                                    }
-                                },
-                                "examples": {
-                                    "envelope": {
-                                        "summary": "Response envelope",
-                                        "description": "The data fields depend on the operation and its resource contract.",
-                                        "value": {
-                                            "data": {},
-                                            "meta": {
-                                                "operation": "partner.accounts.members.remove"
-                                            },
-                                            "messages": []
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "headers": {
-                            "Cache-Control": {
-                                "description": "Authenticated and command results are not stored in shared caches.",
-                                "schema": {
-                                    "type": "string",
-                                    "const": "no-store"
-                                }
-                            },
-                            "X-Request-ID": {
-                                "description": "Identifier used when contacting support.",
-                                "schema": {
-                                    "type": "string",
-                                    "format": "uuid"
-                                }
-                            },
-                            "Idempotency-Replayed": {
-                                "description": "Present with value true when this response replays the saved outcome for the supplied Idempotency-Key; absent on the first execution.",
-                                "schema": {
-                                    "type": "string",
-                                    "const": "true"
-                                }
-                            }
-                        }
-                    },
                     "401": {
                         "description": "Valid delegated user token required",
                         "content": {
@@ -143936,6 +144122,32 @@
                             "application/problem+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "The command completed successfully with no response body.",
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            },
+                            "Idempotency-Replayed": {
+                                "description": "Present with value true when this response replays the saved outcome for the supplied Idempotency-Key; absent on the first execution.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "true"
                                 }
                             }
                         }
@@ -144874,7 +145086,7 @@
                         }
                     },
                     "204": {
-                        "description": "Membership was removed or was already absent."
+                        "description": "The command completed successfully with no response body."
                     }
                 }
             }
@@ -158776,7 +158988,7 @@
                                 "example": {
                                     "data": {
                                         "name": "OPES Health Systems API",
-                                        "api_version": "0.124.0",
+                                        "api_version": "0.125.0",
                                         "openapi_version": "3.1.1",
                                         "authentication": {
                                             "machine": "OAuth 2.0 client credentials with approved scopes",
@@ -159000,7 +159212,7 @@
                                 "example": {
                                     "data": {
                                         "status": "responding",
-                                        "api_version": "0.124.0",
+                                        "api_version": "0.125.0",
                                         "checked_at": "2026-11-01T12:00:00+00:00"
                                     },
                                     "meta": {
@@ -159204,6 +159416,11 @@
                                 "example": {
                                     "data": {
                                         "items": [
+                                            {
+                                                "version": "0.125.0",
+                                                "released_at": "2026-11-06",
+                                                "summary": "Added typed administrator lead and integration-request workflows, and corrected empty DELETE responses to 204 with idempotent replay signaling."
+                                            },
                                             {
                                                 "version": "0.124.0",
                                                 "released_at": "2026-11-06",
@@ -159612,7 +159829,7 @@
                                 },
                                 "example": {
                                     "data": {
-                                        "api_version": "0.124.0",
+                                        "api_version": "0.125.0",
                                         "locale": "en",
                                         "items": [
                                             {

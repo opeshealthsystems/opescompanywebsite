@@ -163,6 +163,25 @@ def response_schema_refinement_only(before, after, ignore_request_body=False):
     return schema_changed and without_response_schemas(old, removed_statuses) == without_response_schemas(new, renamed_statuses=renamed_statuses)
 
 
+def no_content_status_correction_only(before, after):
+    """Allow a reviewed 200 JSON placeholder to become the handler's actual 204 response."""
+    old = shape(before[0], before[1], before[2])
+    new = shape(after[0], after[1], after[2])
+    old_responses = old.get("responses", {})
+    new_responses = new.get("responses", {})
+    if old_responses.keys() - new_responses.keys() != {"200"} or new_responses.keys() - old_responses.keys() != {"204"}:
+        return False
+    if not old_responses["200"].get("content", {}).get("application/json", {}).get("schema"):
+        return False
+    if new_responses["204"].get("content"):
+        return False
+    corrected = copy.deepcopy(old)
+    response = corrected["responses"].pop("200")
+    response.pop("content", None)
+    corrected["responses"]["204"] = response
+    return corrected == new
+
+
 def oauth_scope_additions_only(old, new):
     """Allow new named scopes while preserving every released scope and flow."""
     old = copy.deepcopy(old)
@@ -312,6 +331,8 @@ def check(baseline, current, corrections=None):
                     used_corrections.add(key)
                 elif entry and entry.get("allow_response_schema_refinement") is True and entry.get("reason") and response_schema_refinement_only(before, after):
                     used_corrections.add(key)
+                elif entry and entry.get("allow_no_content_status_correction") is True and entry.get("reason") and no_content_status_correction_only(before, after):
+                    used_corrections.add(key)
                 else:
                     differences.append(f"Changed released operation: {method.upper()} {path}")
     for key in corrections.keys() - used_corrections:
@@ -319,6 +340,8 @@ def check(baseline, current, corrections=None):
         if path in baseline.get("paths", {}) and method in baseline["paths"][path]:
             entry = corrections[key]
             if entry.get("allow_response_schema_refinement") is True and shape(baseline, path, method) == shape(current, path, method):
+                continue
+            if entry.get("allow_no_content_status_correction") is True and shape(baseline, path, method) == shape(current, path, method):
                 continue
             differences.append(f"Unused or unsafe compatibility correction: {key.upper()}")
     return differences

@@ -21,7 +21,7 @@ final class BusinessWorkflowController
         $result = $dispatcher->execute($operation, $input, $request->header('Idempotency-Key'));
         if ($result->kind === 'binary') return response($result->bytes, $result->status, ['Content-Type' => 'application/pdf',
             'Content-Disposition' => \Symfony\Component\HttpFoundation\HeaderUtils::makeDisposition('attachment', $result->filename)]);
-        if ($result->kind === 'empty') return response()->noContent($result->status);
+        if ($result->kind === 'empty') return response()->noContent($result->status, $result->replayed ? ['Idempotency-Replayed' => 'true'] : []);
         if ($result->errors || isset($result->messages['error'])) return response()->json(['type' => 'about:blank', 'title' => 'Operation could not be completed', 'status' => 422,
             'request_id' => $request->attributes->get('request_id'), 'errors' => $result->errors ?: ['operation' => [$result->messages['error']]]], 422, ['Content-Type' => 'application/problem+json']);
         $data = $definition['command'] ? $serializer->references($result->data) : $result->data;
