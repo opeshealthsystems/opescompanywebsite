@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version' => '0.140.0',
+    'version' => '0.141.0',
     'products' => [
         [
             'id' => 'public-enquiries',
@@ -93,6 +93,11 @@ return [
         ],
     ],
     'changelog' => [
+        [
+            'version' => '0.141.0',
+            'released_at' => '2026-11-06',
+            'summary' => 'Added typed administrator course and lesson catalogue responses and lifecycle acknowledgements, including deletion safeguards and enrollment totals.',
+        ],
         [
             'version' => '0.140.0',
             'released_at' => '2026-11-06',

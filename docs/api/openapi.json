@@ -2,7 +2,7 @@
     "openapi": "3.1.1",
     "info": {
         "title": "OHS Platform API",
-        "version": "0.140.0",
+        "version": "0.141.0",
         "description": "Versioned OHS business APIs. Public enquiries and application intake, partner and tester administration, publishing and catalogues, role-scoped operations and workforce workflows, finance registers, reports and line-item detail reads, customer facility profiles, employee and HR administration, risk and performance management, leave requests, validation, practitioner, recruitment, learning, survey and support workflows, account recovery, machine catalogue access and owner-managed public-scope machine clients, public sitemap data, protected admin reference data and resource/relationship summaries, with delegated business workflows using authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.",
         "contact": {
             "name": "OHS support",
@@ -69790,7 +69790,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns paginated administrator course records, including enrollment totals.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -69802,10 +69802,143 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items",
+                                                "pagination"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "product_slug",
+                                                            "title",
+                                                            "title_fr",
+                                                            "slug",
+                                                            "description",
+                                                            "description_fr",
+                                                            "level",
+                                                            "duration_hours",
+                                                            "cover_image",
+                                                            "is_active",
+                                                            "is_featured",
+                                                            "sort_order",
+                                                            "created_at",
+                                                            "updated_at"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "product_slug": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "title": {
+                                                                "type": "string"
+                                                            },
+                                                            "title_fr": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "slug": {
+                                                                "type": "string"
+                                                            },
+                                                            "description": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "description_fr": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "level": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "beginner",
+                                                                    "intermediate",
+                                                                    "advanced"
+                                                                ]
+                                                            },
+                                                            "duration_hours": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ],
+                                                                "minimum": 1
+                                                            },
+                                                            "cover_image": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "is_active": {
+                                                                "type": "boolean"
+                                                            },
+                                                            "is_featured": {
+                                                                "type": "boolean"
+                                                            },
+                                                            "sort_order": {
+                                                                "type": "integer",
+                                                                "minimum": 0
+                                                            },
+                                                            "created_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            },
+                                                            "enrollments_count": {
+                                                                "type": "integer",
+                                                                "minimum": 0
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "current_page",
+                                                        "per_page",
+                                                        "total",
+                                                        "last_page"
+                                                    ],
+                                                    "properties": {
+                                                        "current_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "total": {
+                                                            "type": "integer"
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -69817,10 +69950,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -69962,80 +70092,6 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "required": [
-                                        "data",
-                                        "meta",
-                                        "messages"
-                                    ],
-                                    "properties": {
-                                        "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
-                                        },
-                                        "meta": {
-                                            "type": "object",
-                                            "properties": {
-                                                "operation": {
-                                                    "type": "string",
-                                                    "const": "admin.learning.courses.create"
-                                                }
-                                            }
-                                        },
-                                        "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
-                                        }
-                                    }
-                                },
-                                "examples": {
-                                    "envelope": {
-                                        "summary": "Response envelope",
-                                        "description": "The data fields depend on the operation and its resource contract.",
-                                        "value": {
-                                            "data": {},
-                                            "meta": {
-                                                "operation": "admin.learning.courses.create"
-                                            },
-                                            "messages": []
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "headers": {
-                            "Cache-Control": {
-                                "description": "Authenticated and command results are not stored in shared caches.",
-                                "schema": {
-                                    "type": "string",
-                                    "const": "no-store"
-                                }
-                            },
-                            "X-Request-ID": {
-                                "description": "Identifier used when contacting support.",
-                                "schema": {
-                                    "type": "string",
-                                    "format": "uuid"
-                                }
-                            },
-                            "Idempotency-Replayed": {
-                                "description": "Present with value true when this response replays the saved outcome for the supplied Idempotency-Key; absent on the first execution.",
-                                "schema": {
-                                    "type": "string",
-                                    "const": "true"
-                                }
-                            }
-                        }
-                    },
                     "401": {
                         "description": "Valid delegated user token required",
                         "content": {
@@ -70092,6 +70148,99 @@
                             "application/problem+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Creates an administrator-managed course and returns its identifier reference.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "required": [
+                                                "record",
+                                                "id"
+                                            ],
+                                            "properties": {
+                                                "record": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "type",
+                                                        "id"
+                                                    ],
+                                                    "properties": {
+                                                        "type": {
+                                                            "type": "string",
+                                                            "const": "Course"
+                                                        },
+                                                        "id": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                },
+                                                "id": {
+                                                    "type": "integer"
+                                                }
+                                            }
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.learning.courses.create"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "envelope": {
+                                        "summary": "Response envelope",
+                                        "description": "The data fields depend on the operation and its resource contract.",
+                                        "value": {
+                                            "data": {},
+                                            "meta": {
+                                                "operation": "admin.learning.courses.create"
+                                            },
+                                            "messages": []
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            },
+                            "Idempotency-Replayed": {
+                                "description": "Present with value true when this response replays the saved outcome for the supplied Idempotency-Key; absent on the first execution.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "true"
                                 }
                             }
                         }
@@ -70283,10 +70432,116 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "course"
+                                            ],
+                                            "properties": {
+                                                "course": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "product_slug",
+                                                        "title",
+                                                        "title_fr",
+                                                        "slug",
+                                                        "description",
+                                                        "description_fr",
+                                                        "level",
+                                                        "duration_hours",
+                                                        "cover_image",
+                                                        "is_active",
+                                                        "is_featured",
+                                                        "sort_order",
+                                                        "created_at",
+                                                        "updated_at"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "product_slug": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "title": {
+                                                            "type": "string"
+                                                        },
+                                                        "title_fr": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "slug": {
+                                                            "type": "string"
+                                                        },
+                                                        "description": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "description_fr": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "level": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "beginner",
+                                                                "intermediate",
+                                                                "advanced"
+                                                            ]
+                                                        },
+                                                        "duration_hours": {
+                                                            "type": [
+                                                                "integer",
+                                                                "null"
+                                                            ],
+                                                            "minimum": 1
+                                                        },
+                                                        "cover_image": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "is_active": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "is_featured": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "sort_order": {
+                                                            "type": "integer",
+                                                            "minimum": 0
+                                                        },
+                                                        "created_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "enrollments_count": {
+                                                            "type": "integer",
+                                                            "minimum": 0
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -70298,10 +70553,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -70466,10 +70718,32 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "record",
+                                                "id"
+                                            ],
+                                            "properties": {
+                                                "record": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "type",
+                                                        "id"
+                                                    ],
+                                                    "properties": {
+                                                        "type": {
+                                                            "type": "string",
+                                                            "const": "Course"
+                                                        },
+                                                        "id": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                },
+                                                "id": {
+                                                    "type": "integer"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -70481,10 +70755,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -70760,10 +71031,15 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "deleted_id"
+                                            ],
+                                            "properties": {
+                                                "deleted_id": {
+                                                    "type": "integer"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -70775,10 +71051,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -70949,7 +71222,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns paginated lesson content for the selected course, ordered by sort position.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -70961,10 +71234,116 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items",
+                                                "pagination"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "course_id",
+                                                            "title",
+                                                            "title_fr",
+                                                            "content",
+                                                            "content_fr",
+                                                            "video_url",
+                                                            "duration_minutes",
+                                                            "sort_order",
+                                                            "created_at",
+                                                            "updated_at"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "course_id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "title": {
+                                                                "type": "string"
+                                                            },
+                                                            "title_fr": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "content": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "content_fr": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "video_url": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "uri"
+                                                            },
+                                                            "duration_minutes": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ],
+                                                                "minimum": 1
+                                                            },
+                                                            "sort_order": {
+                                                                "type": "integer",
+                                                                "minimum": 0
+                                                            },
+                                                            "created_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "current_page",
+                                                        "per_page",
+                                                        "total",
+                                                        "last_page"
+                                                    ],
+                                                    "properties": {
+                                                        "current_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "total": {
+                                                            "type": "integer"
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -70976,10 +71355,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -71131,80 +71507,6 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "required": [
-                                        "data",
-                                        "meta",
-                                        "messages"
-                                    ],
-                                    "properties": {
-                                        "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
-                                        },
-                                        "meta": {
-                                            "type": "object",
-                                            "properties": {
-                                                "operation": {
-                                                    "type": "string",
-                                                    "const": "admin.learning.courseLessons.create"
-                                                }
-                                            }
-                                        },
-                                        "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
-                                        }
-                                    }
-                                },
-                                "examples": {
-                                    "envelope": {
-                                        "summary": "Response envelope",
-                                        "description": "The data fields depend on the operation and its resource contract.",
-                                        "value": {
-                                            "data": {},
-                                            "meta": {
-                                                "operation": "admin.learning.courseLessons.create"
-                                            },
-                                            "messages": []
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "headers": {
-                            "Cache-Control": {
-                                "description": "Authenticated and command results are not stored in shared caches.",
-                                "schema": {
-                                    "type": "string",
-                                    "const": "no-store"
-                                }
-                            },
-                            "X-Request-ID": {
-                                "description": "Identifier used when contacting support.",
-                                "schema": {
-                                    "type": "string",
-                                    "format": "uuid"
-                                }
-                            },
-                            "Idempotency-Replayed": {
-                                "description": "Present with value true when this response replays the saved outcome for the supplied Idempotency-Key; absent on the first execution.",
-                                "schema": {
-                                    "type": "string",
-                                    "const": "true"
-                                }
-                            }
-                        }
-                    },
                     "401": {
                         "description": "Valid delegated user token required",
                         "content": {
@@ -71261,6 +71563,99 @@
                             "application/problem+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Creates a lesson within the selected course and returns its identifier reference.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "required": [
+                                                "record",
+                                                "id"
+                                            ],
+                                            "properties": {
+                                                "record": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "type",
+                                                        "id"
+                                                    ],
+                                                    "properties": {
+                                                        "type": {
+                                                            "type": "string",
+                                                            "const": "CourseLesson"
+                                                        },
+                                                        "id": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                },
+                                                "id": {
+                                                    "type": "integer"
+                                                }
+                                            }
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.learning.courseLessons.create"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "envelope": {
+                                        "summary": "Response envelope",
+                                        "description": "The data fields depend on the operation and its resource contract.",
+                                        "value": {
+                                            "data": {},
+                                            "meta": {
+                                                "operation": "admin.learning.courseLessons.create"
+                                            },
+                                            "messages": []
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            },
+                            "Idempotency-Replayed": {
+                                "description": "Present with value true when this response replays the saved outcome for the supplied Idempotency-Key; absent on the first execution.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "true"
                                 }
                             }
                         }
@@ -71502,10 +71897,89 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "lesson"
+                                            ],
+                                            "properties": {
+                                                "lesson": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "course_id",
+                                                        "title",
+                                                        "title_fr",
+                                                        "content",
+                                                        "content_fr",
+                                                        "video_url",
+                                                        "duration_minutes",
+                                                        "sort_order",
+                                                        "created_at",
+                                                        "updated_at"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "course_id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "title": {
+                                                            "type": "string"
+                                                        },
+                                                        "title_fr": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "content": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "content_fr": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "video_url": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "uri"
+                                                        },
+                                                        "duration_minutes": {
+                                                            "type": [
+                                                                "integer",
+                                                                "null"
+                                                            ],
+                                                            "minimum": 1
+                                                        },
+                                                        "sort_order": {
+                                                            "type": "integer",
+                                                            "minimum": 0
+                                                        },
+                                                        "created_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -71517,10 +71991,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -71695,10 +72166,32 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "record",
+                                                "id"
+                                            ],
+                                            "properties": {
+                                                "record": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "type",
+                                                        "id"
+                                                    ],
+                                                    "properties": {
+                                                        "type": {
+                                                            "type": "string",
+                                                            "const": "CourseLesson"
+                                                        },
+                                                        "id": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                },
+                                                "id": {
+                                                    "type": "integer"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -71710,10 +72203,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -72036,10 +72526,15 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "deleted_id"
+                                            ],
+                                            "properties": {
+                                                "deleted_id": {
+                                                    "type": "integer"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -72051,10 +72546,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -73725,10 +74217,15 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "deleted_id"
+                                            ],
+                                            "properties": {
+                                                "deleted_id": {
+                                                    "type": "integer"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -73740,10 +74237,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -84187,47 +84681,16 @@
                                                 "record": {
                                                     "type": "object",
                                                     "required": [
-                                                        "id",
-                                                        "user_id",
-                                                        "year",
                                                         "type",
-                                                        "entitled_days",
-                                                        "used_days",
-                                                        "created_at",
-                                                        "updated_at"
+                                                        "id"
                                                     ],
                                                     "properties": {
+                                                        "type": {
+                                                            "type": "string",
+                                                            "const": "LeaveBalance"
+                                                        },
                                                         "id": {
                                                             "type": "integer"
-                                                        },
-                                                        "user_id": {
-                                                            "type": "integer"
-                                                        },
-                                                        "year": {
-                                                            "type": "integer"
-                                                        },
-                                                        "type": {
-                                                            "type": "string"
-                                                        },
-                                                        "entitled_days": {
-                                                            "type": "string"
-                                                        },
-                                                        "used_days": {
-                                                            "type": "string"
-                                                        },
-                                                        "created_at": {
-                                                            "type": [
-                                                                "string",
-                                                                "null"
-                                                            ],
-                                                            "format": "date-time"
-                                                        },
-                                                        "updated_at": {
-                                                            "type": [
-                                                                "string",
-                                                                "null"
-                                                            ],
-                                                            "format": "date-time"
                                                         }
                                                     }
                                                 },
@@ -84663,47 +85126,16 @@
                                                 "record": {
                                                     "type": "object",
                                                     "required": [
-                                                        "id",
-                                                        "user_id",
-                                                        "year",
                                                         "type",
-                                                        "entitled_days",
-                                                        "used_days",
-                                                        "created_at",
-                                                        "updated_at"
+                                                        "id"
                                                     ],
                                                     "properties": {
+                                                        "type": {
+                                                            "type": "string",
+                                                            "const": "LeaveBalance"
+                                                        },
                                                         "id": {
                                                             "type": "integer"
-                                                        },
-                                                        "user_id": {
-                                                            "type": "integer"
-                                                        },
-                                                        "year": {
-                                                            "type": "integer"
-                                                        },
-                                                        "type": {
-                                                            "type": "string"
-                                                        },
-                                                        "entitled_days": {
-                                                            "type": "string"
-                                                        },
-                                                        "used_days": {
-                                                            "type": "string"
-                                                        },
-                                                        "created_at": {
-                                                            "type": [
-                                                                "string",
-                                                                "null"
-                                                            ],
-                                                            "format": "date-time"
-                                                        },
-                                                        "updated_at": {
-                                                            "type": [
-                                                                "string",
-                                                                "null"
-                                                            ],
-                                                            "format": "date-time"
                                                         }
                                                     }
                                                 },
@@ -163678,7 +164110,7 @@
                                 "example": {
                                     "data": {
                                         "name": "OPES Health Systems API",
-                                        "api_version": "0.140.0",
+                                        "api_version": "0.141.0",
                                         "openapi_version": "3.1.1",
                                         "authentication": {
                                             "machine": "OAuth 2.0 client credentials with approved scopes",
@@ -163902,7 +164334,7 @@
                                 "example": {
                                     "data": {
                                         "status": "responding",
-                                        "api_version": "0.140.0",
+                                        "api_version": "0.141.0",
                                         "checked_at": "2026-11-01T12:00:00+00:00"
                                     },
                                     "meta": {
@@ -164106,6 +164538,11 @@
                                 "example": {
                                     "data": {
                                         "items": [
+                                            {
+                                                "version": "0.141.0",
+                                                "released_at": "2026-11-06",
+                                                "summary": "Added typed administrator course and lesson catalogue responses and lifecycle acknowledgements, including deletion safeguards and enrollment totals."
+                                            },
                                             {
                                                 "version": "0.140.0",
                                                 "released_at": "2026-11-06",
@@ -164594,7 +165031,7 @@
                                 },
                                 "example": {
                                     "data": {
-                                        "api_version": "0.140.0",
+                                        "api_version": "0.141.0",
                                         "locale": "en",
                                         "items": [
                                             {

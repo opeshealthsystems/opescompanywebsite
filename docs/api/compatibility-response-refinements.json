@@ -1,6 +1,72 @@
 [
   {
     "method": "GET",
+    "path": "/learning/courses",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator course and lesson query/command projection, lifecycle acknowledgement, and learning-history safeguards."
+  },
+  {
+    "method": "POST",
+    "path": "/learning/courses",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator course and lesson query/command projection, lifecycle acknowledgement, and learning-history safeguards."
+  },
+  {
+    "method": "GET",
+    "path": "/learning/courses/{course}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator course and lesson query/command projection, lifecycle acknowledgement, and learning-history safeguards."
+  },
+  {
+    "method": "PUT",
+    "path": "/learning/courses/{course}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator course and lesson query/command projection, lifecycle acknowledgement, and learning-history safeguards."
+  },
+  {
+    "method": "DELETE",
+    "path": "/learning/courses/{course}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator course and lesson query/command projection, lifecycle acknowledgement, and learning-history safeguards."
+  },
+  {
+    "method": "GET",
+    "path": "/learning/courses/{course}/lessons",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator course and lesson query/command projection, lifecycle acknowledgement, and learning-history safeguards."
+  },
+  {
+    "method": "POST",
+    "path": "/learning/courses/{course}/lessons",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator course and lesson query/command projection, lifecycle acknowledgement, and learning-history safeguards."
+  },
+  {
+    "method": "GET",
+    "path": "/learning/courses/{course}/lessons/{lesson}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator course and lesson query/command projection, lifecycle acknowledgement, and learning-history safeguards."
+  },
+  {
+    "method": "PUT",
+    "path": "/learning/courses/{course}/lessons/{lesson}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator course and lesson query/command projection, lifecycle acknowledgement, and learning-history safeguards."
+  },
+  {
+    "method": "DELETE",
+    "path": "/learning/courses/{course}/lessons/{lesson}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator course and lesson query/command projection, lifecycle acknowledgement, and learning-history safeguards."
+  },
+  {
+    "method": "DELETE",
+    "path": "/learning/courses/{course}/assessments/{assessment}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator course and lesson query/command projection, lifecycle acknowledgement, and learning-history safeguards."
+  },
+  {
+    "method": "GET",
     "path": "/admin/leaves",
     "allow_response_schema_refinement": true,
     "reason": "Documents the existing administrator leave workflow projection and lifecycle acknowledgement from the shared workforce handler."

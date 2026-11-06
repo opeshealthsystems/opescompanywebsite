@@ -1166,6 +1166,50 @@ class BusinessApiTest extends TestCase
         $this->assertDatabaseMissing('leave_balances', ['id' => $balanceId]);
     }
 
+    public function test_admin_course_and_lesson_api_supports_authenticated_idempotent_lifecycle(): void
+    {
+        $admin = $this->user('admin');
+        $token = $this->access($admin, ['learning:read', 'learning:write']);
+        $headers = ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'learning-course-create-01'];
+        $courseInput = ['title' => 'Fictional API course', 'slug' => 'fictional-api-course', 'level' => 'beginner'];
+        $createdCourse = $this->postJson('/api/v1/learning/courses', $courseInput, $headers)->assertCreated()
+            ->assertJsonPath('data.record.type', 'Course');
+        $this->postJson('/api/v1/learning/courses', $courseInput, $headers)->assertExactJson($createdCourse->json());
+        $courseId = $createdCourse->json('data.id');
+        $createdCourse->assertJsonPath('data.record.id', $courseId);
+
+        $this->getJson('/api/v1/learning/courses', ['Authorization' => 'Bearer '.$token])->assertOk()
+            ->assertJsonPath('data.items.0.id', $courseId)->assertJsonPath('data.items.0.enrollments_count', 0);
+        $this->getJson('/api/v1/learning/courses/'.$courseId, ['Authorization' => 'Bearer '.$token])->assertOk()
+            ->assertJsonPath('data.course.slug', 'fictional-api-course');
+
+        $lessonPath = '/api/v1/learning/courses/'.$courseId.'/lessons';
+        $lessonInput = ['title' => 'Fictional lesson', 'content' => 'Learning content for API verification.'];
+        $lessonHeaders = ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'learning-lesson-create-01'];
+        $createdLesson = $this->postJson($lessonPath, $lessonInput, $lessonHeaders)->assertCreated()
+            ->assertJsonPath('data.record.type', 'CourseLesson');
+        $this->postJson($lessonPath, $lessonInput, $lessonHeaders)->assertExactJson($createdLesson->json());
+        $lessonId = $createdLesson->json('data.id');
+        $this->getJson($lessonPath, ['Authorization' => 'Bearer '.$token])->assertOk()
+            ->assertJsonPath('data.items.0.id', $lessonId)->assertJsonPath('data.items.0.course_id', $courseId);
+        $this->getJson($lessonPath.'/'.$lessonId, ['Authorization' => 'Bearer '.$token])->assertOk()
+            ->assertJsonPath('data.lesson.title', 'Fictional lesson');
+        $this->putJson('/api/v1/learning/courses/'.$courseId, ['title' => 'Updated API course'], [
+            'Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'learning-course-update-01',
+        ])->assertOk()->assertJsonPath('data.record.type', 'Course');
+        $this->putJson($lessonPath.'/'.$lessonId, ['title' => 'Updated lesson'], [
+            'Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'learning-lesson-update-01',
+        ])->assertOk()->assertJsonPath('data.record.type', 'CourseLesson');
+        $this->deleteJson($lessonPath.'/'.$lessonId, [], [
+            'Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'learning-lesson-delete-01',
+        ])->assertOk()->assertJsonPath('data.deleted_id', $lessonId);
+        $this->deleteJson('/api/v1/learning/courses/'.$courseId, [], [
+            'Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'learning-course-delete-01',
+        ])->assertOk()->assertJsonPath('data.deleted_id', $courseId);
+
+        $this->getJson('/api/v1/learning/courses')->assertUnauthorized();
+    }
+
     public function test_performance_review_state_changes_are_shared_and_idempotent(): void
     {
         $admin = $this->user('admin');

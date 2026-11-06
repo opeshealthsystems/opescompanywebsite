@@ -2737,6 +2737,74 @@ unset($leaveBalanceUpdate);
 $leaveBalanceDelete = &$spec['paths']['/admin/workforce/leave-balances/{leaveBalance}']['delete'];
 $leaveBalanceDelete['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['id', 'status'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'deleted']]], 'admin.workforce.leaveBalances.delete');
 unset($leaveBalanceDelete, $adminLeaveItem, $leaveMutation, $leavePagination, $leaveBalance);
+$adminCourse = ['type' => 'object', 'required' => ['id', 'product_slug', 'title', 'title_fr', 'slug', 'description', 'description_fr', 'level', 'duration_hours', 'cover_image', 'is_active', 'is_featured', 'sort_order', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'product_slug' => ['type' => ['string', 'null']], 'title' => ['type' => 'string'], 'title_fr' => ['type' => ['string', 'null']],
+    'slug' => ['type' => 'string'], 'description' => ['type' => ['string', 'null']], 'description_fr' => ['type' => ['string', 'null']],
+    'level' => ['type' => 'string', 'enum' => ['beginner', 'intermediate', 'advanced']], 'duration_hours' => ['type' => ['integer', 'null'], 'minimum' => 1],
+    'cover_image' => ['type' => ['string', 'null']], 'is_active' => ['type' => 'boolean'], 'is_featured' => ['type' => 'boolean'],
+    'sort_order' => ['type' => 'integer', 'minimum' => 0], 'created_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'updated_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'enrollments_count' => ['type' => 'integer', 'minimum' => 0],
+]];
+$adminCourseLesson = ['type' => 'object', 'required' => ['id', 'course_id', 'title', 'title_fr', 'content', 'content_fr', 'video_url', 'duration_minutes', 'sort_order', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'course_id' => ['type' => 'integer'], 'title' => ['type' => 'string'], 'title_fr' => ['type' => ['string', 'null']],
+    'content' => ['type' => ['string', 'null']], 'content_fr' => ['type' => ['string', 'null']], 'video_url' => ['type' => ['string', 'null'], 'format' => 'uri'],
+    'duration_minutes' => ['type' => ['integer', 'null'], 'minimum' => 1], 'sort_order' => ['type' => 'integer', 'minimum' => 0],
+    'created_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'updated_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+]];
+$adminLearningPagination = ['type' => 'object', 'required' => ['current_page', 'per_page', 'total', 'last_page'], 'properties' => [
+    'current_page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+]];
+$adminCourseIndex = &$spec['paths']['/learning/courses']['get'];
+$adminCourseIndex['responses']['200']['description'] = 'Returns paginated administrator course records, including enrollment totals.';
+$adminCourseIndex['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => $adminCourse], 'pagination' => $adminLearningPagination,
+]], 'admin.learning.courses.index');
+unset($adminCourseIndex);
+$adminCourseShow = &$spec['paths']['/learning/courses/{course}']['get'];
+$adminCourseShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['course'], 'properties' => ['course' => $adminCourse]], 'admin.learning.courses.show');
+unset($adminCourseShow);
+$adminCourseCommandReference = ['type' => 'object', 'required' => ['record', 'id'], 'properties' => [
+    'record' => ['type' => 'object', 'required' => ['type', 'id'], 'properties' => ['type' => ['type' => 'string', 'const' => 'Course'], 'id' => ['type' => 'integer']]], 'id' => ['type' => 'integer'],
+]];
+$adminCourseCreate = &$spec['paths']['/learning/courses']['post'];
+$adminCourseCreate['responses']['201'] = $adminCourseCreate['responses']['200'];
+unset($adminCourseCreate['responses']['200']);
+$adminCourseCreate['responses']['201']['description'] = 'Creates an administrator-managed course and returns its identifier reference.';
+$adminCourseCreate['responses']['201']['content']['application/json']['schema'] = $successEnvelope($adminCourseCommandReference, 'admin.learning.courses.create');
+unset($adminCourseCreate);
+$adminCourseUpdate = &$spec['paths']['/learning/courses/{course}']['put'];
+$adminCourseUpdate['responses']['200']['content']['application/json']['schema'] = $successEnvelope($adminCourseCommandReference, 'admin.learning.courses.update');
+unset($adminCourseUpdate);
+$adminCourseDelete = &$spec['paths']['/learning/courses/{course}']['delete'];
+$adminCourseDelete['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['deleted_id'], 'properties' => ['deleted_id' => ['type' => 'integer']]], 'admin.learning.courses.delete');
+unset($adminCourseDelete);
+$adminLessonIndex = &$spec['paths']['/learning/courses/{course}/lessons']['get'];
+$adminLessonIndex['responses']['200']['description'] = 'Returns paginated lesson content for the selected course, ordered by sort position.';
+$adminLessonIndex['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => $adminCourseLesson], 'pagination' => $adminLearningPagination,
+]], 'admin.learning.courseLessons.index');
+unset($adminLessonIndex);
+$adminLessonShow = &$spec['paths']['/learning/courses/{course}/lessons/{lesson}']['get'];
+$adminLessonShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['lesson'], 'properties' => ['lesson' => $adminCourseLesson]], 'admin.learning.courseLessons.show');
+unset($adminLessonShow);
+$adminLessonCommandReference = ['type' => 'object', 'required' => ['record', 'id'], 'properties' => [
+    'record' => ['type' => 'object', 'required' => ['type', 'id'], 'properties' => ['type' => ['type' => 'string', 'const' => 'CourseLesson'], 'id' => ['type' => 'integer']]], 'id' => ['type' => 'integer'],
+]];
+$adminLessonCreate = &$spec['paths']['/learning/courses/{course}/lessons']['post'];
+$adminLessonCreate['responses']['201'] = $adminLessonCreate['responses']['200'];
+unset($adminLessonCreate['responses']['200']);
+$adminLessonCreate['responses']['201']['description'] = 'Creates a lesson within the selected course and returns its identifier reference.';
+$adminLessonCreate['responses']['201']['content']['application/json']['schema'] = $successEnvelope($adminLessonCommandReference, 'admin.learning.courseLessons.create');
+unset($adminLessonCreate);
+$adminLessonUpdate = &$spec['paths']['/learning/courses/{course}/lessons/{lesson}']['put'];
+$adminLessonUpdate['responses']['200']['content']['application/json']['schema'] = $successEnvelope($adminLessonCommandReference, 'admin.learning.courseLessons.update');
+unset($adminLessonUpdate);
+$adminLessonDelete = &$spec['paths']['/learning/courses/{course}/lessons/{lesson}']['delete'];
+$adminLessonDelete['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['deleted_id'], 'properties' => ['deleted_id' => ['type' => 'integer']]], 'admin.learning.courseLessons.delete');
+unset($adminLessonDelete);
+$adminAssessmentDelete = &$spec['paths']['/learning/courses/{course}/assessments/{assessment}']['delete'];
+$adminAssessmentDelete['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['deleted_id'], 'properties' => ['deleted_id' => ['type' => 'integer']]], 'admin.learning.assessments.delete');
+unset($adminAssessmentDelete, $adminCourse, $adminCourseLesson, $adminLearningPagination, $adminCourseCommandReference, $adminLessonCommandReference);
 $contractPath = $root.'/docs/api/openapi.json';
 $contractTemp = $contractPath.'.tmp';
 if (file_put_contents($contractTemp, json_encode($spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR)."\n") === false || !rename($contractTemp, $contractPath)) {

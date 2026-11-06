@@ -1,3 +1,7 @@
+## SDK 0.154.0 — administrator course management (6 November 2026)
+
+Types administrator course and lesson list/detail responses and create/update/delete outcomes, including enrollment counts, lesson content, pagination and reference-only command results. Corrects course and lesson creation to their actual HTTP 201 responses. Existing role/scope authorization and guards that retain learner progress and assessment history are unchanged. OpenAPI is 0.141.0. This downloadable preview remains unpublished to npm. Archive size is 52839 bytes; SHA-256 is `60418e2bf69b88f3bdc569b7cd06887a6eddb039bcc8fcf3a86f6400f5b68950`.
+
 ## SDK 0.153.0 — administrator leave workflows (6 November 2026)
 
 Types administrator leave-request registers/details and create/update/approve/reject/bulk outcomes, plus leave-balance registers/details and lifecycle responses. Corrects leave-balance creation to its actual HTTP 201 response. The API continues to use shared, role/scope-guarded workforce handlers and idempotency-protected commands. OpenAPI is 0.140.0. This downloadable preview remains unpublished to npm. Archive size is 52605 bytes; SHA-256 is `30c1fd2aa9e4fb35f55f3f532127761a2a1a91fa08fd753e018ab739a5bb0400`.
