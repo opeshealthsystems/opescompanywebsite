@@ -111,8 +111,12 @@ def response_schema_refinement_only(before, after):
         operation = copy.deepcopy(operation)
         responses = operation.get("responses", {})
         for response in responses.values():
-            for media in response.get("content", {}).values():
+            content = response.get("content", {})
+            for media in content.values():
                 media.pop("schema", None)
+            response["content"] = {media_type: media for media_type, media in content.items() if media}
+            if not response["content"]:
+                response.pop("content", None)
         return operation
 
     old_responses = old.get("responses", {})
@@ -123,9 +127,12 @@ def response_schema_refinement_only(before, after):
     for status in old_responses:
         old_content = old_responses[status].get("content", {})
         new_content = new_responses[status].get("content", {})
-        if old_content.keys() != new_content.keys():
+        if not new_content.keys() <= old_content.keys():
             return False
         for media_type in old_content:
+            if media_type not in new_content:
+                schema_changed = True
+                continue
             old_schema = old_content[media_type].get("schema")
             new_schema = new_content[media_type].get("schema")
             if old_schema != new_schema:
@@ -287,6 +294,9 @@ def check(baseline, current, corrections=None):
     for key in corrections.keys() - used_corrections:
         method, path = key.split(" ", 1)
         if path in baseline.get("paths", {}) and method in baseline["paths"][path]:
+            entry = corrections[key]
+            if entry.get("allow_response_schema_refinement") is True and shape(baseline, path, method) == shape(current, path, method):
+                continue
             differences.append(f"Unused or unsafe compatibility correction: {key.upper()}")
     return differences
 

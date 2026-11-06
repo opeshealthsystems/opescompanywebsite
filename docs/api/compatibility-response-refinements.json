@@ -16,5 +16,29 @@
     "path": "/admin/customer-profiles/{customerProfile}",
     "allow_response_schema_refinement": true,
     "reason": "Documents the existing customer-profile detail projection and selected customer fields from AdminCustomerProfileQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/practitioner/courses",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing active course list and practitioner-owned enrollment progress projection from PractitionerCourseQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/practitioner/courses/{course}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing course, enrollment and completed-lesson projection from PractitionerCourseQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/practitioner/courses/{course}/lessons/{lesson}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing lesson content, course navigation and practitioner progress projection from PractitionerLessonQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/practitioner/certificates",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing course, validation and council certificate projection from PractitionerCertificateQueries and removes an incorrectly advertised PDF representation from this JSON-only list operation. Runtime response bytes, request shape, authorization and status behavior do not change."
   }
 ]

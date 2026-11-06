@@ -1,3 +1,7 @@
+## SDK 0.120.0 — practitioner learning and certificate response contracts (6 November 2026)
+
+Adds field-specific success schemas for practitioners’ active course catalogue and enrollment progress, course detail and lesson navigation, and course/validation certificates. The generated TypeScript results expose progress percentages, completed lesson references, lesson content and certificate identifiers from the existing API projections. OpenAPI remains 0.118.0 because runtime behavior is unchanged. This private preview remains unpublished to npm. The 46,996-byte downloadable preview SHA-256 is `d3ea1ed928e6343c3d9d8d9f54963bb36e7c87962489282f7c67021b7dc079bf`; it remains unpublished to npm.
+
 ## SDK 0.119.0 — quote and customer profile response contracts (6 November 2026)
 
 Adds field-specific OpenAPI response schemas for paginated admin quote reads, including quote totals, status, lead and creator summaries, and line items; customer profile list/detail responses now expose their projected facility and customer fields. Generated Node TypeScript results therefore provide useful types for these three mobile/admin read operations. OpenAPI remains 0.118.0 because the HTTP behavior did not change; this is an additive documentation and SDK typing improvement. The 46,577-byte downloadable preview SHA-256 is `de18faaa9b33dc2d13f7cc5808e23faaaf2ee74f34a31819d7521d974c82e2f9`; it remains unpublished to npm.

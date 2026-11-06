@@ -1118,6 +1118,67 @@ $customerShow['responses']['200']['content']['application/json']['schema'] = $su
     'customer_profile' => ['type' => 'object', 'required' => ['id', 'user_id', 'facility_name', 'facility_type', 'country', 'city', 'address', 'created_at', 'updated_at', 'customer'], 'properties' => $customerDetailProperties],
 ]], 'admin.customerProfiles.show');
 unset($customerShow);
+$learningLesson = ['type' => 'object', 'required' => ['id', 'course_id', 'title', 'title_fr', 'content', 'content_fr', 'video_url', 'duration_minutes', 'sort_order', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'course_id' => ['type' => 'integer'], 'title' => ['type' => 'string'], 'title_fr' => ['type' => ['string', 'null']],
+    'content' => ['type' => 'string'], 'content_fr' => ['type' => ['string', 'null']], 'video_url' => ['type' => ['string', 'null']],
+    'duration_minutes' => ['type' => ['integer', 'null']], 'sort_order' => ['type' => 'integer'],
+    'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+]];
+$learningCourse = ['type' => 'object', 'required' => ['id', 'product_slug', 'title', 'title_fr', 'slug', 'description', 'description_fr', 'level', 'duration_hours', 'cover_image', 'is_active', 'is_featured', 'sort_order', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'product_slug' => ['type' => ['string', 'null']], 'title' => ['type' => 'string'], 'title_fr' => ['type' => ['string', 'null']], 'slug' => ['type' => 'string'],
+    'description' => ['type' => ['string', 'null']], 'description_fr' => ['type' => ['string', 'null']], 'level' => ['type' => 'string', 'enum' => ['beginner', 'intermediate', 'advanced']],
+    'duration_hours' => ['type' => ['number', 'null']], 'cover_image' => ['type' => ['string', 'null']], 'is_active' => ['type' => 'boolean'], 'is_featured' => ['type' => 'boolean'],
+    'sort_order' => ['type' => 'integer'], 'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+    'lessons' => ['type' => 'array', 'items' => $learningLesson],
+]];
+$learningEnrollment = ['type' => 'object', 'required' => ['id', 'course_id', 'user_id', 'status', 'enrolled_at', 'completed_at', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'course_id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'enum' => ['enrolled', 'in_progress', 'completed', 'dropped']],
+    'enrolled_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'completed_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+]];
+$learningProgress = ['type' => 'object', 'required' => ['id', 'course_id', 'status', 'progress_percent', 'completed_lesson_ids', 'total_lessons', 'certificate_id', 'enrolled_at', 'completed_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'course_id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'enum' => ['enrolled', 'in_progress', 'completed', 'dropped']],
+    'progress_percent' => ['type' => 'integer', 'minimum' => 0, 'maximum' => 100], 'completed_lesson_ids' => ['type' => 'array', 'items' => ['type' => 'integer']],
+    'total_lessons' => ['type' => 'integer', 'minimum' => 0], 'certificate_id' => ['type' => ['integer', 'null']],
+    'enrolled_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'completed_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+]];
+$courseCertificate = ['type' => 'object', 'required' => ['id', 'enrollment_id', 'user_id', 'course_id', 'certificate_number', 'issued_at', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'enrollment_id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'], 'course_id' => ['type' => 'integer'],
+    'certificate_number' => ['type' => 'string'], 'issued_at' => ['type' => 'string', 'format' => 'date-time'], 'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+]];
+$validationCertificate = ['type' => 'object', 'required' => ['id', 'cohort_member_id', 'final_evaluation_id', 'certificate_number', 'score', 'tier', 'issued_by', 'issued_at', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'cohort_member_id' => ['type' => 'integer'], 'final_evaluation_id' => ['type' => 'integer'], 'certificate_number' => ['type' => 'string'],
+    'score' => ['type' => 'integer'], 'tier' => ['type' => 'string'], 'issued_by' => ['type' => ['integer', 'null']], 'issued_at' => ['type' => 'string', 'format' => 'date-time'],
+    'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+]];
+$courseIndex = &$spec['paths']['/practitioner/courses']['get'];
+$courseIndex['responses']['200']['description'] = 'Active courses and this practitioner’s per-course lesson progress and certificate references.';
+$courseIndex['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['courses', 'my_enrollments'], 'properties' => [
+    'courses' => ['type' => 'array', 'items' => $learningCourse], 'my_enrollments' => ['type' => 'array', 'items' => $learningProgress],
+]], 'practitioner.coursecontroller.index');
+unset($courseIndex);
+$courseShow = &$spec['paths']['/practitioner/courses/{course}']['get'];
+$courseShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['course', 'enrollment', 'completed_lesson_ids'], 'properties' => [
+    'course' => $learningCourse, 'enrollment' => ['oneOf' => [$learningEnrollment, ['type' => 'null']]], 'completed_lesson_ids' => ['type' => 'array', 'items' => ['type' => 'integer']],
+]], 'practitioner.coursecontroller.show');
+unset($courseShow);
+$lessonShow = &$spec['paths']['/practitioner/courses/{course}/lessons/{lesson}']['get'];
+$lessonShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['course', 'lesson', 'enrollment', 'completed_lesson_ids', 'prev_lesson', 'next_lesson'], 'properties' => [
+    'course' => $learningCourse, 'lesson' => $learningLesson, 'enrollment' => $learningEnrollment,
+    'completed_lesson_ids' => ['type' => 'array', 'items' => ['type' => 'integer']], 'prev_lesson' => ['oneOf' => [$learningLesson, ['type' => 'null']]], 'next_lesson' => ['oneOf' => [$learningLesson, ['type' => 'null']]],
+]], 'practitioner.lessoncontroller.show');
+unset($lessonShow);
+$certificateIndex = &$spec['paths']['/practitioner/certificates']['get'];
+$certificateIndex['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['certificates', 'validation_certificates', 'council_membership'], 'properties' => [
+    'certificates' => ['type' => 'array', 'items' => $courseCertificate], 'validation_certificates' => ['type' => 'array', 'items' => $validationCertificate],
+    'council_membership' => ['oneOf' => [['type' => 'object', 'required' => ['id', 'user_id', 'validation_certificate_id', 'title', 'term_start', 'term_end', 'status', 'invited_by', 'invited_at', 'created_at', 'updated_at'], 'properties' => [
+        'id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'], 'validation_certificate_id' => ['type' => ['integer', 'null']], 'title' => ['type' => ['string', 'null']],
+        'term_start' => ['type' => ['string', 'null'], 'format' => 'date'], 'term_end' => ['type' => ['string', 'null'], 'format' => 'date'], 'status' => ['type' => 'string'],
+        'invited_by' => ['type' => ['integer', 'null']], 'invited_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+    ]], ['type' => 'null']]],
+]], 'practitioner.certificatecontroller.index');
+unset($certificateIndex['responses']['200']['content']['application/pdf']);
+unset($certificateIndex);
 $contractPath = $root.'/docs/api/openapi.json';
 $contractTemp = $contractPath.'.tmp';
 if (file_put_contents($contractTemp, json_encode($spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR)."\n") === false || !rename($contractTemp, $contractPath)) {

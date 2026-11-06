@@ -37,10 +37,23 @@ const customers = await client.request('admin_customerProfiles_index');
 customers.data.data.items[0]!.customer?.email.toLowerCase();
 const customer = await client.request('admin_customerProfiles_show', { path: { customerProfile: 12 } });
 customer.data.data.customer_profile.facility_name?.toUpperCase();
+customer.data.data.customer_profile.customer?.phone?.toLowerCase();
+const courses = await client.request('practitioner_coursecontroller_index');
+courses.data.data.courses[0]!.title.toUpperCase();
+courses.data.data.my_enrollments[0]!.progress_percent.toFixed();
+const course = await client.request('practitioner_coursecontroller_show', { path: { course: 'example-course' } });
+course.data.data.course.lessons?.[0]!.content.toUpperCase();
+const lesson = await client.request('practitioner_lessoncontroller_show', { path: { course: 'example-course', lesson: 1 } });
+lesson.data.data.next_lesson?.title.toUpperCase();
+const certificates = await client.request('practitioner_certificatecontroller_index');
+certificates.data.data.certificates[0]!.certificate_number.toUpperCase();
+certificates.data.data.validation_certificates[0]!.tier.toUpperCase();
 // @ts-expect-error Quote result fields are constrained by the published response schema.
 quotes.data.data.items[0]!.invented_field;
 // @ts-expect-error Customer profile detail must use its declared resource key.
 customer.data.data.profile;
+// @ts-expect-error Learning progress is typed to the server projection.
+courses.data.data.my_enrollments[0]!.invented_progress;
 
 // @ts-expect-error Quote currency is a contract enum.
 void client.request('admin_finance_quotes_create', { body: { title: 'Clinic proposal', currency: 'GBP', items: [] }, idempotencyKey: key });
