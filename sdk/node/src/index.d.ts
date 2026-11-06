@@ -11,6 +11,8 @@ export interface IntegrationApplicationRequest {
 export type { BusinessOperationId } from './business-operations.js';
 import type { BusinessOperationId } from './business-operations.js';
 import type { BusinessOperationRequestOptions } from './business-operations.js';
+import type { BusinessOperationResponse } from './business-operations.js';
+import type { BusinessOperationRequiresOptions } from './business-operations.js';
 export interface EnquiryInput {
   name: string; email: string; phone?: string | null; facility_type?: string | null;
   products?: string | null; message?: string | null; product_slug?: string | null; locale?: Locale; quote_option?: QuoteOption;
@@ -170,9 +172,10 @@ export class OpesBusinessApiClient {
     baseUrl?: string; timeoutMs?: number; fetch?: typeof globalThis.fetch;
     accessToken?: string; getAccessToken?: () => string | Promise<string>;
   });
-  request<I extends BusinessOperationId, T = unknown>(operationId: I, options: BusinessOperationRequestOptions<I> & {
-    locale?: Locale; signal?: AbortSignal;
-  }): Promise<{ data: T; requestId: string | null; replayed: boolean }>;
+  request<I extends BusinessOperationId, TResponse = BusinessOperationResponse<I>>(operationId: I, ...options: BusinessOperationRequiresOptions<I> extends true
+    ? [options: BusinessOperationRequestOptions<I> & { locale?: Locale; signal?: AbortSignal }]
+    : [options?: BusinessOperationRequestOptions<I> & { locale?: Locale; signal?: AbortSignal }]
+  ): Promise<{ data: TResponse; requestId: string | null; replayed: boolean }>;
   listDeveloperApplications(options?: { page?: number; perPage?: number }): Promise<BusinessApiResult<{
     items: DeveloperOAuthApplication[];
     pagination: { current_page: number; per_page: number; total: number; last_page: number };

@@ -17,6 +17,19 @@ void client.request('admin_resourceSummaries_metric', { query: { metric: 'ticket
 void client.request('issueDelegatedUserToken', {
   body: new URLSearchParams({ grant_type: 'authorization_code' }),
 });
+const status = await client.request('api_product_status');
+status.data.data.api_version.toUpperCase();
+// @ts-expect-error Undocumented response fields are not added to inferred result types.
+status.data.data.unknown_field;
+const typedQuote = await client.request<'admin_finance_quotes_update', { data: { id: number } }>(
+  'admin_finance_quotes_update', { path: { quote: 123 }, body: { title: 'Example' }, idempotencyKey: key },
+);
+typedQuote.data.data.id.toFixed();
+const enquiry = await client.request('submitEnquiry', {
+  body: { name: 'Example', email: 'example@example.test' },
+  idempotencyKey: key,
+});
+enquiry.data.data.status.toUpperCase();
 
 // @ts-expect-error Quote currency is a contract enum.
 void client.request('admin_finance_quotes_create', { body: { title: 'Clinic proposal', currency: 'GBP', items: [] }, idempotencyKey: key });
