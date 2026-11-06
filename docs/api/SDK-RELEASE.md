@@ -1,3 +1,6 @@
+## SDK 0.128.0 — customer licenses and invoices (6 November 2026)
+
+Types owner-scoped license list/detail records and paginated invoice list/detail records, including the owner’s license key, invoice line items, computed totals and pagination. No API runtime behavior or authorization changed. OpenAPI remains 0.118.0. This private SDK preview is not published to npm. Archive size is 48097 bytes; SHA-256 is `d438115fb3db3f27ddc13739f8c44f4a231c56ab60a61b14de39685a82737d82`.
 ## SDK 0.127.0 — customer support tickets and replies (6 November 2026)
 
 Types the customer ticket list and detail, pagination, public replies and creation/reply acknowledgements. Internal staff replies are excluded by the existing customer query and serializer. Ticket ownership, open-ticket reply rules, notifications and idempotency behavior are unchanged. OpenAPI remains 0.118.0; the downloadable preview is not published to npm. Archive size is 47834 bytes; SHA-256 is `3d9a888c4760ff6f27657ac1d341038be60b25bccccbeb442cd391e999431047`.

@@ -12004,7 +12004,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns the authenticated customer\u2019s sent, paid and overdue invoices with line items, totals and pagination metadata.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -12016,10 +12016,195 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "invoices"
+                                            ],
+                                            "properties": {
+                                                "invoices": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "items",
+                                                        "meta"
+                                                    ],
+                                                    "properties": {
+                                                        "items": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object",
+                                                                "required": [
+                                                                    "id",
+                                                                    "customer_id",
+                                                                    "issued_by",
+                                                                    "license_id",
+                                                                    "status",
+                                                                    "currency",
+                                                                    "tax_rate",
+                                                                    "notes",
+                                                                    "due_date",
+                                                                    "paid_at",
+                                                                    "created_at",
+                                                                    "updated_at",
+                                                                    "invoice_number",
+                                                                    "subtotal",
+                                                                    "tax_amount",
+                                                                    "grand_total",
+                                                                    "amount_paid",
+                                                                    "amount_outstanding"
+                                                                ],
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "customer_id": {
+                                                                        "type": [
+                                                                            "integer",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "issued_by": {
+                                                                        "type": [
+                                                                            "integer",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "license_id": {
+                                                                        "type": [
+                                                                            "integer",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "status": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "draft",
+                                                                            "sent",
+                                                                            "paid",
+                                                                            "overdue",
+                                                                            "cancelled"
+                                                                        ]
+                                                                    },
+                                                                    "currency": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "tax_rate": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "notes": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "due_date": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ],
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "paid_at": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ],
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "updated_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "invoice_number": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "subtotal": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "tax_amount": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "grand_total": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "amount_paid": {
+                                                                        "type": "number"
+                                                                    },
+                                                                    "amount_outstanding": {
+                                                                        "type": "number"
+                                                                    },
+                                                                    "items": {
+                                                                        "type": "array",
+                                                                        "items": {
+                                                                            "type": "object",
+                                                                            "required": [
+                                                                                "id",
+                                                                                "invoice_id",
+                                                                                "description",
+                                                                                "quantity",
+                                                                                "unit_price",
+                                                                                "created_at",
+                                                                                "updated_at"
+                                                                            ],
+                                                                            "properties": {
+                                                                                "id": {
+                                                                                    "type": "integer"
+                                                                                },
+                                                                                "invoice_id": {
+                                                                                    "type": "integer"
+                                                                                },
+                                                                                "description": {
+                                                                                    "type": "string"
+                                                                                },
+                                                                                "quantity": {
+                                                                                    "type": "integer"
+                                                                                },
+                                                                                "unit_price": {
+                                                                                    "type": "integer"
+                                                                                },
+                                                                                "created_at": {
+                                                                                    "type": "string",
+                                                                                    "format": "date-time"
+                                                                                },
+                                                                                "updated_at": {
+                                                                                    "type": "string",
+                                                                                    "format": "date-time"
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "meta": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "page",
+                                                                "per_page",
+                                                                "total",
+                                                                "last_page"
+                                                            ],
+                                                            "properties": {
+                                                                "page": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "per_page": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "total": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "last_page": {
+                                                                    "type": "integer"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -12031,10 +12216,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -12198,7 +12380,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns one invoice owned by the authenticated customer with its invoice line items and totals.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -12210,10 +12392,160 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "invoice"
+                                            ],
+                                            "properties": {
+                                                "invoice": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "customer_id",
+                                                        "issued_by",
+                                                        "license_id",
+                                                        "status",
+                                                        "currency",
+                                                        "tax_rate",
+                                                        "notes",
+                                                        "due_date",
+                                                        "paid_at",
+                                                        "created_at",
+                                                        "updated_at",
+                                                        "invoice_number",
+                                                        "subtotal",
+                                                        "tax_amount",
+                                                        "grand_total",
+                                                        "amount_paid",
+                                                        "amount_outstanding"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "customer_id": {
+                                                            "type": [
+                                                                "integer",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "issued_by": {
+                                                            "type": [
+                                                                "integer",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "license_id": {
+                                                            "type": [
+                                                                "integer",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "draft",
+                                                                "sent",
+                                                                "paid",
+                                                                "overdue",
+                                                                "cancelled"
+                                                            ]
+                                                        },
+                                                        "currency": {
+                                                            "type": "string"
+                                                        },
+                                                        "tax_rate": {
+                                                            "type": "string"
+                                                        },
+                                                        "notes": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "due_date": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "paid_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        },
+                                                        "invoice_number": {
+                                                            "type": "string"
+                                                        },
+                                                        "subtotal": {
+                                                            "type": "integer"
+                                                        },
+                                                        "tax_amount": {
+                                                            "type": "integer"
+                                                        },
+                                                        "grand_total": {
+                                                            "type": "integer"
+                                                        },
+                                                        "amount_paid": {
+                                                            "type": "number"
+                                                        },
+                                                        "amount_outstanding": {
+                                                            "type": "number"
+                                                        },
+                                                        "items": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object",
+                                                                "required": [
+                                                                    "id",
+                                                                    "invoice_id",
+                                                                    "description",
+                                                                    "quantity",
+                                                                    "unit_price",
+                                                                    "created_at",
+                                                                    "updated_at"
+                                                                ],
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "invoice_id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "description": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "quantity": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "unit_price": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "updated_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -12225,10 +12557,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -12954,7 +13283,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns licenses belonging to the authenticated customer with pagination metadata, including that customer\u2019s license keys.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -12966,10 +13295,134 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "licenses"
+                                            ],
+                                            "properties": {
+                                                "licenses": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "items",
+                                                        "meta"
+                                                    ],
+                                                    "properties": {
+                                                        "items": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object",
+                                                                "required": [
+                                                                    "id",
+                                                                    "user_id",
+                                                                    "issued_by",
+                                                                    "product_slug",
+                                                                    "product_name",
+                                                                    "license_key",
+                                                                    "plan",
+                                                                    "seats",
+                                                                    "status",
+                                                                    "start_date",
+                                                                    "end_date",
+                                                                    "price",
+                                                                    "currency",
+                                                                    "notes",
+                                                                    "created_at",
+                                                                    "updated_at"
+                                                                ],
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "user_id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "issued_by": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "product_slug": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "product_name": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "license_key": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "plan": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "seats": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "status": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "active",
+                                                                            "suspended",
+                                                                            "expired",
+                                                                            "cancelled"
+                                                                        ]
+                                                                    },
+                                                                    "start_date": {
+                                                                        "type": "string",
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "end_date": {
+                                                                        "type": "string",
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "price": {
+                                                                        "type": [
+                                                                            "integer",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "currency": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "notes": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "updated_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time"
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "meta": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "page",
+                                                                "per_page",
+                                                                "total",
+                                                                "last_page"
+                                                            ],
+                                                            "properties": {
+                                                                "page": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "per_page": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "total": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "last_page": {
+                                                                    "type": "integer"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -12981,10 +13434,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -13148,7 +13598,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns a license owned by the authenticated customer, including its license key.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13160,10 +13610,99 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "license"
+                                            ],
+                                            "properties": {
+                                                "license": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "user_id",
+                                                        "issued_by",
+                                                        "product_slug",
+                                                        "product_name",
+                                                        "license_key",
+                                                        "plan",
+                                                        "seats",
+                                                        "status",
+                                                        "start_date",
+                                                        "end_date",
+                                                        "price",
+                                                        "currency",
+                                                        "notes",
+                                                        "created_at",
+                                                        "updated_at"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "user_id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "issued_by": {
+                                                            "type": "integer"
+                                                        },
+                                                        "product_slug": {
+                                                            "type": "string"
+                                                        },
+                                                        "product_name": {
+                                                            "type": "string"
+                                                        },
+                                                        "license_key": {
+                                                            "type": "string"
+                                                        },
+                                                        "plan": {
+                                                            "type": "string"
+                                                        },
+                                                        "seats": {
+                                                            "type": "integer"
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "active",
+                                                                "suspended",
+                                                                "expired",
+                                                                "cancelled"
+                                                            ]
+                                                        },
+                                                        "start_date": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        },
+                                                        "end_date": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        },
+                                                        "price": {
+                                                            "type": [
+                                                                "integer",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "currency": {
+                                                            "type": "string"
+                                                        },
+                                                        "notes": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -13175,10 +13714,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },

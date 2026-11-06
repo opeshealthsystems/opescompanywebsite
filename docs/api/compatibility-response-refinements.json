@@ -79,6 +79,30 @@
   },
   {
     "method": "GET",
+    "path": "/customer/licenses",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents paginated licenses belonging to the authenticated customer, including the license keys already exposed to that owner by ApiWorkflowSerializer. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/customer/licenses/{id}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing ownership-checked customer license detail, including the owner’s license key. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/customer/invoices",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the authenticated customer’s sent, paid and overdue invoices, their current computed totals and the items loaded by those totals. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/customer/invoices/{id}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing ownership-checked invoice detail and line items returned by CustomerInvoiceQueries and ApiWorkflowSerializer. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
     "path": "/customer/tickets",
     "allow_response_schema_refinement": true,
     "reason": "Documents paginated tickets belonging to the authenticated customer from CustomerTicketQueries and ApiWorkflowSerializer. No response bytes, request shape, authorization or status behavior changes."

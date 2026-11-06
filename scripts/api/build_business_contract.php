@@ -1411,6 +1411,61 @@ $customerTicketReply['responses']['200']['content']['application/json']['schema'
     'locale' => ['type' => 'string', 'enum' => ['en', 'fr']], 'id' => ['type' => 'integer'],
 ]);
 unset($customerTicketReply, $customerTicketCommandResponse);
+$customerLicenseResource = ['type' => 'object', 'required' => ['id', 'user_id', 'issued_by', 'product_slug', 'product_name', 'license_key', 'plan', 'seats', 'status', 'start_date', 'end_date', 'price', 'currency', 'notes', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'], 'issued_by' => ['type' => 'integer'], 'product_slug' => ['type' => 'string'],
+    'product_name' => ['type' => 'string'], 'license_key' => ['type' => 'string'], 'plan' => ['type' => 'string'], 'seats' => ['type' => 'integer'],
+    'status' => ['type' => 'string', 'enum' => ['active', 'suspended', 'expired', 'cancelled']],
+    'start_date' => ['type' => 'string', 'format' => 'date-time'], 'end_date' => ['type' => 'string', 'format' => 'date-time'],
+    'price' => ['type' => ['integer', 'null']], 'currency' => ['type' => 'string'], 'notes' => ['type' => ['string', 'null']],
+    'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+]];
+$customerLicenseList = &$spec['paths']['/customer/licenses']['get'];
+$customerLicenseList['responses']['200']['description'] = 'Returns licenses belonging to the authenticated customer with pagination metadata, including that customer’s license keys.';
+$customerLicenseList['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['licenses'], 'properties' => [
+    'licenses' => ['type' => 'object', 'required' => ['items', 'meta'], 'properties' => [
+        'items' => ['type' => 'array', 'items' => $customerLicenseResource],
+        'meta' => ['type' => 'object', 'required' => ['page', 'per_page', 'total', 'last_page'], 'properties' => [
+            'page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+        ]],
+    ]],
+]], 'customer.licensecontroller.index');
+unset($customerLicenseList);
+$customerLicenseShow = &$spec['paths']['/customer/licenses/{id}']['get'];
+$customerLicenseShow['responses']['200']['description'] = 'Returns a license owned by the authenticated customer, including its license key.';
+$customerLicenseShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['license'], 'properties' => [
+    'license' => $customerLicenseResource,
+]], 'customer.licensecontroller.show');
+unset($customerLicenseShow);
+$customerInvoiceItem = ['type' => 'object', 'required' => ['id', 'invoice_id', 'description', 'quantity', 'unit_price', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'invoice_id' => ['type' => 'integer'], 'description' => ['type' => 'string'], 'quantity' => ['type' => 'integer'],
+    'unit_price' => ['type' => 'integer'], 'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+]];
+$customerInvoiceResource = ['type' => 'object', 'required' => ['id', 'customer_id', 'issued_by', 'license_id', 'status', 'currency', 'tax_rate', 'notes', 'due_date', 'paid_at', 'created_at', 'updated_at', 'invoice_number', 'subtotal', 'tax_amount', 'grand_total', 'amount_paid', 'amount_outstanding'], 'properties' => [
+    'id' => ['type' => 'integer'], 'customer_id' => ['type' => ['integer', 'null']], 'issued_by' => ['type' => ['integer', 'null']], 'license_id' => ['type' => ['integer', 'null']],
+    'status' => ['type' => 'string', 'enum' => ['draft', 'sent', 'paid', 'overdue', 'cancelled']], 'currency' => ['type' => 'string'],
+    'tax_rate' => ['type' => 'string'], 'notes' => ['type' => ['string', 'null']], 'due_date' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'paid_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'created_at' => ['type' => 'string', 'format' => 'date-time'],
+    'updated_at' => ['type' => 'string', 'format' => 'date-time'], 'invoice_number' => ['type' => 'string'], 'subtotal' => ['type' => 'integer'],
+    'tax_amount' => ['type' => 'integer'], 'grand_total' => ['type' => 'integer'], 'amount_paid' => ['type' => 'number'], 'amount_outstanding' => ['type' => 'number'],
+    'items' => ['type' => 'array', 'items' => $customerInvoiceItem],
+]];
+$customerInvoiceList = &$spec['paths']['/customer/invoices']['get'];
+$customerInvoiceList['responses']['200']['description'] = 'Returns the authenticated customer’s sent, paid and overdue invoices with line items, totals and pagination metadata.';
+$customerInvoiceList['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['invoices'], 'properties' => [
+    'invoices' => ['type' => 'object', 'required' => ['items', 'meta'], 'properties' => [
+        'items' => ['type' => 'array', 'items' => $customerInvoiceResource],
+        'meta' => ['type' => 'object', 'required' => ['page', 'per_page', 'total', 'last_page'], 'properties' => [
+            'page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+        ]],
+    ]],
+]], 'customer.invoicecontroller.index');
+unset($customerInvoiceList);
+$customerInvoiceShow = &$spec['paths']['/customer/invoices/{id}']['get'];
+$customerInvoiceShow['responses']['200']['description'] = 'Returns one invoice owned by the authenticated customer with its invoice line items and totals.';
+$customerInvoiceShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['invoice'], 'properties' => [
+    'invoice' => $customerInvoiceResource,
+]], 'customer.invoicecontroller.show');
+unset($customerInvoiceShow);
 $customerDashboard = &$spec['paths']['/customer/dashboard']['get'];
 $dashboardTicket = ['type' => 'object', 'required' => ['id', 'user_id', 'assigned_to', 'subject', 'description', 'type', 'status', 'priority', 'resolution', 'resolved_at', 'closed_at', 'tester_assignment_id', 'sla_rule_id', 'sla_response_due_at', 'sla_resolution_due_at', 'created_at', 'updated_at'], 'properties' => [
     'id' => ['type' => 'integer'], 'user_id' => ['type' => ['integer', 'null']], 'assigned_to' => ['type' => ['integer', 'null']],
