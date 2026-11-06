@@ -209,5 +209,40 @@ class ApiIdentityTest extends TestCase
             ->assertSee($sdk['url'])->assertSee('SHA-256 checksum')->assertSee('/api/v1/me/usage')->assertSee('identity:read');
         $this->get('/fr/developers')->assertOk()->assertSee('Intégrez les API OPES')->assertSee('/api/v1/me/usage');
     }
+
+    public function test_public_api_product_versions_and_download_checksum_match_the_release_artifacts(): void
+    {
+        $contract = json_decode(file_get_contents(base_path('docs/api/openapi.json')), true, 512, JSON_THROW_ON_ERROR);
+        $sdk = json_decode(file_get_contents(public_path('downloads/opes-api-sdk.json')), true, 512, JSON_THROW_ON_ERROR);
+        $package = json_decode(file_get_contents(base_path('sdk/node/package.json')), true, 512, JSON_THROW_ON_ERROR);
+        $sdkOperationsSource = file_get_contents(base_path('sdk/node/src/business-operations.js'));
+        $this->assertSame(1, preg_match('/Object\.freeze\((\{.*\})\);\s*\z/s', $sdkOperationsSource, $matches));
+        $sdkOperations = json_decode($matches[1], true, 512, JSON_THROW_ON_ERROR);
+        $contractOperationIds = [];
+        foreach ($contract['paths'] as $pathItem) {
+            foreach ($pathItem as $method => $operation) {
+                if (in_array(strtoupper($method), ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], true) && isset($operation['operationId'])) {
+                    $contractOperationIds[] = $operation['operationId'];
+                }
+            }
+        }
+        $sdkOperationIds = array_keys($sdkOperations);
+        sort($contractOperationIds);
+        sort($sdkOperationIds);
+        $archive = public_path(ltrim($sdk['url'], '/'));
+        $apiVersion = $contract['info']['version'];
+
+        $this->assertSame($apiVersion, config('api_product.version'));
+        $this->assertSame($apiVersion, config('api_product.changelog.0.version'));
+        $this->assertSame($package['version'], $sdk['version']);
+        $this->assertSame($contractOperationIds, $sdkOperationIds, 'The SDK registry must include every documented HTTP operation exactly once.');
+        $this->assertFileExists($archive);
+        $this->assertSame($sdk['bytes'], filesize($archive));
+        $this->assertSame($sdk['sha256'], hash_file('sha256', $archive));
+
+        $this->getJson('/api/v1/status')->assertOk()->assertJsonPath('data.api_version', $apiVersion);
+        $this->getJson('/api/v1/api-products')->assertOk()->assertJsonPath('data.api_version', $apiVersion);
+        $this->getJson('/api/v1/changelog')->assertOk()->assertJsonPath('data.items.0.version', $apiVersion);
+    }
 }
 
