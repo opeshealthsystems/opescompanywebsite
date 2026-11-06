@@ -79,6 +79,36 @@
   },
   {
     "method": "GET",
+    "path": "/customer/tickets",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents paginated tickets belonging to the authenticated customer from CustomerTicketQueries and ApiWorkflowSerializer. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/customer/tickets/options",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing empty customer-ticket form payload and API envelope. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/customer/tickets/{id}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents a customer-owned ticket and its public replies from CustomerTicketQueries. Internal replies remain filtered by the existing query and serializer. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "POST",
+    "path": "/customer/tickets",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing locale and success acknowledgement after CustomerTicketCommands accepts a new ticket. No ticket creation, notification, idempotency, authorization or status behavior changes."
+  },
+  {
+    "method": "POST",
+    "path": "/customer/tickets/{id}/reply",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing locale, ticket identifier and success acknowledgement after a customer reply is accepted. Internal replies remain excluded. No reply, notification, idempotency, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
     "path": "/customer/courses",
     "allow_response_schema_refinement": true,
     "reason": "Documents active courses and authenticated customer enrollment records from CustomerCourseQueries and ApiWorkflowSerializer. No response bytes, request shape, authorization or status behavior changes."

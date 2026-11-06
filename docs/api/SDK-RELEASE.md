@@ -1,3 +1,6 @@
+## SDK 0.127.0 — customer support tickets and replies (6 November 2026)
+
+Types the customer ticket list and detail, pagination, public replies and creation/reply acknowledgements. Internal staff replies are excluded by the existing customer query and serializer. Ticket ownership, open-ticket reply rules, notifications and idempotency behavior are unchanged. OpenAPI remains 0.118.0; the downloadable preview is not published to npm. Archive size is 47834 bytes; SHA-256 is `3d9a888c4760ff6f27657ac1d341038be60b25bccccbeb442cd391e999431047`.
 ## SDK 0.126.0 — customer learning and certificate workflows (6 November 2026)
 
 Types customer course catalogues, enrollments, lesson content and navigation, completion acknowledgements, and issued certificate records. Enrollment and lesson completion response types preserve their existing success and already-enrolled outcomes. The server behavior and authorization remain unchanged. OpenAPI remains 0.118.0. This private downloadable SDK preview is not published to npm. Archive size is 47718 bytes; SHA-256 is `d49df9256283c5ce28eb57047f3473db5f8448bade2033f0124544a81573c2e7`.

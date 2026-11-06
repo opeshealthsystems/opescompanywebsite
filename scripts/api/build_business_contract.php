@@ -1347,6 +1347,70 @@ $customerLessonDone['responses']['200']['content']['application/json']['schema']
     'messages' => ['type' => 'object', 'required' => ['success'], 'properties' => ['success' => ['type' => 'string']]],
 ]];
 unset($customerLessonDone);
+$customerTicketResource = ['type' => 'object', 'required' => ['id', 'user_id', 'assigned_to', 'subject', 'description', 'type', 'status', 'priority', 'resolution', 'resolved_at', 'closed_at', 'tester_assignment_id', 'sla_rule_id', 'sla_response_due_at', 'sla_resolution_due_at', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'user_id' => ['type' => ['integer', 'null']], 'assigned_to' => ['type' => ['integer', 'null']],
+    'subject' => ['type' => 'string'], 'description' => ['type' => 'string'],
+    'type' => ['type' => 'string', 'enum' => ['support', 'billing', 'technical', 'bug_report', 'other']],
+    'status' => ['type' => 'string', 'enum' => ['open', 'in_progress', 'pending_customer', 'resolved', 'closed']],
+    'priority' => ['type' => 'string', 'enum' => ['low', 'medium', 'high', 'urgent']], 'resolution' => ['type' => ['string', 'null']],
+    'resolved_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'closed_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'tester_assignment_id' => ['type' => ['integer', 'null']], 'sla_rule_id' => ['type' => ['integer', 'null']],
+    'sla_response_due_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'sla_resolution_due_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+    'public_replies' => ['type' => 'array', 'items' => ['type' => 'object', 'required' => ['id', 'ticket_id', 'user_id', 'body', 'is_internal', 'created_at', 'updated_at', 'author'], 'properties' => [
+        'id' => ['type' => 'integer'], 'ticket_id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'], 'body' => ['type' => 'string'],
+        'is_internal' => ['type' => 'boolean', 'const' => false], 'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+        'author' => ['type' => 'object', 'required' => ['id', 'name'], 'properties' => [
+            'id' => ['type' => 'integer'], 'name' => ['type' => 'string'], 'email' => ['type' => 'string', 'format' => 'email'],
+            'phone' => ['type' => ['string', 'null']], 'is_active' => ['type' => 'boolean'], 'position' => ['type' => ['string', 'null']],
+            'avatar' => ['type' => ['string', 'null']], 'employee_id' => ['type' => ['string', 'null']], 'department_id' => ['type' => ['integer', 'null']],
+        ]],
+    ]]],
+]];
+$customerTicketList = &$spec['paths']['/customer/tickets']['get'];
+$customerTicketList['responses']['200']['description'] = 'Returns tickets belonging to the authenticated customer with pagination metadata.';
+$customerTicketList['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['tickets'], 'properties' => [
+    'tickets' => ['type' => 'object', 'required' => ['items', 'meta'], 'properties' => [
+        'items' => ['type' => 'array', 'items' => $customerTicketResource],
+        'meta' => ['type' => 'object', 'required' => ['page', 'per_page', 'total', 'last_page'], 'properties' => [
+            'page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+        ]],
+    ]],
+]], 'customer.ticketcontroller.index');
+unset($customerTicketList);
+$customerTicketShow = &$spec['paths']['/customer/tickets/{id}']['get'];
+$customerTicketShow['responses']['200']['description'] = 'Returns one customer-owned support ticket and its public replies; internal replies are not included.';
+$customerTicketShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['ticket'], 'properties' => [
+    'ticket' => $customerTicketResource,
+]], 'customer.ticketcontroller.show');
+unset($customerTicketShow);
+$customerTicketOptions = &$spec['paths']['/customer/tickets/options']['get'];
+$customerTicketOptions['responses']['200']['description'] = 'Returns the empty data acknowledgement for the customer ticket creation page.';
+$customerTicketOptions['responses']['200']['content']['application/json']['schema'] = ['type' => 'object', 'required' => ['data', 'meta', 'messages'], 'properties' => [
+    'data' => ['type' => 'array', 'maxItems' => 0],
+    'meta' => ['type' => 'object', 'required' => ['operation'], 'properties' => ['operation' => ['type' => 'string', 'const' => 'customer.ticketcontroller.create']]],
+    'messages' => ['type' => 'array', 'maxItems' => 0],
+]];
+unset($customerTicketOptions);
+$customerTicketCommandResponse = static function (string $operation, array $data): array { return [
+    'type' => 'object', 'required' => ['data', 'meta', 'messages'], 'properties' => [
+        'data' => ['type' => 'object', 'required' => array_keys($data), 'properties' => $data],
+        'meta' => ['type' => 'object', 'required' => ['operation'], 'properties' => ['operation' => ['type' => 'string', 'const' => $operation]]],
+        'messages' => ['type' => 'object', 'required' => ['success'], 'properties' => ['success' => ['type' => 'string']]],
+    ],
+]; };
+$customerTicketCreate = &$spec['paths']['/customer/tickets']['post'];
+$customerTicketCreate['responses']['200']['description'] = 'Returns the locale and success acknowledgement after the customer ticket is accepted.';
+$customerTicketCreate['responses']['200']['content']['application/json']['schema'] = $customerTicketCommandResponse('customer.ticketcontroller.store', [
+    'locale' => ['type' => 'string', 'enum' => ['en', 'fr']],
+]);
+unset($customerTicketCreate);
+$customerTicketReply = &$spec['paths']['/customer/tickets/{id}/reply']['post'];
+$customerTicketReply['responses']['200']['description'] = 'Returns the locale, ticket identifier and acknowledgement after the customer reply is accepted.';
+$customerTicketReply['responses']['200']['content']['application/json']['schema'] = $customerTicketCommandResponse('customer.ticketcontroller.reply', [
+    'locale' => ['type' => 'string', 'enum' => ['en', 'fr']], 'id' => ['type' => 'integer'],
+]);
+unset($customerTicketReply, $customerTicketCommandResponse);
 $customerDashboard = &$spec['paths']['/customer/dashboard']['get'];
 $dashboardTicket = ['type' => 'object', 'required' => ['id', 'user_id', 'assigned_to', 'subject', 'description', 'type', 'status', 'priority', 'resolution', 'resolved_at', 'closed_at', 'tester_assignment_id', 'sla_rule_id', 'sla_response_due_at', 'sla_resolution_due_at', 'created_at', 'updated_at'], 'properties' => [
     'id' => ['type' => 'integer'], 'user_id' => ['type' => ['integer', 'null']], 'assigned_to' => ['type' => ['integer', 'null']],
