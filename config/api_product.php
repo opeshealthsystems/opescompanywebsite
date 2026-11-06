@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version' => '0.115.0',
+    'version' => '0.116.0',
     'products' => [
         [
             'id' => 'public-enquiries',
@@ -35,11 +35,11 @@ return [
             'availability' => 'preview',
             'authentication' => 'OAuth 2.0 client credentials',
             'scope' => 'integration:read',
-            'access' => 'GET /api/v1/integration, GET /api/v1/integration/usage, GET /api/v1/integration/quota',
-            'summary' => 'Inspect the authenticated machine client, its request totals, and configured daily/monthly quotas.',
-            'summary_fr' => 'Consultez le client machine authentifié, ses totaux de requêtes et ses quotas quotidiens/mensuels configurés.',
-            'data_boundary' => 'The caller can read only usage attributed to its own machine client.',
-            'data_boundary_fr' => 'L’appelant ne peut lire que l’utilisation attribuée à son propre client machine.',
+            'access' => 'GET /api/v1/integration, GET /api/v1/integration/usage, GET /api/v1/integration/quota, GET /api/v1/integration/metrics',
+            'summary' => 'Inspect the authenticated machine client, its request totals, aggregate operation metrics, and configured daily/monthly quotas.',
+            'summary_fr' => 'Consultez le client machine authentifié, ses totaux de requêtes, les métriques agrégées par opération et ses quotas quotidiens/mensuels configurés.',
+            'data_boundary' => 'The caller can read only usage attributed to its own machine client. Metrics contain aggregate route names, HTTP status classes and response times; request URLs, payloads and record identifiers are not retained.',
+            'data_boundary_fr' => 'L’appelant ne peut consulter que l’utilisation attribuée à son propre client machine. Les métriques contiennent des noms de routes agrégés, des classes de statut HTTP et des temps de réponse ; les URL, charges utiles et identifiants d’enregistrement ne sont pas conservés.',
         ],
         [
             'id' => 'delegated-business-workflows',
@@ -85,14 +85,19 @@ return [
             'availability' => 'preview',
             'authentication' => 'OAuth 2.0 delegated user token with identity:read or identity:write; issued machine credentials use client_credentials',
             'scope' => 'identity:read, identity:write; issued credentials are restricted to catalogue:read and integration:read',
-            'access' => 'GET, POST /api/v1/developer/machine-clients; POST /api/v1/developer/machine-clients/{client}/rotate; DELETE /api/v1/developer/machine-clients/{client}',
-            'summary' => 'Create and manage up to five owner-scoped machine API clients for the public product catalogue and the client’s own integration usage and quota data.',
-            'summary_fr' => 'Créez et gérez jusqu’à cinq clients API machine réservés au catalogue public et aux propres données d’utilisation et de quota du client.',
-            'data_boundary' => 'Only catalogue:read and integration:read are issued. Credentials cannot access patient records or delegated business resources. Client secrets are returned only on creation or rotation; listings never include secrets. Rotating or revoking invalidates existing tokens.',
-            'data_boundary_fr' => 'Seules les portées catalogue:read et integration:read sont émises. Ces identifiants ne donnent accès ni aux dossiers patients ni aux ressources métier déléguées. Le secret est renvoyé uniquement à la création ou à la rotation ; les listes ne contiennent jamais de secret. La rotation ou la révocation invalide les jetons existants.',
+            'access' => 'GET, POST /api/v1/developer/machine-clients; POST /api/v1/developer/machine-clients/{client}/rotate; DELETE /api/v1/developer/machine-clients/{client}; GET /api/v1/integration/metrics',
+            'summary' => 'Create and manage up to five owner-scoped machine API clients for the public product catalogue and the client’s own integration usage, quota and aggregate request metrics.',
+            'summary_fr' => 'Créez et gérez jusqu’à cinq clients API machine réservés au catalogue public et aux propres données d’utilisation, de quota et de métriques agrégées du client.',
+            'data_boundary' => 'Only catalogue:read and integration:read are issued. Credentials cannot access patient records or delegated business resources. Metrics contain aggregate route names, HTTP status classes and response times; request URLs, payloads and record identifiers are not retained. Client secrets are returned only on creation or rotation; listings never include secrets. Rotating or revoking invalidates existing tokens.',
+            'data_boundary_fr' => 'Seules les portées catalogue:read et integration:read sont émises. Ces identifiants ne donnent accès ni aux dossiers patients ni aux ressources métier déléguées. Les métriques contiennent des noms de routes agrégés, des classes de statut HTTP et des temps de réponse ; les URL, charges utiles et identifiants d’enregistrement ne sont pas conservés. Le secret est renvoyé uniquement à la création ou à la rotation ; les listes ne contiennent jamais de secret. La rotation ou la révocation invalide les jetons existants.',
         ],
     ],
     'changelog' => [
+        [
+            'version' => '0.116.0',
+            'released_at' => '2026-11-06',
+            'summary' => 'Added caller-scoped 30-day API request metrics with daily counts, HTTP status classes, top operations and aggregate response times.',
+        ],
         [
             'version' => '0.115.0',
             'released_at' => '2026-11-06',

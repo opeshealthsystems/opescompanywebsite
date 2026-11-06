@@ -116,6 +116,13 @@ class DeveloperMachineClientsApiTest extends TestCase
         ])->assertOk()->json('access_token');
         $this->getJson('/api/v1/integration', ['Authorization' => 'Bearer '.$machineToken])
             ->assertOk()->assertJsonPath('data.client_id', $clientId);
+        $metrics = $this->getJson('/api/v1/integration/metrics', ['Authorization' => 'Bearer '.$machineToken])
+            ->assertOk()->assertJsonPath('data.requests', 1)
+            ->assertJsonPath('data.operations.0.operation', 'api.v1.integration');
+        $this->assertDatabaseHas('api_request_metrics', [
+            'client_id' => $clientId, 'principal_type' => 'machine', 'principal_id' => $clientId,
+            'route_key' => 'api.v1.integration',
+        ]);
         $this->getJson('/api/v1/developer/machine-clients', ['Authorization' => 'Bearer '.$machineToken])
             ->assertUnauthorized();
 
@@ -134,5 +141,19 @@ class DeveloperMachineClientsApiTest extends TestCase
             'grant_type' => 'client_credentials', 'client_id' => $clientId,
             'client_secret' => $newSecret, 'scope' => 'integration:read',
         ])->assertUnauthorized();
+    }
+
+    public function test_delegated_metrics_are_scoped_to_the_signed_in_user_and_current_application(): void
+    {
+        $user = $this->user();
+        $token = $this->delegatedToken($user);
+
+        $this->getJson('/api/v1/me/metrics', ['Authorization' => 'Bearer '.$token])
+            ->assertOk()->assertJsonPath('data.requests', 0)
+            ->assertJsonCount(30, 'data.daily');
+
+        $this->getJson('/api/v1/me/metrics', ['Authorization' => 'Bearer '.$token])
+            ->assertOk()->assertJsonPath('data.requests', 1)
+            ->assertJsonPath('data.operations.0.operation', 'api.v1.me.metrics');
     }
 }

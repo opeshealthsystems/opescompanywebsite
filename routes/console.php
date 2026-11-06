@@ -26,3 +26,11 @@ Schedule::command('payouts:poll')->everyFiveMinutes()->withoutOverlapping();
 // Requires a hosting scheduler invoking artisan schedule:run every minute.
 Schedule::command('website-forms:deliver --retry-only --limit=100')->everyMinute()->withoutOverlapping();
 Schedule::command('business:outbox --limit=100')->everyMinute()->withoutOverlapping();
+
+Artisan::command('api:metrics-prune {--days=35}', function (): void {
+    $days = max(31, min(90, (int) $this->option('days')));
+    $deleted = \Illuminate\Support\Facades\DB::table('api_request_metrics')
+        ->where('metric_date', '<', now('UTC')->subDays($days)->toDateString())
+        ->delete();
+    $this->info("Pruned {$deleted} API metric aggregates older than {$days} days.");
+})->purpose('Remove API request metric aggregates beyond the configured retention window');

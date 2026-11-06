@@ -18,6 +18,7 @@ final class AuthenticateBusinessUser
 
     public function handle(Request $request, Closure $next)
     {
+        $startedAt = hrtime(true);
         try { $psr = $this->server->validateAuthenticatedRequest((new PsrHttpFactory)->createRequest($request)); }
         catch (OAuthServerException) { throw new UnauthorizedHttpException('Bearer'); }
         $subject = (string) $psr->getAttribute('oauth_user_id');
@@ -40,7 +41,18 @@ final class AuthenticateBusinessUser
         \Illuminate\Support\Facades\DB::table('api_user_usage')
             ->where('client_id', $client->id)->where('user_id', $user->id)->where('usage_date', $usageDate)
             ->increment('requests');
-        try { return $next($request); }
+        $metrics = app(\App\Contexts\ApiIdentity\Application\Services\ApiRequestMetricRecorder::class);
+        try {
+            $response = $next($request);
+            $metrics->record($request, (string) $client->id, 'user', (string) $user->id, $response->getStatusCode(),
+                \App\Contexts\ApiIdentity\Application\Services\ApiRequestMetricRecorder::durationMilliseconds($startedAt));
+            return $response;
+        } catch (\Throwable $error) {
+            $metrics->record($request, (string) $client->id, 'user', (string) $user->id,
+                \App\Contexts\ApiIdentity\Application\Services\ApiRequestMetricRecorder::exceptionStatus($error),
+                \App\Contexts\ApiIdentity\Application\Services\ApiRequestMetricRecorder::durationMilliseconds($startedAt));
+            throw $error;
+        }
         finally { $request->setUserResolver($resolver); }
     }
 }

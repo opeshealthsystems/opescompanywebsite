@@ -28,6 +28,7 @@ final class DeveloperMachineClientQueries extends WorkflowHandler
         $items = $page->getCollection()->map(function ($client): array {
             $usage = app(MachineIntegrationUsageQueries::class)->execute($client)->data;
             $quota = app(MachineClientQuota::class)->snapshot($client);
+            $metrics = app(ApiRequestMetricsQueries::class)->execute((string) $client->getKey(), 'machine', (string) $client->getKey());
             return [
                 'client_id' => (string) $client->getKey(),
                 'name' => $client->name,
@@ -36,6 +37,7 @@ final class DeveloperMachineClientQueries extends WorkflowHandler
                 'created_at' => $client->created_at?->toIso8601String(),
                 'usage' => $usage,
                 'quota' => $quota,
+                'metrics' => $metrics,
             ];
         })->all();
 

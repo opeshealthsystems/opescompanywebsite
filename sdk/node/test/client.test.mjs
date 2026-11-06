@@ -105,6 +105,18 @@ test('machine client exposes its own quota snapshot', async () => {
   assert.equal(requests, 1);
 });
 
+test('machine client exposes aggregate request metrics using its own bearer token', async () => {
+  const client = new OpesClient({ oauth, fetch: async (url, options) => {
+    if (url.endsWith('/oauth/token')) return token();
+    assert.ok(url.endsWith('/integration/metrics'));
+    assert.equal(options.headers.Authorization, 'Bearer fictional-token');
+    return json({ data: { requests: 4, responses_4xx: 1, responses_5xx: 0, operations: [] } });
+  } });
+  const result = await client.integrationMetrics();
+  assert.equal(result.data.requests, 4);
+  assert.equal(result.data.responses_4xx, 1);
+});
+
 test('public service catalogue selects the requested locale without OAuth credentials', async () => {
   let calls = 0;
   const client = new OpesClient({ fetch: async (url, options) => {
@@ -143,6 +155,21 @@ test('business operation client uses generated paths, delegated auth and command
   } });
   const usage = await usageClient.request('readOwnBusinessUsage');
   assert.equal(usage.data.data.requests_last_30_days, 9);
+});
+
+test('business SDK reads the current OAuth user application request metrics', async () => {
+  let calls = 0;
+  const client = new OpesBusinessApiClient({ accessToken: 'fictional-user-token', fetch: async (url, options) => {
+    calls++;
+    assert.equal(url, 'https://opeshealthsystems.com/api/v1/me/metrics');
+    assert.equal(options.method, 'GET');
+    assert.equal(options.headers.Authorization, 'Bearer fictional-user-token');
+    assert.equal(options.headers['Idempotency-Key'], undefined);
+    return json({ data: { requests: 9, responses_4xx: 2, responses_5xx: 0, operations: [] } });
+  } });
+  const result = await client.ownRequestMetrics();
+  assert.equal(calls, 1);
+  assert.equal(result.data.data.requests, 9);
 });
 
 test('business operation client refuses missing keys, path values and unknown query fields', async () => {

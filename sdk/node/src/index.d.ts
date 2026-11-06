@@ -77,6 +77,23 @@ export interface DeveloperOAuthApplication {
   client_secret_issued?: false;
 }
 export type DeveloperMachineClientScope = 'catalogue:read' | 'integration:read';
+export interface ApiRequestOperationMetric {
+  operation: string; method: string; requests: number; responses_4xx: number; responses_5xx: number;
+  average_response_time_ms: number; max_response_time_ms: number;
+}
+export interface ApiRequestMetrics {
+  period_start: string; period_end: string; requests: number;
+  responses_2xx: number; responses_3xx: number; responses_4xx: number; responses_5xx: number;
+  average_response_time_ms: number; max_response_time_ms: number;
+  daily: Array<{ date: string; requests: number; responses_4xx: number; responses_5xx: number }>;
+  operations: ApiRequestOperationMetric[];
+}
+export interface IntegrationMetricsResponse extends ApiRequestMetrics {}
+export interface OwnRequestMetricsResponse {
+  data: ApiRequestMetrics;
+  requestId: string | null;
+  replayed: boolean;
+}
 export interface DeveloperMachineClientInput {
   name: string;
   scopes: DeveloperMachineClientScope[];
@@ -96,6 +113,7 @@ export interface DeveloperMachineClient {
     daily_limit: number | null; daily_remaining: number | null; daily_resets_at: string;
     monthly_limit: number | null; monthly_remaining: number | null; monthly_resets_at: string;
   };
+  metrics: ApiRequestMetrics;
 }
 export interface DeveloperMachineClientCredentials {
   client_id: string;
@@ -127,6 +145,7 @@ export class OpesClient {
   integration(): Promise<IntegrationResponse>;
   integrationUsage(): Promise<IntegrationUsageResponse>;
   integrationQuota(): Promise<IntegrationQuotaResponse>;
+  integrationMetrics(): Promise<IntegrationMetricsResponse>;
   serviceOfferings(options?: { locale?: Locale }): Promise<ServiceOfferingsResponse>;
   submitEnquiry(input: EnquiryInput, options: { idempotencyKey: string }): Promise<{
     data: { status: 'recorded'; delivery_status: 'sent' | 'pending'; receipt_delivery_status?: 'sent' | 'pending' };
@@ -153,6 +172,7 @@ export class OpesBusinessApiClient {
     items: DeveloperMachineClient[];
     pagination: { current_page: number; per_page: number; total: number; last_page: number };
   }>>;
+  ownRequestMetrics(): Promise<OwnRequestMetricsResponse>;
   registerDeveloperMachineClient(input: DeveloperMachineClientInput, options: { idempotencyKey: string }): Promise<BusinessApiResult<DeveloperMachineClientCredentials>>;
   rotateDeveloperMachineClient(clientId: string, options: { idempotencyKey: string }): Promise<BusinessApiResult<DeveloperMachineClientCredentials>>;
   revokeDeveloperMachineClient(clientId: string, options: { idempotencyKey: string }): Promise<BusinessApiResult<{ client_id: string; revoked: true }>>;

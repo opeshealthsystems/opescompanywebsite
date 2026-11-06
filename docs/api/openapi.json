@@ -2,7 +2,7 @@
     "openapi": "3.1.1",
     "info": {
         "title": "OHS Platform API",
-        "version": "0.115.0",
+        "version": "0.116.0",
         "description": "Versioned OHS business APIs. Public enquiries and application intake, partner and tester administration, publishing and catalogues, role-scoped operations and workforce workflows, finance registers, reports and line-item detail reads, customer facility profiles, employee and HR administration, risk and performance management, leave requests, validation, practitioner, recruitment, learning, survey and support workflows, account recovery, machine catalogue access and owner-managed public-scope machine clients, public sitemap data, protected admin reference data and resource/relationship summaries, with delegated business workflows using authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.",
         "contact": {
             "name": "OHS support",
@@ -148795,7 +148795,7 @@
                                 "example": {
                                     "data": {
                                         "status": "responding",
-                                        "api_version": "0.115.0",
+                                        "api_version": "0.116.0",
                                         "checked_at": "2026-11-01T12:00:00+00:00"
                                     },
                                     "meta": {
@@ -148999,6 +148999,11 @@
                                 "example": {
                                     "data": {
                                         "items": [
+                                            {
+                                                "version": "0.116.0",
+                                                "released_at": "2026-11-06",
+                                                "summary": "Added caller-scoped 30-day API request metrics with daily counts, HTTP status classes, top operations and aggregate response times."
+                                            },
                                             {
                                                 "version": "0.115.0",
                                                 "released_at": "2026-11-06",
@@ -149362,7 +149367,7 @@
                                 },
                                 "example": {
                                     "data": {
-                                        "api_version": "0.115.0",
+                                        "api_version": "0.116.0",
                                         "locale": "en",
                                         "items": [
                                             {
@@ -149390,9 +149395,9 @@
                                                 "availability": "preview",
                                                 "authentication": "OAuth 2.0 client credentials",
                                                 "scope": "integration:read",
-                                                "access": "GET /api/v1/integration, GET /api/v1/integration/usage, GET /api/v1/integration/quota",
-                                                "summary": "Inspect the authenticated machine client, its request totals, and configured daily/monthly quotas.",
-                                                "data_boundary": "The caller can read only usage attributed to its own machine client."
+                                                "access": "GET /api/v1/integration, GET /api/v1/integration/usage, GET /api/v1/integration/quota, GET /api/v1/integration/metrics",
+                                                "summary": "Inspect the authenticated machine client, its request totals, aggregate operation metrics, and configured daily/monthly quotas.",
+                                                "data_boundary": "The caller can read only usage attributed to its own machine client. Metrics contain aggregate route names, HTTP status classes and response times; request URLs, payloads and record identifiers are not retained."
                                             },
                                             {
                                                 "id": "delegated-business-workflows",
@@ -149428,9 +149433,9 @@
                                                 "availability": "preview",
                                                 "authentication": "OAuth 2.0 delegated user token with identity:read or identity:write; issued machine credentials use client_credentials",
                                                 "scope": "identity:read, identity:write; issued credentials are restricted to catalogue:read and integration:read",
-                                                "access": "GET, POST /api/v1/developer/machine-clients; POST /api/v1/developer/machine-clients/{client}/rotate; DELETE /api/v1/developer/machine-clients/{client}",
-                                                "summary": "Create and manage up to five owner-scoped machine API clients for the public product catalogue and the client\u2019s own integration usage and quota data.",
-                                                "data_boundary": "Only catalogue:read and integration:read are issued. Credentials cannot access patient records or delegated business resources. Client secrets are returned only on creation or rotation; listings never include secrets. Rotating or revoking invalidates existing tokens."
+                                                "access": "GET, POST /api/v1/developer/machine-clients; POST /api/v1/developer/machine-clients/{client}/rotate; DELETE /api/v1/developer/machine-clients/{client}; GET /api/v1/integration/metrics",
+                                                "summary": "Create and manage up to five owner-scoped machine API clients for the public product catalogue and the client\u2019s own integration usage, quota and aggregate request metrics.",
+                                                "data_boundary": "Only catalogue:read and integration:read are issued. Credentials cannot access patient records or delegated business resources. Metrics contain aggregate route names, HTTP status classes and response times; request URLs, payloads and record identifiers are not retained. Client secrets are returned only on creation or rotation; listings never include secrets. Rotating or revoking invalidates existing tokens."
                                             }
                                         ]
                                     },
@@ -150294,6 +150299,67 @@
                 }
             }
         },
+        "/integration/metrics": {
+            "get": {
+                "operationId": "readOwnMachineRequestMetrics",
+                "summary": "Read aggregate request metrics for this machine client",
+                "tags": [
+                    "Identity"
+                ],
+                "description": "Returns the current machine client\u2019s own 30-day UTC daily totals, HTTP status classes, top 25 API operations and aggregate response times. Only requests that passed machine-client authentication are attributable. The report contains route templates and aggregate counters only; it does not retain request URLs, query parameters, payloads, headers or record identifiers. Measurements are delayed until each request completes and are not an availability objective or SLA.",
+                "security": [
+                    {
+                        "OAuth2": [
+                            "integration:read"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Current client-only request metrics.",
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Responses containing credentials are not stored by caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/ApiRequestMetrics"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing, invalid, revoked or expired machine access."
+                    },
+                    "403": {
+                        "description": "integration:read scope is required."
+                    },
+                    "429": {
+                        "description": "The client quota or request rate limit was reached."
+                    }
+                }
+            }
+        },
         "/oauth/user-token": {
             "post": {
                 "operationId": "issueDelegatedUserToken",
@@ -150624,6 +150690,67 @@
                     },
                     "429": {
                         "description": "Rate limit exceeded."
+                    }
+                }
+            }
+        },
+        "/me/metrics": {
+            "get": {
+                "operationId": "readOwnBusinessRequestMetrics",
+                "summary": "Read aggregate request metrics for your account and this application",
+                "tags": [
+                    "Identity"
+                ],
+                "description": "Returns the authenticated user\u2019s own 30-day UTC daily totals, HTTP status classes, top 25 API operations and aggregate response times for this OAuth application. It excludes other users and applications. The report contains route templates and aggregate counters only; request URLs, query parameters, payloads, headers and record identifiers are not retained. Measurements are delayed until each request completes and are not an availability objective or SLA.",
+                "security": [
+                    {
+                        "UserOAuth2": [
+                            "identity:read"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Authenticated user and OAuth-client scoped request metrics.",
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Responses containing credentials are not stored by caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/ApiRequestMetrics"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Delegated user authentication required."
+                    },
+                    "403": {
+                        "description": "identity:read scope is required."
+                    },
+                    "429": {
+                        "description": "The request rate limit was reached."
                     }
                 }
             }
@@ -151096,6 +151223,136 @@
                             "null"
                         ],
                         "format": "date-time"
+                    }
+                }
+            },
+            "ApiRequestMetrics": {
+                "type": "object",
+                "required": [
+                    "period_start",
+                    "period_end",
+                    "requests",
+                    "responses_2xx",
+                    "responses_3xx",
+                    "responses_4xx",
+                    "responses_5xx",
+                    "average_response_time_ms",
+                    "max_response_time_ms",
+                    "daily",
+                    "operations"
+                ],
+                "properties": {
+                    "period_start": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "period_end": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "requests": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "responses_2xx": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "responses_3xx": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "responses_4xx": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "responses_5xx": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "average_response_time_ms": {
+                        "type": "number",
+                        "minimum": 0
+                    },
+                    "max_response_time_ms": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "daily": {
+                        "type": "array",
+                        "minItems": 30,
+                        "maxItems": 30,
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "date",
+                                "requests",
+                                "responses_4xx",
+                                "responses_5xx"
+                            ],
+                            "properties": {
+                                "date": {
+                                    "type": "string",
+                                    "format": "date"
+                                },
+                                "requests": {
+                                    "type": "integer",
+                                    "minimum": 0
+                                },
+                                "responses_4xx": {
+                                    "type": "integer",
+                                    "minimum": 0
+                                },
+                                "responses_5xx": {
+                                    "type": "integer",
+                                    "minimum": 0
+                                }
+                            }
+                        }
+                    },
+                    "operations": {
+                        "type": "array",
+                        "maxItems": 25,
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "operation",
+                                "method",
+                                "requests",
+                                "responses_4xx",
+                                "responses_5xx",
+                                "average_response_time_ms",
+                                "max_response_time_ms"
+                            ],
+                            "properties": {
+                                "operation": {
+                                    "type": "string"
+                                },
+                                "method": {
+                                    "type": "string"
+                                },
+                                "requests": {
+                                    "type": "integer",
+                                    "minimum": 0
+                                },
+                                "responses_4xx": {
+                                    "type": "integer",
+                                    "minimum": 0
+                                },
+                                "responses_5xx": {
+                                    "type": "integer",
+                                    "minimum": 0
+                                },
+                                "average_response_time_ms": {
+                                    "type": "number",
+                                    "minimum": 0
+                                },
+                                "max_response_time_ms": {
+                                    "type": "integer",
+                                    "minimum": 0
+                                }
+                            }
+                        }
                     }
                 }
             }

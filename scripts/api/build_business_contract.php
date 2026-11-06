@@ -954,6 +954,39 @@ $usageOperation['responses']['200']['content']['application/json']['example'] = 
 ]];
 $spec['paths']['/integration/usage']['get'] = $usageOperation;
 unset($usageOperation);
+$requestMetricPeriod = [
+    'period_start' => ['type' => 'string', 'format' => 'date'],
+    'period_end' => ['type' => 'string', 'format' => 'date'],
+    'requests' => ['type' => 'integer', 'minimum' => 0],
+    'responses_2xx' => ['type' => 'integer', 'minimum' => 0],
+    'responses_3xx' => ['type' => 'integer', 'minimum' => 0],
+    'responses_4xx' => ['type' => 'integer', 'minimum' => 0],
+    'responses_5xx' => ['type' => 'integer', 'minimum' => 0],
+    'average_response_time_ms' => ['type' => 'number', 'minimum' => 0],
+    'max_response_time_ms' => ['type' => 'integer', 'minimum' => 0],
+    'daily' => ['type' => 'array', 'minItems' => 30, 'maxItems' => 30, 'items' => ['type' => 'object', 'required' => ['date', 'requests', 'responses_4xx', 'responses_5xx'], 'properties' => [
+        'date' => ['type' => 'string', 'format' => 'date'], 'requests' => ['type' => 'integer', 'minimum' => 0],
+        'responses_4xx' => ['type' => 'integer', 'minimum' => 0], 'responses_5xx' => ['type' => 'integer', 'minimum' => 0],
+    ]]],
+    'operations' => ['type' => 'array', 'maxItems' => 25, 'items' => ['type' => 'object', 'required' => ['operation', 'method', 'requests', 'responses_4xx', 'responses_5xx', 'average_response_time_ms', 'max_response_time_ms'], 'properties' => [
+        'operation' => ['type' => 'string'], 'method' => ['type' => 'string'], 'requests' => ['type' => 'integer', 'minimum' => 0],
+        'responses_4xx' => ['type' => 'integer', 'minimum' => 0], 'responses_5xx' => ['type' => 'integer', 'minimum' => 0],
+        'average_response_time_ms' => ['type' => 'number', 'minimum' => 0], 'max_response_time_ms' => ['type' => 'integer', 'minimum' => 0],
+    ]]],
+];
+$spec['components']['schemas']['ApiRequestMetrics'] = ['type' => 'object', 'required' => array_keys($requestMetricPeriod), 'properties' => $requestMetricPeriod];
+$metricSummary = ['type' => 'object', 'required' => ['data'], 'properties' => ['data' => ['$ref' => '#/components/schemas/ApiRequestMetrics']]];
+$spec['paths']['/integration/metrics']['get'] = [
+    'operationId' => 'readOwnMachineRequestMetrics', 'summary' => 'Read aggregate request metrics for this machine client', 'tags' => ['Identity'],
+    'description' => 'Returns the current machine client’s own 30-day UTC daily totals, HTTP status classes, top 25 API operations and aggregate response times. Only requests that passed machine-client authentication are attributable. The report contains route templates and aggregate counters only; it does not retain request URLs, query parameters, payloads, headers or record identifiers. Measurements are delayed until each request completes and are not an availability objective or SLA.',
+    'security' => [['OAuth2' => ['integration:read']]],
+    'responses' => [
+        '200' => ['description' => 'Current client-only request metrics.', 'headers' => ['Cache-Control' => $noStoreHeader, 'X-Request-ID' => ['schema' => ['type' => 'string', 'format' => 'uuid']]], 'content' => ['application/json' => ['schema' => $metricSummary]]],
+        '401' => ['description' => 'Missing, invalid, revoked or expired machine access.'],
+        '403' => ['description' => 'integration:read scope is required.'],
+        '429' => ['description' => 'The client quota or request rate limit was reached.'],
+    ],
+];
 $userToken = $spec['paths']['/oauth/token']['post'];
 $userToken['operationId'] = 'issueDelegatedUserToken';
 $userToken['summary'] = 'Exchange an authorization code or refresh token';
@@ -984,6 +1017,17 @@ $spec['paths']['/me/usage']['get'] = ['operationId' => 'readOwnBusinessUsage', '
             ],
         ], 'identity.me.usage')]]],
         '401' => ['description' => 'Delegated user authentication required.'], '403' => ['description' => 'identity:read scope required.'], '429' => ['description' => 'Rate limit exceeded.']]];
+$spec['paths']['/me/metrics']['get'] = [
+    'operationId' => 'readOwnBusinessRequestMetrics', 'summary' => 'Read aggregate request metrics for your account and this application', 'tags' => ['Identity'],
+    'description' => 'Returns the authenticated user’s own 30-day UTC daily totals, HTTP status classes, top 25 API operations and aggregate response times for this OAuth application. It excludes other users and applications. The report contains route templates and aggregate counters only; request URLs, query parameters, payloads, headers and record identifiers are not retained. Measurements are delayed until each request completes and are not an availability objective or SLA.',
+    'security' => [['UserOAuth2' => ['identity:read']]],
+    'responses' => [
+        '200' => ['description' => 'Authenticated user and OAuth-client scoped request metrics.', 'headers' => ['Cache-Control' => $noStoreHeader, 'X-Request-ID' => ['schema' => ['type' => 'string', 'format' => 'uuid']]], 'content' => ['application/json' => ['schema' => $metricSummary]]],
+        '401' => ['description' => 'Delegated user authentication required.'],
+        '403' => ['description' => 'identity:read scope is required.'],
+        '429' => ['description' => 'The request rate limit was reached.'],
+    ],
+];
 $spec['paths']['/me']['get'] = ['operationId' => 'readOwnProfile', 'summary' => 'Read your own account and granted roles', 'tags' => ['Identity'],
     'description' => 'Returns the authenticated active user’s own account name, email, current roles and the intersection of role-approved and token-granted business scopes. Intended for role-aware client navigation; it does not grant additional access.',
     'security' => [['UserOAuth2' => ['identity:read']]], 'responses' => [

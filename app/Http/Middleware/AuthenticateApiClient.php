@@ -18,6 +18,7 @@ class AuthenticateApiClient
 
     public function handle(Request $request, Closure $next, string $scope)
     {
+        $startedAt = hrtime(true);
         try {
             $psr = $this->server->validateAuthenticatedRequest((new PsrHttpFactory)->createRequest($request));
         } catch (OAuthServerException) { throw new UnauthorizedHttpException('Bearer'); }
@@ -30,9 +31,28 @@ class AuthenticateApiClient
         if (!$token || $token->client_id !== $client->id || $token->revoked || !$token->expires_at || $token->expires_at->isPast()) throw new UnauthorizedHttpException('Bearer');
         abort_unless(in_array($scope, $psr->getAttribute('oauth_scopes', []), true) && in_array($scope, $client->scopes, true), 403);
         $quota = app(\App\Contexts\ApiIdentity\Application\Services\MachineClientQuota::class)->consume($client);
-        if (!$quota['allowed']) return app(\App\Contexts\ApiIdentity\Application\Services\MachineClientQuota::class)->reject($request, $quota);
         $request->attributes->set('api_client', $client);
         $request->attributes->set('api_scopes', $psr->getAttribute('oauth_scopes', []));
-        return app(\App\Contexts\ApiIdentity\Application\Services\MachineClientQuota::class)->attach($next($request), $quota);
+        $metrics = app(\App\Contexts\ApiIdentity\Application\Services\ApiRequestMetricRecorder::class);
+        if (!$quota['allowed']) {
+            $response = app(\App\Contexts\ApiIdentity\Application\Services\MachineClientQuota::class)->reject($request, $quota);
+            $metrics->record($request, (string) $client->id, 'machine', (string) $client->id, 429,
+                \App\Contexts\ApiIdentity\Application\Services\ApiRequestMetricRecorder::durationMilliseconds($startedAt));
+            return $response;
+        }
+
+        try {
+            $response = $next($request);
+        } catch (\Throwable $error) {
+            $metrics->record($request, (string) $client->id, 'machine', (string) $client->id,
+                \App\Contexts\ApiIdentity\Application\Services\ApiRequestMetricRecorder::exceptionStatus($error),
+                \App\Contexts\ApiIdentity\Application\Services\ApiRequestMetricRecorder::durationMilliseconds($startedAt));
+            throw $error;
+        }
+
+        $response = app(\App\Contexts\ApiIdentity\Application\Services\MachineClientQuota::class)->attach($response, $quota);
+        $metrics->record($request, (string) $client->id, 'machine', (string) $client->id, $response->getStatusCode(),
+            \App\Contexts\ApiIdentity\Application\Services\ApiRequestMetricRecorder::durationMilliseconds($startedAt));
+        return $response;
     }
 }

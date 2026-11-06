@@ -95,6 +95,8 @@ export class OpesClient {
 
   integrationQuota() { return this.#authenticated('/integration/quota'); }
 
+  integrationMetrics() { return this.#authenticated('/integration/metrics'); }
+
   async serviceOfferings({ locale = 'en' } = {}) {
     if (!['en', 'fr'].includes(locale)) throw new TypeError('Locale must be en or fr.');
     const result = await this.#request('/service-offerings', { headers: { 'Accept-Language': locale } });
@@ -210,6 +212,10 @@ export class OpesBusinessApiClient {
 
   listDeveloperMachineClients({ page = 1, perPage = 20 } = {}) {
     return this.request('developer_machine_clients_index', { query: { page, per_page: perPage } });
+  }
+
+  ownRequestMetrics() {
+    return this.request('readOwnBusinessRequestMetrics');
   }
 
   registerDeveloperMachineClient(input, { idempotencyKey } = {}) {

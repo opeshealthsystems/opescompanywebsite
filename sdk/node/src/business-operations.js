@@ -9324,6 +9324,17 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "readOwnBusinessRequestMetrics": {
+        "method": "GET",
+        "path": "/me/metrics",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": false,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "readOwnBusinessUsage": {
         "method": "GET",
         "path": "/me/usage",
@@ -9334,6 +9345,18 @@ export const businessOperations = Object.freeze({
         "acceptLanguage": false,
         "requestBodyRequired": false,
         "contentTypes": []
+    },
+    "readOwnMachineRequestMetrics": {
+        "method": "GET",
+        "path": "/integration/metrics",
+        "authenticated": true,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [],
+        "acceptLanguage": false,
+        "requestBodyRequired": false,
+        "contentTypes": [],
+        "machineClientOnly": true
     },
     "readOwnProfile": {
         "method": "GET",
