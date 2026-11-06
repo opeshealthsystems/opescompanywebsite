@@ -76,6 +76,25 @@ const batchSent = await client.request('admin_finance_invoices_markManySent', {
 batchSent.data.data.updated.toFixed();
 const deletedInvoice = await client.request('admin_finance_invoices_delete', { path: { invoice: 31 }, idempotencyKey: key });
 deletedInvoice.data.data.status.toUpperCase();
+const invoiceTemplates = await client.request('admin_finance_invoiceTemplates_index', { query: { active: true, search: 'clinic' } });
+invoiceTemplates.data.data.items[0]!.frequency.toUpperCase();
+invoiceTemplates.data.data.items[0]!.line_items[0]!.description.toUpperCase();
+const invoiceTemplate = await client.request('admin_finance_invoiceTemplates_show', { path: { invoiceTemplate: 8 } });
+invoiceTemplate.data.data.invoice_template.tax_rate.toUpperCase();
+const createdInvoiceTemplate = await client.request('admin_finance_invoiceTemplates_create', {
+  body: { name: 'Annual facility licence', frequency: 'annual', next_due_date: '2027-01-01', payment_terms_days: 30,
+    currency: 'XAF', tax_rate: 0, issued_by: 1, line_items: [{ description: 'Facility licence', quantity: 1, unit_price: 1000 }] },
+  idempotencyKey: key,
+});
+createdInvoiceTemplate.data.data.is_active.valueOf();
+const updatedInvoiceTemplate = await client.request('admin_finance_invoiceTemplates_update', {
+  path: { invoiceTemplate: 8 }, body: { notes: 'Updated terms' }, idempotencyKey: key,
+});
+updatedInvoiceTemplate.data.data.name.toUpperCase();
+const generatedTemplateInvoice = await client.request('admin_finance_invoiceTemplates_generate', {
+  path: { invoiceTemplate: 8 }, idempotencyKey: key,
+});
+generatedTemplateInvoice.data.data.invoice_number.toUpperCase();
 const customers = await client.request('admin_customerProfiles_index');
 customers.data.data.items[0]!.customer?.email.toLowerCase();
 const customer = await client.request('admin_customerProfiles_show', { path: { customerProfile: 12 } });

@@ -1,5 +1,37 @@
 [
   {
+    "method": "GET",
+    "path": "/finance/invoice-templates",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing recurring-invoice template projection or command acknowledgement from AdminInvoiceTemplateQueries and AdminFinanceCommands; validation and schedule behavior are unchanged."
+  },
+  {
+    "method": "POST",
+    "path": "/finance/invoice-templates",
+    "allow_response_schema_refinement": true,
+    "reason": "Adds the already-validated frequency field and allowed values to the recurring-invoice template request contract; it is required on create and optional on update. Runtime validation and scheduling behavior are unchanged.",
+    "allow_additive_request_schema": true
+  },
+  {
+    "method": "GET",
+    "path": "/finance/invoice-templates/{invoiceTemplate}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing recurring-invoice template projection or command acknowledgement from AdminInvoiceTemplateQueries and AdminFinanceCommands; validation and schedule behavior are unchanged."
+  },
+  {
+    "method": "PUT",
+    "path": "/finance/invoice-templates/{invoiceTemplate}",
+    "allow_response_schema_refinement": true,
+    "reason": "Adds the already-validated frequency field and allowed values to the recurring-invoice template request contract; it is required on create and optional on update. Runtime validation and scheduling behavior are unchanged.",
+    "allow_additive_request_schema": true
+  },
+  {
+    "method": "POST",
+    "path": "/finance/invoice-templates/{invoiceTemplate}/generate-invoice",
+    "allow_response_schema_refinement": true,
+    "reason": "Corrects the generic success placeholder from 200 to the generator's actual 201 response and types the generated draft invoice acknowledgement. Invoice generation rules remain unchanged."
+  },
+  {
     "method": "POST",
     "path": "/finance/invoices",
     "allow_response_schema_refinement": true,

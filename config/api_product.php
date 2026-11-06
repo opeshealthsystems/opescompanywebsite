@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version' => '0.131.0',
+    'version' => '0.132.0',
     'products' => [
         [
             'id' => 'public-enquiries',
@@ -93,6 +93,11 @@ return [
         ],
     ],
     'changelog' => [
+        [
+            'version' => '0.132.0',
+            'released_at' => '2026-11-06',
+            'summary' => 'Added typed recurring-invoice template list/detail and create/update/generate outcomes, including correction of invoice generation to its actual 201 response.',
+        ],
         [
             'version' => '0.131.0',
             'released_at' => '2026-11-06',

@@ -2,7 +2,7 @@
     "openapi": "3.1.1",
     "info": {
         "title": "OHS Platform API",
-        "version": "0.131.0",
+        "version": "0.132.0",
         "description": "Versioned OHS business APIs. Public enquiries and application intake, partner and tester administration, publishing and catalogues, role-scoped operations and workforce workflows, finance registers, reports and line-item detail reads, customer facility profiles, employee and HR administration, risk and performance management, leave requests, validation, practitioner, recruitment, learning, survey and support workflows, account recovery, machine catalogue access and owner-managed public-scope machine clients, public sitemap data, protected admin reference data and resource/relationship summaries, with delegated business workflows using authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.",
         "contact": {
             "name": "OHS support",
@@ -44199,7 +44199,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns filtered recurring-invoice templates with pagination. Template line items and nullable client/customer details are included.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -44211,10 +44211,175 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items",
+                                                "pagination"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "name",
+                                                            "customer_id",
+                                                            "client_name",
+                                                            "client_email",
+                                                            "frequency",
+                                                            "next_due_date",
+                                                            "end_date",
+                                                            "payment_terms_days",
+                                                            "currency",
+                                                            "tax_rate",
+                                                            "line_items",
+                                                            "notes",
+                                                            "is_active",
+                                                            "issued_by",
+                                                            "created_at",
+                                                            "updated_at"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            },
+                                                            "customer_id": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "client_name": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "client_email": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "email"
+                                                            },
+                                                            "frequency": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "weekly",
+                                                                    "monthly",
+                                                                    "quarterly",
+                                                                    "semi_annual",
+                                                                    "annual"
+                                                                ]
+                                                            },
+                                                            "next_due_date": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "description": "Date cast is JSON serialized as an ISO-8601 timestamp by the current model projection."
+                                                            },
+                                                            "end_date": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            },
+                                                            "payment_terms_days": {
+                                                                "type": "integer",
+                                                                "minimum": 0
+                                                            },
+                                                            "currency": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "XAF",
+                                                                    "USD",
+                                                                    "EUR"
+                                                                ]
+                                                            },
+                                                            "tax_rate": {
+                                                                "type": "string"
+                                                            },
+                                                            "line_items": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "object",
+                                                                    "required": [
+                                                                        "description",
+                                                                        "quantity",
+                                                                        "unit_price"
+                                                                    ],
+                                                                    "properties": {
+                                                                        "description": {
+                                                                            "type": "string"
+                                                                        },
+                                                                        "quantity": {
+                                                                            "type": [
+                                                                                "number",
+                                                                                "string"
+                                                                            ],
+                                                                            "minimum": 1
+                                                                        },
+                                                                        "unit_price": {
+                                                                            "type": [
+                                                                                "number",
+                                                                                "string"
+                                                                            ],
+                                                                            "minimum": 0
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            "notes": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "is_active": {
+                                                                "type": "boolean"
+                                                            },
+                                                            "issued_by": {
+                                                                "type": "integer"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "current_page",
+                                                        "per_page",
+                                                        "total",
+                                                        "last_page"
+                                                    ],
+                                                    "properties": {
+                                                        "current_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "total": {
+                                                            "type": "integer"
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -44226,10 +44391,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -44432,7 +44594,7 @@
                         }
                     },
                     "201": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Creates an active recurring-invoice template and returns its identifier, name and active state.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -44444,10 +44606,24 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "id",
+                                                "name",
+                                                "is_active"
+                                            ],
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "is_active": {
+                                                    "type": "boolean",
+                                                    "const": true
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -44459,10 +44635,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -44598,6 +44771,17 @@
                                         ],
                                         "description": "Validation: nullable|string|max:10000",
                                         "maxLength": 10000
+                                    },
+                                    "frequency": {
+                                        "type": "string",
+                                        "enum": [
+                                            "weekly",
+                                            "monthly",
+                                            "quarterly",
+                                            "semi_annual",
+                                            "annual"
+                                        ],
+                                        "description": "Validation: required|in:weekly,monthly,quarterly,semi_annual,annual"
                                     }
                                 },
                                 "required": [
@@ -44607,7 +44791,8 @@
                                     "currency",
                                     "tax_rate",
                                     "issued_by",
-                                    "line_items"
+                                    "line_items",
+                                    "frequency"
                                 ]
                             },
                             "example": {
@@ -44623,7 +44808,8 @@
                                 "is_active": true,
                                 "issued_by": 1,
                                 "line_items": [],
-                                "notes": "REPLACE_WITH_VALUE"
+                                "notes": "REPLACE_WITH_VALUE",
+                                "frequency": "monthly"
                             }
                         },
                         "application/json": {
@@ -44715,6 +44901,17 @@
                                         ],
                                         "description": "Validation: nullable|string|max:10000",
                                         "maxLength": 10000
+                                    },
+                                    "frequency": {
+                                        "type": "string",
+                                        "enum": [
+                                            "weekly",
+                                            "monthly",
+                                            "quarterly",
+                                            "semi_annual",
+                                            "annual"
+                                        ],
+                                        "description": "Validation: required|in:weekly,monthly,quarterly,semi_annual,annual"
                                     }
                                 },
                                 "required": [
@@ -44724,7 +44921,8 @@
                                     "currency",
                                     "tax_rate",
                                     "issued_by",
-                                    "line_items"
+                                    "line_items",
+                                    "frequency"
                                 ]
                             },
                             "example": {
@@ -44740,7 +44938,8 @@
                                 "is_active": true,
                                 "issued_by": 1,
                                 "line_items": [],
-                                "notes": "REPLACE_WITH_VALUE"
+                                "notes": "REPLACE_WITH_VALUE",
+                                "frequency": "monthly"
                             }
                         }
                     }
@@ -44812,7 +45011,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns one recurring-invoice template using the same explicit field projection as the template register.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -44824,10 +45023,148 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "invoice_template"
+                                            ],
+                                            "properties": {
+                                                "invoice_template": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "name",
+                                                        "customer_id",
+                                                        "client_name",
+                                                        "client_email",
+                                                        "frequency",
+                                                        "next_due_date",
+                                                        "end_date",
+                                                        "payment_terms_days",
+                                                        "currency",
+                                                        "tax_rate",
+                                                        "line_items",
+                                                        "notes",
+                                                        "is_active",
+                                                        "issued_by",
+                                                        "created_at",
+                                                        "updated_at"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "customer_id": {
+                                                            "type": [
+                                                                "integer",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "client_name": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "client_email": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "email"
+                                                        },
+                                                        "frequency": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "weekly",
+                                                                "monthly",
+                                                                "quarterly",
+                                                                "semi_annual",
+                                                                "annual"
+                                                            ]
+                                                        },
+                                                        "next_due_date": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "description": "Date cast is JSON serialized as an ISO-8601 timestamp by the current model projection."
+                                                        },
+                                                        "end_date": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "payment_terms_days": {
+                                                            "type": "integer",
+                                                            "minimum": 0
+                                                        },
+                                                        "currency": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "XAF",
+                                                                "USD",
+                                                                "EUR"
+                                                            ]
+                                                        },
+                                                        "tax_rate": {
+                                                            "type": "string"
+                                                        },
+                                                        "line_items": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object",
+                                                                "required": [
+                                                                    "description",
+                                                                    "quantity",
+                                                                    "unit_price"
+                                                                ],
+                                                                "properties": {
+                                                                    "description": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "quantity": {
+                                                                        "type": [
+                                                                            "number",
+                                                                            "string"
+                                                                        ],
+                                                                        "minimum": 1
+                                                                    },
+                                                                    "unit_price": {
+                                                                        "type": [
+                                                                            "number",
+                                                                            "string"
+                                                                        ],
+                                                                        "minimum": 0
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "notes": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "is_active": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "issued_by": {
+                                                            "type": "integer"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -44839,10 +45176,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -44995,7 +45329,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Updates a recurring-invoice template and returns its identifier, name and active state.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -45007,10 +45341,23 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "id",
+                                                "name",
+                                                "is_active"
+                                            ],
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "is_active": {
+                                                    "type": "boolean"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -45022,10 +45369,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -45221,6 +45565,17 @@
                                         ],
                                         "description": "Validation: sometimes|nullable|string|max:10000",
                                         "maxLength": 10000
+                                    },
+                                    "frequency": {
+                                        "type": "string",
+                                        "enum": [
+                                            "weekly",
+                                            "monthly",
+                                            "quarterly",
+                                            "semi_annual",
+                                            "annual"
+                                        ],
+                                        "description": "Validation: sometimes|required|in:weekly,monthly,quarterly,semi_annual,annual"
                                     }
                                 }
                             },
@@ -45237,7 +45592,8 @@
                                 "is_active": true,
                                 "issued_by": 1,
                                 "line_items": [],
-                                "notes": "REPLACE_WITH_VALUE"
+                                "notes": "REPLACE_WITH_VALUE",
+                                "frequency": "monthly"
                             }
                         },
                         "application/json": {
@@ -45329,6 +45685,17 @@
                                         ],
                                         "description": "Validation: sometimes|nullable|string|max:10000",
                                         "maxLength": 10000
+                                    },
+                                    "frequency": {
+                                        "type": "string",
+                                        "enum": [
+                                            "weekly",
+                                            "monthly",
+                                            "quarterly",
+                                            "semi_annual",
+                                            "annual"
+                                        ],
+                                        "description": "Validation: sometimes|required|in:weekly,monthly,quarterly,semi_annual,annual"
                                     }
                                 }
                             },
@@ -45345,7 +45712,8 @@
                                 "is_active": true,
                                 "issued_by": 1,
                                 "line_items": [],
-                                "notes": "REPLACE_WITH_VALUE"
+                                "notes": "REPLACE_WITH_VALUE",
+                                "frequency": "monthly"
                             }
                         }
                     }
@@ -57023,80 +57391,6 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "required": [
-                                        "data",
-                                        "meta",
-                                        "messages"
-                                    ],
-                                    "properties": {
-                                        "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
-                                        },
-                                        "meta": {
-                                            "type": "object",
-                                            "properties": {
-                                                "operation": {
-                                                    "type": "string",
-                                                    "const": "admin.finance.invoiceTemplates.generate"
-                                                }
-                                            }
-                                        },
-                                        "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
-                                        }
-                                    }
-                                },
-                                "examples": {
-                                    "envelope": {
-                                        "summary": "Response envelope",
-                                        "description": "The data fields depend on the operation and its resource contract.",
-                                        "value": {
-                                            "data": {},
-                                            "meta": {
-                                                "operation": "admin.finance.invoiceTemplates.generate"
-                                            },
-                                            "messages": []
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "headers": {
-                            "Cache-Control": {
-                                "description": "Authenticated and command results are not stored in shared caches.",
-                                "schema": {
-                                    "type": "string",
-                                    "const": "no-store"
-                                }
-                            },
-                            "X-Request-ID": {
-                                "description": "Identifier used when contacting support.",
-                                "schema": {
-                                    "type": "string",
-                                    "format": "uuid"
-                                }
-                            },
-                            "Idempotency-Replayed": {
-                                "description": "Present with value true when this response replays the saved outcome for the supplied Idempotency-Key; absent on the first execution.",
-                                "schema": {
-                                    "type": "string",
-                                    "const": "true"
-                                }
-                            }
-                        }
-                    },
                     "401": {
                         "description": "Valid delegated user token required",
                         "content": {
@@ -57153,6 +57447,91 @@
                             "application/problem+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Generates a draft invoice from an active, due recurring-invoice template and returns the invoice identifier, number and status.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "required": [
+                                                "id",
+                                                "invoice_number",
+                                                "status"
+                                            ],
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "invoice_number": {
+                                                    "type": "string"
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "const": "draft"
+                                                }
+                                            }
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.finance.invoiceTemplates.generate"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "envelope": {
+                                        "summary": "Response envelope",
+                                        "description": "The data fields depend on the operation and its resource contract.",
+                                        "value": {
+                                            "data": {},
+                                            "meta": {
+                                                "operation": "admin.finance.invoiceTemplates.generate"
+                                            },
+                                            "messages": []
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            },
+                            "Idempotency-Replayed": {
+                                "description": "Present with value true when this response replays the saved outcome for the supplied Idempotency-Key; absent on the first execution.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "true"
                                 }
                             }
                         }
@@ -160309,7 +160688,7 @@
                                 "example": {
                                     "data": {
                                         "name": "OPES Health Systems API",
-                                        "api_version": "0.131.0",
+                                        "api_version": "0.132.0",
                                         "openapi_version": "3.1.1",
                                         "authentication": {
                                             "machine": "OAuth 2.0 client credentials with approved scopes",
@@ -160533,7 +160912,7 @@
                                 "example": {
                                     "data": {
                                         "status": "responding",
-                                        "api_version": "0.131.0",
+                                        "api_version": "0.132.0",
                                         "checked_at": "2026-11-01T12:00:00+00:00"
                                     },
                                     "meta": {
@@ -160737,6 +161116,11 @@
                                 "example": {
                                     "data": {
                                         "items": [
+                                            {
+                                                "version": "0.132.0",
+                                                "released_at": "2026-11-06",
+                                                "summary": "Added typed recurring-invoice template list/detail and create/update/generate outcomes, including correction of invoice generation to its actual 201 response."
+                                            },
                                             {
                                                 "version": "0.131.0",
                                                 "released_at": "2026-11-06",
@@ -161180,7 +161564,7 @@
                                 },
                                 "example": {
                                     "data": {
-                                        "api_version": "0.131.0",
+                                        "api_version": "0.132.0",
                                         "locale": "en",
                                         "items": [
                                             {

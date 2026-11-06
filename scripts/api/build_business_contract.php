@@ -1181,6 +1181,72 @@ foreach ($spec['paths'] as &$invoicePath) {
     unset($invoiceOperation);
 }
 unset($invoicePath, $invoiceMutationResponses);
+$invoiceTemplateResource = ['type' => 'object', 'required' => ['id', 'name', 'customer_id', 'client_name', 'client_email', 'frequency', 'next_due_date', 'end_date', 'payment_terms_days', 'currency', 'tax_rate', 'line_items', 'notes', 'is_active', 'issued_by', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'name' => ['type' => 'string'], 'customer_id' => ['type' => ['integer', 'null']],
+    'client_name' => ['type' => ['string', 'null']], 'client_email' => ['type' => ['string', 'null'], 'format' => 'email'],
+    'frequency' => ['type' => 'string', 'enum' => ['weekly', 'monthly', 'quarterly', 'semi_annual', 'annual']],
+    'next_due_date' => ['type' => 'string', 'format' => 'date-time', 'description' => 'Date cast is JSON serialized as an ISO-8601 timestamp by the current model projection.'],
+    'end_date' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'payment_terms_days' => ['type' => 'integer', 'minimum' => 0], 'currency' => ['type' => 'string', 'enum' => ['XAF', 'USD', 'EUR']],
+    'tax_rate' => ['type' => 'string'],
+    'line_items' => ['type' => 'array', 'items' => ['type' => 'object', 'required' => ['description', 'quantity', 'unit_price'], 'properties' => [
+        'description' => ['type' => 'string'], 'quantity' => ['type' => ['number', 'string'], 'minimum' => 1], 'unit_price' => ['type' => ['number', 'string'], 'minimum' => 0],
+    ]]],
+    'notes' => ['type' => ['string', 'null']], 'is_active' => ['type' => 'boolean'], 'issued_by' => ['type' => 'integer'],
+    'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+]];
+$invoiceTemplateList = &$spec['paths']['/finance/invoice-templates']['get'];
+$invoiceTemplateList['responses']['200']['description'] = 'Returns filtered recurring-invoice templates with pagination. Template line items and nullable client/customer details are included.';
+$invoiceTemplateList['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => $invoiceTemplateResource],
+    'pagination' => ['type' => 'object', 'required' => ['current_page', 'per_page', 'total', 'last_page'], 'properties' => [
+        'current_page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+    ]],
+]], 'admin.finance.invoiceTemplates.index');
+unset($invoiceTemplateList);
+$invoiceTemplateShow = &$spec['paths']['/finance/invoice-templates/{invoiceTemplate}']['get'];
+$invoiceTemplateShow['responses']['200']['description'] = 'Returns one recurring-invoice template using the same explicit field projection as the template register.';
+$invoiceTemplateShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['invoice_template'], 'properties' => ['invoice_template' => $invoiceTemplateResource]], 'admin.finance.invoiceTemplates.show');
+unset($invoiceTemplateShow);
+$invoiceTemplateCommandResponses = [
+    'admin_finance_invoiceTemplates_create' => ['status' => 201, 'description' => 'Creates an active recurring-invoice template and returns its identifier, name and active state.', 'data' => ['type' => 'object', 'required' => ['id', 'name', 'is_active'], 'properties' => ['id' => ['type' => 'integer'], 'name' => ['type' => 'string'], 'is_active' => ['type' => 'boolean', 'const' => true]]]],
+    'admin_finance_invoiceTemplates_update' => ['status' => 200, 'description' => 'Updates a recurring-invoice template and returns its identifier, name and active state.', 'data' => ['type' => 'object', 'required' => ['id', 'name', 'is_active'], 'properties' => ['id' => ['type' => 'integer'], 'name' => ['type' => 'string'], 'is_active' => ['type' => 'boolean']]]],
+    'admin_finance_invoiceTemplates_generate' => ['status' => 201, 'description' => 'Generates a draft invoice from an active, due recurring-invoice template and returns the invoice identifier, number and status.', 'data' => ['type' => 'object', 'required' => ['id', 'invoice_number', 'status'], 'properties' => ['id' => ['type' => 'integer'], 'invoice_number' => ['type' => 'string'], 'status' => ['type' => 'string', 'const' => 'draft']]]],
+];
+foreach ($spec['paths'] as &$invoiceTemplatePath) {
+    foreach ($invoiceTemplatePath as &$invoiceTemplateOperation) {
+        $operationId = $invoiceTemplateOperation['operationId'] ?? null;
+        if (!isset($invoiceTemplateCommandResponses[$operationId])) continue;
+        $definition = $invoiceTemplateCommandResponses[$operationId];
+        $status = (string) $definition['status'];
+        if ($status === '201' && isset($invoiceTemplateOperation['responses']['200'])) {
+            $invoiceTemplateOperation['responses']['201'] = $invoiceTemplateOperation['responses']['200'];
+            unset($invoiceTemplateOperation['responses']['200']);
+        }
+        $invoiceTemplateOperation['responses'][$status]['description'] = $definition['description'];
+        $oldSchema = $invoiceTemplateOperation['responses'][$status]['content']['application/json']['schema'];
+        $opName = $oldSchema['properties']['meta']['properties']['operation']['const'];
+        $invoiceTemplateOperation['responses'][$status]['content']['application/json']['schema'] = $successEnvelope($definition['data'], $opName);
+    }
+    unset($invoiceTemplateOperation);
+}
+unset($invoiceTemplatePath, $invoiceTemplateCommandResponses);
+$invoiceTemplateFrequencyOptions = array_keys(\App\Models\InvoiceTemplate::frequencyOptions());
+foreach ([
+    ['/finance/invoice-templates', 'post', true],
+    ['/finance/invoice-templates/{invoiceTemplate}', 'put', false],
+] as [$templatePath, $templateMethod, $frequencyRequired]) {
+    $templateOperation = &$spec['paths'][$templatePath][$templateMethod];
+    foreach (array_keys($templateOperation['requestBody']['content'] ?? []) as $contentType) {
+        $templateInput = &$templateOperation['requestBody']['content'][$contentType]['schema'];
+        $templateInput['properties']['frequency'] = ['type' => 'string', 'enum' => $invoiceTemplateFrequencyOptions, 'description' => 'Validation: '.($frequencyRequired ? 'required' : 'sometimes|required').'|in:'.implode(',', $invoiceTemplateFrequencyOptions)];
+        if ($frequencyRequired && !in_array('frequency', $templateInput['required'] ?? [], true)) $templateInput['required'][] = 'frequency';
+        $templateOperation['requestBody']['content'][$contentType]['example']['frequency'] = $invoiceTemplateFrequencyOptions[1] ?? $invoiceTemplateFrequencyOptions[0];
+        unset($templateInput);
+    }
+    unset($templateOperation);
+}
+unset($invoiceTemplateFrequencyOptions, $templatePath, $templateMethod, $frequencyRequired);
 $customerSummarySchema = ['type' => 'object', 'required' => ['id', 'user_id', 'facility_name', 'facility_type', 'country', 'city', 'address', 'created_at', 'updated_at', 'customer'], 'properties' => [
     'id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'], 'facility_name' => ['type' => ['string', 'null']], 'facility_type' => ['type' => ['string', 'null']],
     'country' => ['type' => 'string'], 'city' => ['type' => ['string', 'null']], 'address' => ['type' => ['string', 'null']],

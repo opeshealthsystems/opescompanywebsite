@@ -1,3 +1,7 @@
+## SDK 0.145.0 — recurring-invoice templates (6 November 2026)
+
+Types the filtered recurring-template list and detail projection, template creation/update acknowledgements, and generated-invoice outcome. The request types include the existing frequency allowlist and require frequency on create. Corrects generation to its actual 201 status and documents line items, schedule, currency, terms and nullable client/customer details. Existing schedule and invoice-generation rules are unchanged. OpenAPI is 0.132.0. This downloadable preview remains unpublished to npm. Archive size is 51147 bytes; SHA-256 is `66e225298a25d4810f49dc3e4ad3dee0811010df650f51052eba8b558733cb99`.
+
 ## SDK 0.144.0 — invoice command responses (6 November 2026)
 
 Types invoice creation, draft updates/deletion, send, payment, overdue and batch-send outcomes. The payment request now requires the existing payment_method allowlist. Corrects invoice creation to the handler's actual 201 response and documents integer totals. The send response states that mail/notification work is queued when applicable; it does not claim inbox delivery. Existing finance permissions, payment limits and idempotency behavior are unchanged. OpenAPI is 0.131.0. This downloadable preview remains unpublished to npm. Archive size is 50892 bytes; SHA-256 is `eba1bd4296c0f4b7aa6efc5cee3d3567c8a388e5fff6b6a3f5c5fcf20d8b4148`.
