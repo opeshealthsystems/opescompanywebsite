@@ -1466,6 +1466,33 @@ $customerInvoiceShow['responses']['200']['content']['application/json']['schema'
     'invoice' => $customerInvoiceResource,
 ]], 'customer.invoicecontroller.show');
 unset($customerInvoiceShow);
+$customerDocumentResource = ['type' => 'object', 'required' => ['id', 'document_template_id', 'type', 'title', 'reference_number', 'body_rendered', 'issued_by', 'addressee_user_id', 'addressee_name', 'addressee_email', 'status', 'requires_signature', 'signed_at', 'signed_by_name', 'valid_until', 'notes', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'document_template_id' => ['type' => ['integer', 'null']],
+    'type' => ['type' => 'string', 'enum' => ['receipt', 'letterhead', 'contract_employee', 'contract_business']], 'title' => ['type' => 'string'],
+    'reference_number' => ['type' => 'string'], 'body_rendered' => ['type' => 'string'], 'issued_by' => ['type' => 'integer'],
+    'addressee_user_id' => ['type' => ['integer', 'null']], 'addressee_name' => ['type' => 'string'], 'addressee_email' => ['type' => ['string', 'null'], 'format' => 'email'],
+    'status' => ['type' => 'string', 'enum' => ['sent', 'pending_signature', 'signed', 'voided']], 'requires_signature' => ['type' => 'boolean'],
+    'signed_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'signed_by_name' => ['type' => ['string', 'null']],
+    'valid_until' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'notes' => ['type' => ['string', 'null']],
+    'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+]];
+$customerDocumentList = &$spec['paths']['/customer/documents']['get'];
+$customerDocumentList['responses']['200']['description'] = 'Returns documents addressed to the authenticated customer, excluding drafts, with pagination metadata. Signature tokens, signing IPs and submitted signature data are not returned.';
+$customerDocumentList['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['documents'], 'properties' => [
+    'documents' => ['type' => 'object', 'required' => ['items', 'meta'], 'properties' => [
+        'items' => ['type' => 'array', 'items' => $customerDocumentResource],
+        'meta' => ['type' => 'object', 'required' => ['page', 'per_page', 'total', 'last_page'], 'properties' => [
+            'page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+        ]],
+    ]],
+]], 'customer.documentcontroller.index');
+unset($customerDocumentList);
+$customerDocumentShow = &$spec['paths']['/customer/documents/{id}']['get'];
+$customerDocumentShow['responses']['200']['description'] = 'Returns one non-draft document addressed to the authenticated customer. Signature tokens, signing IPs and submitted signature data are not returned.';
+$customerDocumentShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['document'], 'properties' => [
+    'document' => $customerDocumentResource,
+]], 'customer.documentcontroller.show');
+unset($customerDocumentShow);
 $customerDashboard = &$spec['paths']['/customer/dashboard']['get'];
 $dashboardTicket = ['type' => 'object', 'required' => ['id', 'user_id', 'assigned_to', 'subject', 'description', 'type', 'status', 'priority', 'resolution', 'resolved_at', 'closed_at', 'tester_assignment_id', 'sla_rule_id', 'sla_response_due_at', 'sla_resolution_due_at', 'created_at', 'updated_at'], 'properties' => [
     'id' => ['type' => 'integer'], 'user_id' => ['type' => ['integer', 'null']], 'assigned_to' => ['type' => ['integer', 'null']],

@@ -11626,7 +11626,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns documents addressed to the authenticated customer, excluding drafts, with pagination metadata. Signature tokens, signing IPs and submitted signature data are not returned.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -11638,10 +11638,164 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "documents"
+                                            ],
+                                            "properties": {
+                                                "documents": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "items",
+                                                        "meta"
+                                                    ],
+                                                    "properties": {
+                                                        "items": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object",
+                                                                "required": [
+                                                                    "id",
+                                                                    "document_template_id",
+                                                                    "type",
+                                                                    "title",
+                                                                    "reference_number",
+                                                                    "body_rendered",
+                                                                    "issued_by",
+                                                                    "addressee_user_id",
+                                                                    "addressee_name",
+                                                                    "addressee_email",
+                                                                    "status",
+                                                                    "requires_signature",
+                                                                    "signed_at",
+                                                                    "signed_by_name",
+                                                                    "valid_until",
+                                                                    "notes",
+                                                                    "created_at",
+                                                                    "updated_at"
+                                                                ],
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "document_template_id": {
+                                                                        "type": [
+                                                                            "integer",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "type": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "receipt",
+                                                                            "letterhead",
+                                                                            "contract_employee",
+                                                                            "contract_business"
+                                                                        ]
+                                                                    },
+                                                                    "title": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "reference_number": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "body_rendered": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "issued_by": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "addressee_user_id": {
+                                                                        "type": [
+                                                                            "integer",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "addressee_name": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "addressee_email": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ],
+                                                                        "format": "email"
+                                                                    },
+                                                                    "status": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "sent",
+                                                                            "pending_signature",
+                                                                            "signed",
+                                                                            "voided"
+                                                                        ]
+                                                                    },
+                                                                    "requires_signature": {
+                                                                        "type": "boolean"
+                                                                    },
+                                                                    "signed_at": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ],
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "signed_by_name": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "valid_until": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ],
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "notes": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "updated_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time"
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "meta": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "page",
+                                                                "per_page",
+                                                                "total",
+                                                                "last_page"
+                                                            ],
+                                                            "properties": {
+                                                                "page": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "per_page": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "total": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "last_page": {
+                                                                    "type": "integer"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -11653,10 +11807,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -11820,7 +11971,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns one non-draft document addressed to the authenticated customer. Signature tokens, signing IPs and submitted signature data are not returned.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -11832,10 +11983,129 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "document"
+                                            ],
+                                            "properties": {
+                                                "document": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "document_template_id",
+                                                        "type",
+                                                        "title",
+                                                        "reference_number",
+                                                        "body_rendered",
+                                                        "issued_by",
+                                                        "addressee_user_id",
+                                                        "addressee_name",
+                                                        "addressee_email",
+                                                        "status",
+                                                        "requires_signature",
+                                                        "signed_at",
+                                                        "signed_by_name",
+                                                        "valid_until",
+                                                        "notes",
+                                                        "created_at",
+                                                        "updated_at"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "document_template_id": {
+                                                            "type": [
+                                                                "integer",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "type": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "receipt",
+                                                                "letterhead",
+                                                                "contract_employee",
+                                                                "contract_business"
+                                                            ]
+                                                        },
+                                                        "title": {
+                                                            "type": "string"
+                                                        },
+                                                        "reference_number": {
+                                                            "type": "string"
+                                                        },
+                                                        "body_rendered": {
+                                                            "type": "string"
+                                                        },
+                                                        "issued_by": {
+                                                            "type": "integer"
+                                                        },
+                                                        "addressee_user_id": {
+                                                            "type": [
+                                                                "integer",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "addressee_name": {
+                                                            "type": "string"
+                                                        },
+                                                        "addressee_email": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "email"
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "sent",
+                                                                "pending_signature",
+                                                                "signed",
+                                                                "voided"
+                                                            ]
+                                                        },
+                                                        "requires_signature": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "signed_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "signed_by_name": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "valid_until": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "notes": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -11847,10 +12117,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },

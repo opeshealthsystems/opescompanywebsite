@@ -18,7 +18,7 @@ jobs:
       - run: python -m pip install openapi-spec-validator==0.7.2
       - run: python -m openapi_spec_validator docs/api/openapi.json
       - run: python -m unittest discover -s scripts/api -p 'test_*.py'
-      - run: python scripts/api/report_response_schema_coverage.py docs/api/openapi.json --minimum-field-specific 75 --max-missing-schemas 0
+      - run: python scripts/api/report_response_schema_coverage.py docs/api/openapi.json --minimum-field-specific 77 --max-missing-schemas 0
       - name: Preserve released API operation shapes
         env:
           BASE_REVISION: ${{ github.event.pull_request.base.sha || github.event.before }}

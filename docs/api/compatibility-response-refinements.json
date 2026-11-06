@@ -79,6 +79,18 @@
   },
   {
     "method": "GET",
+    "path": "/customer/documents",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents non-draft documents addressed to the authenticated customer using the existing allowlisted Document resource. Signature tokens, signing IPs and signature payloads remain excluded. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/customer/documents/{id}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents one non-draft customer-addressed document using the existing ownership check and allowlisted resource fields. Signature tokens, signing IPs and signature payloads remain excluded. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
     "path": "/customer/licenses",
     "allow_response_schema_refinement": true,
     "reason": "Documents paginated licenses belonging to the authenticated customer, including the license keys already exposed to that owner by ApiWorkflowSerializer. No response bytes, request shape, authorization or status behavior changes."

@@ -1,3 +1,6 @@
+## SDK 0.129.0 — customer-addressed documents (6 November 2026)
+
+Types the paginated customer document list and owner-checked document detail. The contract omits signing tokens, signing IP addresses and submitted signature data; drafts remain filtered by the existing workflows. No runtime behavior changed. OpenAPI remains 0.118.0. This private SDK preview is not published to npm. Archive size is 48234 bytes; SHA-256 is `a00d7060c7b48b39af75dbbe02ab040620c588936e953e665dd87bf68edfde15`.
 ## SDK 0.128.0 — customer licenses and invoices (6 November 2026)
 
 Types owner-scoped license list/detail records and paginated invoice list/detail records, including the owner’s license key, invoice line items, computed totals and pagination. No API runtime behavior or authorization changed. OpenAPI remains 0.118.0. This private SDK preview is not published to npm. Archive size is 48097 bytes; SHA-256 is `d438115fb3db3f27ddc13739f8c44f4a231c56ab60a61b14de39685a82737d82`.
