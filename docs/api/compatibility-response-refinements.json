@@ -247,6 +247,36 @@
   },
   {
     "method": "GET",
+    "path": "/admin/dashboard/summary",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing role- and permission-dependent dashboard aggregates from AdminDashboardQueries. No response bytes, access checks, or calculations change."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/dashboard/recent-tickets",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing paginated open-ticket projection and customer summary from AdminDashboardReadQueries and ApiWorkflowSerializer. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/dashboard/recent-leads",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing paginated lead resource projection from AdminDashboardReadQueries; IP addresses and structured integration details are excluded. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/dashboard/outstanding-invoices",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing paginated sent and overdue invoice projection with computed totals from AdminDashboardReadQueries and ApiWorkflowSerializer. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/dashboard/announcements",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing role-targeted announcement projection and author summary from AdminDashboardReadQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
     "path": "/customer/tickets",
     "allow_response_schema_refinement": true,
     "reason": "Documents paginated tickets belonging to the authenticated customer from CustomerTicketQueries and ApiWorkflowSerializer. No response bytes, request shape, authorization or status behavior changes."

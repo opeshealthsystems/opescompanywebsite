@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version' => '0.122.0',
+    'version' => '0.123.0',
     'products' => [
         [
             'id' => 'public-enquiries',
@@ -93,6 +93,11 @@ return [
         ],
     ],
     'changelog' => [
+        [
+            'version' => '0.123.0',
+            'released_at' => '2026-11-06',
+            'summary' => 'Added typed role-aware admin dashboard summary, support ticket, lead, invoice and announcement reads.',
+        ],
         [
             'version' => '0.122.0',
             'released_at' => '2026-11-06',

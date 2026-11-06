@@ -1640,6 +1640,70 @@ $adminPayrollEntries['responses']['200']['content']['application/json']['schema'
     ]],
 ]], 'admin.finance.payrollEntries.index');
 unset($adminPayrollEntries, $payrollRunResource, $payrollPageMeta);
+$dashboardPagination = ['type' => 'object', 'required' => ['current_page', 'per_page', 'total', 'last_page'], 'properties' => [
+    'current_page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+]];
+$dashboardTicket = ['type' => 'object', 'required' => ['id', 'user_id', 'assigned_to', 'subject', 'description', 'type', 'status', 'priority', 'resolution', 'resolved_at', 'closed_at', 'tester_assignment_id', 'sla_rule_id', 'sla_response_due_at', 'sla_resolution_due_at', 'created_at', 'updated_at', 'customer'], 'properties' => [
+    'id' => ['type' => 'integer'], 'user_id' => ['type' => ['integer', 'null']], 'assigned_to' => ['type' => ['integer', 'null']],
+    'subject' => ['type' => 'string'], 'description' => ['type' => 'string'], 'type' => ['type' => 'string', 'enum' => ['support', 'billing', 'technical', 'bug_report', 'other']],
+    'status' => ['type' => 'string', 'enum' => ['open', 'in_progress', 'pending_customer', 'resolved', 'closed']],
+    'priority' => ['type' => 'string', 'enum' => ['low', 'medium', 'high', 'urgent']], 'resolution' => ['type' => ['string', 'null']],
+    'resolved_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'closed_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'tester_assignment_id' => ['type' => ['integer', 'null']], 'sla_rule_id' => ['type' => ['integer', 'null']],
+    'sla_response_due_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'sla_resolution_due_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+    'customer' => ['oneOf' => [['type' => 'object', 'required' => ['id', 'name'], 'properties' => ['id' => ['type' => 'integer'], 'name' => ['type' => 'string']]], ['type' => 'null']]],
+]];
+$dashboardLead = ['type' => 'object', 'required' => ['id', 'name', 'email', 'phone', 'facility_type', 'products', 'message', 'source', 'product_slug', 'locale', 'status', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'name' => ['type' => 'string'], 'email' => ['type' => 'string', 'format' => 'email'], 'phone' => ['type' => ['string', 'null']],
+    'facility_type' => ['type' => ['string', 'null']], 'products' => ['type' => ['string', 'null']], 'message' => ['type' => ['string', 'null']],
+    'source' => ['type' => ['string', 'null']], 'product_slug' => ['type' => ['string', 'null']], 'locale' => ['type' => ['string', 'null']],
+    'status' => ['type' => 'string'], 'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+]];
+$dashboardInvoice = ['type' => 'object', 'required' => ['id', 'customer_id', 'issued_by', 'license_id', 'status', 'currency', 'tax_rate', 'notes', 'due_date', 'paid_at', 'created_at', 'updated_at', 'invoice_number', 'subtotal', 'tax_amount', 'grand_total', 'amount_paid', 'amount_outstanding', 'customer'], 'properties' => [
+    'id' => ['type' => 'integer'], 'customer_id' => ['type' => ['integer', 'null']], 'issued_by' => ['type' => ['integer', 'null']], 'license_id' => ['type' => ['integer', 'null']],
+    'status' => ['type' => 'string', 'enum' => ['draft', 'sent', 'paid', 'overdue', 'cancelled']], 'currency' => ['type' => 'string'], 'tax_rate' => ['type' => 'string'],
+    'notes' => ['type' => ['string', 'null']], 'due_date' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'paid_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'], 'invoice_number' => ['type' => 'string'],
+    'subtotal' => ['type' => 'integer'], 'tax_amount' => ['type' => 'integer'], 'grand_total' => ['type' => 'integer'], 'amount_paid' => ['type' => 'number'], 'amount_outstanding' => ['type' => 'number'],
+    'customer' => ['oneOf' => [['type' => 'object', 'required' => ['id', 'name'], 'properties' => ['id' => ['type' => 'integer'], 'name' => ['type' => 'string']]], ['type' => 'null']]],
+]];
+$dashboardAnnouncement = ['type' => 'object', 'required' => ['id', 'title', 'body', 'audience', 'is_pinned', 'author', 'published_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'title' => ['type' => 'string'], 'body' => ['type' => 'string'], 'audience' => ['type' => 'string', 'enum' => ['all', 'admin', 'support', 'tester']],
+    'is_pinned' => ['type' => 'boolean'], 'author' => ['oneOf' => [
+        ['type' => 'object', 'required' => ['id', 'name'], 'properties' => ['id' => ['type' => 'integer'], 'name' => ['type' => 'string']]], ['type' => 'null'],
+    ]],
+    'published_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+]];
+$dashboardCollections = [
+    '/admin/dashboard/recent-tickets' => ['operation' => 'admin.dashboard.recentTickets', 'description' => 'Returns paginated open support tickets, including only the customer id and name summaries visible to dashboard staff.', 'item' => $dashboardTicket],
+    '/admin/dashboard/recent-leads' => ['operation' => 'admin.dashboard.recentLeads', 'description' => 'Returns paginated recent new or contacted leads using the existing lead projection; network addresses and structured integration details are excluded.', 'item' => $dashboardLead],
+    '/admin/dashboard/outstanding-invoices' => ['operation' => 'admin.dashboard.outstandingInvoices', 'description' => 'Returns paginated sent or overdue invoices with computed totals and customer id and name summaries.', 'item' => $dashboardInvoice],
+    '/admin/dashboard/announcements' => ['operation' => 'admin.dashboard.announcements', 'description' => 'Returns active announcements visible to the authenticated user with author id and name summaries.', 'item' => $dashboardAnnouncement],
+];
+foreach ($dashboardCollections as $path => $configuration) {
+    $target = &$spec['paths'][$path]['get'];
+    $target['responses']['200']['description'] = $configuration['description'];
+    $target['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+        'items' => ['type' => 'array', 'items' => $configuration['item']], 'pagination' => $dashboardPagination,
+    ]], $configuration['operation']);
+    unset($target);
+}
+$dashboardSummary = &$spec['paths']['/admin/dashboard/summary']['get'];
+$dashboardSummary['responses']['200']['description'] = 'Returns account, ticket, license, tester-assignment and support-staff counts. Finance and CRM aggregates appear only for actors with the corresponding permission or administrator role.';
+$dashboardSummary['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['summary', 'generated_at'], 'properties' => [
+    'summary' => ['type' => 'object', 'required' => ['customers', 'tickets', 'licenses', 'tester_assignments', 'support_staff'], 'properties' => [
+        'customers' => ['type' => 'object', 'required' => ['total', 'new_this_month'], 'properties' => ['total' => ['type' => 'integer'], 'new_this_month' => ['type' => 'integer']]],
+        'tickets' => ['type' => 'object', 'required' => ['open', 'resolved_this_month'], 'properties' => ['open' => ['type' => 'integer'], 'resolved_this_month' => ['type' => 'integer']]],
+        'licenses' => ['type' => 'object', 'required' => ['active', 'expiring_in_30_days'], 'properties' => ['active' => ['type' => 'integer'], 'expiring_in_30_days' => ['type' => 'integer']]],
+        'tester_assignments' => ['type' => 'object', 'required' => ['pending', 'active'], 'properties' => ['pending' => ['type' => 'integer'], 'active' => ['type' => 'integer']]],
+        'support_staff' => ['type' => 'integer'],
+        'finance' => ['type' => 'object', 'required' => ['outstanding_invoices', 'overdue_invoices'], 'properties' => ['outstanding_invoices' => ['type' => 'integer'], 'overdue_invoices' => ['type' => 'integer']]],
+        'crm' => ['type' => 'object', 'required' => ['new_leads', 'qualified_leads', 'open_pipeline_value'], 'properties' => ['new_leads' => ['type' => 'integer'], 'qualified_leads' => ['type' => 'integer'], 'open_pipeline_value' => ['type' => 'number']]],
+    ]],
+    'generated_at' => ['type' => 'string', 'format' => 'date-time'],
+]], 'admin.dashboard.summary');
+unset($dashboardSummary, $dashboardCollections, $dashboardPagination, $dashboardTicket, $dashboardLead, $dashboardInvoice, $dashboardAnnouncement);
 $customerDocumentResource = ['type' => 'object', 'required' => ['id', 'document_template_id', 'type', 'title', 'reference_number', 'body_rendered', 'issued_by', 'addressee_user_id', 'addressee_name', 'addressee_email', 'status', 'requires_signature', 'signed_at', 'signed_by_name', 'valid_until', 'notes', 'created_at', 'updated_at'], 'properties' => [
     'id' => ['type' => 'integer'], 'document_template_id' => ['type' => ['integer', 'null']],
     'type' => ['type' => 'string', 'enum' => ['receipt', 'letterhead', 'contract_employee', 'contract_business']], 'title' => ['type' => 'string'],

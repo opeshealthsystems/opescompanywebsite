@@ -2,7 +2,7 @@
     "openapi": "3.1.1",
     "info": {
         "title": "OHS Platform API",
-        "version": "0.122.0",
+        "version": "0.123.0",
         "description": "Versioned OHS business APIs. Public enquiries and application intake, partner and tester administration, publishing and catalogues, role-scoped operations and workforce workflows, finance registers, reports and line-item detail reads, customer facility profiles, employee and HR administration, risk and performance management, leave requests, validation, practitioner, recruitment, learning, survey and support workflows, account recovery, machine catalogue access and owner-managed public-scope machine clients, public sitemap data, protected admin reference data and resource/relationship summaries, with delegated business workflows using authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.",
         "contact": {
             "name": "OHS support",
@@ -99978,7 +99978,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns paginated open support tickets, including only the customer id and name summaries visible to dashboard staff.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -99990,10 +99990,190 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items",
+                                                "pagination"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "user_id",
+                                                            "assigned_to",
+                                                            "subject",
+                                                            "description",
+                                                            "type",
+                                                            "status",
+                                                            "priority",
+                                                            "resolution",
+                                                            "resolved_at",
+                                                            "closed_at",
+                                                            "tester_assignment_id",
+                                                            "sla_rule_id",
+                                                            "sla_response_due_at",
+                                                            "sla_resolution_due_at",
+                                                            "created_at",
+                                                            "updated_at",
+                                                            "customer"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "user_id": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "assigned_to": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "subject": {
+                                                                "type": "string"
+                                                            },
+                                                            "description": {
+                                                                "type": "string"
+                                                            },
+                                                            "type": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "support",
+                                                                    "billing",
+                                                                    "technical",
+                                                                    "bug_report",
+                                                                    "other"
+                                                                ]
+                                                            },
+                                                            "status": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "open",
+                                                                    "in_progress",
+                                                                    "pending_customer",
+                                                                    "resolved",
+                                                                    "closed"
+                                                                ]
+                                                            },
+                                                            "priority": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "low",
+                                                                    "medium",
+                                                                    "high",
+                                                                    "urgent"
+                                                                ]
+                                                            },
+                                                            "resolution": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "resolved_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            },
+                                                            "closed_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            },
+                                                            "tester_assignment_id": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "sla_rule_id": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "sla_response_due_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            },
+                                                            "sla_resolution_due_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            },
+                                                            "customer": {
+                                                                "oneOf": [
+                                                                    {
+                                                                        "type": "object",
+                                                                        "required": [
+                                                                            "id",
+                                                                            "name"
+                                                                        ],
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "name": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "type": "null"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "current_page",
+                                                        "per_page",
+                                                        "total",
+                                                        "last_page"
+                                                    ],
+                                                    "properties": {
+                                                        "current_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "total": {
+                                                            "type": "integer"
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -100005,10 +100185,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -100162,7 +100339,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns paginated recent new or contacted leads using the existing lead projection; network addresses and structured integration details are excluded.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -100174,10 +100351,122 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items",
+                                                "pagination"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "name",
+                                                            "email",
+                                                            "phone",
+                                                            "facility_type",
+                                                            "products",
+                                                            "message",
+                                                            "source",
+                                                            "product_slug",
+                                                            "locale",
+                                                            "status",
+                                                            "created_at",
+                                                            "updated_at"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            },
+                                                            "email": {
+                                                                "type": "string",
+                                                                "format": "email"
+                                                            },
+                                                            "phone": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "facility_type": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "products": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "message": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "source": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "product_slug": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "locale": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "status": {
+                                                                "type": "string"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "current_page",
+                                                        "per_page",
+                                                        "total",
+                                                        "last_page"
+                                                    ],
+                                                    "properties": {
+                                                        "current_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "total": {
+                                                            "type": "integer"
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -100189,10 +100478,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -100346,7 +100632,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns paginated sent or overdue invoices with computed totals and customer id and name summaries.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -100358,10 +100644,170 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items",
+                                                "pagination"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "customer_id",
+                                                            "issued_by",
+                                                            "license_id",
+                                                            "status",
+                                                            "currency",
+                                                            "tax_rate",
+                                                            "notes",
+                                                            "due_date",
+                                                            "paid_at",
+                                                            "created_at",
+                                                            "updated_at",
+                                                            "invoice_number",
+                                                            "subtotal",
+                                                            "tax_amount",
+                                                            "grand_total",
+                                                            "amount_paid",
+                                                            "amount_outstanding",
+                                                            "customer"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "customer_id": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "issued_by": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "license_id": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "status": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "draft",
+                                                                    "sent",
+                                                                    "paid",
+                                                                    "overdue",
+                                                                    "cancelled"
+                                                                ]
+                                                            },
+                                                            "currency": {
+                                                                "type": "string"
+                                                            },
+                                                            "tax_rate": {
+                                                                "type": "string"
+                                                            },
+                                                            "notes": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "due_date": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            },
+                                                            "paid_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            },
+                                                            "invoice_number": {
+                                                                "type": "string"
+                                                            },
+                                                            "subtotal": {
+                                                                "type": "integer"
+                                                            },
+                                                            "tax_amount": {
+                                                                "type": "integer"
+                                                            },
+                                                            "grand_total": {
+                                                                "type": "integer"
+                                                            },
+                                                            "amount_paid": {
+                                                                "type": "number"
+                                                            },
+                                                            "amount_outstanding": {
+                                                                "type": "number"
+                                                            },
+                                                            "customer": {
+                                                                "oneOf": [
+                                                                    {
+                                                                        "type": "object",
+                                                                        "required": [
+                                                                            "id",
+                                                                            "name"
+                                                                        ],
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "name": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "type": "null"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "current_page",
+                                                        "per_page",
+                                                        "total",
+                                                        "last_page"
+                                                    ],
+                                                    "properties": {
+                                                        "current_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "total": {
+                                                            "type": "integer"
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -100373,10 +100819,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -100530,7 +100973,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns active announcements visible to the authenticated user with author id and name summaries.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -100542,10 +100985,103 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items",
+                                                "pagination"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "title",
+                                                            "body",
+                                                            "audience",
+                                                            "is_pinned",
+                                                            "author",
+                                                            "published_at"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "title": {
+                                                                "type": "string"
+                                                            },
+                                                            "body": {
+                                                                "type": "string"
+                                                            },
+                                                            "audience": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "all",
+                                                                    "admin",
+                                                                    "support",
+                                                                    "tester"
+                                                                ]
+                                                            },
+                                                            "is_pinned": {
+                                                                "type": "boolean"
+                                                            },
+                                                            "author": {
+                                                                "oneOf": [
+                                                                    {
+                                                                        "type": "object",
+                                                                        "required": [
+                                                                            "id",
+                                                                            "name"
+                                                                        ],
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "name": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "type": "null"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "published_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "current_page",
+                                                        "per_page",
+                                                        "total",
+                                                        "last_page"
+                                                    ],
+                                                    "properties": {
+                                                        "current_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "total": {
+                                                            "type": "integer"
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -100557,10 +101093,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -103786,7 +104319,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns account, ticket, license, tester-assignment and support-staff counts. Finance and CRM aggregates appear only for actors with the corresponding permission or administrator role.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -103798,10 +104331,126 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "summary",
+                                                "generated_at"
+                                            ],
+                                            "properties": {
+                                                "summary": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "customers",
+                                                        "tickets",
+                                                        "licenses",
+                                                        "tester_assignments",
+                                                        "support_staff"
+                                                    ],
+                                                    "properties": {
+                                                        "customers": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "total",
+                                                                "new_this_month"
+                                                            ],
+                                                            "properties": {
+                                                                "total": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "new_this_month": {
+                                                                    "type": "integer"
+                                                                }
+                                                            }
+                                                        },
+                                                        "tickets": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "open",
+                                                                "resolved_this_month"
+                                                            ],
+                                                            "properties": {
+                                                                "open": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "resolved_this_month": {
+                                                                    "type": "integer"
+                                                                }
+                                                            }
+                                                        },
+                                                        "licenses": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "active",
+                                                                "expiring_in_30_days"
+                                                            ],
+                                                            "properties": {
+                                                                "active": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "expiring_in_30_days": {
+                                                                    "type": "integer"
+                                                                }
+                                                            }
+                                                        },
+                                                        "tester_assignments": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "pending",
+                                                                "active"
+                                                            ],
+                                                            "properties": {
+                                                                "pending": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "active": {
+                                                                    "type": "integer"
+                                                                }
+                                                            }
+                                                        },
+                                                        "support_staff": {
+                                                            "type": "integer"
+                                                        },
+                                                        "finance": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "outstanding_invoices",
+                                                                "overdue_invoices"
+                                                            ],
+                                                            "properties": {
+                                                                "outstanding_invoices": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "overdue_invoices": {
+                                                                    "type": "integer"
+                                                                }
+                                                            }
+                                                        },
+                                                        "crm": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "new_leads",
+                                                                "qualified_leads",
+                                                                "open_pipeline_value"
+                                                            ],
+                                                            "properties": {
+                                                                "new_leads": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "qualified_leads": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "open_pipeline_value": {
+                                                                    "type": "number"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "generated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -103813,10 +104462,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -157525,7 +158171,7 @@
                                 "example": {
                                     "data": {
                                         "name": "OPES Health Systems API",
-                                        "api_version": "0.122.0",
+                                        "api_version": "0.123.0",
                                         "openapi_version": "3.1.1",
                                         "authentication": {
                                             "machine": "OAuth 2.0 client credentials with approved scopes",
@@ -157749,7 +158395,7 @@
                                 "example": {
                                     "data": {
                                         "status": "responding",
-                                        "api_version": "0.122.0",
+                                        "api_version": "0.123.0",
                                         "checked_at": "2026-11-01T12:00:00+00:00"
                                     },
                                     "meta": {
@@ -157953,6 +158599,11 @@
                                 "example": {
                                     "data": {
                                         "items": [
+                                            {
+                                                "version": "0.123.0",
+                                                "released_at": "2026-11-06",
+                                                "summary": "Added typed role-aware admin dashboard summary, support ticket, lead, invoice and announcement reads."
+                                            },
                                             {
                                                 "version": "0.122.0",
                                                 "released_at": "2026-11-06",
@@ -158351,7 +159002,7 @@
                                 },
                                 "example": {
                                     "data": {
-                                        "api_version": "0.122.0",
+                                        "api_version": "0.123.0",
                                         "locale": "en",
                                         "items": [
                                             {

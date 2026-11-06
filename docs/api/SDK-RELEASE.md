@@ -1,3 +1,7 @@
+## SDK 0.136.0 — admin dashboard reads (6 November 2026)
+
+Types the role-aware dashboard aggregates and its recent ticket, lead, outstanding invoice and announcement lists. The lead contract omits network address and structured integration details. Dashboard summary schemas show finance and CRM fields as optional because the existing workflow includes them only for eligible roles and permissions. OpenAPI is 0.123.0; runtime behavior is unchanged. This downloadable preview remains unpublished to npm. Archive size is 49851 bytes; SHA-256 is `e2b0bee0636e54cb50277d18da152e571228ed11271bcf75e64de17746e99001`.
+
 ## SDK 0.135.0 — payroll registers (6 November 2026)
 
 Types the administrator, accountant and HR payroll registers plus administrator payroll entry reads. Payroll entry salary values and deduction items follow their current decimal and JSON projections. The existing workflows, roles and payload behavior are unchanged. OpenAPI is 0.122.0. This downloadable preview remains unpublished to npm. Archive size is 49337 bytes; SHA-256 is `1107711ce3a9f441916935d35ae8fa85b4c4bde811a5395cae934a677f4b7213`.
