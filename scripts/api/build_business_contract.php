@@ -1272,6 +1272,81 @@ $customerProfileUpdate['responses']['200']['content']['application/json']['schem
 $customerPasswordUpdate['responses']['200']['description'] = 'Returns the locale and success acknowledgement after changing the authenticated customer password.';
 $customerPasswordUpdate['responses']['200']['content']['application/json']['schema'] = $customerCommandResponse('customer.profilecontroller.changePassword');
 unset($customerProfileUpdate, $customerPasswordUpdate, $customerCommandResponse);
+$courseLessonResource = ['type' => 'object', 'required' => ['id', 'course_id', 'title', 'title_fr', 'content', 'content_fr', 'video_url', 'duration_minutes', 'sort_order', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'course_id' => ['type' => 'integer'], 'title' => ['type' => 'string'], 'title_fr' => ['type' => ['string', 'null']],
+    'content' => ['type' => ['string', 'null']], 'content_fr' => ['type' => ['string', 'null']], 'video_url' => ['type' => ['string', 'null']],
+    'duration_minutes' => ['type' => ['integer', 'null']], 'sort_order' => ['type' => 'integer'],
+    'created_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'updated_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+]];
+$courseResource = ['type' => 'object', 'required' => ['id', 'product_slug', 'title', 'title_fr', 'slug', 'description', 'description_fr', 'level', 'duration_hours', 'cover_image', 'is_active', 'is_featured', 'sort_order', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'product_slug' => ['type' => ['string', 'null']], 'title' => ['type' => 'string'], 'title_fr' => ['type' => ['string', 'null']],
+    'slug' => ['type' => 'string'], 'description' => ['type' => ['string', 'null']], 'description_fr' => ['type' => ['string', 'null']],
+    'level' => ['type' => 'string', 'enum' => ['beginner', 'intermediate', 'advanced']], 'duration_hours' => ['type' => ['integer', 'null']],
+    'cover_image' => ['type' => ['string', 'null']], 'is_active' => ['type' => 'boolean'], 'is_featured' => ['type' => 'boolean'], 'sort_order' => ['type' => 'integer'],
+    'created_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'updated_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'lessons' => ['type' => 'array', 'items' => $courseLessonResource],
+]];
+$courseEnrollmentResource = ['type' => 'object', 'required' => ['id', 'course_id', 'user_id', 'status', 'enrolled_at', 'completed_at', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'course_id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'],
+    'status' => ['type' => 'string', 'enum' => ['enrolled', 'in_progress', 'completed', 'dropped']],
+    'enrolled_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'completed_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'created_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'updated_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'course' => $courseResource,
+]];
+$courseCertificateResource = ['type' => 'object', 'required' => ['id', 'enrollment_id', 'user_id', 'course_id', 'certificate_number', 'issued_at', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'enrollment_id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'], 'course_id' => ['type' => 'integer'],
+    'certificate_number' => ['type' => 'string'], 'issued_at' => ['type' => 'string', 'format' => 'date-time'],
+    'created_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'updated_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+]];
+$customerCourses = &$spec['paths']['/customer/courses']['get'];
+$customerCourses['responses']['200']['description'] = 'Returns active courses and this customer account’s course enrollments.';
+$customerCourses['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['courses', 'my_enrollments'], 'properties' => [
+    'courses' => ['type' => 'array', 'items' => $courseResource],
+    'my_enrollments' => ['oneOf' => [
+        ['type' => 'array', 'items' => $courseEnrollmentResource],
+        ['type' => 'object', 'additionalProperties' => $courseEnrollmentResource],
+    ]],
+]], 'customer.coursecontroller.index');
+unset($customerCourses);
+$customerCourse = &$spec['paths']['/customer/courses/{course}']['get'];
+$customerCourse['responses']['200']['description'] = 'Returns an active course, the authenticated customer’s enrollment if present, and completed lesson identifiers.';
+$customerCourse['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['course', 'enrollment', 'completed_lesson_ids'], 'properties' => [
+    'course' => $courseResource, 'enrollment' => ['oneOf' => [$courseEnrollmentResource, ['type' => 'null']]],
+    'completed_lesson_ids' => ['type' => 'array', 'items' => ['type' => 'integer']],
+]], 'customer.coursecontroller.show');
+unset($customerCourse);
+$customerLesson = &$spec['paths']['/customer/courses/{course}/lessons/{lesson}']['get'];
+$customerLesson['responses']['200']['description'] = 'Returns an enrolled customer’s lesson, course navigation, enrollment progress and completed lesson identifiers.';
+$customerLesson['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['course', 'lesson', 'enrollment', 'completed_lesson_ids', 'prev_lesson', 'next_lesson'], 'properties' => [
+    'course' => $courseResource, 'lesson' => $courseLessonResource, 'enrollment' => $courseEnrollmentResource,
+    'completed_lesson_ids' => ['type' => 'array', 'items' => ['type' => 'integer']],
+    'prev_lesson' => ['oneOf' => [$courseLessonResource, ['type' => 'null']]], 'next_lesson' => ['oneOf' => [$courseLessonResource, ['type' => 'null']]],
+]], 'customer.lessoncontroller.show');
+unset($customerLesson);
+$customerCertificates = &$spec['paths']['/customer/certificates']['get'];
+$customerCertificates['responses']['200']['description'] = 'Returns certificates issued to the authenticated customer account.';
+$customerCertificates['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['certificates'], 'properties' => [
+    'certificates' => ['type' => 'array', 'items' => $courseCertificateResource],
+]], 'customer.certificatecontroller.index');
+unset($customerCertificates);
+$customerEnroll = &$spec['paths']['/customer/courses/{course}/enroll']['post'];
+$customerEnroll['responses']['200']['description'] = 'Returns the requested course and locale; a new enrollment includes a success message.';
+$customerEnroll['responses']['200']['content']['application/json']['schema'] = ['type' => 'object', 'required' => ['data', 'meta', 'messages'], 'properties' => [
+    'data' => ['type' => 'object', 'required' => ['locale', 'course'], 'properties' => ['locale' => ['type' => 'string', 'enum' => ['en', 'fr']], 'course' => ['type' => 'string']]],
+    'meta' => ['type' => 'object', 'required' => ['operation'], 'properties' => ['operation' => ['type' => 'string', 'const' => 'customer.coursecontroller.enroll']]],
+    'messages' => ['oneOf' => [['type' => 'array', 'maxItems' => 0], ['type' => 'object', 'required' => ['success'], 'properties' => ['success' => ['type' => 'string']]]]],
+]];
+unset($customerEnroll);
+$customerLessonDone = &$spec['paths']['/customer/courses/{course}/lessons/{lesson}/done']['post'];
+$customerLessonDone['responses']['200']['description'] = 'Returns completion acknowledgement and the next lesson when available; completing the course may issue a certificate.';
+$customerLessonDone['responses']['200']['content']['application/json']['schema'] = ['type' => 'object', 'required' => ['data', 'meta', 'messages'], 'properties' => [
+    'data' => ['type' => 'object', 'required' => ['locale', 'course'], 'properties' => [
+        'locale' => ['type' => 'string', 'enum' => ['en', 'fr']], 'course' => ['type' => 'string'], 'lesson' => ['type' => 'integer'],
+    ]],
+    'meta' => ['type' => 'object', 'required' => ['operation'], 'properties' => ['operation' => ['type' => 'string', 'const' => 'customer.lessoncontroller.markDone']]],
+    'messages' => ['type' => 'object', 'required' => ['success'], 'properties' => ['success' => ['type' => 'string']]],
+]];
+unset($customerLessonDone);
 $customerDashboard = &$spec['paths']['/customer/dashboard']['get'];
 $dashboardTicket = ['type' => 'object', 'required' => ['id', 'user_id', 'assigned_to', 'subject', 'description', 'type', 'status', 'priority', 'resolution', 'resolved_at', 'closed_at', 'tester_assignment_id', 'sla_rule_id', 'sla_response_due_at', 'sla_resolution_due_at', 'created_at', 'updated_at'], 'properties' => [
     'id' => ['type' => 'integer'], 'user_id' => ['type' => ['integer', 'null']], 'assigned_to' => ['type' => ['integer', 'null']],

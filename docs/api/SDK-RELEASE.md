@@ -1,3 +1,6 @@
+## SDK 0.126.0 — customer learning and certificate workflows (6 November 2026)
+
+Types customer course catalogues, enrollments, lesson content and navigation, completion acknowledgements, and issued certificate records. Enrollment and lesson completion response types preserve their existing success and already-enrolled outcomes. The server behavior and authorization remain unchanged. OpenAPI remains 0.118.0. This private downloadable SDK preview is not published to npm. Archive size is 47718 bytes; SHA-256 is `d49df9256283c5ce28eb57047f3473db5f8448bade2033f0124544a81573c2e7`.
 ## SDK 0.125.0 — customer profile command responses (6 November 2026)
 
 Adds typed success acknowledgements for customer facility-profile updates and password changes. The response contract documents the existing locale, operation identifier and success message; the input contract already reflects the server validation rules. No runtime behavior changes. OpenAPI remains 0.118.0. The private downloadable preview is not published to npm. Archive size is 47503 bytes; SHA-256 is `c29a542949b28091be9204b233ad191b76e4f2891aa38befdd17cbfd9b0c24e9`.

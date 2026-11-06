@@ -78,6 +78,42 @@
     "reason": "Documents server-scored results and correct-choice review revealed after successful submission from CourseAssessmentCommands. No request, scoring, authorization or status behavior changes."
   },
   {
+    "method": "GET",
+    "path": "/customer/courses",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents active courses and authenticated customer enrollment records from CustomerCourseQueries and ApiWorkflowSerializer. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/customer/courses/{course}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing active course, owned enrollment and completed lesson identifiers returned by CustomerCourseQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/customer/courses/{course}/lessons/{lesson}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing enrollment-gated lesson and previous/next lesson navigation returned by CustomerLessonQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/customer/certificates",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents certificates belonging to the authenticated customer from CustomerCertificateQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "POST",
+    "path": "/customer/courses/{course}/enroll",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing enrolment outcome for a new or already-enrolled customer and the optional success acknowledgement. No enrolment, notification, idempotency, authorization or status behavior changes."
+  },
+  {
+    "method": "POST",
+    "path": "/customer/courses/{course}/lessons/{lesson}/done",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents lesson completion acknowledgement and optional next-lesson navigation returned by CustomerLessonCommands, including final-course completion. No progress, certificate, notification, idempotency, authorization or status behavior changes."
+  },
+  {
     "method": "PUT",
     "path": "/customer/profile",
     "allow_response_schema_refinement": true,

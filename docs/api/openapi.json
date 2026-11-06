@@ -8137,7 +8137,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns certificates issued to the authenticated customer account.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -8149,10 +8149,63 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "certificates"
+                                            ],
+                                            "properties": {
+                                                "certificates": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "enrollment_id",
+                                                            "user_id",
+                                                            "course_id",
+                                                            "certificate_number",
+                                                            "issued_at",
+                                                            "created_at",
+                                                            "updated_at"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "enrollment_id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "user_id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "course_id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "certificate_number": {
+                                                                "type": "string"
+                                                            },
+                                                            "issued_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            },
+                                                            "created_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -8164,10 +8217,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -8321,7 +8371,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns active courses and this customer account\u2019s course enrollments.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -8333,10 +8383,673 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "courses",
+                                                "my_enrollments"
+                                            ],
+                                            "properties": {
+                                                "courses": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "product_slug",
+                                                            "title",
+                                                            "title_fr",
+                                                            "slug",
+                                                            "description",
+                                                            "description_fr",
+                                                            "level",
+                                                            "duration_hours",
+                                                            "cover_image",
+                                                            "is_active",
+                                                            "is_featured",
+                                                            "sort_order",
+                                                            "created_at",
+                                                            "updated_at"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "product_slug": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "title": {
+                                                                "type": "string"
+                                                            },
+                                                            "title_fr": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "slug": {
+                                                                "type": "string"
+                                                            },
+                                                            "description": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "description_fr": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "level": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "beginner",
+                                                                    "intermediate",
+                                                                    "advanced"
+                                                                ]
+                                                            },
+                                                            "duration_hours": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "cover_image": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "is_active": {
+                                                                "type": "boolean"
+                                                            },
+                                                            "is_featured": {
+                                                                "type": "boolean"
+                                                            },
+                                                            "sort_order": {
+                                                                "type": "integer"
+                                                            },
+                                                            "created_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            },
+                                                            "lessons": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "object",
+                                                                    "required": [
+                                                                        "id",
+                                                                        "course_id",
+                                                                        "title",
+                                                                        "title_fr",
+                                                                        "content",
+                                                                        "content_fr",
+                                                                        "video_url",
+                                                                        "duration_minutes",
+                                                                        "sort_order",
+                                                                        "created_at",
+                                                                        "updated_at"
+                                                                    ],
+                                                                    "properties": {
+                                                                        "id": {
+                                                                            "type": "integer"
+                                                                        },
+                                                                        "course_id": {
+                                                                            "type": "integer"
+                                                                        },
+                                                                        "title": {
+                                                                            "type": "string"
+                                                                        },
+                                                                        "title_fr": {
+                                                                            "type": [
+                                                                                "string",
+                                                                                "null"
+                                                                            ]
+                                                                        },
+                                                                        "content": {
+                                                                            "type": [
+                                                                                "string",
+                                                                                "null"
+                                                                            ]
+                                                                        },
+                                                                        "content_fr": {
+                                                                            "type": [
+                                                                                "string",
+                                                                                "null"
+                                                                            ]
+                                                                        },
+                                                                        "video_url": {
+                                                                            "type": [
+                                                                                "string",
+                                                                                "null"
+                                                                            ]
+                                                                        },
+                                                                        "duration_minutes": {
+                                                                            "type": [
+                                                                                "integer",
+                                                                                "null"
+                                                                            ]
+                                                                        },
+                                                                        "sort_order": {
+                                                                            "type": "integer"
+                                                                        },
+                                                                        "created_at": {
+                                                                            "type": [
+                                                                                "string",
+                                                                                "null"
+                                                                            ],
+                                                                            "format": "date-time"
+                                                                        },
+                                                                        "updated_at": {
+                                                                            "type": [
+                                                                                "string",
+                                                                                "null"
+                                                                            ],
+                                                                            "format": "date-time"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "my_enrollments": {
+                                                    "oneOf": [
+                                                        {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object",
+                                                                "required": [
+                                                                    "id",
+                                                                    "course_id",
+                                                                    "user_id",
+                                                                    "status",
+                                                                    "enrolled_at",
+                                                                    "completed_at",
+                                                                    "created_at",
+                                                                    "updated_at"
+                                                                ],
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "course_id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "user_id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "status": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "enrolled",
+                                                                            "in_progress",
+                                                                            "completed",
+                                                                            "dropped"
+                                                                        ]
+                                                                    },
+                                                                    "enrolled_at": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ],
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "completed_at": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ],
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ],
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "updated_at": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ],
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "course": {
+                                                                        "type": "object",
+                                                                        "required": [
+                                                                            "id",
+                                                                            "product_slug",
+                                                                            "title",
+                                                                            "title_fr",
+                                                                            "slug",
+                                                                            "description",
+                                                                            "description_fr",
+                                                                            "level",
+                                                                            "duration_hours",
+                                                                            "cover_image",
+                                                                            "is_active",
+                                                                            "is_featured",
+                                                                            "sort_order",
+                                                                            "created_at",
+                                                                            "updated_at"
+                                                                        ],
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "product_slug": {
+                                                                                "type": [
+                                                                                    "string",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "title": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "title_fr": {
+                                                                                "type": [
+                                                                                    "string",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "slug": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "description": {
+                                                                                "type": [
+                                                                                    "string",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "description_fr": {
+                                                                                "type": [
+                                                                                    "string",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "level": {
+                                                                                "type": "string",
+                                                                                "enum": [
+                                                                                    "beginner",
+                                                                                    "intermediate",
+                                                                                    "advanced"
+                                                                                ]
+                                                                            },
+                                                                            "duration_hours": {
+                                                                                "type": [
+                                                                                    "integer",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "cover_image": {
+                                                                                "type": [
+                                                                                    "string",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "is_active": {
+                                                                                "type": "boolean"
+                                                                            },
+                                                                            "is_featured": {
+                                                                                "type": "boolean"
+                                                                            },
+                                                                            "sort_order": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "created_at": {
+                                                                                "type": [
+                                                                                    "string",
+                                                                                    "null"
+                                                                                ],
+                                                                                "format": "date-time"
+                                                                            },
+                                                                            "updated_at": {
+                                                                                "type": [
+                                                                                    "string",
+                                                                                    "null"
+                                                                                ],
+                                                                                "format": "date-time"
+                                                                            },
+                                                                            "lessons": {
+                                                                                "type": "array",
+                                                                                "items": {
+                                                                                    "type": "object",
+                                                                                    "required": [
+                                                                                        "id",
+                                                                                        "course_id",
+                                                                                        "title",
+                                                                                        "title_fr",
+                                                                                        "content",
+                                                                                        "content_fr",
+                                                                                        "video_url",
+                                                                                        "duration_minutes",
+                                                                                        "sort_order",
+                                                                                        "created_at",
+                                                                                        "updated_at"
+                                                                                    ],
+                                                                                    "properties": {
+                                                                                        "id": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "course_id": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "title": {
+                                                                                            "type": "string"
+                                                                                        },
+                                                                                        "title_fr": {
+                                                                                            "type": [
+                                                                                                "string",
+                                                                                                "null"
+                                                                                            ]
+                                                                                        },
+                                                                                        "content": {
+                                                                                            "type": [
+                                                                                                "string",
+                                                                                                "null"
+                                                                                            ]
+                                                                                        },
+                                                                                        "content_fr": {
+                                                                                            "type": [
+                                                                                                "string",
+                                                                                                "null"
+                                                                                            ]
+                                                                                        },
+                                                                                        "video_url": {
+                                                                                            "type": [
+                                                                                                "string",
+                                                                                                "null"
+                                                                                            ]
+                                                                                        },
+                                                                                        "duration_minutes": {
+                                                                                            "type": [
+                                                                                                "integer",
+                                                                                                "null"
+                                                                                            ]
+                                                                                        },
+                                                                                        "sort_order": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "created_at": {
+                                                                                            "type": [
+                                                                                                "string",
+                                                                                                "null"
+                                                                                            ],
+                                                                                            "format": "date-time"
+                                                                                        },
+                                                                                        "updated_at": {
+                                                                                            "type": [
+                                                                                                "string",
+                                                                                                "null"
+                                                                                            ],
+                                                                                            "format": "date-time"
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "object",
+                                                            "additionalProperties": {
+                                                                "type": "object",
+                                                                "required": [
+                                                                    "id",
+                                                                    "course_id",
+                                                                    "user_id",
+                                                                    "status",
+                                                                    "enrolled_at",
+                                                                    "completed_at",
+                                                                    "created_at",
+                                                                    "updated_at"
+                                                                ],
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "course_id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "user_id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "status": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "enrolled",
+                                                                            "in_progress",
+                                                                            "completed",
+                                                                            "dropped"
+                                                                        ]
+                                                                    },
+                                                                    "enrolled_at": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ],
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "completed_at": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ],
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ],
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "updated_at": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ],
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "course": {
+                                                                        "type": "object",
+                                                                        "required": [
+                                                                            "id",
+                                                                            "product_slug",
+                                                                            "title",
+                                                                            "title_fr",
+                                                                            "slug",
+                                                                            "description",
+                                                                            "description_fr",
+                                                                            "level",
+                                                                            "duration_hours",
+                                                                            "cover_image",
+                                                                            "is_active",
+                                                                            "is_featured",
+                                                                            "sort_order",
+                                                                            "created_at",
+                                                                            "updated_at"
+                                                                        ],
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "product_slug": {
+                                                                                "type": [
+                                                                                    "string",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "title": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "title_fr": {
+                                                                                "type": [
+                                                                                    "string",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "slug": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "description": {
+                                                                                "type": [
+                                                                                    "string",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "description_fr": {
+                                                                                "type": [
+                                                                                    "string",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "level": {
+                                                                                "type": "string",
+                                                                                "enum": [
+                                                                                    "beginner",
+                                                                                    "intermediate",
+                                                                                    "advanced"
+                                                                                ]
+                                                                            },
+                                                                            "duration_hours": {
+                                                                                "type": [
+                                                                                    "integer",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "cover_image": {
+                                                                                "type": [
+                                                                                    "string",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "is_active": {
+                                                                                "type": "boolean"
+                                                                            },
+                                                                            "is_featured": {
+                                                                                "type": "boolean"
+                                                                            },
+                                                                            "sort_order": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "created_at": {
+                                                                                "type": [
+                                                                                    "string",
+                                                                                    "null"
+                                                                                ],
+                                                                                "format": "date-time"
+                                                                            },
+                                                                            "updated_at": {
+                                                                                "type": [
+                                                                                    "string",
+                                                                                    "null"
+                                                                                ],
+                                                                                "format": "date-time"
+                                                                            },
+                                                                            "lessons": {
+                                                                                "type": "array",
+                                                                                "items": {
+                                                                                    "type": "object",
+                                                                                    "required": [
+                                                                                        "id",
+                                                                                        "course_id",
+                                                                                        "title",
+                                                                                        "title_fr",
+                                                                                        "content",
+                                                                                        "content_fr",
+                                                                                        "video_url",
+                                                                                        "duration_minutes",
+                                                                                        "sort_order",
+                                                                                        "created_at",
+                                                                                        "updated_at"
+                                                                                    ],
+                                                                                    "properties": {
+                                                                                        "id": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "course_id": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "title": {
+                                                                                            "type": "string"
+                                                                                        },
+                                                                                        "title_fr": {
+                                                                                            "type": [
+                                                                                                "string",
+                                                                                                "null"
+                                                                                            ]
+                                                                                        },
+                                                                                        "content": {
+                                                                                            "type": [
+                                                                                                "string",
+                                                                                                "null"
+                                                                                            ]
+                                                                                        },
+                                                                                        "content_fr": {
+                                                                                            "type": [
+                                                                                                "string",
+                                                                                                "null"
+                                                                                            ]
+                                                                                        },
+                                                                                        "video_url": {
+                                                                                            "type": [
+                                                                                                "string",
+                                                                                                "null"
+                                                                                            ]
+                                                                                        },
+                                                                                        "duration_minutes": {
+                                                                                            "type": [
+                                                                                                "integer",
+                                                                                                "null"
+                                                                                            ]
+                                                                                        },
+                                                                                        "sort_order": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "created_at": {
+                                                                                            "type": [
+                                                                                                "string",
+                                                                                                "null"
+                                                                                            ],
+                                                                                            "format": "date-time"
+                                                                                        },
+                                                                                        "updated_at": {
+                                                                                            "type": [
+                                                                                                "string",
+                                                                                                "null"
+                                                                                            ],
+                                                                                            "format": "date-time"
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -8348,10 +9061,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -8515,7 +9225,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns an active course, the authenticated customer\u2019s enrollment if present, and completed lesson identifiers.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -8527,10 +9237,438 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "course",
+                                                "enrollment",
+                                                "completed_lesson_ids"
+                                            ],
+                                            "properties": {
+                                                "course": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "product_slug",
+                                                        "title",
+                                                        "title_fr",
+                                                        "slug",
+                                                        "description",
+                                                        "description_fr",
+                                                        "level",
+                                                        "duration_hours",
+                                                        "cover_image",
+                                                        "is_active",
+                                                        "is_featured",
+                                                        "sort_order",
+                                                        "created_at",
+                                                        "updated_at"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "product_slug": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "title": {
+                                                            "type": "string"
+                                                        },
+                                                        "title_fr": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "slug": {
+                                                            "type": "string"
+                                                        },
+                                                        "description": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "description_fr": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "level": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "beginner",
+                                                                "intermediate",
+                                                                "advanced"
+                                                            ]
+                                                        },
+                                                        "duration_hours": {
+                                                            "type": [
+                                                                "integer",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "cover_image": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "is_active": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "is_featured": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "sort_order": {
+                                                            "type": "integer"
+                                                        },
+                                                        "created_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "lessons": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object",
+                                                                "required": [
+                                                                    "id",
+                                                                    "course_id",
+                                                                    "title",
+                                                                    "title_fr",
+                                                                    "content",
+                                                                    "content_fr",
+                                                                    "video_url",
+                                                                    "duration_minutes",
+                                                                    "sort_order",
+                                                                    "created_at",
+                                                                    "updated_at"
+                                                                ],
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "course_id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "title": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "title_fr": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "content": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "content_fr": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "video_url": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "duration_minutes": {
+                                                                        "type": [
+                                                                            "integer",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "sort_order": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ],
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "updated_at": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ],
+                                                                        "format": "date-time"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "enrollment": {
+                                                    "oneOf": [
+                                                        {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "id",
+                                                                "course_id",
+                                                                "user_id",
+                                                                "status",
+                                                                "enrolled_at",
+                                                                "completed_at",
+                                                                "created_at",
+                                                                "updated_at"
+                                                            ],
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "course_id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "user_id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "status": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "enrolled",
+                                                                        "in_progress",
+                                                                        "completed",
+                                                                        "dropped"
+                                                                    ]
+                                                                },
+                                                                "enrolled_at": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ],
+                                                                    "format": "date-time"
+                                                                },
+                                                                "completed_at": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ],
+                                                                    "format": "date-time"
+                                                                },
+                                                                "created_at": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ],
+                                                                    "format": "date-time"
+                                                                },
+                                                                "updated_at": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ],
+                                                                    "format": "date-time"
+                                                                },
+                                                                "course": {
+                                                                    "type": "object",
+                                                                    "required": [
+                                                                        "id",
+                                                                        "product_slug",
+                                                                        "title",
+                                                                        "title_fr",
+                                                                        "slug",
+                                                                        "description",
+                                                                        "description_fr",
+                                                                        "level",
+                                                                        "duration_hours",
+                                                                        "cover_image",
+                                                                        "is_active",
+                                                                        "is_featured",
+                                                                        "sort_order",
+                                                                        "created_at",
+                                                                        "updated_at"
+                                                                    ],
+                                                                    "properties": {
+                                                                        "id": {
+                                                                            "type": "integer"
+                                                                        },
+                                                                        "product_slug": {
+                                                                            "type": [
+                                                                                "string",
+                                                                                "null"
+                                                                            ]
+                                                                        },
+                                                                        "title": {
+                                                                            "type": "string"
+                                                                        },
+                                                                        "title_fr": {
+                                                                            "type": [
+                                                                                "string",
+                                                                                "null"
+                                                                            ]
+                                                                        },
+                                                                        "slug": {
+                                                                            "type": "string"
+                                                                        },
+                                                                        "description": {
+                                                                            "type": [
+                                                                                "string",
+                                                                                "null"
+                                                                            ]
+                                                                        },
+                                                                        "description_fr": {
+                                                                            "type": [
+                                                                                "string",
+                                                                                "null"
+                                                                            ]
+                                                                        },
+                                                                        "level": {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "beginner",
+                                                                                "intermediate",
+                                                                                "advanced"
+                                                                            ]
+                                                                        },
+                                                                        "duration_hours": {
+                                                                            "type": [
+                                                                                "integer",
+                                                                                "null"
+                                                                            ]
+                                                                        },
+                                                                        "cover_image": {
+                                                                            "type": [
+                                                                                "string",
+                                                                                "null"
+                                                                            ]
+                                                                        },
+                                                                        "is_active": {
+                                                                            "type": "boolean"
+                                                                        },
+                                                                        "is_featured": {
+                                                                            "type": "boolean"
+                                                                        },
+                                                                        "sort_order": {
+                                                                            "type": "integer"
+                                                                        },
+                                                                        "created_at": {
+                                                                            "type": [
+                                                                                "string",
+                                                                                "null"
+                                                                            ],
+                                                                            "format": "date-time"
+                                                                        },
+                                                                        "updated_at": {
+                                                                            "type": [
+                                                                                "string",
+                                                                                "null"
+                                                                            ],
+                                                                            "format": "date-time"
+                                                                        },
+                                                                        "lessons": {
+                                                                            "type": "array",
+                                                                            "items": {
+                                                                                "type": "object",
+                                                                                "required": [
+                                                                                    "id",
+                                                                                    "course_id",
+                                                                                    "title",
+                                                                                    "title_fr",
+                                                                                    "content",
+                                                                                    "content_fr",
+                                                                                    "video_url",
+                                                                                    "duration_minutes",
+                                                                                    "sort_order",
+                                                                                    "created_at",
+                                                                                    "updated_at"
+                                                                                ],
+                                                                                "properties": {
+                                                                                    "id": {
+                                                                                        "type": "integer"
+                                                                                    },
+                                                                                    "course_id": {
+                                                                                        "type": "integer"
+                                                                                    },
+                                                                                    "title": {
+                                                                                        "type": "string"
+                                                                                    },
+                                                                                    "title_fr": {
+                                                                                        "type": [
+                                                                                            "string",
+                                                                                            "null"
+                                                                                        ]
+                                                                                    },
+                                                                                    "content": {
+                                                                                        "type": [
+                                                                                            "string",
+                                                                                            "null"
+                                                                                        ]
+                                                                                    },
+                                                                                    "content_fr": {
+                                                                                        "type": [
+                                                                                            "string",
+                                                                                            "null"
+                                                                                        ]
+                                                                                    },
+                                                                                    "video_url": {
+                                                                                        "type": [
+                                                                                            "string",
+                                                                                            "null"
+                                                                                        ]
+                                                                                    },
+                                                                                    "duration_minutes": {
+                                                                                        "type": [
+                                                                                            "integer",
+                                                                                            "null"
+                                                                                        ]
+                                                                                    },
+                                                                                    "sort_order": {
+                                                                                        "type": "integer"
+                                                                                    },
+                                                                                    "created_at": {
+                                                                                        "type": [
+                                                                                            "string",
+                                                                                            "null"
+                                                                                        ],
+                                                                                        "format": "date-time"
+                                                                                    },
+                                                                                    "updated_at": {
+                                                                                        "type": [
+                                                                                            "string",
+                                                                                            "null"
+                                                                                        ],
+                                                                                        "format": "date-time"
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "null"
+                                                        }
+                                                    ]
+                                                },
+                                                "completed_lesson_ids": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "integer"
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -8542,10 +9680,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -8700,7 +9835,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns the requested course and locale; a new enrollment includes a success message.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -8712,13 +9847,29 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "locale",
+                                                "course"
+                                            ],
+                                            "properties": {
+                                                "locale": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "en",
+                                                        "fr"
+                                                    ]
+                                                },
+                                                "course": {
+                                                    "type": "string"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
+                                            "required": [
+                                                "operation"
+                                            ],
                                             "properties": {
                                                 "operation": {
                                                     "type": "string",
@@ -8727,9 +9878,22 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
+                                            "oneOf": [
+                                                {
+                                                    "type": "array",
+                                                    "maxItems": 0
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "success"
+                                                    ],
+                                                    "properties": {
+                                                        "success": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
                                             ]
                                         }
                                     }
@@ -8911,7 +10075,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns an enrolled customer\u2019s lesson, course navigation, enrollment progress and completed lesson identifiers.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -8923,10 +10087,670 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "course",
+                                                "lesson",
+                                                "enrollment",
+                                                "completed_lesson_ids",
+                                                "prev_lesson",
+                                                "next_lesson"
+                                            ],
+                                            "properties": {
+                                                "course": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "product_slug",
+                                                        "title",
+                                                        "title_fr",
+                                                        "slug",
+                                                        "description",
+                                                        "description_fr",
+                                                        "level",
+                                                        "duration_hours",
+                                                        "cover_image",
+                                                        "is_active",
+                                                        "is_featured",
+                                                        "sort_order",
+                                                        "created_at",
+                                                        "updated_at"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "product_slug": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "title": {
+                                                            "type": "string"
+                                                        },
+                                                        "title_fr": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "slug": {
+                                                            "type": "string"
+                                                        },
+                                                        "description": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "description_fr": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "level": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "beginner",
+                                                                "intermediate",
+                                                                "advanced"
+                                                            ]
+                                                        },
+                                                        "duration_hours": {
+                                                            "type": [
+                                                                "integer",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "cover_image": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "is_active": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "is_featured": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "sort_order": {
+                                                            "type": "integer"
+                                                        },
+                                                        "created_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "lessons": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object",
+                                                                "required": [
+                                                                    "id",
+                                                                    "course_id",
+                                                                    "title",
+                                                                    "title_fr",
+                                                                    "content",
+                                                                    "content_fr",
+                                                                    "video_url",
+                                                                    "duration_minutes",
+                                                                    "sort_order",
+                                                                    "created_at",
+                                                                    "updated_at"
+                                                                ],
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "course_id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "title": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "title_fr": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "content": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "content_fr": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "video_url": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "duration_minutes": {
+                                                                        "type": [
+                                                                            "integer",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "sort_order": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ],
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "updated_at": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ],
+                                                                        "format": "date-time"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "lesson": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "course_id",
+                                                        "title",
+                                                        "title_fr",
+                                                        "content",
+                                                        "content_fr",
+                                                        "video_url",
+                                                        "duration_minutes",
+                                                        "sort_order",
+                                                        "created_at",
+                                                        "updated_at"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "course_id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "title": {
+                                                            "type": "string"
+                                                        },
+                                                        "title_fr": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "content": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "content_fr": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "video_url": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "duration_minutes": {
+                                                            "type": [
+                                                                "integer",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "sort_order": {
+                                                            "type": "integer"
+                                                        },
+                                                        "created_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        }
+                                                    }
+                                                },
+                                                "enrollment": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "course_id",
+                                                        "user_id",
+                                                        "status",
+                                                        "enrolled_at",
+                                                        "completed_at",
+                                                        "created_at",
+                                                        "updated_at"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "course_id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "user_id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "enrolled",
+                                                                "in_progress",
+                                                                "completed",
+                                                                "dropped"
+                                                            ]
+                                                        },
+                                                        "enrolled_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "completed_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "created_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "course": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "id",
+                                                                "product_slug",
+                                                                "title",
+                                                                "title_fr",
+                                                                "slug",
+                                                                "description",
+                                                                "description_fr",
+                                                                "level",
+                                                                "duration_hours",
+                                                                "cover_image",
+                                                                "is_active",
+                                                                "is_featured",
+                                                                "sort_order",
+                                                                "created_at",
+                                                                "updated_at"
+                                                            ],
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "product_slug": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ]
+                                                                },
+                                                                "title": {
+                                                                    "type": "string"
+                                                                },
+                                                                "title_fr": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ]
+                                                                },
+                                                                "slug": {
+                                                                    "type": "string"
+                                                                },
+                                                                "description": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ]
+                                                                },
+                                                                "description_fr": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ]
+                                                                },
+                                                                "level": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "beginner",
+                                                                        "intermediate",
+                                                                        "advanced"
+                                                                    ]
+                                                                },
+                                                                "duration_hours": {
+                                                                    "type": [
+                                                                        "integer",
+                                                                        "null"
+                                                                    ]
+                                                                },
+                                                                "cover_image": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ]
+                                                                },
+                                                                "is_active": {
+                                                                    "type": "boolean"
+                                                                },
+                                                                "is_featured": {
+                                                                    "type": "boolean"
+                                                                },
+                                                                "sort_order": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "created_at": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ],
+                                                                    "format": "date-time"
+                                                                },
+                                                                "updated_at": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ],
+                                                                    "format": "date-time"
+                                                                },
+                                                                "lessons": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "type": "object",
+                                                                        "required": [
+                                                                            "id",
+                                                                            "course_id",
+                                                                            "title",
+                                                                            "title_fr",
+                                                                            "content",
+                                                                            "content_fr",
+                                                                            "video_url",
+                                                                            "duration_minutes",
+                                                                            "sort_order",
+                                                                            "created_at",
+                                                                            "updated_at"
+                                                                        ],
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "course_id": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "title": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "title_fr": {
+                                                                                "type": [
+                                                                                    "string",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "content": {
+                                                                                "type": [
+                                                                                    "string",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "content_fr": {
+                                                                                "type": [
+                                                                                    "string",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "video_url": {
+                                                                                "type": [
+                                                                                    "string",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "duration_minutes": {
+                                                                                "type": [
+                                                                                    "integer",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "sort_order": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "created_at": {
+                                                                                "type": [
+                                                                                    "string",
+                                                                                    "null"
+                                                                                ],
+                                                                                "format": "date-time"
+                                                                            },
+                                                                            "updated_at": {
+                                                                                "type": [
+                                                                                    "string",
+                                                                                    "null"
+                                                                                ],
+                                                                                "format": "date-time"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "completed_lesson_ids": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "integer"
+                                                    }
+                                                },
+                                                "prev_lesson": {
+                                                    "oneOf": [
+                                                        {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "id",
+                                                                "course_id",
+                                                                "title",
+                                                                "title_fr",
+                                                                "content",
+                                                                "content_fr",
+                                                                "video_url",
+                                                                "duration_minutes",
+                                                                "sort_order",
+                                                                "created_at",
+                                                                "updated_at"
+                                                            ],
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "course_id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "title": {
+                                                                    "type": "string"
+                                                                },
+                                                                "title_fr": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ]
+                                                                },
+                                                                "content": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ]
+                                                                },
+                                                                "content_fr": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ]
+                                                                },
+                                                                "video_url": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ]
+                                                                },
+                                                                "duration_minutes": {
+                                                                    "type": [
+                                                                        "integer",
+                                                                        "null"
+                                                                    ]
+                                                                },
+                                                                "sort_order": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "created_at": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ],
+                                                                    "format": "date-time"
+                                                                },
+                                                                "updated_at": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ],
+                                                                    "format": "date-time"
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "null"
+                                                        }
+                                                    ]
+                                                },
+                                                "next_lesson": {
+                                                    "oneOf": [
+                                                        {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "id",
+                                                                "course_id",
+                                                                "title",
+                                                                "title_fr",
+                                                                "content",
+                                                                "content_fr",
+                                                                "video_url",
+                                                                "duration_minutes",
+                                                                "sort_order",
+                                                                "created_at",
+                                                                "updated_at"
+                                                            ],
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "course_id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "title": {
+                                                                    "type": "string"
+                                                                },
+                                                                "title_fr": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ]
+                                                                },
+                                                                "content": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ]
+                                                                },
+                                                                "content_fr": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ]
+                                                                },
+                                                                "video_url": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ]
+                                                                },
+                                                                "duration_minutes": {
+                                                                    "type": [
+                                                                        "integer",
+                                                                        "null"
+                                                                    ]
+                                                                },
+                                                                "sort_order": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "created_at": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ],
+                                                                    "format": "date-time"
+                                                                },
+                                                                "updated_at": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ],
+                                                                    "format": "date-time"
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "null"
+                                                        }
+                                                    ]
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -8938,10 +10762,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -9106,7 +10927,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns completion acknowledgement and the next lesson when available; completing the course may issue a certificate.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -9118,13 +10939,32 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "locale",
+                                                "course"
+                                            ],
+                                            "properties": {
+                                                "locale": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "en",
+                                                        "fr"
+                                                    ]
+                                                },
+                                                "course": {
+                                                    "type": "string"
+                                                },
+                                                "lesson": {
+                                                    "type": "integer"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
+                                            "required": [
+                                                "operation"
+                                            ],
                                             "properties": {
                                                 "operation": {
                                                     "type": "string",
@@ -9133,10 +10973,15 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "success"
+                                            ],
+                                            "properties": {
+                                                "success": {
+                                                    "type": "string"
+                                                }
+                                            }
                                         }
                                     }
                                 },
