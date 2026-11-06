@@ -9,6 +9,29 @@ use App\Contexts\Shared\Application\WorkflowResult;
 /** Public, non-sensitive API product metadata. */
 final class ApiProductQueries extends WorkflowHandler
 {
+    public function discovery(WorkflowInput $input): WorkflowResult
+    {
+        return WorkflowResult::payload([
+            'name' => 'OPES Health Systems API',
+            'api_version' => (string) config('api_product.version'),
+            'openapi_version' => '3.1.1',
+            'authentication' => [
+                'machine' => 'OAuth 2.0 client credentials with approved scopes',
+                'delegated' => 'OAuth 2.0 authorization code with S256 PKCE and user consent',
+            ],
+            '_links' => [
+                'self' => ['href' => '/api/v1/discovery'],
+                'openapi' => ['href' => '/api/v1/openapi.json'],
+                'status' => ['href' => '/api/v1/status'],
+                'api_products' => ['href' => '/api/v1/api-products'],
+                'service_offerings' => ['href' => '/api/v1/service-offerings'],
+                'changelog' => ['href' => '/api/v1/changelog'],
+                'sdk_metadata' => ['href' => '/downloads/opes-api-sdk.json'],
+                'developer_portal' => ['href' => '/'.$input->locale().'/developers'],
+            ],
+        ]);
+    }
+
     public function status(WorkflowInput $input): WorkflowResult
     {
         return WorkflowResult::payload([

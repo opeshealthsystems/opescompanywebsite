@@ -4,6 +4,13 @@ $base = ['context' => 'ApiIdentity', 'roles' => [], 'authenticated' => false, 's
 $input = ['name' => 'input', 'kind' => 'input'];
 
 return [
+    'api.product.discovery' => $base + [
+        'handler' => 'App\\Contexts\\ApiIdentity\\Application\\Queries\\ApiProductQueries',
+        'method' => 'discovery', 'parameters' => [$input], 'command' => false,
+        'api_path' => 'discovery', 'http_methods' => ['GET'], 'rate_limiter' => 'public-api-read',
+        'public_cache_seconds' => 300,
+        'source_controller' => 'ApiProduct', 'source_action' => 'discovery',
+    ],
     'api.product.status' => $base + [
         'handler' => 'App\\Contexts\\ApiIdentity\\Application\\Queries\\ApiProductQueries',
         'method' => 'status', 'parameters' => [$input], 'command' => false,
@@ -14,18 +21,21 @@ return [
         'handler' => 'App\\Contexts\\ApiIdentity\\Application\\Queries\\ApiProductQueries',
         'method' => 'changelog', 'parameters' => [$input], 'command' => false,
         'api_path' => 'changelog', 'http_methods' => ['GET'], 'rate_limiter' => 'public-api-read',
+        'public_cache_seconds' => 300,
         'source_controller' => 'ApiProduct', 'source_action' => 'changelog',
     ],
     'api.product.catalogue' => $base + [
         'handler' => 'App\\Contexts\\ApiIdentity\\Application\\Queries\\ApiProductQueries',
         'method' => 'catalogue', 'parameters' => [$input], 'command' => false,
         'api_path' => 'api-products', 'http_methods' => ['GET'], 'rate_limiter' => 'public-api-read',
+        'public_cache_seconds' => 300, 'public_cache_vary' => ['Accept-Language'],
         'source_controller' => 'ApiProduct', 'source_action' => 'catalogue',
     ],
     'publishing.service-offerings.catalogue' => ['context' => 'Publishing'] + $base + [
         'handler' => 'App\\Contexts\\Publishing\\Application\\Queries\\PublicServiceOfferingQueries',
         'method' => 'catalogue', 'parameters' => [$input], 'command' => false,
         'api_path' => 'service-offerings', 'http_methods' => ['GET'], 'rate_limiter' => 'public-api-read',
+        'public_cache_seconds' => 300, 'public_cache_vary' => ['Accept-Language'],
         'source_controller' => 'ServiceOffering', 'source_action' => 'catalogue',
     ],
 ];

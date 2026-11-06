@@ -41,6 +41,17 @@ export interface ServiceOfferingsResponse {
     data_boundary: string; contact_url: string;
   }> };
 }
+export interface ApiDiscoveryResponse {
+  data: {
+    name: string;
+    api_version: string;
+    openapi_version: '3.1.1';
+    authentication: { machine: string; delegated: string };
+    _links: Record<'self' | 'openapi' | 'status' | 'api_products' | 'service_offerings' | 'changelog' | 'sdk_metadata' | 'developer_portal', { href: string }>;
+  };
+  meta: { operation: 'api.product.discovery' };
+  messages: Record<string, string>;
+}
 export interface DeveloperOAuthApplicationInput {
   name: string;
   redirect_uris: string[];
@@ -146,6 +157,7 @@ export class OpesClient {
   integrationUsage(): Promise<IntegrationUsageResponse>;
   integrationQuota(): Promise<IntegrationQuotaResponse>;
   integrationMetrics(): Promise<IntegrationMetricsResponse>;
+  discovery(options?: { locale?: Locale }): Promise<ApiDiscoveryResponse>;
   serviceOfferings(options?: { locale?: Locale }): Promise<ServiceOfferingsResponse>;
   submitEnquiry(input: EnquiryInput, options: { idempotencyKey: string }): Promise<{
     data: { status: 'recorded'; delivery_status: 'sent' | 'pending'; receipt_delivery_status?: 'sent' | 'pending' };

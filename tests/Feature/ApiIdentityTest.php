@@ -206,8 +206,8 @@ class ApiIdentityTest extends TestCase
     {
         $sdk = json_decode(file_get_contents(public_path('downloads/opes-api-sdk.json')), true, 512, JSON_THROW_ON_ERROR);
         $this->get('/en/developers')->assertOk()->assertSee('Build with OPES APIs')->assertSee('/api/v1/openapi.json')
-            ->assertSee($sdk['url'])->assertSee('SHA-256 checksum')->assertSee('/api/v1/me/usage')->assertSee('identity:read');
-        $this->get('/fr/developers')->assertOk()->assertSee('Intégrez les API OPES')->assertSee('/api/v1/me/usage');
+            ->assertSee('/api/v1/discovery')->assertSee($sdk['url'])->assertSee('SHA-256 checksum')->assertSee('/api/v1/me/usage')->assertSee('identity:read');
+        $this->get('/fr/developers')->assertOk()->assertSee('Intégrez les API OPES')->assertSee('/api/v1/discovery')->assertSee('/api/v1/me/usage');
     }
 
     public function test_public_api_product_versions_and_download_checksum_match_the_release_artifacts(): void
@@ -241,8 +241,27 @@ class ApiIdentityTest extends TestCase
         $this->assertSame($sdk['sha256'], hash_file('sha256', $archive));
 
         $this->getJson('/api/v1/status')->assertOk()->assertJsonPath('data.api_version', $apiVersion);
+        $this->getJson('/api/v1/discovery')->assertOk()->assertJsonPath('data.api_version', $apiVersion)
+            ->assertJsonPath('data._links.openapi.href', '/api/v1/openapi.json')
+            ->assertJsonPath('data._links.developer_portal.href', '/en/developers')
+            ->assertHeader('Cache-Control', 'max-age=300, public, stale-while-revalidate=60');
         $this->getJson('/api/v1/api-products')->assertOk()->assertJsonPath('data.api_version', $apiVersion);
         $this->getJson('/api/v1/changelog')->assertOk()->assertJsonPath('data.items.0.version', $apiVersion);
+    }
+
+    public function test_only_static_public_catalogues_receive_cache_headers(): void
+    {
+        $catalogue = 'max-age=300, public, stale-while-revalidate=60';
+        foreach (['/api/v1/discovery', '/api/v1/changelog', '/api/v1/api-products'] as $path) {
+            $this->getJson($path)->assertOk()->assertHeader('Cache-Control', $catalogue);
+        }
+        $this->getJson('/api/v1/api-products', ['Accept-Language' => 'fr'])
+            ->assertOk()->assertHeader('Cache-Control', $catalogue)->assertHeader('Vary', 'Accept-Language');
+        $this->getJson('/api/v1/service-offerings', ['Accept-Language' => 'en'])
+            ->assertOk()->assertHeader('Cache-Control', $catalogue)->assertHeader('Vary', 'Accept-Language');
+        $this->getJson('/api/v1/status')->assertOk()->assertHeader('Cache-Control', 'no-store, private');
+        $this->getJson('/api/v1/me/usage')->assertUnauthorized()->assertHeader('Cache-Control', 'no-store, private');
+        $this->postJson('/api/v1/enquiries', [])->assertUnprocessable()->assertHeader('Cache-Control', 'no-store, private');
     }
 }
 

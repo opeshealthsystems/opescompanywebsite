@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version' => '0.116.0',
+    'version' => '0.118.0',
     'products' => [
         [
             'id' => 'public-enquiries',
@@ -93,6 +93,16 @@ return [
         ],
     ],
     'changelog' => [
+        [
+            'version' => '0.118.0',
+            'released_at' => '2026-11-06',
+            'summary' => 'Added a public API discovery document with canonical OpenAPI, status, catalogue, changelog, SDK and developer-portal links.',
+        ],
+        [
+            'version' => '0.117.0',
+            'released_at' => '2026-11-06',
+            'summary' => 'Added a bounded public cache policy for static product and service catalogues; dynamic status, authenticated data, commands, and errors remain non-cacheable.',
+        ],
         [
             'version' => '0.116.0',
             'released_at' => '2026-11-06',

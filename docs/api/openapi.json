@@ -2,7 +2,7 @@
     "openapi": "3.1.1",
     "info": {
         "title": "OHS Platform API",
-        "version": "0.116.0",
+        "version": "0.118.0",
         "description": "Versioned OHS business APIs. Public enquiries and application intake, partner and tester administration, publishing and catalogues, role-scoped operations and workforce workflows, finance registers, reports and line-item detail reads, customer facility profiles, employee and HR administration, risk and performance management, leave requests, validation, practitioner, recruitment, learning, survey and support workflows, account recovery, machine catalogue access and owner-managed public-scope machine clients, public sitemap data, protected admin reference data and resource/relationship summaries, with delegated business workflows using authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.",
         "contact": {
             "name": "OHS support",
@@ -148684,6 +148684,358 @@
                 }
             }
         },
+        "/discovery": {
+            "get": {
+                "operationId": "api_product_discovery",
+                "summary": "Discover OPES Health API entry points and client access",
+                "description": "Returns the current API version, supported OAuth 2.0 access patterns and canonical links to the OpenAPI contract, status, product and service catalogues, changelog, SDK metadata and developer portal. This public discovery document is cacheable for five minutes.",
+                "tags": [
+                    "ApiIdentity"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "name": "Accept-Language",
+                        "description": "Response language; defaults to English.",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "en",
+                                "fr"
+                            ],
+                            "example": "en"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 10000,
+                            "example": 1
+                        },
+                        "description": "One-based page for paginated collections. Ignored by single-record and aggregate reads."
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 100,
+                            "example": 25
+                        },
+                        "description": "Page size, up to 100 records, for paginated collections. Non-paginated lists are bounded to 100 records."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Public API discovery document.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "required": [
+                                                "name",
+                                                "api_version",
+                                                "openapi_version",
+                                                "authentication",
+                                                "_links"
+                                            ],
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "api_version": {
+                                                    "type": "string"
+                                                },
+                                                "openapi_version": {
+                                                    "type": "string",
+                                                    "const": "3.1.1"
+                                                },
+                                                "authentication": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "machine",
+                                                        "delegated"
+                                                    ],
+                                                    "properties": {
+                                                        "machine": {
+                                                            "type": "string"
+                                                        },
+                                                        "delegated": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "_links": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "self",
+                                                        "openapi",
+                                                        "status",
+                                                        "api_products",
+                                                        "service_offerings",
+                                                        "changelog",
+                                                        "sdk_metadata",
+                                                        "developer_portal"
+                                                    ],
+                                                    "additionalProperties": false,
+                                                    "properties": {
+                                                        "self": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "href"
+                                                            ],
+                                                            "properties": {
+                                                                "href": {
+                                                                    "type": "string",
+                                                                    "format": "uri-reference"
+                                                                }
+                                                            }
+                                                        },
+                                                        "openapi": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "href"
+                                                            ],
+                                                            "properties": {
+                                                                "href": {
+                                                                    "type": "string",
+                                                                    "format": "uri-reference"
+                                                                }
+                                                            }
+                                                        },
+                                                        "status": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "href"
+                                                            ],
+                                                            "properties": {
+                                                                "href": {
+                                                                    "type": "string",
+                                                                    "format": "uri-reference"
+                                                                }
+                                                            }
+                                                        },
+                                                        "api_products": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "href"
+                                                            ],
+                                                            "properties": {
+                                                                "href": {
+                                                                    "type": "string",
+                                                                    "format": "uri-reference"
+                                                                }
+                                                            }
+                                                        },
+                                                        "service_offerings": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "href"
+                                                            ],
+                                                            "properties": {
+                                                                "href": {
+                                                                    "type": "string",
+                                                                    "format": "uri-reference"
+                                                                }
+                                                            }
+                                                        },
+                                                        "changelog": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "href"
+                                                            ],
+                                                            "properties": {
+                                                                "href": {
+                                                                    "type": "string",
+                                                                    "format": "uri-reference"
+                                                                }
+                                                            }
+                                                        },
+                                                        "sdk_metadata": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "href"
+                                                            ],
+                                                            "properties": {
+                                                                "href": {
+                                                                    "type": "string",
+                                                                    "format": "uri-reference"
+                                                                }
+                                                            }
+                                                        },
+                                                        "developer_portal": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "href"
+                                                            ],
+                                                            "properties": {
+                                                                "href": {
+                                                                    "type": "string",
+                                                                    "format": "uri-reference"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "api.product.discovery"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "envelope": {
+                                        "summary": "Response envelope",
+                                        "description": "The data fields depend on the operation and its resource contract.",
+                                        "value": {
+                                            "data": {},
+                                            "meta": {
+                                                "operation": "api.product.discovery"
+                                            },
+                                            "messages": []
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "data": {
+                                        "name": "OPES Health Systems API",
+                                        "api_version": "0.118.0",
+                                        "openapi_version": "3.1.1",
+                                        "authentication": {
+                                            "machine": "OAuth 2.0 client credentials with approved scopes",
+                                            "delegated": "OAuth 2.0 authorization code with S256 PKCE and user consent"
+                                        },
+                                        "_links": {
+                                            "self": {
+                                                "href": "/api/v1/discovery"
+                                            },
+                                            "openapi": {
+                                                "href": "/api/v1/openapi.json"
+                                            },
+                                            "status": {
+                                                "href": "/api/v1/status"
+                                            },
+                                            "api_products": {
+                                                "href": "/api/v1/api-products"
+                                            },
+                                            "service_offerings": {
+                                                "href": "/api/v1/service-offerings"
+                                            },
+                                            "changelog": {
+                                                "href": "/api/v1/changelog"
+                                            },
+                                            "sdk_metadata": {
+                                                "href": "/downloads/opes-api-sdk.json"
+                                            },
+                                            "developer_portal": {
+                                                "href": "/en/developers"
+                                            }
+                                        }
+                                    },
+                                    "meta": {
+                                        "operation": "api.product.discovery"
+                                    },
+                                    "messages": []
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Public static catalogue response; clients may cache it for 300 seconds, with stale-while-revalidate for 60 seconds.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "public, max-age=300, stale-while-revalidate=60"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Valid delegated user token required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Role, scope or record access denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Idempotency key used with a different request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Public read rate limit exceeded."
+                    }
+                }
+            }
+        },
         "/status": {
             "get": {
                 "operationId": "api_product_status",
@@ -148795,7 +149147,7 @@
                                 "example": {
                                     "data": {
                                         "status": "responding",
-                                        "api_version": "0.116.0",
+                                        "api_version": "0.118.0",
                                         "checked_at": "2026-11-01T12:00:00+00:00"
                                     },
                                     "meta": {
@@ -149000,6 +149352,16 @@
                                     "data": {
                                         "items": [
                                             {
+                                                "version": "0.118.0",
+                                                "released_at": "2026-11-06",
+                                                "summary": "Added a public API discovery document with canonical OpenAPI, status, catalogue, changelog, SDK and developer-portal links."
+                                            },
+                                            {
+                                                "version": "0.117.0",
+                                                "released_at": "2026-11-06",
+                                                "summary": "Added a bounded public cache policy for static product and service catalogues; dynamic status, authenticated data, commands, and errors remain non-cacheable."
+                                            },
+                                            {
                                                 "version": "0.116.0",
                                                 "released_at": "2026-11-06",
                                                 "summary": "Added caller-scoped 30-day API request metrics with daily counts, HTTP status classes, top operations and aggregate response times."
@@ -149140,10 +149502,10 @@
                         },
                         "headers": {
                             "Cache-Control": {
-                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "description": "Public static catalogue response; clients may cache it for 300 seconds, with stale-while-revalidate for 60 seconds.",
                                 "schema": {
                                     "type": "string",
-                                    "const": "no-store"
+                                    "const": "public, max-age=300, stale-while-revalidate=60"
                                 }
                             },
                             "X-Request-ID": {
@@ -149367,7 +149729,7 @@
                                 },
                                 "example": {
                                     "data": {
-                                        "api_version": "0.116.0",
+                                        "api_version": "0.118.0",
                                         "locale": "en",
                                         "items": [
                                             {
@@ -149448,10 +149810,10 @@
                         },
                         "headers": {
                             "Cache-Control": {
-                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "description": "Public static catalogue response; clients may cache it for 300 seconds, with stale-while-revalidate for 60 seconds.",
                                 "schema": {
                                     "type": "string",
-                                    "const": "no-store"
+                                    "const": "public, max-age=300, stale-while-revalidate=60"
                                 }
                             },
                             "X-Request-ID": {
@@ -149459,6 +149821,13 @@
                                 "schema": {
                                     "type": "string",
                                     "format": "uuid"
+                                }
+                            },
+                            "Vary": {
+                                "description": "Cache key dimensions used to select the localized representation.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "Accept-Language"
                                 }
                             }
                         }
@@ -149694,10 +150063,10 @@
                         },
                         "headers": {
                             "Cache-Control": {
-                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "description": "Public static catalogue response; clients may cache it for 300 seconds, with stale-while-revalidate for 60 seconds.",
                                 "schema": {
                                     "type": "string",
-                                    "const": "no-store"
+                                    "const": "public, max-age=300, stale-while-revalidate=60"
                                 }
                             },
                             "X-Request-ID": {
@@ -149705,6 +150074,13 @@
                                 "schema": {
                                     "type": "string",
                                     "format": "uuid"
+                                }
+                            },
+                            "Vary": {
+                                "description": "Cache key dimensions used to select the localized representation.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "Accept-Language"
                                 }
                             }
                         }

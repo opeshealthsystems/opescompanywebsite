@@ -65,6 +65,16 @@ class CompatibilityTests(unittest.TestCase):
         response.setdefault("headers", {})["Idempotency-Replayed"] = {"schema": {"type": "string", "const": "true"}}
         self.assertEqual([], check(self.baseline, self.current))
 
+    def test_bounded_cache_policy_is_allowed_only_for_anonymous_gets(self):
+        self.baseline["paths"]["/public-catalogue"] = {"get": {"security": [], "responses": {"200": {"headers": {"Cache-Control": {"schema": {"type": "string", "const": "no-store"}}}}}}}
+        self.current = copy.deepcopy(self.baseline)
+        self.current["paths"]["/public-catalogue"]["get"]["responses"]["200"]["headers"]["Cache-Control"] = {
+            "schema": {"type": "string", "const": "public, max-age=300, stale-while-revalidate=60"}
+        }
+        self.assertEqual([], check(self.baseline, self.current))
+        self.current["paths"]["/public-catalogue"]["get"]["security"] = [{"OAuth2": ["catalogue:read"]}]
+        self.assertTrue(check(self.baseline, self.current))
+
     def test_changed_or_removed_released_response_header_is_rejected(self):
         response = self.baseline["paths"]["/catalogue/products"]["get"]["responses"]["200"]
         response["headers"] = {"X-Request-ID": {"schema": {"type": "string"}}}

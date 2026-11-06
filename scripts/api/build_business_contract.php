@@ -224,6 +224,13 @@ foreach ($registry['definitions'] as $operation => $definition) {
     if (str_contains(file_get_contents($file), 'WorkflowResult::download(')) $response['content']['application/pdf'] = ['schema' => ['type' => 'string', 'format' => 'binary']];
     $response['headers'] = ['Cache-Control' => ['description' => 'Authenticated and command results are not stored in shared caches.', 'schema' => ['type' => 'string', 'const' => 'no-store']],
         'X-Request-ID' => ['description' => 'Identifier used when contacting support.', 'schema' => ['type' => 'string', 'format' => 'uuid']]];
+    if (($definition['public_cache_seconds'] ?? 0) > 0 && !$definition['authenticated'] && !$definition['command'] && $definition['http_methods'] === ['GET']) {
+        $seconds = (int) $definition['public_cache_seconds'];
+        $response['headers']['Cache-Control'] = ['description' => 'Public static catalogue response; clients may cache it for '.$seconds.' seconds, with stale-while-revalidate for 60 seconds.', 'schema' => ['type' => 'string', 'const' => 'public, max-age='.$seconds.', stale-while-revalidate=60']];
+        if (!empty($definition['public_cache_vary'])) {
+            $response['headers']['Vary'] = ['description' => 'Cache key dimensions used to select the localized representation.', 'schema' => ['type' => 'string', 'const' => implode(', ', $definition['public_cache_vary'])]];
+        }
+    }
     if ($definition['command']) $response['headers']['Idempotency-Replayed'] = [
         'description' => 'Present with value true when this response replays the saved outcome for the supplied Idempotency-Key; absent on the first execution.',
         'schema' => ['type' => 'string', 'const' => 'true'],
@@ -613,6 +620,33 @@ $oauthRevoke['responses']['200']['content']['application/json']['schema'] = $suc
     'type' => 'object', 'required' => ['client_id', 'revoked'], 'properties' => ['client_id' => ['type' => 'string', 'format' => 'uuid'], 'revoked' => ['type' => 'boolean', 'const' => true]],
 ], 'admin.oauthClients.revoke');
 unset($oauthList, $oauthCreate, $oauthRevoke);
+$discoveryOperation = &$spec['paths']['/discovery']['get'];
+$discoveryOperation['summary'] = 'Discover OPES Health API entry points and client access';
+$discoveryOperation['description'] = 'Returns the current API version, supported OAuth 2.0 access patterns and canonical links to the OpenAPI contract, status, product and service catalogues, changelog, SDK metadata and developer portal. This public discovery document is cacheable for five minutes.';
+$discoveryOperation['responses']['200']['description'] = 'Public API discovery document.';
+$discoveryOperation['responses']['200']['content']['application/json']['schema'] = $successEnvelope([
+    'type' => 'object', 'required' => ['name', 'api_version', 'openapi_version', 'authentication', '_links'], 'properties' => [
+        'name' => ['type' => 'string'], 'api_version' => ['type' => 'string'], 'openapi_version' => ['type' => 'string', 'const' => '3.1.1'],
+        'authentication' => ['type' => 'object', 'required' => ['machine', 'delegated'], 'properties' => [
+            'machine' => ['type' => 'string'], 'delegated' => ['type' => 'string'],
+        ]],
+        '_links' => ['type' => 'object', 'required' => ['self', 'openapi', 'status', 'api_products', 'service_offerings', 'changelog', 'sdk_metadata', 'developer_portal'],
+            'additionalProperties' => false, 'properties' => array_fill_keys(['self', 'openapi', 'status', 'api_products', 'service_offerings', 'changelog', 'sdk_metadata', 'developer_portal'], [
+                'type' => 'object', 'required' => ['href'], 'properties' => ['href' => ['type' => 'string', 'format' => 'uri-reference']],
+            ])],
+    ],
+], 'api.product.discovery');
+$discoveryOperation['responses']['200']['content']['application/json']['example'] = ['data' => [
+    'name' => 'OPES Health Systems API', 'api_version' => $product['version'], 'openapi_version' => '3.1.1',
+    'authentication' => ['machine' => 'OAuth 2.0 client credentials with approved scopes', 'delegated' => 'OAuth 2.0 authorization code with S256 PKCE and user consent'],
+    '_links' => array_map(static fn (string $href): array => ['href' => $href], [
+        'self' => '/api/v1/discovery', 'openapi' => '/api/v1/openapi.json', 'status' => '/api/v1/status',
+        'api_products' => '/api/v1/api-products', 'service_offerings' => '/api/v1/service-offerings',
+        'changelog' => '/api/v1/changelog', 'sdk_metadata' => '/downloads/opes-api-sdk.json', 'developer_portal' => '/en/developers',
+    ]),
+], 'meta' => ['operation' => 'api.product.discovery'], 'messages' => []];
+$discoveryOperation['responses']['429'] = ['description' => 'Public read rate limit exceeded.'];
+unset($discoveryOperation);
 $statusOperation = &$spec['paths']['/status']['get'];
 $statusOperation['summary'] = 'Check whether the API application is responding';
 $statusOperation['description'] = 'Returns a point-in-time response from this API application and its contract version. It does not test databases, external providers, dependent services or service-level availability. Public read limit: 60 requests per minute per IP address.';

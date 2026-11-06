@@ -1,3 +1,11 @@
+## SDK 0.115.0 — typed discovery helper (6 November 2026)
+
+Adds `OpesClient.discovery({ locale })` and a typed response for the public API discovery document, keeping this entry point unauthenticated while validating the requested English or French locale. The downloadable Node package includes `examples/discovery.mjs`. It aligns with OpenAPI 0.118.0 and is a private, unpublished server-side preview. The 26,307-byte archive SHA-256 is `062dae708d23f8fea9cd89b9a2f1e4ee5fb9a1130938b199c7b175ee9bfab9f9`, also recorded in `/downloads/opes-api-sdk.json`.
+
+## SDK 0.113.0 — cache-aware public catalogue contract (6 November 2026)
+
+Aligned the downloadable Node preview with OpenAPI 0.117.0. Static public product, changelog and localized service catalogues advertise a five-minute cache lifetime; locale-aware catalogues vary on `Accept-Language`. Dynamic status, authenticated data, commands and errors remain non-cacheable. Package is a private, unpublished server-side preview. Archive metadata and SHA-256 are recorded in `/downloads/opes-api-sdk.json` after packing and release verification.
+
 ## SDK 0.112.0 — aligned with OpenAPI 0.116.0 (6 November 2026)
 
 Adds caller-scoped 30-day API request metrics for machine clients and delegated users, including daily request and error counts, top route-template operations, and aggregate response times. Metrics omit request URLs, content, headers, and record IDs. Aggregates older than 35 days are pruned on the first authenticated API request each UTC day; cleanup is deferred during idle periods. These summaries are not service objectives. New SDK methods are `integrationMetrics()` and `ownRequestMetrics()`. The 25,930-byte preview archive SHA-256 is `e71cf9816090b85c8bff68a4b0bc8753502746fdd95cd2e6b73a5b91c35cebe0`; the archive remains unpublished to npm.
@@ -381,3 +389,6 @@ SDK 0.97.0 adds the generated partner account operations from OpenAPI 0.101.0. P
 SDK 0.97.0 downloadable archive: 21752 bytes, SHA-256 `b88cff9695f9ea9a5586ba6be9573ce17d29b13d2ef1dfd8bca0cb9fbcff757d`. It carries all 616 operation IDs documented by OpenAPI 0.101.0. The package registry remains unpublished.
 
 SDK 0.106.0 aligns with live OpenAPI 0.110.0 and adds the delegated-user usage operation. `/me/usage` returns 30 UTC daily buckets scoped to the authenticated user and current OAuth application; it requires `identity:read` and does not expose other users' or applications' usage. The SDK includes a read-only example. The 23,596-byte archive is live and matches SHA-256 `e30eb95a731898b84ce9b44457d4960f03443a1240203c0c6e391a80c7c61340`. The npm registry remains unpublished.
+## SDK 0.114.0 — public API discovery entry point (6 November 2026)
+
+Aligned the downloadable Node preview with OpenAPI 0.118.0. The public `GET /api/v1/discovery` operation provides the API version, machine and delegated OAuth descriptions, and canonical links to the OpenAPI contract, status, product and service catalogues, changelog, SDK metadata and developer portal. The endpoint is cacheable for five minutes. This is a private, unpublished server-side preview. The 26,047-byte archive SHA-256 is `d326c633fa6bcdd189d48f245a9d24bdce0433a72d00e1aa2260b26dd32cdb0d`, also recorded in `/downloads/opes-api-sdk.json`.

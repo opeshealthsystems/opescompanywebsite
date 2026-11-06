@@ -172,6 +172,37 @@ def response_headers_additive_only(old, new):
     return same(old, new) and added
 
 
+def bounded_public_cache_policy_only(old, new, method):
+    """Allow replacing no-store with a bounded cache policy on anonymous GETs only."""
+    if method != "get" or old.get("security") or new.get("security"):
+        return False
+    old = copy.deepcopy(old)
+    new = copy.deepcopy(new)
+    changed = False
+    old_responses = old.get("responses", {})
+    new_responses = new.get("responses", {})
+    if old_responses.keys() != new_responses.keys():
+        return False
+    for status in old_responses:
+        before = old_responses[status].get("headers", {})
+        after = new_responses[status].get("headers", {})
+        if before.get("Cache-Control") != after.get("Cache-Control"):
+            old_value = before.get("Cache-Control", {}).get("schema", {}).get("const")
+            new_value = after.get("Cache-Control", {}).get("schema", {}).get("const", "")
+            if old_value != "no-store" or not re.fullmatch(r"public, max-age=[1-9][0-9]{0,3}, stale-while-revalidate=[1-9][0-9]{0,3}", new_value):
+                return False
+            changed = True
+            before.pop("Cache-Control", None)
+            after.pop("Cache-Control", None)
+        if before.get("Vary") != after.get("Vary"):
+            vary_value = after.get("Vary", {}).get("schema", {}).get("const")
+            if before.get("Vary") is not None or vary_value != "Accept-Language":
+                return False
+            changed = True
+            after.pop("Vary", None)
+    return changed and old == new
+
+
 def check(baseline, current, corrections=None):
     differences = []
     baseline = normalize_route_binding_paths(baseline)
@@ -209,6 +240,8 @@ def check(baseline, current, corrections=None):
                 old_shape = shape(*before)
                 new_shape = shape(*after)
                 if oauth_scope_additions_only(old_shape, new_shape):
+                    continue
+                if bounded_public_cache_policy_only(old_shape, new_shape, method):
                     continue
                 if response_headers_additive_only(old_shape, new_shape):
                     continue

@@ -13,6 +13,7 @@
         <h1>{{ $fr ? 'Intégrez les API OPES' : 'Build with OPES APIs' }}</h1>
         <p>{{ $fr ? 'Consultez notre catalogue logiciel et transmettez des demandes grâce à des interfaces documentées et versionnées.' : 'Discover our software catalogue and submit enquiries through documented, versioned interfaces.' }}</p>
         <div class="dev-actions">
+            <a class="dev-secondary" href="{{ url('/api/v1/discovery') }}">{{ $fr ? 'Découverte de l’API' : 'API discovery' }}</a>
             <a class="dev-secondary" href="{{ url(app()->getLocale().'/developers/console') }}">{{ $fr ? 'Gérer mes applications et clients API' : 'Manage OAuth apps and API clients' }}</a>
             <a class="dev-secondary" href="{{ url('/api/v1/status') }}">{{ $fr ? 'Statut API' : 'API application status' }}</a>
             <a class="dev-secondary" href="{{ url('/api/v1/api-products') }}">{{ $fr ? 'Catalogue des API' : 'API product catalogue' }}</a>

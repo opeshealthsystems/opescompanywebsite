@@ -63,8 +63,52 @@ export const demoAccounts: DemoAccount[] = [
   { id: 'partner', label: 'Partner', audience: 'partner', account: { id: 'demo-partner', name: 'Sam Okoro', email: 'partner.preview@example.test', roles: ['partner'], scopes: [] }, organization: 'Example Health Network', reference: 'DEMO-PAR-001' },
 ];
 
-// Demo logins open an empty, local-only workspace: no sample records ship with the app.
-// Anything created during a demo session stays in memory and is cleared on exit.
+const sampleRows: Record<Audience, Record<string, ApiRecord[]>> = {
+  staff: {
+    quotes: [{ id: 'DEMO-QUOTE-101', reference: 'DEMO-Q-101', title: 'Example clinic platform proposal', status: 'draft', created_at: '2026-11-01T09:00:00Z', valid_until: '2026-12-01', currency: 'XAF', subtotal: 1250000, tax_rate: 0, tax_amount: 0, total: 1250000, notes: 'Fictional preview quotation.', lead: { name: 'Amina Demo', email: 'amina@example.test', organization_name: 'Example Community Clinic', country: 'Cameroon' }, creator: { name: 'Taylor Kim', email: 'staff.preview@example.test' }, items: [{ id: 'DEMO-LINE-1', product_name: 'Clinic information system', description: 'Illustrative annual subscription', quantity: 1, unit_price: 950000, total: 950000 }, { id: 'DEMO-LINE-2', product_name: 'Implementation and training', quantity: 1, unit_price: 300000, total: 300000 }] }],
+    customers: [{ id: 'DEMO-CUSTOMER-201', user_id: 201, name: 'Example Community Clinic', facility_name: 'Example Community Clinic', facility_type: 'clinic', country: 'Cameroon', city: 'Yaounde', status: 'active', email: 'clinic@example.test', phone: '+237 600 000 201' }],
+    contacts: [{ id: 'DEMO-LEAD-301', name: 'Amina Demo', email: 'amina@example.test', phone: '+237 600 000 301', organization_name: 'Example Community Clinic', facility_type: 'clinic', products: 'Clinic platform', message: 'Fictional request for an introductory product discussion.', source: 'contact', status: 'new', created_at: '2026-11-02T10:30:00Z' }],
+    partnerApps: [{ id: 'DEMO-PARTNER-401', organization_name: 'Example Digital Health Institute', contact_name: 'Noah Example', email: 'partner@example.test', country: 'Ghana', partner_type: 'academic', description: 'Fictional academic collaboration request for preview purposes.', status: 'pending', created_at: '2026-11-03T08:15:00Z' }],
+    deals: [{ id: 'DEMO-DEAL-501', title: 'Example district health network', stage: 'proposal', value: 6800000, currency: 'XAF', probability: 50, expected_close_date: '2026-12-15', status: 'open', notes: 'Fictional opportunity for the mobile preview.' }],
+    notifications: [{ id: 'DEMO-NOTICE-001', title: 'Welcome to the sample workspace', message: 'All records shown here are fictional and remain on this device.', created_at: '2026-11-06T08:00:00Z', status: 'unread' }],
+  },
+  customer: {
+    serviceRequests: [{ id: 'DEMO-SERVICE-101', reference: 'DEMO-SR-101', type: 'training', product_slug: 'clinic-platform', description: 'Example request for a product orientation session.', preferred_date: '2026-11-20', preferred_time: '10:00', location: 'Example Care Clinic', status: 'submitted', created_at: '2026-11-04T09:15:00Z' }],
+    tickets: [{ id: 'DEMO-TICKET-201', reference: 'DEMO-TK-201', subject: 'Example onboarding question', description: 'Fictional support conversation for preview purposes.', type: 'support', priority: 'normal', status: 'open', created_at: '2026-11-05T13:20:00Z', replies: [{ id: 'DEMO-REPLY-1', author: 'OPES Support Preview', body: 'This is a sample reply. Real support replies appear in your live account.', created_at: '2026-11-05T14:00:00Z' }] }],
+    invoices: [{ id: 'DEMO-INVOICE-301', reference: 'DEMO-INV-301', title: 'Example service invoice', currency: 'XAF', total: 450000, due_date: '2026-12-05', status: 'pending', issued_at: '2026-11-05' }],
+    customerProfile: [{ id: 'DEMO-PROFILE-C1', name: 'Maya Clinic Admin', facility_name: 'Example Care Clinic', facility_type: 'clinic', country: 'Cameroon', city: 'Douala', phone: '+237 600 000 401', address: 'Example Avenue', status: 'sample' }],
+    notifications: [{ id: 'DEMO-NOTICE-002', title: 'Service request received', message: 'Your fictional training request is shown in the sample workspace.', created_at: '2026-11-04T09:16:00Z', status: 'unread' }],
+  },
+  practitioner: {
+    practitionerProfile: [{ id: 'DEMO-PROFILE-P1', name: 'Dr. Amina Ncube', phone: '+237 600 000 501', specialty: 'Health informatics', workplace_name: 'Example Community Hospital', workplace_city: 'Bamenda', workplace_country: 'Cameroon', years_of_experience: 5, bio: 'Fictional profile for the OPES Health app preview.' }],
+    courses: [
+      { id: 'DEMO-COURSE-101', slug: 'health-informatics-foundations-demo', title: 'Health Informatics Foundations · Sample', description: 'A fictional preview course covering digital health workflows, information quality and safe system use.', duration_hours: 3, status: 'in_progress', progress_percent: 33, completed_lesson_ids: ['DEMO-LESSON-1'], lessons: [
+        { id: 'DEMO-LESSON-1', title: 'Digital health workflows', duration_minutes: 20, content: 'A digital health workflow describes how people, information and systems work together to complete a service.\n\nWhen studying a workflow, map the people involved, the information they need, the decisions they make and the hand-offs between steps.\n\nThis sample lesson is educational preview content and contains no patient data or clinical advice.' },
+        { id: 'DEMO-LESSON-2', title: 'Information quality and stewardship', duration_minutes: 25, content: 'Information quality depends on clear definitions, appropriate access and consistent capture.\n\nA stewardship plan identifies who maintains a data element, how changes are reviewed and how users report an issue.\n\nThis sample lesson is educational preview content and contains no patient data or clinical advice.' },
+        { id: 'DEMO-LESSON-3', title: 'Safe adoption and improvement', duration_minutes: 30, content: 'A responsible digital health rollout includes training, accessible support and a way to learn from operational feedback.\n\nReview the workflow with the people who use it, document risks and measure whether the change improves the intended process.\n\nThis sample lesson is educational preview content and contains no patient data or clinical advice.' },
+      ] },
+      { id: 'DEMO-COURSE-102', slug: 'health-data-governance-demo', title: 'Health Data Governance · Sample', description: 'A fictional preview course on stewardship, access boundaries and responsible data use.', duration_hours: 2, status: 'available', progress_percent: 0, completed_lesson_ids: [], lessons: [{ id: 'DEMO-LESSON-4', title: 'Roles and access boundaries', duration_minutes: 25, content: 'A data access boundary describes which people and systems may use a dataset for a defined purpose.\n\nGood governance records the purpose, authorized users, permitted fields, retention period and review process.\n\nThis sample lesson is educational preview content and contains no patient data or clinical advice.' }] },
+    ],
+    certificates: [{ id: 'DEMO-CERT-501', course_id: 'DEMO-COURSE-090', title: 'Digital Health Orientation · Sample', certificate_number: 'DEMO-CERT-501', issued_at: '2026-10-28T12:00:00Z', status: 'sample' }],
+    notifications: [{ id: 'DEMO-NOTICE-003', title: 'Learning progress saved', message: 'Your sample course progress is available in Courses.', created_at: '2026-11-05T10:00:00Z', status: 'unread' }],
+  },
+  tester: {
+    assignments: [{ id: 'DEMO-ASSIGNMENT-101', reference: 'DEMO-TEST-101', title: 'Review the course catalogue', product: 'OPES Health mobile preview', status: 'in_progress', priority: 'normal', due_date: '2026-11-18', description: 'Fictional test assignment: review course navigation and report any usability issues.', bug_reports: [{ id: 'DEMO-BUG-101', subject: 'Example: course card spacing', description: 'Sample issue already filed against this preview assignment.', priority: 'low', status: 'open' }] }, { id: 'DEMO-ASSIGNMENT-102', reference: 'DEMO-TEST-102', title: 'Check account profile', product: 'OPES Health mobile preview', status: 'pending', priority: 'normal', due_date: '2026-11-22', description: 'Fictional test assignment: review profile details and save behavior.', bug_reports: [] }],
+    bugReports: [{ id: 'DEMO-BUG-101', reference: 'DEMO-BUG-101', subject: 'Example: course card spacing', description: 'Sample report linked to a fictional assignment.', priority: 'low', status: 'open', assignment_id: 'DEMO-ASSIGNMENT-101', created_at: '2026-11-05T11:00:00Z' }],
+    notifications: [{ id: 'DEMO-NOTICE-004', title: 'New sample assignment', message: 'A fictional assignment is ready in your Testing workspace.', created_at: '2026-11-05T08:00:00Z', status: 'unread' }],
+  },
+  partner: {
+    partnerAccounts: [{ id: 'DEMO-ORG-101', application_id: 'DEMO-APPLICATION-101', organization_name: 'Example Health Network', partner_type: 'implementation', membership_role: 'member', country: 'Cameroon', city: 'Garoua', status: 'approved', description: 'Fictional partner organization for mobile preview purposes.' }],
+    partnerships: [{ id: 'DEMO-PARTNER-DIR-1', name: 'Example Academic Health Institute', partner_type: 'academic', country: 'Ghana', description: 'Fictional institution shown in the sample directory.' }, { id: 'DEMO-PARTNER-DIR-2', name: 'Example Digital Care Network', partner_type: 'technology', country: 'Kenya', description: 'Fictional organization shown in the sample directory.' }],
+    notifications: [{ id: 'DEMO-NOTICE-005', title: 'Partner workspace preview', message: 'The linked organization and directory records are fictional samples.', created_at: '2026-11-05T08:00:00Z', status: 'unread' }],
+  },
+};
+
+function sampleRowsFor(audience: Audience): Record<string, ApiRecord[]> {
+  return JSON.parse(JSON.stringify(sampleRows[audience])) as Record<string, ApiRecord[]>;
+}
+
+// Demo accounts use fictional local-only records. Mutations stay on-device and are cleared on exit.
 
 type SessionValue = {
   account: Account | null; audience: Audience | null; token: Token | null; demo: DemoAccount | null; demoRows: Record<string, ApiRecord[]>;
@@ -112,7 +156,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const startDemo = (id: string) => {
     const next = demoAccounts.find(item => item.id === id);
     if (!next) throw new Error('Demo workspace not found.');
-    setDemo(next); setAccountState(next.account); setAudience(next.audience); setTokenState(null); tokenRef.current = null; setDemoRows({});
+    setDemo(next); setAccountState(next.account); setAudience(next.audience); setTokenState(null); tokenRef.current = null; setDemoRows(sampleRowsFor(next.audience));
     return next;
   };
 

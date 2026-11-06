@@ -97,6 +97,12 @@ export class OpesClient {
 
   integrationMetrics() { return this.#authenticated('/integration/metrics'); }
 
+  async discovery({ locale = 'en' } = {}) {
+    if (!['en', 'fr'].includes(locale)) throw new TypeError('Locale must be en or fr.');
+    const result = await this.#request('/discovery', { headers: { 'Accept-Language': locale } });
+    return result.data;
+  }
+
   async serviceOfferings({ locale = 'en' } = {}) {
     if (!['en', 'fr'].includes(locale)) throw new TypeError('Locale must be en or fr.');
     const result = await this.#request('/service-offerings', { headers: { 'Accept-Language': locale } });

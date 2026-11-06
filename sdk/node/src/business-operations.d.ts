@@ -473,6 +473,7 @@ export type BusinessOperationId =
   | 'administration_projects_update'
   | 'api_product_catalogue'
   | 'api_product_changelog'
+  | 'api_product_discovery'
   | 'api_product_status'
   | 'blogcontroller_comment'
   | 'blogcontroller_index'

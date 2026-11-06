@@ -133,6 +133,23 @@ test('public service catalogue selects the requested locale without OAuth creden
   assert.equal(calls, 1);
 });
 
+test('API discovery helper returns canonical links without OAuth credentials', async () => {
+  let calls = 0;
+  const client = new OpesClient({ fetch: async (url, options) => {
+    calls++;
+    assert.equal(url, 'https://opeshealthsystems.com/api/v1/discovery');
+    assert.equal(options.headers['Accept-Language'], 'fr');
+    assert.equal(options.headers.Authorization, undefined);
+    return json({ data: { api_version: '0.118.0', _links: { openapi: { href: '/api/v1/openapi.json' }, developer_portal: { href: '/fr/developers' } } }, meta: { operation: 'api.product.discovery' }, messages: [] });
+  } });
+  const result = await client.discovery({ locale: 'fr' });
+  assert.equal(result.data._links.openapi.href, '/api/v1/openapi.json');
+  assert.equal(result.data._links.developer_portal.href, '/fr/developers');
+  assert.equal(calls, 1);
+  await assert.rejects(client.discovery({ locale: 'es' }), TypeError);
+  assert.equal(calls, 1);
+});
+
 test('business operation client uses generated paths, delegated auth and command keys', async () => {
   const key = createIdempotencyKey(); const requestId = '8a8bced2-2135-462f-82af-5b083a90632f'; let calls = 0;
   const client = new OpesBusinessApiClient({ accessToken: 'fictional-delegated-token', fetch: async (url, options) => {

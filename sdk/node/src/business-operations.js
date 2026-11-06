@@ -7037,6 +7037,20 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "api_product_discovery": {
+        "method": "GET",
+        "path": "/discovery",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "page",
+            "per_page"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "api_product_status": {
         "method": "GET",
         "path": "/status",

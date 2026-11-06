@@ -12,6 +12,19 @@ return [
     'eas_build_url' => 'https://expo.dev/accounts/opesware/projects/opes-health/builds/8e8b12ec-ea72-406c-acbf-1d723650e652',
     'ota_updates' => [
         [
+            'group' => 'b0fd49bd-4501-4b87-81e7-f931f2eccfa0',
+            'date' => '2026-11-06',
+            'runtime' => '0.3.0',
+            'title' => [
+                'en' => 'Functional fictional role demos',
+                'fr' => 'Démos fictives fonctionnelles par rôle',
+            ],
+            'summary' => [
+                'en' => 'Published Android and iOS preview OTA for runtime 0.3.0. Staff, customer, practitioner, tester and partner demos now include fictional records for exploring dashboards and workflows. Demo changes stay on the device and reset on exit; no admin demo or production data is included. Install Android build 8 (app/runtime 0.3.0) to receive this update.',
+                'fr' => 'Mise à jour OTA publiée pour les aperçus Android et iOS, runtime 0.3.0. Les démos du personnel, des clients, des praticiens, des testeurs et des partenaires contiennent maintenant des dossiers fictifs pour explorer les tableaux de bord et les workflows. Les modifications restent sur l’appareil et sont effacées à la sortie ; aucune démo administrateur ni donnée de production n’est incluse. Installer le build Android 8 (application/runtime 0.3.0) pour recevoir cette mise à jour.',
+            ],
+        ],
+        [
             'group' => '1893ae72-0b3d-4eab-93ee-d5d9bdca5221',
             'date' => '2026-11-06',
             'runtime' => '0.3.0',
@@ -116,15 +129,15 @@ return [
                 'fr' => 'Sessions plus sûres, workflows améliorés et interface bilingue',
             ],
             'summary' => [
-                'en' => 'Current private Android preview. Uses OAuth 2.0 with S256 PKCE and server RBAC; adds stronger session recovery, retry-safe mutations, confirmed high-impact actions, live-record refresh and English/French support. Includes OTA groups 1893ae72-0b3d-4eab-93ee-d5d9bdca5221 and 911604e1-d930-4468-b706-b322c870fda6 for runtime 0.3.0.',
-                'fr' => 'Aperçu Android privé actuel. Utilise OAuth 2.0 avec PKCE S256 et le RBAC serveur ; améliore la récupération de session, la sécurité des nouvelles tentatives de mutation, confirme les actions importantes, actualise les données et prend en charge l’anglais et le français. Inclut les groupes OTA 1893ae72-0b3d-4eab-93ee-d5d9bdca5221 et 911604e1-d930-4468-b706-b322c870fda6 pour le runtime 0.3.0.',
+                'en' => 'Current private Android preview. Uses OAuth 2.0 with S256 PKCE and server RBAC; adds stronger session recovery, retry-safe mutations, confirmed high-impact actions, live-record refresh, English/French support and local fictional role demos. Includes OTA groups b0fd49bd-4501-4b87-81e7-f931f2eccfa0, 1893ae72-0b3d-4eab-93ee-d5d9bdca5221 and 911604e1-d930-4468-b706-b322c870fda6 for runtime 0.3.0.',
+                'fr' => 'Aperçu Android privé actuel. Utilise OAuth 2.0 avec PKCE S256 et le RBAC serveur ; améliore la récupération de session, la sécurité des nouvelles tentatives, confirme les actions importantes, actualise les données et prend en charge l’anglais, le français et les démos locales fictives par rôle. Inclut les groupes OTA b0fd49bd-4501-4b87-81e7-f931f2eccfa0, 1893ae72-0b3d-4eab-93ee-d5d9bdca5221 et 911604e1-d930-4468-b706-b322c870fda6 pour le runtime 0.3.0.',
             ],
             'changes' => [
                 'en' => [
                     'Protected signed-in routes, handled expired sessions clearly, and refreshed once after an authentication failure while reusing the same idempotency key.',
                     'Persisted protected mutation idempotency keys for up to 23 hours so a retry after an interrupted request reuses the same command key.',
                     'Added confirmations for sign-out and sensitive partner, assignment and lead actions; refreshed live records before full updates.',
-                    'Kept demo workspace previews local and removed all sample records and administrator demo access.',
+                    'Kept five non-admin demo workspaces local, added clearly fictional sample records, and retained the ban on administrator demo access.',
                     'Added English/French language selection, readable form labels, a clearer profile and an updated home screen with mobile-safe navigation.',
                     'App icon remains the rounded shield; the full OPES seal remains the splash-screen mark.',
                     'App version 0.3.0, Android build 8, OTA runtime 0.3.0.',
@@ -133,7 +146,7 @@ return [
                     'Protection des écrans connectés, gestion claire des sessions expirées et nouvel essai après erreur d’authentification en conservant la même clé d’idempotence.',
                     'Conservation sécurisée des clés d’idempotence des mutations pendant 23 heures afin de réutiliser la même clé après une interruption réseau.',
                     'Ajout de confirmations pour la déconnexion et les actions sensibles des partenaires, affectations et prospects ; actualisation des données avant remplacement complet.',
-                    'Aperçus des espaces de démonstration conservés localement ; suppression des données fictives et de l’accès administrateur de démonstration.',
+                    'Cinq espaces de démonstration sans rôle administrateur restent locaux et affichent des dossiers fictifs clairement signalés ; aucun accès administrateur de démonstration.',
                     'Ajout du choix anglais/français, de libellés de formulaire lisibles, d’un profil amélioré et d’un nouvel accueil avec navigation adaptée au mobile.',
                     'L’icône reste le bouclier arrondi ; le sceau OPES complet reste réservé à l’écran de lancement.',
                     'Version 0.3.0, build Android 8, runtime OTA 0.3.0.',
