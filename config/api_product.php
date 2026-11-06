@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version' => '0.125.0',
+    'version' => '0.126.0',
     'products' => [
         [
             'id' => 'public-enquiries',
@@ -93,6 +93,11 @@ return [
         ],
     ],
     'changelog' => [
+        [
+            'version' => '0.126.0',
+            'released_at' => '2026-11-06',
+            'summary' => 'Added field-specific administrator machine-client usage and audit-log list/detail responses, documenting the redaction of sensitive audit values.',
+        ],
         [
             'version' => '0.125.0',
             'released_at' => '2026-11-06',

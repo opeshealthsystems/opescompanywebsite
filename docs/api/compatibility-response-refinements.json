@@ -1,6 +1,24 @@
 [
   {
     "method": "GET",
+    "path": "/admin/api-clients/{client}/usage",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator client identity, UTC totals and fixed 30-day usage series from AdminApiClientQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/audit-logs",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing filtered audit-log metadata and pagination from AdminAuditLogQueries. Sensitive old/new values remain available only from detail. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/audit-logs/{auditLog}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing audit-log detail and recursively redacted old/new values from AdminAuditLogQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
     "path": "/finance/quotes",
     "allow_response_schema_refinement": true,
     "reason": "Documents the existing quote list projection from the Quote model and AdminFinanceRecordQueries, including its already serialized lead, creator and line items. No response bytes, request shape, authorization or status behavior changes."

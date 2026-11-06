@@ -2010,6 +2010,47 @@ foreach ([
     unset($target);
 }
 unset($adminLeadResource, $integrationRequestResource, $leadCommandResponse);
+$adminClientUsage = &$spec['paths']['/admin/api-clients/{client}/usage']['get'];
+$adminClientUsage['responses']['200']['description'] = 'Returns the approved machine client identity and its UTC request totals for today and the rolling 30-day period, including one count for each date.';
+$adminClientUsage['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['client', 'usage'], 'properties' => [
+    'client' => ['type' => 'object', 'required' => ['client_id', 'name', 'revoked', 'scopes'], 'properties' => [
+        'client_id' => ['type' => 'string'], 'name' => ['type' => 'string'], 'revoked' => ['type' => 'boolean'],
+        'scopes' => ['type' => 'array', 'items' => ['type' => 'string', 'enum' => ['catalogue:read', 'integration:read']]],
+    ]],
+    'usage' => ['type' => 'object', 'required' => ['period_start', 'period_end', 'requests_today', 'requests_last_30_days', 'daily_usage'], 'properties' => [
+        'period_start' => ['type' => 'string', 'format' => 'date'], 'period_end' => ['type' => 'string', 'format' => 'date'],
+        'requests_today' => ['type' => 'integer', 'minimum' => 0], 'requests_last_30_days' => ['type' => 'integer', 'minimum' => 0],
+        'daily_usage' => ['type' => 'array', 'minItems' => 30, 'maxItems' => 30, 'items' => ['type' => 'object', 'required' => ['date', 'requests'], 'properties' => [
+            'date' => ['type' => 'string', 'format' => 'date'], 'requests' => ['type' => 'integer', 'minimum' => 0],
+        ]]],
+    ]],
+]], 'admin.apiClients.usage');
+unset($adminClientUsage);
+$auditLogResource = ['type' => 'object', 'required' => ['id', 'user_id', 'user_name', 'action', 'model_type', 'model_id', 'ip_address', 'user_agent', 'created_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'user_id' => ['type' => ['integer', 'null']], 'user_name' => ['type' => ['string', 'null']],
+    'action' => ['type' => 'string'], 'model_type' => ['type' => 'string'], 'model_id' => ['type' => ['string', 'integer', 'null']],
+    'ip_address' => ['type' => ['string', 'null']], 'user_agent' => ['type' => ['string', 'null']], 'created_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+]];
+$auditLogList = &$spec['paths']['/admin/audit-logs']['get'];
+$auditLogList['responses']['200']['description'] = 'Returns filtered audit-log metadata and pagination; old/new values are available only from the detail read.';
+$auditLogList['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => $auditLogResource],
+    'pagination' => ['type' => 'object', 'required' => ['current_page', 'per_page', 'total', 'last_page'], 'properties' => [
+        'current_page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+    ]],
+]], 'admin.auditLogs.index');
+unset($auditLogList);
+$auditValues = ['oneOf' => [
+    ['type' => 'object', 'additionalProperties' => true], ['type' => 'array', 'items' => []],
+]];
+$auditLogDetail = &$spec['paths']['/admin/audit-logs/{auditLog}']['get'];
+$auditLogDetail['responses']['200']['description'] = 'Returns one audit-log record with recursively redacted old/new values. Secret, password, token, API-key and authorization fields are replaced with [redacted].';
+$auditLogDetail['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['audit_log'], 'properties' => [
+    'audit_log' => ['type' => 'object', 'required' => array_merge(array_keys($auditLogResource['properties']), ['old_values', 'new_values']), 'properties' => $auditLogResource['properties'] + [
+        'old_values' => $auditValues, 'new_values' => $auditValues,
+    ]],
+]], 'admin.auditLogs.show');
+unset($auditLogDetail, $auditLogResource, $auditValues);
 $contractPath = $root.'/docs/api/openapi.json';
 $contractTemp = $contractPath.'.tmp';
 if (file_put_contents($contractTemp, json_encode($spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR)."\n") === false || !rename($contractTemp, $contractPath)) {

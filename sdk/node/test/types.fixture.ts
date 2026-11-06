@@ -69,6 +69,15 @@ const serviceRequests = await client.request('customer_servicerequestcontroller_
 serviceRequests.data.data.service_requests[0]!.reference_number.toUpperCase();
 const serviceRequest = await client.request('customer_servicerequestcontroller_show', { path: { serviceRequest: 22 } });
 serviceRequest.data.data.service_request.preferred_date.toUpperCase();
+const adminClientUsage = await client.request('admin_apiClients_usage', { path: { client: 12 } });
+adminClientUsage.data.data.usage.requests_last_30_days.toFixed();
+adminClientUsage.data.data.usage.daily_usage[0]!.date.toUpperCase();
+const auditLogs = await client.request('admin_auditLogs_index');
+auditLogs.data.data.items[0]!.action.toUpperCase();
+const auditLog = await client.request('admin_auditLogs_show', { path: { auditLog: 12 } });
+auditLog.data.data.audit_log.new_values;
+// @ts-expect-error Audit-log fields are limited to the reviewed metadata projection.
+auditLog.data.data.audit_log.client_secret;
 const createdServiceRequest = await client.request('customer_servicerequestcontroller_store', {
   body: { type: 'maintenance', preferred_date: '2026-11-09', location: 'Example facility' }, idempotencyKey: key,
 });

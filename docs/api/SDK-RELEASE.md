@@ -1,3 +1,7 @@
+## SDK 0.139.0 — administrator usage and audit records (6 November 2026)
+
+Types administrator machine-client usage totals and the fixed 30-day daily series, plus paginated audit-log metadata and detail values. The audit detail contract documents recursive redaction of password, token, API-key, secret and authorization fields. OpenAPI is 0.126.0. This downloadable preview remains unpublished to npm. Archive size is 50234 bytes; SHA-256 is `5f6b4ba6058fb1f7886542808699c79d5613c5784535334b847328badd377f5d`.
+
 ## SDK 0.138.0 — administrator enquiries and empty commands (6 November 2026)
 
 Types administrator lead lists/details, structured integration requests and lead create/update/follow-up acknowledgements. Corrected lead/member deletion contracts to actual 204 no-content responses; empty idempotent command replays now carry the documented Idempotency-Replayed header. OpenAPI is 0.125.0. This downloadable preview remains unpublished to npm. Archive size is 50177 bytes; SHA-256 is `f952f60474b401faca5da80e16f4c5a8b56b4cd37f1ca27c63aed37e19921028`.

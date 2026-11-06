@@ -2,7 +2,7 @@
     "openapi": "3.1.1",
     "info": {
         "title": "OHS Platform API",
-        "version": "0.125.0",
+        "version": "0.126.0",
         "description": "Versioned OHS business APIs. Public enquiries and application intake, partner and tester administration, publishing and catalogues, role-scoped operations and workforce workflows, finance registers, reports and line-item detail reads, customer facility profiles, employee and HR administration, risk and performance management, leave requests, validation, practitioner, recruitment, learning, survey and support workflows, account recovery, machine catalogue access and owner-managed public-scope machine clients, public sitemap data, protected admin reference data and resource/relationship summaries, with delegated business workflows using authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.",
         "contact": {
             "name": "OHS support",
@@ -153922,7 +153922,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns filtered audit-log metadata and pagination; old/new values are available only from the detail read.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -153934,10 +153934,102 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items",
+                                                "pagination"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "user_id",
+                                                            "user_name",
+                                                            "action",
+                                                            "model_type",
+                                                            "model_id",
+                                                            "ip_address",
+                                                            "user_agent",
+                                                            "created_at"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "user_id": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "user_name": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "action": {
+                                                                "type": "string"
+                                                            },
+                                                            "model_type": {
+                                                                "type": "string"
+                                                            },
+                                                            "model_id": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "ip_address": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "user_agent": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "created_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "current_page",
+                                                        "per_page",
+                                                        "total",
+                                                        "last_page"
+                                                    ],
+                                                    "properties": {
+                                                        "current_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "total": {
+                                                            "type": "integer"
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -153949,10 +154041,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -154116,7 +154205,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns one audit-log record with recursively redacted old/new values. Secret, password, token, API-key and authorization fields are replaced with [redacted].",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -154128,10 +154217,101 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "audit_log"
+                                            ],
+                                            "properties": {
+                                                "audit_log": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "user_id",
+                                                        "user_name",
+                                                        "action",
+                                                        "model_type",
+                                                        "model_id",
+                                                        "ip_address",
+                                                        "user_agent",
+                                                        "created_at",
+                                                        "old_values",
+                                                        "new_values"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "user_id": {
+                                                            "type": [
+                                                                "integer",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "user_name": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "action": {
+                                                            "type": "string"
+                                                        },
+                                                        "model_type": {
+                                                            "type": "string"
+                                                        },
+                                                        "model_id": {
+                                                            "type": [
+                                                                "string",
+                                                                "integer",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "ip_address": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "user_agent": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "created_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "old_values": {
+                                                            "oneOf": [
+                                                                {
+                                                                    "type": "object",
+                                                                    "additionalProperties": true
+                                                                },
+                                                                {
+                                                                    "type": "array",
+                                                                    "items": []
+                                                                }
+                                                            ]
+                                                        },
+                                                        "new_values": {
+                                                            "oneOf": [
+                                                                {
+                                                                    "type": "object",
+                                                                    "additionalProperties": true
+                                                                },
+                                                                {
+                                                                    "type": "array",
+                                                                    "items": []
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -154143,10 +154323,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -155109,7 +155286,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns the approved machine client identity and its UTC request totals for today and the rolling 30-day period, including one count for each date.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -155121,10 +155298,93 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "client",
+                                                "usage"
+                                            ],
+                                            "properties": {
+                                                "client": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "client_id",
+                                                        "name",
+                                                        "revoked",
+                                                        "scopes"
+                                                    ],
+                                                    "properties": {
+                                                        "client_id": {
+                                                            "type": "string"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "revoked": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "scopes": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "catalogue:read",
+                                                                    "integration:read"
+                                                                ]
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "usage": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "period_start",
+                                                        "period_end",
+                                                        "requests_today",
+                                                        "requests_last_30_days",
+                                                        "daily_usage"
+                                                    ],
+                                                    "properties": {
+                                                        "period_start": {
+                                                            "type": "string",
+                                                            "format": "date"
+                                                        },
+                                                        "period_end": {
+                                                            "type": "string",
+                                                            "format": "date"
+                                                        },
+                                                        "requests_today": {
+                                                            "type": "integer",
+                                                            "minimum": 0
+                                                        },
+                                                        "requests_last_30_days": {
+                                                            "type": "integer",
+                                                            "minimum": 0
+                                                        },
+                                                        "daily_usage": {
+                                                            "type": "array",
+                                                            "minItems": 30,
+                                                            "maxItems": 30,
+                                                            "items": {
+                                                                "type": "object",
+                                                                "required": [
+                                                                    "date",
+                                                                    "requests"
+                                                                ],
+                                                                "properties": {
+                                                                    "date": {
+                                                                        "type": "string",
+                                                                        "format": "date"
+                                                                    },
+                                                                    "requests": {
+                                                                        "type": "integer",
+                                                                        "minimum": 0
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -155136,10 +155396,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -158988,7 +159245,7 @@
                                 "example": {
                                     "data": {
                                         "name": "OPES Health Systems API",
-                                        "api_version": "0.125.0",
+                                        "api_version": "0.126.0",
                                         "openapi_version": "3.1.1",
                                         "authentication": {
                                             "machine": "OAuth 2.0 client credentials with approved scopes",
@@ -159212,7 +159469,7 @@
                                 "example": {
                                     "data": {
                                         "status": "responding",
-                                        "api_version": "0.125.0",
+                                        "api_version": "0.126.0",
                                         "checked_at": "2026-11-01T12:00:00+00:00"
                                     },
                                     "meta": {
@@ -159416,6 +159673,11 @@
                                 "example": {
                                     "data": {
                                         "items": [
+                                            {
+                                                "version": "0.126.0",
+                                                "released_at": "2026-11-06",
+                                                "summary": "Added field-specific administrator machine-client usage and audit-log list/detail responses, documenting the redaction of sensitive audit values."
+                                            },
                                             {
                                                 "version": "0.125.0",
                                                 "released_at": "2026-11-06",
@@ -159829,7 +160091,7 @@
                                 },
                                 "example": {
                                     "data": {
-                                        "api_version": "0.125.0",
+                                        "api_version": "0.126.0",
                                         "locale": "en",
                                         "items": [
                                             {
