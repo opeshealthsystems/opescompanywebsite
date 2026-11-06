@@ -1,5 +1,41 @@
 [
   {
+    "method": "POST",
+    "path": "/finance/quotes",
+    "allow_response_schema_refinement": true,
+    "reason": "Corrects the generic success status from 200 to the handler's actual 201 and documents the generated quote reference and recalculated decimal totals; request and business behavior remain unchanged."
+  },
+  {
+    "method": "PUT",
+    "path": "/finance/quotes/{quote}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing quote application workflow response and decimal serialization without changing command, query, authorization or idempotency behavior."
+  },
+  {
+    "method": "DELETE",
+    "path": "/finance/quotes/{quote}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing quote application workflow response and decimal serialization without changing command, query, authorization or idempotency behavior."
+  },
+  {
+    "method": "POST",
+    "path": "/finance/quotes/{quote}/mark-sent",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing quote application workflow response and decimal serialization without changing command, query, authorization or idempotency behavior."
+  },
+  {
+    "method": "POST",
+    "path": "/finance/quotes/{quote}/accept",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing quote application workflow response and decimal serialization without changing command, query, authorization or idempotency behavior."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/finance/quotes/{quote}/items",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing quote application workflow response and decimal serialization without changing command, query, authorization or idempotency behavior."
+  },
+  {
     "method": "GET",
     "path": "/admin/references/users",
     "allow_response_schema_refinement": true,

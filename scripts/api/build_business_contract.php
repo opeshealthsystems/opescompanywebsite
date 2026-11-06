@@ -1074,13 +1074,13 @@ $spec['paths']['/me']['get'] = ['operationId' => 'readOwnProfile', 'summary' => 
         '401' => ['description' => 'Delegated user authentication required.'], '403' => ['description' => 'identity:read scope required.'], '429' => ['description' => 'Rate limit exceeded.']]];
 $quoteItemSchema = ['type' => 'object', 'required' => ['id', 'quote_id', 'product_name', 'description', 'quantity', 'unit_price', 'total', 'created_at', 'updated_at'], 'properties' => [
     'id' => ['type' => 'integer'], 'quote_id' => ['type' => 'integer'], 'product_name' => ['type' => 'string'], 'description' => ['type' => ['string', 'null']],
-    'quantity' => ['type' => 'number'], 'unit_price' => ['type' => 'number'], 'total' => ['type' => 'number'],
+    'quantity' => ['type' => 'string'], 'unit_price' => ['type' => 'string'], 'total' => ['type' => 'string'],
     'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
 ]];
 $quoteRecordSchema = ['type' => 'object', 'required' => ['id', 'reference', 'lead_id', 'title', 'status', 'valid_until', 'subtotal', 'tax_rate', 'tax_amount', 'total', 'currency', 'notes', 'created_by', 'created_at', 'updated_at', 'lead', 'creator', 'items'], 'properties' => [
     'id' => ['type' => 'integer'], 'reference' => ['type' => 'string'], 'lead_id' => ['type' => ['integer', 'null']], 'title' => ['type' => 'string'],
     'status' => ['type' => 'string', 'enum' => ['draft', 'sent', 'accepted', 'rejected', 'expired']], 'valid_until' => ['type' => ['string', 'null'], 'format' => 'date'],
-    'subtotal' => ['type' => 'number'], 'tax_rate' => ['type' => 'number'], 'tax_amount' => ['type' => 'number'], 'total' => ['type' => 'number'],
+    'subtotal' => ['type' => 'string'], 'tax_rate' => ['type' => 'string'], 'tax_amount' => ['type' => 'string'], 'total' => ['type' => 'string'],
     'currency' => ['type' => 'string'], 'notes' => ['type' => ['string', 'null']], 'created_by' => ['type' => 'integer'],
     'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
     'lead' => ['type' => ['object', 'null'], 'properties' => ['id' => ['type' => 'integer'], 'name' => ['type' => 'string'], 'email' => ['type' => 'string', 'format' => 'email'], 'phone' => ['type' => ['string', 'null']], 'facility_type' => ['type' => ['string', 'null']]]],
@@ -1096,6 +1096,47 @@ $quoteList['responses']['200']['content']['application/json']['schema'] = $succe
     ]],
 ]], 'admin.finance.quotes.index');
 unset($quoteList);
+$quoteMutationResponses = [
+    'admin_finance_quotes_create' => ['status' => 201, 'description' => 'Creates a draft quote and returns its generated identifier, reference, status, and recalculated decimal totals.', 'data' => ['type' => 'object', 'required' => ['id', 'reference', 'status', 'subtotal', 'total'], 'properties' => [
+        'id' => ['type' => 'integer'], 'reference' => ['type' => 'string'], 'status' => ['type' => 'string', 'const' => 'draft'], 'subtotal' => ['type' => 'string'], 'total' => ['type' => 'string'],
+    ]]],
+    'admin_finance_quotes_update' => ['status' => 200, 'description' => 'Updates an existing draft quote and returns its identifier, draft status, reference, and recalculated decimal totals.', 'data' => ['type' => 'object', 'required' => ['id', 'status', 'reference', 'subtotal', 'total'], 'properties' => [
+        'id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'draft'], 'reference' => ['type' => 'string'], 'subtotal' => ['type' => 'string'], 'total' => ['type' => 'string'],
+    ]]],
+    'admin_finance_quotes_delete' => ['status' => 200, 'description' => 'Deletes a draft quote and returns its identifier with the deleted status.', 'data' => ['type' => 'object', 'required' => ['id', 'status'], 'properties' => [
+        'id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'deleted'],
+    ]]],
+    'admin_finance_quotes_markSent' => ['status' => 200, 'description' => 'Marks a valid draft quote as sent and returns its identifier, sent status, reference, and recalculated decimal totals.', 'data' => ['type' => 'object', 'required' => ['id', 'status', 'reference', 'subtotal', 'total'], 'properties' => [
+        'id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'sent'], 'reference' => ['type' => 'string'], 'subtotal' => ['type' => 'string'], 'total' => ['type' => 'string'],
+    ]]],
+    'admin_finance_quotes_accept' => ['status' => 200, 'description' => 'Accepts a valid sent quote and returns its identifier and accepted status.', 'data' => ['type' => 'object', 'required' => ['id', 'status'], 'properties' => [
+        'id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'accepted'],
+    ]]],
+];
+foreach ($spec['paths'] as &$quotePath) {
+    foreach ($quotePath as &$quoteOperation) {
+        $operationId = $quoteOperation['operationId'] ?? null;
+        if (!isset($quoteMutationResponses[$operationId])) continue;
+        $definition = $quoteMutationResponses[$operationId];
+        $status = (string) $definition['status'];
+        if ($status === '201') {
+            $quoteOperation['responses']['201'] = $quoteOperation['responses']['200'];
+            unset($quoteOperation['responses']['200']);
+        }
+        $quoteOperation['responses'][$status]['description'] = $definition['description'];
+        $quoteOperation['responses'][$status]['content']['application/json']['schema'] = $successEnvelope($definition['data'], $quoteOperation['responses'][$status]['content']['application/json']['schema']['properties']['meta']['properties']['operation']['const']);
+    }
+    unset($quoteOperation);
+}
+unset($quotePath, $quoteMutationResponses);
+$quoteItemsRead = &$spec['paths']['/admin/finance/quotes/{quote}/items']['get'];
+$quoteItemsRead['responses']['200']['description'] = 'Returns quote line items in stable order. Quantity and unit_price are decimal strings as serialized by the existing model casts.';
+$quoteItemsRead['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => ['type' => 'object', 'required' => ['product_name', 'quantity', 'unit_price'], 'properties' => [
+        'product_name' => ['type' => 'string'], 'quantity' => ['type' => 'string'], 'unit_price' => ['type' => 'string'],
+    ]]],
+]], 'admin.finance.quoteItems');
+unset($quoteItemsRead);
 $customerSummarySchema = ['type' => 'object', 'required' => ['id', 'user_id', 'facility_name', 'facility_type', 'country', 'city', 'address', 'created_at', 'updated_at', 'customer'], 'properties' => [
     'id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'], 'facility_name' => ['type' => ['string', 'null']], 'facility_type' => ['type' => ['string', 'null']],
     'country' => ['type' => 'string'], 'city' => ['type' => ['string', 'null']], 'address' => ['type' => ['string', 'null']],

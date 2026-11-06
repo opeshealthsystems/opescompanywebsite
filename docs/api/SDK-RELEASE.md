@@ -1,3 +1,7 @@
+## SDK 0.143.0 — quote workflow responses (6 November 2026)
+
+Types quote creation, draft updates, send/accept/delete acknowledgements and quote line-item reads. Corrects quote creation to its actual 201 response and decimal amounts to the decimal strings emitted by the model casts. Existing quote authorization, status transitions, totals and idempotency behavior are unchanged. OpenAPI is 0.130.0. This downloadable preview remains unpublished to npm. Archive size is 50735 bytes; SHA-256 is `0f31bc4f8844d5f8e3847aed14e9f6f1836cafcdd434cbd88498eb38ba9e783f`.
+
 ## SDK 0.142.0 — administrator form references (6 November 2026)
 
 Types all 21 administrator form-reference reads, including users with conditionally present email, role permissions, invoices, licenses, cohort members, audit filters and next employee identifiers. The projections preserve existing filters and privacy rules. OpenAPI is 0.129.0. This downloadable preview remains unpublished to npm. Archive size is 50618 bytes; SHA-256 is `eedf1a63b9db5fc26c69e3edf6ec49e97f84c6ff8e5b72c3998e56c7eae996e0`.

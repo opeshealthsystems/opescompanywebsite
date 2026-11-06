@@ -33,6 +33,24 @@ enquiry.data.data.status.toUpperCase();
 const quotes = await client.request('admin_finance_quotes_index');
 quotes.data.data.items[0]!.items[0]!.product_name.toUpperCase();
 quotes.data.data.items[0]!.lead?.email?.toLowerCase();
+quotes.data.data.items[0]!.subtotal.toUpperCase();
+const quoteLineItems = await client.request('admin_finance_quoteItems', { path: { quote: 99 } });
+quoteLineItems.data.data.items[0]!.unit_price.toUpperCase();
+const createdQuote = await client.request('admin_finance_quotes_create', {
+  body: { title: 'Clinic proposal', currency: 'XAF', items: [{ product_name: 'Platform licence', quantity: 2, unit_price: 100 }] },
+  idempotencyKey: key,
+});
+createdQuote.data.data.subtotal.toUpperCase();
+const updatedQuote = await client.request('admin_finance_quotes_update', {
+  path: { quote: 99 }, body: { title: 'Updated proposal' }, idempotencyKey: key,
+});
+updatedQuote.data.data.total.toUpperCase();
+const markedQuoteSent = await client.request('admin_finance_quotes_markSent', { path: { quote: 99 }, idempotencyKey: key });
+markedQuoteSent.data.data.status.toUpperCase();
+const acceptedQuote = await client.request('admin_finance_quotes_accept', { path: { quote: 99 }, idempotencyKey: key });
+acceptedQuote.data.data.status.toUpperCase();
+const deletedQuote = await client.request('admin_finance_quotes_delete', { path: { quote: 99 }, idempotencyKey: key });
+deletedQuote.data.data.status.toUpperCase();
 const customers = await client.request('admin_customerProfiles_index');
 customers.data.data.items[0]!.customer?.email.toLowerCase();
 const customer = await client.request('admin_customerProfiles_show', { path: { customerProfile: 12 } });

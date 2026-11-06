@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version' => '0.129.0',
+    'version' => '0.130.0',
     'products' => [
         [
             'id' => 'public-enquiries',
@@ -93,6 +93,11 @@ return [
         ],
     ],
     'changelog' => [
+        [
+            'version' => '0.130.0',
+            'released_at' => '2026-11-06',
+            'summary' => 'Added typed quote create, edit, send, accept and delete outcomes plus quote-item reads; corrected decimal amounts to the server’s serialized string format.',
+        ],
         [
             'version' => '0.129.0',
             'released_at' => '2026-11-06',
