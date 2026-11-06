@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version' => '0.121.0',
+    'version' => '0.122.0',
     'products' => [
         [
             'id' => 'public-enquiries',
@@ -93,6 +93,11 @@ return [
         ],
     ],
     'changelog' => [
+        [
+            'version' => '0.122.0',
+            'released_at' => '2026-11-06',
+            'summary' => 'Added typed administrator, accountant and HR payroll register responses plus administrator payroll entry detail.',
+        ],
         [
             'version' => '0.121.0',
             'released_at' => '2026-11-06',

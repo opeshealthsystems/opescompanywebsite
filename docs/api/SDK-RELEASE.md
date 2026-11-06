@@ -1,3 +1,7 @@
+## SDK 0.135.0 — payroll registers (6 November 2026)
+
+Types the administrator, accountant and HR payroll registers plus administrator payroll entry reads. Payroll entry salary values and deduction items follow their current decimal and JSON projections. The existing workflows, roles and payload behavior are unchanged. OpenAPI is 0.122.0. This downloadable preview remains unpublished to npm. Archive size is 49337 bytes; SHA-256 is `1107711ce3a9f441916935d35ae8fa85b4c4bde811a5395cae934a677f4b7213`.
+
 ## SDK 0.134.0 — finance report responses (6 November 2026)
 
 Types the existing administrator aging reports, monthly cash flow, budget variance, payroll headcount, profit-and-loss and finance overview payloads. The monthly maps, aging buckets, amounts and aggregate counts now have concrete schemas. Existing report calculations, access and response behavior are unchanged. OpenAPI is 0.121.0. This downloadable preview remains unpublished to npm. Archive size is 49202 bytes; SHA-256 is `84497f777ede316066d96612e0df3bd5b93dd9596a8b715beb2c74e1c5090d94`.

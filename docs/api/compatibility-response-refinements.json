@@ -223,6 +223,30 @@
   },
   {
     "method": "GET",
+    "path": "/accountant/payroll",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents paginated payroll run summaries returned by AccountantPayrollQueries through the allowlisted PayrollRun serializer. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/hr/payroll",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents paginated payroll run summaries returned by HRPayrollQueries through the allowlisted PayrollRun serializer. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/finance/payroll-runs",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the paginated administrator payroll run summaries from AdminFinanceRecordQueries and the PayrollRun resource projection. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/finance/payroll-runs/{run}/entries",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing explicit payroll entry and pagination projection from AdminFinanceRecordQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
     "path": "/customer/tickets",
     "allow_response_schema_refinement": true,
     "reason": "Documents paginated tickets belonging to the authenticated customer from CustomerTicketQueries and ApiWorkflowSerializer. No response bytes, request shape, authorization or status behavior changes."

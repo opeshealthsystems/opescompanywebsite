@@ -1593,6 +1593,53 @@ foreach ($reportSchemas as $slug => $report) {
     unset($target);
 }
 unset($agingBucket, $agingBuckets, $agingFields, $payableFields, $payableItem, $receivableItem, $monthCashFlow, $monthProfitLoss, $reportSchemas);
+$payrollRunResource = ['type' => 'object', 'required' => ['id', 'reference', 'period_start', 'period_end', 'status', 'total_gross', 'total_net', 'currency', 'notes', 'processed_by', 'completed_at', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'reference' => ['type' => 'string'], 'period_start' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'period_end' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'status' => ['type' => 'string', 'enum' => ['draft', 'processing', 'completed', 'cancelled']],
+    'total_gross' => ['type' => 'string'], 'total_net' => ['type' => 'string'], 'currency' => ['type' => 'string'], 'notes' => ['type' => ['string', 'null']],
+    'processed_by' => ['type' => ['integer', 'null']], 'completed_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+]];
+$payrollPageMeta = ['type' => 'object', 'required' => ['page', 'per_page', 'total', 'last_page'], 'properties' => [
+    'page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+]];
+foreach ([
+    '/accountant/payroll' => ['operation' => 'accountant.payrollcontroller.index', 'key' => 'runs'],
+    '/hr/payroll' => ['operation' => 'hr.payrollcontroller.index', 'key' => 'runs'],
+] as $path => $configuration) {
+    $target = &$spec['paths'][$path]['get'];
+    $target['responses']['200']['description'] = 'Returns the role-authorized payroll register with paginated payroll run summaries.';
+    $target['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => [$configuration['key']], 'properties' => [
+        $configuration['key'] => ['type' => 'object', 'required' => ['items', 'meta'], 'properties' => [
+            'items' => ['type' => 'array', 'items' => $payrollRunResource], 'meta' => $payrollPageMeta,
+        ]],
+    ]], $configuration['operation']);
+    unset($target);
+}
+$adminPayrollRuns = &$spec['paths']['/finance/payroll-runs']['get'];
+$adminPayrollRuns['responses']['200']['description'] = 'Returns the administrator payroll register with status and year filters, run summaries and pagination.';
+$adminPayrollRuns['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => $payrollRunResource],
+    'pagination' => ['type' => 'object', 'required' => ['current_page', 'per_page', 'total', 'last_page'], 'properties' => [
+        'current_page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+    ]],
+]], 'admin.finance.payrollRuns.index');
+unset($adminPayrollRuns);
+$adminPayrollEntries = &$spec['paths']['/finance/payroll-runs/{run}/entries']['get'];
+$adminPayrollEntries['responses']['200']['description'] = 'Returns paginated payroll entry amounts and employee names for the selected run.';
+$adminPayrollEntries['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => ['type' => 'object', 'required' => ['id', 'payroll_run_id', 'user_id', 'employee_name', 'gross_salary', 'deductions', 'total_deductions', 'net_salary', 'currency', 'status'], 'properties' => [
+        'id' => ['type' => 'integer'], 'payroll_run_id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'], 'employee_name' => ['type' => ['string', 'null']],
+        'gross_salary' => ['type' => 'string'], 'deductions' => ['type' => ['array', 'null'], 'items' => ['type' => 'object', 'required' => ['label', 'amount'], 'properties' => [
+            'label' => ['type' => 'string'], 'amount' => ['type' => 'number'],
+        ]]],
+        'total_deductions' => ['type' => 'string'], 'net_salary' => ['type' => 'string'], 'currency' => ['type' => 'string'], 'status' => ['type' => 'string'],
+    ]]],
+    'pagination' => ['type' => 'object', 'required' => ['current_page', 'per_page', 'total', 'last_page'], 'properties' => [
+        'current_page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+    ]],
+]], 'admin.finance.payrollEntries.index');
+unset($adminPayrollEntries, $payrollRunResource, $payrollPageMeta);
 $customerDocumentResource = ['type' => 'object', 'required' => ['id', 'document_template_id', 'type', 'title', 'reference_number', 'body_rendered', 'issued_by', 'addressee_user_id', 'addressee_name', 'addressee_email', 'status', 'requires_signature', 'signed_at', 'signed_by_name', 'valid_until', 'notes', 'created_at', 'updated_at'], 'properties' => [
     'id' => ['type' => 'integer'], 'document_template_id' => ['type' => ['integer', 'null']],
     'type' => ['type' => 'string', 'enum' => ['receipt', 'letterhead', 'contract_employee', 'contract_business']], 'title' => ['type' => 'string'],
