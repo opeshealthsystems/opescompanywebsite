@@ -1,3 +1,7 @@
+## SDK 0.134.0 — finance report responses (6 November 2026)
+
+Types the existing administrator aging reports, monthly cash flow, budget variance, payroll headcount, profit-and-loss and finance overview payloads. The monthly maps, aging buckets, amounts and aggregate counts now have concrete schemas. Existing report calculations, access and response behavior are unchanged. OpenAPI is 0.121.0. This downloadable preview remains unpublished to npm. Archive size is 49202 bytes; SHA-256 is `84497f777ede316066d96612e0df3bd5b93dd9596a8b715beb2c74e1c5090d94`.
+
 ## SDK 0.133.0 — administrator invoice reads (6 November 2026)
 
 Types the administrator invoice register, paginated payment history and invoice line-item read. Payment notes are excluded from the payment history projection. Existing handlers, roles, scopes and response behavior are unchanged. OpenAPI is 0.120.0. This downloadable preview remains unpublished to npm. Archive size is 48822 bytes; SHA-256 is `7a7db0e1323ac56e1c25d571e154512f82cdc5b4d51eb285a3491954b1c05d14`.

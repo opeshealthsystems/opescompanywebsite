@@ -1524,6 +1524,75 @@ $adminInvoiceItems['responses']['200']['content']['application/json']['schema'] 
     ]]],
 ]], 'admin.finance.invoiceItems');
 unset($adminInvoiceItems, $invoicePaymentResource);
+$agingBucket = static function (string $itemKey, array $itemSchema): array { return [
+    'type' => 'object', 'required' => ['label', $itemKey, 'total'], 'properties' => [
+        'label' => ['type' => 'string'], $itemKey => ['type' => 'array', 'items' => $itemSchema], 'total' => ['type' => 'number'],
+    ],
+]; };
+$agingBuckets = static function (string $itemKey, array $itemSchema) use ($agingBucket): array { return [
+    'type' => 'object', 'required' => ['current', '1_30', '31_60', '61_90', 'over_90'], 'properties' => [
+        'current' => $agingBucket($itemKey, $itemSchema), '1_30' => $agingBucket($itemKey, $itemSchema),
+        '31_60' => $agingBucket($itemKey, $itemSchema), '61_90' => $agingBucket($itemKey, $itemSchema), 'over_90' => $agingBucket($itemKey, $itemSchema),
+    ],
+]; };
+$agingFields = ['reference' => ['type' => 'string'], 'amount' => ['type' => 'number'], 'currency' => ['type' => 'string'],
+    'status' => ['type' => 'string'], 'due_date' => ['type' => 'string'], 'days_overdue' => ['type' => ['integer', 'null']]];
+$receivableItem = ['type' => 'object', 'required' => array_keys($agingFields), 'properties' => $agingFields];
+$payableFields = $agingFields + ['vendor' => ['type' => 'string'], 'bill_number' => ['type' => 'string']];
+$payableItem = ['type' => 'object', 'required' => array_keys($payableFields), 'properties' => $payableFields];
+foreach ([
+    'accounts-payable-aging' => ['summary' => 'Returns outstanding supplier bills grouped into current and overdue aging buckets.', 'data' => [
+        'buckets' => $agingBuckets('bills', $payableItem), 'total_outstanding' => ['type' => 'number'],
+    ]],
+    'accounts-receivable-aging' => ['summary' => 'Returns outstanding invoices grouped into current and overdue aging buckets.', 'data' => [
+        'buckets' => $agingBuckets('invoices', $receivableItem), 'total_outstanding' => ['type' => 'number'],
+    ]],
+] as $slug => $report) {
+    $operation = $slug === 'accounts-payable-aging' ? 'admin.finance.reports.accountsPayableAging' : 'admin.finance.reports.accountsReceivableAging';
+    $path = '/finance/reports/'.$slug; $target = &$spec['paths'][$path]['get'];
+    $target['responses']['200']['description'] = $report['summary'];
+    $target['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => array_keys($report['data']), 'properties' => $report['data']], $operation);
+    unset($target);
+}
+$monthCashFlow = ['type' => 'object', 'required' => ['month', 'cash_in', 'cash_out_exp', 'cash_out_pay', 'cash_out', 'net_cash', 'cumulative'], 'properties' => [
+    'month' => ['type' => 'string'], 'cash_in' => ['type' => 'number'], 'cash_out_exp' => ['type' => 'number'], 'cash_out_pay' => ['type' => 'number'],
+    'cash_out' => ['type' => 'number'], 'net_cash' => ['type' => 'number'], 'cumulative' => ['type' => 'number'],
+]];
+$monthProfitLoss = ['type' => 'object', 'required' => ['month', 'revenue', 'expenses', 'payroll', 'total_costs', 'net'], 'properties' => [
+    'month' => ['type' => 'string'], 'revenue' => ['type' => 'number'], 'expenses' => ['type' => 'number'], 'payroll' => ['type' => 'number'],
+    'total_costs' => ['type' => 'number'], 'net' => ['type' => 'number'],
+]];
+$reportSchemas = [
+    'cash-flow' => ['summary' => 'Returns the selected year of monthly cash-in, outflow, net cash and cumulative cash projections.', 'operation' => 'admin.finance.reports.cashFlow', 'data' => [
+        'year' => ['type' => 'integer'], 'months' => ['type' => 'object', 'additionalProperties' => $monthCashFlow], 'cumulative' => ['type' => 'number'],
+    ]],
+    'profit-and-loss' => ['summary' => 'Returns monthly paid revenue, approved or paid expenses, completed payroll and net totals for the selected year.', 'operation' => 'admin.finance.reports.profitAndLoss', 'data' => [
+        'year' => ['type' => 'integer'], 'months' => ['type' => 'object', 'additionalProperties' => $monthProfitLoss], 'total_revenue' => ['type' => 'number'],
+        'total_expenses' => ['type' => 'number'], 'total_payroll' => ['type' => 'number'], 'total_costs' => ['type' => 'number'], 'net' => ['type' => 'number'],
+    ]],
+    'budget-vs-actual' => ['summary' => 'Returns budget allocations and approved or paid expense actuals by budget category for the selected year.', 'operation' => 'admin.finance.reports.budgetVsActual', 'data' => [
+        'year' => ['type' => 'integer'], 'items' => ['type' => 'array', 'items' => ['type' => 'object', 'required' => ['id', 'category', 'department', 'currency', 'allocated_amount', 'actual_spent', 'variance', 'utilization'], 'properties' => [
+            'id' => ['type' => 'integer'], 'category' => ['type' => 'string'], 'department' => ['type' => ['string', 'null']], 'currency' => ['type' => 'string'],
+            'allocated_amount' => ['type' => 'number'], 'actual_spent' => ['type' => 'number'], 'variance' => ['type' => 'number'], 'utilization' => ['type' => ['number', 'null']],
+        ]]],
+    ]],
+    'payroll-headcount' => ['summary' => 'Returns completed payroll runs and aggregate payroll headcount and totals for the selected year.', 'operation' => 'admin.finance.reports.payrollHeadcount', 'data' => [
+        'year' => ['type' => 'integer'], 'runs' => ['type' => 'array', 'items' => ['type' => 'object', 'required' => ['reference', 'period', 'headcount', 'gross', 'net', 'avg_net', 'currency'], 'properties' => [
+            'reference' => ['type' => 'string'], 'period' => ['type' => 'string'], 'headcount' => ['type' => 'integer'], 'gross' => ['type' => 'number'],
+            'net' => ['type' => 'number'], 'avg_net' => ['type' => 'number'], 'currency' => ['type' => 'string'],
+        ]]], 'total_staff' => ['type' => 'integer'], 'total_payroll_net' => ['type' => 'number'],
+    ]],
+    'overview' => ['summary' => 'Returns current-month recognized revenue, outstanding invoices, pending expenses and overdue payable count.', 'operation' => 'admin.finance.reports.overview', 'data' => [
+        'revenue_this_month' => ['type' => 'number'], 'outstanding_invoices' => ['type' => 'number'], 'pending_expenses' => ['type' => 'integer'], 'overdue_payables' => ['type' => 'integer'],
+    ]],
+];
+foreach ($reportSchemas as $slug => $report) {
+    $target = &$spec['paths']['/finance/reports/'.$slug]['get'];
+    $target['responses']['200']['description'] = $report['summary'];
+    $target['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => array_keys($report['data']), 'properties' => $report['data']], $report['operation']);
+    unset($target);
+}
+unset($agingBucket, $agingBuckets, $agingFields, $payableFields, $payableItem, $receivableItem, $monthCashFlow, $monthProfitLoss, $reportSchemas);
 $customerDocumentResource = ['type' => 'object', 'required' => ['id', 'document_template_id', 'type', 'title', 'reference_number', 'body_rendered', 'issued_by', 'addressee_user_id', 'addressee_name', 'addressee_email', 'status', 'requires_signature', 'signed_at', 'signed_by_name', 'valid_until', 'notes', 'created_at', 'updated_at'], 'properties' => [
     'id' => ['type' => 'integer'], 'document_template_id' => ['type' => ['integer', 'null']],
     'type' => ['type' => 'string', 'enum' => ['receipt', 'letterhead', 'contract_employee', 'contract_business']], 'title' => ['type' => 'string'],

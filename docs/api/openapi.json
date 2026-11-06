@@ -2,7 +2,7 @@
     "openapi": "3.1.1",
     "info": {
         "title": "OHS Platform API",
-        "version": "0.120.0",
+        "version": "0.121.0",
         "description": "Versioned OHS business APIs. Public enquiries and application intake, partner and tester administration, publishing and catalogues, role-scoped operations and workforce workflows, finance registers, reports and line-item detail reads, customer facility profiles, employee and HR administration, risk and performance management, leave requests, validation, practitioner, recruitment, learning, survey and support workflows, account recovery, machine catalogue access and owner-managed public-scope machine clients, public sitemap data, protected admin reference data and resource/relationship summaries, with delegated business workflows using authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.",
         "contact": {
             "name": "OHS support",
@@ -101285,7 +101285,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns outstanding supplier bills grouped into current and overdue aging buckets.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -101297,10 +101297,333 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "buckets",
+                                                "total_outstanding"
+                                            ],
+                                            "properties": {
+                                                "buckets": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "current",
+                                                        "1_30",
+                                                        "31_60",
+                                                        "61_90",
+                                                        "over_90"
+                                                    ],
+                                                    "properties": {
+                                                        "current": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "label",
+                                                                "bills",
+                                                                "total"
+                                                            ],
+                                                            "properties": {
+                                                                "label": {
+                                                                    "type": "string"
+                                                                },
+                                                                "bills": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "type": "object",
+                                                                        "required": [
+                                                                            "reference",
+                                                                            "amount",
+                                                                            "currency",
+                                                                            "status",
+                                                                            "due_date",
+                                                                            "days_overdue",
+                                                                            "vendor",
+                                                                            "bill_number"
+                                                                        ],
+                                                                        "properties": {
+                                                                            "reference": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "amount": {
+                                                                                "type": "number"
+                                                                            },
+                                                                            "currency": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "status": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "due_date": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "days_overdue": {
+                                                                                "type": [
+                                                                                    "integer",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "vendor": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "bill_number": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "total": {
+                                                                    "type": "number"
+                                                                }
+                                                            }
+                                                        },
+                                                        "1_30": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "label",
+                                                                "bills",
+                                                                "total"
+                                                            ],
+                                                            "properties": {
+                                                                "label": {
+                                                                    "type": "string"
+                                                                },
+                                                                "bills": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "type": "object",
+                                                                        "required": [
+                                                                            "reference",
+                                                                            "amount",
+                                                                            "currency",
+                                                                            "status",
+                                                                            "due_date",
+                                                                            "days_overdue",
+                                                                            "vendor",
+                                                                            "bill_number"
+                                                                        ],
+                                                                        "properties": {
+                                                                            "reference": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "amount": {
+                                                                                "type": "number"
+                                                                            },
+                                                                            "currency": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "status": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "due_date": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "days_overdue": {
+                                                                                "type": [
+                                                                                    "integer",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "vendor": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "bill_number": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "total": {
+                                                                    "type": "number"
+                                                                }
+                                                            }
+                                                        },
+                                                        "31_60": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "label",
+                                                                "bills",
+                                                                "total"
+                                                            ],
+                                                            "properties": {
+                                                                "label": {
+                                                                    "type": "string"
+                                                                },
+                                                                "bills": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "type": "object",
+                                                                        "required": [
+                                                                            "reference",
+                                                                            "amount",
+                                                                            "currency",
+                                                                            "status",
+                                                                            "due_date",
+                                                                            "days_overdue",
+                                                                            "vendor",
+                                                                            "bill_number"
+                                                                        ],
+                                                                        "properties": {
+                                                                            "reference": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "amount": {
+                                                                                "type": "number"
+                                                                            },
+                                                                            "currency": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "status": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "due_date": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "days_overdue": {
+                                                                                "type": [
+                                                                                    "integer",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "vendor": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "bill_number": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "total": {
+                                                                    "type": "number"
+                                                                }
+                                                            }
+                                                        },
+                                                        "61_90": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "label",
+                                                                "bills",
+                                                                "total"
+                                                            ],
+                                                            "properties": {
+                                                                "label": {
+                                                                    "type": "string"
+                                                                },
+                                                                "bills": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "type": "object",
+                                                                        "required": [
+                                                                            "reference",
+                                                                            "amount",
+                                                                            "currency",
+                                                                            "status",
+                                                                            "due_date",
+                                                                            "days_overdue",
+                                                                            "vendor",
+                                                                            "bill_number"
+                                                                        ],
+                                                                        "properties": {
+                                                                            "reference": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "amount": {
+                                                                                "type": "number"
+                                                                            },
+                                                                            "currency": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "status": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "due_date": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "days_overdue": {
+                                                                                "type": [
+                                                                                    "integer",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "vendor": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "bill_number": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "total": {
+                                                                    "type": "number"
+                                                                }
+                                                            }
+                                                        },
+                                                        "over_90": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "label",
+                                                                "bills",
+                                                                "total"
+                                                            ],
+                                                            "properties": {
+                                                                "label": {
+                                                                    "type": "string"
+                                                                },
+                                                                "bills": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "type": "object",
+                                                                        "required": [
+                                                                            "reference",
+                                                                            "amount",
+                                                                            "currency",
+                                                                            "status",
+                                                                            "due_date",
+                                                                            "days_overdue",
+                                                                            "vendor",
+                                                                            "bill_number"
+                                                                        ],
+                                                                        "properties": {
+                                                                            "reference": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "amount": {
+                                                                                "type": "number"
+                                                                            },
+                                                                            "currency": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "status": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "due_date": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "days_overdue": {
+                                                                                "type": [
+                                                                                    "integer",
+                                                                                    "null"
+                                                                                ]
+                                                                            },
+                                                                            "vendor": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "bill_number": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "total": {
+                                                                    "type": "number"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "total_outstanding": {
+                                                    "type": "number"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -101312,10 +101635,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -101469,7 +101789,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns outstanding invoices grouped into current and overdue aging buckets.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -101481,10 +101801,293 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "buckets",
+                                                "total_outstanding"
+                                            ],
+                                            "properties": {
+                                                "buckets": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "current",
+                                                        "1_30",
+                                                        "31_60",
+                                                        "61_90",
+                                                        "over_90"
+                                                    ],
+                                                    "properties": {
+                                                        "current": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "label",
+                                                                "invoices",
+                                                                "total"
+                                                            ],
+                                                            "properties": {
+                                                                "label": {
+                                                                    "type": "string"
+                                                                },
+                                                                "invoices": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "type": "object",
+                                                                        "required": [
+                                                                            "reference",
+                                                                            "amount",
+                                                                            "currency",
+                                                                            "status",
+                                                                            "due_date",
+                                                                            "days_overdue"
+                                                                        ],
+                                                                        "properties": {
+                                                                            "reference": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "amount": {
+                                                                                "type": "number"
+                                                                            },
+                                                                            "currency": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "status": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "due_date": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "days_overdue": {
+                                                                                "type": [
+                                                                                    "integer",
+                                                                                    "null"
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "total": {
+                                                                    "type": "number"
+                                                                }
+                                                            }
+                                                        },
+                                                        "1_30": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "label",
+                                                                "invoices",
+                                                                "total"
+                                                            ],
+                                                            "properties": {
+                                                                "label": {
+                                                                    "type": "string"
+                                                                },
+                                                                "invoices": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "type": "object",
+                                                                        "required": [
+                                                                            "reference",
+                                                                            "amount",
+                                                                            "currency",
+                                                                            "status",
+                                                                            "due_date",
+                                                                            "days_overdue"
+                                                                        ],
+                                                                        "properties": {
+                                                                            "reference": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "amount": {
+                                                                                "type": "number"
+                                                                            },
+                                                                            "currency": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "status": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "due_date": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "days_overdue": {
+                                                                                "type": [
+                                                                                    "integer",
+                                                                                    "null"
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "total": {
+                                                                    "type": "number"
+                                                                }
+                                                            }
+                                                        },
+                                                        "31_60": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "label",
+                                                                "invoices",
+                                                                "total"
+                                                            ],
+                                                            "properties": {
+                                                                "label": {
+                                                                    "type": "string"
+                                                                },
+                                                                "invoices": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "type": "object",
+                                                                        "required": [
+                                                                            "reference",
+                                                                            "amount",
+                                                                            "currency",
+                                                                            "status",
+                                                                            "due_date",
+                                                                            "days_overdue"
+                                                                        ],
+                                                                        "properties": {
+                                                                            "reference": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "amount": {
+                                                                                "type": "number"
+                                                                            },
+                                                                            "currency": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "status": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "due_date": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "days_overdue": {
+                                                                                "type": [
+                                                                                    "integer",
+                                                                                    "null"
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "total": {
+                                                                    "type": "number"
+                                                                }
+                                                            }
+                                                        },
+                                                        "61_90": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "label",
+                                                                "invoices",
+                                                                "total"
+                                                            ],
+                                                            "properties": {
+                                                                "label": {
+                                                                    "type": "string"
+                                                                },
+                                                                "invoices": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "type": "object",
+                                                                        "required": [
+                                                                            "reference",
+                                                                            "amount",
+                                                                            "currency",
+                                                                            "status",
+                                                                            "due_date",
+                                                                            "days_overdue"
+                                                                        ],
+                                                                        "properties": {
+                                                                            "reference": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "amount": {
+                                                                                "type": "number"
+                                                                            },
+                                                                            "currency": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "status": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "due_date": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "days_overdue": {
+                                                                                "type": [
+                                                                                    "integer",
+                                                                                    "null"
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "total": {
+                                                                    "type": "number"
+                                                                }
+                                                            }
+                                                        },
+                                                        "over_90": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "label",
+                                                                "invoices",
+                                                                "total"
+                                                            ],
+                                                            "properties": {
+                                                                "label": {
+                                                                    "type": "string"
+                                                                },
+                                                                "invoices": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "type": "object",
+                                                                        "required": [
+                                                                            "reference",
+                                                                            "amount",
+                                                                            "currency",
+                                                                            "status",
+                                                                            "due_date",
+                                                                            "days_overdue"
+                                                                        ],
+                                                                        "properties": {
+                                                                            "reference": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "amount": {
+                                                                                "type": "number"
+                                                                            },
+                                                                            "currency": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "status": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "due_date": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "days_overdue": {
+                                                                                "type": [
+                                                                                    "integer",
+                                                                                    "null"
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "total": {
+                                                                    "type": "number"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "total_outstanding": {
+                                                    "type": "number"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -101496,10 +102099,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -101665,7 +102265,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns the selected year of monthly cash-in, outflow, net cash and cumulative cash projections.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -101677,10 +102277,58 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "year",
+                                                "months",
+                                                "cumulative"
+                                            ],
+                                            "properties": {
+                                                "year": {
+                                                    "type": "integer"
+                                                },
+                                                "months": {
+                                                    "type": "object",
+                                                    "additionalProperties": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "month",
+                                                            "cash_in",
+                                                            "cash_out_exp",
+                                                            "cash_out_pay",
+                                                            "cash_out",
+                                                            "net_cash",
+                                                            "cumulative"
+                                                        ],
+                                                        "properties": {
+                                                            "month": {
+                                                                "type": "string"
+                                                            },
+                                                            "cash_in": {
+                                                                "type": "number"
+                                                            },
+                                                            "cash_out_exp": {
+                                                                "type": "number"
+                                                            },
+                                                            "cash_out_pay": {
+                                                                "type": "number"
+                                                            },
+                                                            "cash_out": {
+                                                                "type": "number"
+                                                            },
+                                                            "net_cash": {
+                                                                "type": "number"
+                                                            },
+                                                            "cumulative": {
+                                                                "type": "number"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "cumulative": {
+                                                    "type": "number"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -101692,10 +102340,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -101861,7 +102506,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns budget allocations and approved or paid expense actuals by budget category for the selected year.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -101873,10 +102518,64 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "year",
+                                                "items"
+                                            ],
+                                            "properties": {
+                                                "year": {
+                                                    "type": "integer"
+                                                },
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "category",
+                                                            "department",
+                                                            "currency",
+                                                            "allocated_amount",
+                                                            "actual_spent",
+                                                            "variance",
+                                                            "utilization"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "category": {
+                                                                "type": "string"
+                                                            },
+                                                            "department": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "currency": {
+                                                                "type": "string"
+                                                            },
+                                                            "allocated_amount": {
+                                                                "type": "number"
+                                                            },
+                                                            "actual_spent": {
+                                                                "type": "number"
+                                                            },
+                                                            "variance": {
+                                                                "type": "number"
+                                                            },
+                                                            "utilization": {
+                                                                "type": [
+                                                                    "number",
+                                                                    "null"
+                                                                ]
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -101888,10 +102587,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -102057,7 +102753,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns completed payroll runs and aggregate payroll headcount and totals for the selected year.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -102069,10 +102765,62 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "year",
+                                                "runs",
+                                                "total_staff",
+                                                "total_payroll_net"
+                                            ],
+                                            "properties": {
+                                                "year": {
+                                                    "type": "integer"
+                                                },
+                                                "runs": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "reference",
+                                                            "period",
+                                                            "headcount",
+                                                            "gross",
+                                                            "net",
+                                                            "avg_net",
+                                                            "currency"
+                                                        ],
+                                                        "properties": {
+                                                            "reference": {
+                                                                "type": "string"
+                                                            },
+                                                            "period": {
+                                                                "type": "string"
+                                                            },
+                                                            "headcount": {
+                                                                "type": "integer"
+                                                            },
+                                                            "gross": {
+                                                                "type": "number"
+                                                            },
+                                                            "net": {
+                                                                "type": "number"
+                                                            },
+                                                            "avg_net": {
+                                                                "type": "number"
+                                                            },
+                                                            "currency": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "total_staff": {
+                                                    "type": "integer"
+                                                },
+                                                "total_payroll_net": {
+                                                    "type": "number"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -102084,10 +102832,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -102253,7 +102998,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns monthly paid revenue, approved or paid expenses, completed payroll and net totals for the selected year.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -102265,10 +103010,70 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "year",
+                                                "months",
+                                                "total_revenue",
+                                                "total_expenses",
+                                                "total_payroll",
+                                                "total_costs",
+                                                "net"
+                                            ],
+                                            "properties": {
+                                                "year": {
+                                                    "type": "integer"
+                                                },
+                                                "months": {
+                                                    "type": "object",
+                                                    "additionalProperties": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "month",
+                                                            "revenue",
+                                                            "expenses",
+                                                            "payroll",
+                                                            "total_costs",
+                                                            "net"
+                                                        ],
+                                                        "properties": {
+                                                            "month": {
+                                                                "type": "string"
+                                                            },
+                                                            "revenue": {
+                                                                "type": "number"
+                                                            },
+                                                            "expenses": {
+                                                                "type": "number"
+                                                            },
+                                                            "payroll": {
+                                                                "type": "number"
+                                                            },
+                                                            "total_costs": {
+                                                                "type": "number"
+                                                            },
+                                                            "net": {
+                                                                "type": "number"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "total_revenue": {
+                                                    "type": "number"
+                                                },
+                                                "total_expenses": {
+                                                    "type": "number"
+                                                },
+                                                "total_payroll": {
+                                                    "type": "number"
+                                                },
+                                                "total_costs": {
+                                                    "type": "number"
+                                                },
+                                                "net": {
+                                                    "type": "number"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -102280,10 +103085,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -102437,7 +103239,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns current-month recognized revenue, outstanding invoices, pending expenses and overdue payable count.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -102449,10 +103251,27 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "revenue_this_month",
+                                                "outstanding_invoices",
+                                                "pending_expenses",
+                                                "overdue_payables"
+                                            ],
+                                            "properties": {
+                                                "revenue_this_month": {
+                                                    "type": "number"
+                                                },
+                                                "outstanding_invoices": {
+                                                    "type": "number"
+                                                },
+                                                "pending_expenses": {
+                                                    "type": "integer"
+                                                },
+                                                "overdue_payables": {
+                                                    "type": "integer"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -102464,10 +103283,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -156266,7 +157082,7 @@
                                 "example": {
                                     "data": {
                                         "name": "OPES Health Systems API",
-                                        "api_version": "0.120.0",
+                                        "api_version": "0.121.0",
                                         "openapi_version": "3.1.1",
                                         "authentication": {
                                             "machine": "OAuth 2.0 client credentials with approved scopes",
@@ -156490,7 +157306,7 @@
                                 "example": {
                                     "data": {
                                         "status": "responding",
-                                        "api_version": "0.120.0",
+                                        "api_version": "0.121.0",
                                         "checked_at": "2026-11-01T12:00:00+00:00"
                                     },
                                     "meta": {
@@ -156694,6 +157510,11 @@
                                 "example": {
                                     "data": {
                                         "items": [
+                                            {
+                                                "version": "0.121.0",
+                                                "released_at": "2026-11-06",
+                                                "summary": "Added typed finance aging, cash-flow, budget variance, payroll headcount, profit-and-loss, and overview report responses."
+                                            },
                                             {
                                                 "version": "0.120.0",
                                                 "released_at": "2026-11-06",
@@ -157082,7 +157903,7 @@
                                 },
                                 "example": {
                                     "data": {
-                                        "api_version": "0.120.0",
+                                        "api_version": "0.121.0",
                                         "locale": "en",
                                         "items": [
                                             {

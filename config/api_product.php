@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version' => '0.120.0',
+    'version' => '0.121.0',
     'products' => [
         [
             'id' => 'public-enquiries',
@@ -93,6 +93,11 @@ return [
         ],
     ],
     'changelog' => [
+        [
+            'version' => '0.121.0',
+            'released_at' => '2026-11-06',
+            'summary' => 'Added typed finance aging, cash-flow, budget variance, payroll headcount, profit-and-loss, and overview report responses.',
+        ],
         [
             'version' => '0.120.0',
             'released_at' => '2026-11-06',

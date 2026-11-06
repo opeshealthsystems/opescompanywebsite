@@ -181,6 +181,48 @@
   },
   {
     "method": "GET",
+    "path": "/finance/reports/accounts-payable-aging",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing supplier-bill aging buckets and totals from AdminFinanceReportQueries. No calculations, response bytes, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/finance/reports/accounts-receivable-aging",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing invoice aging buckets and totals from AdminFinanceReportQueries. No calculations, response bytes, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/finance/reports/cash-flow",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing monthly cash-flow aggregates from AdminFinanceReportQueries. No calculations, request shape, authorization or response bytes change."
+  },
+  {
+    "method": "GET",
+    "path": "/finance/reports/profit-and-loss",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing monthly profit-and-loss aggregates from AdminFinanceReportQueries. No calculations, request shape, authorization or response bytes change."
+  },
+  {
+    "method": "GET",
+    "path": "/finance/reports/budget-vs-actual",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing budget and expense variance projection from AdminFinanceReportQueries. No calculations, request shape, authorization or response bytes change."
+  },
+  {
+    "method": "GET",
+    "path": "/finance/reports/payroll-headcount",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing completed payroll run and aggregate staff counts from AdminFinanceReportQueries. No calculations, request shape, authorization or response bytes change."
+  },
+  {
+    "method": "GET",
+    "path": "/finance/reports/overview",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing finance overview aggregates from AdminFinanceReportQueries. No calculations, request shape, authorization or response bytes change."
+  },
+  {
+    "method": "GET",
     "path": "/customer/tickets",
     "allow_response_schema_refinement": true,
     "reason": "Documents paginated tickets belonging to the authenticated customer from CustomerTicketQueries and ApiWorkflowSerializer. No response bytes, request shape, authorization or status behavior changes."
