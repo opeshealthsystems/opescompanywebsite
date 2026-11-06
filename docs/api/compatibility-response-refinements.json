@@ -79,6 +79,12 @@
   },
   {
     "method": "GET",
+    "path": "/customer/service-requests/options",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing service-request type labels returned by CustomerServiceRequestQueries from ServiceRequest::typeOptions. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
     "path": "/customer/profile",
     "allow_response_schema_refinement": true,
     "reason": "Documents the authenticated customer's own account and facility-profile fields from CustomerProfileQueries and ApiWorkflowSerializer. No runtime behavior changes."

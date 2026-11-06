@@ -1258,6 +1258,14 @@ $customerProfileResponse = $successEnvelope(['type' => 'object', 'required' => [
 $customerProfileShow = &$spec['paths']['/customer/profile']['get'];
 $customerProfileShow['responses']['200']['content']['application/json']['schema'] = $customerProfileResponse;
 unset($customerProfileShow);
+$serviceRequestOptions = &$spec['paths']['/customer/service-requests/options']['get'];
+$serviceRequestOptions['responses']['200']['description'] = 'Returns the service-request types currently accepted by the customer portal.';
+$serviceRequestOptions['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['type_options'], 'properties' => [
+    'type_options' => ['type' => 'object', 'required' => ['installation', 'maintenance', 'training', 'other'], 'additionalProperties' => false, 'properties' => [
+        'installation' => ['type' => 'string'], 'maintenance' => ['type' => 'string'], 'training' => ['type' => 'string'], 'other' => ['type' => 'string'],
+    ]],
+]], 'customer.servicerequestcontroller.create');
+unset($serviceRequestOptions);
 $serviceRequestSchema = ['type' => 'object', 'required' => ['id', 'reference_number', 'customer_id', 'type', 'product_slug', 'description', 'preferred_date', 'preferred_time', 'location', 'status', 'assigned_technician_id', 'confirmed_date', 'confirmed_time', 'created_at', 'updated_at'], 'properties' => [
     'id' => ['type' => 'integer'], 'reference_number' => ['type' => 'string'], 'customer_id' => ['type' => 'integer'],
     'type' => ['type' => 'string', 'enum' => ['installation', 'maintenance', 'training', 'other']], 'product_slug' => ['type' => ['string', 'null']],

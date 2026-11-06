@@ -12775,7 +12775,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns the service-request types currently accepted by the customer portal.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -12787,10 +12787,36 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "type_options"
+                                            ],
+                                            "properties": {
+                                                "type_options": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "installation",
+                                                        "maintenance",
+                                                        "training",
+                                                        "other"
+                                                    ],
+                                                    "additionalProperties": false,
+                                                    "properties": {
+                                                        "installation": {
+                                                            "type": "string"
+                                                        },
+                                                        "maintenance": {
+                                                            "type": "string"
+                                                        },
+                                                        "training": {
+                                                            "type": "string"
+                                                        },
+                                                        "other": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -12802,10 +12828,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },

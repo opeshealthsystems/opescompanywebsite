@@ -1,6 +1,9 @@
+## SDK 0.123.0 — customer service-request form options (6 November 2026)
+
+Types the existing customer service-request options response so clients can render installation, maintenance, training and other choices from the platform contract. This is a schema-only refinement; response bytes and authorization are unchanged. OpenAPI remains 0.118.0. The package remains a private downloadable preview and is not published to npm. Archive size is 47299 bytes; SHA-256 is `1b221d8013a03120227dc53bf0722b3ec22b0026761c617bc14aee1c269a8118`.
 ## SDK 0.122.0 — customer account and service-request contracts (6 November 2026)
 
-Adds typed customer account/facility-profile reads and owner-scoped service-request list/detail flows. Creating a service request now returns the customer-safe created record and reference while preserving the existing API status, locale field, and acknowledgement message; the browser form redirect stays intact. Internal admin notes are excluded. OpenAPI remains 0.118.0. The package is a private downloadable preview, not published to npm; This is a private downloadable preview, not published to npm. Archive size is 47261 bytes; SHA-256 is `0ef675411cd3dd6514f0844779f5ea41604f8bd34b0cd25e7362d01cfc60b651`.
+Adds typed customer account/facility-profile reads and owner-scoped service-request list/detail flows. Creating a service request now returns the customer-safe created record and reference while preserving the existing API status, locale field, and acknowledgement message; the browser form redirect stays intact. Internal admin notes are excluded. OpenAPI remains 0.118.0. The package is a private downloadable preview, not published to npm; Archive size is 47261 bytes; SHA-256 is `0ef675411cd3dd6514f0844779f5ea41604f8bd34b0cd25e7362d01cfc60b651`.
 
 ## SDK 0.121.0 — typed practitioner exam workflows (6 November 2026)
 
@@ -419,3 +422,4 @@ Aligned the downloadable Node preview with OpenAPI 0.118.0. The public `GET /api
 ## SDK 0.118.0 — response-schema coverage and caller result overrides (6 November 2026)
 
 Added `report_response_schema_coverage.py` and a CI floor so OpenAPI success-schema detail cannot silently regress. The current contract has field-specific data schemas for 46 operations, generic object/array response shapes for 609, one no-content operation, and no missing success schemas. The generated SDK preserves those distinctions; it does not invent resource fields. Callers may provide a reviewed response type as a generic override when an existing API schema is broader than their integration needs. This SDK-only release does not change OpenAPI `0.118.0` or its wire contract. The 46,382-byte archive SHA-256 is `ce4e12d84d20ec32e01ad356a46cedc22964b48055b9f01cfd55422b9ec71910`.
+SDK 0.123.0 archive: 47299 bytes, SHA-256 `1b221d8013a03120227dc53bf0722b3ec22b0026761c617bc14aee1c269a8118`. It carries all 656 operation IDs and includes typed service-request form options.
