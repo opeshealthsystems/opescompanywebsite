@@ -1,3 +1,7 @@
+## SDK 0.155.0 — practitioner learning progress (6 November 2026)
+
+Types practitioner course-enrollment results and lesson-completion progress, including completed/total lesson counts, progress percentage, next lesson, and bounded certificate summary. The shared command handlers persist these API outcomes, serialize repeated progress safely, and keep browser redirect behavior on the web transport. OpenAPI is 0.142.0. This downloadable preview remains unpublished to npm. Archive size is 52987 bytes; SHA-256 is `e414caf74077408d8031683590d6131bd6ae9c9d71b4472975f6e871e72d02c5`.
+
 ## SDK 0.154.0 — administrator course management (6 November 2026)
 
 Types administrator course and lesson list/detail responses and create/update/delete outcomes, including enrollment counts, lesson content, pagination and reference-only command results. Corrects course and lesson creation to their actual HTTP 201 responses. Existing role/scope authorization and guards that retain learner progress and assessment history are unchanged. OpenAPI is 0.141.0. This downloadable preview remains unpublished to npm. Archive size is 52839 bytes; SHA-256 is `60418e2bf69b88f3bdc569b7cd06887a6eddb039bcc8fcf3a86f6400f5b68950`.

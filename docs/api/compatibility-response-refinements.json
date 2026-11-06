@@ -1,5 +1,17 @@
 [
   {
+    "method": "POST",
+    "path": "/practitioner/courses/{course}/enroll",
+    "allow_response_schema_refinement": true,
+    "reason": "Replaces the web-navigation parameter payload with bounded practitioner enrollment or learning progress data from the existing shared course workflow."
+  },
+  {
+    "method": "POST",
+    "path": "/practitioner/courses/{course}/lessons/{lesson}/done",
+    "allow_response_schema_refinement": true,
+    "reason": "Replaces the web-navigation parameter payload with bounded practitioner enrollment or learning progress data from the existing shared course workflow."
+  },
+  {
     "method": "GET",
     "path": "/learning/courses",
     "allow_response_schema_refinement": true,

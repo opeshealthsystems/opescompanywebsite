@@ -1210,6 +1210,51 @@ class BusinessApiTest extends TestCase
         $this->getJson('/api/v1/learning/courses')->assertUnauthorized();
     }
 
+    public function test_practitioner_course_api_returns_enrollment_progress_and_certificate_outcomes(): void
+    {
+        Role::findOrCreate('practitioner', 'web');
+        $practitioner = $this->user('practitioner');
+        $course = \App\Models\Course::create(['title' => 'Fictional learning course', 'slug' => 'fictional-learning-course', 'level' => 'beginner', 'is_active' => true]);
+        $firstLesson = \App\Models\CourseLesson::create(['course_id' => $course->id, 'title' => 'Lesson one', 'sort_order' => 1]);
+        $secondLesson = \App\Models\CourseLesson::create(['course_id' => $course->id, 'title' => 'Lesson two', 'sort_order' => 2]);
+        $token = $this->access($practitioner, ['practitioner:read', 'practitioner:write']);
+        $headers = ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'practitioner-course-enroll-01'];
+
+        $enrollment = $this->postJson('/api/v1/practitioner/courses/'.$course->slug.'/enroll', [], $headers)->assertOk()
+            ->assertJsonPath('data.enrollment.course_id', $course->id)
+            ->assertJsonPath('data.enrollment.status', 'enrolled')
+            ->assertJsonPath('data.already_enrolled', false);
+        $this->postJson('/api/v1/practitioner/courses/'.$course->slug.'/enroll', [], $headers)->assertExactJson($enrollment->json());
+        $this->postJson('/api/v1/practitioner/courses/'.$course->slug.'/enroll', [], [
+            'Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'practitioner-course-enroll-02',
+        ])->assertOk()->assertJsonPath('data.already_enrolled', true);
+        $this->assertDatabaseCount('course_enrollments', 1);
+
+        $completeLesson = fn ($lesson, $key) => $this->postJson('/api/v1/practitioner/courses/'.$course->slug.'/lessons/'.$lesson->id.'/done', [], [
+            'Authorization' => 'Bearer '.$token, 'Idempotency-Key' => $key,
+        ]);
+        $first = $completeLesson($firstLesson, 'practitioner-lesson-done-01')->assertOk()
+            ->assertJsonPath('data.enrollment.status', 'in_progress')
+            ->assertJsonPath('data.enrollment.completed_lessons', 1)
+            ->assertJsonPath('data.enrollment.total_lessons', 2)
+            ->assertJsonPath('data.enrollment.progress_percent', 50)
+            ->assertJsonPath('data.next_lesson_id', $secondLesson->id);
+        $completeLesson($firstLesson, 'practitioner-lesson-done-01')->assertExactJson($first->json());
+
+        $finished = $completeLesson($secondLesson, 'practitioner-lesson-done-02')->assertOk()
+            ->assertJsonPath('data.enrollment.status', 'completed')
+            ->assertJsonPath('data.enrollment.progress_percent', 100)
+            ->assertJsonPath('data.next_lesson_id', null)
+            ->assertJsonPath('data.certificate.certificate_number', fn ($value) => is_string($value) && $value !== '');
+        $this->assertDatabaseCount('course_certificates', 1);
+        $this->assertDatabaseHas('business_outbox', ['type' => 'learning.course_completed.v1']);
+
+        $completeLesson($secondLesson, 'practitioner-lesson-done-03')->assertOk()
+            ->assertJsonPath('data.enrollment.status', 'completed')
+            ->assertJsonPath('data.certificate.id', $finished->json('data.certificate.id'));
+        $this->assertDatabaseCount('course_certificates', 1);
+    }
+
     public function test_performance_review_state_changes_are_shared_and_idempotent(): void
     {
         $admin = $this->user('admin');

@@ -2805,6 +2805,32 @@ unset($adminLessonDelete);
 $adminAssessmentDelete = &$spec['paths']['/learning/courses/{course}/assessments/{assessment}']['delete'];
 $adminAssessmentDelete['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['deleted_id'], 'properties' => ['deleted_id' => ['type' => 'integer']]], 'admin.learning.assessments.delete');
 unset($adminAssessmentDelete, $adminCourse, $adminCourseLesson, $adminLearningPagination, $adminCourseCommandReference, $adminLessonCommandReference);
+$practitionerEnrollment = ['type' => 'object', 'required' => ['id', 'course_id', 'status', 'enrolled_at', 'completed_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'course_id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'enum' => ['enrolled', 'in_progress', 'completed']],
+    'enrolled_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'completed_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+]];
+$practitionerEnroll = &$spec['paths']['/practitioner/courses/{course}/enroll']['post'];
+$practitionerEnroll['responses']['200']['description'] = 'Returns the practitioner’s course enrollment and whether it already existed; repeating the enrollment command does not create another enrollment.';
+$practitionerEnroll['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['enrollment', 'already_enrolled'], 'properties' => [
+    'enrollment' => $practitionerEnrollment, 'already_enrolled' => ['type' => 'boolean'],
+]], 'practitioner.coursecontroller.enroll');
+unset($practitionerEnroll);
+$practitionerLessonProgress = ['type' => 'object', 'required' => ['lesson_id', 'completed_at'], 'properties' => ['lesson_id' => ['type' => 'integer'], 'completed_at' => ['type' => 'string', 'format' => 'date-time']]];
+$practitionerProgressEnrollment = ['type' => 'object', 'required' => ['id', 'course_id', 'status', 'completed_lessons', 'total_lessons', 'progress_percent', 'completed_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'course_id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'enum' => ['enrolled', 'in_progress', 'completed']],
+    'completed_lessons' => ['type' => 'integer', 'minimum' => 0], 'total_lessons' => ['type' => 'integer', 'minimum' => 0],
+    'progress_percent' => ['type' => 'integer', 'minimum' => 0, 'maximum' => 100], 'completed_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+]];
+$practitionerCertificate = ['type' => ['object', 'null'], 'required' => ['id', 'certificate_number', 'issued_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'certificate_number' => ['type' => 'string'], 'issued_at' => ['type' => 'string', 'format' => 'date-time'],
+]];
+$practitionerLessonDone = &$spec['paths']['/practitioner/courses/{course}/lessons/{lesson}/done']['post'];
+$practitionerLessonDone['responses']['200']['description'] = 'Persists lesson completion and returns course progress, the next uncompleted lesson when available, and the certificate once the course is complete. Repeated completion does not issue duplicate certificates.';
+$practitionerLessonDone['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['lesson_progress', 'enrollment', 'next_lesson_id', 'certificate'], 'properties' => [
+    'lesson_progress' => $practitionerLessonProgress, 'enrollment' => $practitionerProgressEnrollment,
+    'next_lesson_id' => ['type' => ['integer', 'null']], 'certificate' => $practitionerCertificate,
+]], 'practitioner.lessoncontroller.markDone');
+unset($practitionerLessonDone, $practitionerEnrollment, $practitionerLessonProgress, $practitionerProgressEnrollment, $practitionerCertificate);
 $contractPath = $root.'/docs/api/openapi.json';
 $contractTemp = $contractPath.'.tmp';
 if (file_put_contents($contractTemp, json_encode($spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR)."\n") === false || !rename($contractTemp, $contractPath)) {

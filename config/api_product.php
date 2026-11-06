@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version' => '0.141.0',
+    'version' => '0.142.0',
     'products' => [
         [
             'id' => 'public-enquiries',
@@ -93,6 +93,11 @@ return [
         ],
     ],
     'changelog' => [
+        [
+            'version' => '0.142.0',
+            'released_at' => '2026-11-06',
+            'summary' => 'Practitioner course enrollment and lesson completion now return explicit progress and certificate outcomes through the API, with transactional idempotent progress updates.',
+        ],
         [
             'version' => '0.141.0',
             'released_at' => '2026-11-06',
