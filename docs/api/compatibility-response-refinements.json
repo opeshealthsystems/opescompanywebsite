@@ -79,6 +79,24 @@
   },
   {
     "method": "GET",
+    "path": "/customer/surveys",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents currently active customer-facing surveys and the authenticated customer’s submitted survey IDs from CustomerSurveyQueries. No other users’ answers are returned. Runtime behavior, authorization and response bytes are unchanged."
+  },
+  {
+    "method": "GET",
+    "path": "/customer/surveys/{survey}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents an active customer-facing survey, its questions, the customer’s response state and existing text answers from CustomerSurveyQueries. Other users’ answers remain private. Runtime behavior, authorization and response bytes are unchanged."
+  },
+  {
+    "method": "POST",
+    "path": "/customer/surveys/{survey}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing locale and success acknowledgement after customer survey submission. Validation, one-submission rule, idempotency, authorization and status behavior are unchanged."
+  },
+  {
+    "method": "GET",
     "path": "/customer/documents",
     "allow_response_schema_refinement": true,
     "reason": "Documents non-draft documents addressed to the authenticated customer using the existing allowlisted Document resource. Signature tokens, signing IPs and signature payloads remain excluded. No response bytes, request shape, authorization or status behavior changes."

@@ -1493,6 +1493,46 @@ $customerDocumentShow['responses']['200']['content']['application/json']['schema
     'document' => $customerDocumentResource,
 ]], 'customer.documentcontroller.show');
 unset($customerDocumentShow);
+$customerSurveyQuestion = ['type' => 'object', 'required' => ['id', 'survey_id', 'question', 'question_fr', 'type', 'options', 'options_fr', 'is_required', 'sort_order', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'survey_id' => ['type' => 'integer'], 'question' => ['type' => 'string'], 'question_fr' => ['type' => ['string', 'null']],
+    'type' => ['type' => 'string', 'enum' => ['text', 'rating', 'multiple_choice', 'yes_no']],
+    'options' => ['type' => ['array', 'null'], 'items' => ['type' => 'string']], 'options_fr' => ['type' => ['array', 'null'], 'items' => ['type' => 'string']],
+    'is_required' => ['type' => 'boolean'], 'sort_order' => ['type' => 'integer'],
+    'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+]];
+$customerSurveyResource = ['type' => 'object', 'required' => ['id', 'title', 'title_fr', 'description', 'description_fr', 'audience', 'status', 'starts_at', 'ends_at', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'title' => ['type' => 'string'], 'title_fr' => ['type' => ['string', 'null']],
+    'description' => ['type' => ['string', 'null']], 'description_fr' => ['type' => ['string', 'null']],
+    'audience' => ['type' => 'string', 'enum' => ['practitioners', 'customers', 'all']], 'status' => ['type' => 'string', 'enum' => ['active']],
+    'starts_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'ends_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+    'questions' => ['type' => 'array', 'items' => $customerSurveyQuestion],
+]];
+$customerSurveyList = &$spec['paths']['/customer/surveys']['get'];
+$customerSurveyList['responses']['200']['description'] = 'Returns currently active surveys open to customers and the customer’s submitted survey identifiers; other users’ answers are never included.';
+$customerSurveyList['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['surveys', 'my_response_ids'], 'properties' => [
+    'surveys' => ['type' => 'array', 'items' => $customerSurveyResource], 'my_response_ids' => ['type' => 'array', 'items' => ['type' => 'integer']],
+]], 'customer.surveycontroller.index');
+unset($customerSurveyList);
+$customerSurveyShow = &$spec['paths']['/customer/surveys/{survey}']['get'];
+$customerSurveyShow['responses']['200']['description'] = 'Returns an active customer survey, its questions, this customer’s response state and saved text answers only.';
+$customerSurveyShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['survey', 'response', 'existing_answers'], 'properties' => [
+    'survey' => $customerSurveyResource,
+    'response' => ['type' => 'object', 'required' => ['survey_id', 'user_id'], 'properties' => [
+        'id' => ['type' => 'integer'], 'survey_id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'],
+        'submitted_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'created_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'updated_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    ]],
+    'existing_answers' => ['type' => 'object', 'additionalProperties' => ['type' => ['string', 'null']]],
+]], 'customer.surveycontroller.show');
+unset($customerSurveyShow);
+$customerSurveySubmit = &$spec['paths']['/customer/surveys/{survey}']['post'];
+$customerSurveySubmit['responses']['200']['description'] = 'Returns the locale and success acknowledgement after submitting the authenticated customer’s survey answers.';
+$customerSurveySubmit['responses']['200']['content']['application/json']['schema'] = ['type' => 'object', 'required' => ['data', 'meta', 'messages'], 'properties' => [
+    'data' => ['type' => 'object', 'required' => ['locale'], 'properties' => ['locale' => ['type' => 'string', 'enum' => ['en', 'fr']]]],
+    'meta' => ['type' => 'object', 'required' => ['operation'], 'properties' => ['operation' => ['type' => 'string', 'const' => 'customer.surveycontroller.submit']]],
+    'messages' => ['type' => 'object', 'required' => ['success'], 'properties' => ['success' => ['type' => 'string']]],
+]];
+unset($customerSurveySubmit);
 $customerDashboard = &$spec['paths']['/customer/dashboard']['get'];
 $dashboardTicket = ['type' => 'object', 'required' => ['id', 'user_id', 'assigned_to', 'subject', 'description', 'type', 'status', 'priority', 'resolution', 'resolved_at', 'closed_at', 'tester_assignment_id', 'sla_rule_id', 'sla_response_due_at', 'sla_resolution_due_at', 'created_at', 'updated_at'], 'properties' => [
     'id' => ['type' => 'integer'], 'user_id' => ['type' => ['integer', 'null']], 'assigned_to' => ['type' => ['integer', 'null']],
