@@ -2579,6 +2579,81 @@ foreach ($spec['paths'] as &$referencePath) {
     unset($referenceOperation);
 }
 unset($referencePath, $adminReferenceData, $referenceItems, $referenceItem, $referenceString, $referenceInteger);
+$accountantPagination = ['type' => 'object', 'required' => ['page', 'per_page', 'total', 'last_page'], 'properties' => [
+    'page' => ['type' => 'integer', 'minimum' => 1], 'per_page' => ['type' => 'integer', 'minimum' => 1],
+    'total' => ['type' => 'integer', 'minimum' => 0], 'last_page' => ['type' => 'integer', 'minimum' => 1],
+]];
+$accountantExpense = ['type' => 'object', 'required' => ['id', 'reference', 'title', 'category', 'amount', 'currency', 'expense_date', 'status', 'submitted_by', 'approved_by', 'approved_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'reference' => ['type' => 'string'], 'title' => ['type' => 'string'],
+    'description' => ['type' => ['string', 'null']], 'category' => ['type' => 'string', 'enum' => ['payroll', 'rent', 'utilities', 'software', 'hardware', 'travel', 'marketing', 'legal', 'training', 'other']],
+    'amount' => ['type' => 'string', 'pattern' => '^-?[0-9]+\\.[0-9]{2}$'], 'currency' => ['type' => 'string'], 'vendor' => ['type' => ['string', 'null']],
+    'expense_date' => ['type' => 'string', 'format' => 'date'], 'status' => ['type' => 'string', 'enum' => ['pending', 'approved', 'rejected', 'paid']],
+    'submitted_by' => ['type' => ['integer', 'null']], 'approved_by' => ['type' => ['integer', 'null']],
+    'approved_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'notes' => ['type' => ['string', 'null']],
+    'created_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'updated_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+]];
+$accountantExpenseIndex = &$spec['paths']['/accountant/expenses']['get'];
+$accountantExpenseIndex['responses']['200']['description'] = 'Returns paginated accountant expense records with bounded submitter and approver identifiers.';
+$accountantExpenseIndex['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['expenses'], 'properties' => [
+    'expenses' => ['type' => 'object', 'required' => ['items', 'meta'], 'properties' => [
+        'items' => ['type' => 'array', 'items' => $accountantExpense], 'meta' => $accountantPagination,
+    ]],
+]], 'accountant.expensecontroller.index');
+unset($accountantExpenseIndex);
+$accountantPayrollRun = ['type' => 'object', 'required' => ['id', 'reference', 'period_start', 'period_end', 'status', 'total_gross', 'total_net', 'currency', 'processed_by', 'completed_at', 'processor'], 'properties' => [
+    'id' => ['type' => 'integer'], 'reference' => ['type' => 'string'], 'period_start' => ['type' => 'string', 'format' => 'date'],
+    'period_end' => ['type' => 'string', 'format' => 'date'], 'status' => ['type' => 'string', 'enum' => ['draft', 'processing', 'completed', 'cancelled']],
+    'total_gross' => ['type' => 'string'], 'total_net' => ['type' => 'string'], 'currency' => ['type' => 'string'],
+    'notes' => ['type' => ['string', 'null']], 'processed_by' => ['type' => ['integer', 'null']], 'completed_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'processor' => ['type' => ['object', 'null'], 'required' => ['id', 'name'], 'properties' => ['id' => ['type' => 'integer'], 'name' => ['type' => 'string']]],
+]];
+$accountantDepartmentTotal = ['type' => 'object', 'required' => ['dept_name', 'total_net', 'total_gross', 'count'], 'properties' => [
+    'dept_name' => ['type' => 'string'], 'total_net' => ['type' => ['string', 'number']], 'total_gross' => ['type' => ['string', 'number']], 'count' => ['type' => 'integer'],
+]];
+$accountantPayrollEntry = ['type' => 'object', 'required' => ['id', 'payroll_run_id', 'user_id', 'gross_salary', 'deductions', 'total_deductions', 'net_salary', 'currency', 'status', 'employee'], 'properties' => [
+    'id' => ['type' => 'integer'], 'payroll_run_id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'],
+    'gross_salary' => ['type' => 'string'], 'deductions' => ['type' => ['array', 'object', 'null']], 'total_deductions' => ['type' => 'string'],
+    'net_salary' => ['type' => 'string'], 'currency' => ['type' => 'string'], 'status' => ['type' => 'string'],
+    'employee' => ['type' => ['object', 'null'], 'required' => ['id', 'name'], 'properties' => ['id' => ['type' => 'integer'], 'name' => ['type' => 'string']]],
+]];
+$accountantPayrollShow = &$spec['paths']['/accountant/payroll/{run}']['get'];
+$accountantPayrollShow['responses']['200']['description'] = 'Returns a payroll run, department totals, and paginated payroll entries with employee id/name summaries.';
+$accountantPayrollShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['run', 'by_dept', 'entries'], 'properties' => [
+    'run' => $accountantPayrollRun, 'by_dept' => ['type' => 'array', 'items' => $accountantDepartmentTotal],
+    'entries' => ['type' => 'object', 'required' => ['items', 'meta'], 'properties' => ['items' => ['type' => 'array', 'items' => $accountantPayrollEntry], 'meta' => $accountantPagination]],
+]], 'accountant.payrollcontroller.show');
+unset($accountantPayrollShow, $accountantPagination, $accountantExpense, $accountantPayrollRun, $accountantDepartmentTotal, $accountantPayrollEntry);
+foreach ([
+    ['/accountant/expenses/{id}/approve', 'approve', 'accountant.expensecontroller.approve', 'approved'],
+    ['/accountant/expenses/{id}/reject', 'reject', 'accountant.expensecontroller.reject', 'rejected'],
+] as [$path, $action, $operation, $status]) {
+    $entry = &$spec['paths'][$path]['post'];
+    $entry['responses']['200']['description'] = 'Returns the accountant expense identifier and resulting status. Only pending expenses transition; repeating the same decision is idempotent.';
+    $entry['responses']['200']['content']['application/json']['schema'] = $successEnvelope([
+        'type' => 'object', 'required' => ['id', 'status'], 'properties' => [
+            'id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => $status],
+        ],
+    ], $operation);
+    unset($entry);
+}
+$accountantInvoicePaid = &$spec['paths']['/accountant/invoices/{invoice}/mark-paid']['post'];
+$accountantInvoicePaid['responses']['200']['description'] = 'Returns the invoice identifier and resulting status after the authorized accountant records the outstanding balance as received.';
+$accountantInvoicePaid['responses']['200']['content']['application/json']['schema'] = $successEnvelope([
+    'type' => 'object', 'required' => ['id', 'status'], 'properties' => [
+        'id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'paid'],
+    ],
+], 'accountant.invoicecontroller.markPaid');
+unset($accountantInvoicePaid);
+$accountantProfileUpdate = &$spec['paths']['/accountant/profile']['patch'];
+$accountantProfileUpdate['responses']['200']['description'] = 'Returns the authenticated accountant’s bounded profile projection after update.';
+$accountantProfileUpdate['responses']['200']['content']['application/json']['schema'] = $successEnvelope([
+    'type' => 'object', 'required' => ['user_id', 'name', 'accounting_specialization', 'certifications', 'bio'], 'properties' => [
+        'user_id' => ['type' => 'integer'], 'name' => ['type' => 'string'],
+        'accounting_specialization' => ['type' => 'string', 'enum' => ['general', 'tax', 'payroll', 'audit']],
+        'certifications' => ['type' => ['string', 'null']], 'bio' => ['type' => ['string', 'null']],
+    ],
+], 'accountant.profilecontroller.update');
+unset($accountantProfileUpdate);
 $contractPath = $root.'/docs/api/openapi.json';
 $contractTemp = $contractPath.'.tmp';
 if (file_put_contents($contractTemp, json_encode($spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR)."\n") === false || !rename($contractTemp, $contractPath)) {

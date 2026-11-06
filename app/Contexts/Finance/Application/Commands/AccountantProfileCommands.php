@@ -10,7 +10,9 @@ class AccountantProfileCommands extends \App\Contexts\Shared\Application\Workflo
         $validated = $request->validate(['name' => 'required|string|max:100', 'phone' => 'nullable|string|max:30', 'accounting_specialization' => 'nullable|string|in:general,tax,payroll,audit', 'certifications' => 'nullable|string|max:1000', 'bio' => 'nullable|string|max:2000']);
         $user = $request->user();
         $user->update(['name' => $validated['name'], 'phone' => $validated['phone'] ?? null]);
-        \App\Models\AccountantProfile::updateOrCreate(['user_id' => $user->id], ['accounting_specialization' => $validated['accounting_specialization'] ?? 'general', 'certifications' => $validated['certifications'] ?? null, 'bio' => $validated['bio'] ?? null]);
-        return \App\Contexts\Shared\Application\WorkflowResult::next('accountant_profilecontroller_update_1', ['locale' => $request->locale()])->with('success', 'Profile updated successfully.');
+        $profile = \App\Models\AccountantProfile::updateOrCreate(['user_id' => $user->id], ['accounting_specialization' => $validated['accounting_specialization'] ?? 'general', 'certifications' => $validated['certifications'] ?? null, 'bio' => $validated['bio'] ?? null]);
+        $result = ['user_id' => $user->id, 'name' => $user->name, 'accounting_specialization' => $profile->accounting_specialization,
+            'certifications' => $profile->certifications, 'bio' => $profile->bio];
+        return \App\Contexts\Shared\Application\WorkflowResult::next('accountant_profilecontroller_update_1', $request->api ? $result : ['locale' => $request->locale()])->with('success', 'Profile updated successfully.');
     }
 }

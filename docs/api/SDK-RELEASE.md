@@ -1,3 +1,11 @@
+## SDK 0.151.0 — accountant finance reads (6 November 2026)
+
+Types the accountant expense register and payroll-run detail, including pagination, department totals and bounded employee summaries. Payroll detail now maps grouped query rows and loaded employees into an explicit API response projection. Salary values retain decimal string precision. OpenAPI is 0.138.0. This downloadable preview remains unpublished to npm. Archive size is 52161 bytes; SHA-256 is `db48348086f52ad196841c3d2eff11b327e6f8e91276c8146bd6d675dab77a6d`.
+
+## SDK 0.150.0 — accountant finance workflows (6 November 2026)
+
+Types accountant expense approval/rejection, invoice payment and self-profile update responses. Expense decisions now use transactional pending-only state transitions, treat repeated matching decisions idempotently and append domain events to the outbox. Web flows retain their redirect behavior. OpenAPI is 0.137.0. This downloadable preview remains unpublished to npm. Archive size is 51851 bytes; SHA-256 is `267ed595e5f85b697b579bc5dd6f2e87cd3b7387795028e24968c7ee320480fb`.
+
 ## SDK 0.149.0 — payroll commands (6 November 2026)
 
 Types payroll-run create/update/delete and entry-generation/completion results plus individual and batch entry-payment acknowledgements. Payroll records expose their declared decimal, period, state and processor fields. Completion reports notification queue counts without claiming inbox delivery. OpenAPI is 0.136.0. This downloadable preview remains unpublished to npm. Archive size is 51676 bytes; SHA-256 is `250a1c09806e0095c7d0f92a16b4dc9f14a9a2212e0e9658c4ab6bf9aa7293ed`.

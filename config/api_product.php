@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version' => '0.136.0',
+    'version' => '0.138.0',
     'products' => [
         [
             'id' => 'public-enquiries',
@@ -94,22 +94,32 @@ return [
     ],
     'changelog' => [
         [
+            'version' => '0.138.0',
+            'released_at' => '2026-11-06',
+            'summary' => 'Added a typed accountant expense register and payroll detail contract, with an explicit API projection for payroll department totals and employee summaries.',
+        ],
+        [
+            'version' => '0.137.0',
+            'released_at' => '2026-11-06',
+            'summary' => 'Added typed accountant expense decisions, invoice payment, and self-profile update responses; expense decisions are transactional and emit domain events.',
+        ],
+        [
             'version' => '0.136.0',
             'released_at' => '2026-11-06',
             'summary' => 'Added typed payroll-run creation, editing, deletion, generation, completion, and entry-payment responses.',
         ],
         [
-            'version' => '0.136.0',
+            'version' => '0.135.0',
             'released_at' => '2026-11-06',
             'summary' => 'Added typed credit-note register and draft create/update/delete plus issue and void outcomes.',
         ],
         [
-            'version' => '0.136.0',
+            'version' => '0.134.0',
             'released_at' => '2026-11-06',
             'summary' => 'Added typed purchase-order and supplier-bill registers and lifecycle outcomes with bounded vendor and requester summaries.',
         ],
         [
-            'version' => '0.136.0',
+            'version' => '0.133.0',
             'released_at' => '2026-11-06',
             'summary' => 'Added typed expense register and expense commands plus budget list/detail/commands, with a bounded submitter projection and actual 201 creation responses.',
         ],

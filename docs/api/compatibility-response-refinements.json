@@ -1,6 +1,42 @@
 [
   {
     "method": "GET",
+    "path": "/accountant/expenses",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing paginated expense projection and bounded submitter/approver identifiers returned by the accountant expense query."
+  },
+  {
+    "method": "GET",
+    "path": "/accountant/payroll/{run}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the bounded accountant payroll run, department totals and paginated employee salary entries from an explicit API projection."
+  },
+  {
+    "method": "POST",
+    "path": "/accountant/expenses/{id}/approve",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing accountant approval result and resulting expense state; pending-only transitions are transactional and repeated approvals are idempotent."
+  },
+  {
+    "method": "POST",
+    "path": "/accountant/expenses/{id}/reject",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing accountant rejection result and resulting expense state; pending-only transitions are transactional and repeated rejections are idempotent."
+  },
+  {
+    "method": "POST",
+    "path": "/accountant/invoices/{invoice}/mark-paid",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing invoice identifier and paid status returned after an authorized accountant records the outstanding balance."
+  },
+  {
+    "method": "PATCH",
+    "path": "/accountant/profile",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the bounded self-profile projection returned by the existing accountant profile update workflow."
+  },
+  {
+    "method": "GET",
     "path": "/finance/invoice-templates",
     "allow_response_schema_refinement": true,
     "reason": "Documents the existing recurring-invoice template projection or command acknowledgement from AdminInvoiceTemplateQueries and AdminFinanceCommands; validation and schedule behavior are unchanged."
