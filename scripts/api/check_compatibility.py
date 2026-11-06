@@ -100,6 +100,39 @@ def request_schema_correction_is_additive(before, after):
     return old == new and new_body is not None and (old_body is None or additive(old_body, new_body))
 
 
+def response_schema_refinement_only(before, after):
+    """Allow reviewed OpenAPI response-schema detail without changing runtime operation behavior."""
+    old = shape(before[0], before[1], before[2])
+    new = shape(after[0], after[1], after[2])
+    if old == new:
+        return False
+
+    def without_response_schemas(operation):
+        operation = copy.deepcopy(operation)
+        responses = operation.get("responses", {})
+        for response in responses.values():
+            for media in response.get("content", {}).values():
+                media.pop("schema", None)
+        return operation
+
+    old_responses = old.get("responses", {})
+    new_responses = new.get("responses", {})
+    schema_changed = False
+    if old_responses.keys() != new_responses.keys():
+        return False
+    for status in old_responses:
+        old_content = old_responses[status].get("content", {})
+        new_content = new_responses[status].get("content", {})
+        if old_content.keys() != new_content.keys():
+            return False
+        for media_type in old_content:
+            old_schema = old_content[media_type].get("schema")
+            new_schema = new_content[media_type].get("schema")
+            if old_schema != new_schema:
+                schema_changed = True
+    return schema_changed and without_response_schemas(old) == without_response_schemas(new)
+
+
 def oauth_scope_additions_only(old, new):
     """Allow new named scopes while preserving every released scope and flow."""
     old = copy.deepcopy(old)
@@ -247,12 +280,14 @@ def check(baseline, current, corrections=None):
                     continue
                 if entry and entry.get("allow_additive_request_schema") is True and entry.get("reason") and request_schema_correction_is_additive(before, after):
                     used_corrections.add(key)
+                elif entry and entry.get("allow_response_schema_refinement") is True and entry.get("reason") and response_schema_refinement_only(before, after):
+                    used_corrections.add(key)
                 else:
                     differences.append(f"Changed released operation: {method.upper()} {path}")
     for key in corrections.keys() - used_corrections:
         method, path = key.split(" ", 1)
         if path in baseline.get("paths", {}) and method in baseline["paths"][path]:
-            differences.append(f"Unused or unsafe request-schema correction: {key.upper()}")
+            differences.append(f"Unused or unsafe compatibility correction: {key.upper()}")
     return differences
 
 
@@ -260,7 +295,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("baseline")
     parser.add_argument("current")
-    parser.add_argument("--corrections", action="append", help="JSON list of reviewed additive request-schema corrections")
+    parser.add_argument("--corrections", action="append", help="JSON list of narrowly scoped reviewed compatibility corrections")
     args = parser.parse_args()
     baseline = json.loads(Path(args.baseline).read_text(encoding="utf-8"))
     current = json.loads(Path(args.current).read_text(encoding="utf-8"))

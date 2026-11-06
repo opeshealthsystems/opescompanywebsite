@@ -1,0 +1,20 @@
+[
+  {
+    "method": "GET",
+    "path": "/finance/quotes",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing quote list projection from the Quote model and AdminFinanceRecordQueries, including its already serialized lead, creator and line items. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/customer-profiles",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing allowlisted paginated customer-profile projection from AdminCustomerProfileQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/customer-profiles/{customerProfile}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing customer-profile detail projection and selected customer fields from AdminCustomerProfileQueries. No response bytes, request shape, authorization or status behavior changes."
+  }
+]

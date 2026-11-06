@@ -9,6 +9,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -22,6 +23,7 @@ export const businessOperations = Object.freeze({
             "id"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -36,6 +38,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -49,6 +52,7 @@ export const businessOperations = Object.freeze({
             "id"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -63,6 +67,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -76,6 +81,7 @@ export const businessOperations = Object.freeze({
             "invoice"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -92,6 +98,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -106,6 +113,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -122,6 +130,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -136,6 +145,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -147,6 +157,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -164,6 +175,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -175,6 +187,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -192,6 +205,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -208,6 +222,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -221,6 +236,7 @@ export const businessOperations = Object.freeze({
             "client"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -234,6 +250,7 @@ export const businessOperations = Object.freeze({
             "client"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -247,6 +264,7 @@ export const businessOperations = Object.freeze({
             "client"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -265,6 +283,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -285,6 +304,7 @@ export const businessOperations = Object.freeze({
             "until",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -301,6 +321,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -314,6 +335,7 @@ export const businessOperations = Object.freeze({
             "product"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -325,6 +347,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -342,6 +365,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -358,6 +382,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -371,6 +396,7 @@ export const businessOperations = Object.freeze({
             "product"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -385,6 +411,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -401,6 +428,7 @@ export const businessOperations = Object.freeze({
             "announcement"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -415,6 +443,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -431,6 +460,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -444,6 +474,7 @@ export const businessOperations = Object.freeze({
             "announcement"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -458,6 +489,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -474,6 +506,7 @@ export const businessOperations = Object.freeze({
             "template"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -489,6 +522,7 @@ export const businessOperations = Object.freeze({
             "per_page",
             "is_active"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -505,6 +539,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -518,6 +553,7 @@ export const businessOperations = Object.freeze({
             "template"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -532,6 +568,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -548,6 +585,7 @@ export const businessOperations = Object.freeze({
             "testimonial"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -562,6 +600,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -578,6 +617,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -591,6 +631,7 @@ export const businessOperations = Object.freeze({
             "testimonial"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -607,6 +648,7 @@ export const businessOperations = Object.freeze({
             "article"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -620,6 +662,7 @@ export const businessOperations = Object.freeze({
             "contract"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -631,6 +674,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -647,6 +691,7 @@ export const businessOperations = Object.freeze({
             "contract"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -661,6 +706,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -676,6 +722,7 @@ export const businessOperations = Object.freeze({
             "per_page",
             "auto_renew"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -689,6 +736,7 @@ export const businessOperations = Object.freeze({
             "contract"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -702,6 +750,7 @@ export const businessOperations = Object.freeze({
             "contract"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -716,6 +765,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -732,6 +782,7 @@ export const businessOperations = Object.freeze({
             "deal"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -748,6 +799,7 @@ export const businessOperations = Object.freeze({
             "owner_id",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -762,6 +814,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -778,6 +831,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -791,6 +845,7 @@ export const businessOperations = Object.freeze({
             "deal"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -805,6 +860,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -821,6 +877,7 @@ export const businessOperations = Object.freeze({
             "demoRequest"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -836,6 +893,7 @@ export const businessOperations = Object.freeze({
             "per_page",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -852,6 +910,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -865,6 +924,7 @@ export const businessOperations = Object.freeze({
             "demoRequest"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -879,6 +939,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -895,6 +956,7 @@ export const businessOperations = Object.freeze({
             "search",
             "country"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -911,6 +973,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -924,6 +987,7 @@ export const businessOperations = Object.freeze({
             "customerProfile"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -938,6 +1002,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -952,6 +1017,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -966,6 +1032,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -980,6 +1047,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -994,6 +1062,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1005,6 +1074,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1021,6 +1091,7 @@ export const businessOperations = Object.freeze({
             "document"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1038,6 +1109,7 @@ export const businessOperations = Object.freeze({
             "status",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1051,6 +1123,7 @@ export const businessOperations = Object.freeze({
             "document"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1062,6 +1135,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1078,6 +1152,7 @@ export const businessOperations = Object.freeze({
             "template"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1092,6 +1167,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1108,6 +1184,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1121,6 +1198,7 @@ export const businessOperations = Object.freeze({
             "template"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1137,6 +1215,7 @@ export const businessOperations = Object.freeze({
             "document"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1153,6 +1232,7 @@ export const businessOperations = Object.freeze({
             "document"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1166,6 +1246,7 @@ export const businessOperations = Object.freeze({
             "event"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1187,6 +1268,7 @@ export const businessOperations = Object.freeze({
             "from",
             "to"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1203,6 +1285,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1219,6 +1302,7 @@ export const businessOperations = Object.freeze({
             "status",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1235,6 +1319,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1246,6 +1331,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1262,6 +1348,7 @@ export const businessOperations = Object.freeze({
             "lead"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1279,6 +1366,7 @@ export const businessOperations = Object.freeze({
             "facility_type",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1292,6 +1380,7 @@ export const businessOperations = Object.freeze({
             "lead"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1311,6 +1400,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1324,6 +1414,7 @@ export const businessOperations = Object.freeze({
             "lead"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1344,6 +1435,7 @@ export const businessOperations = Object.freeze({
             "partner_type",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1357,6 +1449,7 @@ export const businessOperations = Object.freeze({
             "partnerApplication"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1375,6 +1468,7 @@ export const businessOperations = Object.freeze({
             "per_page",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1391,6 +1485,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1405,6 +1500,7 @@ export const businessOperations = Object.freeze({
             "member"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1421,6 +1517,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1434,6 +1531,7 @@ export const businessOperations = Object.freeze({
             "partnerApplication"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1454,6 +1552,7 @@ export const businessOperations = Object.freeze({
             "profession",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1470,6 +1569,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1483,6 +1583,7 @@ export const businessOperations = Object.freeze({
             "testerApplication"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1497,6 +1598,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1513,6 +1615,7 @@ export const businessOperations = Object.freeze({
             "budget"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1527,6 +1630,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1543,6 +1647,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1556,6 +1661,7 @@ export const businessOperations = Object.freeze({
             "budget"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1575,6 +1681,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1586,6 +1693,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1602,6 +1710,7 @@ export const businessOperations = Object.freeze({
             "creditNote"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1619,6 +1728,7 @@ export const businessOperations = Object.freeze({
             "invoice_id",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1632,6 +1742,7 @@ export const businessOperations = Object.freeze({
             "creditNote"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1645,6 +1756,7 @@ export const businessOperations = Object.freeze({
             "creditNote"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1661,6 +1773,7 @@ export const businessOperations = Object.freeze({
             "creditNote"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1674,6 +1787,7 @@ export const businessOperations = Object.freeze({
             "expense"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1685,6 +1799,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1702,6 +1817,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1715,6 +1831,7 @@ export const businessOperations = Object.freeze({
             "expense"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1728,6 +1845,7 @@ export const businessOperations = Object.freeze({
             "expense"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1747,6 +1865,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1763,6 +1882,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1774,6 +1894,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1790,6 +1911,7 @@ export const businessOperations = Object.freeze({
             "invoiceTemplate"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1806,6 +1928,7 @@ export const businessOperations = Object.freeze({
             "active",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1822,6 +1945,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1835,6 +1959,7 @@ export const businessOperations = Object.freeze({
             "invoiceTemplate"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1849,6 +1974,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1865,6 +1991,7 @@ export const businessOperations = Object.freeze({
             "invoice"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1881,6 +2008,7 @@ export const businessOperations = Object.freeze({
             "status",
             "customer_id"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1892,6 +2020,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1908,6 +2037,7 @@ export const businessOperations = Object.freeze({
             "invoice"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1921,6 +2051,7 @@ export const businessOperations = Object.freeze({
             "invoice"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1934,6 +2065,7 @@ export const businessOperations = Object.freeze({
             "invoice"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -1947,6 +2079,7 @@ export const businessOperations = Object.freeze({
             "invoice"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1963,6 +2096,7 @@ export const businessOperations = Object.freeze({
             "invoice"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1977,6 +2111,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -1993,6 +2128,7 @@ export const businessOperations = Object.freeze({
             "deductionType"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2007,6 +2143,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2023,6 +2160,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2036,6 +2174,7 @@ export const businessOperations = Object.freeze({
             "deductionType"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -2055,6 +2194,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2068,6 +2208,7 @@ export const businessOperations = Object.freeze({
             "run"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -2085,6 +2226,7 @@ export const businessOperations = Object.freeze({
             "entry"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2098,6 +2240,7 @@ export const businessOperations = Object.freeze({
             "run"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2109,6 +2252,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -2125,6 +2269,7 @@ export const businessOperations = Object.freeze({
             "run"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2138,6 +2283,7 @@ export const businessOperations = Object.freeze({
             "run"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2153,6 +2299,7 @@ export const businessOperations = Object.freeze({
             "per_page",
             "year"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2169,6 +2316,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2182,6 +2330,7 @@ export const businessOperations = Object.freeze({
             "run"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -2201,6 +2350,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2214,6 +2364,7 @@ export const businessOperations = Object.freeze({
             "purchaseOrder"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2225,6 +2376,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -2241,6 +2393,7 @@ export const businessOperations = Object.freeze({
             "purchaseOrder"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2256,6 +2409,7 @@ export const businessOperations = Object.freeze({
             "per_page",
             "vendor_id"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2269,6 +2423,7 @@ export const businessOperations = Object.freeze({
             "purchaseOrder"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2282,6 +2437,7 @@ export const businessOperations = Object.freeze({
             "purchaseOrder"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -2301,6 +2457,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2314,6 +2471,7 @@ export const businessOperations = Object.freeze({
             "quote"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2325,6 +2483,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -2341,6 +2500,7 @@ export const businessOperations = Object.freeze({
             "quote"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2356,6 +2516,7 @@ export const businessOperations = Object.freeze({
             "per_page",
             "lead_id"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2369,6 +2530,7 @@ export const businessOperations = Object.freeze({
             "quote"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2382,6 +2544,7 @@ export const businessOperations = Object.freeze({
             "quote"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -2399,6 +2562,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2413,6 +2577,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2427,6 +2592,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2442,6 +2608,7 @@ export const businessOperations = Object.freeze({
             "per_page",
             "year"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2457,6 +2624,7 @@ export const businessOperations = Object.freeze({
             "per_page",
             "year"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2471,6 +2639,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2486,6 +2655,7 @@ export const businessOperations = Object.freeze({
             "per_page",
             "year"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2501,6 +2671,7 @@ export const businessOperations = Object.freeze({
             "per_page",
             "year"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2517,6 +2688,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2530,6 +2702,7 @@ export const businessOperations = Object.freeze({
             "supplierBill"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2541,6 +2714,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -2557,6 +2731,7 @@ export const businessOperations = Object.freeze({
             "supplierBill"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2572,6 +2747,7 @@ export const businessOperations = Object.freeze({
             "per_page",
             "vendor_id"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2585,6 +2761,7 @@ export const businessOperations = Object.freeze({
             "supplierBill"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2598,6 +2775,7 @@ export const businessOperations = Object.freeze({
             "supplierBill"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -2612,6 +2790,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -2628,6 +2807,7 @@ export const businessOperations = Object.freeze({
             "vendor"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2642,6 +2822,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2658,6 +2839,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2671,6 +2853,7 @@ export const businessOperations = Object.freeze({
             "vendor"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -2688,6 +2871,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2699,6 +2883,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -2715,6 +2900,7 @@ export const businessOperations = Object.freeze({
             "user"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2731,6 +2917,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2748,6 +2935,7 @@ export const businessOperations = Object.freeze({
             "role",
             "is_active"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2761,6 +2949,7 @@ export const businessOperations = Object.freeze({
             "user"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2774,6 +2963,7 @@ export const businessOperations = Object.freeze({
             "user"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -2790,6 +2980,7 @@ export const businessOperations = Object.freeze({
             "course"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -2806,6 +2997,7 @@ export const businessOperations = Object.freeze({
             "assessment"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2822,6 +3014,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2839,6 +3032,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2853,6 +3047,7 @@ export const businessOperations = Object.freeze({
             "assessment"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -2871,6 +3066,7 @@ export const businessOperations = Object.freeze({
             "course_id",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2884,6 +3080,7 @@ export const businessOperations = Object.freeze({
             "course"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -2901,6 +3098,7 @@ export const businessOperations = Object.freeze({
             "lesson"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2917,6 +3115,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2934,6 +3133,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2948,6 +3148,7 @@ export const businessOperations = Object.freeze({
             "lesson"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -2962,6 +3163,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -2977,6 +3179,7 @@ export const businessOperations = Object.freeze({
             "course"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -2993,6 +3196,7 @@ export const businessOperations = Object.freeze({
             "is_active",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3009,6 +3213,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3022,6 +3227,7 @@ export const businessOperations = Object.freeze({
             "course"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3037,6 +3243,7 @@ export const businessOperations = Object.freeze({
             "enrollment"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3054,6 +3261,7 @@ export const businessOperations = Object.freeze({
             "course_id",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3065,6 +3273,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3082,6 +3291,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3095,6 +3305,7 @@ export const businessOperations = Object.freeze({
             "client"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3106,6 +3317,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3122,6 +3334,7 @@ export const businessOperations = Object.freeze({
             "asset"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3137,6 +3350,7 @@ export const businessOperations = Object.freeze({
             "per_page",
             "assigned_to"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3150,6 +3364,7 @@ export const businessOperations = Object.freeze({
             "asset"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3166,6 +3381,7 @@ export const businessOperations = Object.freeze({
             "project"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3183,6 +3399,7 @@ export const businessOperations = Object.freeze({
             "milestone"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3199,6 +3416,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3216,6 +3434,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3230,6 +3449,7 @@ export const businessOperations = Object.freeze({
             "milestone"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3246,6 +3466,7 @@ export const businessOperations = Object.freeze({
             "application"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3262,6 +3483,7 @@ export const businessOperations = Object.freeze({
             "status",
             "program_id"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3275,6 +3497,7 @@ export const businessOperations = Object.freeze({
             "application"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3291,6 +3514,7 @@ export const businessOperations = Object.freeze({
             "application"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3307,6 +3531,7 @@ export const businessOperations = Object.freeze({
             "application"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3326,6 +3551,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3339,6 +3565,7 @@ export const businessOperations = Object.freeze({
             "application"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3358,6 +3585,7 @@ export const businessOperations = Object.freeze({
             "published",
             "application_id"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3371,6 +3599,7 @@ export const businessOperations = Object.freeze({
             "finding"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3387,6 +3616,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3400,6 +3630,7 @@ export const businessOperations = Object.freeze({
             "finding"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3413,6 +3644,7 @@ export const businessOperations = Object.freeze({
             "finding"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3433,6 +3665,7 @@ export const businessOperations = Object.freeze({
             "verified",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3449,6 +3682,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3462,6 +3696,7 @@ export const businessOperations = Object.freeze({
             "profile"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3478,6 +3713,7 @@ export const businessOperations = Object.freeze({
             "profile"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3489,6 +3725,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3510,6 +3747,7 @@ export const businessOperations = Object.freeze({
             "status",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3526,6 +3764,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3539,6 +3778,7 @@ export const businessOperations = Object.freeze({
             "program"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3559,6 +3799,7 @@ export const businessOperations = Object.freeze({
             "category",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3572,6 +3813,7 @@ export const businessOperations = Object.freeze({
             "suggestion"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3588,6 +3830,7 @@ export const businessOperations = Object.freeze({
             "survey"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3605,6 +3848,7 @@ export const businessOperations = Object.freeze({
             "question"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3621,6 +3865,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3638,6 +3883,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3652,6 +3898,7 @@ export const businessOperations = Object.freeze({
             "question"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3668,6 +3915,7 @@ export const businessOperations = Object.freeze({
             "survey"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3681,6 +3929,7 @@ export const businessOperations = Object.freeze({
             "survey"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3692,6 +3941,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3708,6 +3958,7 @@ export const businessOperations = Object.freeze({
             "survey"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3723,6 +3974,7 @@ export const businessOperations = Object.freeze({
             "per_page",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3739,6 +3991,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3752,6 +4005,7 @@ export const businessOperations = Object.freeze({
             "survey"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3766,6 +4020,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3782,6 +4037,7 @@ export const businessOperations = Object.freeze({
             "blogPost"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3798,6 +4054,7 @@ export const businessOperations = Object.freeze({
             "published",
             "category"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3814,6 +4071,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3827,6 +4085,7 @@ export const businessOperations = Object.freeze({
             "blogPost"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3841,6 +4100,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3861,6 +4121,7 @@ export const businessOperations = Object.freeze({
             "featured",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3877,6 +4138,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3890,6 +4152,7 @@ export const businessOperations = Object.freeze({
             "institution"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3903,6 +4166,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3918,6 +4182,7 @@ export const businessOperations = Object.freeze({
             "application"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3931,6 +4196,7 @@ export const businessOperations = Object.freeze({
             "application"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3950,6 +4216,7 @@ export const businessOperations = Object.freeze({
             "job_opening_id",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -3963,6 +4230,7 @@ export const businessOperations = Object.freeze({
             "application"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3979,6 +4247,7 @@ export const businessOperations = Object.freeze({
             "application"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -3995,6 +4264,7 @@ export const businessOperations = Object.freeze({
             "application"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -4011,6 +4281,7 @@ export const businessOperations = Object.freeze({
             "application"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -4030,6 +4301,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4043,6 +4315,7 @@ export const businessOperations = Object.freeze({
             "application"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -4058,6 +4331,7 @@ export const businessOperations = Object.freeze({
             "opening"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4069,6 +4343,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -4085,6 +4360,7 @@ export const businessOperations = Object.freeze({
             "opening"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4100,6 +4376,7 @@ export const businessOperations = Object.freeze({
             "per_page",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4116,6 +4393,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4129,6 +4407,7 @@ export const businessOperations = Object.freeze({
             "opening"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -4146,6 +4425,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4160,6 +4440,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4176,6 +4457,7 @@ export const businessOperations = Object.freeze({
             "program_id",
             "status"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4190,6 +4472,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4204,6 +4487,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4218,6 +4502,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4233,6 +4518,7 @@ export const businessOperations = Object.freeze({
             "per_page",
             "id"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4248,6 +4534,7 @@ export const businessOperations = Object.freeze({
             "per_page",
             "status"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4262,6 +4549,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4276,6 +4564,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4290,6 +4579,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4304,6 +4594,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4318,6 +4609,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4332,6 +4624,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4345,6 +4638,9 @@ export const businessOperations = Object.freeze({
         "queryParameters": [
             "page",
             "per_page",
+            "id"
+        ],
+        "requiredQueryParameters": [
             "id"
         ],
         "acceptLanguage": true,
@@ -4361,6 +4657,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4375,6 +4672,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4389,6 +4687,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4406,6 +4705,7 @@ export const businessOperations = Object.freeze({
             "id",
             "include_email"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4420,6 +4720,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4434,6 +4735,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4448,6 +4750,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4462,6 +4765,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4476,6 +4780,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4490,6 +4795,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4504,6 +4810,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4518,6 +4825,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4535,6 +4843,9 @@ export const businessOperations = Object.freeze({
             "id",
             "program_id"
         ],
+        "requiredQueryParameters": [
+            "metric"
+        ],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4548,6 +4859,7 @@ export const businessOperations = Object.freeze({
             "risk"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4562,6 +4874,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4573,6 +4886,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4590,6 +4904,7 @@ export const businessOperations = Object.freeze({
             "severity",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4603,6 +4918,7 @@ export const businessOperations = Object.freeze({
             "bugReport"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -4619,6 +4935,7 @@ export const businessOperations = Object.freeze({
             "article"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4630,6 +4947,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -4646,6 +4964,7 @@ export const businessOperations = Object.freeze({
             "article"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4660,6 +4979,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4676,6 +4996,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4689,6 +5010,7 @@ export const businessOperations = Object.freeze({
             "article"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -4703,6 +5025,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -4719,6 +5042,7 @@ export const businessOperations = Object.freeze({
             "category"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4733,6 +5057,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4749,6 +5074,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4762,6 +5088,7 @@ export const businessOperations = Object.freeze({
             "category"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -4778,6 +5105,7 @@ export const businessOperations = Object.freeze({
             "serviceRequest"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4791,6 +5119,7 @@ export const businessOperations = Object.freeze({
             "serviceRequest"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4804,6 +5133,7 @@ export const businessOperations = Object.freeze({
             "serviceRequest"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -4824,6 +5154,7 @@ export const businessOperations = Object.freeze({
             "type",
             "customer_id"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4840,6 +5171,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4853,6 +5185,7 @@ export const businessOperations = Object.freeze({
             "serviceRequest"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -4867,6 +5200,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -4883,6 +5217,7 @@ export const businessOperations = Object.freeze({
             "slaRule"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4897,6 +5232,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4913,6 +5249,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -4926,6 +5263,7 @@ export const businessOperations = Object.freeze({
             "slaRule"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -4940,6 +5278,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -4956,6 +5295,7 @@ export const businessOperations = Object.freeze({
             "ticket"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -4972,6 +5312,7 @@ export const businessOperations = Object.freeze({
             "ticket"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -4988,6 +5329,7 @@ export const businessOperations = Object.freeze({
             "ticket"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5002,6 +5344,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5018,6 +5361,7 @@ export const businessOperations = Object.freeze({
             "testerAssignment"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5036,6 +5380,7 @@ export const businessOperations = Object.freeze({
             "product_slug",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5049,6 +5394,7 @@ export const businessOperations = Object.freeze({
             "testerAssignment"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5069,6 +5415,7 @@ export const businessOperations = Object.freeze({
             "cohort_id",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5082,6 +5429,7 @@ export const businessOperations = Object.freeze({
             "certificate"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5101,6 +5449,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5115,6 +5464,7 @@ export const businessOperations = Object.freeze({
             "member"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5131,6 +5481,7 @@ export const businessOperations = Object.freeze({
             "cohort"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5148,6 +5499,7 @@ export const businessOperations = Object.freeze({
             "testCase"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5164,6 +5516,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5175,6 +5528,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5191,6 +5545,7 @@ export const businessOperations = Object.freeze({
             "cohort"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5207,6 +5562,7 @@ export const businessOperations = Object.freeze({
             "status",
             "practitioner_program_id"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5223,6 +5579,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5236,6 +5593,7 @@ export const businessOperations = Object.freeze({
             "cohort"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5253,6 +5611,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5269,6 +5628,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5282,6 +5642,7 @@ export const businessOperations = Object.freeze({
             "member"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5303,6 +5664,7 @@ export const businessOperations = Object.freeze({
             "date_from",
             "date_to"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5316,6 +5678,7 @@ export const businessOperations = Object.freeze({
             "task"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5337,6 +5700,7 @@ export const businessOperations = Object.freeze({
             "assigned_to",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5350,6 +5714,7 @@ export const businessOperations = Object.freeze({
             "task"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5366,6 +5731,7 @@ export const businessOperations = Object.freeze({
             "task"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5382,6 +5748,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5395,6 +5762,7 @@ export const businessOperations = Object.freeze({
             "task"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5408,6 +5776,7 @@ export const businessOperations = Object.freeze({
             "task"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5422,6 +5791,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5438,6 +5808,7 @@ export const businessOperations = Object.freeze({
             "evaluation"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5454,6 +5825,7 @@ export const businessOperations = Object.freeze({
             "cohort_member_id",
             "rating"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5467,6 +5839,7 @@ export const businessOperations = Object.freeze({
             "evaluation"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5483,6 +5856,7 @@ export const businessOperations = Object.freeze({
             "issue"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5499,6 +5873,7 @@ export const businessOperations = Object.freeze({
             "issue"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5517,6 +5892,7 @@ export const businessOperations = Object.freeze({
             "issue_type",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5530,6 +5906,7 @@ export const businessOperations = Object.freeze({
             "issue"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5546,6 +5923,7 @@ export const businessOperations = Object.freeze({
             "issue"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5560,6 +5938,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5574,6 +5953,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5589,6 +5969,7 @@ export const businessOperations = Object.freeze({
             "per_page",
             "cohort_id"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5604,6 +5985,7 @@ export const businessOperations = Object.freeze({
             "per_page",
             "cohort_id"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5617,6 +5999,7 @@ export const businessOperations = Object.freeze({
             "product"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5633,6 +6016,7 @@ export const businessOperations = Object.freeze({
             "module"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5650,6 +6034,7 @@ export const businessOperations = Object.freeze({
             "active",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5666,6 +6051,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5679,6 +6065,7 @@ export const businessOperations = Object.freeze({
             "module"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5693,6 +6080,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5709,6 +6097,7 @@ export const businessOperations = Object.freeze({
             "validationProduct"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5723,6 +6112,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5739,6 +6129,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5752,6 +6143,7 @@ export const businessOperations = Object.freeze({
             "validationProduct"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5768,6 +6160,7 @@ export const businessOperations = Object.freeze({
             "workflow"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5785,6 +6178,7 @@ export const businessOperations = Object.freeze({
             "testCase"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5803,6 +6197,7 @@ export const businessOperations = Object.freeze({
             "active",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5820,6 +6215,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5834,6 +6230,7 @@ export const businessOperations = Object.freeze({
             "testCase"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5848,6 +6245,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5868,6 +6266,7 @@ export const businessOperations = Object.freeze({
             "week_from",
             "week_to"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5881,6 +6280,7 @@ export const businessOperations = Object.freeze({
             "weeklyReview"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5897,6 +6297,7 @@ export const businessOperations = Object.freeze({
             "module"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5914,6 +6315,7 @@ export const businessOperations = Object.freeze({
             "workflow"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5932,6 +6334,7 @@ export const businessOperations = Object.freeze({
             "active",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5949,6 +6352,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -5963,6 +6367,7 @@ export const businessOperations = Object.freeze({
             "workflow"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5977,6 +6382,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -5993,6 +6399,7 @@ export const businessOperations = Object.freeze({
             "attendanceRecord"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6007,6 +6414,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6023,6 +6431,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6036,6 +6445,7 @@ export const businessOperations = Object.freeze({
             "attendanceRecord"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6050,6 +6460,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6066,6 +6477,7 @@ export const businessOperations = Object.freeze({
             "department"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6080,6 +6492,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6096,6 +6509,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6109,6 +6523,7 @@ export const businessOperations = Object.freeze({
             "department"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6123,6 +6538,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6139,6 +6555,7 @@ export const businessOperations = Object.freeze({
             "search",
             "active"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6155,6 +6572,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6168,6 +6586,7 @@ export const businessOperations = Object.freeze({
             "employee"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6181,6 +6600,7 @@ export const businessOperations = Object.freeze({
             "employee"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6197,6 +6617,7 @@ export const businessOperations = Object.freeze({
             "leaveBalance"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6213,6 +6634,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6229,6 +6651,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6242,6 +6665,7 @@ export const businessOperations = Object.freeze({
             "leaveBalance"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6256,6 +6680,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6272,6 +6697,7 @@ export const businessOperations = Object.freeze({
             "leaveType"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6286,6 +6712,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6302,6 +6729,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6315,6 +6743,7 @@ export const businessOperations = Object.freeze({
             "leaveType"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6331,6 +6760,7 @@ export const businessOperations = Object.freeze({
             "leave"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6342,6 +6772,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6356,6 +6787,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6370,6 +6802,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6391,6 +6824,7 @@ export const businessOperations = Object.freeze({
             "from",
             "to"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6404,6 +6838,7 @@ export const businessOperations = Object.freeze({
             "leave"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6420,6 +6855,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6433,6 +6869,7 @@ export const businessOperations = Object.freeze({
             "leave"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6449,6 +6886,7 @@ export const businessOperations = Object.freeze({
             "milestone"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6462,6 +6900,7 @@ export const businessOperations = Object.freeze({
             "review"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6473,6 +6912,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6493,6 +6933,7 @@ export const businessOperations = Object.freeze({
             "user_id",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6509,6 +6950,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6522,6 +6964,7 @@ export const businessOperations = Object.freeze({
             "review"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6535,6 +6978,7 @@ export const businessOperations = Object.freeze({
             "review"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6549,6 +6993,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6567,6 +7012,7 @@ export const businessOperations = Object.freeze({
             "per_page",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6583,6 +7029,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6596,6 +7043,7 @@ export const businessOperations = Object.freeze({
             "risk"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6610,6 +7058,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6626,6 +7075,7 @@ export const businessOperations = Object.freeze({
             "salaryGrade"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6640,6 +7090,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6656,6 +7107,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6669,6 +7121,7 @@ export const businessOperations = Object.freeze({
             "salaryGrade"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6683,6 +7136,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6699,6 +7153,7 @@ export const businessOperations = Object.freeze({
             "timesheet"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6713,6 +7168,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6729,6 +7185,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6742,6 +7199,7 @@ export const businessOperations = Object.freeze({
             "timesheet"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6758,6 +7216,7 @@ export const businessOperations = Object.freeze({
             "trainingRecord"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6769,6 +7228,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6784,6 +7244,7 @@ export const businessOperations = Object.freeze({
             "trainingRecord"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6798,6 +7259,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6814,6 +7276,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6827,6 +7290,7 @@ export const businessOperations = Object.freeze({
             "trainingRecord"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6840,6 +7304,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6856,6 +7321,7 @@ export const businessOperations = Object.freeze({
             "license"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6871,6 +7337,7 @@ export const businessOperations = Object.freeze({
             "per_page",
             "status"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6884,6 +7351,7 @@ export const businessOperations = Object.freeze({
             "license"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6900,6 +7368,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6913,6 +7382,7 @@ export const businessOperations = Object.freeze({
             "license"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6926,6 +7396,7 @@ export const businessOperations = Object.freeze({
             "license"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6940,6 +7411,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -6956,6 +7428,7 @@ export const businessOperations = Object.freeze({
             "project"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6973,6 +7446,7 @@ export const businessOperations = Object.freeze({
             "priority",
             "search"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -6989,6 +7463,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7002,6 +7477,7 @@ export const businessOperations = Object.freeze({
             "project"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -7019,6 +7495,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7033,6 +7510,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7047,6 +7525,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7061,6 +7540,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7074,6 +7554,7 @@ export const businessOperations = Object.freeze({
             "slug"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -7091,6 +7572,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7104,6 +7586,7 @@ export const businessOperations = Object.freeze({
             "slug"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7117,6 +7600,7 @@ export const businessOperations = Object.freeze({
             "slug"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7133,6 +7617,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7149,6 +7634,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7165,6 +7651,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7181,6 +7668,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7195,6 +7683,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7208,6 +7697,7 @@ export const businessOperations = Object.freeze({
             "course"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7222,6 +7712,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7238,6 +7729,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7252,6 +7744,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7266,6 +7759,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7282,6 +7776,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7296,6 +7791,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7312,6 +7808,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7328,6 +7825,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7342,6 +7840,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7358,6 +7857,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7372,6 +7872,7 @@ export const businessOperations = Object.freeze({
             "lesson"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7389,6 +7890,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7403,6 +7905,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7419,6 +7922,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7430,6 +7934,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -7447,6 +7952,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7458,6 +7964,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -7475,6 +7982,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7489,6 +7997,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7505,6 +8014,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7516,6 +8026,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -7533,6 +8044,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7549,6 +8061,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7562,6 +8075,7 @@ export const businessOperations = Object.freeze({
             "survey"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7576,6 +8090,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7590,6 +8105,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7603,6 +8119,7 @@ export const businessOperations = Object.freeze({
             "id"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -7622,6 +8139,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7633,6 +8151,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -7650,6 +8169,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7661,6 +8181,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -7675,6 +8196,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -7692,6 +8214,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7705,6 +8228,7 @@ export const businessOperations = Object.freeze({
             "client"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7718,6 +8242,7 @@ export const businessOperations = Object.freeze({
             "client"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7729,6 +8254,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -7745,6 +8271,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7758,6 +8285,7 @@ export const businessOperations = Object.freeze({
             "client"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7771,6 +8299,7 @@ export const businessOperations = Object.freeze({
             "client"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -7789,6 +8318,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7805,6 +8335,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7821,6 +8352,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7834,6 +8366,7 @@ export const businessOperations = Object.freeze({
             "token"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -7851,6 +8384,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7865,6 +8399,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7879,6 +8414,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7892,6 +8428,7 @@ export const businessOperations = Object.freeze({
             "dept"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -7909,6 +8446,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7925,6 +8463,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7938,6 +8477,7 @@ export const businessOperations = Object.freeze({
             "id"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -7955,6 +8495,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -7968,6 +8509,7 @@ export const businessOperations = Object.freeze({
             "id"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -7985,6 +8527,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8001,6 +8544,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8015,6 +8559,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8026,6 +8571,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -8043,6 +8589,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8054,6 +8601,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -8068,6 +8616,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -8082,6 +8631,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -8096,6 +8646,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8107,6 +8658,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": false,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": false,
         "requestBodyRequired": false,
         "contentTypes": [],
@@ -8124,6 +8676,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8135,6 +8688,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": false,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": false,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -8148,6 +8702,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": false,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": false,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -8165,6 +8720,7 @@ export const businessOperations = Object.freeze({
             "per_page",
             "locale"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": false,
         "requestBodyRequired": false,
         "contentTypes": [],
@@ -8180,6 +8736,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8193,6 +8750,7 @@ export const businessOperations = Object.freeze({
             "id"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -8210,6 +8768,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8223,6 +8782,7 @@ export const businessOperations = Object.freeze({
             "id"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -8240,6 +8800,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8251,6 +8812,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -8268,6 +8830,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8279,6 +8842,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -8296,6 +8860,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8310,6 +8875,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8324,6 +8890,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8340,6 +8907,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8354,6 +8922,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8365,6 +8934,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8378,6 +8948,7 @@ export const businessOperations = Object.freeze({
             "id"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8392,6 +8963,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8405,6 +8977,7 @@ export const businessOperations = Object.freeze({
             "partnerApplication"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -8424,6 +8997,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8438,6 +9012,7 @@ export const businessOperations = Object.freeze({
             "member"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8451,6 +9026,7 @@ export const businessOperations = Object.freeze({
             "partnerApplication"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -8468,6 +9044,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8479,6 +9056,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -8496,6 +9074,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8512,6 +9091,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8526,6 +9106,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8542,6 +9123,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8556,6 +9138,7 @@ export const businessOperations = Object.freeze({
             "attempt"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -8576,6 +9159,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8589,6 +9173,7 @@ export const businessOperations = Object.freeze({
             "assessment"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8603,6 +9188,7 @@ export const businessOperations = Object.freeze({
             "attempt"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": [
@@ -8621,6 +9207,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8637,6 +9224,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8651,6 +9239,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8665,6 +9254,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8681,6 +9271,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8692,6 +9283,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -8710,6 +9302,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8724,6 +9317,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8737,6 +9331,7 @@ export const businessOperations = Object.freeze({
             "course"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8751,6 +9346,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8767,6 +9363,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8781,6 +9378,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8797,6 +9395,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8810,6 +9409,7 @@ export const businessOperations = Object.freeze({
             "application"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -8826,6 +9426,7 @@ export const businessOperations = Object.freeze({
             "lesson"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8843,6 +9444,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8854,6 +9456,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -8871,6 +9474,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8882,6 +9486,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -8898,6 +9503,7 @@ export const businessOperations = Object.freeze({
             "program"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -8915,6 +9521,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8931,6 +9538,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8945,6 +9553,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8959,6 +9568,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -8970,6 +9580,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -8987,6 +9598,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9003,6 +9615,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9016,6 +9629,7 @@ export const businessOperations = Object.freeze({
             "survey"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9030,6 +9644,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9044,6 +9659,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9058,6 +9674,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9074,6 +9691,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9085,6 +9703,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -9101,6 +9720,7 @@ export const businessOperations = Object.freeze({
             "issue"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -9118,6 +9738,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9132,6 +9753,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9143,6 +9765,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -9160,6 +9783,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9176,6 +9800,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9190,6 +9815,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9206,6 +9832,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9220,6 +9847,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9234,6 +9862,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9250,6 +9879,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9264,6 +9894,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9280,6 +9911,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9296,6 +9928,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9307,6 +9940,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": false,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": false,
         "requestBodyRequired": false,
         "contentTypes": [],
@@ -9319,6 +9953,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": false,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": false,
         "requestBodyRequired": false,
         "contentTypes": [],
@@ -9334,6 +9969,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": false,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9345,6 +9981,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": false,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": false,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9356,6 +9993,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": false,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": false,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9367,6 +10005,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": false,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": false,
         "requestBodyRequired": false,
         "contentTypes": [],
@@ -9379,6 +10018,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": false,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": false,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9390,6 +10030,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": false,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": false,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -9408,6 +10049,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9422,6 +10064,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9436,6 +10079,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9447,6 +10091,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -9463,6 +10108,7 @@ export const businessOperations = Object.freeze({
             "ticket"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9477,6 +10123,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9490,6 +10137,7 @@ export const businessOperations = Object.freeze({
             "ticket"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -9509,6 +10157,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9522,6 +10171,7 @@ export const businessOperations = Object.freeze({
             "ticket"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -9539,6 +10189,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9555,6 +10206,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9568,6 +10220,7 @@ export const businessOperations = Object.freeze({
             "id"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -9584,6 +10237,7 @@ export const businessOperations = Object.freeze({
             "id"
         ],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -9601,6 +10255,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9615,6 +10270,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9629,6 +10285,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9640,6 +10297,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [
@@ -9657,6 +10315,7 @@ export const businessOperations = Object.freeze({
             "page",
             "per_page"
         ],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": false,
         "contentTypes": []
@@ -9668,6 +10327,7 @@ export const businessOperations = Object.freeze({
         "idempotencyRequired": true,
         "pathParameters": [],
         "queryParameters": [],
+        "requiredQueryParameters": [],
         "acceptLanguage": true,
         "requestBodyRequired": true,
         "contentTypes": [

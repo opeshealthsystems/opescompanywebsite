@@ -1,3 +1,7 @@
+## SDK 0.119.0 — quote and customer profile response contracts (6 November 2026)
+
+Adds field-specific OpenAPI response schemas for paginated admin quote reads, including quote totals, status, lead and creator summaries, and line items; customer profile list/detail responses now expose their projected facility and customer fields. Generated Node TypeScript results therefore provide useful types for these three mobile/admin read operations. OpenAPI remains 0.118.0 because the HTTP behavior did not change; this is an additive documentation and SDK typing improvement. The 46,577-byte downloadable preview SHA-256 is `de18faaa9b33dc2d13f7cc5808e23faaaf2ee74f34a31819d7521d974c82e2f9`; it remains unpublished to npm.
+
 ## SDK 0.117.0 — typed success responses from OpenAPI (6 November 2026)
 
 The SDK generator now uses successful response schemas from OpenAPI to create result types for all 656 operations. The 655 operations with declared response schemas now expose those payload shapes; the no-content response is `null`. Request types from 0.116.0 remain, including required paths/queries, JSON bodies, URL-encoded forms and idempotency keys. This improves TypeScript clients without changing the API wire contract. Compile fixtures verify access to documented response fields and reject undocumented fields. The 46,299-byte downloadable preview SHA-256 is `99271fb3f4d6335f0e7db391683d941a860b38f47613e53f678ea5e60e0db0ca`; it remains unpublished to npm.

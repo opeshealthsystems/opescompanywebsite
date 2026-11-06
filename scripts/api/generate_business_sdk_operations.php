@@ -41,6 +41,7 @@ $schemaType = function (array $schema) use (&$schemaType): string {
 };
 $operations = [];
 $requestTypes = [];
+$responseTypes = [];
 foreach ($spec['paths'] as $path => $pathItem) {
     foreach ($pathItem as $method => $operation) {
         if (!isset($operation['operationId']) || !in_array(strtoupper($method), ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], true)) continue;
@@ -86,6 +87,20 @@ foreach ($spec['paths'] as $path => $pathItem) {
             'bodyRequired' => (bool) ($requestBody['required'] ?? false),
             'idempotencyRequired' => $entry['idempotencyRequired'],
         ];
+        $successTypes = [];
+        $hasNoContentSuccess = false;
+        foreach ($operation['responses'] ?? [] as $status => $response) {
+            if (!preg_match('/^2[0-9]{2}$/', (string) $status)) continue;
+            $hasNoContentSuccess = $hasNoContentSuccess || (string) $status === '204';
+            foreach ($response['content'] ?? [] as $contentType => $content) {
+                if (isset($content['schema'])) {
+                    $successTypes[] = str_contains($contentType, 'json') ? $schemaType($content['schema']) : 'ArrayBuffer';
+                }
+            }
+        }
+        $responseTypes[$operation['operationId']] = array_values(array_unique($successTypes))
+            ? '('.implode(' | ', array_values(array_unique($successTypes))).')'
+            : ($hasNoContentSuccess ? 'null' : 'unknown');
     }
 }
 ksort($operations);
@@ -105,14 +120,21 @@ foreach ($requestTypes as $id => $shape) {
     $body = $shape['body'] === null ? 'undefined' : $shape['body'];
     $requestDeclarations[] = '  '.json_encode($id, JSON_THROW_ON_ERROR).': { path: { '.implode(' ', $pathFields).' }; query: { '.implode(' ', $queryFields).' }; queryRequired: '.($shape['queryRequired'] ? 'true' : 'false').'; body: '.$body.'; bodyRequired: '.($shape['bodyRequired'] ? 'true' : 'false').'; idempotencyRequired: '.($shape['idempotencyRequired'] ? 'true' : 'false').'; };';
 }
+$responseDeclarations = [];
+foreach ($responseTypes as $id => $type) {
+    $responseDeclarations[] = '  '.json_encode($id, JSON_THROW_ON_ERROR).': '.$type.';';
+}
 $types = "export type BusinessOperationId =\n".implode("\n", array_map(fn ($id) => "  | '".$id."'", array_keys($operations))).";\n\n".
     implode("\n", $schemaDeclarations)."\n\n".
     "export interface BusinessOperationRequestMap {\n".implode("\n", $requestDeclarations)."\n}\n\n".
+    "export interface BusinessOperationResponseMap {\n".implode("\n", $responseDeclarations)."\n}\n\n".
     "type Entry<I extends BusinessOperationId> = BusinessOperationRequestMap[I];\n".
     "type PathOption<I extends BusinessOperationId> = keyof Entry<I>['path'] extends never ? { path?: never } : { path: Entry<I>['path'] };\n".
     "type QueryOption<I extends BusinessOperationId> = keyof Entry<I>['query'] extends never ? { query?: never } : Entry<I>['queryRequired'] extends true ? { query: Entry<I>['query'] } : { query?: Entry<I>['query'] };\n".
     "type BodyOption<I extends BusinessOperationId> = Entry<I>['body'] extends undefined ? { body?: never } : Entry<I>['bodyRequired'] extends true ? { body: Exclude<Entry<I>['body'], undefined> } : { body?: Entry<I>['body'] };\n".
     "type IdempotencyOption<I extends BusinessOperationId> = Entry<I>['idempotencyRequired'] extends true ? { idempotencyKey: string } : { idempotencyKey?: string };\n".
-    "export type BusinessOperationRequestOptions<I extends BusinessOperationId> = PathOption<I> & QueryOption<I> & BodyOption<I> & IdempotencyOption<I>;\n";
+    "export type BusinessOperationRequestOptions<I extends BusinessOperationId> = PathOption<I> & QueryOption<I> & BodyOption<I> & IdempotencyOption<I>;\n".
+    "export type BusinessOperationRequiresOptions<I extends BusinessOperationId> = keyof Entry<I>['path'] extends never ? Entry<I>['queryRequired'] extends true ? true : Entry<I>['bodyRequired'] extends true ? true : Entry<I>['idempotencyRequired'] extends true ? true : false : true;\n".
+    "export type BusinessOperationResponse<I extends BusinessOperationId> = BusinessOperationResponseMap[I];\n";
 file_put_contents($root.'/sdk/node/src/business-operations.d.ts', $types);
 echo json_encode(['operationIds' => count($operations), 'source' => 'sdk/node/src/business-operations.js']).PHP_EOL;

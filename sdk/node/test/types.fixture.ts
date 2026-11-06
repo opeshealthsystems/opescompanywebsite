@@ -30,6 +30,17 @@ const enquiry = await client.request('submitEnquiry', {
   idempotencyKey: key,
 });
 enquiry.data.data.status.toUpperCase();
+const quotes = await client.request('admin_finance_quotes_index');
+quotes.data.data.items[0]!.items[0]!.product_name.toUpperCase();
+quotes.data.data.items[0]!.lead?.email?.toLowerCase();
+const customers = await client.request('admin_customerProfiles_index');
+customers.data.data.items[0]!.customer?.email.toLowerCase();
+const customer = await client.request('admin_customerProfiles_show', { path: { customerProfile: 12 } });
+customer.data.data.customer_profile.facility_name?.toUpperCase();
+// @ts-expect-error Quote result fields are constrained by the published response schema.
+quotes.data.data.items[0]!.invented_field;
+// @ts-expect-error Customer profile detail must use its declared resource key.
+customer.data.data.profile;
 
 // @ts-expect-error Quote currency is a contract enum.
 void client.request('admin_finance_quotes_create', { body: { title: 'Clinic proposal', currency: 'GBP', items: [] }, idempotencyKey: key });

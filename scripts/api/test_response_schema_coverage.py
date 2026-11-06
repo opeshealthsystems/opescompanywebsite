@@ -26,8 +26,8 @@ class ResponseSchemaCoverageTest(unittest.TestCase):
         counts, _ = coverage(contract)
         self.assertEqual(counts, {
             "operations": 656,
-            "field_specific": 46,
-            "generic": 609,
+            "field_specific": 49,
+            "generic": 606,
             "no_content": 1,
             "missing_schema": 0,
         })

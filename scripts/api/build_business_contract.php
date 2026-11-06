@@ -1072,6 +1072,52 @@ $spec['paths']['/me']['get'] = ['operationId' => 'readOwnProfile', 'summary' => 
             ],
         ], 'identity.me')]]],
         '401' => ['description' => 'Delegated user authentication required.'], '403' => ['description' => 'identity:read scope required.'], '429' => ['description' => 'Rate limit exceeded.']]];
+$quoteItemSchema = ['type' => 'object', 'required' => ['id', 'quote_id', 'product_name', 'description', 'quantity', 'unit_price', 'total', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'quote_id' => ['type' => 'integer'], 'product_name' => ['type' => 'string'], 'description' => ['type' => ['string', 'null']],
+    'quantity' => ['type' => 'number'], 'unit_price' => ['type' => 'number'], 'total' => ['type' => 'number'],
+    'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+]];
+$quoteRecordSchema = ['type' => 'object', 'required' => ['id', 'reference', 'lead_id', 'title', 'status', 'valid_until', 'subtotal', 'tax_rate', 'tax_amount', 'total', 'currency', 'notes', 'created_by', 'created_at', 'updated_at', 'lead', 'creator', 'items'], 'properties' => [
+    'id' => ['type' => 'integer'], 'reference' => ['type' => 'string'], 'lead_id' => ['type' => ['integer', 'null']], 'title' => ['type' => 'string'],
+    'status' => ['type' => 'string', 'enum' => ['draft', 'sent', 'accepted', 'rejected', 'expired']], 'valid_until' => ['type' => ['string', 'null'], 'format' => 'date'],
+    'subtotal' => ['type' => 'number'], 'tax_rate' => ['type' => 'number'], 'tax_amount' => ['type' => 'number'], 'total' => ['type' => 'number'],
+    'currency' => ['type' => 'string'], 'notes' => ['type' => ['string', 'null']], 'created_by' => ['type' => 'integer'],
+    'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+    'lead' => ['type' => ['object', 'null'], 'properties' => ['id' => ['type' => 'integer'], 'name' => ['type' => 'string'], 'email' => ['type' => 'string', 'format' => 'email'], 'phone' => ['type' => ['string', 'null']], 'facility_type' => ['type' => ['string', 'null']]]],
+    'creator' => ['type' => ['object', 'null'], 'properties' => ['id' => ['type' => 'integer'], 'name' => ['type' => 'string'], 'email' => ['type' => 'string', 'format' => 'email']]],
+    'items' => ['type' => 'array', 'items' => $quoteItemSchema],
+]];
+$quoteList = &$spec['paths']['/finance/quotes']['get'];
+$quoteList['responses']['200']['description'] = 'Paginated quotes with lead, creator and line-item details for quote review.';
+$quoteList['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => $quoteRecordSchema],
+    'pagination' => ['type' => 'object', 'required' => ['current_page', 'per_page', 'total', 'last_page'], 'properties' => [
+        'current_page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+    ]],
+]], 'admin.finance.quotes.index');
+unset($quoteList);
+$customerSummarySchema = ['type' => 'object', 'required' => ['id', 'user_id', 'facility_name', 'facility_type', 'country', 'city', 'address', 'created_at', 'updated_at', 'customer'], 'properties' => [
+    'id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'], 'facility_name' => ['type' => ['string', 'null']], 'facility_type' => ['type' => ['string', 'null']],
+    'country' => ['type' => 'string'], 'city' => ['type' => ['string', 'null']], 'address' => ['type' => ['string', 'null']],
+    'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+    'customer' => ['type' => ['object', 'null'], 'required' => ['id', 'name', 'email'], 'properties' => ['id' => ['type' => 'integer'], 'name' => ['type' => 'string'], 'email' => ['type' => 'string', 'format' => 'email']]],
+]];
+$customerIndex = &$spec['paths']['/admin/customer-profiles']['get'];
+$customerIndex['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => $customerSummarySchema],
+    'pagination' => ['type' => 'object', 'required' => ['current_page', 'per_page', 'total', 'last_page'], 'properties' => [
+        'current_page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+    ]],
+]], 'admin.customerProfiles.index');
+unset($customerIndex);
+$customerShow = &$spec['paths']['/admin/customer-profiles/{customerProfile}']['get'];
+$customerDetailProperties = $customerSummarySchema['properties'];
+$customerDetailProperties['customer']['required'][] = 'phone';
+$customerDetailProperties['customer']['properties']['phone'] = ['type' => ['string', 'null']];
+$customerShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['customer_profile'], 'properties' => [
+    'customer_profile' => ['type' => 'object', 'required' => ['id', 'user_id', 'facility_name', 'facility_type', 'country', 'city', 'address', 'created_at', 'updated_at', 'customer'], 'properties' => $customerDetailProperties],
+]], 'admin.customerProfiles.show');
+unset($customerShow);
 $contractPath = $root.'/docs/api/openapi.json';
 $contractTemp = $contractPath.'.tmp';
 if (file_put_contents($contractTemp, json_encode($spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR)."\n") === false || !rename($contractTemp, $contractPath)) {
