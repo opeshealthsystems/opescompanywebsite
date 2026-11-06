@@ -1,4 +1,5 @@
 import * as AuthSession from 'expo-auth-session';
+import * as Crypto from 'expo-crypto';
 import * as SecureStore from 'expo-secure-store';
 import { createContext, ReactNode, useContext, useMemo, useRef, useState } from 'react';
 import { Platform } from 'react-native';
@@ -15,7 +16,11 @@ export type DemoAccount = { id: string; label: string; audience: Audience; accou
 const API = process.env.EXPO_PUBLIC_OHS_API_URL ?? 'https://opeshealthsystems.com/api/v1';
 const CLIENT_ID = process.env.EXPO_PUBLIC_OHS_OAUTH_CLIENT_ID ?? '';
 const TOKEN_KEY = 'opes.health.session.v1';
+const MUTATION_SALT_KEY = 'opes.health.mutation-salt.v1';
+const MUTATION_KEY_PREFIX = 'opes.health.pending-mutation.v1.';
+const MUTATION_KEY_TTL_MS = 23 * 60 * 60 * 1000;
 const discovery = { authorizationEndpoint: 'https://opeshealthsystems.com/oauth/authorize', tokenEndpoint: `${API}/oauth/user-token` };
+type PendingMutationKey = { value: string; expiresAt: number; storageKey: string };
 
 export const workspaceTitles: Record<Audience, string> = {
   staff: 'Staff & administration', customer: 'Customer workspace', practitioner: 'Practitioner workspace', tester: 'Testing workspace', partner: 'Partner workspace',
@@ -79,6 +84,10 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const [demoRows, setDemoRows] = useState<Record<string, ApiRecord[]>>({});
   const tokenRef = useRef<Token | null>(null);
   const refreshInFlight = useRef<Promise<Token | null> | null>(null);
+  const mutationSalt = useRef<Promise<string> | null>(null);
+  const webMutationSalt = useRef(Crypto.randomUUID());
+  const pendingMutationKeys = useRef(new Map<string, PendingMutationKey>());
+  const creatingMutationKeys = useRef(new Map<string, Promise<PendingMutationKey>>());
 
   const setAccount = (value: Account) => {
     setDemo(null); setDemoRows({}); setAccountState(value);
@@ -126,8 +135,64 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   };
 
   const request = async <T,>(path: string, method = 'GET', body?: unknown, idempotencyKey?: string): Promise<T> => {
-    // One key per logical request so a retry after token refresh cannot create a duplicate write.
-    const key = !['GET', 'HEAD', 'OPTIONS'].includes(method.toUpperCase()) ? idempotencyKey ?? `mobile-${Date.now()}-${Math.random().toString(36).slice(2)}` : undefined;
+    const upperMethod = method.toUpperCase();
+    const mutating = !['GET', 'HEAD', 'OPTIONS'].includes(upperMethod);
+    let pending: PendingMutationKey | null = null;
+    if (mutating && !idempotencyKey) {
+      if (!path.startsWith('/') || path.startsWith('//')) throw new TypeError('API requests must use a relative path.');
+      const salt = Platform.OS === 'web' ? webMutationSalt.current : await (mutationSalt.current ??= (async () => {
+        try {
+          const stored = await SecureStore.getItemAsync(MUTATION_SALT_KEY);
+          if (stored) return stored;
+          const generated = Crypto.randomUUID();
+          await SecureStore.setItemAsync(MUTATION_SALT_KEY, generated);
+          return generated;
+        } catch { return webMutationSalt.current; }
+      })());
+      const fingerprintInput = `${account?.id ?? 'anonymous'}\n${upperMethod}\n${path}\n${body === undefined ? '' : JSON.stringify(body)}`;
+      const fingerprint = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, `${salt}\n${fingerprintInput}`);
+      const storageKey = `${MUTATION_KEY_PREFIX}${fingerprint}`;
+      pending = pendingMutationKeys.current.get(storageKey) ?? null;
+      if (!pending) {
+        let creation = creatingMutationKeys.current.get(storageKey);
+        if (!creation) {
+          creation = (async () => {
+            const now = Date.now();
+            if (Platform.OS !== 'web') {
+              try {
+                const stored = await SecureStore.getItemAsync(storageKey);
+                if (stored) {
+                  const value = JSON.parse(stored) as { value?: unknown; expiresAt?: unknown };
+                  if (typeof value.value === 'string' && typeof value.expiresAt === 'number' && value.expiresAt > now) {
+                    return { value: value.value, expiresAt: value.expiresAt, storageKey };
+                  }
+                  await SecureStore.deleteItemAsync(storageKey);
+                }
+              } catch { /* Use an in-memory key when secure storage is temporarily unavailable. */ }
+            }
+            const value = `mobile-${Crypto.randomUUID()}`;
+            const entry = { value, expiresAt: now + MUTATION_KEY_TTL_MS, storageKey };
+            if (Platform.OS !== 'web') {
+              try { await SecureStore.setItemAsync(storageKey, JSON.stringify({ value, expiresAt: entry.expiresAt })); } catch { /* Keep the key in memory for this session. */ }
+            }
+            return entry;
+          })();
+          creatingMutationKeys.current.set(storageKey, creation);
+        }
+        try { pending = await creation; }
+        finally { creatingMutationKeys.current.delete(storageKey); }
+        pendingMutationKeys.current.set(storageKey, pending);
+      }
+    }
+    // Persist retry keys before sending; keep them after network/5xx/429 ambiguity and reuse them on the next attempt.
+    const key = idempotencyKey ?? pending?.value;
+    const clearPendingKey = async () => {
+      if (!pending) return;
+      pendingMutationKeys.current.delete(pending.storageKey);
+      if (Platform.OS !== 'web') {
+        try { await SecureStore.deleteItemAsync(pending.storageKey); } catch { /* A stale key is safer than duplicating a command. */ }
+      }
+    };
     const send = (active: Token | null) => {
       const headers: Record<string, string> = { Accept: 'application/json', 'Accept-Language': getLang() };
       if (active?.access_token) headers.Authorization = `Bearer ${active.access_token}`;
@@ -148,10 +213,12 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       throw new Error(t('Your session has expired. Sign in again to continue.'));
     }
     if (!response.ok) {
+      if (pending && response.status >= 400 && response.status < 500 && ![408, 425, 429].includes(response.status)) await clearPendingKey();
       const fieldErrors = data?.errors && typeof data.errors === 'object' ? Object.values(data.errors).flat().filter(value => typeof value === 'string').join(' ') : '';
       const requestId = typeof data?.request_id === 'string' ? t(' Reference: {id}', { id: data.request_id }) : '';
       throw new Error(`${data?.detail || data?.message || fieldErrors || data?.title || t('Request failed ({status})', { status: response.status })}${requestId}`);
     }
+    await clearPendingKey();
     return (data?.data ?? data) as T;
   };
 
