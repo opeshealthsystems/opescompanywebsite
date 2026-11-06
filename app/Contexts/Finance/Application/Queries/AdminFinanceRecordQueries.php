@@ -92,7 +92,30 @@ final class AdminFinanceRecordQueries extends WorkflowHandler
         $filters = $input->validate(['status' => 'sometimes|in:'.implode(',', array_keys(Expense::statusOptions())), 'category' => 'sometimes|in:'.implode(',', array_keys(Expense::categoryOptions()))]);
         $query = $this->expenseQuery($input);
         foreach (['status', 'category'] as $field) if (isset($filters[$field])) $query->where($field, $filters[$field]);
-        return $this->respond($input, $query);
+        $page = $input->paginate($query);
+
+        return WorkflowResult::payload(['items' => $page->getCollection()->map(fn (Expense $expense) => [
+            'id' => $expense->id,
+            'reference' => $expense->reference,
+            'title' => $expense->title,
+            'description' => $expense->description,
+            'category' => $expense->category,
+            'amount' => $expense->amount,
+            'currency' => $expense->currency,
+            'vendor' => $expense->vendor,
+            'expense_date' => $expense->expense_date?->toDateString(),
+            'receipt_path' => $expense->receipt_path,
+            'status' => $expense->status,
+            'submitted_by' => $expense->submitted_by,
+            'approved_by' => $expense->approved_by,
+            'approved_at' => $expense->approved_at?->toIso8601String(),
+            'notes' => $expense->notes,
+            'created_at' => $expense->created_at?->toIso8601String(),
+            'updated_at' => $expense->updated_at?->toIso8601String(),
+            'submitter' => $expense->submitter ? ['id' => $expense->submitter->id, 'name' => $expense->submitter->name] : null,
+        ])->values(), 'pagination' => [
+            'current_page' => $page->currentPage(), 'per_page' => $page->perPage(), 'total' => $page->total(), 'last_page' => $page->lastPage(),
+        ]]);
     }
 
     public function payrollRunQuery(WorkflowInput $input): Builder

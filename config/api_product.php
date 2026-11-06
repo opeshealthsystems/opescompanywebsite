@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version' => '0.132.0',
+    'version' => '0.133.0',
     'products' => [
         [
             'id' => 'public-enquiries',
@@ -93,6 +93,11 @@ return [
         ],
     ],
     'changelog' => [
+        [
+            'version' => '0.133.0',
+            'released_at' => '2026-11-06',
+            'summary' => 'Added typed expense register and expense commands plus budget list/detail/commands, with a bounded submitter projection and actual 201 creation responses.',
+        ],
         [
             'version' => '0.132.0',
             'released_at' => '2026-11-06',

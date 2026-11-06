@@ -782,5 +782,65 @@
     "allow_response_schema_refinement": true,
     "allow_additive_request_schema": true,
     "reason": "Publishes the already-required service-request type input and adds the created customer-safe resource to the existing acknowledgement while preserving status, locale and message; the browser redirect remains unchanged and internal notes are excluded."
+  },
+  {
+    "method": "GET",
+    "path": "/finance/expenses",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the typed administrator expense register and intentionally narrows the related submitter object to id and name, removing incidental user-model fields from this API response. Finance access and expense data remain administrator-only."
+  },
+  {
+    "method": "POST",
+    "path": "/finance/expenses",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the expense creation acknowledgement and corrects success to the handler actual 201 Created response. Validation, pending status, generated reference, authorization and idempotency are unchanged."
+  },
+  {
+    "method": "PUT",
+    "path": "/finance/expenses/{expense}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing pending-expense update acknowledgement and decimal-safe expense register projection. Update validation and pending-only edit rules are unchanged."
+  },
+  {
+    "method": "POST",
+    "path": "/finance/expenses/{expense}/approve",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing expense approval acknowledgement and approved status."
+  },
+  {
+    "method": "POST",
+    "path": "/finance/expenses/{expense}/mark-paid",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing expense payment acknowledgement and paid status."
+  },
+  {
+    "method": "GET",
+    "path": "/finance/budgets",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing filtered/paginated budget projection returned by AdminBudgetQueries."
+  },
+  {
+    "method": "GET",
+    "path": "/finance/budgets/{budget}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing budget detail projection returned by AdminBudgetQueries."
+  },
+  {
+    "method": "POST",
+    "path": "/finance/budgets",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing budget create acknowledgement and corrects success to the handler actual 201 Created response. Validation, uniqueness, authorization and idempotency are unchanged."
+  },
+  {
+    "method": "PUT",
+    "path": "/finance/budgets/{budget}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing budget update acknowledgement and serialized decimal cast. Validation, uniqueness, authorization and idempotency are unchanged."
+  },
+  {
+    "method": "DELETE",
+    "path": "/finance/budgets/{budget}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing budget deletion acknowledgement, including its deleted record identifier."
   }
 ]

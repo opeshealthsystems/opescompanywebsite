@@ -1,3 +1,11 @@
+## API release 0.133.0 — finance expense and budget contracts (6 November 2026)
+
+Deployed OpenAPI 0.133.0 and Node SDK preview 0.146.0. The contract now defines the administrator expense list and expense create/update/approve/pay outcomes, plus budget list/detail/create/update/delete. The expense list returns a bounded submitter summary (`id`, `name`) instead of serializing the related user model. Expense and budget creation document the actual 201 response. No migration was required.
+
+Gates: finance API suite 52 tests / 845 assertions passed; Node SDK 19/19; strict TypeScript fixtures, API compatibility review, response-schema coverage (174 field-specific, 479 generic, 3 no-content across 656 operations), and PHP contract generation passed. Production status, discovery and OpenAPI report 0.133.0; the live contract has 465 paths and 656 operations. The developer portal returns 200 and advertises SDK 0.146.0. Its 51,424-byte download matches live metadata SHA-256 `fb218c40534896343fc146eba5e6d4bc37934fc84c20af69358341d60bcc4e1e`. Anonymous finance expense and budget reads return 401.
+
+Release archive `/home/u117099711/releases/ohs-api-0.133.0-20261106.tar.gz` SHA-256 `624b552563de59396c45b0b6b7a76235cedd40fef9b16dd1c713dc50c092ced9`. Predeploy rollback archive `/home/u117099711/backups/ohs-api-0.133.0-predeploy-20261106.tar.gz` SHA-256 `74e6d788ebe5414c48f814ec379a87ea52f6e54a03c5ebf8aa99a6b0dda19b75`, gzip verified and mode 0600. Laravel configuration cache rebuilt. No GitHub push was performed.
+
 # API architecture implementation status
 
 ## Developer self-service console — deployed 5 November 2026

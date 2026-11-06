@@ -1,3 +1,7 @@
+## SDK 0.146.0 — expense and budget workflows (6 November 2026)
+
+Types the administrator expense register with its bounded submitter projection, expense creation/update/approval/payment results, budget list/detail, and budget create/update/delete results. Corrects expense and budget creation to their actual 201 responses. Existing finance roles, validation, approval rules and idempotency behavior are unchanged. OpenAPI is 0.133.0. This downloadable preview remains unpublished to npm. Archive size is 51424 bytes; SHA-256 is `fb218c40534896343fc146eba5e6d4bc37934fc84c20af69358341d60bcc4e1e`.
+
 ## SDK 0.145.0 — recurring-invoice templates (6 November 2026)
 
 Types the filtered recurring-template list and detail projection, template creation/update acknowledgements, and generated-invoice outcome. The request types include the existing frequency allowlist and require frequency on create. Corrects generation to its actual 201 status and documents line items, schedule, currency, terms and nullable client/customer details. Existing schedule and invoice-generation rules are unchanged. OpenAPI is 0.132.0. This downloadable preview remains unpublished to npm. Archive size is 51147 bytes; SHA-256 is `66e225298a25d4810f49dc3e4ad3dee0811010df650f51052eba8b558733cb99`.

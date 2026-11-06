@@ -1247,6 +1247,93 @@ foreach ([
     unset($templateOperation);
 }
 unset($invoiceTemplateFrequencyOptions, $templatePath, $templateMethod, $frequencyRequired);
+$financePaginationSchema = ['type' => 'object', 'required' => ['current_page', 'per_page', 'total', 'last_page'], 'properties' => [
+    'current_page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+]];
+$budgetSchema = ['type' => 'object', 'required' => ['id', 'year', 'category', 'department', 'allocated_amount', 'currency', 'notes'], 'properties' => [
+    'id' => ['type' => 'integer'], 'year' => ['type' => 'integer', 'minimum' => 2000, 'maximum' => 2100],
+    'category' => ['type' => 'string', 'enum' => array_keys(\App\Models\Expense::categoryOptions())], 'department' => ['type' => 'string'],
+    'allocated_amount' => ['type' => 'string', 'description' => 'Decimal value serialized as a string by the Budget model cast.'],
+    'currency' => ['type' => 'string', 'enum' => ['XAF', 'USD', 'EUR']], 'notes' => ['type' => ['string', 'null']],
+    'created_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'updated_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+]];
+$budgetList = &$spec['paths']['/finance/budgets']['get'];
+$budgetList['responses']['200']['description'] = 'Returns the paginated finance budget projection.';
+$budgetList['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => $budgetSchema], 'pagination' => $financePaginationSchema,
+]], 'admin.finance.budgets.index');
+unset($budgetList);
+$budgetShow = &$spec['paths']['/finance/budgets/{budget}']['get'];
+$budgetShow['responses']['200']['description'] = 'Returns one budget with the stable fields used by the administrator budget register.';
+$budgetShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['budget'], 'properties' => ['budget' => $budgetSchema]], 'admin.finance.budgets.show');
+unset($budgetShow);
+$budgetCommandResponses = [
+    'admin_finance_budgets_create' => ['status' => 201, 'description' => 'Creates a unique budget allocation and returns its identifier and budget record.', 'data' => ['type' => 'object', 'required' => ['record', 'id'], 'properties' => ['record' => $budgetSchema, 'id' => ['type' => 'integer']]]],
+    'admin_finance_budgets_update' => ['status' => 200, 'description' => 'Updates a budget allocation and returns its identifier and current budget record.', 'data' => ['type' => 'object', 'required' => ['record', 'id'], 'properties' => ['record' => $budgetSchema, 'id' => ['type' => 'integer']]]],
+    'admin_finance_budgets_delete' => ['status' => 200, 'description' => 'Deletes a budget allocation and returns its deleted identifier.', 'data' => ['type' => 'object', 'required' => ['deleted_id'], 'properties' => ['deleted_id' => ['type' => 'integer']]]],
+];
+foreach ($spec['paths'] as &$budgetPath) {
+    foreach ($budgetPath as &$budgetOperation) {
+        $operationId = $budgetOperation['operationId'] ?? null;
+        if (!isset($budgetCommandResponses[$operationId])) continue;
+        $definition = $budgetCommandResponses[$operationId];
+        $status = (string) $definition['status'];
+        $sourceStatus = isset($budgetOperation['responses'][$status]) ? $status : '200';
+        $oldSchema = $budgetOperation['responses'][$sourceStatus]['content']['application/json']['schema'];
+        $opName = $oldSchema['properties']['meta']['properties']['operation']['const'];
+        if ($sourceStatus !== $status) {
+            $budgetOperation['responses'][$status] = $budgetOperation['responses'][$sourceStatus];
+            unset($budgetOperation['responses'][$sourceStatus]);
+        }
+        $budgetOperation['responses'][$status]['description'] = $definition['description'];
+        $budgetOperation['responses'][$status]['content']['application/json']['schema'] = $successEnvelope($definition['data'], $opName);
+    }
+    unset($budgetOperation);
+}
+unset($budgetPath, $budgetCommandResponses);
+$expenseSchema = ['type' => 'object', 'required' => ['id', 'reference', 'title', 'description', 'category', 'amount', 'currency', 'vendor', 'expense_date', 'receipt_path', 'status', 'submitted_by', 'approved_by', 'approved_at', 'notes', 'created_at', 'updated_at', 'submitter'], 'properties' => [
+    'id' => ['type' => 'integer'], 'reference' => ['type' => 'string'], 'title' => ['type' => 'string'],
+    'description' => ['type' => ['string', 'null']], 'category' => ['type' => 'string', 'enum' => array_keys(\App\Models\Expense::categoryOptions())],
+    'amount' => ['type' => 'string', 'description' => 'Decimal value serialized as a string by the Expense model cast.'],
+    'currency' => ['type' => 'string', 'enum' => ['XAF', 'USD', 'EUR']], 'vendor' => ['type' => ['string', 'null']],
+    'expense_date' => ['type' => 'string', 'format' => 'date'], 'receipt_path' => ['type' => ['string', 'null']],
+    'status' => ['type' => 'string', 'enum' => array_keys(\App\Models\Expense::statusOptions())], 'submitted_by' => ['type' => 'integer'],
+    'approved_by' => ['type' => ['integer', 'null']], 'approved_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'notes' => ['type' => ['string', 'null']], 'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+    'submitter' => ['type' => ['object', 'null'], 'required' => ['id', 'name'], 'properties' => ['id' => ['type' => 'integer'], 'name' => ['type' => 'string']]],
+]];
+$expenseList = &$spec['paths']['/finance/expenses']['get'];
+$expenseList['responses']['200']['description'] = 'Returns paginated finance expenses with an explicit administrator-safe record projection and submitter summary.';
+$expenseList['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => $expenseSchema], 'pagination' => $financePaginationSchema,
+]], 'admin.finance.expenses.index');
+unset($expenseList);
+$expenseCommandResponses = [
+    'admin_finance_expenses_create' => ['status' => 201, 'description' => 'Records a pending expense and returns its generated reference, identifier and initial approval status.', 'data' => ['type' => 'object', 'required' => ['id', 'reference', 'status'], 'properties' => ['id' => ['type' => 'integer'], 'reference' => ['type' => 'string'], 'status' => ['type' => 'string', 'const' => 'pending']]]],
+    'admin_finance_expenses_update' => ['status' => 200, 'description' => 'Updates an editable pending expense and returns its identifier, current status and reference.', 'data' => ['type' => 'object', 'required' => ['id', 'status', 'reference'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'pending'], 'reference' => ['type' => 'string']]]],
+    'admin_finance_expenses_approve' => ['status' => 200, 'description' => 'Approves a pending expense and returns its identifier and approval status.', 'data' => ['type' => 'object', 'required' => ['id', 'status'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'approved']]]],
+    'admin_finance_expenses_markPaid' => ['status' => 200, 'description' => 'Marks an approved expense as paid and returns its identifier and payment status.', 'data' => ['type' => 'object', 'required' => ['id', 'status'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'paid']]]],
+];
+foreach ($spec['paths'] as &$expensePath) {
+    foreach ($expensePath as &$expenseOperation) {
+        $operationId = $expenseOperation['operationId'] ?? null;
+        if (!isset($expenseCommandResponses[$operationId])) continue;
+        $definition = $expenseCommandResponses[$operationId];
+        $status = (string) $definition['status'];
+        $sourceStatus = isset($expenseOperation['responses'][$status]) ? $status : '200';
+        $oldSchema = $expenseOperation['responses'][$sourceStatus]['content']['application/json']['schema'];
+        $opName = $oldSchema['properties']['meta']['properties']['operation']['const'];
+        if ($sourceStatus !== $status) {
+            $expenseOperation['responses'][$status] = $expenseOperation['responses'][$sourceStatus];
+            unset($expenseOperation['responses'][$sourceStatus]);
+        }
+        $expenseOperation['responses'][$status]['description'] = $definition['description'];
+        $expenseOperation['responses'][$status]['content']['application/json']['schema'] = $successEnvelope($definition['data'], $opName);
+    }
+    unset($expenseOperation);
+}
+unset($expensePath, $expenseCommandResponses, $expenseSchema, $budgetSchema, $financePaginationSchema);
+
 $customerSummarySchema = ['type' => 'object', 'required' => ['id', 'user_id', 'facility_name', 'facility_type', 'country', 'city', 'address', 'created_at', 'updated_at', 'customer'], 'properties' => [
     'id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'], 'facility_name' => ['type' => ['string', 'null']], 'facility_type' => ['type' => ['string', 'null']],
     'country' => ['type' => 'string'], 'city' => ['type' => ['string', 'null']], 'address' => ['type' => ['string', 'null']],
