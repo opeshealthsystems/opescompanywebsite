@@ -1,10 +1,11 @@
 @php $locale = app()->getLocale(); @endphp
+@php $isConceptLanding = request()->routeIs('home'); $isDrugTracePage = request()->route('slug') === 'opes-drugtrace'; @endphp
 
 <nav class="site-nav" id="siteNav">
     <a href="{{ url($locale) }}" class="nav-logo">
         <img class="site-seal" src="{{ asset('images/opes-seal.png') }}" alt="" width="44" height="44" style="object-fit:contain;flex-shrink:0">
         <div class="nav-logo-text">
-            <div class="nav-logo-name">OPES <span>Health</span> Systems</div>
+            <div class="nav-logo-name"><span class="nav-brand-opes">OPES</span><span class="nav-brand-divider">|</span><span class="nav-brand-name">Health Systems</span></div>
             <div class="nav-logo-tagline">{{ $locale === 'fr' ? 'Infrastructure de santé numérique pour l\'Afrique' : 'Digital Health Infrastructure for Africa' }}</div>
         </div>
     </a>
@@ -81,8 +82,8 @@
         </a>
         @endauth
 
-        <a href="{{ url($locale.'/book-demo') }}" class="btn-cta">
-            {{ __('nav.book_demo') }}
+        <a href="{{ $isDrugTracePage ? route('contact', ['locale' => $locale, 'product_slug' => 'opes-drugtrace']) : ($isConceptLanding ? url($locale.'/contact') : url($locale.'/book-demo')) }}" class="btn-cta">
+            {{ $isConceptLanding || $isDrugTracePage ? ($locale === 'fr' ? 'Parler à OPES' : 'Talk to our team') : __('nav.book_demo') }}
         </a>
     </div>
     </div>

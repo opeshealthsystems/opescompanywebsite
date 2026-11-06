@@ -14,7 +14,7 @@ $current = $locale;
             <a href="{{ url($locale) }}" class="nav-logo" style="text-decoration:none;margin-bottom:10px">
                 <img class="site-seal" src="{{ asset('images/opes-seal.png') }}" alt="" width="44" height="44" style="object-fit:contain;flex-shrink:0">
                 <div class="nav-logo-text">
-                    <div class="nav-logo-name">OPES <span>Health</span> Systems</div>
+                    <div class="nav-logo-name"><span class="nav-brand-opes">OPES</span><span class="nav-brand-divider">|</span><span class="nav-brand-name">Health Systems</span></div>
                 </div>
             </a>
             <p>{{ $isFr ? 'Des logiciels de santé conçus au Cameroun pour les équipes de soins en Afrique. Consultez le catalogue et contactez notre équipe pour connaître les disponibilités.' : 'Healthcare software designed in Cameroon for healthcare teams across Africa. Explore the catalogue and discuss availability with our team.' }}</p>

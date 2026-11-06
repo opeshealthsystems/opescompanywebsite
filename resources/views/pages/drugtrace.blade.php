@@ -1,163 +1,131 @@
-@php $isFr = app()->getLocale() === 'fr'; @endphp
+@php $isFr = app()->getLocale() === 'fr'; $locale = app()->getLocale(); @endphp
+
 <x-layouts.app
-    title="{{ $isFr ? 'OPES DrugTrace — Sécurité et traçabilité des médicaments' : 'OPES DrugTrace — Medicine Safety & Traceability' }}"
-    description="{{ $isFr ? 'Suivez l’origine, les lots, les dates, les rappels et les mouvements des médicaments avec OPES DrugTrace.' : 'Track medicine provenance, lots, expiry, recalls and supply movements with OPES DrugTrace.' }}">
-<style>
-.dt-hero { max-width:1120px; margin:0 auto; padding:64px 28px 44px; text-align:center; }
-.dt-hero h1 { color:#f1f5f9; font-size:clamp(2rem,4vw,3.2rem); line-height:1.12; margin:10px auto 14px; max-width:820px; }
-.dt-hero p { color:#b8c6d5; font-size:1.05rem; line-height:1.75; max-width:820px; margin:0 auto; }
-.dt-actions { display:flex; justify-content:center; flex-wrap:wrap; gap:12px; margin-top:24px; }
-.dt-section { max-width:1120px; margin:0 auto; padding:42px 28px; scroll-margin-top:90px; }
-.dt-section h2 { color:#f1f5f9; font-size:clamp(1.4rem,3vw,2rem); margin:0 0 12px; }
-.dt-lead { color:#b8c6d5; line-height:1.75; max-width:850px; margin:0 0 24px; }
-.dt-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,245px),1fr)); gap:14px; }
-.dt-card { background:#0b1d31; border:1px solid #29445e; border-radius:12px; padding:20px; }
-.dt-card h3 { color:#eaf2f8; font-size:1rem; margin:0 0 8px; }
-.dt-card p,.dt-card li { color:#b8c6d5; line-height:1.65; font-size:.9rem; }
-.dt-card ul { margin:8px 0 0; padding-left:19px; }
-.dt-step { background:#0b1d31; border:1px solid #29445e; border-radius:12px; padding:17px; }
-.dt-step b { display:block; color:#acd5ec; font-size:.78rem; letter-spacing:.1em; margin-bottom:9px; }
-.dt-step h3 { color:#eaf2f8; font-size:.98rem; margin:0 0 7px; }
-.dt-step p { color:#b8c6d5; font-size:.88rem; line-height:1.6; margin:0; }
-.dt-note { border:1px solid #506a82; border-radius:10px; background:#0b1d31; padding:15px 18px; color:#d0dce7; line-height:1.7; font-size:.9rem; }
-@media(max-width:640px) { .dt-hero,.dt-section { padding-left:18px; padding-right:18px; } }
-</style>
+    bodyClass="public-drugtrace"
+    :title="$isFr ? 'OPES DrugTrace | Traçabilité et sécurité des médicaments' : 'OPES DrugTrace | Medicine Traceability'"
+    :description="$isFr ? 'Suivez les médicaments de la réception à la délivrance avec OPES DrugTrace. Évaluez les flux de vérification, de stock et de rappel adaptés à votre organisation.' : 'Track medicines from receipt to dispensing with OPES DrugTrace. Explore verification, stock and recall workflows scoped to your organisation.'">
 
-<header class="dt-hero">
-    <div class="section-label" style="justify-content:center">{{ $isFr ? 'Sécurité du médicament · Traçabilité pharmaceutique' : 'Medicine safety · Pharmaceutical traceability' }}</div>
-    <h1>OPES DrugTrace</h1>
-    <p>{{ $isFr ? 'Chaque médicament devrait pouvoir raconter son parcours. DrugTrace aide les acteurs autorisés à examiner l’origine, l’authenticité, la légalité, les lots, les rappels et les mouvements — du fournisseur jusqu’au point de délivrance.' : 'Every medicine should be able to tell its story. DrugTrace helps authorized participants review provenance, authenticity, supply-chain legitimacy, lots, recalls and movements from supplier to dispensing point.' }}</p>
-    <div class="brand-notice" style="max-width:760px;margin:20px auto 0"><strong>{{ $isFr ? 'Disponible' : 'Released and available' }}</strong> · {{ $isFr ? 'Disponibilité confirmée par OPES le 30 octobre 2026. La portée et les options sont confirmées pendant l’évaluation du projet.' : 'Availability confirmed by OPES on 30 October 2026. Scope and options are confirmed during project evaluation.' }}</div>
-    <div class="dt-actions">
-        <a class="btn-primary" href="{{ route('book-demo', ['product' => 'opes-drugtrace']) }}">{{ $isFr ? 'Demander une démonstration' : 'Request a demonstration' }}</a>
-        <a class="btn-secondary" href="{{ route('contact', ['locale' => app()->getLocale(), 'product_slug' => 'opes-drugtrace']) }}">{{ $isFr ? 'Demander un devis' : 'Request a quote' }}</a>
-        <a class="btn-secondary" href="{{ route('products.index') }}">{{ $isFr ? 'Voir les produits OPES' : 'Explore OPES products' }}</a>
-    </div>
-</header>
+<div class="drugtrace-page">
+    <section class="dt-product-hero" aria-labelledby="drugtrace-title">
+        <div class="dt-hero-inner">
+            <div class="dt-hero-copy">
+                <div class="dt-eyebrow">{{ $isFr ? 'TRAÇABILITÉ DES MÉDICAMENTS' : 'MEDICINE TRACEABILITY' }}</div>
+                <h1 id="drugtrace-title">OPES DrugTrace</h1>
+                <p>{{ $isFr ? 'Reliez la vérification des médicaments et la visibilité sur les approvisionnements entre les systèmes de santé — de la réception à l’utilisation dans les structures de soins.' : 'Connect medicine verification and supply visibility across health systems, helping teams track products from receipt to use across facilities and care settings.' }}</p>
+                <div class="dt-hero-actions">
+                    <a class="dt-button dt-button-primary" href="{{ route('book-demo', ['product' => 'opes-drugtrace']) }}">{{ $isFr ? 'Demander une démonstration' : 'Request a product walkthrough' }} <i data-lucide="arrow-right" aria-hidden="true"></i></a>
+                    <a class="dt-button dt-button-secondary" href="{{ url($locale.'/partnerships') }}">{{ $isFr ? 'Explorer les partenariats' : 'Explore partnerships' }}</a>
+                </div>
+                <div class="dt-availability"><span></span>{{ $isFr ? 'Disponible — périmètre à confirmer selon votre projet' : 'Released and available · Scope confirmed for each project' }}</div>
+            </div>
 
-<section class="dt-section" id="what-it-traces">
-    <div class="section-label">{{ $isFr ? 'Au-delà du simple inventaire' : 'Beyond a simple stock count' }}</div>
-    <h2>{{ $isFr ? 'Relier chaque lot à son origine et à son statut' : 'Connect each medicine lot to its origin and status' }}</h2>
-    <p class="dt-lead">{{ $isFr ? 'Un stock total ne répond pas toujours aux questions essentielles : qui a fabriqué ou importé le produit, par quelle chaîne il est arrivé, quel lot est concerné, s’il est expiré ou rappelé, et ce qui a été reçu, délivré, mis en quarantaine, retourné ou détruit.' : 'A total stock number cannot answer every important question: who made or imported the product, how it entered the supply chain, which lot it belongs to, whether it has expired or been recalled, and what was received, dispensed, quarantined, returned or destroyed.' }}</p>
-    <div class="dt-grid">
-        @foreach($isFr ? [
-            ['Origine et chaîne d’approvisionnement','Consigner les fournisseurs, la provenance et les mouvements des produits.'],
-            ['Authenticité et légalité','Présenter séparément l’authenticité du produit et la légitimité du canal d’approvisionnement.'],
-            ['Lots, stocks et péremption','Suivre les quantités, lots, emplacements, dates de péremption et statuts de quarantaine.'],
-            ['Rappels, retours et pertes','Identifier les unités concernées, suivre les actions et conserver les preuves de rapprochement.'],
-        ] : [
-            ['Provenance and supply chain','Record suppliers, product origin and movements through the supply chain.'],
-            ['Authenticity and legality','Show product authenticity separately from whether its supply channel is authorized.'],
-            ['Lots, stock and expiry','Track quantities, batches, locations, expiry dates and quarantine status.'],
-            ['Recalls, returns and losses','Locate affected units, track actions and retain reconciliation evidence.'],
-        ] as $item)
-        <article class="dt-card"><h3>{{ $item[0] }}</h3><p>{{ $item[1] }}</p></article>
-        @endforeach
-    </div>
-    <p class="dt-note" style="margin-top:16px">{{ $isFr ? 'Un médicament authentique peut avoir suivi un canal non autorisé. DrugTrace affiche des signaux à examiner par les personnes responsables ; ces signaux ne constituent pas, à eux seuls, une conclusion réglementaire ou une accusation.' : 'A genuine medicine may still have entered through an unauthorized channel. DrugTrace surfaces signals for responsible people to investigate; a signal alone is not a regulatory determination or accusation.' }}</p>
-</section>
+            <div class="dt-trace-illustration" aria-label="{{ $isFr ? 'Illustration du suivi des étapes de réception, vérification, mouvement et rapprochement' : 'Illustration of the receive, verify, move and reconcile workflow' }}">
+                <div class="dt-pack" aria-hidden="true"><i data-lucide="pill"></i><span></span><span></span><b><i data-lucide="check" aria-hidden="true"></i></b></div>
+                <div class="dt-trace-panel">
+                    <div class="dt-trace-panel-heading"><i data-lucide="package-check" aria-hidden="true"></i><strong>{{ $isFr ? 'Traçabilité des médicaments' : 'Medicine Trace' }}</strong></div>
+                    <ol>
+                        @foreach($isFr ? ['Réception','Vérification','Mouvement','Rapprochement'] : ['Receive','Verify','Move','Reconcile'] as $step)
+                        <li><span><i data-lucide="check" aria-hidden="true"></i></span><strong>{{ $step }}</strong><i class="dt-trace-line" aria-hidden="true"></i></li>
+                        @endforeach
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section class="dt-section" id="workflow">
-    <div class="section-label">{{ $isFr ? 'Parcours de traçabilité' : 'Traceability workflow' }}</div>
-    <h2>{{ $isFr ? 'De la réception à la délivrance' : 'From receiving to dispensing' }}</h2>
-    <div class="dt-grid">
-        @foreach($isFr ? [
-            ['01','Réception','Comparer la livraison attendue au fournisseur, aux informations de provenance et aux quantités reçues.'],
-            ['02','Scan et capture','Enregistrer le produit, le lot, la date, le numéro de série et la quantité.'],
-            ['03','Décision','Accepter, signaler, mettre en quarantaine ou envoyer pour investigation selon les règles convenues.'],
-            ['04','Stock par lot','Suivre l’emplacement, les transferts, les dates et les alertes de rupture ou péremption.'],
-            ['05','Vérification avant délivrance','Contrôler le lot, la date, le rappel, la quarantaine et le statut du numéro de série.'],
-            ['06','Délivrance et rapprochement','Tracer la délivrance, réduire le stock et confirmer le mouvement au système connecté lorsque cette intégration est prévue.'],
-        ] : [
-            ['01','Receive','Compare the expected delivery with supplier, provenance and received-quantity details.'],
-            ['02','Scan and capture','Record product, lot, expiry, serial and quantity.'],
-            ['03','Decide','Accept, warn, quarantine or refer for investigation under agreed rules.'],
-            ['04','Track lot-level stock','Follow locations, transfers, expiry and shortage alerts.'],
-            ['05','Verify before dispensing','Check the lot, expiry, recall, quarantine and serial status.'],
-            ['06','Dispense and reconcile','Record dispensing, reduce stock and confirm the movement to a connected system where that integration is in scope.'],
-        ] as $step)
-        <article class="dt-step"><b>{{ $step[0] }}</b><h3>{{ $step[1] }}</h3><p>{{ $step[2] }}</p></article>
-        @endforeach
-    </div>
-</section>
+    <section class="dt-workflow-section" aria-labelledby="dt-workflow-title">
+        <div class="dt-section-inner">
+            <h2 id="dt-workflow-title">{{ $isFr ? 'Tracer les médicaments tout au long du parcours.' : 'Trace medicines across the workflow.' }}</h2>
+            <div class="dt-workflow-grid">
+                @foreach($isFr ? [
+                    ['package', 'Réceptionner', 'Enregistrer les médicaments entrants et les informations disponibles au point de réception.'],
+                    ['shield-check', 'Vérifier', 'Examiner les données, le lot et le statut enregistré selon les règles convenues.'],
+                    ['layers-3', 'Suivre', 'Consulter les mouvements et le statut des médicaments dans le périmètre configuré.'],
+                ] : [
+                    ['package', 'Receive', 'Record incoming medicines and available information at the receiving point.'],
+                    ['shield-check', 'Verify', 'Review recorded product, batch and status details against agreed rules.'],
+                    ['layers-3', 'Monitor', 'Review medicine movements and status within the configured scope.'],
+                ] as [$icon, $title, $copy])
+                <article class="dt-workflow-item"><i data-lucide="{{ $icon }}" aria-hidden="true"></i><div><h3>{{ $title }}</h3><p>{{ $copy }}</p></div></article>
+                @endforeach
+            </div>
+        </div>
+    </section>
 
-<section class="dt-section" id="capabilities">
-    <div class="section-label">{{ $isFr ? 'Fonctions présentées' : 'Product capabilities' }}</div>
-    <h2>{{ $isFr ? 'Des preuves pour agir sur les risques d’approvisionnement' : 'Traceability evidence for supply-chain action' }}</h2>
-    <div class="dt-grid">
-        @foreach($isFr ? [
-            ['Vérification par scan','Résultats lisibles : vérifié, avertissement, inconnu, suspect, rappelé, expiré, en quarantaine, déjà délivré, perdu ou volé, ou canal non autorisé.'],
-            ['Gestion des rappels','Localiser les stocks concernés, bloquer les unités restantes selon le processus configuré et suivre récupération et rapprochement.'],
-            ['Alertes et contrôle des stocks','Suivre les stocks par lot et emplacement, les transferts, les ruptures et les échéances 30/60/90 jours selon le paramétrage.'],
-            ['Signaux d’approvisionnement','Comparer les mouvements enregistrés et observés pour repérer les écarts à investiguer — sans attribuer automatiquement une faute.'],
-            ['Application et intégration','Scan mobile, API et événements de traçabilité compatibles GS1/EPCIS selon le périmètre d’intégration convenu.'],
-            ['Données d’audit','Conserver l’historique des mouvements, décisions, retours et destructions avec les éléments de preuve configurés.'],
-        ] : [
-            ['Scan verification','Readable outcomes include verified, warning, unknown, suspicious, recalled, expired, quarantined, previously dispensed, lost or stolen, and unauthorized supply channel.'],
-            ['Recall management','Locate affected stock, block remaining units under the configured process, and track recovery and reconciliation.'],
-            ['Stock alerts and control','Track inventory by lot and location, transfers, shortages and 30/60/90-day expiry alerts where configured.'],
-            ['Supply-chain signals','Compare recorded and observed movements to surface discrepancies for investigation without assigning blame automatically.'],
-            ['Mobile and integration','Mobile scanning, APIs and GS1/EPCIS-compatible trace events subject to the agreed integration scope.'],
-            ['Audit evidence','Retain configured histories of movements, decisions, returns and destruction records.'],
-        ] as $item)
-        <article class="dt-card"><h3>{{ $item[0] }}</h3><p>{{ $item[1] }}</p></article>
-        @endforeach
-    </div>
-</section>
+    <section class="dt-visibility-section" aria-labelledby="dt-visibility-title">
+        <div class="dt-section-inner dt-visibility-grid">
+            <div class="dt-dashboard-preview" aria-label="{{ $isFr ? 'Aperçu illustratif du tableau de bord DrugTrace' : 'Illustrative DrugTrace dashboard preview' }}">
+                <div class="dt-dashboard-top"><i data-lucide="menu" aria-hidden="true"></i><strong>OPES DrugTrace</strong><span>{{ $isFr ? 'Aperçu produit' : 'Product preview' }}</span></div>
+                <div class="dt-dashboard-body">
+                    <nav aria-label="{{ $isFr ? 'Aperçu de navigation' : 'Preview navigation' }}">
+                        @foreach($isFr ? [['house','Vue générale'],['package','Médicaments'],['arrow-left-right','Mouvements'],['layers-3','Stock'],['file-text','Rapports']] : [['house','Overview'],['package','Medicines'],['arrow-left-right','Movements'],['layers-3','Stock'],['file-text','Reports']] as [$icon, $label])
+                        <span class="{{ $loop->first ? 'is-current' : '' }}"><i data-lucide="{{ $icon }}" aria-hidden="true"></i>{{ $label }}</span>
+                        @endforeach
+                    </nav>
+                    <div class="dt-dashboard-content">
+                        <h3>{{ $isFr ? 'Vue d’approvisionnement' : 'Supply overview' }}</h3>
+                        <div class="dt-dashboard-stats"><div><b>{{ $isFr ? 'Médicaments' : 'Medicines' }}</b><span>{{ $isFr ? 'Catalogue' : 'Catalogue' }}</span></div><div><b>{{ $isFr ? 'Mouvements' : 'Movements' }}</b><span>{{ $isFr ? 'Activité' : 'Activity' }}</span></div><div><b>{{ $isFr ? 'Stock' : 'Stock' }}</b><span>{{ $isFr ? 'Disponibilité' : 'Availability' }}</span></div></div>
+                        <div class="dt-activity">
+                            <div class="dt-activity-heading">{{ $isFr ? 'Étapes du flux' : 'Workflow steps' }}<span>{{ $isFr ? 'Exemple illustratif' : 'Illustrative example' }}</span></div>
+                            @foreach($isFr ? ['Réceptionner','Vérifier','Déplacer','Rapprocher'] : ['Receive','Verify','Move','Reconcile'] as $step)
+                            <div class="dt-activity-row"><i data-lucide="{{ $loop->iteration === 2 ? 'shield-check' : ($loop->iteration === 3 ? 'arrow-left-right' : 'package') }}" aria-hidden="true"></i><span>{{ $step }}</span><span class="dt-activity-status">{{ $isFr ? 'Étape' : 'Workflow' }}</span><span class="dt-skeleton" aria-hidden="true"></span></div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dt-visibility-copy">
+                <h2 id="dt-visibility-title">{{ $isFr ? 'Une vue partagée des mouvements de médicaments.' : 'A shared view of medicine movement.' }}</h2>
+                @foreach($isFr ? [
+                    ['check-check','Réception vérifiée','Consigner les informations disponibles à l’arrivée des médicaments dans les structures et points d’approvisionnement.'],
+                    ['arrow-left-right','Historique des transferts','Consulter les mouvements enregistrés entre les lieux participants.'],
+                    ['layers-3','Visibilité du stock','Maintenir une vue claire sur la disponibilité des médicaments dans le périmètre convenu.'],
+                ] : [
+                    ['check-check','Verified intake','Record and confirm incoming medicines across facilities and supply points.'],
+                    ['arrow-left-right','Transfer history','Review where medicines have moved across participating locations.'],
+                    ['layers-3','Stock visibility','Keep a clear view of medicine availability across the agreed scope.'],
+                ] as [$icon, $title, $copy])
+                <article class="dt-benefit"><span><i data-lucide="{{ $icon }}" aria-hidden="true"></i></span><div><h3>{{ $title }}</h3><p>{{ $copy }}</p></div></article>
+                @endforeach
+            </div>
+        </div>
+    </section>
 
-<section class="dt-section" id="participants">
-    <div class="section-label">{{ $isFr ? 'Un réseau de confiance' : 'A shared trust network' }}</div>
-    <h2>{{ $isFr ? 'Pour les acteurs du circuit du médicament' : 'For medicine supply-chain participants' }}</h2>
-    <div class="dt-grid">
-        @foreach($isFr ? [
-            ['Hôpitaux et pharmacies','Réception, contrôle par lot, délivrance, rappels, péremption et rapprochement.'],
-            ['Fabricants et importateurs','Tracer les lots et signaux de circulation inhabituelle, selon les accès autorisés.'],
-            ['Distributeurs et grossistes','Documenter la chaîne de garde et réduire les litiges sur les livraisons.'],
-            ['Régulateurs et programmes','Étudier la coordination des rappels, les inspections et les signaux d’intégrité à l’échelle convenue.'],
-            ['Professionnels et patients','Les patients peuvent vérifier les informations affichées par scan dans l’application, sans envoyer de code SMS ; les patients ne voient pas les données internes des organisations.'],
-            ['Chercheurs','Étudier des indicateurs anonymisés de pertes, délais de rappel et écarts de réception avec les autorisations nécessaires.'],
-        ] : [
-            ['Hospitals and pharmacies','Manage receiving, lot checks, dispensing, recalls, expiry and reconciliation.'],
-            ['Manufacturers and importers','Trace batches and review unusual circulation signals within authorized access.'],
-            ['Distributors and wholesalers','Document chain of custody and reduce delivery disputes.'],
-            ['Regulators and programmes','Explore recall coordination, inspection support and supply-integrity signals at the agreed scope.'],
-            ['Health workers and patients','Patients can scan in the app to view the product, manufacturer, batch, expiry, recall status and warnings, without an SMS code; they do not see organizations’ internal data.'],
-            ['Researchers','Study authorized, appropriately anonymized indicators for loss, recall timing and receiving discrepancies.'],
-        ] as $item)
-        <article class="dt-card"><h3>{{ $item[0] }}</h3><p>{{ $item[1] }}</p></article>
-        @endforeach
-    </div>
-</section>
+    <section class="dt-integrations" aria-labelledby="dt-integrations-title">
+        <div class="dt-section-inner">
+            <h2 id="dt-integrations-title">{{ $isFr ? 'Conçu pour se connecter aux flux EMR, approvisionnement et données de santé.' : 'Designed to connect with EMR, procurement and health data workflows.' }}</h2>
+            <div class="dt-integration-map" aria-label="{{ $isFr ? 'Les systèmes de santé et partenaires peuvent se connecter à DrugTrace selon le périmètre du projet.' : 'Health systems and partners can connect to DrugTrace according to project scope.' }}">
+                <div><i data-lucide="stethoscope" aria-hidden="true"></i><strong>OPES EMR</strong></div>
+                <div><i data-lucide="shopping-cart" aria-hidden="true"></i><strong>{{ $isFr ? 'Approvisionnement' : 'Procurement' }}</strong></div>
+                <b>OPES DrugTrace</b>
+                <div><i data-lucide="database" aria-hidden="true"></i><strong>{{ $isFr ? 'Données de santé' : 'Health Data Platform' }}</strong></div>
+                <div><i data-lucide="chart-no-axes-column-increasing" aria-hidden="true"></i><strong>{{ $isFr ? 'Analytique et rapports' : 'Analytics & Reporting' }}</strong></div>
+            </div>
+            <p class="dt-scope-note">{{ $isFr ? 'Les systèmes, les données échangées, les responsabilités, les tests et les options de déploiement sont évalués et convenus avant chaque intégration.' : 'Systems, exchanged data, responsibilities, testing and deployment options are assessed and agreed before each integration.' }}</p>
+        </div>
+    </section>
 
-<section class="dt-section" id="deployment">
-    <div class="section-label">{{ $isFr ? 'Déploiement et gouvernance' : 'Deployment and governance' }}</div>
-    <h2>{{ $isFr ? 'À configurer selon les responsabilités de chaque organisation' : 'Configured around each organization’s responsibilities' }}</h2>
-    <div class="dt-grid">
-        @foreach($isFr ? [
-            ['Options','Sur site, hébergement géré ou architecture hybride, sous réserve d’évaluation technique et d’accord de service.'],
-            ['Accès et audit','Accès selon les rôles et journalisation des actions, avec les responsabilités de chaque partie définies avant déploiement.'],
-            ['Connexion aux systèmes','Évaluer les systèmes de pharmacie, EMR, ERP et partenaires à connecter, ainsi que les données et tests d’acceptation nécessaires.'],
-        ] : [
-            ['Deployment options','On-premise, managed hosting or hybrid, subject to technical assessment and service agreement.'],
-            ['Access and audit','Role-based access and activity logging, with each party’s responsibilities agreed before deployment.'],
-            ['System connections','Assess pharmacy, EMR, ERP and partner systems to connect, along with data and acceptance tests required.'],
-        ] as $item)
-        <article class="dt-card"><h3>{{ $item[0] }}</h3><p>{{ $item[1] }}</p></article>
-        @endforeach
-    </div>
-    <article class="dt-card" style="margin-top:14px">
-        <h3>{{ $isFr ? 'Modèle tarifaire' : 'Pricing approach' }}</h3>
-        <p>{{ $isFr ? 'Prix sur devis. Le document produit prévoit un abonnement par établissement, ainsi que des offres pour fabricants, distributeurs et API ; les déploiements nationaux sont évalués sur devis. Confirmez le périmètre, le nombre de sites et les services inclus.' : 'Pricing is by quote. The product material describes per-facility subscriptions and manufacturer, distributor and API plans; national deployments are scoped by quote. Confirm scope, site count and included services.' }}</p>
-    </article>
-    <p class="dt-note" style="margin-top:16px">{{ $isFr ? 'La disponibilité commerciale n’est pas une certification réglementaire ni une garantie universelle d’authenticité. La vérification dépend des données enregistrées, des participants et des intégrations activées. Confirmez les capacités de la version proposée, les responsabilités, la gouvernance et les tests de réception dans votre offre.' : 'Commercial availability is not regulatory certification or a universal guarantee of medicine authenticity. Verification depends on recorded data, participating organizations and enabled integrations. Confirm the proposed version’s capabilities, responsibilities, governance and acceptance tests in your offer.' }}</p>
-</section>
+    <section class="dt-related" aria-labelledby="dt-related-title">
+        <div class="dt-section-inner">
+            <h2 id="dt-related-title">{{ $isFr ? 'Produits associés' : 'Related products' }}</h2>
+            <p>{{ $isFr ? 'Des solutions complémentaires pour un système de santé plus connecté.' : 'Complementary OPES solutions for a more connected health system.' }}</p>
+            <div class="dt-related-grid">
+                @foreach([
+                    ['briefcase-medical', 'OPES EMR', $isFr ? 'Dossiers et flux cliniques pour les établissements.' : 'Clinical records and care workflows for facilities.', 'opes-emr'],
+                    ['heart-pulse', $isFr ? 'Triage santé' : 'Health Triage', $isFr ? 'Accueil numérique et priorisation des patients.' : 'Digital intake and patient prioritisation.', 'opes-triage'],
+                    ['search', $isFr ? 'Recherche de médicaments' : 'Medicine Finder', $isFr ? 'Recherche de médicaments et d’informations de disponibilité.' : 'Find medicines and availability information.', null],
+                ] as [$icon, $name, $copy, $slug])
+                <a href="{{ $slug ? url($locale.'/products/'.$slug) : url($locale.'/products') }}" class="dt-related-card"><i data-lucide="{{ $icon }}" aria-hidden="true"></i><span><strong>{{ $name }}</strong><small>{{ $copy }}</small></span><i class="dt-related-arrow" data-lucide="arrow-right" aria-hidden="true"></i></a>
+                @endforeach
+            </div>
+        </div>
+    </section>
 
-<div class="demo-section">
-    <h2>{{ $isFr ? 'Évaluons votre circuit pharmaceutique' : 'Assess your medicine supply workflow' }}</h2>
-    <p>{{ $isFr ? 'Parlez-nous des acteurs, systèmes, parcours de réception et délivrance, exigences de traçabilité et objectifs de rappel de votre organisation.' : 'Tell us about the participants, systems, receiving and dispensing workflows, traceability needs and recall objectives for your organization.' }}</p>
-    <div class="dt-actions">
-        <a class="btn-primary" href="{{ route('book-demo', ['product' => 'opes-drugtrace']) }}">{{ $isFr ? 'Demander une démonstration' : 'Request a demonstration' }}</a>
-        <a class="btn-secondary" href="{{ route('contact', ['locale' => app()->getLocale(), 'product_slug' => 'opes-drugtrace']) }}">{{ $isFr ? 'Demander un devis' : 'Request a quote' }}</a>
-    </div>
+    <section class="dt-final-cta">
+        <div class="dt-final-copy"><h2>{{ $isFr ? 'Améliorez la visibilité des médicaments dans votre système de santé.' : 'Bring medicine visibility into your health system.' }}</h2><p>{{ $isFr ? 'Échangeons sur la vérification, le suivi et la coordination des médicaments dans vos structures, programmes et parcours de soins.' : 'Explore how your teams can verify, track and coordinate medicines across facilities, programmes and care settings.' }}</p></div>
+        <a class="dt-button dt-button-light" href="{{ route('contact', ['locale' => $locale, 'product_slug' => 'opes-drugtrace']) }}">{{ $isFr ? 'Parler à OPES' : 'Talk to OPES' }} <i data-lucide="arrow-right" aria-hidden="true"></i></a>
+    </section>
+
+    <p class="dt-disclaimer">{{ $isFr ? 'La vérification dépend des données disponibles, des participants et des intégrations activées. DrugTrace n’est pas une certification réglementaire ni une garantie universelle d’authenticité. Toute configuration, portée, responsabilité et option tarifaire est confirmée dans le cadre du projet.' : 'Verification depends on available records, participating organisations and enabled integrations. DrugTrace is not a regulatory certification or a universal guarantee of authenticity. Configuration, scope, responsibilities and pricing are confirmed for each project.' }}</p>
 </div>
 </x-layouts.app>
