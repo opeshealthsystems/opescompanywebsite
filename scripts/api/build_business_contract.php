@@ -1334,6 +1334,72 @@ foreach ($spec['paths'] as &$expensePath) {
 }
 unset($expensePath, $expenseCommandResponses, $expenseSchema, $budgetSchema, $financePaginationSchema);
 
+$procurementPagination = ['type' => 'object', 'required' => ['current_page', 'per_page', 'total', 'last_page'], 'properties' => [
+    'current_page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+]];
+$purchaseOrderSchema = ['type' => 'object', 'required' => ['id', 'reference', 'vendor_id', 'vendor_name', 'title', 'description', 'status', 'requested_by', 'approved_by', 'approved_at', 'expected_date', 'received_date', 'subtotal', 'tax_amount', 'total', 'currency', 'notes', 'created_at', 'updated_at', 'vendor', 'requester'], 'properties' => [
+    'id' => ['type' => 'integer'], 'reference' => ['type' => 'string'], 'vendor_id' => ['type' => ['integer', 'null']], 'vendor_name' => ['type' => ['string', 'null']],
+    'title' => ['type' => 'string'], 'description' => ['type' => ['string', 'null']], 'status' => ['type' => 'string', 'enum' => ['draft', 'submitted', 'approved', 'received', 'cancelled']],
+    'requested_by' => ['type' => 'integer'], 'approved_by' => ['type' => ['integer', 'null']], 'approved_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'expected_date' => ['type' => ['string', 'null'], 'format' => 'date'], 'received_date' => ['type' => ['string', 'null'], 'format' => 'date'],
+    'subtotal' => ['type' => 'string'], 'tax_amount' => ['type' => 'string'], 'total' => ['type' => 'string'], 'currency' => ['type' => 'string', 'enum' => ['XAF', 'USD', 'EUR']],
+    'notes' => ['type' => ['string', 'null']], 'created_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'updated_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'vendor' => ['type' => ['object', 'null'], 'required' => ['id', 'name'], 'properties' => ['id' => ['type' => 'integer'], 'name' => ['type' => 'string']]],
+    'requester' => ['type' => ['object', 'null'], 'required' => ['id', 'name'], 'properties' => ['id' => ['type' => 'integer'], 'name' => ['type' => 'string']]],
+]];
+$supplierBillSchema = ['type' => 'object', 'required' => ['id', 'reference', 'vendor_id', 'vendor_name', 'purchase_order_id', 'bill_number', 'status', 'issue_date', 'due_date', 'subtotal', 'tax_amount', 'total', 'currency', 'paid_at', 'notes', 'created_by', 'created_at', 'updated_at', 'vendor'], 'properties' => [
+    'id' => ['type' => 'integer'], 'reference' => ['type' => 'string'], 'vendor_id' => ['type' => ['integer', 'null']], 'vendor_name' => ['type' => ['string', 'null']],
+    'purchase_order_id' => ['type' => ['integer', 'null']], 'bill_number' => ['type' => ['string', 'null']],
+    'status' => ['type' => 'string', 'enum' => ['draft', 'received', 'approved', 'paid', 'overdue', 'disputed']],
+    'issue_date' => ['type' => 'string', 'format' => 'date'], 'due_date' => ['type' => ['string', 'null'], 'format' => 'date'],
+    'subtotal' => ['type' => 'string'], 'tax_amount' => ['type' => 'string'], 'total' => ['type' => 'string'], 'currency' => ['type' => 'string', 'enum' => ['XAF', 'USD', 'EUR']],
+    'paid_at' => ['type' => ['string', 'null'], 'format' => 'date'], 'notes' => ['type' => ['string', 'null']], 'created_by' => ['type' => 'integer'],
+    'created_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'updated_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'vendor' => ['type' => ['object', 'null'], 'required' => ['id', 'name'], 'properties' => ['id' => ['type' => 'integer'], 'name' => ['type' => 'string']]],
+]];
+foreach ([
+    ['/finance/purchase-orders', 'admin.finance.purchaseOrders.index', $purchaseOrderSchema],
+    ['/finance/supplier-bills', 'admin.finance.supplierBills.index', $supplierBillSchema],
+] as [$procurementPath, $procurementOperation, $procurementSchema]) {
+    $target = &$spec['paths'][$procurementPath]['get'];
+    $target['responses']['200']['description'] = 'Returns the filtered administrator register with an explicit procurement record projection and bounded related-record summaries.';
+    $target['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+        'items' => ['type' => 'array', 'items' => $procurementSchema], 'pagination' => $procurementPagination,
+    ]], $procurementOperation);
+    unset($target);
+}
+$procurementCommandResponses = [
+    'admin_finance_purchaseOrders_create' => ['status' => 201, 'description' => 'Creates a draft purchase order and returns its generated reference, identifier and calculated decimal totals.', 'data' => ['type' => 'object', 'required' => ['id', 'reference', 'status', 'subtotal', 'total'], 'properties' => ['id' => ['type' => 'integer'], 'reference' => ['type' => 'string'], 'status' => ['type' => 'string', 'const' => 'draft'], 'subtotal' => ['type' => 'string'], 'total' => ['type' => 'string']]]],
+    'admin_finance_purchaseOrders_update' => ['status' => 200, 'description' => 'Updates a draft purchase order and returns its identifier, current status, reference and recalculated decimal totals.', 'data' => ['type' => 'object', 'required' => ['id', 'status', 'reference', 'subtotal', 'total'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'draft'], 'reference' => ['type' => 'string'], 'subtotal' => ['type' => 'string'], 'total' => ['type' => 'string']]]],
+    'admin_finance_purchaseOrders_delete' => ['status' => 200, 'description' => 'Deletes an eligible draft purchase order and returns its identifier with deleted status.', 'data' => ['type' => 'object', 'required' => ['id', 'status'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'deleted']]]],
+    'admin_finance_purchaseOrders_approve' => ['status' => 200, 'description' => 'Approves a submitted purchase order and returns its identifier and approved status.', 'data' => ['type' => 'object', 'required' => ['id', 'status'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'approved']]]],
+    'admin_finance_purchaseOrders_receive' => ['status' => 200, 'description' => 'Marks an approved purchase order received and returns its identifier and received status.', 'data' => ['type' => 'object', 'required' => ['id', 'status'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'received']]]],
+    'admin_finance_supplierBills_create' => ['status' => 201, 'description' => 'Records a received supplier bill and returns its generated reference, identifier and calculated decimal totals.', 'data' => ['type' => 'object', 'required' => ['id', 'reference', 'status', 'subtotal', 'total'], 'properties' => ['id' => ['type' => 'integer'], 'reference' => ['type' => 'string'], 'status' => ['type' => 'string', 'const' => 'received'], 'subtotal' => ['type' => 'string'], 'total' => ['type' => 'string']]]],
+    'admin_finance_supplierBills_update' => ['status' => 200, 'description' => 'Updates an editable supplier bill and returns its identifier, current status, reference and recalculated decimal totals.', 'data' => ['type' => 'object', 'required' => ['id', 'status', 'reference', 'subtotal', 'total'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'enum' => ['draft', 'received']], 'reference' => ['type' => 'string'], 'subtotal' => ['type' => 'string'], 'total' => ['type' => 'string']]]],
+    'admin_finance_supplierBills_delete' => ['status' => 200, 'description' => 'Deletes an editable supplier bill and returns its identifier with deleted status.', 'data' => ['type' => 'object', 'required' => ['id', 'status'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'deleted']]]],
+    'admin_finance_supplierBills_approve' => ['status' => 200, 'description' => 'Approves a received supplier bill and returns its identifier and approved status.', 'data' => ['type' => 'object', 'required' => ['id', 'status'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'approved']]]],
+    'admin_finance_supplierBills_markPaid' => ['status' => 200, 'description' => 'Marks an approved supplier bill paid and returns its identifier and paid status.', 'data' => ['type' => 'object', 'required' => ['id', 'status'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'paid']]]],
+];
+foreach ($spec['paths'] as &$procurementPathItem) {
+    foreach ($procurementPathItem as &$procurementOperationItem) {
+        $operationId = $procurementOperationItem['operationId'] ?? null;
+        if (!isset($procurementCommandResponses[$operationId])) continue;
+        $definition = $procurementCommandResponses[$operationId];
+        $status = (string) $definition['status'];
+        $sourceStatus = isset($procurementOperationItem['responses'][$status]) ? $status : '200';
+        $oldSchema = $procurementOperationItem['responses'][$sourceStatus]['content']['application/json']['schema'];
+        $operationName = $oldSchema['properties']['meta']['properties']['operation']['const'];
+        if ($sourceStatus !== $status) {
+            $procurementOperationItem['responses'][$status] = $procurementOperationItem['responses'][$sourceStatus];
+            unset($procurementOperationItem['responses'][$sourceStatus]);
+        }
+        $procurementOperationItem['responses'][$status]['description'] = $definition['description'];
+        $procurementOperationItem['responses'][$status]['content']['application/json']['schema'] = $successEnvelope($definition['data'], $operationName);
+    }
+    unset($procurementOperationItem);
+}
+unset($procurementPathItem, $procurementCommandResponses, $procurementPagination, $purchaseOrderSchema, $supplierBillSchema);
+
 $customerSummarySchema = ['type' => 'object', 'required' => ['id', 'user_id', 'facility_name', 'facility_type', 'country', 'city', 'address', 'created_at', 'updated_at', 'customer'], 'properties' => [
     'id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'], 'facility_name' => ['type' => ['string', 'null']], 'facility_type' => ['type' => ['string', 'null']],
     'country' => ['type' => 'string'], 'city' => ['type' => ['string', 'null']], 'address' => ['type' => ['string', 'null']],

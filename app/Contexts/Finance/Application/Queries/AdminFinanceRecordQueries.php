@@ -46,7 +46,21 @@ final class AdminFinanceRecordQueries extends WorkflowHandler
         $filters = $input->validate(['status' => 'sometimes|in:'.implode(',', array_keys(PurchaseOrder::statusOptions())), 'vendor_id' => 'sometimes|integer|exists:vendors,id']);
         $query = $this->purchaseOrderQuery($input);
         foreach (['status', 'vendor_id'] as $field) if (isset($filters[$field])) $query->where($field, $filters[$field]);
-        return $this->respond($input, $query);
+        $page = $input->paginate($query);
+
+        return WorkflowResult::payload(['items' => $page->getCollection()->map(fn (PurchaseOrder $order) => [
+            'id' => $order->id, 'reference' => $order->reference, 'vendor_id' => $order->vendor_id, 'vendor_name' => $order->vendor_name,
+            'title' => $order->title, 'description' => $order->description, 'status' => $order->status, 'requested_by' => $order->requested_by,
+            'approved_by' => $order->approved_by, 'approved_at' => $order->approved_at?->toIso8601String(),
+            'expected_date' => $order->expected_date?->toDateString(), 'received_date' => $order->received_date?->toDateString(),
+            'subtotal' => $order->subtotal, 'tax_amount' => $order->tax_amount, 'total' => $order->total,
+            'currency' => $order->currency, 'notes' => $order->notes,
+            'created_at' => $order->created_at?->toIso8601String(), 'updated_at' => $order->updated_at?->toIso8601String(),
+            'vendor' => $order->vendor ? ['id' => $order->vendor->id, 'name' => $order->vendor->name] : null,
+            'requester' => $order->requester ? ['id' => $order->requester->id, 'name' => $order->requester->name] : null,
+        ])->values(), 'pagination' => [
+            'current_page' => $page->currentPage(), 'per_page' => $page->perPage(), 'total' => $page->total(), 'last_page' => $page->lastPage(),
+        ]]);
     }
 
     public function quoteQuery(WorkflowInput $input): Builder
@@ -77,7 +91,19 @@ final class AdminFinanceRecordQueries extends WorkflowHandler
         $filters = $input->validate(['status' => 'sometimes|in:'.implode(',', array_keys(SupplierBill::statusOptions())), 'vendor_id' => 'sometimes|integer|exists:vendors,id']);
         $query = $this->supplierBillQuery($input);
         foreach (['status', 'vendor_id'] as $field) if (isset($filters[$field])) $query->where($field, $filters[$field]);
-        return $this->respond($input, $query);
+        $page = $input->paginate($query);
+
+        return WorkflowResult::payload(['items' => $page->getCollection()->map(fn (SupplierBill $bill) => [
+            'id' => $bill->id, 'reference' => $bill->reference, 'vendor_id' => $bill->vendor_id, 'vendor_name' => $bill->vendor_name,
+            'purchase_order_id' => $bill->purchase_order_id, 'bill_number' => $bill->bill_number, 'status' => $bill->status,
+            'issue_date' => $bill->issue_date?->toDateString(), 'due_date' => $bill->due_date?->toDateString(),
+            'subtotal' => $bill->subtotal, 'tax_amount' => $bill->tax_amount, 'total' => $bill->total, 'currency' => $bill->currency,
+            'paid_at' => $bill->paid_at?->toDateString(), 'notes' => $bill->notes, 'created_by' => $bill->created_by,
+            'created_at' => $bill->created_at?->toIso8601String(), 'updated_at' => $bill->updated_at?->toIso8601String(),
+            'vendor' => $bill->vendor ? ['id' => $bill->vendor->id, 'name' => $bill->vendor->name] : null,
+        ])->values(), 'pagination' => [
+            'current_page' => $page->currentPage(), 'per_page' => $page->perPage(), 'total' => $page->total(), 'last_page' => $page->lastPage(),
+        ]]);
     }
 
     public function expenseQuery(WorkflowInput $input): Builder

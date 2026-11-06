@@ -1,3 +1,11 @@
+## API release 0.134.0 — procurement workflows (6 November 2026)
+
+Deployed OpenAPI 0.134.0 and Node SDK preview 0.147.0. Added typed administrator purchase-order and supplier-bill registers and create/update/delete/approve/receive/pay outcomes. Procurement list responses now project only the needed vendor and requester identifiers and names rather than serializing full related models. No migration was required.
+
+Gates: finance API suite 52 tests / 845 assertions passed; Node SDK 19/19; strict TypeScript compilation, compatibility review against 0.133.0, and response-schema coverage (186 field-specific, 467 generic, 3 no-content across 656 operations) passed. Production status, discovery and OpenAPI report 0.134.0; the live contract has 465 paths and 656 operations. The developer page returns 200 and advertises SDK 0.147.0. The 51,562-byte live SDK download matches metadata SHA-256 `547eb4e92ad4fdcd7d458ac639a70802a77d5218339e29a4d8162ae575077fa9`. Anonymous expense, budget, purchase-order and supplier-bill API reads all return 401.
+
+Release archive `/home/u117099711/releases/ohs-api-0.134.0-20261106.tar.gz` SHA-256 `ba57fb8c7fab28825a4b682a9e3dc1e0d4611c9873beb54ba4ecb9b468a626b8`. Predeploy rollback archive `/home/u117099711/backups/ohs-api-0.134.0-predeploy-20261106.tar.gz` SHA-256 `7cc66b6b02527d7403136c0bf063dc20c9c5ef21a8ed734235911db36a7c2e40`, gzip verified and mode 0600. Laravel configuration cache rebuilt. No GitHub push was performed.
+
 ## API release 0.133.0 — finance expense and budget contracts (6 November 2026)
 
 Deployed OpenAPI 0.133.0 and Node SDK preview 0.146.0. The contract now defines the administrator expense list and expense create/update/approve/pay outcomes, plus budget list/detail/create/update/delete. The expense list returns a bounded submitter summary (`id`, `name`) instead of serializing the related user model. Expense and budget creation document the actual 201 response. No migration was required.

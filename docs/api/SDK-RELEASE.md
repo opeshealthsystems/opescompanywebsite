@@ -1,3 +1,7 @@
+## SDK 0.147.0 — purchase orders and supplier bills (6 November 2026)
+
+Types the purchase-order and supplier-bill administrator registers with bounded vendor/requester summaries and their create, edit, approve, receive, pay and delete acknowledgements. Corrects create operations to their actual 201 responses; decimal totals follow the model serialization. Existing finance authorization, status transitions, validation and idempotency behavior are unchanged. OpenAPI is 0.134.0. This downloadable preview remains unpublished to npm. Archive size is 51562 bytes; SHA-256 is `547eb4e92ad4fdcd7d458ac639a70802a77d5218339e29a4d8162ae575077fa9`.
+
 ## SDK 0.146.0 — expense and budget workflows (6 November 2026)
 
 Types the administrator expense register with its bounded submitter projection, expense creation/update/approval/payment results, budget list/detail, and budget create/update/delete results. Corrects expense and budget creation to their actual 201 responses. Existing finance roles, validation, approval rules and idempotency behavior are unchanged. OpenAPI is 0.133.0. This downloadable preview remains unpublished to npm. Archive size is 51424 bytes; SHA-256 is `fb218c40534896343fc146eba5e6d4bc37934fc84c20af69358341d60bcc4e1e`.

@@ -842,5 +842,77 @@
     "path": "/finance/budgets/{budget}",
     "allow_response_schema_refinement": true,
     "reason": "Documents the existing budget deletion acknowledgement, including its deleted record identifier."
+  },
+  {
+    "method": "GET",
+    "path": "/finance/purchase-orders",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the typed purchase-order register and intentionally narrows vendor and requester relationships to id/name summaries instead of incidental full related models."
+  },
+  {
+    "method": "GET",
+    "path": "/finance/supplier-bills",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the typed supplier-bill register and intentionally narrows the vendor relationship to an id/name summary."
+  },
+  {
+    "method": "POST",
+    "path": "/finance/purchase-orders",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the purchase-order creation acknowledgement and corrects success to the handler actual 201 Created response. Validation, draft status, reference generation and idempotency are unchanged."
+  },
+  {
+    "method": "PUT",
+    "path": "/finance/purchase-orders/{purchaseOrder}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the purchase-order draft update acknowledgement and decimal totals. Draft-only editing behavior is unchanged."
+  },
+  {
+    "method": "DELETE",
+    "path": "/finance/purchase-orders/{purchaseOrder}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the purchase-order deletion acknowledgement and deleted identifier/status."
+  },
+  {
+    "method": "POST",
+    "path": "/finance/purchase-orders/{purchaseOrder}/approve",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing submitted-to-approved transition acknowledgement."
+  },
+  {
+    "method": "POST",
+    "path": "/finance/purchase-orders/{purchaseOrder}/receive",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing approved-to-received transition acknowledgement."
+  },
+  {
+    "method": "POST",
+    "path": "/finance/supplier-bills",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the supplier-bill creation acknowledgement and corrects success to the handler actual 201 Created response. Validation, received status, reference generation and idempotency are unchanged."
+  },
+  {
+    "method": "PUT",
+    "path": "/finance/supplier-bills/{supplierBill}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the editable supplier-bill update acknowledgement and decimal totals. Existing editable status constraints are unchanged."
+  },
+  {
+    "method": "DELETE",
+    "path": "/finance/supplier-bills/{supplierBill}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the supplier-bill deletion acknowledgement and deleted identifier/status."
+  },
+  {
+    "method": "POST",
+    "path": "/finance/supplier-bills/{supplierBill}/approve",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing received-to-approved transition acknowledgement."
+  },
+  {
+    "method": "POST",
+    "path": "/finance/supplier-bills/{supplierBill}/mark-paid",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing approved-to-paid transition acknowledgement."
   }
 ]
