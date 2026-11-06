@@ -1,3 +1,7 @@
+## SDK 0.132.0 — accountant invoice responses (6 November 2026)
+
+Types the accountant invoice register and invoice detail, including current totals, loaded line items, customer summary and issuer summary where present. The existing reads, roles, scopes and payload behavior are unchanged. OpenAPI is 0.119.0. This downloadable preview remains unpublished to npm. Archive size is 48608 bytes; SHA-256 is `73e4361ae81e5bc9a5aeab440d7284d9ccc3b17a397a6a1fd09a30f5362203b6`.
+
 ## SDK 0.131.0 — public knowledge base responses (6 November 2026)
 
 Types the public knowledge-base index, category listing and article detail responses, including pagination and related articles. The contract limits these reads to public, published content as the existing workflows do. Runtime behavior is unchanged. OpenAPI remains 0.118.0. This private SDK preview is not published to npm. Archive size is 48534 bytes; SHA-256 is `e10e43488288bd4fb87226d2f8d7b76e76476efb696ead8dcf24bcde5f542c10`.
@@ -447,3 +451,5 @@ Aligned the downloadable Node preview with OpenAPI 0.118.0. The public `GET /api
 
 Added `report_response_schema_coverage.py` and a CI floor so OpenAPI success-schema detail cannot silently regress. The current contract has field-specific data schemas for 46 operations, generic object/array response shapes for 609, one no-content operation, and no missing success schemas. The generated SDK preserves those distinctions; it does not invent resource fields. Callers may provide a reviewed response type as a generic override when an existing API schema is broader than their integration needs. This SDK-only release does not change OpenAPI `0.118.0` or its wire contract. The 46,382-byte archive SHA-256 is `ce4e12d84d20ec32e01ad356a46cedc22964b48055b9f01cfd55422b9ec71910`.
 SDK 0.123.0 archive: 47299 bytes, SHA-256 `1b221d8013a03120227dc53bf0722b3ec22b0026761c617bc14aee1c269a8118`. It carries all 656 operation IDs and includes typed service-request form options.
+
+

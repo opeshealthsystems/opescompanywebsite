@@ -1466,6 +1466,33 @@ $customerInvoiceShow['responses']['200']['content']['application/json']['schema'
     'invoice' => $customerInvoiceResource,
 ]], 'customer.invoicecontroller.show');
 unset($customerInvoiceShow);
+$accountantInvoiceResource = $customerInvoiceResource;
+$accountantInvoiceResource['properties']['customer'] = ['type' => ['object', 'null'], 'required' => ['id', 'name'], 'properties' => [
+    'id' => ['type' => 'integer'], 'name' => ['type' => 'string'],
+]];
+$accountantInvoiceResource['properties']['issuer'] = ['type' => ['object', 'null'], 'required' => ['id', 'name'], 'properties' => [
+    'id' => ['type' => 'integer'], 'name' => ['type' => 'string'], 'email' => ['type' => 'string', 'format' => 'email'],
+    'phone' => ['type' => ['string', 'null']], 'employee_id' => ['type' => ['string', 'null']],
+    'position' => ['type' => ['string', 'null']], 'hire_date' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'is_active' => ['type' => 'boolean'], 'department_id' => ['type' => ['integer', 'null']],
+]];
+$accountantInvoiceList = &$spec['paths']['/accountant/invoices']['get'];
+$accountantInvoiceList['responses']['200']['description'] = 'Returns invoices visible to the authenticated accountant with current totals, loaded line items, customer summary and pagination metadata.';
+$accountantInvoiceList['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['invoices'], 'properties' => [
+    'invoices' => ['type' => 'object', 'required' => ['items', 'meta'], 'properties' => [
+        'items' => ['type' => 'array', 'items' => $accountantInvoiceResource],
+        'meta' => ['type' => 'object', 'required' => ['page', 'per_page', 'total', 'last_page'], 'properties' => [
+            'page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+        ]],
+    ]],
+]], 'accountant.invoicecontroller.index');
+unset($accountantInvoiceList);
+$accountantInvoiceShow = &$spec['paths']['/accountant/invoices/{invoice}']['get'];
+$accountantInvoiceShow['responses']['200']['description'] = 'Returns one invoice and its loaded line items with customer and issuer summaries for the authenticated accountant.';
+$accountantInvoiceShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['invoice'], 'properties' => [
+    'invoice' => $accountantInvoiceResource,
+]], 'accountant.invoicecontroller.show');
+unset($accountantInvoiceShow, $accountantInvoiceResource);
 $customerDocumentResource = ['type' => 'object', 'required' => ['id', 'document_template_id', 'type', 'title', 'reference_number', 'body_rendered', 'issued_by', 'addressee_user_id', 'addressee_name', 'addressee_email', 'status', 'requires_signature', 'signed_at', 'signed_by_name', 'valid_until', 'notes', 'created_at', 'updated_at'], 'properties' => [
     'id' => ['type' => 'integer'], 'document_template_id' => ['type' => ['integer', 'null']],
     'type' => ['type' => 'string', 'enum' => ['receipt', 'letterhead', 'contract_employee', 'contract_business']], 'title' => ['type' => 'string'],

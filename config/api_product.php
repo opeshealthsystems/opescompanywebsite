@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version' => '0.118.0',
+    'version' => '0.119.0',
     'products' => [
         [
             'id' => 'public-enquiries',
@@ -93,6 +93,11 @@ return [
         ],
     ],
     'changelog' => [
+        [
+            'version' => '0.119.0',
+            'released_at' => '2026-11-06',
+            'summary' => 'Added explicit accountant invoice register and detail response contracts with totals, line items and related user summaries.',
+        ],
         [
             'version' => '0.118.0',
             'released_at' => '2026-11-06',

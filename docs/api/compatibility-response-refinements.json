@@ -151,6 +151,18 @@
   },
   {
     "method": "GET",
+    "path": "/accountant/invoices",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing accountant invoice register, current invoice totals, line items, customer summary and pagination returned by AccountantInvoiceQueries and ApiWorkflowSerializer. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/accountant/invoices/{invoice}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing accountant invoice detail, loaded line items, customer and issuer summaries returned by AccountantInvoiceQueries and ApiWorkflowSerializer. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
     "path": "/customer/tickets",
     "allow_response_schema_refinement": true,
     "reason": "Documents paginated tickets belonging to the authenticated customer from CustomerTicketQueries and ApiWorkflowSerializer. No response bytes, request shape, authorization or status behavior changes."
