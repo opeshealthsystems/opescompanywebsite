@@ -12978,7 +12978,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns active public root categories and up to six recent published public articles.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -12990,10 +12990,153 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "categories",
+                                                "recent"
+                                            ],
+                                            "properties": {
+                                                "categories": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "name",
+                                                            "slug",
+                                                            "description",
+                                                            "parent_id",
+                                                            "is_public",
+                                                            "sort_order",
+                                                            "is_active",
+                                                            "created_at",
+                                                            "updated_at"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            },
+                                                            "slug": {
+                                                                "type": "string"
+                                                            },
+                                                            "description": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "parent_id": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "is_public": {
+                                                                "type": "boolean"
+                                                            },
+                                                            "sort_order": {
+                                                                "type": "integer"
+                                                            },
+                                                            "is_active": {
+                                                                "type": "boolean"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "recent": {
+                                                    "type": "array",
+                                                    "maxItems": 6,
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "category_id",
+                                                            "author_id",
+                                                            "title",
+                                                            "slug",
+                                                            "content",
+                                                            "status",
+                                                            "is_public",
+                                                            "views",
+                                                            "tags",
+                                                            "published_at",
+                                                            "created_at",
+                                                            "updated_at"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "category_id": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "author_id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "title": {
+                                                                "type": "string"
+                                                            },
+                                                            "slug": {
+                                                                "type": "string"
+                                                            },
+                                                            "content": {
+                                                                "type": "string"
+                                                            },
+                                                            "status": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "published"
+                                                                ]
+                                                            },
+                                                            "is_public": {
+                                                                "type": "boolean",
+                                                                "const": true
+                                                            },
+                                                            "views": {
+                                                                "type": "integer"
+                                                            },
+                                                            "tags": {
+                                                                "type": [
+                                                                    "array",
+                                                                    "null"
+                                                                ],
+                                                                "items": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "published_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -13005,10 +13148,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -13172,7 +13312,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns one public category and its paginated published public articles.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13184,10 +13324,181 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "category",
+                                                "articles"
+                                            ],
+                                            "properties": {
+                                                "category": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "name",
+                                                        "slug",
+                                                        "description",
+                                                        "parent_id",
+                                                        "is_public",
+                                                        "sort_order",
+                                                        "is_active",
+                                                        "created_at",
+                                                        "updated_at"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "slug": {
+                                                            "type": "string"
+                                                        },
+                                                        "description": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "parent_id": {
+                                                            "type": [
+                                                                "integer",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "is_public": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "sort_order": {
+                                                            "type": "integer"
+                                                        },
+                                                        "is_active": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        }
+                                                    }
+                                                },
+                                                "articles": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "items",
+                                                        "meta"
+                                                    ],
+                                                    "properties": {
+                                                        "items": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object",
+                                                                "required": [
+                                                                    "id",
+                                                                    "category_id",
+                                                                    "author_id",
+                                                                    "title",
+                                                                    "slug",
+                                                                    "content",
+                                                                    "status",
+                                                                    "is_public",
+                                                                    "views",
+                                                                    "tags",
+                                                                    "published_at",
+                                                                    "created_at",
+                                                                    "updated_at"
+                                                                ],
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "category_id": {
+                                                                        "type": [
+                                                                            "integer",
+                                                                            "null"
+                                                                        ]
+                                                                    },
+                                                                    "author_id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "title": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "slug": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "content": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "status": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "published"
+                                                                        ]
+                                                                    },
+                                                                    "is_public": {
+                                                                        "type": "boolean",
+                                                                        "const": true
+                                                                    },
+                                                                    "views": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "tags": {
+                                                                        "type": [
+                                                                            "array",
+                                                                            "null"
+                                                                        ],
+                                                                        "items": {
+                                                                            "type": "string"
+                                                                        }
+                                                                    },
+                                                                    "published_at": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ],
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "updated_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time"
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "meta": {
+                                                            "type": "object",
+                                                            "required": [
+                                                                "page",
+                                                                "per_page",
+                                                                "total",
+                                                                "last_page"
+                                                            ],
+                                                            "properties": {
+                                                                "page": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "per_page": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "total": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "last_page": {
+                                                                    "type": "integer"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -13199,10 +13510,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -13366,7 +13674,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns one published public knowledge-base article and up to four related public articles.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13378,10 +13686,173 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "article",
+                                                "related"
+                                            ],
+                                            "properties": {
+                                                "article": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "category_id",
+                                                        "author_id",
+                                                        "title",
+                                                        "slug",
+                                                        "content",
+                                                        "status",
+                                                        "is_public",
+                                                        "views",
+                                                        "tags",
+                                                        "published_at",
+                                                        "created_at",
+                                                        "updated_at"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "category_id": {
+                                                            "type": [
+                                                                "integer",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "author_id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "title": {
+                                                            "type": "string"
+                                                        },
+                                                        "slug": {
+                                                            "type": "string"
+                                                        },
+                                                        "content": {
+                                                            "type": "string"
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "published"
+                                                            ]
+                                                        },
+                                                        "is_public": {
+                                                            "type": "boolean",
+                                                            "const": true
+                                                        },
+                                                        "views": {
+                                                            "type": "integer"
+                                                        },
+                                                        "tags": {
+                                                            "type": [
+                                                                "array",
+                                                                "null"
+                                                            ],
+                                                            "items": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "published_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        }
+                                                    }
+                                                },
+                                                "related": {
+                                                    "type": "array",
+                                                    "maxItems": 4,
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "category_id",
+                                                            "author_id",
+                                                            "title",
+                                                            "slug",
+                                                            "content",
+                                                            "status",
+                                                            "is_public",
+                                                            "views",
+                                                            "tags",
+                                                            "published_at",
+                                                            "created_at",
+                                                            "updated_at"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "category_id": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "author_id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "title": {
+                                                                "type": "string"
+                                                            },
+                                                            "slug": {
+                                                                "type": "string"
+                                                            },
+                                                            "content": {
+                                                                "type": "string"
+                                                            },
+                                                            "status": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "published"
+                                                                ]
+                                                            },
+                                                            "is_public": {
+                                                                "type": "boolean",
+                                                                "const": true
+                                                            },
+                                                            "views": {
+                                                                "type": "integer"
+                                                            },
+                                                            "tags": {
+                                                                "type": [
+                                                                    "array",
+                                                                    "null"
+                                                                ],
+                                                                "items": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "published_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -13393,10 +13864,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },

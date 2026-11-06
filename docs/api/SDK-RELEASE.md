@@ -1,3 +1,6 @@
+## SDK 0.131.0 — public knowledge base responses (6 November 2026)
+
+Types the public knowledge-base index, category listing and article detail responses, including pagination and related articles. The contract limits these reads to public, published content as the existing workflows do. Runtime behavior is unchanged. OpenAPI remains 0.118.0. This private SDK preview is not published to npm. Archive size is 48534 bytes; SHA-256 is `e10e43488288bd4fb87226d2f8d7b76e76476efb696ead8dcf24bcde5f542c10`.
 ## SDK 0.130.0 — customer survey workflows (6 November 2026)
 
 Types the active customer survey list, customer-owned response state, survey questions, saved text answers and submit acknowledgement. The response contract excludes other users’ answers. Existing answer validation and the one-submission rule are unchanged. OpenAPI remains 0.118.0. The private SDK preview is not published to npm. Archive size is 48407 bytes; SHA-256 is `8b1d2041e9f7597bc985d30b4b9c6b19e7f6f9e7ab703590681b60de3ea2afd4`.

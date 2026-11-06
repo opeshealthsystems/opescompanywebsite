@@ -79,6 +79,24 @@
   },
   {
     "method": "GET",
+    "path": "/customer/knowledge-base",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the public root categories and recent published public articles returned by CustomerKnowledgeBaseQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/customer/knowledge-base/category/{slug}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents a public knowledge-base category and its paginated published public articles. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/customer/knowledge-base/{slug}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents a published public article and its related public articles returned by CustomerKnowledgeBaseQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
     "path": "/customer/surveys",
     "allow_response_schema_refinement": true,
     "reason": "Documents currently active customer-facing surveys and the authenticated customer’s submitted survey IDs from CustomerSurveyQueries. No other users’ answers are returned. Runtime behavior, authorization and response bytes are unchanged."

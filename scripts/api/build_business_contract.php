@@ -1533,6 +1533,41 @@ $customerSurveySubmit['responses']['200']['content']['application/json']['schema
     'messages' => ['type' => 'object', 'required' => ['success'], 'properties' => ['success' => ['type' => 'string']]],
 ]];
 unset($customerSurveySubmit);
+$customerKnowledgeCategory = ['type' => 'object', 'required' => ['id', 'name', 'slug', 'description', 'parent_id', 'is_public', 'sort_order', 'is_active', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'name' => ['type' => 'string'], 'slug' => ['type' => 'string'], 'description' => ['type' => ['string', 'null']],
+    'parent_id' => ['type' => ['integer', 'null']], 'is_public' => ['type' => 'boolean'], 'sort_order' => ['type' => 'integer'], 'is_active' => ['type' => 'boolean'],
+    'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+]];
+$customerKnowledgeArticle = ['type' => 'object', 'required' => ['id', 'category_id', 'author_id', 'title', 'slug', 'content', 'status', 'is_public', 'views', 'tags', 'published_at', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'category_id' => ['type' => ['integer', 'null']], 'author_id' => ['type' => 'integer'], 'title' => ['type' => 'string'],
+    'slug' => ['type' => 'string'], 'content' => ['type' => 'string'], 'status' => ['type' => 'string', 'enum' => ['published']], 'is_public' => ['type' => 'boolean', 'const' => true],
+    'views' => ['type' => 'integer'], 'tags' => ['type' => ['array', 'null'], 'items' => ['type' => 'string']],
+    'published_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+]];
+$customerKnowledgeIndex = &$spec['paths']['/customer/knowledge-base']['get'];
+$customerKnowledgeIndex['responses']['200']['description'] = 'Returns active public root categories and up to six recent published public articles.';
+$customerKnowledgeIndex['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['categories', 'recent'], 'properties' => [
+    'categories' => ['type' => 'array', 'items' => $customerKnowledgeCategory], 'recent' => ['type' => 'array', 'maxItems' => 6, 'items' => $customerKnowledgeArticle],
+]], 'customer.knowledgebasecontroller.index');
+unset($customerKnowledgeIndex);
+$customerKnowledgeCategoryShow = &$spec['paths']['/customer/knowledge-base/category/{slug}']['get'];
+$customerKnowledgeCategoryShow['responses']['200']['description'] = 'Returns one public category and its paginated published public articles.';
+$customerKnowledgeCategoryShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['category', 'articles'], 'properties' => [
+    'category' => $customerKnowledgeCategory,
+    'articles' => ['type' => 'object', 'required' => ['items', 'meta'], 'properties' => [
+        'items' => ['type' => 'array', 'items' => $customerKnowledgeArticle],
+        'meta' => ['type' => 'object', 'required' => ['page', 'per_page', 'total', 'last_page'], 'properties' => [
+            'page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+        ]],
+    ]],
+]], 'customer.knowledgebasecontroller.category');
+unset($customerKnowledgeCategoryShow);
+$customerKnowledgeShow = &$spec['paths']['/customer/knowledge-base/{slug}']['get'];
+$customerKnowledgeShow['responses']['200']['description'] = 'Returns one published public knowledge-base article and up to four related public articles.';
+$customerKnowledgeShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['article', 'related'], 'properties' => [
+    'article' => $customerKnowledgeArticle, 'related' => ['type' => 'array', 'maxItems' => 4, 'items' => $customerKnowledgeArticle],
+]], 'customer.knowledgebasecontroller.show');
+unset($customerKnowledgeShow);
 $customerDashboard = &$spec['paths']['/customer/dashboard']['get'];
 $dashboardTicket = ['type' => 'object', 'required' => ['id', 'user_id', 'assigned_to', 'subject', 'description', 'type', 'status', 'priority', 'resolution', 'resolved_at', 'closed_at', 'tester_assignment_id', 'sla_rule_id', 'sla_response_due_at', 'sla_resolution_due_at', 'created_at', 'updated_at'], 'properties' => [
     'id' => ['type' => 'integer'], 'user_id' => ['type' => ['integer', 'null']], 'assigned_to' => ['type' => ['integer', 'null']],
