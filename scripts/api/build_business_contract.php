@@ -1704,6 +1704,59 @@ $dashboardSummary['responses']['200']['content']['application/json']['schema'] =
     'generated_at' => ['type' => 'string', 'format' => 'date-time'],
 ]], 'admin.dashboard.summary');
 unset($dashboardSummary, $dashboardCollections, $dashboardPagination, $dashboardTicket, $dashboardLead, $dashboardInvoice, $dashboardAnnouncement);
+$dealResource = ['type' => 'object', 'required' => ['id', 'reference', 'title', 'lead_id', 'stage', 'value', 'currency', 'probability', 'expected_close_date', 'actual_close_date', 'owner_id', 'notes', 'lost_reason', 'created_at', 'updated_at', 'owner', 'lead'], 'properties' => [
+    'id' => ['type' => 'integer'], 'reference' => ['type' => 'string'], 'title' => ['type' => 'string'], 'lead_id' => ['type' => ['integer', 'null']],
+    'stage' => ['type' => 'string', 'enum' => ['prospecting', 'qualification', 'proposal', 'negotiation', 'closed_won', 'closed_lost']],
+    'value' => ['type' => 'string'], 'currency' => ['type' => 'string', 'enum' => ['XAF', 'USD', 'EUR']], 'probability' => ['type' => 'integer'],
+    'expected_close_date' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'actual_close_date' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'owner_id' => ['type' => 'integer'], 'notes' => ['type' => ['string', 'null']], 'lost_reason' => ['type' => ['string', 'null']],
+    'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+    'owner' => ['oneOf' => [['type' => 'object', 'required' => ['id', 'name'], 'properties' => ['id' => ['type' => 'integer'], 'name' => ['type' => 'string']]], ['type' => 'null']]],
+    'lead' => ['oneOf' => [['type' => 'object', 'required' => ['id', 'name', 'email'], 'properties' => ['id' => ['type' => 'integer'], 'name' => ['type' => 'string'], 'email' => ['type' => 'string', 'format' => 'email']]], ['type' => 'null']]],
+]];
+$dealList = &$spec['paths']['/crm/deals']['get'];
+$dealList['responses']['200']['description'] = 'Returns filtered administrator deals with owner and lead summaries and pagination metadata.';
+$dealList['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => $dealResource],
+    'pagination' => ['type' => 'object', 'required' => ['current_page', 'per_page', 'total', 'last_page'], 'properties' => [
+        'current_page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+    ]],
+]], 'admin.crm.deals.index');
+unset($dealList);
+$dealShow = &$spec['paths']['/crm/deals/{deal}']['get'];
+$dealShow['responses']['200']['description'] = 'Returns one administrator deal with owner and lead summaries.';
+$dealShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['deal'], 'properties' => ['deal' => $dealResource]], 'admin.crm.deals.show');
+unset($dealShow);
+$dealPipeline = &$spec['paths']['/crm/deals/pipeline']['get'];
+$dealPipeline['responses']['200']['description'] = 'Returns open pipeline stages, up to 500 prioritized deal records, stage totals and a truncation indicator.';
+$dealPipeline['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['stages', 'deals_by_stage', 'stage_stats', 'truncated'], 'properties' => [
+    'stages' => ['type' => 'object', 'additionalProperties' => ['type' => 'string']],
+    'deals_by_stage' => ['type' => 'object', 'additionalProperties' => ['type' => 'array', 'items' => $dealResource]],
+    'stage_stats' => ['type' => 'object', 'additionalProperties' => ['type' => 'object', 'required' => ['stage', 'count', 'total_value', 'avg_probability'], 'properties' => [
+        'stage' => ['type' => 'string', 'enum' => ['prospecting', 'qualification', 'proposal', 'negotiation']], 'count' => ['type' => 'integer'],
+        'total_value' => ['oneOf' => [['type' => 'number'], ['type' => 'string']] ], 'avg_probability' => ['oneOf' => [['type' => 'number'], ['type' => 'string']]],
+    ]]],
+    'truncated' => ['type' => 'boolean'],
+]], 'admin.crm.deals.pipeline');
+unset($dealPipeline);
+$dealCommandResponse = static function (string $operation, array $fields): array { return [
+    'type' => 'object', 'required' => ['data', 'meta', 'messages'], 'properties' => [
+        'data' => ['type' => 'object', 'required' => array_keys($fields), 'properties' => $fields],
+        'meta' => ['type' => 'object', 'properties' => ['operation' => ['type' => 'string', 'const' => $operation]]],
+        'messages' => ['type' => 'object', 'required' => ['success'], 'properties' => ['success' => ['type' => 'string']]],
+    ],
+]; };
+foreach ([
+    ['path' => '/crm/deals', 'method' => 'post', 'status' => '201', 'operation' => 'admin.crm.deals.create', 'fields' => ['id' => ['type' => 'integer'], 'reference' => ['type' => 'string'], 'stage' => $dealResource['properties']['stage']], 'description' => 'Returns the created deal identifier, generated reference, initial stage and acknowledgement.'],
+    ['path' => '/crm/deals/{deal}', 'method' => 'put', 'status' => '200', 'operation' => 'admin.crm.deals.update', 'fields' => ['id' => ['type' => 'integer'], 'reference' => ['type' => 'string'], 'stage' => $dealResource['properties']['stage']], 'description' => 'Returns the updated deal identifier, reference, current stage and acknowledgement. Closed deals cannot be updated.'],
+    ['path' => '/crm/deals/{deal}', 'method' => 'delete', 'status' => '200', 'operation' => 'admin.crm.deals.delete', 'fields' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'deleted']], 'description' => 'Returns the deleted deal identifier and acknowledgement. Closed deals cannot be deleted.'],
+] as $command) {
+    $target = &$spec['paths'][$command['path']][$command['method']];
+    $target['responses'][$command['status']]['description'] = $command['description'];
+    $target['responses'][$command['status']]['content']['application/json']['schema'] = $dealCommandResponse($command['operation'], $command['fields']);
+    unset($target);
+}
+unset($dealResource, $dealCommandResponse);
 $customerDocumentResource = ['type' => 'object', 'required' => ['id', 'document_template_id', 'type', 'title', 'reference_number', 'body_rendered', 'issued_by', 'addressee_user_id', 'addressee_name', 'addressee_email', 'status', 'requires_signature', 'signed_at', 'signed_by_name', 'valid_until', 'notes', 'created_at', 'updated_at'], 'properties' => [
     'id' => ['type' => 'integer'], 'document_template_id' => ['type' => ['integer', 'null']],
     'type' => ['type' => 'string', 'enum' => ['receipt', 'letterhead', 'contract_employee', 'contract_business']], 'title' => ['type' => 'string'],

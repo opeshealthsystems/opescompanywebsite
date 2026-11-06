@@ -277,6 +277,42 @@
   },
   {
     "method": "GET",
+    "path": "/crm/deals",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing filtered deal, owner and lead projections and pagination from AdminDealQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/crm/deals/{deal}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing deal detail with owner and lead summaries from AdminDealQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/crm/deals/pipeline",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing bounded CRM pipeline deal groups, stage aggregates and truncation indicator from AdminDealQueries. No calculations, response bytes, authorization or status behavior changes."
+  },
+  {
+    "method": "POST",
+    "path": "/crm/deals",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing deal-creation identifier, generated reference, initial stage and success acknowledgement from AdminDealCommands. No request, state, idempotency, authorization or status behavior changes."
+  },
+  {
+    "method": "PUT",
+    "path": "/crm/deals/{deal}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing deal-update identifier, reference, current stage and success acknowledgement from AdminDealCommands. Closed-deal validation and runtime behavior are unchanged."
+  },
+  {
+    "method": "DELETE",
+    "path": "/crm/deals/{deal}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing deleted deal identifier, status and success acknowledgement from AdminDealCommands. Closed-deal validation and runtime behavior are unchanged."
+  },
+  {
+    "method": "GET",
     "path": "/customer/tickets",
     "allow_response_schema_refinement": true,
     "reason": "Documents paginated tickets belonging to the authenticated customer from CustomerTicketQueries and ApiWorkflowSerializer. No response bytes, request shape, authorization or status behavior changes."

@@ -1,3 +1,7 @@
+## SDK 0.137.0 — CRM deal workflows (6 November 2026)
+
+Types deal search, owner/lead summaries, deal detail, stage pipeline aggregates, and create/update/delete acknowledgements. Closed-deal mutation rules and command state behavior remain unchanged. OpenAPI is 0.124.0. This downloadable preview remains unpublished to npm. Archive size is 50105 bytes; SHA-256 is `c8d04dac65474c0dd93c6ab8b0736faef69c3800052f42aa76afa0e099d7828c`.
+
 ## SDK 0.136.0 — admin dashboard reads (6 November 2026)
 
 Types the role-aware dashboard aggregates and its recent ticket, lead, outstanding invoice and announcement lists. The lead contract omits network address and structured integration details. Dashboard summary schemas show finance and CRM fields as optional because the existing workflow includes them only for eligible roles and permissions. OpenAPI is 0.123.0; runtime behavior is unchanged. This downloadable preview remains unpublished to npm. Archive size is 49851 bytes; SHA-256 is `e2b0bee0636e54cb50277d18da152e571228ed11271bcf75e64de17746e99001`.
