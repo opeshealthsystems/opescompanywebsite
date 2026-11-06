@@ -1449,6 +1449,42 @@ foreach ($spec['paths'] as &$creditNotePath) {
 }
 unset($creditNotePath, $creditNoteCommandResponses, $creditNoteSchema);
 
+$payrollCommandRun = ['type' => 'object', 'required' => ['id', 'reference', 'period_start', 'period_end', 'status', 'total_gross', 'total_net', 'currency', 'notes', 'processed_by', 'completed_at', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'reference' => ['type' => 'string'], 'period_start' => ['type' => 'string', 'format' => 'date'], 'period_end' => ['type' => 'string', 'format' => 'date'],
+    'status' => ['type' => 'string', 'enum' => array_keys(\App\Models\PayrollRun::statusOptions())],
+    'total_gross' => ['type' => 'string'], 'total_net' => ['type' => 'string'], 'currency' => ['type' => 'string', 'enum' => ['XAF', 'USD', 'EUR']],
+    'notes' => ['type' => ['string', 'null']], 'processed_by' => ['type' => ['integer', 'null']], 'completed_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'created_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'updated_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+]];
+$payrollCommandResponses = [
+    'admin_finance_payrollRuns_create' => ['status' => 201, 'description' => 'Creates a draft payroll run and returns its identifier, generated reference and record.', 'data' => ['type' => 'object', 'required' => ['record', 'id', 'reference'], 'properties' => ['record' => $payrollCommandRun, 'id' => ['type' => 'integer'], 'reference' => ['type' => 'string']]]],
+    'admin_finance_payrollRuns_update' => ['status' => 200, 'description' => 'Updates an eligible draft payroll run and returns its identifier, reference and current record.', 'data' => ['type' => 'object', 'required' => ['record', 'id', 'reference'], 'properties' => ['record' => $payrollCommandRun, 'id' => ['type' => 'integer'], 'reference' => ['type' => 'string']]]],
+    'admin_finance_payrollRuns_delete' => ['status' => 200, 'description' => 'Deletes an empty draft payroll run and returns its deleted identifier.', 'data' => ['type' => 'object', 'required' => ['deleted_id'], 'properties' => ['deleted_id' => ['type' => 'integer']]]],
+    'admin_finance_payrollRuns_generateEntries' => ['status' => 200, 'description' => 'Generates missing payroll entries for active staff and returns the run identifier, resulting state and count created.', 'data' => ['type' => 'object', 'required' => ['id', 'status', 'created'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'enum' => ['draft', 'processing']], 'created' => ['type' => 'integer', 'minimum' => 0]]]],
+    'admin_finance_payrollRuns_complete' => ['status' => 200, 'description' => 'Completes a payroll run and reports how many employee notifications were queued; this does not assert inbox delivery.', 'data' => ['type' => 'object', 'required' => ['id', 'status', 'notified'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'completed'], 'notified' => ['type' => 'integer', 'minimum' => 0]]]],
+    'admin_finance_payrollEntries_markPaid' => ['status' => 200, 'description' => 'Marks one entry in the specified payroll run as paid and returns its identifier and current status.', 'data' => ['type' => 'object', 'required' => ['id', 'status'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'enum' => ['pending', 'paid']]]]],
+    'admin_finance_payrollEntries_markManyPaid' => ['status' => 200, 'description' => 'Marks eligible selected entries as paid and returns the run identifier, number newly updated and all matched entry identifiers.', 'data' => ['type' => 'object', 'required' => ['run_id', 'updated', 'ids'], 'properties' => ['run_id' => ['type' => 'integer'], 'updated' => ['type' => 'integer', 'minimum' => 0], 'ids' => ['type' => 'array', 'items' => ['type' => 'integer']]]]],
+];
+foreach ($spec['paths'] as &$payrollPath) {
+    foreach ($payrollPath as &$payrollOperation) {
+        $operationId = $payrollOperation['operationId'] ?? null;
+        if (!isset($payrollCommandResponses[$operationId])) continue;
+        $definition = $payrollCommandResponses[$operationId];
+        $status = (string) $definition['status'];
+        $sourceStatus = isset($payrollOperation['responses'][$status]) ? $status : '200';
+        $oldSchema = $payrollOperation['responses'][$sourceStatus]['content']['application/json']['schema'];
+        $operationName = $oldSchema['properties']['meta']['properties']['operation']['const'];
+        if ($sourceStatus !== $status) {
+            $payrollOperation['responses'][$status] = $payrollOperation['responses'][$sourceStatus];
+            unset($payrollOperation['responses'][$sourceStatus]);
+        }
+        $payrollOperation['responses'][$status]['description'] = $definition['description'];
+        $payrollOperation['responses'][$status]['content']['application/json']['schema'] = $successEnvelope($definition['data'], $operationName);
+    }
+    unset($payrollOperation);
+}
+unset($payrollPath, $payrollCommandResponses, $payrollCommandRun);
+
 $customerSummarySchema = ['type' => 'object', 'required' => ['id', 'user_id', 'facility_name', 'facility_type', 'country', 'city', 'address', 'created_at', 'updated_at', 'customer'], 'properties' => [
     'id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'], 'facility_name' => ['type' => ['string', 'null']], 'facility_type' => ['type' => ['string', 'null']],
     'country' => ['type' => 'string'], 'city' => ['type' => ['string', 'null']], 'address' => ['type' => ['string', 'null']],

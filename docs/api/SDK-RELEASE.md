@@ -1,3 +1,7 @@
+## SDK 0.149.0 — payroll commands (6 November 2026)
+
+Types payroll-run create/update/delete and entry-generation/completion results plus individual and batch entry-payment acknowledgements. Payroll records expose their declared decimal, period, state and processor fields. Completion reports notification queue counts without claiming inbox delivery. OpenAPI is 0.136.0. This downloadable preview remains unpublished to npm. Archive size is 51676 bytes; SHA-256 is `250a1c09806e0095c7d0f92a16b4dc9f14a9a2212e0e9658c4ab6bf9aa7293ed`.
+
 ## SDK 0.148.0 — credit notes (6 November 2026)
 
 Types the administrator credit-note register with bounded invoice and creator summaries and its create, update, delete, issue and void outcomes. Corrects creation to its actual 201 response; decimal totals and line items follow current model serialization. Existing finance authorization, validation, status transitions and idempotency behavior are unchanged. OpenAPI is 0.135.0. This downloadable preview remains unpublished to npm. Archive size is 51615 bytes; SHA-256 is `87927856015327bf1c538ba8381aa8d3693a85917d6f9d309dd74d4324c5e2dc`.

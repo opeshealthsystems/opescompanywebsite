@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version' => '0.135.0',
+    'version' => '0.136.0',
     'products' => [
         [
             'id' => 'public-enquiries',
@@ -94,17 +94,22 @@ return [
     ],
     'changelog' => [
         [
-            'version' => '0.135.0',
+            'version' => '0.136.0',
+            'released_at' => '2026-11-06',
+            'summary' => 'Added typed payroll-run creation, editing, deletion, generation, completion, and entry-payment responses.',
+        ],
+        [
+            'version' => '0.136.0',
             'released_at' => '2026-11-06',
             'summary' => 'Added typed credit-note register and draft create/update/delete plus issue and void outcomes.',
         ],
         [
-            'version' => '0.135.0',
+            'version' => '0.136.0',
             'released_at' => '2026-11-06',
             'summary' => 'Added typed purchase-order and supplier-bill registers and lifecycle outcomes with bounded vendor and requester summaries.',
         ],
         [
-            'version' => '0.135.0',
+            'version' => '0.136.0',
             'released_at' => '2026-11-06',
             'summary' => 'Added typed expense register and expense commands plus budget list/detail/commands, with a bounded submitter projection and actual 201 creation responses.',
         ],

@@ -1,3 +1,11 @@
+## API release 0.136.0 — payroll command contracts (6 November 2026)
+
+Deployed OpenAPI 0.136.0 and Node SDK preview 0.149.0. Added typed payroll-run creation/update/deletion, entry generation, run completion, and individual/batch payment responses. Payroll completion reports notification counts as queued activity and does not claim inbox delivery. No application runtime or database migration changed.
+
+Gates: focused payroll workflow test passes (1 test / 18 assertions); Node SDK tests pass 19/19; strict TypeScript compilation, compatibility review against 0.135.0, and response-schema coverage pass (199 field-specific, 454 generic, 3 no-content across 656 operations). Live status and OpenAPI report 0.136.0 with 465 paths and 656 operations. The developer page returns 200 and advertises SDK 0.149.0. The 51,676-byte live archive matches metadata SHA-256 `250a1c09806e0095c7d0f92a16b4dc9f14a9a2212e0e9658c4ab6bf9aa7293ed`; anonymous payroll reads return 401.
+
+Release archive `/home/u117099711/releases/ohs-api-0.136.0-20261106.tar.gz` SHA-256 `19576758041aad9d6ae922a0ddeb89460d9fbaed62bf6e3b6ec91958ffffa82b`. Predeploy rollback archive `/home/u117099711/backups/ohs-api-0.136.0-predeploy-20261106.tar.gz` SHA-256 `c9e5ce5412f0b00fdd3e6b5109bf3a06cf9cbe4ae211018c52405bf9a46dae5b`, gzip verified and mode 0600. Laravel configuration cache rebuilt. No GitHub push was performed.
+
 ## API release 0.135.0 — credit-note workflows (6 November 2026)
 
 Deployed OpenAPI 0.135.0 and Node SDK preview 0.148.0. Added a typed credit-note register with explicit invoice, creator and line-item fields, and typed create/update/delete/issue/void outcomes. Credit-note creation documents the handler's actual 201 response. No runtime workflow, migration or authorization changes were required.

@@ -950,5 +950,47 @@
     "path": "/finance/credit-notes/{creditNote}/void",
     "allow_response_schema_refinement": true,
     "reason": "Documents the existing eligible credit-note void acknowledgement and void state."
+  },
+  {
+    "method": "POST",
+    "path": "/finance/payroll-runs",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents payroll-run creation outcome and corrects success to the handler actual 201 Created response. Validation, draft defaults, reference generation and idempotency are unchanged."
+  },
+  {
+    "method": "PUT",
+    "path": "/finance/payroll-runs/{run}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing draft payroll-run update outcome and decimal model projection."
+  },
+  {
+    "method": "DELETE",
+    "path": "/finance/payroll-runs/{run}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing eligible draft payroll-run deletion acknowledgement."
+  },
+  {
+    "method": "POST",
+    "path": "/finance/payroll-runs/{run}/generate-entries",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing entry-generation result, including resulting run state and created count."
+  },
+  {
+    "method": "POST",
+    "path": "/finance/payroll-runs/{run}/complete",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing completion result and reports notifications queued, not inbox delivery."
+  },
+  {
+    "method": "POST",
+    "path": "/finance/payroll-runs/{run}/entries/{entry}/mark-paid",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing individual payroll-entry payment acknowledgement."
+  },
+  {
+    "method": "POST",
+    "path": "/finance/payroll-runs/{run}/entries/mark-paid",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing batch payment result, updated count and matched entry identifiers."
   }
 ]
