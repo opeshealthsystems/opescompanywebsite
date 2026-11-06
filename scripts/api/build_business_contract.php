@@ -1137,6 +1137,50 @@ $quoteItemsRead['responses']['200']['content']['application/json']['schema'] = $
     ]]],
 ]], 'admin.finance.quoteItems');
 unset($quoteItemsRead);
+$invoiceMutationResponses = [
+    'admin_finance_invoices_create' => ['status' => 201, 'description' => 'Creates a draft invoice and returns its generated number and integer subtotal, tax, and grand-total values.', 'data' => ['type' => 'object', 'required' => ['id', 'invoice_number', 'status', 'subtotal', 'tax_amount', 'grand_total'], 'properties' => [
+        'id' => ['type' => 'integer'], 'invoice_number' => ['type' => 'string'], 'status' => ['type' => 'string', 'const' => 'draft'],
+        'subtotal' => ['type' => 'integer'], 'tax_amount' => ['type' => 'integer'], 'grand_total' => ['type' => 'integer'],
+    ]]],
+    'admin_finance_invoices_update' => ['status' => 200, 'description' => 'Updates a draft invoice and returns its identifier, draft status, number and recalculated integer totals.', 'data' => ['type' => 'object', 'required' => ['id', 'status', 'invoice_number', 'subtotal', 'tax_amount', 'grand_total'], 'properties' => [
+        'id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'draft'], 'invoice_number' => ['type' => 'string'],
+        'subtotal' => ['type' => 'integer'], 'tax_amount' => ['type' => 'integer'], 'grand_total' => ['type' => 'integer'],
+    ]]],
+    'admin_finance_invoices_delete' => ['status' => 200, 'description' => 'Deletes an eligible draft invoice and returns its identifier with the deleted status.', 'data' => ['type' => 'object', 'required' => ['id', 'status'], 'properties' => [
+        'id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'deleted'],
+    ]]],
+    'admin_finance_invoices_markSent' => ['status' => 200, 'description' => 'Marks a draft invoice as sent. If its customer has an email address, an invoice email and account notification are queued; this response does not claim inbox delivery.', 'data' => ['type' => 'object', 'required' => ['id', 'status'], 'properties' => [
+        'id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'sent'],
+    ]]],
+    'admin_finance_invoices_markPaid' => ['status' => 200, 'description' => 'Records receipt of the outstanding invoice balance and returns its identifier and paid status.', 'data' => ['type' => 'object', 'required' => ['id', 'status'], 'properties' => [
+        'id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'paid'],
+    ]]],
+    'admin_finance_invoices_recordPayment' => ['status' => 200, 'description' => 'Records a validated payment and returns the invoice identifier and resulting status. Payment cannot be recorded against cancelled invoices or above the outstanding balance.', 'data' => ['type' => 'object', 'required' => ['id', 'status'], 'properties' => [
+        'id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'enum' => ['draft', 'sent', 'paid', 'overdue']],
+    ]]],
+    'admin_finance_invoices_markOverdue' => ['status' => 200, 'description' => 'Marks a sent invoice overdue and returns its identifier and overdue status.', 'data' => ['type' => 'object', 'required' => ['id', 'status'], 'properties' => [
+        'id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'overdue'],
+    ]]],
+    'admin_finance_invoices_markManySent' => ['status' => 200, 'description' => 'Marks selected draft invoices sent and returns the number newly updated plus all selected invoice identifiers. No invoice emails are sent by this batch command.', 'data' => ['type' => 'object', 'required' => ['updated', 'ids'], 'properties' => [
+        'updated' => ['type' => 'integer', 'minimum' => 0], 'ids' => ['type' => 'array', 'items' => ['type' => 'integer']],
+    ]]],
+];
+foreach ($spec['paths'] as &$invoicePath) {
+    foreach ($invoicePath as &$invoiceOperation) {
+        $operationId = $invoiceOperation['operationId'] ?? null;
+        if (!isset($invoiceMutationResponses[$operationId])) continue;
+        $definition = $invoiceMutationResponses[$operationId];
+        $status = (string) $definition['status'];
+        if ($status === '201') {
+            $invoiceOperation['responses']['201'] = $invoiceOperation['responses']['200'];
+            unset($invoiceOperation['responses']['200']);
+        }
+        $invoiceOperation['responses'][$status]['description'] = $definition['description'];
+        $invoiceOperation['responses'][$status]['content']['application/json']['schema'] = $successEnvelope($definition['data'], $invoiceOperation['responses'][$status]['content']['application/json']['schema']['properties']['meta']['properties']['operation']['const']);
+    }
+    unset($invoiceOperation);
+}
+unset($invoicePath, $invoiceMutationResponses);
 $customerSummarySchema = ['type' => 'object', 'required' => ['id', 'user_id', 'facility_name', 'facility_type', 'country', 'city', 'address', 'created_at', 'updated_at', 'customer'], 'properties' => [
     'id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'], 'facility_name' => ['type' => ['string', 'null']], 'facility_type' => ['type' => ['string', 'null']],
     'country' => ['type' => 'string'], 'city' => ['type' => ['string', 'null']], 'address' => ['type' => ['string', 'null']],
@@ -1557,6 +1601,18 @@ $adminInvoicePayments['responses']['200']['content']['application/json']['schema
     ]],
 ]], 'admin.finance.invoicePayments.index');
 unset($adminInvoicePayments);
+$invoicePaymentCommand = &$spec['paths']['/finance/invoices/{invoice}/payments']['post'];
+$paymentMethods = array_keys(\App\Models\InvoicePayment::methodOptions());
+foreach (['application/json', 'multipart/form-data'] as $contentType) {
+    $paymentInput = &$invoicePaymentCommand['requestBody']['content'][$contentType]['schema'];
+    $paymentInput['properties']['payment_method'] = ['type' => 'string', 'enum' => $paymentMethods, 'description' => 'Required payment method accepted by InvoicePayment::methodOptions().'];
+    if (!in_array('payment_method', $paymentInput['required'] ?? [], true)) $paymentInput['required'][] = 'payment_method';
+    $invoicePaymentCommand['requestBody']['content'][$contentType]['example']['payment_method'] = $paymentMethods[0];
+    unset($paymentInput);
+}
+$invoicePaymentCommand['requestBody']['content']['application/json']['example']['payment_method'] = $paymentMethods[0];
+$invoicePaymentCommand['requestBody']['content']['multipart/form-data']['example']['payment_method'] = $paymentMethods[0];
+unset($invoicePaymentCommand, $paymentMethods);
 $adminInvoiceItems = &$spec['paths']['/admin/finance/invoices/{invoice}/items']['get'];
 $adminInvoiceItems['responses']['200']['description'] = 'Returns invoice line item descriptions, quantities and unit prices through the existing finance detail query.';
 $adminInvoiceItems['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items'], 'properties' => [

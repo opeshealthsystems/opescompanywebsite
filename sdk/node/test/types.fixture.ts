@@ -51,6 +51,31 @@ const acceptedQuote = await client.request('admin_finance_quotes_accept', { path
 acceptedQuote.data.data.status.toUpperCase();
 const deletedQuote = await client.request('admin_finance_quotes_delete', { path: { quote: 99 }, idempotencyKey: key });
 deletedQuote.data.data.status.toUpperCase();
+const createdInvoice = await client.request('admin_finance_invoices_create', {
+  body: { customer_id: 7, currency: 'XAF', items: [{ description: 'Platform licence', quantity: 1, unit_price: 500 }] },
+  idempotencyKey: key,
+});
+createdInvoice.data.data.grand_total.toFixed();
+const updatedInvoice = await client.request('admin_finance_invoices_update', {
+  path: { invoice: 31 }, body: { notes: 'Updated billing note' }, idempotencyKey: key,
+});
+updatedInvoice.data.data.invoice_number.toUpperCase();
+const sentInvoice = await client.request('admin_finance_invoices_markSent', { path: { invoice: 31 }, idempotencyKey: key });
+sentInvoice.data.data.status.toUpperCase();
+const paidInvoice = await client.request('admin_finance_invoices_markPaid', { path: { invoice: 31 }, idempotencyKey: key });
+paidInvoice.data.data.status.toUpperCase();
+const recordedPayment = await client.request('admin_finance_invoices_recordPayment', {
+  path: { invoice: 31 }, body: { amount: 500, payment_method: 'bank_transfer', payment_date: '2026-11-06' }, idempotencyKey: key,
+});
+recordedPayment.data.data.status.toUpperCase();
+const overdueInvoice = await client.request('admin_finance_invoices_markOverdue', { path: { invoice: 31 }, idempotencyKey: key });
+overdueInvoice.data.data.status.toUpperCase();
+const batchSent = await client.request('admin_finance_invoices_markManySent', {
+  body: { ids: [31, 32] }, idempotencyKey: key,
+});
+batchSent.data.data.updated.toFixed();
+const deletedInvoice = await client.request('admin_finance_invoices_delete', { path: { invoice: 31 }, idempotencyKey: key });
+deletedInvoice.data.data.status.toUpperCase();
 const customers = await client.request('admin_customerProfiles_index');
 customers.data.data.items[0]!.customer?.email.toLowerCase();
 const customer = await client.request('admin_customerProfiles_show', { path: { customerProfile: 12 } });

@@ -1,3 +1,7 @@
+## SDK 0.144.0 — invoice command responses (6 November 2026)
+
+Types invoice creation, draft updates/deletion, send, payment, overdue and batch-send outcomes. The payment request now requires the existing payment_method allowlist. Corrects invoice creation to the handler's actual 201 response and documents integer totals. The send response states that mail/notification work is queued when applicable; it does not claim inbox delivery. Existing finance permissions, payment limits and idempotency behavior are unchanged. OpenAPI is 0.131.0. This downloadable preview remains unpublished to npm. Archive size is 50892 bytes; SHA-256 is `eba1bd4296c0f4b7aa6efc5cee3d3567c8a388e5fff6b6a3f5c5fcf20d8b4148`.
+
 ## SDK 0.143.0 — quote workflow responses (6 November 2026)
 
 Types quote creation, draft updates, send/accept/delete acknowledgements and quote line-item reads. Corrects quote creation to its actual 201 response and decimal amounts to the decimal strings emitted by the model casts. Existing quote authorization, status transitions, totals and idempotency behavior are unchanged. OpenAPI is 0.130.0. This downloadable preview remains unpublished to npm. Archive size is 50735 bytes; SHA-256 is `0f31bc4f8844d5f8e3847aed14e9f6f1836cafcdd434cbd88498eb38ba9e783f`.

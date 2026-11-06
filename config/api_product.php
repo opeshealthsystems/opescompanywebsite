@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version' => '0.130.0',
+    'version' => '0.131.0',
     'products' => [
         [
             'id' => 'public-enquiries',
@@ -93,6 +93,11 @@ return [
         ],
     ],
     'changelog' => [
+        [
+            'version' => '0.131.0',
+            'released_at' => '2026-11-06',
+            'summary' => 'Added typed invoice creation, editing, deletion, payment, sent/overdue status and batch-send outcomes; documented the required payment-method allowlist and actual 201 creation response.',
+        ],
         [
             'version' => '0.130.0',
             'released_at' => '2026-11-06',

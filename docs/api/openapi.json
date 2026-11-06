@@ -2,7 +2,7 @@
     "openapi": "3.1.1",
     "info": {
         "title": "OHS Platform API",
-        "version": "0.130.0",
+        "version": "0.131.0",
         "description": "Versioned OHS business APIs. Public enquiries and application intake, partner and tester administration, publishing and catalogues, role-scoped operations and workforce workflows, finance registers, reports and line-item detail reads, customer facility profiles, employee and HR administration, risk and performance management, leave requests, validation, practitioner, recruitment, learning, survey and support workflows, account recovery, machine catalogue access and owner-managed public-scope machine clients, public sitemap data, protected admin reference data and resource/relationship summaries, with delegated business workflows using authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.",
         "contact": {
             "name": "OHS support",
@@ -47669,80 +47669,6 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "required": [
-                                        "data",
-                                        "meta",
-                                        "messages"
-                                    ],
-                                    "properties": {
-                                        "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
-                                        },
-                                        "meta": {
-                                            "type": "object",
-                                            "properties": {
-                                                "operation": {
-                                                    "type": "string",
-                                                    "const": "admin.finance.invoices.create"
-                                                }
-                                            }
-                                        },
-                                        "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
-                                        }
-                                    }
-                                },
-                                "examples": {
-                                    "envelope": {
-                                        "summary": "Response envelope",
-                                        "description": "The data fields depend on the operation and its resource contract.",
-                                        "value": {
-                                            "data": {},
-                                            "meta": {
-                                                "operation": "admin.finance.invoices.create"
-                                            },
-                                            "messages": []
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "headers": {
-                            "Cache-Control": {
-                                "description": "Authenticated and command results are not stored in shared caches.",
-                                "schema": {
-                                    "type": "string",
-                                    "const": "no-store"
-                                }
-                            },
-                            "X-Request-ID": {
-                                "description": "Identifier used when contacting support.",
-                                "schema": {
-                                    "type": "string",
-                                    "format": "uuid"
-                                }
-                            },
-                            "Idempotency-Replayed": {
-                                "description": "Present with value true when this response replays the saved outcome for the supplied Idempotency-Key; absent on the first execution.",
-                                "schema": {
-                                    "type": "string",
-                                    "const": "true"
-                                }
-                            }
-                        }
-                    },
                     "401": {
                         "description": "Valid delegated user token required",
                         "content": {
@@ -47799,6 +47725,103 @@
                             "application/problem+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Creates a draft invoice and returns its generated number and integer subtotal, tax, and grand-total values.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "required": [
+                                                "id",
+                                                "invoice_number",
+                                                "status",
+                                                "subtotal",
+                                                "tax_amount",
+                                                "grand_total"
+                                            ],
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "invoice_number": {
+                                                    "type": "string"
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "const": "draft"
+                                                },
+                                                "subtotal": {
+                                                    "type": "integer"
+                                                },
+                                                "tax_amount": {
+                                                    "type": "integer"
+                                                },
+                                                "grand_total": {
+                                                    "type": "integer"
+                                                }
+                                            }
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.finance.invoices.create"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "envelope": {
+                                        "summary": "Response envelope",
+                                        "description": "The data fields depend on the operation and its resource contract.",
+                                        "value": {
+                                            "data": {},
+                                            "meta": {
+                                                "operation": "admin.finance.invoices.create"
+                                            },
+                                            "messages": []
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            },
+                            "Idempotency-Replayed": {
+                                "description": "Present with value true when this response replays the saved outcome for the supplied Idempotency-Key; absent on the first execution.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "true"
                                 }
                             }
                         }
@@ -48470,7 +48493,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Updates a draft invoice and returns its identifier, draft status, number and recalculated integer totals.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -48482,10 +48505,36 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "id",
+                                                "status",
+                                                "invoice_number",
+                                                "subtotal",
+                                                "tax_amount",
+                                                "grand_total"
+                                            ],
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "const": "draft"
+                                                },
+                                                "invoice_number": {
+                                                    "type": "string"
+                                                },
+                                                "subtotal": {
+                                                    "type": "integer"
+                                                },
+                                                "tax_amount": {
+                                                    "type": "integer"
+                                                },
+                                                "grand_total": {
+                                                    "type": "integer"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -48497,10 +48546,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -48801,7 +48847,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Deletes an eligible draft invoice and returns its identifier with the deleted status.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -48813,10 +48859,20 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "id",
+                                                "status"
+                                            ],
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "const": "deleted"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -48828,10 +48884,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -54177,7 +54230,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Marks a draft invoice as sent. If its customer has an email address, an invoice email and account notification are queued; this response does not claim inbox delivery.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -54189,10 +54242,20 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "id",
+                                                "status"
+                                            ],
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "const": "sent"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -54204,10 +54267,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -54369,7 +54429,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Records receipt of the outstanding invoice balance and returns its identifier and paid status.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -54381,10 +54441,20 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "id",
+                                                "status"
+                                            ],
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "const": "paid"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -54396,10 +54466,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -54561,7 +54628,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Records a validated payment and returns the invoice identifier and resulting status. Payment cannot be recorded against cancelled invoices or above the outstanding balance.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -54573,10 +54640,25 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "id",
+                                                "status"
+                                            ],
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "draft",
+                                                        "sent",
+                                                        "paid",
+                                                        "overdue"
+                                                    ]
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -54588,10 +54670,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -54726,18 +54805,32 @@
                                         ],
                                         "description": "Validation: nullable|string|max:5000",
                                         "maxLength": 5000
+                                    },
+                                    "payment_method": {
+                                        "type": "string",
+                                        "enum": [
+                                            "bank_transfer",
+                                            "mobile_money",
+                                            "cash",
+                                            "cheque",
+                                            "credit_card",
+                                            "other"
+                                        ],
+                                        "description": "Required payment method accepted by InvoicePayment::methodOptions()."
                                     }
                                 },
                                 "required": [
                                     "amount",
-                                    "payment_date"
+                                    "payment_date",
+                                    "payment_method"
                                 ]
                             },
                             "example": {
                                 "amount": 1,
                                 "payment_date": "2026-01-01",
                                 "reference_number": "REPLACE_WITH_VALUE",
-                                "notes": "REPLACE_WITH_VALUE"
+                                "notes": "REPLACE_WITH_VALUE",
+                                "payment_method": "bank_transfer"
                             }
                         },
                         "application/json": {
@@ -54768,18 +54861,32 @@
                                         ],
                                         "description": "Validation: nullable|string|max:5000",
                                         "maxLength": 5000
+                                    },
+                                    "payment_method": {
+                                        "type": "string",
+                                        "enum": [
+                                            "bank_transfer",
+                                            "mobile_money",
+                                            "cash",
+                                            "cheque",
+                                            "credit_card",
+                                            "other"
+                                        ],
+                                        "description": "Required payment method accepted by InvoicePayment::methodOptions()."
                                     }
                                 },
                                 "required": [
                                     "amount",
-                                    "payment_date"
+                                    "payment_date",
+                                    "payment_method"
                                 ]
                             },
                             "example": {
                                 "amount": 1,
                                 "payment_date": "2026-01-01",
                                 "reference_number": "REPLACE_WITH_VALUE",
-                                "notes": "REPLACE_WITH_VALUE"
+                                "notes": "REPLACE_WITH_VALUE",
+                                "payment_method": "bank_transfer"
                             }
                         }
                     }
@@ -55116,7 +55223,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Marks a sent invoice overdue and returns its identifier and overdue status.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -55128,10 +55235,20 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "id",
+                                                "status"
+                                            ],
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "const": "overdue"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -55143,10 +55260,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -56657,7 +56771,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Marks selected draft invoices sent and returns the number newly updated plus all selected invoice identifiers. No invoice emails are sent by this batch command.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -56669,10 +56783,23 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "updated",
+                                                "ids"
+                                            ],
+                                            "properties": {
+                                                "updated": {
+                                                    "type": "integer",
+                                                    "minimum": 0
+                                                },
+                                                "ids": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "integer"
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -56684,10 +56811,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -160185,7 +160309,7 @@
                                 "example": {
                                     "data": {
                                         "name": "OPES Health Systems API",
-                                        "api_version": "0.130.0",
+                                        "api_version": "0.131.0",
                                         "openapi_version": "3.1.1",
                                         "authentication": {
                                             "machine": "OAuth 2.0 client credentials with approved scopes",
@@ -160409,7 +160533,7 @@
                                 "example": {
                                     "data": {
                                         "status": "responding",
-                                        "api_version": "0.130.0",
+                                        "api_version": "0.131.0",
                                         "checked_at": "2026-11-01T12:00:00+00:00"
                                     },
                                     "meta": {
@@ -160613,6 +160737,11 @@
                                 "example": {
                                     "data": {
                                         "items": [
+                                            {
+                                                "version": "0.131.0",
+                                                "released_at": "2026-11-06",
+                                                "summary": "Added typed invoice creation, editing, deletion, payment, sent/overdue status and batch-send outcomes; documented the required payment-method allowlist and actual 201 creation response."
+                                            },
                                             {
                                                 "version": "0.130.0",
                                                 "released_at": "2026-11-06",
@@ -161051,7 +161180,7 @@
                                 },
                                 "example": {
                                     "data": {
-                                        "api_version": "0.130.0",
+                                        "api_version": "0.131.0",
                                         "locale": "en",
                                         "items": [
                                             {
