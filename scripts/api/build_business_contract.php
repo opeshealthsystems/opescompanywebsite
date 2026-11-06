@@ -2682,6 +2682,61 @@ $accountantProfileUpdate['responses']['200']['content']['application/json']['sch
     ],
 ], 'accountant.profilecontroller.update');
 unset($accountantProfileUpdate);
+$adminLeaveItem = ['type' => 'object', 'required' => ['id', 'user_id', 'leave_type_id', 'type', 'start_date', 'end_date', 'total_days', 'reason', 'status', 'approved_by', 'approved_at', 'notes', 'created_at', 'updated_at', 'employee', 'leave_type', 'approver'], 'properties' => [
+    'id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'], 'leave_type_id' => ['type' => ['integer', 'null']],
+    'type' => ['type' => 'string', 'enum' => ['annual', 'sick', 'unpaid', 'maternity', 'paternity', 'other']],
+    'start_date' => ['type' => 'string', 'format' => 'date'], 'end_date' => ['type' => 'string', 'format' => 'date'], 'total_days' => ['type' => 'string'],
+    'reason' => ['type' => ['string', 'null']], 'status' => ['type' => 'string', 'enum' => ['pending', 'approved', 'rejected', 'cancelled']],
+    'approved_by' => ['type' => ['integer', 'null']], 'approved_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'notes' => ['type' => ['string', 'null']], 'created_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'updated_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'employee' => ['type' => ['object', 'null'], 'required' => ['id', 'name', 'email'], 'properties' => ['id' => ['type' => 'integer'], 'name' => ['type' => 'string'], 'email' => ['type' => ['string', 'null'], 'format' => 'email']]],
+    'leave_type' => ['type' => ['object', 'null'], 'required' => ['id', 'name', 'code'], 'properties' => ['id' => ['type' => 'integer'], 'name' => ['type' => 'string'], 'code' => ['type' => 'string']]],
+    'approver' => ['type' => ['object', 'null'], 'required' => ['id', 'name'], 'properties' => ['id' => ['type' => 'integer'], 'name' => ['type' => 'string']]],
+]];
+$leaveMutation = ['type' => 'object', 'required' => ['id', 'status'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'enum' => ['pending', 'approved', 'rejected', 'cancelled']]]];
+$leavePagination = ['type' => 'object', 'required' => ['current_page', 'per_page', 'total', 'last_page'], 'properties' => ['current_page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer']]];
+$adminLeavesIndex = &$spec['paths']['/admin/leaves']['get'];
+$adminLeavesIndex['responses']['200']['description'] = 'Returns paginated leave requests with employee, leave-type and approver summaries. Access is limited to active administrators.';
+$adminLeavesIndex['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => ['items' => ['type' => 'array', 'items' => $adminLeaveItem], 'pagination' => $leavePagination]], 'admin.workforce.leaves.index');
+unset($adminLeavesIndex);
+$adminLeavesCreate = &$spec['paths']['/admin/leaves']['post'];
+$adminLeavesCreate['responses']['201']['content']['application/json']['schema'] = $successEnvelope($leaveMutation, 'admin.workforce.leaves.create');
+unset($adminLeavesCreate);
+$adminLeavesShow = &$spec['paths']['/admin/leaves/{leave}']['get'];
+$adminLeavesShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['leave_request'], 'properties' => ['leave_request' => $adminLeaveItem]], 'admin.workforce.leaves.show');
+unset($adminLeavesShow);
+foreach ([['/admin/leaves/{leave}/approve', 'post', 'admin.workforce.leaves.approve'], ['/admin/leaves/{leave}/reject', 'post', 'admin.workforce.leaves.reject'], ['/admin/leaves/{leave}', 'put', 'admin.workforce.leaves.update']] as [$path, $method, $operation]) {
+    $entry = &$spec['paths'][$path][$method];
+    $entry['responses']['200']['content']['application/json']['schema'] = $successEnvelope($leaveMutation, $operation);
+    unset($entry);
+}
+foreach ([['/admin/leaves/bulk-approve', 'admin.workforce.leaves.bulkApprove', 'approved'], ['/admin/leaves/bulk-reject', 'admin.workforce.leaves.bulkReject', 'rejected']] as [$path, $operation, $decision]) {
+    $entry = &$spec['paths'][$path]['post'];
+    $entry['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['count', 'ids', 'decision'], 'properties' => ['count' => ['type' => 'integer', 'minimum' => 1], 'ids' => ['type' => 'array', 'items' => ['type' => 'integer']], 'decision' => ['type' => 'string', 'const' => $decision]]], $operation);
+    unset($entry);
+}
+$leaveBalance = ['type' => 'object', 'required' => ['id', 'user_id', 'year', 'type', 'entitled_days', 'used_days', 'remaining_days'], 'properties' => [
+    'id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'], 'year' => ['type' => 'integer'], 'type' => ['type' => 'string', 'enum' => ['annual', 'sick', 'unpaid', 'maternity', 'paternity', 'other']],
+    'entitled_days' => ['type' => 'string'], 'used_days' => ['type' => 'string'], 'remaining_days' => ['type' => 'number', 'minimum' => 0],
+]];
+$leaveBalancesIndex = &$spec['paths']['/admin/workforce/employees/{employee}/leave-balances']['get'];
+$leaveBalancesIndex['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => ['items' => ['type' => 'array', 'items' => $leaveBalance], 'pagination' => $leavePagination]], 'admin.workforce.leaveBalances.index');
+unset($leaveBalancesIndex);
+$leaveBalancesCreate = &$spec['paths']['/admin/workforce/employees/{employee}/leave-balances']['post'];
+$leaveBalancesCreate['responses']['201'] = $leaveBalancesCreate['responses']['200'];
+unset($leaveBalancesCreate['responses']['200']);
+$leaveBalancesCreate['responses']['201']['description'] = 'Creates a leave balance and returns the persisted balance record.';
+$leaveBalancesCreate['responses']['201']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['record', 'id'], 'properties' => ['record' => ['type' => 'object', 'required' => ['type', 'id'], 'properties' => ['type' => ['type' => 'string', 'const' => 'LeaveBalance'], 'id' => ['type' => 'integer']]], 'id' => ['type' => 'integer']]], 'admin.workforce.leaveBalances.create');
+unset($leaveBalancesCreate);
+$leaveBalanceShow = &$spec['paths']['/admin/workforce/leave-balances/{leaveBalance}']['get'];
+$leaveBalanceShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['leave_balance'], 'properties' => ['leave_balance' => $leaveBalance]], 'admin.workforce.leaveBalances.show');
+unset($leaveBalanceShow);
+$leaveBalanceUpdate = &$spec['paths']['/admin/workforce/leave-balances/{leaveBalance}']['put'];
+$leaveBalanceUpdate['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['record', 'id'], 'properties' => ['record' => ['type' => 'object', 'required' => ['type', 'id'], 'properties' => ['type' => ['type' => 'string', 'const' => 'LeaveBalance'], 'id' => ['type' => 'integer']]], 'id' => ['type' => 'integer']]], 'admin.workforce.leaveBalances.update');
+unset($leaveBalanceUpdate);
+$leaveBalanceDelete = &$spec['paths']['/admin/workforce/leave-balances/{leaveBalance}']['delete'];
+$leaveBalanceDelete['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['id', 'status'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'deleted']]], 'admin.workforce.leaveBalances.delete');
+unset($leaveBalanceDelete, $adminLeaveItem, $leaveMutation, $leavePagination, $leaveBalance);
 $contractPath = $root.'/docs/api/openapi.json';
 $contractTemp = $contractPath.'.tmp';
 if (file_put_contents($contractTemp, json_encode($spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR)."\n") === false || !rename($contractTemp, $contractPath)) {

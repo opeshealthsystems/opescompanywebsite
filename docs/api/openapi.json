@@ -2,7 +2,7 @@
     "openapi": "3.1.1",
     "info": {
         "title": "OHS Platform API",
-        "version": "0.139.0",
+        "version": "0.140.0",
         "description": "Versioned OHS business APIs. Public enquiries and application intake, partner and tester administration, publishing and catalogues, role-scoped operations and workforce workflows, finance registers, reports and line-item detail reads, customer facility profiles, employee and HR administration, risk and performance management, leave requests, validation, practitioner, recruitment, learning, survey and support workflows, account recovery, machine catalogue access and owner-managed public-scope machine clients, public sitemap data, protected admin reference data and resource/relationship summaries, with delegated business workflows using authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.",
         "contact": {
             "name": "OHS support",
@@ -81509,10 +81509,25 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "id",
+                                                "status"
+                                            ],
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "pending",
+                                                        "approved",
+                                                        "rejected",
+                                                        "cancelled"
+                                                    ]
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -81524,10 +81539,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -81701,10 +81713,25 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "id",
+                                                "status"
+                                            ],
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "pending",
+                                                        "approved",
+                                                        "rejected",
+                                                        "cancelled"
+                                                    ]
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -81716,10 +81743,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -81883,10 +81907,28 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "count",
+                                                "ids",
+                                                "decision"
+                                            ],
+                                            "properties": {
+                                                "count": {
+                                                    "type": "integer",
+                                                    "minimum": 1
+                                                },
+                                                "ids": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "integer"
+                                                    }
+                                                },
+                                                "decision": {
+                                                    "type": "string",
+                                                    "const": "approved"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -81898,10 +81940,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -82116,10 +82155,28 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "count",
+                                                "ids",
+                                                "decision"
+                                            ],
+                                            "properties": {
+                                                "count": {
+                                                    "type": "integer",
+                                                    "minimum": 1
+                                                },
+                                                "ids": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "integer"
+                                                    }
+                                                },
+                                                "decision": {
+                                                    "type": "string",
+                                                    "const": "rejected"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -82131,10 +82188,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -82394,7 +82448,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns paginated leave requests with employee, leave-type and approver summaries. Access is limited to active administrators.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -82406,10 +82460,211 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items",
+                                                "pagination"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "user_id",
+                                                            "leave_type_id",
+                                                            "type",
+                                                            "start_date",
+                                                            "end_date",
+                                                            "total_days",
+                                                            "reason",
+                                                            "status",
+                                                            "approved_by",
+                                                            "approved_at",
+                                                            "notes",
+                                                            "created_at",
+                                                            "updated_at",
+                                                            "employee",
+                                                            "leave_type",
+                                                            "approver"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "user_id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "leave_type_id": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "type": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "annual",
+                                                                    "sick",
+                                                                    "unpaid",
+                                                                    "maternity",
+                                                                    "paternity",
+                                                                    "other"
+                                                                ]
+                                                            },
+                                                            "start_date": {
+                                                                "type": "string",
+                                                                "format": "date"
+                                                            },
+                                                            "end_date": {
+                                                                "type": "string",
+                                                                "format": "date"
+                                                            },
+                                                            "total_days": {
+                                                                "type": "string"
+                                                            },
+                                                            "reason": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "status": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "pending",
+                                                                    "approved",
+                                                                    "rejected",
+                                                                    "cancelled"
+                                                                ]
+                                                            },
+                                                            "approved_by": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "approved_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            },
+                                                            "notes": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "created_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            },
+                                                            "employee": {
+                                                                "type": [
+                                                                    "object",
+                                                                    "null"
+                                                                ],
+                                                                "required": [
+                                                                    "id",
+                                                                    "name",
+                                                                    "email"
+                                                                ],
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "name": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "email": {
+                                                                        "type": [
+                                                                            "string",
+                                                                            "null"
+                                                                        ],
+                                                                        "format": "email"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "leave_type": {
+                                                                "type": [
+                                                                    "object",
+                                                                    "null"
+                                                                ],
+                                                                "required": [
+                                                                    "id",
+                                                                    "name",
+                                                                    "code"
+                                                                ],
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "name": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "code": {
+                                                                        "type": "string"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "approver": {
+                                                                "type": [
+                                                                    "object",
+                                                                    "null"
+                                                                ],
+                                                                "required": [
+                                                                    "id",
+                                                                    "name"
+                                                                ],
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "name": {
+                                                                        "type": "string"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "current_page",
+                                                        "per_page",
+                                                        "total",
+                                                        "last_page"
+                                                    ],
+                                                    "properties": {
+                                                        "current_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "total": {
+                                                            "type": "integer"
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -82421,10 +82676,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -82639,10 +82891,25 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "id",
+                                                "status"
+                                            ],
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "pending",
+                                                        "approved",
+                                                        "rejected",
+                                                        "cancelled"
+                                                    ]
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -82654,10 +82921,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -82913,10 +83177,184 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "leave_request"
+                                            ],
+                                            "properties": {
+                                                "leave_request": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "user_id",
+                                                        "leave_type_id",
+                                                        "type",
+                                                        "start_date",
+                                                        "end_date",
+                                                        "total_days",
+                                                        "reason",
+                                                        "status",
+                                                        "approved_by",
+                                                        "approved_at",
+                                                        "notes",
+                                                        "created_at",
+                                                        "updated_at",
+                                                        "employee",
+                                                        "leave_type",
+                                                        "approver"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "user_id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "leave_type_id": {
+                                                            "type": [
+                                                                "integer",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "type": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "annual",
+                                                                "sick",
+                                                                "unpaid",
+                                                                "maternity",
+                                                                "paternity",
+                                                                "other"
+                                                            ]
+                                                        },
+                                                        "start_date": {
+                                                            "type": "string",
+                                                            "format": "date"
+                                                        },
+                                                        "end_date": {
+                                                            "type": "string",
+                                                            "format": "date"
+                                                        },
+                                                        "total_days": {
+                                                            "type": "string"
+                                                        },
+                                                        "reason": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "pending",
+                                                                "approved",
+                                                                "rejected",
+                                                                "cancelled"
+                                                            ]
+                                                        },
+                                                        "approved_by": {
+                                                            "type": [
+                                                                "integer",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "approved_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "notes": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "created_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "employee": {
+                                                            "type": [
+                                                                "object",
+                                                                "null"
+                                                            ],
+                                                            "required": [
+                                                                "id",
+                                                                "name",
+                                                                "email"
+                                                            ],
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "name": {
+                                                                    "type": "string"
+                                                                },
+                                                                "email": {
+                                                                    "type": [
+                                                                        "string",
+                                                                        "null"
+                                                                    ],
+                                                                    "format": "email"
+                                                                }
+                                                            }
+                                                        },
+                                                        "leave_type": {
+                                                            "type": [
+                                                                "object",
+                                                                "null"
+                                                            ],
+                                                            "required": [
+                                                                "id",
+                                                                "name",
+                                                                "code"
+                                                            ],
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "name": {
+                                                                    "type": "string"
+                                                                },
+                                                                "code": {
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        },
+                                                        "approver": {
+                                                            "type": [
+                                                                "object",
+                                                                "null"
+                                                            ],
+                                                            "required": [
+                                                                "id",
+                                                                "name"
+                                                            ],
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "name": {
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -82928,10 +83366,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -83096,10 +83531,25 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "id",
+                                                "status"
+                                            ],
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "pending",
+                                                        "approved",
+                                                        "rejected",
+                                                        "cancelled"
+                                                    ]
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -83111,10 +83561,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -83418,10 +83865,83 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items",
+                                                "pagination"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "user_id",
+                                                            "year",
+                                                            "type",
+                                                            "entitled_days",
+                                                            "used_days",
+                                                            "remaining_days"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "user_id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "year": {
+                                                                "type": "integer"
+                                                            },
+                                                            "type": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "annual",
+                                                                    "sick",
+                                                                    "unpaid",
+                                                                    "maternity",
+                                                                    "paternity",
+                                                                    "other"
+                                                                ]
+                                                            },
+                                                            "entitled_days": {
+                                                                "type": "string"
+                                                            },
+                                                            "used_days": {
+                                                                "type": "string"
+                                                            },
+                                                            "remaining_days": {
+                                                                "type": "number",
+                                                                "minimum": 0
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "current_page",
+                                                        "per_page",
+                                                        "total",
+                                                        "last_page"
+                                                    ],
+                                                    "properties": {
+                                                        "current_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "total": {
+                                                            "type": "integer"
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -83433,10 +83953,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -83588,80 +84105,6 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "required": [
-                                        "data",
-                                        "meta",
-                                        "messages"
-                                    ],
-                                    "properties": {
-                                        "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
-                                        },
-                                        "meta": {
-                                            "type": "object",
-                                            "properties": {
-                                                "operation": {
-                                                    "type": "string",
-                                                    "const": "admin.workforce.leaveBalances.create"
-                                                }
-                                            }
-                                        },
-                                        "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
-                                        }
-                                    }
-                                },
-                                "examples": {
-                                    "envelope": {
-                                        "summary": "Response envelope",
-                                        "description": "The data fields depend on the operation and its resource contract.",
-                                        "value": {
-                                            "data": {},
-                                            "meta": {
-                                                "operation": "admin.workforce.leaveBalances.create"
-                                            },
-                                            "messages": []
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "headers": {
-                            "Cache-Control": {
-                                "description": "Authenticated and command results are not stored in shared caches.",
-                                "schema": {
-                                    "type": "string",
-                                    "const": "no-store"
-                                }
-                            },
-                            "X-Request-ID": {
-                                "description": "Identifier used when contacting support.",
-                                "schema": {
-                                    "type": "string",
-                                    "format": "uuid"
-                                }
-                            },
-                            "Idempotency-Replayed": {
-                                "description": "Present with value true when this response replays the saved outcome for the supplied Idempotency-Key; absent on the first execution.",
-                                "schema": {
-                                    "type": "string",
-                                    "const": "true"
-                                }
-                            }
-                        }
-                    },
                     "401": {
                         "description": "Valid delegated user token required",
                         "content": {
@@ -83718,6 +84161,130 @@
                             "application/problem+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Creates a leave balance and returns the persisted balance record.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "required": [
+                                                "record",
+                                                "id"
+                                            ],
+                                            "properties": {
+                                                "record": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "user_id",
+                                                        "year",
+                                                        "type",
+                                                        "entitled_days",
+                                                        "used_days",
+                                                        "created_at",
+                                                        "updated_at"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "user_id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "year": {
+                                                            "type": "integer"
+                                                        },
+                                                        "type": {
+                                                            "type": "string"
+                                                        },
+                                                        "entitled_days": {
+                                                            "type": "string"
+                                                        },
+                                                        "used_days": {
+                                                            "type": "string"
+                                                        },
+                                                        "created_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        }
+                                                    }
+                                                },
+                                                "id": {
+                                                    "type": "integer"
+                                                }
+                                            }
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "admin.workforce.leaveBalances.create"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "envelope": {
+                                        "summary": "Response envelope",
+                                        "description": "The data fields depend on the operation and its resource contract.",
+                                        "value": {
+                                            "data": {},
+                                            "meta": {
+                                                "operation": "admin.workforce.leaveBalances.create"
+                                            },
+                                            "messages": []
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            },
+                            "Idempotency-Replayed": {
+                                "description": "Present with value true when this response replays the saved outcome for the supplied Idempotency-Key; absent on the first execution.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "true"
                                 }
                             }
                         }
@@ -83861,10 +84428,56 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "leave_balance"
+                                            ],
+                                            "properties": {
+                                                "leave_balance": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "user_id",
+                                                        "year",
+                                                        "type",
+                                                        "entitled_days",
+                                                        "used_days",
+                                                        "remaining_days"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "user_id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "year": {
+                                                            "type": "integer"
+                                                        },
+                                                        "type": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "annual",
+                                                                "sick",
+                                                                "unpaid",
+                                                                "maternity",
+                                                                "paternity",
+                                                                "other"
+                                                            ]
+                                                        },
+                                                        "entitled_days": {
+                                                            "type": "string"
+                                                        },
+                                                        "used_days": {
+                                                            "type": "string"
+                                                        },
+                                                        "remaining_days": {
+                                                            "type": "number",
+                                                            "minimum": 0
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -83876,10 +84489,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -84044,10 +84654,63 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "record",
+                                                "id"
+                                            ],
+                                            "properties": {
+                                                "record": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "user_id",
+                                                        "year",
+                                                        "type",
+                                                        "entitled_days",
+                                                        "used_days",
+                                                        "created_at",
+                                                        "updated_at"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "user_id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "year": {
+                                                            "type": "integer"
+                                                        },
+                                                        "type": {
+                                                            "type": "string"
+                                                        },
+                                                        "entitled_days": {
+                                                            "type": "string"
+                                                        },
+                                                        "used_days": {
+                                                            "type": "string"
+                                                        },
+                                                        "created_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        }
+                                                    }
+                                                },
+                                                "id": {
+                                                    "type": "integer"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -84059,10 +84722,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -84277,10 +84937,20 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "id",
+                                                "status"
+                                            ],
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "const": "deleted"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -84292,10 +84962,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -163011,7 +163678,7 @@
                                 "example": {
                                     "data": {
                                         "name": "OPES Health Systems API",
-                                        "api_version": "0.139.0",
+                                        "api_version": "0.140.0",
                                         "openapi_version": "3.1.1",
                                         "authentication": {
                                             "machine": "OAuth 2.0 client credentials with approved scopes",
@@ -163235,7 +163902,7 @@
                                 "example": {
                                     "data": {
                                         "status": "responding",
-                                        "api_version": "0.139.0",
+                                        "api_version": "0.140.0",
                                         "checked_at": "2026-11-01T12:00:00+00:00"
                                     },
                                     "meta": {
@@ -163439,6 +164106,11 @@
                                 "example": {
                                     "data": {
                                         "items": [
+                                            {
+                                                "version": "0.140.0",
+                                                "released_at": "2026-11-06",
+                                                "summary": "Added typed administrator leave-request and leave-balance workflows, including accurate 201 creation status for new leave balances."
+                                            },
                                             {
                                                 "version": "0.139.0",
                                                 "released_at": "2026-11-06",
@@ -163922,7 +164594,7 @@
                                 },
                                 "example": {
                                     "data": {
-                                        "api_version": "0.139.0",
+                                        "api_version": "0.140.0",
                                         "locale": "en",
                                         "items": [
                                             {

@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version' => '0.139.0',
+    'version' => '0.140.0',
     'products' => [
         [
             'id' => 'public-enquiries',
@@ -93,6 +93,11 @@ return [
         ],
     ],
     'changelog' => [
+        [
+            'version' => '0.140.0',
+            'released_at' => '2026-11-06',
+            'summary' => 'Added typed administrator leave-request and leave-balance workflows, including accurate 201 creation status for new leave balances.',
+        ],
         [
             'version' => '0.139.0',
             'released_at' => '2026-11-06',

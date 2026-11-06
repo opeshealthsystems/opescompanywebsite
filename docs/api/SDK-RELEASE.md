@@ -1,3 +1,7 @@
+## SDK 0.153.0 — administrator leave workflows (6 November 2026)
+
+Types administrator leave-request registers/details and create/update/approve/reject/bulk outcomes, plus leave-balance registers/details and lifecycle responses. Corrects leave-balance creation to its actual HTTP 201 response. The API continues to use shared, role/scope-guarded workforce handlers and idempotency-protected commands. OpenAPI is 0.140.0. This downloadable preview remains unpublished to npm. Archive size is 52605 bytes; SHA-256 is `30c1fd2aa9e4fb35f55f3f532127761a2a1a91fa08fd753e018ab739a5bb0400`.
+
 ## SDK 0.152.0 — accountant dashboard (6 November 2026)
 
 Types accountant dashboard finance totals, the latest completed payroll run, and up to five overdue and recently paid invoice summaries. Invoice resource fields follow the existing accountant-visible serialization and calculations are unchanged. OpenAPI is 0.139.0. This downloadable preview remains unpublished to npm. Archive size is 52355 bytes; SHA-256 is `ff8633ea8f21f1d6442a6fbaeb994c9960842271a037d0c72e62357ba93f1162`.

@@ -1,6 +1,84 @@
 [
   {
     "method": "GET",
+    "path": "/admin/leaves",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator leave workflow projection and lifecycle acknowledgement from the shared workforce handler."
+  },
+  {
+    "method": "POST",
+    "path": "/admin/leaves",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator leave workflow projection and lifecycle acknowledgement from the shared workforce handler."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/leaves/{leave}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator leave workflow projection and lifecycle acknowledgement from the shared workforce handler."
+  },
+  {
+    "method": "PUT",
+    "path": "/admin/leaves/{leave}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator leave workflow projection and lifecycle acknowledgement from the shared workforce handler."
+  },
+  {
+    "method": "POST",
+    "path": "/admin/leaves/{leave}/approve",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator leave workflow projection and lifecycle acknowledgement from the shared workforce handler."
+  },
+  {
+    "method": "POST",
+    "path": "/admin/leaves/{leave}/reject",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator leave workflow projection and lifecycle acknowledgement from the shared workforce handler."
+  },
+  {
+    "method": "POST",
+    "path": "/admin/leaves/bulk-approve",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator leave workflow projection and lifecycle acknowledgement from the shared workforce handler."
+  },
+  {
+    "method": "POST",
+    "path": "/admin/leaves/bulk-reject",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator leave workflow projection and lifecycle acknowledgement from the shared workforce handler."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/workforce/employees/{employee}/leave-balances",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator leave workflow projection and lifecycle acknowledgement from the shared workforce handler."
+  },
+  {
+    "method": "POST",
+    "path": "/admin/workforce/employees/{employee}/leave-balances",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator leave workflow projection and lifecycle acknowledgement from the shared workforce handler."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/workforce/leave-balances/{leaveBalance}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator leave workflow projection and lifecycle acknowledgement from the shared workforce handler."
+  },
+  {
+    "method": "PUT",
+    "path": "/admin/workforce/leave-balances/{leaveBalance}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator leave workflow projection and lifecycle acknowledgement from the shared workforce handler."
+  },
+  {
+    "method": "DELETE",
+    "path": "/admin/workforce/leave-balances/{leaveBalance}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator leave workflow projection and lifecycle acknowledgement from the shared workforce handler."
+  },
+  {
+    "method": "GET",
     "path": "/accountant/dashboard",
     "allow_response_schema_refinement": true,
     "reason": "Documents the existing accountant dashboard totals, latest payroll run and bounded five-item invoice summaries without changing calculations or visibility."
@@ -390,7 +468,7 @@
     "method": "GET",
     "path": "/practitioner/assessments/{assessment}",
     "allow_response_schema_refinement": true,
-    "reason": "Documents the enrolled practitioner’s exam questions and attempt history from CourseAssessmentQueries; question projections omit correct choice identifiers. No runtime behavior changes."
+    "reason": "Documents the enrolled practitioner\u2019s exam questions and attempt history from CourseAssessmentQueries; question projections omit correct choice identifiers. No runtime behavior changes."
   },
   {
     "method": "GET",
@@ -438,13 +516,13 @@
     "method": "GET",
     "path": "/customer/surveys",
     "allow_response_schema_refinement": true,
-    "reason": "Documents currently active customer-facing surveys and the authenticated customer’s submitted survey IDs from CustomerSurveyQueries. No other users’ answers are returned. Runtime behavior, authorization and response bytes are unchanged."
+    "reason": "Documents currently active customer-facing surveys and the authenticated customer\u2019s submitted survey IDs from CustomerSurveyQueries. No other users\u2019 answers are returned. Runtime behavior, authorization and response bytes are unchanged."
   },
   {
     "method": "GET",
     "path": "/customer/surveys/{survey}",
     "allow_response_schema_refinement": true,
-    "reason": "Documents an active customer-facing survey, its questions, the customer’s response state and existing text answers from CustomerSurveyQueries. Other users’ answers remain private. Runtime behavior, authorization and response bytes are unchanged."
+    "reason": "Documents an active customer-facing survey, its questions, the customer\u2019s response state and existing text answers from CustomerSurveyQueries. Other users\u2019 answers remain private. Runtime behavior, authorization and response bytes are unchanged."
   },
   {
     "method": "POST",
@@ -474,13 +552,13 @@
     "method": "GET",
     "path": "/customer/licenses/{id}",
     "allow_response_schema_refinement": true,
-    "reason": "Documents the existing ownership-checked customer license detail, including the owner’s license key. No response bytes, request shape, authorization or status behavior changes."
+    "reason": "Documents the existing ownership-checked customer license detail, including the owner\u2019s license key. No response bytes, request shape, authorization or status behavior changes."
   },
   {
     "method": "GET",
     "path": "/customer/invoices",
     "allow_response_schema_refinement": true,
-    "reason": "Documents the authenticated customer’s sent, paid and overdue invoices, their current computed totals and the items loaded by those totals. No response bytes, request shape, authorization or status behavior changes."
+    "reason": "Documents the authenticated customer\u2019s sent, paid and overdue invoices, their current computed totals and the items loaded by those totals. No response bytes, request shape, authorization or status behavior changes."
   },
   {
     "method": "GET",

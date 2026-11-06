@@ -1134,6 +1134,38 @@ class BusinessApiTest extends TestCase
         $this->assertDatabaseHas('business_outbox', ['type' => 'workforce.leave_decided.v1']);
     }
 
+    public function test_admin_leave_balance_api_creates_with_201_and_supports_idempotent_lifecycle(): void
+    {
+        $admin = $this->user('admin');
+        $employee = $this->user('support');
+        $token = $this->access($admin, ['workforce:hr:read', 'workforce:hr:write']);
+        $headers = ['Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'leave-balance-create-0001'];
+        $path = '/api/v1/admin/workforce/employees/'.$employee->id.'/leave-balances';
+        $input = ['year' => 2026, 'type' => 'annual', 'entitled_days' => 20];
+
+        $created = $this->postJson($path, $input, $headers)->assertCreated()
+            ->assertJsonPath('data.record.type', 'LeaveBalance');
+        $this->postJson($path, $input, $headers)->assertExactJson($created->json());
+        $this->assertDatabaseCount('leave_balances', 1);
+
+        $balanceId = $created->json('data.id');
+        $created->assertJsonPath('data.record.id', $balanceId);
+        $this->getJson('/api/v1/admin/workforce/employees/'.$employee->id.'/leave-balances', ['Authorization' => 'Bearer '.$token])
+            ->assertOk()->assertJsonPath('data.items.0.id', $balanceId)->assertJsonPath('data.pagination.total', 1);
+        $this->getJson('/api/v1/admin/workforce/leave-balances/'.$balanceId, ['Authorization' => 'Bearer '.$token])
+            ->assertOk()->assertJsonPath('data.leave_balance.remaining_days', 20);
+
+        $this->putJson('/api/v1/admin/workforce/leave-balances/'.$balanceId, ['entitled_days' => 22], [
+            'Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'leave-balance-update-0001',
+        ])->assertOk()->assertJsonPath('data.record.type', 'LeaveBalance')->assertJsonPath('data.record.id', $balanceId);
+        $this->getJson('/api/v1/admin/workforce/leave-balances/'.$balanceId, ['Authorization' => 'Bearer '.$token])
+            ->assertOk()->assertJsonPath('data.leave_balance.entitled_days', '22.0');
+        $this->deleteJson('/api/v1/admin/workforce/leave-balances/'.$balanceId, [], [
+            'Authorization' => 'Bearer '.$token, 'Idempotency-Key' => 'leave-balance-delete-0001',
+        ])->assertOk()->assertJsonPath('data.status', 'deleted');
+        $this->assertDatabaseMissing('leave_balances', ['id' => $balanceId]);
+    }
+
     public function test_performance_review_state_changes_are_shared_and_idempotent(): void
     {
         $admin = $this->user('admin');
@@ -1391,7 +1423,7 @@ class BusinessApiTest extends TestCase
     public function test_workforce_department_and_leave_type_apis_enforce_hierarchy_and_history_rules(): void
     {
         $admin = $this->user('admin');
-        $headers = ['Authorization' => 'Bearer '.$this->access($admin, ['workforce:read', 'workforce:write']), 'Idempotency-Key' => 'department-create-0001'];
+        $headers = ['Authorization' => 'Bearer '.$this->access($admin, ['workforce:hr:read', 'workforce:hr:write']), 'Idempotency-Key' => 'department-create-0001'];
         $this->postJson('/api/v1/departments', [], ['Idempotency-Key' => 'department-anon-0001'])->assertUnauthorized();
         $parent = $this->postJson('/api/v1/departments', ['name' => 'Fictional Operations', 'code' => 'FOP', 'is_active' => true], $headers)->assertCreated();
         $parentId = $parent->json('data.id');
