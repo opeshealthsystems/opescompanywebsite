@@ -1,3 +1,11 @@
+## API release 0.135.0 — credit-note workflows (6 November 2026)
+
+Deployed OpenAPI 0.135.0 and Node SDK preview 0.148.0. Added a typed credit-note register with explicit invoice, creator and line-item fields, and typed create/update/delete/issue/void outcomes. Credit-note creation documents the handler's actual 201 response. No runtime workflow, migration or authorization changes were required.
+
+Gates: the focused credit-note lifecycle test passes (1 test / 22 assertions); Node SDK tests pass 19/19; strict TypeScript compilation, compatibility review against 0.134.0, and schema coverage tests pass (192 field-specific, 461 generic, 3 no-content across 656 operations). Live status, discovery and OpenAPI report 0.135.0 with 465 paths and 656 operations. The developer page returns 200 and advertises SDK 0.148.0. The 51,615-byte live SDK matches metadata SHA-256 `87927856015327bf1c538ba8381aa8d3693a85917d6f9d309dd74d4324c5e2dc`; anonymous credit-note reads return 401.
+
+Release archive `/home/u117099711/releases/ohs-api-0.135.0-20261106.tar.gz` SHA-256 `c743852c9a47aa7743637adbd5a9e378ae6e5532dc470f64c7171fb57fd9535e`. Predeploy rollback archive `/home/u117099711/backups/ohs-api-0.135.0-predeploy-20261106.tar.gz` SHA-256 `e94deb773a318df0469fde40a8b43b5a028702ca20ccbe502b9ecac08ab1f43e`, gzip verified and mode 0600. Laravel configuration cache rebuilt. No GitHub push was performed.
+
 ## API release 0.134.0 — procurement workflows (6 November 2026)
 
 Deployed OpenAPI 0.134.0 and Node SDK preview 0.147.0. Added typed administrator purchase-order and supplier-bill registers and create/update/delete/approve/receive/pay outcomes. Procurement list responses now project only the needed vendor and requester identifiers and names rather than serializing full related models. No migration was required.

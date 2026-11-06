@@ -1400,6 +1400,55 @@ foreach ($spec['paths'] as &$procurementPathItem) {
 }
 unset($procurementPathItem, $procurementCommandResponses, $procurementPagination, $purchaseOrderSchema, $supplierBillSchema);
 
+$creditNoteSchema = ['type' => 'object', 'required' => ['id', 'reference', 'invoice_id', 'reason', 'status', 'subtotal', 'tax_amount', 'total', 'currency', 'issued_at', 'notes', 'created_by', 'created_at', 'updated_at', 'invoice', 'creator', 'items'], 'properties' => [
+    'id' => ['type' => 'integer'], 'reference' => ['type' => 'string'], 'invoice_id' => ['type' => ['integer', 'null']], 'reason' => ['type' => 'string'],
+    'status' => ['type' => 'string', 'enum' => ['draft', 'issued', 'applied', 'void']],
+    'subtotal' => ['type' => 'string'], 'tax_amount' => ['type' => 'string'], 'total' => ['type' => 'string'], 'currency' => ['type' => 'string', 'enum' => ['XAF', 'USD', 'EUR']],
+    'issued_at' => ['type' => ['string', 'null'], 'format' => 'date'], 'notes' => ['type' => ['string', 'null']], 'created_by' => ['type' => 'integer'],
+    'created_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'updated_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'invoice' => ['type' => ['object', 'null'], 'required' => ['id', 'invoice_number', 'currency', 'grand_total'], 'properties' => [
+        'id' => ['type' => 'integer'], 'invoice_number' => ['type' => 'string'], 'currency' => ['type' => 'string'], 'grand_total' => ['type' => 'integer'],
+    ]],
+    'creator' => ['type' => ['object', 'null'], 'required' => ['id', 'name'], 'properties' => ['id' => ['type' => 'integer'], 'name' => ['type' => 'string']]],
+    'items' => ['type' => 'array', 'items' => ['type' => 'object', 'required' => ['id', 'description', 'quantity', 'unit_price', 'total'], 'properties' => [
+        'id' => ['type' => 'integer'], 'description' => ['type' => 'string'], 'quantity' => ['type' => 'string'], 'unit_price' => ['type' => 'string'], 'total' => ['type' => 'string'],
+    ]]],
+]];
+$creditNoteList = &$spec['paths']['/finance/credit-notes']['get'];
+$creditNoteList['responses']['200']['description'] = 'Returns filtered credit notes with decimal totals, line items, and bounded invoice and creator summaries.';
+$creditNoteList['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => $creditNoteSchema], 'pagination' => ['type' => 'object', 'required' => ['current_page', 'per_page', 'total', 'last_page'], 'properties' => [
+        'current_page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+    ]],
+]], 'admin.finance.creditNotes.index');
+unset($creditNoteList);
+$creditNoteCommandResponses = [
+    'admin_finance_creditNotes_create' => ['status' => 201, 'description' => 'Creates a draft credit note and returns its generated reference, identifier and calculated decimal totals.', 'data' => ['type' => 'object', 'required' => ['id', 'reference', 'status', 'subtotal', 'total'], 'properties' => ['id' => ['type' => 'integer'], 'reference' => ['type' => 'string'], 'status' => ['type' => 'string', 'const' => 'draft'], 'subtotal' => ['type' => 'string'], 'total' => ['type' => 'string']]]],
+    'admin_finance_creditNotes_update' => ['status' => 200, 'description' => 'Updates a draft credit note and returns its identifier, current status, reference and recalculated decimal totals.', 'data' => ['type' => 'object', 'required' => ['id', 'status', 'reference', 'subtotal', 'total'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'draft'], 'reference' => ['type' => 'string'], 'subtotal' => ['type' => 'string'], 'total' => ['type' => 'string']]]],
+    'admin_finance_creditNotes_delete' => ['status' => 200, 'description' => 'Deletes a draft credit note and returns its identifier with deleted status.', 'data' => ['type' => 'object', 'required' => ['id', 'status'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'deleted']]]],
+    'admin_finance_creditNotes_issue' => ['status' => 200, 'description' => 'Issues a positive-value draft credit note and returns its identifier and issued status.', 'data' => ['type' => 'object', 'required' => ['id', 'status'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'issued']]]],
+    'admin_finance_creditNotes_void' => ['status' => 200, 'description' => 'Voids an eligible draft or issued credit note and returns its identifier and void status.', 'data' => ['type' => 'object', 'required' => ['id', 'status'], 'properties' => ['id' => ['type' => 'integer'], 'status' => ['type' => 'string', 'const' => 'void']]]],
+];
+foreach ($spec['paths'] as &$creditNotePath) {
+    foreach ($creditNotePath as &$creditNoteOperation) {
+        $operationId = $creditNoteOperation['operationId'] ?? null;
+        if (!isset($creditNoteCommandResponses[$operationId])) continue;
+        $definition = $creditNoteCommandResponses[$operationId];
+        $status = (string) $definition['status'];
+        $sourceStatus = isset($creditNoteOperation['responses'][$status]) ? $status : '200';
+        $oldSchema = $creditNoteOperation['responses'][$sourceStatus]['content']['application/json']['schema'];
+        $operationName = $oldSchema['properties']['meta']['properties']['operation']['const'];
+        if ($sourceStatus !== $status) {
+            $creditNoteOperation['responses'][$status] = $creditNoteOperation['responses'][$sourceStatus];
+            unset($creditNoteOperation['responses'][$sourceStatus]);
+        }
+        $creditNoteOperation['responses'][$status]['description'] = $definition['description'];
+        $creditNoteOperation['responses'][$status]['content']['application/json']['schema'] = $successEnvelope($definition['data'], $operationName);
+    }
+    unset($creditNoteOperation);
+}
+unset($creditNotePath, $creditNoteCommandResponses, $creditNoteSchema);
+
 $customerSummarySchema = ['type' => 'object', 'required' => ['id', 'user_id', 'facility_name', 'facility_type', 'country', 'city', 'address', 'created_at', 'updated_at', 'customer'], 'properties' => [
     'id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'], 'facility_name' => ['type' => ['string', 'null']], 'facility_type' => ['type' => ['string', 'null']],
     'country' => ['type' => 'string'], 'city' => ['type' => ['string', 'null']], 'address' => ['type' => ['string', 'null']],

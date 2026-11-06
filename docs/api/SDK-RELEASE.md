@@ -1,3 +1,7 @@
+## SDK 0.148.0 — credit notes (6 November 2026)
+
+Types the administrator credit-note register with bounded invoice and creator summaries and its create, update, delete, issue and void outcomes. Corrects creation to its actual 201 response; decimal totals and line items follow current model serialization. Existing finance authorization, validation, status transitions and idempotency behavior are unchanged. OpenAPI is 0.135.0. This downloadable preview remains unpublished to npm. Archive size is 51615 bytes; SHA-256 is `87927856015327bf1c538ba8381aa8d3693a85917d6f9d309dd74d4324c5e2dc`.
+
 ## SDK 0.147.0 — purchase orders and supplier bills (6 November 2026)
 
 Types the purchase-order and supplier-bill administrator registers with bounded vendor/requester summaries and their create, edit, approve, receive, pay and delete acknowledgements. Corrects create operations to their actual 201 responses; decimal totals follow the model serialization. Existing finance authorization, status transitions, validation and idempotency behavior are unchanged. OpenAPI is 0.134.0. This downloadable preview remains unpublished to npm. Archive size is 51562 bytes; SHA-256 is `547eb4e92ad4fdcd7d458ac639a70802a77d5218339e29a4d8162ae575077fa9`.

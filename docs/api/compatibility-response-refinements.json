@@ -914,5 +914,41 @@
     "path": "/finance/supplier-bills/{supplierBill}/mark-paid",
     "allow_response_schema_refinement": true,
     "reason": "Documents the existing approved-to-paid transition acknowledgement."
+  },
+  {
+    "method": "GET",
+    "path": "/finance/credit-notes",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing filtered credit-note projection, including decimal line items and bounded invoice/creator fields returned by AdminFinanceRecordQueries."
+  },
+  {
+    "method": "POST",
+    "path": "/finance/credit-notes",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the credit-note creation acknowledgement and corrects success to the handler actual 201 Created response. Validation, draft status, reference generation and idempotency are unchanged."
+  },
+  {
+    "method": "PUT",
+    "path": "/finance/credit-notes/{creditNote}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing draft credit-note update acknowledgement and decimal totals. Draft-only editing and validation are unchanged."
+  },
+  {
+    "method": "DELETE",
+    "path": "/finance/credit-notes/{creditNote}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing draft deletion acknowledgement and deleted status."
+  },
+  {
+    "method": "POST",
+    "path": "/finance/credit-notes/{creditNote}/issue",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing issue acknowledgement and its issued state; positive-total and cancelled-invoice checks are unchanged."
+  },
+  {
+    "method": "POST",
+    "path": "/finance/credit-notes/{creditNote}/void",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing eligible credit-note void acknowledgement and void state."
   }
 ]
