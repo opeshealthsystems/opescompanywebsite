@@ -1,6 +1,30 @@
 [
   {
     "method": "GET",
+    "path": "/developer/machine-clients",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing owner-scoped machine-client metadata, quota, usage and aggregate metrics from DeveloperMachineClientQueries. Client secrets remain excluded from listings. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "POST",
+    "path": "/developer/machine-clients",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing one-time client credential response from DeveloperMachineClientCommands; client_secret is returned only at creation and scopes remain limited to the existing public allowlist. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "POST",
+    "path": "/developer/machine-clients/{client}/rotate",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing one-time credential rotation response from DeveloperMachineClientCommands; rotating revokes existing tokens and client_secret is returned only in this response. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "DELETE",
+    "path": "/developer/machine-clients/{client}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing owner-scoped machine-client revocation acknowledgement from DeveloperMachineClientCommands. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
     "path": "/admin/api-clients/{client}/usage",
     "allow_response_schema_refinement": true,
     "reason": "Documents the existing administrator client identity, UTC totals and fixed 30-day usage series from AdminApiClientQueries. No response bytes, request shape, authorization or status behavior changes."

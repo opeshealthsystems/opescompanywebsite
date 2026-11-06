@@ -78,6 +78,25 @@ const auditLog = await client.request('admin_auditLogs_show', { path: { auditLog
 auditLog.data.data.audit_log.new_values;
 // @ts-expect-error Audit-log fields are limited to the reviewed metadata projection.
 auditLog.data.data.audit_log.client_secret;
+const developerClients = await client.request('developer_machine_clients_index');
+developerClients.data.data.items[0]!.metrics.daily[0]!.responses_4xx.toFixed();
+developerClients.data.data.items[0]!.quota.daily_remaining?.toFixed();
+// @ts-expect-error Developer machine-client listings never reveal credential material.
+developerClients.data.data.items[0]!.client_secret;
+const createdDeveloperClient = await client.request('developer_machine_clients_create', {
+  body: { name: 'Research integration', scopes: ['catalogue:read', 'integration:read'] },
+  idempotencyKey: key,
+});
+createdDeveloperClient.data.data.client_secret.toUpperCase();
+createdDeveloperClient.data.data.secret_shown_once.valueOf();
+const rotatedDeveloperClient = await client.request('developer_machine_clients_rotate', {
+  path: { client: 18 }, idempotencyKey: key,
+});
+rotatedDeveloperClient.data.data.token_url.toLowerCase();
+const revokedDeveloperClient = await client.request('developer_machine_clients_revoke', {
+  path: { client: 18 }, idempotencyKey: key,
+});
+revokedDeveloperClient.data.data.revoked.valueOf();
 const createdServiceRequest = await client.request('customer_servicerequestcontroller_store', {
   body: { type: 'maintenance', preferred_date: '2026-11-09', location: 'Example facility' }, idempotencyKey: key,
 });

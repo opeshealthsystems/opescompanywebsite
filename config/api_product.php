@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version' => '0.126.0',
+    'version' => '0.127.0',
     'products' => [
         [
             'id' => 'public-enquiries',
@@ -93,6 +93,11 @@ return [
         ],
     ],
     'changelog' => [
+        [
+            'version' => '0.127.0',
+            'released_at' => '2026-11-06',
+            'summary' => 'Added typed owner-scoped developer machine-client listing, one-time credential creation/rotation, and revocation responses.',
+        ],
         [
             'version' => '0.126.0',
             'released_at' => '2026-11-06',

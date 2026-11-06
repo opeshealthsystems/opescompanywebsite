@@ -1,3 +1,7 @@
+## SDK 0.140.0 — developer machine-client lifecycle (6 November 2026)
+
+Types owner-scoped machine-client listings with daily usage, quota and aggregate request metrics; creation and rotation expose the secret only in their one-time response, while listings omit credentials. Revocation has a typed acknowledgement. OpenAPI is 0.127.0. This downloadable preview remains unpublished to npm. Archive size is 50395 bytes; SHA-256 is `c91010840b8d826bcf59eaabd73fb8e5450adf0132950cd13679d2e4da2b15e9`.
+
 ## SDK 0.139.0 — administrator usage and audit records (6 November 2026)
 
 Types administrator machine-client usage totals and the fixed 30-day daily series, plus paginated audit-log metadata and detail values. The audit detail contract documents recursive redaction of password, token, API-key, secret and authorization fields. OpenAPI is 0.126.0. This downloadable preview remains unpublished to npm. Archive size is 50234 bytes; SHA-256 is `5f6b4ba6058fb1f7886542808699c79d5613c5784535334b847328badd377f5d`.

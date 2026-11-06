@@ -2051,6 +2051,71 @@ $auditLogDetail['responses']['200']['content']['application/json']['schema'] = $
     ]],
 ]], 'admin.auditLogs.show');
 unset($auditLogDetail, $auditLogResource, $auditValues);
+$machineUsage = ['type' => 'object', 'required' => ['period_start', 'period_end', 'requests_today', 'requests_last_30_days', 'daily_usage'], 'properties' => [
+    'period_start' => ['type' => 'string', 'format' => 'date'], 'period_end' => ['type' => 'string', 'format' => 'date'],
+    'requests_today' => ['type' => 'integer', 'minimum' => 0], 'requests_last_30_days' => ['type' => 'integer', 'minimum' => 0],
+    'daily_usage' => ['type' => 'array', 'minItems' => 30, 'maxItems' => 30, 'items' => ['type' => 'object', 'required' => ['date', 'requests'], 'properties' => [
+        'date' => ['type' => 'string', 'format' => 'date'], 'requests' => ['type' => 'integer', 'minimum' => 0],
+    ]]],
+]];
+$machineQuota = ['type' => 'object', 'required' => ['period', 'requests_today', 'requests_this_month', 'daily_limit', 'daily_remaining', 'daily_resets_at', 'monthly_limit', 'monthly_remaining', 'monthly_resets_at'], 'properties' => [
+    'period' => ['type' => 'string', 'const' => 'UTC calendar day and calendar month'],
+    'requests_today' => ['type' => 'integer', 'minimum' => 0], 'requests_this_month' => ['type' => 'integer', 'minimum' => 0],
+    'daily_limit' => ['type' => ['integer', 'null'], 'minimum' => 0], 'daily_remaining' => ['type' => ['integer', 'null'], 'minimum' => 0],
+    'daily_resets_at' => ['type' => 'string', 'format' => 'date-time'],
+    'monthly_limit' => ['type' => ['integer', 'null'], 'minimum' => 0], 'monthly_remaining' => ['type' => ['integer', 'null'], 'minimum' => 0],
+    'monthly_resets_at' => ['type' => 'string', 'format' => 'date-time'],
+]];
+$machineMetrics = ['type' => 'object', 'required' => ['period_start', 'period_end', 'requests', 'responses_2xx', 'responses_3xx', 'responses_4xx', 'responses_5xx', 'average_response_time_ms', 'max_response_time_ms', 'daily', 'operations'], 'properties' => [
+    'period_start' => ['type' => 'string', 'format' => 'date'], 'period_end' => ['type' => 'string', 'format' => 'date'],
+    'requests' => ['type' => 'integer', 'minimum' => 0], 'responses_2xx' => ['type' => 'integer', 'minimum' => 0],
+    'responses_3xx' => ['type' => 'integer', 'minimum' => 0], 'responses_4xx' => ['type' => 'integer', 'minimum' => 0], 'responses_5xx' => ['type' => 'integer', 'minimum' => 0],
+    'average_response_time_ms' => ['type' => 'number', 'minimum' => 0], 'max_response_time_ms' => ['type' => 'integer', 'minimum' => 0],
+    'daily' => ['type' => 'array', 'minItems' => 30, 'maxItems' => 30, 'items' => ['type' => 'object', 'required' => ['date', 'requests', 'responses_4xx', 'responses_5xx'], 'properties' => [
+        'date' => ['type' => 'string', 'format' => 'date'], 'requests' => ['type' => 'integer', 'minimum' => 0],
+        'responses_4xx' => ['type' => 'integer', 'minimum' => 0], 'responses_5xx' => ['type' => 'integer', 'minimum' => 0],
+    ]]],
+    'operations' => ['type' => 'array', 'maxItems' => 25, 'items' => ['type' => 'object', 'required' => ['operation', 'method', 'requests', 'responses_4xx', 'responses_5xx', 'average_response_time_ms', 'max_response_time_ms'], 'properties' => [
+        'operation' => ['type' => 'string'], 'method' => ['type' => 'string'], 'requests' => ['type' => 'integer', 'minimum' => 0],
+        'responses_4xx' => ['type' => 'integer', 'minimum' => 0], 'responses_5xx' => ['type' => 'integer', 'minimum' => 0],
+        'average_response_time_ms' => ['type' => 'number', 'minimum' => 0], 'max_response_time_ms' => ['type' => 'integer', 'minimum' => 0],
+    ]]],
+]];
+$machineClientResource = ['type' => 'object', 'required' => ['client_id', 'name', 'scopes', 'revoked', 'created_at', 'usage', 'quota', 'metrics'], 'properties' => [
+    'client_id' => ['type' => 'string'], 'name' => ['type' => 'string'],
+    'scopes' => ['type' => 'array', 'items' => ['type' => 'string', 'enum' => ['catalogue:read', 'integration:read']]],
+    'revoked' => ['type' => 'boolean'], 'created_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'usage' => $machineUsage, 'quota' => $machineQuota, 'metrics' => $machineMetrics,
+]];
+$machineClientList = &$spec['paths']['/developer/machine-clients']['get'];
+$machineClientList['responses']['200']['description'] = 'Returns paginated machine clients owned by the authenticated developer, including each client’s UTC usage, configured quota and aggregate request metrics. Client secrets are never included.';
+$machineClientList['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => $machineClientResource],
+    'pagination' => ['type' => 'object', 'required' => ['current_page', 'per_page', 'total', 'last_page'], 'properties' => [
+        'current_page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+    ]],
+]], 'developer.machine_clients.index');
+unset($machineClientList);
+$machineSecretResource = ['type' => 'object', 'required' => ['client_id', 'name', 'client_secret', 'token_url', 'scopes', 'secret_shown_once'], 'properties' => [
+    'client_id' => ['type' => 'string'], 'name' => ['type' => 'string'], 'client_secret' => ['type' => 'string', 'minLength' => 1],
+    'token_url' => ['type' => 'string', 'format' => 'uri'],
+    'scopes' => ['type' => 'array', 'minItems' => 1, 'maxItems' => 2, 'items' => ['type' => 'string', 'enum' => ['catalogue:read', 'integration:read']]],
+    'secret_shown_once' => ['type' => 'boolean', 'const' => true],
+]];
+$machineClientCreate = &$spec['paths']['/developer/machine-clients']['post'];
+$machineClientCreate['responses']['201']['description'] = 'Returns the new owner-scoped machine client and its secret exactly once. Store the client secret securely; client listings do not expose it.';
+$machineClientCreate['responses']['201']['content']['application/json']['schema'] = $successEnvelope($machineSecretResource, 'developer.machine_clients.create');
+unset($machineClientCreate);
+$machineClientRotate = &$spec['paths']['/developer/machine-clients/{client}/rotate']['post'];
+$machineClientRotate['responses']['200']['description'] = 'Returns the rotated machine-client secret exactly once. Existing access and refresh tokens are revoked.';
+$machineClientRotate['responses']['200']['content']['application/json']['schema'] = $successEnvelope($machineSecretResource, 'developer.machine_clients.rotate');
+unset($machineClientRotate);
+$machineClientRevoke = &$spec['paths']['/developer/machine-clients/{client}']['delete'];
+$machineClientRevoke['responses']['200']['description'] = 'Confirms revocation of the authenticated developer’s owned machine client.';
+$machineClientRevoke['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['client_id', 'revoked'], 'properties' => [
+    'client_id' => ['type' => 'string'], 'revoked' => ['type' => 'boolean', 'const' => true],
+]], 'developer.machine_clients.revoke');
+unset($machineClientRevoke, $machineUsage, $machineQuota, $machineMetrics, $machineClientResource, $machineSecretResource);
 $contractPath = $root.'/docs/api/openapi.json';
 $contractTemp = $contractPath.'.tmp';
 if (file_put_contents($contractTemp, json_encode($spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR)."\n") === false || !rename($contractTemp, $contractPath)) {

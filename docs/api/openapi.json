@@ -2,7 +2,7 @@
     "openapi": "3.1.1",
     "info": {
         "title": "OHS Platform API",
-        "version": "0.126.0",
+        "version": "0.127.0",
         "description": "Versioned OHS business APIs. Public enquiries and application intake, partner and tester administration, publishing and catalogues, role-scoped operations and workforce workflows, finance registers, reports and line-item detail reads, customer facility profiles, employee and HR administration, risk and performance management, leave requests, validation, practitioner, recruitment, learning, survey and support workflows, account recovery, machine catalogue access and owner-managed public-scope machine clients, public sitemap data, protected admin reference data and resource/relationship summaries, with delegated business workflows using authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.",
         "contact": {
             "name": "OHS support",
@@ -158252,7 +158252,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns paginated machine clients owned by the authenticated developer, including each client\u2019s UTC usage, configured quota and aggregate request metrics. Client secrets are never included.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -158264,10 +158264,324 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items",
+                                                "pagination"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "client_id",
+                                                            "name",
+                                                            "scopes",
+                                                            "revoked",
+                                                            "created_at",
+                                                            "usage",
+                                                            "quota",
+                                                            "metrics"
+                                                        ],
+                                                        "properties": {
+                                                            "client_id": {
+                                                                "type": "string"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            },
+                                                            "scopes": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "string",
+                                                                    "enum": [
+                                                                        "catalogue:read",
+                                                                        "integration:read"
+                                                                    ]
+                                                                }
+                                                            },
+                                                            "revoked": {
+                                                                "type": "boolean"
+                                                            },
+                                                            "created_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            },
+                                                            "usage": {
+                                                                "type": "object",
+                                                                "required": [
+                                                                    "period_start",
+                                                                    "period_end",
+                                                                    "requests_today",
+                                                                    "requests_last_30_days",
+                                                                    "daily_usage"
+                                                                ],
+                                                                "properties": {
+                                                                    "period_start": {
+                                                                        "type": "string",
+                                                                        "format": "date"
+                                                                    },
+                                                                    "period_end": {
+                                                                        "type": "string",
+                                                                        "format": "date"
+                                                                    },
+                                                                    "requests_today": {
+                                                                        "type": "integer",
+                                                                        "minimum": 0
+                                                                    },
+                                                                    "requests_last_30_days": {
+                                                                        "type": "integer",
+                                                                        "minimum": 0
+                                                                    },
+                                                                    "daily_usage": {
+                                                                        "type": "array",
+                                                                        "minItems": 30,
+                                                                        "maxItems": 30,
+                                                                        "items": {
+                                                                            "type": "object",
+                                                                            "required": [
+                                                                                "date",
+                                                                                "requests"
+                                                                            ],
+                                                                            "properties": {
+                                                                                "date": {
+                                                                                    "type": "string",
+                                                                                    "format": "date"
+                                                                                },
+                                                                                "requests": {
+                                                                                    "type": "integer",
+                                                                                    "minimum": 0
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            "quota": {
+                                                                "type": "object",
+                                                                "required": [
+                                                                    "period",
+                                                                    "requests_today",
+                                                                    "requests_this_month",
+                                                                    "daily_limit",
+                                                                    "daily_remaining",
+                                                                    "daily_resets_at",
+                                                                    "monthly_limit",
+                                                                    "monthly_remaining",
+                                                                    "monthly_resets_at"
+                                                                ],
+                                                                "properties": {
+                                                                    "period": {
+                                                                        "type": "string",
+                                                                        "const": "UTC calendar day and calendar month"
+                                                                    },
+                                                                    "requests_today": {
+                                                                        "type": "integer",
+                                                                        "minimum": 0
+                                                                    },
+                                                                    "requests_this_month": {
+                                                                        "type": "integer",
+                                                                        "minimum": 0
+                                                                    },
+                                                                    "daily_limit": {
+                                                                        "type": [
+                                                                            "integer",
+                                                                            "null"
+                                                                        ],
+                                                                        "minimum": 0
+                                                                    },
+                                                                    "daily_remaining": {
+                                                                        "type": [
+                                                                            "integer",
+                                                                            "null"
+                                                                        ],
+                                                                        "minimum": 0
+                                                                    },
+                                                                    "daily_resets_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "monthly_limit": {
+                                                                        "type": [
+                                                                            "integer",
+                                                                            "null"
+                                                                        ],
+                                                                        "minimum": 0
+                                                                    },
+                                                                    "monthly_remaining": {
+                                                                        "type": [
+                                                                            "integer",
+                                                                            "null"
+                                                                        ],
+                                                                        "minimum": 0
+                                                                    },
+                                                                    "monthly_resets_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "metrics": {
+                                                                "type": "object",
+                                                                "required": [
+                                                                    "period_start",
+                                                                    "period_end",
+                                                                    "requests",
+                                                                    "responses_2xx",
+                                                                    "responses_3xx",
+                                                                    "responses_4xx",
+                                                                    "responses_5xx",
+                                                                    "average_response_time_ms",
+                                                                    "max_response_time_ms",
+                                                                    "daily",
+                                                                    "operations"
+                                                                ],
+                                                                "properties": {
+                                                                    "period_start": {
+                                                                        "type": "string",
+                                                                        "format": "date"
+                                                                    },
+                                                                    "period_end": {
+                                                                        "type": "string",
+                                                                        "format": "date"
+                                                                    },
+                                                                    "requests": {
+                                                                        "type": "integer",
+                                                                        "minimum": 0
+                                                                    },
+                                                                    "responses_2xx": {
+                                                                        "type": "integer",
+                                                                        "minimum": 0
+                                                                    },
+                                                                    "responses_3xx": {
+                                                                        "type": "integer",
+                                                                        "minimum": 0
+                                                                    },
+                                                                    "responses_4xx": {
+                                                                        "type": "integer",
+                                                                        "minimum": 0
+                                                                    },
+                                                                    "responses_5xx": {
+                                                                        "type": "integer",
+                                                                        "minimum": 0
+                                                                    },
+                                                                    "average_response_time_ms": {
+                                                                        "type": "number",
+                                                                        "minimum": 0
+                                                                    },
+                                                                    "max_response_time_ms": {
+                                                                        "type": "integer",
+                                                                        "minimum": 0
+                                                                    },
+                                                                    "daily": {
+                                                                        "type": "array",
+                                                                        "minItems": 30,
+                                                                        "maxItems": 30,
+                                                                        "items": {
+                                                                            "type": "object",
+                                                                            "required": [
+                                                                                "date",
+                                                                                "requests",
+                                                                                "responses_4xx",
+                                                                                "responses_5xx"
+                                                                            ],
+                                                                            "properties": {
+                                                                                "date": {
+                                                                                    "type": "string",
+                                                                                    "format": "date"
+                                                                                },
+                                                                                "requests": {
+                                                                                    "type": "integer",
+                                                                                    "minimum": 0
+                                                                                },
+                                                                                "responses_4xx": {
+                                                                                    "type": "integer",
+                                                                                    "minimum": 0
+                                                                                },
+                                                                                "responses_5xx": {
+                                                                                    "type": "integer",
+                                                                                    "minimum": 0
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "operations": {
+                                                                        "type": "array",
+                                                                        "maxItems": 25,
+                                                                        "items": {
+                                                                            "type": "object",
+                                                                            "required": [
+                                                                                "operation",
+                                                                                "method",
+                                                                                "requests",
+                                                                                "responses_4xx",
+                                                                                "responses_5xx",
+                                                                                "average_response_time_ms",
+                                                                                "max_response_time_ms"
+                                                                            ],
+                                                                            "properties": {
+                                                                                "operation": {
+                                                                                    "type": "string"
+                                                                                },
+                                                                                "method": {
+                                                                                    "type": "string"
+                                                                                },
+                                                                                "requests": {
+                                                                                    "type": "integer",
+                                                                                    "minimum": 0
+                                                                                },
+                                                                                "responses_4xx": {
+                                                                                    "type": "integer",
+                                                                                    "minimum": 0
+                                                                                },
+                                                                                "responses_5xx": {
+                                                                                    "type": "integer",
+                                                                                    "minimum": 0
+                                                                                },
+                                                                                "average_response_time_ms": {
+                                                                                    "type": "number",
+                                                                                    "minimum": 0
+                                                                                },
+                                                                                "max_response_time_ms": {
+                                                                                    "type": "integer",
+                                                                                    "minimum": 0
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "current_page",
+                                                        "per_page",
+                                                        "total",
+                                                        "last_page"
+                                                    ],
+                                                    "properties": {
+                                                        "current_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "total": {
+                                                            "type": "integer"
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -158279,10 +158593,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -158485,7 +158796,7 @@
                         }
                     },
                     "201": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns the new owner-scoped machine client and its secret exactly once. Store the client secret securely; client listings do not expose it.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -158497,10 +158808,47 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "client_id",
+                                                "name",
+                                                "client_secret",
+                                                "token_url",
+                                                "scopes",
+                                                "secret_shown_once"
+                                            ],
+                                            "properties": {
+                                                "client_id": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "client_secret": {
+                                                    "type": "string",
+                                                    "minLength": 1
+                                                },
+                                                "token_url": {
+                                                    "type": "string",
+                                                    "format": "uri"
+                                                },
+                                                "scopes": {
+                                                    "type": "array",
+                                                    "minItems": 1,
+                                                    "maxItems": 2,
+                                                    "items": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "catalogue:read",
+                                                            "integration:read"
+                                                        ]
+                                                    }
+                                                },
+                                                "secret_shown_once": {
+                                                    "type": "boolean",
+                                                    "const": true
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -158512,10 +158860,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -158678,7 +159023,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns the rotated machine-client secret exactly once. Existing access and refresh tokens are revoked.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -158690,10 +159035,47 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "client_id",
+                                                "name",
+                                                "client_secret",
+                                                "token_url",
+                                                "scopes",
+                                                "secret_shown_once"
+                                            ],
+                                            "properties": {
+                                                "client_id": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "client_secret": {
+                                                    "type": "string",
+                                                    "minLength": 1
+                                                },
+                                                "token_url": {
+                                                    "type": "string",
+                                                    "format": "uri"
+                                                },
+                                                "scopes": {
+                                                    "type": "array",
+                                                    "minItems": 1,
+                                                    "maxItems": 2,
+                                                    "items": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "catalogue:read",
+                                                            "integration:read"
+                                                        ]
+                                                    }
+                                                },
+                                                "secret_shown_once": {
+                                                    "type": "boolean",
+                                                    "const": true
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -158705,10 +159087,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -158870,7 +159249,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Confirms revocation of the authenticated developer\u2019s owned machine client.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -158882,10 +159261,20 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "client_id",
+                                                "revoked"
+                                            ],
+                                            "properties": {
+                                                "client_id": {
+                                                    "type": "string"
+                                                },
+                                                "revoked": {
+                                                    "type": "boolean",
+                                                    "const": true
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -158897,10 +159286,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -159245,7 +159631,7 @@
                                 "example": {
                                     "data": {
                                         "name": "OPES Health Systems API",
-                                        "api_version": "0.126.0",
+                                        "api_version": "0.127.0",
                                         "openapi_version": "3.1.1",
                                         "authentication": {
                                             "machine": "OAuth 2.0 client credentials with approved scopes",
@@ -159469,7 +159855,7 @@
                                 "example": {
                                     "data": {
                                         "status": "responding",
-                                        "api_version": "0.126.0",
+                                        "api_version": "0.127.0",
                                         "checked_at": "2026-11-01T12:00:00+00:00"
                                     },
                                     "meta": {
@@ -159673,6 +160059,11 @@
                                 "example": {
                                     "data": {
                                         "items": [
+                                            {
+                                                "version": "0.127.0",
+                                                "released_at": "2026-11-06",
+                                                "summary": "Added typed owner-scoped developer machine-client listing, one-time credential creation/rotation, and revocation responses."
+                                            },
                                             {
                                                 "version": "0.126.0",
                                                 "released_at": "2026-11-06",
@@ -160091,7 +160482,7 @@
                                 },
                                 "example": {
                                     "data": {
-                                        "api_version": "0.126.0",
+                                        "api_version": "0.127.0",
                                         "locale": "en",
                                         "items": [
                                             {
