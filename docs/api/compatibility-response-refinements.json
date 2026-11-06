@@ -79,6 +79,12 @@
   },
   {
     "method": "GET",
+    "path": "/customer/dashboard",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing authenticated customer dashboard values, recent customer-owned tickets, and configured catalogue items from CustomerDashboardQueries and ApiWorkflowSerializer. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
     "path": "/customer/service-requests/options",
     "allow_response_schema_refinement": true,
     "reason": "Documents the existing service-request type labels returned by CustomerServiceRequestQueries from ServiceRequest::typeOptions. No response bytes, request shape, authorization or status behavior changes."

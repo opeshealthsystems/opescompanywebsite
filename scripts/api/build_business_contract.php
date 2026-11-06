@@ -1258,6 +1258,39 @@ $customerProfileResponse = $successEnvelope(['type' => 'object', 'required' => [
 $customerProfileShow = &$spec['paths']['/customer/profile']['get'];
 $customerProfileShow['responses']['200']['content']['application/json']['schema'] = $customerProfileResponse;
 unset($customerProfileShow);
+$customerDashboard = &$spec['paths']['/customer/dashboard']['get'];
+$dashboardTicket = ['type' => 'object', 'required' => ['id', 'user_id', 'assigned_to', 'subject', 'description', 'type', 'status', 'priority', 'resolution', 'resolved_at', 'closed_at', 'tester_assignment_id', 'sla_rule_id', 'sla_response_due_at', 'sla_resolution_due_at', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'user_id' => ['type' => ['integer', 'null']], 'assigned_to' => ['type' => ['integer', 'null']],
+    'subject' => ['type' => 'string'], 'description' => ['type' => 'string'],
+    'type' => ['type' => 'string', 'enum' => ['support', 'billing', 'technical', 'bug_report', 'other']],
+    'status' => ['type' => 'string', 'enum' => ['open', 'in_progress', 'pending_customer', 'resolved', 'closed']],
+    'priority' => ['type' => 'string', 'enum' => ['low', 'medium', 'high', 'urgent']], 'resolution' => ['type' => ['string', 'null']],
+    'resolved_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'closed_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'tester_assignment_id' => ['type' => ['integer', 'null']], 'sla_rule_id' => ['type' => ['integer', 'null']],
+    'sla_response_due_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'sla_resolution_due_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+]];
+$customerDashboard['responses']['200']['description'] = 'Returns the authenticated customer account, facility profile, operational counts, three most recently updated tickets and configured catalogue items.';
+$customerDashboard['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['user', 'profile', 'active_licenses', 'open_tickets', 'pending_invoices', 'recent_tickets', 'all_products'], 'properties' => [
+    'user' => ['type' => 'object', 'required' => ['id', 'name', 'email', 'phone', 'is_active', 'position', 'avatar', 'employee_id', 'department_id'], 'properties' => [
+        'id' => ['type' => 'integer'], 'name' => ['type' => 'string'], 'email' => ['type' => 'string', 'format' => 'email'], 'phone' => ['type' => ['string', 'null']],
+        'is_active' => ['type' => 'boolean'], 'position' => ['type' => ['string', 'null']], 'avatar' => ['type' => ['string', 'null']],
+        'employee_id' => ['type' => ['string', 'null']], 'department_id' => ['type' => ['integer', 'null']],
+    ]],
+    'profile' => ['oneOf' => [
+        ['type' => 'object', 'required' => ['id', 'user_id', 'facility_name', 'facility_type', 'country', 'city', 'address', 'created_at', 'updated_at'], 'properties' => [
+            'id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'], 'facility_name' => ['type' => ['string', 'null']], 'facility_type' => ['type' => ['string', 'null']],
+            'country' => ['type' => ['string', 'null']], 'city' => ['type' => ['string', 'null']], 'address' => ['type' => ['string', 'null']],
+            'created_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'updated_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+        ]], ['type' => 'null'],
+    ]],
+    'active_licenses' => ['type' => 'integer', 'minimum' => 0], 'open_tickets' => ['type' => 'integer', 'minimum' => 0],
+    'pending_invoices' => ['type' => 'integer', 'minimum' => 0], 'recent_tickets' => ['type' => 'array', 'maxItems' => 3, 'items' => $dashboardTicket],
+    'all_products' => ['type' => 'array', 'items' => ['type' => 'object', 'required' => ['slug', 'name'], 'properties' => [
+        'slug' => ['type' => 'string'], 'name' => ['type' => 'string'],
+    ], 'additionalProperties' => true]],
+]], 'customer.dashboardcontroller.index');
+unset($customerDashboard);
 $serviceRequestOptions = &$spec['paths']['/customer/service-requests/options']['get'];
 $serviceRequestOptions['responses']['200']['description'] = 'Returns the service-request types currently accepted by the customer portal.';
 $serviceRequestOptions['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['type_options'], 'properties' => [

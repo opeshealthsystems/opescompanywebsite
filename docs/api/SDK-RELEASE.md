@@ -1,3 +1,6 @@
+## SDK 0.124.0 — customer dashboard response contract (6 November 2026)
+
+Types the existing customer dashboard account, facility profile, operational counts, recent customer tickets and configured catalogue item response. Ticket fields are restricted to the allowlisted customer-safe resource. This is a schema-only refinement; response bytes and authorization are unchanged. OpenAPI remains 0.118.0. The package remains a private downloadable preview and is not published to npm. Archive size is 47491 bytes; SHA-256 is `65631561bd0611e26c499e80830ff29035bb85ac5a0545e4c2f5c6ce72164a1a`.
 ## SDK 0.123.0 — customer service-request form options (6 November 2026)
 
 Types the existing customer service-request options response so clients can render installation, maintenance, training and other choices from the platform contract. This is a schema-only refinement; response bytes and authorization are unchanged. OpenAPI remains 0.118.0. The package remains a private downloadable preview and is not published to npm. Archive size is 47299 bytes; SHA-256 is `1b221d8013a03120227dc53bf0722b3ec22b0026761c617bc14aee1c269a8118`.
