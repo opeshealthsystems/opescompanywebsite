@@ -62,12 +62,25 @@ const submittedAttempt = await client.request('practitioner_assessments_attempts
   path: { assessment: 7, attempt: 12 }, body: { answers: { question: 'choice' } }, idempotencyKey: key,
 });
 submittedAttempt.data.data.review[0]!.correct.toString();
+const customerProfile = await client.request('customer_profilecontroller_show');
+customerProfile.data.data.profile.country?.toUpperCase();
+customerProfile.data.data.user.email.toLowerCase();
+const serviceRequests = await client.request('customer_servicerequestcontroller_index');
+serviceRequests.data.data.service_requests[0]!.reference_number.toUpperCase();
+const serviceRequest = await client.request('customer_servicerequestcontroller_show', { path: { serviceRequest: 22 } });
+serviceRequest.data.data.service_request.preferred_date.toUpperCase();
+const createdServiceRequest = await client.request('customer_servicerequestcontroller_store', {
+  body: { type: 'maintenance', preferred_date: '2026-11-09', location: 'Example facility' }, idempotencyKey: key,
+});
+createdServiceRequest.data.data.service_request.reference_number.toUpperCase();
 // @ts-expect-error Quote result fields are constrained by the published response schema.
 quotes.data.data.items[0]!.invented_field;
 // @ts-expect-error Customer profile detail must use its declared resource key.
 customer.data.data.profile;
 // @ts-expect-error Learning progress is typed to the server projection.
 courses.data.data.my_enrollments[0]!.invented_progress;
+// @ts-expect-error Internal service-request notes are never exposed to customer APIs.
+serviceRequest.data.data.service_request.admin_notes;
 
 // @ts-expect-error Quote currency is a contract enum.
 void client.request('admin_finance_quotes_create', { body: { title: 'Clinic proposal', currency: 'GBP', items: [] }, idempotencyKey: key });

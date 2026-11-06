@@ -70,6 +70,27 @@ class BusinessApiTest extends TestCase
         $this->actingAs($this->user('customer'))->getJson('/api/v1/customer/tickets')->assertUnauthorized();
     }
 
+    public function test_customer_service_request_api_returns_the_created_owned_resource(): void
+    {
+        $customer = $this->user('customer');
+        $headers = [
+            'Authorization' => 'Bearer '.$this->access($customer, ['customer:write']),
+            'Idempotency-Key' => 'customer-service-request-0001',
+        ];
+        $input = [
+            'type' => 'maintenance', 'product_slug' => 'opes-clinic', 'description' => 'Fictional service request for API verification.',
+            'preferred_date' => today()->addDays(3)->toDateString(), 'preferred_time' => '09:30', 'location' => 'Example facility',
+        ];
+
+        $created = $this->postJson('/api/v1/customer/service-requests', $input, $headers)
+            ->assertOk()->assertJsonPath('data.locale', 'en')->assertJsonPath('data.service_request.customer_id', $customer->id)
+            ->assertJsonPath('data.service_request.type', 'maintenance')
+            ->assertJsonPath('data.service_request.status', 'pending')
+            ->assertJsonMissingPath('data.service_request.admin_notes');
+        $this->postJson('/api/v1/customer/service-requests', $input, $headers)->assertExactJson($created->json());
+        $this->assertDatabaseCount('service_requests', 1);
+    }
+
     public function test_delegated_usage_requires_identity_scope_and_returns_only_own_daily_totals(): void
     {
         $user = $this->user('customer');

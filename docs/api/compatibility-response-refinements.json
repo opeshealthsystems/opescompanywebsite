@@ -76,5 +76,30 @@
     "path": "/practitioner/assessments/{assessment}/attempts/{attempt}/submit",
     "allow_response_schema_refinement": true,
     "reason": "Documents server-scored results and correct-choice review revealed after successful submission from CourseAssessmentCommands. No request, scoring, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/customer/profile",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the authenticated customer's own account and facility-profile fields from CustomerProfileQueries and ApiWorkflowSerializer. No runtime behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/customer/service-requests",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents only the authenticated customer's service-request list using the allowlisted ServiceRequest API fields. No runtime behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/customer/service-requests/{serviceRequest}",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing owner-checked customer service-request detail projection using allowlisted fields. No runtime behavior changes."
+  },
+  {
+    "method": "POST",
+    "path": "/customer/service-requests",
+    "allow_response_schema_refinement": true,
+    "allow_additive_request_schema": true,
+    "reason": "Publishes the already-required service-request type input and adds the created customer-safe resource to the existing acknowledgement while preserving status, locale and message; the browser redirect remains unchanged and internal notes are excluded."
   }
 ]

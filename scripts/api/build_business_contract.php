@@ -1243,6 +1243,50 @@ $submitAttempt['responses']['200']['content']['application/json']['schema'] = $s
     'score' => ['type' => 'number', 'minimum' => 0, 'maximum' => 100], 'passed' => ['type' => 'boolean'], 'pass_mark' => ['type' => 'integer', 'minimum' => 1, 'maximum' => 100],
 ]], 'practitioner.assessments.attempts.submit');
 unset($submitAttempt);
+$customerProfileResponse = $successEnvelope(['type' => 'object', 'required' => ['user', 'profile'], 'properties' => [
+    'user' => ['type' => 'object', 'required' => ['id', 'name', 'email', 'phone', 'is_active', 'position', 'avatar', 'employee_id', 'department_id'], 'properties' => [
+        'id' => ['type' => 'integer'], 'name' => ['type' => 'string'], 'email' => ['type' => 'string', 'format' => 'email'], 'phone' => ['type' => ['string', 'null']],
+        'is_active' => ['type' => 'boolean'], 'position' => ['type' => ['string', 'null']], 'avatar' => ['type' => ['string', 'null']],
+        'employee_id' => ['type' => ['string', 'null']], 'department_id' => ['type' => ['integer', 'null']],
+    ]],
+    'profile' => ['type' => 'object', 'required' => ['id', 'user_id', 'facility_name', 'facility_type', 'country', 'city', 'address', 'created_at', 'updated_at'], 'properties' => [
+        'id' => ['type' => ['integer', 'null']], 'user_id' => ['type' => 'integer'], 'facility_name' => ['type' => ['string', 'null']], 'facility_type' => ['type' => ['string', 'null']],
+        'country' => ['type' => ['string', 'null']], 'city' => ['type' => ['string', 'null']], 'address' => ['type' => ['string', 'null']],
+        'created_at' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'updated_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    ]],
+]], 'customer.profilecontroller.show');
+$customerProfileShow = &$spec['paths']['/customer/profile']['get'];
+$customerProfileShow['responses']['200']['content']['application/json']['schema'] = $customerProfileResponse;
+unset($customerProfileShow);
+$serviceRequestSchema = ['type' => 'object', 'required' => ['id', 'reference_number', 'customer_id', 'type', 'product_slug', 'description', 'preferred_date', 'preferred_time', 'location', 'status', 'assigned_technician_id', 'confirmed_date', 'confirmed_time', 'created_at', 'updated_at'], 'properties' => [
+    'id' => ['type' => 'integer'], 'reference_number' => ['type' => 'string'], 'customer_id' => ['type' => 'integer'],
+    'type' => ['type' => 'string', 'enum' => ['installation', 'maintenance', 'training', 'other']], 'product_slug' => ['type' => ['string', 'null']],
+    'description' => ['type' => ['string', 'null']], 'preferred_date' => ['type' => 'string', 'format' => 'date'], 'preferred_time' => ['type' => ['string', 'null']],
+    'location' => ['type' => ['string', 'null']], 'status' => ['type' => 'string', 'enum' => ['pending', 'confirmed', 'assigned', 'completed', 'cancelled']],
+    'assigned_technician_id' => ['type' => ['integer', 'null']], 'confirmed_date' => ['type' => ['string', 'null'], 'format' => 'date'],
+    'confirmed_time' => ['type' => ['string', 'null']], 'created_at' => ['type' => 'string', 'format' => 'date-time'], 'updated_at' => ['type' => 'string', 'format' => 'date-time'],
+]];
+$serviceRequests = &$spec['paths']['/customer/service-requests']['get'];
+$serviceRequests['responses']['200']['description'] = 'Service requests belonging only to the authenticated customer.';
+$serviceRequests['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['service_requests'], 'properties' => [
+    'service_requests' => ['type' => 'array', 'items' => $serviceRequestSchema],
+]], 'customer.servicerequestcontroller.index');
+unset($serviceRequests);
+$serviceRequestShow = &$spec['paths']['/customer/service-requests/{serviceRequest}']['get'];
+$serviceRequestShow['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['service_request'], 'properties' => ['service_request' => $serviceRequestSchema]], 'customer.servicerequestcontroller.show');
+unset($serviceRequestShow);
+$serviceRequestCreate = &$spec['paths']['/customer/service-requests']['post'];
+$serviceRequestCreate['requestBody']['content']['application/json']['schema']['properties']['type'] = [
+    'type' => 'string', 'enum' => ['installation', 'maintenance', 'training', 'other'],
+];
+$serviceRequestCreate['requestBody']['content']['application/json']['schema']['required'] = array_values(array_unique(array_merge(
+    $serviceRequestCreate['requestBody']['content']['application/json']['schema']['required'] ?? [], ['type'],
+)));
+$serviceRequestCreate['responses']['200']['description'] = 'Creates an owned service request and returns its reference, customer-visible status and the existing locale acknowledgement.';
+$serviceRequestCreate['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['locale', 'service_request'], 'properties' => [
+    'locale' => ['type' => 'string', 'enum' => ['en', 'fr']], 'service_request' => $serviceRequestSchema,
+]], 'customer.servicerequestcontroller.store');
+unset($serviceRequestCreate);
 $contractPath = $root.'/docs/api/openapi.json';
 $contractTemp = $contractPath.'.tmp';
 if (file_put_contents($contractTemp, json_encode($spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR)."\n") === false || !rename($contractTemp, $contractPath)) {

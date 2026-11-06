@@ -1,3 +1,7 @@
+## SDK 0.122.0 — customer account and service-request contracts (6 November 2026)
+
+Adds typed customer account/facility-profile reads and owner-scoped service-request list/detail flows. Creating a service request now returns the customer-safe created record and reference while preserving the existing API status, locale field, and acknowledgement message; the browser form redirect stays intact. Internal admin notes are excluded. OpenAPI remains 0.118.0. The package is a private downloadable preview, not published to npm; This is a private downloadable preview, not published to npm. Archive size is 47261 bytes; SHA-256 is `0ef675411cd3dd6514f0844779f5ea41604f8bd34b0cd25e7362d01cfc60b651`.
+
 ## SDK 0.121.0 — typed practitioner exam workflows (6 November 2026)
 
 Adds field-specific responses for exam lists and details, attempt start and resume, autosaved answers, and server-scored submission review. Learner question types intentionally omit correct-choice fields; the review type exposes scoring details only after submission. OpenAPI remains 0.118.0 because this documents existing behavior. This is a private downloadable preview, not an npm registry release. Archive size is 47080 bytes; SHA-256 is `b1bf1bc549818b8b6042c9f15a99e32cfa5f67d9f90ae4c4e37e70ef17d89f19`.

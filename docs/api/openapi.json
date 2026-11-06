@@ -11199,10 +11199,141 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "user",
+                                                "profile"
+                                            ],
+                                            "properties": {
+                                                "user": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "name",
+                                                        "email",
+                                                        "phone",
+                                                        "is_active",
+                                                        "position",
+                                                        "avatar",
+                                                        "employee_id",
+                                                        "department_id"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "format": "email"
+                                                        },
+                                                        "phone": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "is_active": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "position": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "avatar": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "employee_id": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "department_id": {
+                                                            "type": [
+                                                                "integer",
+                                                                "null"
+                                                            ]
+                                                        }
+                                                    }
+                                                },
+                                                "profile": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "user_id",
+                                                        "facility_name",
+                                                        "facility_type",
+                                                        "country",
+                                                        "city",
+                                                        "address",
+                                                        "created_at",
+                                                        "updated_at"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": [
+                                                                "integer",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "user_id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "facility_name": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "facility_type": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "country": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "city": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "address": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "created_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date-time"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -11214,10 +11345,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -11941,7 +12069,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Service requests belonging only to the authenticated customer.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -11953,10 +12081,120 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "service_requests"
+                                            ],
+                                            "properties": {
+                                                "service_requests": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "reference_number",
+                                                            "customer_id",
+                                                            "type",
+                                                            "product_slug",
+                                                            "description",
+                                                            "preferred_date",
+                                                            "preferred_time",
+                                                            "location",
+                                                            "status",
+                                                            "assigned_technician_id",
+                                                            "confirmed_date",
+                                                            "confirmed_time",
+                                                            "created_at",
+                                                            "updated_at"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "reference_number": {
+                                                                "type": "string"
+                                                            },
+                                                            "customer_id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "type": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "installation",
+                                                                    "maintenance",
+                                                                    "training",
+                                                                    "other"
+                                                                ]
+                                                            },
+                                                            "product_slug": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "description": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "preferred_date": {
+                                                                "type": "string",
+                                                                "format": "date"
+                                                            },
+                                                            "preferred_time": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "location": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "status": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "pending",
+                                                                    "confirmed",
+                                                                    "assigned",
+                                                                    "completed",
+                                                                    "cancelled"
+                                                                ]
+                                                            },
+                                                            "assigned_technician_id": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "confirmed_date": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date"
+                                                            },
+                                                            "confirmed_time": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -11968,10 +12206,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -12114,7 +12349,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Creates an owned service request and returns its reference, customer-visible status and the existing locale acknowledgement.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -12126,10 +12361,125 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "locale",
+                                                "service_request"
+                                            ],
+                                            "properties": {
+                                                "locale": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "en",
+                                                        "fr"
+                                                    ]
+                                                },
+                                                "service_request": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "reference_number",
+                                                        "customer_id",
+                                                        "type",
+                                                        "product_slug",
+                                                        "description",
+                                                        "preferred_date",
+                                                        "preferred_time",
+                                                        "location",
+                                                        "status",
+                                                        "assigned_technician_id",
+                                                        "confirmed_date",
+                                                        "confirmed_time",
+                                                        "created_at",
+                                                        "updated_at"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "reference_number": {
+                                                            "type": "string"
+                                                        },
+                                                        "customer_id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "type": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "installation",
+                                                                "maintenance",
+                                                                "training",
+                                                                "other"
+                                                            ]
+                                                        },
+                                                        "product_slug": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "description": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "preferred_date": {
+                                                            "type": "string",
+                                                            "format": "date"
+                                                        },
+                                                        "preferred_time": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "location": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "pending",
+                                                                "confirmed",
+                                                                "assigned",
+                                                                "completed",
+                                                                "cancelled"
+                                                            ]
+                                                        },
+                                                        "assigned_technician_id": {
+                                                            "type": [
+                                                                "integer",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "confirmed_date": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date"
+                                                        },
+                                                        "confirmed_time": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -12141,10 +12491,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -12345,10 +12692,20 @@
                                         ],
                                         "description": "Validation: nullable|string|max:200",
                                         "maxLength": 200
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "installation",
+                                            "maintenance",
+                                            "training",
+                                            "other"
+                                        ]
                                     }
                                 },
                                 "required": [
-                                    "preferred_date"
+                                    "preferred_date",
+                                    "type"
                                 ]
                             },
                             "example": {
@@ -12624,10 +12981,117 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "service_request"
+                                            ],
+                                            "properties": {
+                                                "service_request": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "id",
+                                                        "reference_number",
+                                                        "customer_id",
+                                                        "type",
+                                                        "product_slug",
+                                                        "description",
+                                                        "preferred_date",
+                                                        "preferred_time",
+                                                        "location",
+                                                        "status",
+                                                        "assigned_technician_id",
+                                                        "confirmed_date",
+                                                        "confirmed_time",
+                                                        "created_at",
+                                                        "updated_at"
+                                                    ],
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "reference_number": {
+                                                            "type": "string"
+                                                        },
+                                                        "customer_id": {
+                                                            "type": "integer"
+                                                        },
+                                                        "type": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "installation",
+                                                                "maintenance",
+                                                                "training",
+                                                                "other"
+                                                            ]
+                                                        },
+                                                        "product_slug": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "description": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "preferred_date": {
+                                                            "type": "string",
+                                                            "format": "date"
+                                                        },
+                                                        "preferred_time": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "location": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "pending",
+                                                                "confirmed",
+                                                                "assigned",
+                                                                "completed",
+                                                                "cancelled"
+                                                            ]
+                                                        },
+                                                        "assigned_technician_id": {
+                                                            "type": [
+                                                                "integer",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "confirmed_date": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ],
+                                                            "format": "date"
+                                                        },
+                                                        "confirmed_time": {
+                                                            "type": [
+                                                                "string",
+                                                                "null"
+                                                            ]
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -12639,10 +13103,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },

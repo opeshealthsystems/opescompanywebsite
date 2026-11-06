@@ -97,21 +97,30 @@ def request_schema_correction_is_additive(before, after):
     new = shape(after[0], after[1], after[2])
     old_body = old.pop("requestBody", None)
     new_body = new.pop("requestBody", None)
-    return old == new and new_body is not None and (old_body is None or additive(old_body, new_body))
+    request_additive = new_body is not None and (old_body is None or additive(old_body, new_body))
+    if old == new:
+        return request_additive
+    return request_additive and response_schema_refinement_only(before, after, ignore_request_body=True)
 
 
-def response_schema_refinement_only(before, after):
+def response_schema_refinement_only(before, after, ignore_request_body=False):
     """Allow reviewed OpenAPI response-schema detail without changing runtime operation behavior."""
     old = shape(before[0], before[1], before[2])
     new = shape(after[0], after[1], after[2])
+    if ignore_request_body:
+        old.pop("requestBody", None)
+        new.pop("requestBody", None)
     if old == new:
         return False
 
-    def without_response_schemas(operation, removed_statuses=()):
+    def without_response_schemas(operation, removed_statuses=(), renamed_statuses=None):
         operation = copy.deepcopy(operation)
         responses = operation.get("responses", {})
         for status in removed_statuses:
             responses.pop(status, None)
+        for new_status, prior_status in (renamed_statuses or {}).items():
+            if new_status in responses:
+                responses[prior_status] = responses.pop(new_status)
         for response in responses.values():
             content = response.get("content", {})
             for media in content.values():
@@ -124,15 +133,23 @@ def response_schema_refinement_only(before, after):
     old_responses = old.get("responses", {})
     new_responses = new.get("responses", {})
     schema_changed = False
-    if not new_responses.keys() <= old_responses.keys():
-        return False
+    added_statuses = new_responses.keys() - old_responses.keys()
     removed_statuses = old_responses.keys() - new_responses.keys()
-    schema_changed = bool(removed_statuses)
+    renamed_statuses = {}
+    if added_statuses:
+        if added_statuses == {'201'} and removed_statuses == {'200'}:
+            renamed_statuses = {'201': '200'}
+        else:
+            return False
+    elif not new_responses.keys() <= old_responses.keys():
+        return False
+    schema_changed = bool(removed_statuses or added_statuses)
     for status in old_responses:
-        if status not in new_responses:
+        new_status = next((new for new, prior in renamed_statuses.items() if prior == status), status)
+        if new_status not in new_responses:
             continue
         old_content = old_responses[status].get("content", {})
-        new_content = new_responses[status].get("content", {})
+        new_content = new_responses[new_status].get("content", {})
         if not new_content.keys() <= old_content.keys():
             return False
         for media_type in old_content:
@@ -143,7 +160,7 @@ def response_schema_refinement_only(before, after):
             new_schema = new_content[media_type].get("schema")
             if old_schema != new_schema:
                 schema_changed = True
-    return schema_changed and without_response_schemas(old, removed_statuses) == without_response_schemas(new)
+    return schema_changed and without_response_schemas(old, removed_statuses) == without_response_schemas(new, renamed_statuses=renamed_statuses)
 
 
 def oauth_scope_additions_only(old, new):
