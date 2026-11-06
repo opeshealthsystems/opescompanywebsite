@@ -160,7 +160,9 @@ def response_schema_refinement_only(before, after, ignore_request_body=False):
             new_schema = new_content[media_type].get("schema")
             if old_schema != new_schema:
                 schema_changed = True
-    return schema_changed and without_response_schemas(old, removed_statuses) == without_response_schemas(new, renamed_statuses=renamed_statuses)
+    prior_statuses_for_renames = set(renamed_statuses.values())
+    truly_removed_statuses = removed_statuses - prior_statuses_for_renames
+    return schema_changed and without_response_schemas(old, truly_removed_statuses) == without_response_schemas(new, renamed_statuses=renamed_statuses)
 
 
 def no_content_status_correction_only(before, after):

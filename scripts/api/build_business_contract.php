@@ -2116,6 +2116,27 @@ $machineClientRevoke['responses']['200']['content']['application/json']['schema'
     'client_id' => ['type' => 'string'], 'revoked' => ['type' => 'boolean', 'const' => true],
 ]], 'developer.machine_clients.revoke');
 unset($machineClientRevoke, $machineUsage, $machineQuota, $machineMetrics, $machineClientResource, $machineSecretResource);
+$partnerMember = ['type' => 'object', 'required' => ['id', 'user_id', 'name', 'email', 'member_since', 'membership_role'], 'properties' => [
+    'id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'], 'name' => ['type' => 'string'], 'email' => ['type' => 'string', 'format' => 'email'],
+    'member_since' => ['type' => ['string', 'null'], 'format' => 'date-time'], 'membership_role' => ['type' => 'string', 'enum' => ['owner', 'member']],
+]];
+$partnerMemberList = &$spec['paths']['/partner/accounts/{partnerApplication}/members']['get'];
+$partnerMemberList['responses']['200']['description'] = 'Returns paginated active, verified partner members for an approved organization. Access is limited to administrators and linked organization owners.';
+$partnerMemberList['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['items', 'pagination'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => $partnerMember],
+    'pagination' => ['type' => 'object', 'required' => ['current_page', 'per_page', 'total', 'last_page'], 'properties' => [
+        'current_page' => ['type' => 'integer'], 'per_page' => ['type' => 'integer'], 'total' => ['type' => 'integer'], 'last_page' => ['type' => 'integer'],
+    ]],
+]], 'partner.accounts.members.index');
+unset($partnerMemberList);
+$partnerMemberAdd = &$spec['paths']['/partner/accounts/{partnerApplication}/members']['post'];
+$partnerMemberAdd['responses']['201'] = $partnerMemberAdd['responses']['200'];
+unset($partnerMemberAdd['responses']['200']);
+$partnerMemberAdd['responses']['201']['description'] = 'Returns the membership and user identifiers after adding or updating an eligible verified partner account; only organization owners and administrators may manage membership.';
+$partnerMemberAdd['responses']['201']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['membership_id', 'application_id', 'user_id'], 'properties' => [
+    'membership_id' => ['type' => 'integer'], 'application_id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'],
+]], 'partner.accounts.members.add');
+unset($partnerMemberAdd, $partnerMember);
 $contractPath = $root.'/docs/api/openapi.json';
 $contractTemp = $contractPath.'.tmp';
 if (file_put_contents($contractTemp, json_encode($spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR)."\n") === false || !rename($contractTemp, $contractPath)) {

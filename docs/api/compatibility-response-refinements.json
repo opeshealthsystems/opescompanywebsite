@@ -1,6 +1,18 @@
 [
   {
     "method": "GET",
+    "path": "/partner/accounts/{partnerApplication}/members",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing verified active partner member projection and pagination from PartnerAccountQueries. Email is returned only to an authorized organization owner or administrator. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "POST",
+    "path": "/partner/accounts/{partnerApplication}/members",
+    "allow_response_schema_refinement": true,
+    "reason": "Corrects the generated success placeholder from 200 to the handler's actual 201, and documents the existing membership, organization and user identifiers from PartnerAccountMembershipCommands. Existing verified-partner eligibility and last-owner protections are unchanged."
+  },
+  {
+    "method": "GET",
     "path": "/developer/machine-clients",
     "allow_response_schema_refinement": true,
     "reason": "Documents the existing owner-scoped machine-client metadata, quota, usage and aggregate metrics from DeveloperMachineClientQueries. Client secrets remain excluded from listings. No response bytes, request shape, authorization or status behavior changes."

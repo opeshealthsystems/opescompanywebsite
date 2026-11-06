@@ -2,7 +2,7 @@
     "openapi": "3.1.1",
     "info": {
         "title": "OHS Platform API",
-        "version": "0.127.0",
+        "version": "0.128.0",
         "description": "Versioned OHS business APIs. Public enquiries and application intake, partner and tester administration, publishing and catalogues, role-scoped operations and workforce workflows, finance registers, reports and line-item detail reads, customer facility profiles, employee and HR administration, risk and performance management, leave requests, validation, practitioner, recruitment, learning, survey and support workflows, account recovery, machine catalogue access and owner-managed public-scope machine clients, public sitemap data, protected admin reference data and resource/relationship summaries, with delegated business workflows using authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.",
         "contact": {
             "name": "OHS support",
@@ -143599,7 +143599,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns paginated active, verified partner members for an approved organization. Access is limited to administrators and linked organization owners.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -143611,10 +143611,79 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items",
+                                                "pagination"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "user_id",
+                                                            "name",
+                                                            "email",
+                                                            "member_since",
+                                                            "membership_role"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "user_id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            },
+                                                            "email": {
+                                                                "type": "string",
+                                                                "format": "email"
+                                                            },
+                                                            "member_since": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            },
+                                                            "membership_role": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "owner",
+                                                                    "member"
+                                                                ]
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "required": [
+                                                        "current_page",
+                                                        "per_page",
+                                                        "total",
+                                                        "last_page"
+                                                    ],
+                                                    "properties": {
+                                                        "current_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "total": {
+                                                            "type": "integer"
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -143626,10 +143695,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -143781,80 +143847,6 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "required": [
-                                        "data",
-                                        "meta",
-                                        "messages"
-                                    ],
-                                    "properties": {
-                                        "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
-                                        },
-                                        "meta": {
-                                            "type": "object",
-                                            "properties": {
-                                                "operation": {
-                                                    "type": "string",
-                                                    "const": "partner.accounts.members.add"
-                                                }
-                                            }
-                                        },
-                                        "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
-                                        }
-                                    }
-                                },
-                                "examples": {
-                                    "envelope": {
-                                        "summary": "Response envelope",
-                                        "description": "The data fields depend on the operation and its resource contract.",
-                                        "value": {
-                                            "data": {},
-                                            "meta": {
-                                                "operation": "partner.accounts.members.add"
-                                            },
-                                            "messages": []
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "headers": {
-                            "Cache-Control": {
-                                "description": "Authenticated and command results are not stored in shared caches.",
-                                "schema": {
-                                    "type": "string",
-                                    "const": "no-store"
-                                }
-                            },
-                            "X-Request-ID": {
-                                "description": "Identifier used when contacting support.",
-                                "schema": {
-                                    "type": "string",
-                                    "format": "uuid"
-                                }
-                            },
-                            "Idempotency-Replayed": {
-                                "description": "Present with value true when this response replays the saved outcome for the supplied Idempotency-Key; absent on the first execution.",
-                                "schema": {
-                                    "type": "string",
-                                    "const": "true"
-                                }
-                            }
-                        }
-                    },
                     "401": {
                         "description": "Valid delegated user token required",
                         "content": {
@@ -143911,6 +143903,90 @@
                             "application/problem+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Returns the membership and user identifiers after adding or updating an eligible verified partner account; only organization owners and administrators may manage membership.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "required": [
+                                                "membership_id",
+                                                "application_id",
+                                                "user_id"
+                                            ],
+                                            "properties": {
+                                                "membership_id": {
+                                                    "type": "integer"
+                                                },
+                                                "application_id": {
+                                                    "type": "integer"
+                                                },
+                                                "user_id": {
+                                                    "type": "integer"
+                                                }
+                                            }
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "partner.accounts.members.add"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "envelope": {
+                                        "summary": "Response envelope",
+                                        "description": "The data fields depend on the operation and its resource contract.",
+                                        "value": {
+                                            "data": {},
+                                            "meta": {
+                                                "operation": "partner.accounts.members.add"
+                                            },
+                                            "messages": []
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            },
+                            "Idempotency-Replayed": {
+                                "description": "Present with value true when this response replays the saved outcome for the supplied Idempotency-Key; absent on the first execution.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "true"
                                 }
                             }
                         }
@@ -159631,7 +159707,7 @@
                                 "example": {
                                     "data": {
                                         "name": "OPES Health Systems API",
-                                        "api_version": "0.127.0",
+                                        "api_version": "0.128.0",
                                         "openapi_version": "3.1.1",
                                         "authentication": {
                                             "machine": "OAuth 2.0 client credentials with approved scopes",
@@ -159855,7 +159931,7 @@
                                 "example": {
                                     "data": {
                                         "status": "responding",
-                                        "api_version": "0.127.0",
+                                        "api_version": "0.128.0",
                                         "checked_at": "2026-11-01T12:00:00+00:00"
                                     },
                                     "meta": {
@@ -160059,6 +160135,11 @@
                                 "example": {
                                     "data": {
                                         "items": [
+                                            {
+                                                "version": "0.128.0",
+                                                "released_at": "2026-11-06",
+                                                "summary": "Added typed partner-organization member listings and add-or-update membership acknowledgements with owner/member roles."
+                                            },
                                             {
                                                 "version": "0.127.0",
                                                 "released_at": "2026-11-06",
@@ -160482,7 +160563,7 @@
                                 },
                                 "example": {
                                     "data": {
-                                        "api_version": "0.127.0",
+                                        "api_version": "0.128.0",
                                         "locale": "en",
                                         "items": [
                                             {

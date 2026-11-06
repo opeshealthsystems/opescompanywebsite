@@ -1,3 +1,7 @@
+## SDK 0.141.0 — partner organization membership (6 November 2026)
+
+Types the paginated active, verified partner-member list and the member add-or-update acknowledgement. The listing exposes member email only to linked organization owners and administrators; existing verified-account, role and last-owner checks are unchanged. OpenAPI is 0.128.0. This downloadable preview remains unpublished to npm. Archive size is 50461 bytes; SHA-256 is `81bdc63ae3059eb3e6b4a17d5e4194b0199de8ff0f597b350ac1e6384b988941`.
+
 ## SDK 0.140.0 — developer machine-client lifecycle (6 November 2026)
 
 Types owner-scoped machine-client listings with daily usage, quota and aggregate request metrics; creation and rotation expose the secret only in their one-time response, while listings omit credentials. Revocation has a typed acknowledgement. OpenAPI is 0.127.0. This downloadable preview remains unpublished to npm. Archive size is 50395 bytes; SHA-256 is `c91010840b8d826bcf59eaabd73fb8e5450adf0132950cd13679d2e4da2b15e9`.
