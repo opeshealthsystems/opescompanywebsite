@@ -2137,6 +2137,47 @@ $partnerMemberAdd['responses']['201']['content']['application/json']['schema'] =
     'membership_id' => ['type' => 'integer'], 'application_id' => ['type' => 'integer'], 'user_id' => ['type' => 'integer'],
 ]], 'partner.accounts.members.add');
 unset($partnerMemberAdd, $partnerMember);
+$referenceItem = static fn (array $properties, array $required = ['id', 'name']) => ['type' => 'object', 'required' => $required, 'properties' => $properties];
+$referenceItems = static fn (array $properties, array $required = ['id', 'name']) => ['type' => 'object', 'required' => ['items'], 'properties' => [
+    'items' => ['type' => 'array', 'items' => $referenceItem($properties, $required)],
+]];
+$referenceString = ['type' => 'string'];
+$referenceInteger = ['type' => 'integer'];
+$adminReferenceData = [
+    'admin_references_users' => $referenceItems(['id' => $referenceInteger, 'name' => $referenceString, 'email' => ['type' => 'string', 'format' => 'email']], ['id', 'name']),
+    'admin_references_leads' => $referenceItems(['id' => $referenceInteger, 'name' => $referenceString]),
+    'admin_references_departments' => $referenceItems(['id' => $referenceInteger, 'name' => $referenceString]),
+    'admin_references_salaryGrades' => $referenceItems(['id' => $referenceInteger, 'name' => $referenceString, 'label' => $referenceString], ['id', 'name', 'label']),
+    'admin_references_customerCountries' => $referenceItems(['id' => $referenceString, 'name' => $referenceString]),
+    'admin_references_userRoles' => $referenceItems(['id' => $referenceString, 'name' => $referenceString]),
+    'admin_references_rolePermissions' => $referenceItems(['id' => $referenceString, 'name' => $referenceString]),
+    'admin_references_projects' => $referenceItems(['id' => $referenceInteger, 'title' => $referenceString], ['id', 'title']),
+    'admin_references_jobOpenings' => $referenceItems(['id' => $referenceInteger, 'title' => $referenceString], ['id', 'title']),
+    'admin_references_knowledgeCategories' => $referenceItems(['id' => $referenceInteger, 'name' => $referenceString]),
+    'admin_references_validationPrograms' => $referenceItems(['id' => $referenceInteger, 'title' => $referenceString], ['id', 'title']),
+    'admin_references_testCases' => $referenceItems(['id' => $referenceInteger, 'title' => $referenceString], ['id', 'title']),
+    'admin_references_vendors' => $referenceItems(['id' => $referenceInteger, 'name' => $referenceString]),
+    'admin_references_invoices' => $referenceItems(['id' => $referenceInteger, 'invoice_number' => $referenceString, 'grand_total' => ['type' => 'number'], 'currency' => $referenceString], ['id', 'invoice_number', 'grand_total', 'currency']),
+    'admin_references_licenses' => $referenceItems(['id' => $referenceInteger, 'license_key' => $referenceString, 'product_name' => $referenceString, 'customer' => ['type' => ['string', 'null']]], ['id', 'license_key', 'product_name', 'customer']),
+    'admin_references_purchaseOrders' => $referenceItems(['id' => $referenceInteger, 'reference' => $referenceString, 'title' => $referenceString], ['id', 'reference', 'title']),
+    'admin_references_documentTemplates' => $referenceItems(['id' => $referenceInteger, 'name' => $referenceString, 'type' => $referenceString], ['id', 'name', 'type']),
+    'admin_references_cohortMembers' => $referenceItems(['id' => $referenceInteger, 'name' => ['type' => ['string', 'null']], 'cohort' => ['type' => ['string', 'null']], 'status' => $referenceString], ['id', 'name', 'cohort', 'status']),
+    'admin_references_cohorts' => $referenceItems(['id' => $referenceInteger, 'name' => $referenceString]),
+    'admin_references_auditLogFilters' => ['type' => 'object', 'required' => ['actions', 'model_types'], 'properties' => [
+        'actions' => ['type' => 'array', 'items' => $referenceString], 'model_types' => ['type' => 'array', 'items' => $referenceString],
+    ]],
+    'admin_references_nextEmployeeId' => ['type' => 'object', 'required' => ['employee_id'], 'properties' => ['employee_id' => $referenceString]],
+];
+foreach ($spec['paths'] as &$referencePath) {
+    foreach ($referencePath as &$referenceOperation) {
+        $operationId = $referenceOperation['operationId'] ?? null;
+        if (!isset($adminReferenceData[$operationId])) continue;
+        $referenceOperation['responses']['200']['description'] = 'Returns administrator form reference data from AdminFormReferenceQueries; optional filters and privacy-limited fields follow the query authorization and projection.';
+        $referenceOperation['responses']['200']['content']['application/json']['schema'] = $successEnvelope($adminReferenceData[$operationId], 'admin.references.'.substr($operationId, strlen('admin_references_')));
+    }
+    unset($referenceOperation);
+}
+unset($referencePath, $adminReferenceData, $referenceItems, $referenceItem, $referenceString, $referenceInteger);
 $contractPath = $root.'/docs/api/openapi.json';
 $contractTemp = $contractPath.'.tmp';
 if (file_put_contents($contractTemp, json_encode($spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR)."\n") === false || !rename($contractTemp, $contractPath)) {

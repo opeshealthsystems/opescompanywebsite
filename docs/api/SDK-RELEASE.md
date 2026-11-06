@@ -1,3 +1,7 @@
+## SDK 0.142.0 — administrator form references (6 November 2026)
+
+Types all 21 administrator form-reference reads, including users with conditionally present email, role permissions, invoices, licenses, cohort members, audit filters and next employee identifiers. The projections preserve existing filters and privacy rules. OpenAPI is 0.129.0. This downloadable preview remains unpublished to npm. Archive size is 50618 bytes; SHA-256 is `eedf1a63b9db5fc26c69e3edf6ec49e97f84c6ff8e5b72c3998e56c7eae996e0`.
+
 ## SDK 0.141.0 — partner organization membership (6 November 2026)
 
 Types the paginated active, verified partner-member list and the member add-or-update acknowledgement. The listing exposes member email only to linked organization owners and administrators; existing verified-account, role and last-owner checks are unchanged. OpenAPI is 0.128.0. This downloadable preview remains unpublished to npm. Archive size is 50461 bytes; SHA-256 is `81bdc63ae3059eb3e6b4a17d5e4194b0199de8ff0f597b350ac1e6384b988941`.

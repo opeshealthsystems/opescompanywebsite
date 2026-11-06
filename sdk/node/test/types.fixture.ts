@@ -97,6 +97,16 @@ const revokedDeveloperClient = await client.request('developer_machine_clients_r
   path: { client: 18 }, idempotencyKey: key,
 });
 revokedDeveloperClient.data.data.revoked.valueOf();
+const userReferences = await client.request('admin_references_users', { query: { role: 'customers', include_email: true } });
+userReferences.data.data.items[0]!.email?.toLowerCase();
+const invoiceReferences = await client.request('admin_references_invoices');
+invoiceReferences.data.data.items[0]!.grand_total.toFixed();
+const auditFilters = await client.request('admin_references_auditLogFilters');
+auditFilters.data.data.model_types[0]?.toUpperCase();
+const employeeId = await client.request('admin_references_nextEmployeeId');
+employeeId.data.data.employee_id.toUpperCase();
+// @ts-expect-error Administrator user-reference responses do not project phone numbers.
+userReferences.data.data.items[0]!.phone;
 const createdServiceRequest = await client.request('customer_servicerequestcontroller_store', {
   body: { type: 'maintenance', preferred_date: '2026-11-09', location: 'Example facility' }, idempotencyKey: key,
 });

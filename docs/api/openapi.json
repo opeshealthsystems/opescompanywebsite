@@ -2,7 +2,7 @@
     "openapi": "3.1.1",
     "info": {
         "title": "OHS Platform API",
-        "version": "0.128.0",
+        "version": "0.129.0",
         "description": "Versioned OHS business APIs. Public enquiries and application intake, partner and tester administration, publishing and catalogues, role-scoped operations and workforce workflows, finance registers, reports and line-item detail reads, customer facility profiles, employee and HR administration, risk and performance management, leave requests, validation, practitioner, recruitment, learning, survey and support workflows, account recovery, machine catalogue access and owner-managed public-scope machine clients, public sitemap data, protected admin reference data and resource/relationship summaries, with delegated business workflows using authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.",
         "contact": {
             "name": "OHS support",
@@ -148838,7 +148838,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns administrator form reference data from AdminFormReferenceQueries; optional filters and privacy-limited fields follow the query authorization and projection.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -148850,10 +148850,34 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "name"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            },
+                                                            "email": {
+                                                                "type": "string",
+                                                                "format": "email"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -148865,10 +148889,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -149022,7 +149043,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns administrator form reference data from AdminFormReferenceQueries; optional filters and privacy-limited fields follow the query authorization and projection.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -149034,10 +149055,30 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "name"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -149049,10 +149090,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -149206,7 +149244,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns administrator form reference data from AdminFormReferenceQueries; optional filters and privacy-limited fields follow the query authorization and projection.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -149218,10 +149256,30 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "name"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -149233,10 +149291,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -149390,7 +149445,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns administrator form reference data from AdminFormReferenceQueries; optional filters and privacy-limited fields follow the query authorization and projection.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -149402,10 +149457,34 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "name",
+                                                            "label"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            },
+                                                            "label": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -149417,10 +149496,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -149574,7 +149650,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns administrator form reference data from AdminFormReferenceQueries; optional filters and privacy-limited fields follow the query authorization and projection.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -149586,10 +149662,15 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "employee_id"
+                                            ],
+                                            "properties": {
+                                                "employee_id": {
+                                                    "type": "string"
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -149601,10 +149682,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -149758,7 +149836,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns administrator form reference data from AdminFormReferenceQueries; optional filters and privacy-limited fields follow the query authorization and projection.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -149770,10 +149848,30 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "name"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -149785,10 +149883,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -149942,7 +150037,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns administrator form reference data from AdminFormReferenceQueries; optional filters and privacy-limited fields follow the query authorization and projection.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -149954,10 +150049,30 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "name"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -149969,10 +150084,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -150136,7 +150248,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns administrator form reference data from AdminFormReferenceQueries; optional filters and privacy-limited fields follow the query authorization and projection.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -150148,10 +150260,30 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "name"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -150163,10 +150295,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -150320,7 +150449,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns administrator form reference data from AdminFormReferenceQueries; optional filters and privacy-limited fields follow the query authorization and projection.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -150332,10 +150461,25 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "actions",
+                                                "model_types"
+                                            ],
+                                            "properties": {
+                                                "actions": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "model_types": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -150347,10 +150491,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -150504,7 +150645,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns administrator form reference data from AdminFormReferenceQueries; optional filters and privacy-limited fields follow the query authorization and projection.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -150516,10 +150657,30 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "title"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "title": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -150531,10 +150692,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -150702,7 +150860,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns administrator form reference data from AdminFormReferenceQueries; optional filters and privacy-limited fields follow the query authorization and projection.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -150714,10 +150872,30 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "title"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "title": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -150729,10 +150907,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -150886,7 +151061,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns administrator form reference data from AdminFormReferenceQueries; optional filters and privacy-limited fields follow the query authorization and projection.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -150898,10 +151073,30 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "name"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -150913,10 +151108,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -151070,7 +151262,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns administrator form reference data from AdminFormReferenceQueries; optional filters and privacy-limited fields follow the query authorization and projection.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -151082,10 +151274,30 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "title"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "title": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -151097,10 +151309,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -151254,7 +151463,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns administrator form reference data from AdminFormReferenceQueries; optional filters and privacy-limited fields follow the query authorization and projection.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -151266,10 +151475,30 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "title"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "title": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -151281,10 +151510,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -151438,7 +151664,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns administrator form reference data from AdminFormReferenceQueries; optional filters and privacy-limited fields follow the query authorization and projection.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -151450,10 +151676,30 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "name"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -151465,10 +151711,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -151632,7 +151875,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns administrator form reference data from AdminFormReferenceQueries; optional filters and privacy-limited fields follow the query authorization and projection.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -151644,10 +151887,38 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "invoice_number",
+                                                            "grand_total",
+                                                            "currency"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "invoice_number": {
+                                                                "type": "string"
+                                                            },
+                                                            "grand_total": {
+                                                                "type": "number"
+                                                            },
+                                                            "currency": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -151659,10 +151930,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -151816,7 +152084,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns administrator form reference data from AdminFormReferenceQueries; optional filters and privacy-limited fields follow the query authorization and projection.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -151828,10 +152096,41 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "license_key",
+                                                            "product_name",
+                                                            "customer"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "license_key": {
+                                                                "type": "string"
+                                                            },
+                                                            "product_name": {
+                                                                "type": "string"
+                                                            },
+                                                            "customer": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -151843,10 +152142,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -152000,7 +152296,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns administrator form reference data from AdminFormReferenceQueries; optional filters and privacy-limited fields follow the query authorization and projection.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -152012,10 +152308,34 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "reference",
+                                                            "title"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "reference": {
+                                                                "type": "string"
+                                                            },
+                                                            "title": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -152027,10 +152347,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -152184,7 +152501,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns administrator form reference data from AdminFormReferenceQueries; optional filters and privacy-limited fields follow the query authorization and projection.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -152196,10 +152513,34 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "name",
+                                                            "type"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            },
+                                                            "type": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -152211,10 +152552,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -152368,7 +152706,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns administrator form reference data from AdminFormReferenceQueries; optional filters and privacy-limited fields follow the query authorization and projection.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -152380,10 +152718,44 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "name",
+                                                            "cohort",
+                                                            "status"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "name": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "cohort": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "status": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -152395,10 +152767,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -152577,7 +152946,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Application outcome. Read results use explicit resource field contracts; commands return references and messages.",
+                        "description": "Returns administrator form reference data from AdminFormReferenceQueries; optional filters and privacy-limited fields follow the query authorization and projection.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -152589,10 +152958,30 @@
                                     ],
                                     "properties": {
                                         "data": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object",
+                                            "required": [
+                                                "items"
+                                            ],
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "id",
+                                                            "name"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         },
                                         "meta": {
                                             "type": "object",
@@ -152604,10 +152993,7 @@
                                             }
                                         },
                                         "messages": {
-                                            "type": [
-                                                "object",
-                                                "array"
-                                            ]
+                                            "type": "object"
                                         }
                                     }
                                 },
@@ -159707,7 +160093,7 @@
                                 "example": {
                                     "data": {
                                         "name": "OPES Health Systems API",
-                                        "api_version": "0.128.0",
+                                        "api_version": "0.129.0",
                                         "openapi_version": "3.1.1",
                                         "authentication": {
                                             "machine": "OAuth 2.0 client credentials with approved scopes",
@@ -159931,7 +160317,7 @@
                                 "example": {
                                     "data": {
                                         "status": "responding",
-                                        "api_version": "0.128.0",
+                                        "api_version": "0.129.0",
                                         "checked_at": "2026-11-01T12:00:00+00:00"
                                     },
                                     "meta": {
@@ -160135,6 +160521,11 @@
                                 "example": {
                                     "data": {
                                         "items": [
+                                            {
+                                                "version": "0.129.0",
+                                                "released_at": "2026-11-06",
+                                                "summary": "Added field-specific response contracts for all 21 administrator form-reference reads, including conditional email exposure and role-filtered lookups."
+                                            },
                                             {
                                                 "version": "0.128.0",
                                                 "released_at": "2026-11-06",
@@ -160563,7 +160954,7 @@
                                 },
                                 "example": {
                                     "data": {
-                                        "api_version": "0.128.0",
+                                        "api_version": "0.129.0",
                                         "locale": "en",
                                         "items": [
                                             {

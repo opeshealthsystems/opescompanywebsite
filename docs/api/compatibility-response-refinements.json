@@ -1,6 +1,132 @@
 [
   {
     "method": "GET",
+    "path": "/admin/references/users",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator reference-data projection and filtering from AdminFormReferenceQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/references/leads",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator reference-data projection and filtering from AdminFormReferenceQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/references/departments",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator reference-data projection and filtering from AdminFormReferenceQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/references/salary-grades",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator reference-data projection and filtering from AdminFormReferenceQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/references/next-employee-id",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator reference-data projection and filtering from AdminFormReferenceQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/references/customer-countries",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator reference-data projection and filtering from AdminFormReferenceQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/references/user-roles",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator reference-data projection and filtering from AdminFormReferenceQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/references/role-permissions",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator reference-data projection and filtering from AdminFormReferenceQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/references/audit-log-filters",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator reference-data projection and filtering from AdminFormReferenceQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/references/projects",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator reference-data projection and filtering from AdminFormReferenceQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/references/open-jobs",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator reference-data projection and filtering from AdminFormReferenceQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/references/knowledge-categories",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator reference-data projection and filtering from AdminFormReferenceQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/references/validation-programs",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator reference-data projection and filtering from AdminFormReferenceQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/references/test-cases",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator reference-data projection and filtering from AdminFormReferenceQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/references/vendors",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator reference-data projection and filtering from AdminFormReferenceQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/references/invoices",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator reference-data projection and filtering from AdminFormReferenceQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/references/licenses",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator reference-data projection and filtering from AdminFormReferenceQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/references/purchase-orders",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator reference-data projection and filtering from AdminFormReferenceQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/references/document-templates",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator reference-data projection and filtering from AdminFormReferenceQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/references/cohort-members",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator reference-data projection and filtering from AdminFormReferenceQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
+    "path": "/admin/references/cohorts",
+    "allow_response_schema_refinement": true,
+    "reason": "Documents the existing administrator reference-data projection and filtering from AdminFormReferenceQueries. No response bytes, request shape, authorization or status behavior changes."
+  },
+  {
+    "method": "GET",
     "path": "/partner/accounts/{partnerApplication}/members",
     "allow_response_schema_refinement": true,
     "reason": "Documents the existing verified active partner member projection and pagination from PartnerAccountQueries. Email is returned only to an authorized organization owner or administrator. No response bytes, request shape, authorization or status behavior changes."

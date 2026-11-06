@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'version' => '0.128.0',
+    'version' => '0.129.0',
     'products' => [
         [
             'id' => 'public-enquiries',
@@ -93,6 +93,11 @@ return [
         ],
     ],
     'changelog' => [
+        [
+            'version' => '0.129.0',
+            'released_at' => '2026-11-06',
+            'summary' => 'Added field-specific response contracts for all 21 administrator form-reference reads, including conditional email exposure and role-filtered lookups.',
+        ],
         [
             'version' => '0.128.0',
             'released_at' => '2026-11-06',
