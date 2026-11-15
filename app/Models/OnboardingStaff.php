@@ -10,14 +10,18 @@ class OnboardingStaff extends Model
     protected $table = 'onboarding_staff';
 
     protected $fillable = [
-        'hospital_onboarding_id', 'full_name', 'job_role', 'department',
+        'hospital_onboarding_id', 'full_name', 'job_role', 'specialty', 'department', 'site',
         'phone', 'email', 'access_level', 'takes_tasks',
+        'licence_number', 'licence_issuing_body', 'licence_expiry', 'years_experience',
+        'working_hours', 'consultation_fee', 'signature_path',
         'emr_account_created', 'emr_username', 'notes',
     ];
 
     protected $casts = [
         'takes_tasks'         => 'boolean',
         'emr_account_created' => 'boolean',
+        'licence_expiry'      => 'date',
+        'years_experience'    => 'integer',
     ];
 
     public function onboarding(): BelongsTo
@@ -29,21 +33,21 @@ class OnboardingStaff extends Model
     public static array $jobRoles = [
         'doctor'          => ['en' => 'Doctor / Physician', 'fr' => 'Médecin'],
         'nurse'           => ['en' => 'Nurse', 'fr' => 'Infirmier(ère)'],
-        'lab_technician'  => ['en' => 'Lab Technician', 'fr' => 'Technicien(ne) de laboratoire'],
-        'pharmacist'      => ['en' => 'Pharmacist', 'fr' => 'Pharmacien(ne)'],
-        'receptionist'    => ['en' => 'Receptionist / Front Desk', 'fr' => 'Réceptionniste / Accueil'],
+        'lab'             => ['en' => 'Lab', 'fr' => 'Laboratoire'],
+        'pharmacy'        => ['en' => 'Pharmacy', 'fr' => 'Pharmacie'],
+        'reception'       => ['en' => 'Reception', 'fr' => 'Accueil'],
+        'billing'         => ['en' => 'Billing', 'fr' => 'Facturation'],
         'records_officer' => ['en' => 'Medical Records Officer', 'fr' => 'Archiviste médical'],
-        'cashier'         => ['en' => 'Cashier / Billing', 'fr' => 'Caissier(ère) / Facturation'],
-        'administrator'   => ['en' => 'Administrator / Manager', 'fr' => 'Administrateur / Gestionnaire'],
+        'admin'           => ['en' => 'Admin', 'fr' => 'Administration'],
         'it_officer'      => ['en' => 'IT Officer', 'fr' => 'Responsable informatique'],
         'other'           => ['en' => 'Other', 'fr' => 'Autre'],
     ];
 
-    /** Intended level of access inside the EMR. */
+    /** Access tiers, per the clinic-setup form: view only / enter data / approve / admin. */
     public static array $accessLevels = [
-        'administrator' => ['en' => 'Administrator (full access)', 'fr' => 'Administrateur (accès complet)'],
-        'clinician'     => ['en' => 'Clinician (clinical records)', 'fr' => 'Clinicien (dossiers cliniques)'],
-        'front_desk'    => ['en' => 'Front desk / Operations', 'fr' => 'Accueil / Opérations'],
-        'read_only'     => ['en' => 'Read only', 'fr' => 'Lecture seule'],
+        'view_only'  => ['en' => 'View only', 'fr' => 'Lecture seule'],
+        'enter_data' => ['en' => 'Enter data', 'fr' => 'Saisie de données'],
+        'approve'    => ['en' => 'Approve (prescriptions / results)', 'fr' => 'Approuver (ordonnances / résultats)'],
+        'admin'      => ['en' => 'Administrator', 'fr' => 'Administrateur'],
     ];
 }
