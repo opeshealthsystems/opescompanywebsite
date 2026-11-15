@@ -6534,6 +6534,7 @@ $registry['definitions'] += require __DIR__.'/business_admin_partner_institution
 $registry['definitions'] += require __DIR__.'/business_admin_practitioner_programs.php';
 $registry['definitions'] += require __DIR__.'/business_admin_references.php';
 $registry['definitions'] += require __DIR__.'/business_public_content.php';
+$registry['presentations'] += require __DIR__.'/business_public_presentations.php';
 $registry['definitions'] += require __DIR__.'/business_admin_finance_details.php';
 $registry['definitions'] += require __DIR__.'/business_admin_audit_logs.php';
 $registry['definitions'] += require __DIR__.'/business_admin_payouts.php';

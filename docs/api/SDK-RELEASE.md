@@ -1,3 +1,7 @@
+# SDK 0.156.0 — public platform search (10 November 2026)
+
+Adds the generated `searchPublicPlatformContent` operation with a required search phrase and typed results for published articles, active courses and public product metadata. Search is unauthenticated, bounded and excludes account, enquiry, customer and clinical records. OpenAPI is 0.144.0. Archive size is 53,422 bytes; SHA-256 is `df00688952dc56c2013cdfecead3254975dbc4c89a076e7042fd52817e934f70`. This downloadable preview remains unpublished to npm.
+
 ## SDK 0.155.0 — practitioner learning progress (6 November 2026)
 
 Types practitioner course-enrollment results and lesson-completion progress, including completed/total lesson counts, progress percentage, next lesson, and bounded certificate summary. The shared command handlers persist these API outcomes, serialize repeated progress safely, and keep browser redirect behavior on the web transport. OpenAPI is 0.142.0. This downloadable preview remains unpublished to npm. Archive size is 52987 bytes; SHA-256 is `e414caf74077408d8031683590d6131bd6ae9c9d71b4472975f6e871e72d02c5`.

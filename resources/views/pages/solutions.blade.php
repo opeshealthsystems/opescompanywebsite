@@ -37,9 +37,10 @@
         </article>
         <article class="sol-card">
             <div class="sol-card-icon" style="background:rgba(49,95,125,0.18)"><i data-lucide="chart-no-axes-combined" style="width:24px;height:24px;color:#8AC5ED"></i></div>
-            <h3 class="sol-card-title">{{ $isFr ? 'Services de données de santé' : 'Health data services' }}</h3>
+            <h3 class="sol-card-title"><a href="{{ url($locale.'/health-data') }}" style="color:inherit;text-decoration:none">{{ $isFr ? 'Services de données de santé' : 'Health data services' }}</a></h3>
             <p class="sol-card-desc">{{ $isFr ? 'Échange et qualité des données, rapports opérationnels, indicateurs de programme et analytique à définir avec les autorités concernées, sur des bases légales et des règles d’accès convenues.' : 'Health information exchange, data quality, operational reporting, programme indicators and analytics scoped with responsible authorities under agreed lawful bases and access rules.' }}</p>
             <div class="sol-systems"><span class="sol-badge">OPESCare</span><span class="sol-badge">APIs</span><span class="sol-badge">Reporting</span></div>
+            <a class="btn-secondary" href="{{ url($locale.'/health-data') }}" style="display:inline-flex;margin-top:14px">{{ $isFr ? 'Découvrir les services de données' : 'Explore health data services' }} <i data-lucide="arrow-right" style="width:15px;height:15px"></i></a>
         </article>
         <article class="sol-card">
             <div class="sol-card-icon" style="background:rgba(49,95,125,0.18)"><i data-lucide="workflow" style="width:24px;height:24px;color:#8AC5ED"></i></div>
@@ -86,7 +87,7 @@
             <div class="section-label">{{ $isFr ? 'Produit phare · Réseau de santé' : 'Flagship · Health Network' }}</div>
             <h2 class="sol-card-title">{{ __('solutions.opescare_title') }}</h2>
             <p class="sol-card-desc">{{ __('solutions.opescare_body') }}</p>
-            <a class="btn-secondary" href="{{ url($locale.'/products/opescare') }}" style="display:inline-flex;margin-top:14px">{{ __('solutions.opescare_link') }} <i data-lucide="arrow-right" style="width:15px;height:15px"></i></a>
+            <a class="btn-secondary" href="{{ url($locale.'/health-id') }}" style="display:inline-flex;margin-top:14px">{{ $isFr ? 'Découvrir Health ID' : 'Explore Health ID' }} <i data-lucide="arrow-right" style="width:15px;height:15px"></i></a>
         </div>
     </div>
 </section>

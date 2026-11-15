@@ -52,9 +52,13 @@ class ContactController extends Controller
             $validated, app()->getLocale(), $request->ip(), null, $quoteOption
         );
 
-        $success = app()->getLocale() === 'fr'
-            ? 'Merci ! Votre demande a été enregistrée. Notre équipe vous recontactera.'
-            : 'Thank you! Your request has been recorded. Our team will contact you.';
+        $success = isset($validated['participation'])
+            ? (app()->getLocale() === 'fr'
+                ? 'Merci. Votre proposition de participation a été enregistrée. L’équipe OPES l’examinera et vous contactera.'
+                : 'Thank you. Your participation proposal has been recorded. The OPES team will review it and contact you.')
+            : (app()->getLocale() === 'fr'
+                ? 'Merci ! Votre demande a été enregistrée. Notre équipe vous recontactera.'
+                : 'Thank you! Your request has been recorded. Our team will contact you.');
 
         if ($quoteOption !== null && in_array($result['receipt_status'] ?? null, ['sent', 'already-sent'], true)) {
             $success = app()->getLocale() === 'fr'

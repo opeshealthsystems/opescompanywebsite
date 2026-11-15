@@ -2,7 +2,7 @@
     "openapi": "3.1.1",
     "info": {
         "title": "OHS Platform API",
-        "version": "0.142.0",
+        "version": "0.144.0",
         "description": "Versioned OHS business APIs. Public enquiries and application intake, partner and tester administration, publishing and catalogues, role-scoped operations and workforce workflows, finance registers, reports and line-item detail reads, customer facility profiles, employee and HR administration, risk and performance management, leave requests, validation, practitioner, recruitment, learning, survey and support workflows, account recovery, machine catalogue access and owner-managed public-scope machine clients, public sitemap data, protected admin reference data and resource/relationship summaries, with delegated business workflows using authorization code and S256 PKCE. Private operations require current role, scope and record authorization. OpenID Connect is not implemented.",
         "contact": {
             "name": "OHS support",
@@ -59,6 +59,19 @@
                                         "customer:read"
                                     ],
                                     "use_case": "Allow clinic staff to review their licensed OHS services."
+                                },
+                                "participation": {
+                                    "program": "data-license",
+                                    "organization_name": "Example Regional Hospital",
+                                    "organization_type": "hospital",
+                                    "country": "Cameroon",
+                                    "city": "Yaounde",
+                                    "area": "care-pathways",
+                                    "proposal": "Discuss whether approved, de-identified service-use data could support a defined health systems study.",
+                                    "data_authority": "confirming",
+                                    "data_status": "not-assessed",
+                                    "contact_permission": true,
+                                    "no_sensitive_data": true
                                 }
                             }
                         }
@@ -45713,7 +45726,7 @@
                                     "line_items": {
                                         "type": "array",
                                         "description": "Validation: required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     },
@@ -45843,7 +45856,7 @@
                                     "line_items": {
                                         "type": "array",
                                         "description": "Validation: required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     },
@@ -46507,7 +46520,7 @@
                                     "line_items": {
                                         "type": "array",
                                         "description": "Validation: sometimes|required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     },
@@ -46627,7 +46640,7 @@
                                     "line_items": {
                                         "type": "array",
                                         "description": "Validation: sometimes|required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     },
@@ -46943,7 +46956,7 @@
                                     "items": {
                                         "type": "array",
                                         "description": "Validation: required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     }
@@ -47034,7 +47047,7 @@
                                     "items": {
                                         "type": "array",
                                         "description": "Validation: required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     }
@@ -47727,7 +47740,7 @@
                                     "items": {
                                         "type": "array",
                                         "description": "Validation: sometimes|required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     }
@@ -47813,7 +47826,7 @@
                                     "items": {
                                         "type": "array",
                                         "description": "Validation: sometimes|required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     }
@@ -48309,7 +48322,7 @@
                                     "items": {
                                         "type": "array",
                                         "description": "Validation: required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     }
@@ -48408,7 +48421,7 @@
                                     "items": {
                                         "type": "array",
                                         "description": "Validation: required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     }
@@ -49087,7 +49100,7 @@
                                     "items": {
                                         "type": "array",
                                         "description": "Validation: sometimes|required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     }
@@ -49181,7 +49194,7 @@
                                     "items": {
                                         "type": "array",
                                         "description": "Validation: sometimes|required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     }
@@ -49659,7 +49672,7 @@
                                     "items": {
                                         "type": "array",
                                         "description": "Validation: required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     }
@@ -49732,7 +49745,7 @@
                                     "items": {
                                         "type": "array",
                                         "description": "Validation: required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     }
@@ -50482,7 +50495,7 @@
                                     "items": {
                                         "type": "array",
                                         "description": "Validation: sometimes|required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     }
@@ -50550,7 +50563,7 @@
                                     "items": {
                                         "type": "array",
                                         "description": "Validation: sometimes|required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     }
@@ -51022,7 +51035,7 @@
                                     "items": {
                                         "type": "array",
                                         "description": "Validation: required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     }
@@ -51096,7 +51109,7 @@
                                     "items": {
                                         "type": "array",
                                         "description": "Validation: required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     }
@@ -51792,7 +51805,7 @@
                                     "items": {
                                         "type": "array",
                                         "description": "Validation: sometimes|required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     }
@@ -51861,7 +51874,7 @@
                                     "items": {
                                         "type": "array",
                                         "description": "Validation: sometimes|required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     }
@@ -52324,7 +52337,7 @@
                                     "items": {
                                         "type": "array",
                                         "description": "Validation: required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     }
@@ -52388,7 +52401,7 @@
                                     "items": {
                                         "type": "array",
                                         "description": "Validation: required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     }
@@ -53082,7 +53095,7 @@
                                     "items": {
                                         "type": "array",
                                         "description": "Validation: sometimes|required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     }
@@ -53141,7 +53154,7 @@
                                     "items": {
                                         "type": "array",
                                         "description": "Validation: sometimes|required|array|min:1|max:100",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 100
                                     }
@@ -101023,11 +101036,13 @@
                                             "string",
                                             "null"
                                         ],
-                                        "description": "Validation: nullable|in:contact,product-page,demo",
+                                        "description": "Validation: nullable|in:contact,product-page,demo,research-participation,data-partnership",
                                         "enum": [
                                             "contact",
                                             "product-page",
-                                            "demo"
+                                            "demo",
+                                            "research-participation",
+                                            "data-partnership"
                                         ]
                                     },
                                     "product_slug": {
@@ -101135,11 +101150,13 @@
                                             "string",
                                             "null"
                                         ],
-                                        "description": "Validation: nullable|in:contact,product-page,demo",
+                                        "description": "Validation: nullable|in:contact,product-page,demo,research-participation,data-partnership",
                                         "enum": [
                                             "contact",
                                             "product-page",
-                                            "demo"
+                                            "demo",
+                                            "research-participation",
+                                            "data-partnership"
                                         ]
                                     },
                                     "product_slug": {
@@ -101762,11 +101779,13 @@
                                             "string",
                                             "null"
                                         ],
-                                        "description": "Validation: nullable|in:contact,product-page,demo",
+                                        "description": "Validation: nullable|in:contact,product-page,demo,research-participation,data-partnership",
                                         "enum": [
                                             "contact",
                                             "product-page",
-                                            "demo"
+                                            "demo",
+                                            "research-participation",
+                                            "data-partnership"
                                         ]
                                     },
                                     "product_slug": {
@@ -101875,11 +101894,13 @@
                                             "string",
                                             "null"
                                         ],
-                                        "description": "Validation: nullable|in:contact,product-page,demo",
+                                        "description": "Validation: nullable|in:contact,product-page,demo,research-participation,data-partnership",
                                         "enum": [
                                             "contact",
                                             "product-page",
-                                            "demo"
+                                            "demo",
+                                            "research-participation",
+                                            "data-partnership"
                                         ]
                                     },
                                     "product_slug": {
@@ -157404,6 +157425,217 @@
                 }
             }
         },
+        "/public/search": {
+            "get": {
+                "operationId": "searchPublicPlatformContent",
+                "summary": "Search public platform content",
+                "description": "Search published articles, active courses and public product metadata. Results exclude account, enquiry, customer and clinical records. The query must contain 2 to 100 characters and results are bounded to 30.",
+                "tags": [
+                    "Publishing"
+                ],
+                "security": [],
+                "parameters": [
+                    {
+                        "name": "Accept-Language",
+                        "description": "Response language; defaults to English.",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "en",
+                                "fr"
+                            ],
+                            "example": "en"
+                        }
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "required": true,
+                        "description": "Search phrase; 2 to 100 characters.",
+                        "schema": {
+                            "type": "string",
+                            "minLength": 2,
+                            "maxLength": 100,
+                            "example": "health data"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Matching public content. Each item includes type, localized title and summary, and a canonical destination URL.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "data",
+                                        "meta",
+                                        "messages"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "required": [
+                                                "query",
+                                                "results"
+                                            ],
+                                            "properties": {
+                                                "query": {
+                                                    "type": "string"
+                                                },
+                                                "results": {
+                                                    "type": "array",
+                                                    "maxItems": 30,
+                                                    "items": {
+                                                        "type": "object",
+                                                        "required": [
+                                                            "type",
+                                                            "title",
+                                                            "summary",
+                                                            "url"
+                                                        ],
+                                                        "properties": {
+                                                            "type": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "article",
+                                                                    "course",
+                                                                    "product"
+                                                                ]
+                                                            },
+                                                            "title": {
+                                                                "type": "string"
+                                                            },
+                                                            "summary": {
+                                                                "type": "string"
+                                                            },
+                                                            "url": {
+                                                                "type": "string",
+                                                                "format": "uri"
+                                                            },
+                                                            "published_at": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                                "format": "date-time"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "operation": {
+                                                    "type": "string",
+                                                    "const": "public.search"
+                                                }
+                                            }
+                                        },
+                                        "messages": {
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "envelope": {
+                                        "summary": "Response envelope",
+                                        "description": "The data fields depend on the operation and its resource contract.",
+                                        "value": {
+                                            "data": {},
+                                            "meta": {
+                                                "operation": "public.search"
+                                            },
+                                            "messages": []
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Cache-Control": {
+                                "description": "Authenticated and command results are not stored in shared caches.",
+                                "schema": {
+                                    "type": "string",
+                                    "const": "no-store"
+                                }
+                            },
+                            "X-Request-ID": {
+                                "description": "Identifier used when contacting support.",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Valid delegated user token required",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Role, scope or record access denied",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Idempotency key used with a different request",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    },
+                    "429": {
+                        "description": "Rate limit exceeded",
+                        "content": {
+                            "application/problem+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Problem"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/admin/finance/invoices/{invoice}/items": {
             "get": {
                 "operationId": "admin_finance_invoiceItems",
@@ -158910,7 +159142,7 @@
                                                                 },
                                                                 {
                                                                     "type": "array",
-                                                                    "items": []
+                                                                    "items": {}
                                                                 }
                                                             ]
                                                         },
@@ -158922,7 +159154,7 @@
                                                                 },
                                                                 {
                                                                     "type": "array",
-                                                                    "items": []
+                                                                    "items": {}
                                                                 }
                                                             ]
                                                         }
@@ -159783,7 +160015,7 @@
                                     "scopes": {
                                         "type": "array",
                                         "description": "Validation: required|array|min:1|max:2",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 2
                                     }
@@ -159817,7 +160049,7 @@
                                     "scopes": {
                                         "type": "array",
                                         "description": "Validation: required|array|min:1|max:2",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 2
                                     }
@@ -163537,7 +163769,7 @@
                                     "scopes": {
                                         "type": "array",
                                         "description": "Validation: required|array|min:1|max:2",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 2
                                     }
@@ -163565,7 +163797,7 @@
                                     "scopes": {
                                         "type": "array",
                                         "description": "Validation: required|array|min:1|max:2",
-                                        "items": [],
+                                        "items": {},
                                         "minItems": 1,
                                         "maxItems": 2
                                     }
@@ -164248,7 +164480,7 @@
                                 "example": {
                                     "data": {
                                         "name": "OPES Health Systems API",
-                                        "api_version": "0.142.0",
+                                        "api_version": "0.144.0",
                                         "openapi_version": "3.1.1",
                                         "authentication": {
                                             "machine": "OAuth 2.0 client credentials with approved scopes",
@@ -164472,7 +164704,7 @@
                                 "example": {
                                     "data": {
                                         "status": "responding",
-                                        "api_version": "0.142.0",
+                                        "api_version": "0.144.0",
                                         "checked_at": "2026-11-01T12:00:00+00:00"
                                     },
                                     "meta": {
@@ -164676,6 +164908,11 @@
                                 "example": {
                                     "data": {
                                         "items": [
+                                            {
+                                                "version": "0.144.0",
+                                                "released_at": "2026-11-10",
+                                                "summary": "Added a versioned public search API shared by the website search experience, covering published articles, active courses and public products."
+                                            },
                                             {
                                                 "version": "0.142.0",
                                                 "released_at": "2026-11-06",
@@ -165174,16 +165411,25 @@
                                 },
                                 "example": {
                                     "data": {
-                                        "api_version": "0.142.0",
+                                        "api_version": "0.144.0",
                                         "locale": "en",
                                         "items": [
+                                            {
+                                                "id": "public-platform-search",
+                                                "name": "Public platform search",
+                                                "availability": "preview",
+                                                "authentication": "none",
+                                                "access": "GET /api/v1/public/search?q={query}",
+                                                "summary": "Search published articles, active courses and public product catalogue metadata.",
+                                                "data_boundary": "Published public content only. No account, enquiry, customer or clinical records are searched."
+                                            },
                                             {
                                                 "id": "public-enquiries",
                                                 "name": "Public enquiries",
                                                 "availability": "preview",
                                                 "authentication": "none",
                                                 "access": "POST /api/v1/enquiries",
-                                                "summary": "Submit a product or pricing enquiry, a general enquiry, or a structured API access request with an optional idempotency key.",
+                                                "summary": "Submit product and pricing enquiries, research participation proposals, de-identified health data licensing proposals, general enquiries, or structured API access requests with an optional idempotency key.",
                                                 "data_boundary": "Contact and enquiry details only. Do not submit patient or other sensitive health information."
                                             },
                                             {
@@ -166727,9 +166973,138 @@
                                 "maxLength": 1200
                             }
                         }
+                    },
+                    "participation": {
+                        "type": "object",
+                        "description": "Optional structured institutional proposal for a health technology research collaboration or a de-identified health data licensing discussion. Do not include patient records, identifiers, samples or other sensitive health information.",
+                        "additionalProperties": false,
+                        "required": [
+                            "program",
+                            "organization_name",
+                            "organization_type",
+                            "country",
+                            "area",
+                            "proposal",
+                            "contact_permission",
+                            "no_sensitive_data"
+                        ],
+                        "properties": {
+                            "program": {
+                                "type": "string",
+                                "enum": [
+                                    "research",
+                                    "data-license"
+                                ]
+                            },
+                            "organization_name": {
+                                "type": "string",
+                                "maxLength": 150
+                            },
+                            "organization_type": {
+                                "type": "string",
+                                "enum": [
+                                    "hospital",
+                                    "clinic",
+                                    "pharmacy",
+                                    "pharmaceutical",
+                                    "lab",
+                                    "university",
+                                    "public-health",
+                                    "technology-company",
+                                    "government",
+                                    "ngo",
+                                    "other"
+                                ]
+                            },
+                            "country": {
+                                "type": "string",
+                                "maxLength": 80
+                            },
+                            "city": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ],
+                                "maxLength": 80
+                            },
+                            "area": {
+                                "type": "string",
+                                "enum": [
+                                    "medical-hardware",
+                                    "health-software",
+                                    "interoperability",
+                                    "data-quality",
+                                    "clinical-support",
+                                    "telemedicine-triage",
+                                    "pharmacy-medicines",
+                                    "laboratory-diagnostics",
+                                    "care-pathways",
+                                    "public-health",
+                                    "other"
+                                ]
+                            },
+                            "proposal": {
+                                "type": "string",
+                                "minLength": 20,
+                                "maxLength": 700
+                            },
+                            "readiness": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ],
+                                "enum": [
+                                    "exploring",
+                                    "protocol-planned",
+                                    "pilot-sought",
+                                    "active-study",
+                                    null
+                                ]
+                            },
+                            "data_authority": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ],
+                                "enum": [
+                                    "authorized",
+                                    "confirming",
+                                    "need-guidance",
+                                    null
+                                ]
+                            },
+                            "data_status": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ],
+                                "enum": [
+                                    "aggregated",
+                                    "deidentified",
+                                    "not-assessed",
+                                    "unsure",
+                                    null
+                                ]
+                            },
+                            "data_period": {
+                                "type": [
+                                    "string",
+                                    "null"
+                                ],
+                                "maxLength": 80
+                            },
+                            "contact_permission": {
+                                "type": "boolean",
+                                "const": true
+                            },
+                            "no_sensitive_data": {
+                                "type": "boolean",
+                                "const": true
+                            }
+                        }
                     }
                 },
-                "description": "Public website enquiry fields. Do not send patient or other sensitive health information.",
+                "description": "Public website enquiry fields, including structured institutional participation proposals. Do not send patient or other sensitive health information.",
                 "example": {
                     "name": "Example sender",
                     "email": "sender@example.test",
@@ -166744,6 +167119,19 @@
                             "customer:read"
                         ],
                         "use_case": "Allow clinic staff to review their licensed OHS services."
+                    },
+                    "participation": {
+                        "program": "data-license",
+                        "organization_name": "Example Regional Hospital",
+                        "organization_type": "hospital",
+                        "country": "Cameroon",
+                        "city": "Yaounde",
+                        "area": "care-pathways",
+                        "proposal": "Discuss whether approved, de-identified service-use data could support a defined health systems study.",
+                        "data_authority": "confirming",
+                        "data_status": "not-assessed",
+                        "contact_permission": true,
+                        "no_sensitive_data": true
                     }
                 }
             },

@@ -29,7 +29,7 @@ final class AdminLeadCommands extends WorkflowHandler
             'name' => 'required|string|max:100', 'email' => 'required|email|max:150', 'phone' => 'nullable|string|max:30',
             'facility_type' => 'nullable|in:clinic,hospital,laboratory,pharmacy,government,ngo,other',
             'products' => 'nullable|string|max:255', 'message' => 'nullable|string|max:10000',
-            'source' => 'nullable|in:contact,product-page,demo', 'product_slug' => 'nullable|string|max:255',
+            'source' => 'nullable|in:contact,product-page,demo,research-participation,data-partnership', 'product_slug' => 'nullable|string|max:255',
             'locale' => 'nullable|string|max:10', 'status' => 'sometimes|in:new,contacted,qualified,closed',
         ]);
         $record = DB::transaction(function () use ($data, $actor) {
@@ -47,7 +47,7 @@ final class AdminLeadCommands extends WorkflowHandler
             'name' => 'required|string|max:100', 'email' => 'required|email|max:150', 'phone' => 'nullable|string|max:30',
             'facility_type' => 'nullable|in:clinic,hospital,laboratory,pharmacy,government,ngo,other',
             'products' => 'nullable|string|max:255', 'message' => 'nullable|string|max:10000',
-            'source' => 'nullable|in:contact,product-page,demo', 'product_slug' => 'nullable|string|max:255',
+            'source' => 'nullable|in:contact,product-page,demo,research-participation,data-partnership', 'product_slug' => 'nullable|string|max:255',
             'locale' => 'nullable|string|max:10', 'status' => 'required|in:new,contacted,qualified,closed',
         ]);
         $record = DB::transaction(function () use ($lead, $data, $actor) {

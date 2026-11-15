@@ -21,7 +21,7 @@ export const fr: Record<string, string> = {
   'Customers': "Clients", // dynamic
   'Review customer facilities and create customer profiles.': "Consultez les établissements clients et créez des profils clients.", // dynamic
   'Contacts & leads': "Contacts et prospects", // dynamic
-  'Add contacts, review enquiries and update follow-up status.': "Ajoutez des contacts, consultez les demandes et mettez à jour le suivi.", // dynamic
+  'Review contact enquiries, research participation and health data licensing proposals.': "Consultez les demandes, les propositions de recherche et les propositions de licence de données de santé.", // dynamic
   'Partner applications': "Candidatures partenaires", // dynamic
   'Review incoming partnership applications.': "Examinez les candidatures de partenariat reçues.", // dynamic
   'CRM deals': "Opportunités CRM", // dynamic

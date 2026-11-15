@@ -10023,6 +10023,22 @@ export const businessOperations = Object.freeze({
         "requestBodyRequired": false,
         "contentTypes": []
     },
+    "searchPublicPlatformContent": {
+        "method": "GET",
+        "path": "/public/search",
+        "authenticated": false,
+        "idempotencyRequired": false,
+        "pathParameters": [],
+        "queryParameters": [
+            "q"
+        ],
+        "requiredQueryParameters": [
+            "q"
+        ],
+        "acceptLanguage": true,
+        "requestBodyRequired": false,
+        "contentTypes": []
+    },
     "submitEnquiry": {
         "method": "POST",
         "path": "/enquiries",

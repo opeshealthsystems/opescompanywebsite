@@ -77,6 +77,14 @@ $current = $locale;
             <a href="{{ url($locale.'/interoperability') }}">
                 <i data-lucide="share-2" style="width:12px;height:12px"></i>{{ $isFr ? 'Interopérabilité' : 'Interoperability' }}
             </a>
+            <a href="{{ url($locale.'/health-id') }}">
+                <i data-lucide="fingerprint" style="width:12px;height:12px"></i>{{ $isFr ? 'OPESCare Health ID' : 'OPESCare Health ID' }}
+            </a>
+            <a href="{{ url($locale.'/research') }}">{{ $isFr ? 'Recherche' : 'Research' }}</a>
+            <a href="{{ url($locale.'/deidentified-health-data') }}">{{ $isFr ? 'Données de santé désidentifiées' : 'De-identified Health Data' }}</a>
+            <a href="{{ url($locale.'/health-data') }}">
+                <i data-lucide="database" style="width:12px;height:12px"></i>{{ $isFr ? 'Services de données de santé' : 'Health Data Services' }}
+            </a>
             <a href="{{ url($locale.'/quality') }}">
                 <i data-lucide="badge-check" style="width:12px;height:12px"></i>{{ $isFr ? 'Qualité (SGQ)' : 'Quality (QMS)' }}
             </a>

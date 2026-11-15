@@ -122,17 +122,17 @@
             {{ $isFr ? 'Identité santé' : 'Health identity' }}
         </div>
         <h2 style="font-size:clamp(20px,3vw,28px);font-weight:700;color:#e2e8f0;margin-bottom:14px;line-height:1.3">
-            {{ $isFr ? 'Un identifiant patient universel pour toute l\'Afrique' : 'One universal patient identifier across Africa' }}
+            {{ $isFr ? 'Une identité santé pour les organisations participantes' : 'Health identity for participating organizations' }}
         </h2>
         <p style="color:var(--text-muted);max-width:700px;line-height:1.75;margin-bottom:16px;font-size:15px">
             {{ $isFr
-                ? 'La couche OPESCare assigne à chaque patient un identifiant numérique unique dès son premier contact avec le système de santé. Cet identifiant persiste à travers les consultations, les transferts inter-établissements, et les années — éliminant la duplication des dossiers et les erreurs d\'identification.'
-                : 'The OPESCare layer assigns every patient a unique digital identifier at their first point of contact with the health system. This identifier persists across consultations, inter-facility transfers, and years — eliminating duplicate records and identification errors.' }}
+                ? 'OPESCare peut relier les identités au sein des organisations participantes selon des règles de rapprochement configurées. Les identifiants, intégrations, accès et échanges sont définis avec les partenaires pour chaque déploiement.'
+                : 'OPESCare can link identities across participating organizations using configured matching rules. Identifiers, integrations, access and information exchange are agreed with partners for each deployment.' }}
         </p>
         <div style="display:flex;gap:24px;flex-wrap:wrap;margin-top:24px">
             @foreach($isFr
-                ? ['Indexe patient maître (MPI)','Correspondance multi-établissements','Conformité CRVS','ID hors ligne & mode dégradé']
-                : ['Master Patient Index (MPI)','Cross-facility record matching','CRVS-compliant','Offline ID & degraded mode'] as $f)
+                ? ['Index maître des patients (MPI)','Rapprochement selon les règles du projet','Échanges autorisés','Interopérabilité à définir']
+                : ['Master Patient Index (MPI)','Matching scoped to the project','Authorized exchange','Interoperability scoped per project'] as $f)
             <div style="display:flex;align-items:center;gap:8px">
                 <i data-lucide="check-circle" style="width:15px;height:15px;color:var(--brand-accent);flex-shrink:0"></i>
                 <span style="color:var(--text-muted);font-size:13px">{{ $f }}</span>
@@ -162,12 +162,12 @@
             ['icon'=>'lock','title'=>'Chiffrement AES-256','desc'=>'Données au repos et en transit chiffrées avec AES-256 et TLS 1.3.'],
             ['icon'=>'users','title'=>'Contrôle d\'accès RBAC','desc'=>'Permissions granulaires basées sur les rôles : clinicien, administrateur, infirmier, technicien.'],
             ['icon'=>'file-clock','title'=>'Piste d\'audit complète','desc'=>'Journalisation immuable de toute action — qui a accédé à quoi et quand.'],
-            ['icon'=>'shield','title'=>'Conformité HIPAA/GDPR','desc'=>'Architecture alignée sur les référentiels HIPAA, GDPR et la loi camerounaise sur les données de santé.'],
+            ['icon'=>'shield','title'=>'Exigences de confidentialité','desc'=>'Les obligations applicables et les contrôles requis sont évalués pour chaque déploiement.'],
         ] : [
             ['icon'=>'lock','title'=>'AES-256 Encryption','desc'=>'Data at rest and in transit encrypted with AES-256 and TLS 1.3.'],
             ['icon'=>'users','title'=>'RBAC Access Control','desc'=>'Granular role-based permissions: clinician, admin, nurse, technician, auditor.'],
             ['icon'=>'file-clock','title'=>'Full Audit Trail','desc'=>'Immutable logging of every action — who accessed what and when.'],
-            ['icon'=>'shield','title'=>'HIPAA/GDPR-aligned','desc'=>'Architecture aligned with HIPAA, GDPR, and Cameroonian health data law.'],
+            ['icon'=>'shield','title'=>'Privacy requirements','desc'=>'Applicable obligations and required controls are assessed for each deployment.'],
         ];
         @endphp
         @foreach($secItems as $item)

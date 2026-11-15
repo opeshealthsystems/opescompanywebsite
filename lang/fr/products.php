@@ -18,11 +18,11 @@ return [
 
     // Sections de catégories
     'cat_core'              => 'Plateforme de base',
-    'cat_core_desc'         => 'Les systèmes fondamentaux avec lesquels tout établissement connecté à OPES commence. Couvre l\'identité du patient, les dossiers cliniques, la gestion hospitalière et les revenus.',
+    'cat_core_desc'         => 'Les systèmes essentiels d’identité patient, de dossiers cliniques, de gestion hospitalière et de revenus, sélectionnés selon les besoins de chaque établissement.',
     'cat_diagnostics'       => 'Diagnostics et support',
     'cat_diagnostics_desc'  => 'Laboratoire, pharmacie, radiologie, documents et gestion du cycle de revenus — l\'épine dorsale opérationnelle de tout établissement de santé moderne.',
     'cat_specialist'        => 'Systèmes spécialisés',
-    'cat_specialist_desc'   => 'Modules spécifiques aux disciplines pour les cliniques et départements spécialisés — chacun s\'intègre nativement à la plateforme de base via OPESCare Health ID.',
+    'cat_specialist_desc'   => 'Modules dédiés aux cliniques et services spécialisés. L’intégration avec OPESCare est définie et confirmée pour chaque déploiement.',
     'systems_count'         => ':count système|:count systèmes',
 
     // CTA Démo
@@ -59,12 +59,12 @@ return [
     // Fiche Produit — section Modules
     'section_modules'       => 'Modules',
     'modules_heading'       => 'Tout en un seul système',
-    'modules_sub'           => 'Chaque module s\'intègre nativement — commencez avec ce dont vous avez besoin aujourd\'hui, développez au fur et à mesure de votre croissance.',
+    'modules_sub'           => 'Choisissez les modules adaptés à vos flux actuels et confirmez le périmètre d’intégration pour votre déploiement.',
 
     // Fiche Produit — section Processus
     'section_workflow'      => 'Processus patient',
     'workflow_heading'      => 'Comment fonctionne :name',
-    'workflow_sub'          => 'Étape par étape à travers le flux de travail clinique — chaque phase intégrée, chaque transfert fluide.',
+    'workflow_sub'          => 'Un aperçu étape par étape du flux de travail. Les étapes et transferts disponibles dépendent des systèmes et de la configuration retenus.',
 
     // Fiche Produit — section Avantages
     'section_benefits'      => 'Avantages clés',
@@ -73,7 +73,7 @@ return [
     // Fiche Produit — section Intégrations
     'section_ecosystem'     => 'Écosystème OPES',
     'integrations_heading'  => ':name se connecte à',
-    'integrations_sub'      => 'Chaque système OPES est conçu pour interopérer. :name échange des données avec ces systèmes nativement via OPESCare Health ID.',
+    'integrations_sub'      => 'Examinez les intégrations possibles pour :name. Les interfaces, versions, autorisations et tests sont confirmés pour chaque projet.',
 
     // Fiche Produit — section Spécifications techniques
     'section_specs'         => 'Spécifications techniques',

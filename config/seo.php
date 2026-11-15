@@ -5,6 +5,8 @@ return [
     // Only public, useful landing pages belong in the sitemap. Authentication and
     // confidential application routes are deliberately absent.
     'pages' => [
+        'research' => ['Healthcare hardware and software research', 'Recherche sur le matériel et les logiciels de santé'],
+        'deidentified-health-data' => ['De-identified health data licensing for research', 'Licences de données de santé désidentifiées pour la recherche'],
         'developers' => ['APIs and developer documentation', 'API et documentation développeur'],
         'mobile-app' => ['OPES Health mobile app and updates', 'Application mobile OPES Health et mises à jour'],
         '' => ['Healthcare technology from Cameroon for Africa and global partnerships', 'Technologies de santé du Cameroun pour l’Afrique et les partenariats internationaux'],

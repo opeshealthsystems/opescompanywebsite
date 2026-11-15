@@ -96,12 +96,17 @@ Route::prefix('{locale}')
         Route::get('/contact',        [ContactController::class, 'show'])->name('contact');
         Route::post('/contact',       [ContactController::class, 'submit'])->name('contact.submit');
         Route::get('/solutions',      fn () => view('pages.solutions'))->name('solutions');
+        Route::get('/health-id',      fn () => view('pages.health-id'))->name('health-id');
+        Route::get('/health-data',    fn () => view('pages.health-data'))->name('health-data');
+        Route::view('/research', 'pages.research')->name('research');
+        Route::view('/deidentified-health-data', 'pages.deidentified-health-data')->name('deidentified-health-data');
         // CEMAC market landing pages (data-driven from config/markets.php; additive, does not affect the home page)
         Route::get('/markets',          [\App\Http\Controllers\MarketController::class, 'index'])->name('markets.index');
         Route::get('/markets/{country}',[\App\Http\Controllers\MarketController::class, 'show'])
             ->where('country', 'gabon|congo-brazzaville|chad|central-african-republic|equatorial-guinea')
             ->name('markets.show');
         Route::get('/about',          fn () => view('pages.about'))->name('about');
+        Route::get('/search', [\App\Http\Controllers\PublicSearchController::class, 'index'])->name('search');
         Route::get('/blog',              [BlogController::class, 'index'])->name('blog');
         Route::get('/blog/{slug}',       [BlogController::class, 'show'])->name('blog.show');
         Route::post('/blog/{slug}/like',    [BlogController::class, 'like'])->name('blog.like');
@@ -130,6 +135,8 @@ Route::prefix('{locale}')
         Route::get('/faq',                  fn () => view('pages.faq'))->name('faq');
         Route::get('/book-demo',            [\App\Http\Controllers\DemoRequestController::class, 'show'])->name('book-demo');
         Route::post('/book-demo',           [\App\Http\Controllers\DemoRequestController::class, 'submit'])->name('book-demo.submit');
+        Route::get('/emr-onboarding',       [\App\Http\Controllers\EmrOnboardingController::class, 'show'])->name('emr-onboarding');
+        Route::post('/emr-onboarding',      [\App\Http\Controllers\EmrOnboardingController::class, 'submit'])->name('emr-onboarding.submit');
         Route::get('/become-a-partner',     [\App\Http\Controllers\PartnerApplicationController::class, 'show'])->name('become-a-partner');
         Route::post('/become-a-partner',    [\App\Http\Controllers\PartnerApplicationController::class, 'submit'])->name('become-a-partner.submit');
         Route::get('/join-testers',         [\App\Http\Controllers\TesterApplicationController::class, 'show'])->name('join-testers');

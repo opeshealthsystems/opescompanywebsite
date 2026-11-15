@@ -18,11 +18,11 @@ return [
 
     // Category sections
     'cat_core'              => 'Core Platform',
-    'cat_core_desc'         => 'Foundation systems that every OPES-connected facility starts with. Covers patient identity, clinical records, hospital management, and revenue.',
+    'cat_core_desc'         => 'Core systems for patient identity, clinical records, hospital management, and revenue, selected to fit each facility.',
     'cat_diagnostics'       => 'Diagnostics & Support',
     'cat_diagnostics_desc'  => 'Laboratory, pharmacy, radiology, documents, and revenue cycle management — the operational backbone of any modern health facility.',
     'cat_specialist'        => 'Specialist Systems',
-    'cat_specialist_desc'   => 'Discipline-specific modules for specialist clinics and departments — each integrates natively with the Core Platform via OPESCare Health ID.',
+    'cat_specialist_desc'   => 'Discipline-specific modules for specialist clinics and departments. Integration with OPESCare is scoped and confirmed for each deployment.',
     'systems_count'         => ':count systems',
 
     // Demo CTA
@@ -59,12 +59,12 @@ return [
     // Product Show — Modules section
     'section_modules'       => 'Modules',
     'modules_heading'       => 'Everything in one system',
-    'modules_sub'           => 'Each module integrates natively — start with what you need today, expand as you grow.',
+    'modules_sub'           => 'Choose the modules that fit your current workflows and confirm the integration scope for your deployment.',
 
     // Product Show — Workflow section
     'section_workflow'      => 'Patient Workflow',
     'workflow_heading'      => 'How :name works',
-    'workflow_sub'          => 'Step-by-step through the clinical workflow — every stage integrated, every handover seamless.',
+    'workflow_sub'          => 'A step-by-step view of the workflow. Available stages and handovers depend on the selected systems and configuration.',
 
     // Product Show — Benefits section
     'section_benefits'      => 'Key Benefits',
@@ -73,7 +73,7 @@ return [
     // Product Show — Integrations section
     'section_ecosystem'     => 'OPES Ecosystem',
     'integrations_heading'  => ':name connects to',
-    'integrations_sub'      => 'Every OPES system is built to interoperate. :name exchanges data with these systems natively through OPESCare Health ID.',
+    'integrations_sub'      => 'Review potential integrations for :name. Supported interfaces, versions, permissions and acceptance tests are confirmed for each project.',
 
     // Product Show — Technical Specs section
     'section_specs'         => 'Technical Specifications',

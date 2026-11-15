@@ -18,7 +18,7 @@ jobs:
       - run: python -m pip install openapi-spec-validator==0.7.2
       - run: python -m openapi_spec_validator docs/api/openapi.json
       - run: python -m unittest discover -s scripts/api -p 'test_*.py'
-      - run: python scripts/api/report_response_schema_coverage.py docs/api/openapi.json --minimum-field-specific 83 --max-missing-schemas 0
+      - run: python scripts/api/report_response_schema_coverage.py docs/api/openapi.json --minimum-field-specific 232 --max-missing-schemas 0
       - name: Preserve released API operation shapes
         env:
           BASE_REVISION: ${{ github.event.pull_request.base.sha || github.event.before }}
@@ -59,4 +59,7 @@ jobs:
         run: php scripts/api/audit_filament_command_adapters.php
       - name: Require shared application workflows for API identity CLI commands
         run: php scripts/api/audit_console_api_identity_adapters.php
+      - name: Keep mobile feature routes and scopes aligned with OpenAPI
+        run: node scripts/check-api-feature-scopes.mjs
+        working-directory: mobile-app
       - run: php artisan test --compact tests/Feature/EnquiriesApiTest.php tests/Feature/WebsiteFormDeliveryTest.php tests/Feature/EnquiryReliabilityTest.php tests/Feature/ApiIdentityTest.php tests/Feature/BusinessApiRegistryCoverageTest.php

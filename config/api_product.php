@@ -1,8 +1,20 @@
 <?php
 
 return [
-    'version' => '0.142.0',
+    'version' => '0.144.0',
     'products' => [
+        [
+            'id' => 'public-platform-search',
+            'name' => 'Public platform search',
+            'name_fr' => 'Recherche publique de la plateforme',
+            'availability' => 'preview',
+            'authentication' => 'none',
+            'access' => 'GET /api/v1/public/search?q={query}',
+            'summary' => 'Search published articles, active courses and public product catalogue metadata.',
+            'summary_fr' => 'Recherchez les articles publiés, les formations actives et les métadonnées publiques du catalogue.',
+            'data_boundary' => 'Published public content only. No account, enquiry, customer or clinical records are searched.',
+            'data_boundary_fr' => 'Contenu public publié uniquement. Aucun compte, demande, dossier client ou dossier clinique n’est recherché.',
+        ],
         [
             'id' => 'public-enquiries',
             'name' => 'Public enquiries',
@@ -10,8 +22,8 @@ return [
             'availability' => 'preview',
             'authentication' => 'none',
             'access' => 'POST /api/v1/enquiries',
-            'summary' => 'Submit a product or pricing enquiry, a general enquiry, or a structured API access request with an optional idempotency key.',
-            'summary_fr' => 'Envoyez une demande produit ou tarifaire, une demande générale ou une demande structurée d’accès API avec une clé d’idempotence facultative.',
+            'summary' => 'Submit product and pricing enquiries, research participation proposals, de-identified health data licensing proposals, general enquiries, or structured API access requests with an optional idempotency key.',
+            'summary_fr' => 'Envoyez une demande produit ou tarifaire, une proposition de recherche ou de licence de données de santé désidentifiées, une demande générale ou une demande structurée d’accès API avec une clé d’idempotence facultative.',
             'data_boundary' => 'Contact and enquiry details only. Do not submit patient or other sensitive health information.',
             'data_boundary_fr' => 'Coordonnées et demande uniquement. N’envoyez aucune donnée patient ou autre donnée de santé sensible.',
         ],
@@ -93,6 +105,11 @@ return [
         ],
     ],
     'changelog' => [
+        [
+            'version' => '0.144.0',
+            'released_at' => '2026-11-10',
+            'summary' => 'Added a versioned public search API shared by the website search experience, covering published articles, active courses and public products.',
+        ],
         [
             'version' => '0.142.0',
             'released_at' => '2026-11-06',

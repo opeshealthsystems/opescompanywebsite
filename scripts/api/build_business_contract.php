@@ -11,7 +11,7 @@ $spec['info']['description'] = 'Versioned OHS business APIs. Public enquiries an
 $scopes = [];
 foreach ($registry['definitions'] as $definition) if ($definition['authenticated']) $scopes[$definition['scope']] = str_replace(':', ' ', $definition['scope']);
 $schemaDocs = [
-    'EnquiryInput' => ['description' => 'Public website enquiry fields. Do not send patient or other sensitive health information.', 'example' => ['name' => 'Example sender', 'email' => 'sender@example.test', 'message' => 'Please share information about OHS products.', 'locale' => 'en']],
+    'EnquiryInput' => ['description' => 'Public website enquiry fields, including structured institutional participation proposals. Do not send patient or other sensitive health information.', 'example' => ['name' => 'Example sender', 'email' => 'sender@example.test', 'message' => 'Please share information about OHS products.', 'locale' => 'en']],
     'Problem' => ['description' => 'Problem Details response for a rejected or invalid API request.', 'example' => ['type' => 'https://opeshealthsystems.com/problems/validation-error', 'title' => 'Validation failed', 'status' => 422, 'request_id' => '00000000-0000-4000-8000-000000000000', 'errors' => ['email' => ['The email address is invalid.']]]],
     'OAuthError' => ['description' => 'OAuth 2.0 token endpoint error response. Error strings follow the OAuth server response.', 'example' => ['error' => 'invalid_client', 'error_description' => 'The client credentials are invalid.']],
     'OAuthToken' => ['description' => 'Short-lived OAuth 2.0 bearer token response. The example token is a placeholder.', 'example' => ['access_token' => 'REPLACE_WITH_ISSUED_TOKEN', 'token_type' => 'Bearer', 'expires_in' => 900]],
@@ -42,15 +42,41 @@ $enquiryInput['properties']['integration_application'] = [
         'use_case' => ['type' => 'string', 'minLength' => 10, 'maxLength' => 1200],
     ],
 ];
+$enquiryInput['properties']['participation'] = [
+    'type' => 'object',
+    'description' => 'Optional structured institutional proposal for a health technology research collaboration or a de-identified health data licensing discussion. Do not include patient records, identifiers, samples or other sensitive health information.',
+    'additionalProperties' => false,
+    'required' => ['program', 'organization_name', 'organization_type', 'country', 'area', 'proposal', 'contact_permission', 'no_sensitive_data'],
+    'properties' => [
+        'program' => ['type' => 'string', 'enum' => ['research', 'data-license']],
+        'organization_name' => ['type' => 'string', 'maxLength' => 150],
+        'organization_type' => ['type' => 'string', 'enum' => ['hospital', 'clinic', 'pharmacy', 'pharmaceutical', 'lab', 'university', 'public-health', 'technology-company', 'government', 'ngo', 'other']],
+        'country' => ['type' => 'string', 'maxLength' => 80], 'city' => ['type' => ['string', 'null'], 'maxLength' => 80],
+        'area' => ['type' => 'string', 'enum' => ['medical-hardware', 'health-software', 'interoperability', 'data-quality', 'clinical-support', 'telemedicine-triage', 'pharmacy-medicines', 'laboratory-diagnostics', 'care-pathways', 'public-health', 'other']],
+        'proposal' => ['type' => 'string', 'minLength' => 20, 'maxLength' => 700],
+        'readiness' => ['type' => ['string', 'null'], 'enum' => ['exploring', 'protocol-planned', 'pilot-sought', 'active-study', null]],
+        'data_authority' => ['type' => ['string', 'null'], 'enum' => ['authorized', 'confirming', 'need-guidance', null]],
+        'data_status' => ['type' => ['string', 'null'], 'enum' => ['aggregated', 'deidentified', 'not-assessed', 'unsure', null]],
+        'data_period' => ['type' => ['string', 'null'], 'maxLength' => 80],
+        'contact_permission' => ['type' => 'boolean', 'const' => true], 'no_sensitive_data' => ['type' => 'boolean', 'const' => true],
+    ],
+];
 $enquiryInput['example']['integration_application'] = [
     'application_name' => 'Clinic scheduling integration', 'access_type' => 'delegated',
     'redirect_uri' => 'https://clinic.example/callback', 'requested_scopes' => ['customer:read'],
     'use_case' => 'Allow clinic staff to review their licensed OHS services.',
 ];
+$enquiryInput['example']['participation'] = [
+    'program' => 'data-license', 'organization_name' => 'Example Regional Hospital', 'organization_type' => 'hospital',
+    'country' => 'Cameroon', 'city' => 'Yaounde', 'area' => 'care-pathways',
+    'proposal' => 'Discuss whether approved, de-identified service-use data could support a defined health systems study.',
+    'data_authority' => 'confirming', 'data_status' => 'not-assessed', 'contact_permission' => true, 'no_sensitive_data' => true,
+];
 unset($enquiryInput);
 $enquiryOperation = &$spec['paths']['/enquiries']['post'];
 $enquiryOperation['requestBody']['content']['application/json']['example']['quote_option'] = 'clinic-saas';
 $enquiryOperation['requestBody']['content']['application/json']['example']['integration_application'] = $spec['components']['schemas']['EnquiryInput']['example']['integration_application'];
+$enquiryOperation['requestBody']['content']['application/json']['example']['participation'] = $spec['components']['schemas']['EnquiryInput']['example']['participation'];
 $enquiryOperation['responses']['201']['description'] = 'Enquiry recorded with durable delivery intent. When quote_option is supplied, the selected indicative price is stored and a copy is sent to the requester. receipt_delivery_status reports acceptance by the mail transport, not inbox placement; a replay returns the saved original response.';
 $enquiryResponseData = &$enquiryOperation['responses']['201']['content']['application/json']['schema']['properties']['data']['properties'];
 $enquiryResponseData['receipt_delivery_status'] = ['type' => 'string', 'enum' => ['sent', 'pending'], 'description' => 'Present only for quote requests with quote_option. sent means the email transport accepted the requester copy; pending means delivery was not confirmed.'];
@@ -157,7 +183,9 @@ foreach ($registry['definitions'] as $operation => $definition) {
             $schema = ['type' => 'string', 'description' => 'Validation: '.$rule];
             if (in_array('prohibited', $rules, true)) continue;
             foreach (['integer' => 'integer', 'numeric' => 'number', 'boolean' => 'boolean', 'array' => 'array'] as $r => $type) if (in_array($r, $rules, true)) $schema['type'] = $type;
-            if ($schema['type'] === 'array') $schema['items'] = [];
+            // An empty JSON Schema is an object, not a PHP list. Use stdClass so
+            // json_encode emits `{}`; `[]` here becomes invalid OpenAPI `items: []`.
+            if ($schema['type'] === 'array') $schema['items'] = (object) [];
             if (in_array('email', $rules, true)) $schema['format'] = 'email';
             if (in_array('date', $rules, true)) $schema['format'] = 'date';
             if (in_array('file', $rules, true) || in_array('image', $rules, true)) $schema['format'] = 'binary';
@@ -202,6 +230,10 @@ foreach ($registry['definitions'] as $operation => $definition) {
             unset($schema['description']);
             $parameters[] = ['name' => $name, 'in' => 'query', 'required' => in_array($name, $required, true),
                 'description' => $description, 'schema' => $schema];
+        }
+        foreach ($definition['query'] ?? [] as $name => $queryParameter) {
+            $parameters[] = ['name' => $name, 'in' => 'query', 'required' => (bool) ($queryParameter['required'] ?? false),
+                'description' => $queryParameter['description'] ?? 'Search term.', 'schema' => array_diff_key($queryParameter, array_flip(['required', 'description']))];
         }
     }
     foreach ($parameters as &$parameter) {
@@ -2442,7 +2474,7 @@ $auditLogList['responses']['200']['content']['application/json']['schema'] = $su
 ]], 'admin.auditLogs.index');
 unset($auditLogList);
 $auditValues = ['oneOf' => [
-    ['type' => 'object', 'additionalProperties' => true], ['type' => 'array', 'items' => []],
+    ['type' => 'object', 'additionalProperties' => true], ['type' => 'array', 'items' => (object) []],
 ]];
 $auditLogDetail = &$spec['paths']['/admin/audit-logs/{auditLog}']['get'];
 $auditLogDetail['responses']['200']['description'] = 'Returns one audit-log record with recursively redacted old/new values. Secret, password, token, API-key and authorization fields are replaced with [redacted].';
@@ -2831,6 +2863,21 @@ $practitionerLessonDone['responses']['200']['content']['application/json']['sche
     'next_lesson_id' => ['type' => ['integer', 'null']], 'certificate' => $practitionerCertificate,
 ]], 'practitioner.lessoncontroller.markDone');
 unset($practitionerLessonDone, $practitionerEnrollment, $practitionerLessonProgress, $practitionerProgressEnrollment, $practitionerCertificate);
+$publicSearch = &$spec['paths']['/public/search']['get'];
+$publicSearch['operationId'] = 'searchPublicPlatformContent';
+$publicSearch['summary'] = 'Search public platform content';
+$publicSearch['description'] = 'Search published articles, active courses and public product metadata. Results exclude account, enquiry, customer and clinical records. The query must contain 2 to 100 characters and results are bounded to 30.';
+$publicSearch['tags'] = ['Publishing'];
+$publicSearch['parameters'] = array_values(array_filter($publicSearch['parameters'], fn ($parameter) => in_array($parameter['name'] ?? '', ['Accept-Language'], true)));
+$publicSearch['parameters'][] = ['name' => 'q', 'in' => 'query', 'required' => true, 'description' => 'Search phrase; 2 to 100 characters.', 'schema' => ['type' => 'string', 'minLength' => 2, 'maxLength' => 100, 'example' => 'health data']];
+$publicSearch['responses']['200']['description'] = 'Matching public content. Each item includes type, localized title and summary, and a canonical destination URL.';
+$publicSearch['responses']['200']['content']['application/json']['schema'] = $successEnvelope(['type' => 'object', 'required' => ['query', 'results'], 'properties' => [
+    'query' => ['type' => 'string'],
+    'results' => ['type' => 'array', 'maxItems' => 30, 'items' => ['type' => 'object', 'required' => ['type', 'title', 'summary', 'url'], 'properties' => [
+        'type' => ['type' => 'string', 'enum' => ['article', 'course', 'product']], 'title' => ['type' => 'string'], 'summary' => ['type' => 'string'], 'url' => ['type' => 'string', 'format' => 'uri'], 'published_at' => ['type' => ['string', 'null'], 'format' => 'date-time'],
+    ]]],
+]], 'public.search');
+unset($publicSearch);
 $contractPath = $root.'/docs/api/openapi.json';
 $contractTemp = $contractPath.'.tmp';
 if (file_put_contents($contractTemp, json_encode($spec, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR)."\n") === false || !rename($contractTemp, $contractPath)) {

@@ -20,10 +20,10 @@ return [
             'Insurance and CNPS partners needing verified patient identity',
         ],
         'problems_solved' => [
-            ['title' => 'Duplicate patient records across facilities', 'desc' => 'One Health ID eliminates re-registration and duplicate data entry at every new facility.'],
-            ['title' => 'Fragmented medical histories', 'desc' => 'Lab results, prescriptions, and diagnoses from any connected facility appear in one unified record.'],
-            ['title' => 'Inability to track patients across the care continuum', 'desc' => 'Follow a patient from primary clinic through specialist referral, hospitalisation, and discharge in one system.'],
-            ['title' => 'No population health data for Ministry reporting', 'desc' => 'Aggregated, de-identified data feeds directly into HMIS and public health dashboards.'],
+            ['title' => 'Duplicate patient records across facilities', 'desc' => 'Configured MPI matching can help identify and review potential duplicates across participating facilities.'],
+            ['title' => 'Fragmented medical histories', 'desc' => 'Approved integrations can make selected information available across connected services under the agreed access rules.'],
+            ['title' => 'Continuity across care settings', 'desc' => 'Participating organizations can configure identity and referral workflows across the care continuum.'],
+            ['title' => 'Health programme reporting needs', 'desc' => 'Agree indicators, data sources, permitted access and reporting outputs with the responsible health authority.'],
         ],
         'stats' => [
             ['value' => 'Network', 'label' => 'participating health organizations'],
@@ -34,13 +34,13 @@ return [
         'modules' => [
             ['icon' => 'fingerprint', 'name' => 'Health ID and identity resolution', 'desc' => 'Resolve a health identity across participating services using the configured matching methods.', 'features' => ['Identity matching rules agreed per project', 'Configured identifiers and QR options', 'Duplicate review workflows', 'Authorized lookup across participating facilities']],
             ['icon' => 'network', 'name' => 'Interoperability and APIs', 'desc' => 'Standards-based APIs and approved connectors for OPES services and external systems included in the deployment.', 'features' => ['FHIR and REST API capabilities according to scope', 'Event and batch exchange where configured', 'External system connectors subject to integration', 'Documented exchange rules']],
-            ['icon' => 'shield', 'name' => 'Consent & Privacy', 'desc' => 'Patient-controlled data sharing permissions with full audit trail on every access.', 'features' => ['Granular sharing consent', 'Access revocation', 'Full audit log', 'GDPR / local regulation ready']],
+            ['icon' => 'shield', 'name' => 'Consent & Privacy', 'desc' => 'Configure consent and access controls with participating organizations for each deployment.', 'features' => ['Sharing permissions scoped per project', 'Access changes subject to configured workflows', 'Audit requirements agreed per deployment', 'Applicable legal and regulatory requirements assessed']],
             ['icon' => 'bar-chart-2', 'name' => 'Population health reporting', 'desc' => 'Aggregate dashboards and reporting defined with the responsible health authority and deployment partners.', 'features' => ['Program indicators agreed per project', 'Configurable reporting outputs', 'Public health monitoring subject to approvals', 'Facility-level views under agreed access rules']],
         ],
         'workflow' => [
             ['step' => 'First Contact', 'desc' => 'Patient registers at a participating facility'],
-            ['step' => 'ID Issued', 'desc' => 'Unique Health ID created instantly'],
-            ['step' => 'Record Grows', 'desc' => 'Every visit, test & prescription appended'],
+            ['step' => 'ID Issued', 'desc' => 'Health ID assigned under the configured registration policy'],
+            ['step' => 'Record Grows', 'desc' => 'Information added through participating services and approved integrations'],
             ['step' => 'Participating Facility', 'desc' => 'Authorized lookup within the configured network'],
             ['step' => 'Connected Record', 'desc' => 'Information available under consent and access rules'],
         ],

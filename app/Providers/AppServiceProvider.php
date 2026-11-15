@@ -91,6 +91,7 @@ class AppServiceProvider extends ServiceProvider
             \Illuminate\Cache\RateLimiting\Limit::perMinute(5)->by('enquiry-minute:'.$request->ip()),
             \Illuminate\Cache\RateLimiting\Limit::perDay(30)->by('enquiry-day:'.$request->ip()),
         ]);
+        \Illuminate\Support\Facades\RateLimiter::for('public-search', fn (\Illuminate\Http\Request $request) => \Illuminate\Cache\RateLimiting\Limit::perMinute(30)->by('public-search:'.$request->ip()));
         if ($this->app->isProduction()) {
             \Illuminate\Support\Facades\URL::forceRootUrl(config('seo.canonical_url'));
             \Illuminate\Support\Facades\URL::forceScheme('https');
