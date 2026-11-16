@@ -84,6 +84,9 @@ class AppServiceProvider extends ServiceProvider
         \Laravel\Passport\Passport::tokensExpireIn(\Carbon\CarbonInterval::minutes(15));
         \Laravel\Passport\Passport::refreshTokensExpireIn(\Carbon\CarbonInterval::days(7));
         \Laravel\Passport\Passport::clientCredentialsTokensExpireIn(\Carbon\CarbonInterval::minutes(15));
+        // First-party native in-app sign-in (OPES Health mobile) exchanges email + password directly for a
+        // scoped token through the public password grant; UserTokenController guards it (active gate, generic errors).
+        \Laravel\Passport\Passport::enablePasswordGrant();
         \Illuminate\Support\Facades\RateLimiter::for('oauth-token', fn (\Illuminate\Http\Request $request) => \Illuminate\Cache\RateLimiting\Limit::perMinute(20)->by('oauth:'.$request->ip()));
         \Illuminate\Support\Facades\RateLimiter::for('api-consumer', fn (\Illuminate\Http\Request $request) => \Illuminate\Cache\RateLimiting\Limit::perMinute(60)->by('consumer:'.$request->attributes->get('api_client')->id));
         \Illuminate\Support\Facades\RateLimiter::for('public-api-read', fn (\Illuminate\Http\Request $request) => \Illuminate\Cache\RateLimiting\Limit::perMinute(60)->by('public-api:'.$request->ip()));

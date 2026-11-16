@@ -65,7 +65,7 @@ export default function ProfileScreen({ inTab = false }: { inTab?: boolean }) {
       <Text style={{ color: colors.muted, fontSize: 12, lineHeight: 18, marginTop: 8 }}>{t('The app follows your phone’s language. Choose one here to override it.')}</Text>
     </Card>
     <SectionTitle title={t('App & security')} />
-    <Card><Text style={{ color: colors.navy, fontSize: 14, fontWeight: '800' }}>{t('OPES Health mobile')}</Text><Text style={{ color: colors.muted, fontSize: 12, marginTop: 5 }}>{t('Version {version}', { version: Constants.expoConfig?.version ?? '—' })}{Updates.channel ? t(' · {channel} channel', { channel: Updates.channel }) : ''}</Text><Text style={{ color: colors.muted, fontSize: 12, lineHeight: 18, marginTop: 7 }}>{t('The app checks for compatible updates when it opens. You can also check manually here.')}</Text></Card>
+    <Card><Text style={{ color: colors.navy, fontSize: 14, fontWeight: '800' }}>{t('OPES Health mobile')}</Text><Text style={{ color: colors.muted, fontSize: 12, marginTop: 5 }}>{t('Version {version}', { version: Constants.expoConfig?.version ?? '—' })}</Text><Text style={{ color: colors.muted, fontSize: 12, lineHeight: 18, marginTop: 7 }}>{t('The app checks for compatible updates when it opens. You can also check manually here.')}</Text></Card>
     {!!updateMessage && <Notice>{updateMessage}</Notice>}
     <ActionButton label={updateBusy ? t('Checking for updates…') : t('Check for app updates')} secondary onPress={() => void checkForUpdates()} busy={updateBusy} />
     {!inTab && <ActionButton label={t('Home')} secondary onPress={() => router.replace('/workspace')} />}
