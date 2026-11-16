@@ -29,13 +29,6 @@ export default function PractitionerCertificatesScreen({ inTab = false }: { inTa
   const load = useCallback(async () => {
     setBusy(true); setError('');
     try {
-      if (session.demo) {
-        const [certificates, courses] = await Promise.all([session.rowsFor('certificates'), session.rowsFor('courses')]);
-        setCourseCertificates(certificates);
-        setValidationCertificates([]);
-        setCourseTitles(Object.fromEntries(courses.map(course => [String(course.id), String(course.title ?? t('Course certificate'))])));
-        return;
-      }
       const [certificateResult, courseResult] = await Promise.all([
         session.request<Record<string, unknown>>('/practitioner/certificates'),
         session.request<Record<string, unknown>>('/practitioner/courses'),
@@ -51,7 +44,6 @@ export default function PractitionerCertificatesScreen({ inTab = false }: { inTa
   useEffect(() => { void Promise.resolve().then(load); }, [load]);
   return <Page fixedHeader={<AppHeader />} onRefresh={() => void load()} refreshing={busy}>
     {!inTab && <Pressable accessibilityRole="button" onPress={() => router.back()} style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 4 }}><AppIcon name="chevronLeft" size={18} /><Text style={{ color: colors.blue, fontSize: 14, fontWeight: '700' }}>{t('Back to learning')}</Text></Pressable>}
-    {session.demo && <Notice>{t('DEMO MODE · Sample certificate details are fictional and stay in this app.')}</Notice>}
     <Heading eyebrow={t('Learning record')} title={t('Certificates')} subtitle={t('Review course awards and professional validation certificates associated with your account.')} />
     {!!error && <Notice tone="error">{error}</Notice>}
     {busy && <ActivityIndicator color={colors.blue} style={{ marginVertical: 24 }} />}

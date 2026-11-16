@@ -32,23 +32,14 @@ export default function CourseDetailScreen() {
     if (!slug) return;
     setBusy(true); setError('');
     try {
-      if (session.demo) {
-        const courses = await session.rowsFor('courses');
-        const course = courses.find(row => String(row.slug) === String(slug)) as Course | undefined;
-        if (!course) throw new Error(t('This sample course could not be found.'));
-        const completed = Array.isArray(course.completed_lesson_ids) ? course.completed_lesson_ids as (number | string)[] : [];
-        setDetail({ course, enrollment: ['enrolled', 'in_progress', 'completed'].includes(String(course.status)) ? { status: course.status } : null, completed_lesson_ids: completed });
-        setAssessments([]);
-      } else {
-        const response = await session.request<CourseDetail>(`/practitioner/courses/${encodeURIComponent(String(slug))}`);
-        setDetail(response);
-        if (response.enrollment && response.enrollment.status !== 'dropped') {
-          try {
-            const assessmentResponse = await session.request<{ assessments?: CourseAssessment[] }>(`/practitioner/courses/${encodeURIComponent(String(slug))}/assessments`);
-            setAssessments(Array.isArray(assessmentResponse.assessments) ? assessmentResponse.assessments : []);
-          } catch { setAssessments([]); }
-        } else setAssessments([]);
-      }
+      const response = await session.request<CourseDetail>(`/practitioner/courses/${encodeURIComponent(String(slug))}`);
+      setDetail(response);
+      if (response.enrollment && response.enrollment.status !== 'dropped') {
+        try {
+          const assessmentResponse = await session.request<{ assessments?: CourseAssessment[] }>(`/practitioner/courses/${encodeURIComponent(String(slug))}/assessments`);
+          setAssessments(Array.isArray(assessmentResponse.assessments) ? assessmentResponse.assessments : []);
+        } catch { setAssessments([]); }
+      } else setAssessments([]);
     } catch (e) { setError(e instanceof Error ? e.message : t('Course details could not be loaded.')); }
     finally { setBusy(false); }
   }, [session, slug]);
@@ -59,8 +50,7 @@ export default function CourseDetailScreen() {
     if (!detail) return;
     setActing(true); setError(''); setMessage('');
     try {
-      if (session.demo) session.mutateDemo('courses', 'enroll', { status: 'enrolled' }, String(slug));
-      else await session.request(`/practitioner/courses/${encodeURIComponent(String(slug))}/enroll`, 'POST', {});
+      await session.request(`/practitioner/courses/${encodeURIComponent(String(slug))}/enroll`, 'POST', {});
       setMessage(t('You are enrolled. Your lessons and progress are ready.'));
       await load();
     } catch (e) { setError(e instanceof Error ? e.message : t('Enrollment could not be saved.')); }
@@ -76,7 +66,6 @@ export default function CourseDetailScreen() {
 
   return <Page fixedHeader={<AppHeader />}>
     <Pressable accessibilityRole="button" onPress={() => router.back()} style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 4 }}><AppIcon name="chevronLeft" size={18} /><Text style={{ color: colors.blue, fontSize: 14, fontWeight: '700' }}>{t('Back to courses')}</Text></Pressable>
-    {session.demo && <Notice>{t('DEMO MODE · Progress is sample data stored only in this app.')}</Notice>}
     {busy && <ActivityIndicator color={colors.blue} style={{ marginVertical: 28 }} />}
     {!!error && <Notice tone="error">{error}</Notice>}
     {!!message && <Notice tone="success">{message}</Notice>}
@@ -104,9 +93,8 @@ export default function CourseDetailScreen() {
         </Pressable>;
       })}
       <SectionTitle title={t('Exams & assessments')} />
-      {session.demo && <Notice>{t('Demo course records do not include assessments. Live practitioner accounts can take exams published for their enrolled courses.')}</Notice>}
-      {!session.demo && enrolled && assessments.length === 0 && <Card><Text style={{ color: colors.text, fontWeight: '700' }}>{t('No exams are published for this course')}</Text><Text style={{ color: colors.muted, fontSize: 12, lineHeight: 18, marginTop: 5 }}>{t('When the learning team publishes an assessment, you can take it here and review your result.')}</Text></Card>}
-      {!session.demo && !enrolled && <Card><Text style={{ color: colors.muted, fontSize: 12, lineHeight: 18 }}>{t('Enroll in this course to see its published exams.')}</Text></Card>}
+      {enrolled && assessments.length === 0 && <Card><Text style={{ color: colors.text, fontWeight: '700' }}>{t('No exams are published for this course')}</Text><Text style={{ color: colors.muted, fontSize: 12, lineHeight: 18, marginTop: 5 }}>{t('When the learning team publishes an assessment, you can take it here and review your result.')}</Text></Card>}
+      {!enrolled && <Card><Text style={{ color: colors.muted, fontSize: 12, lineHeight: 18 }}>{t('Enroll in this course to see its published exams.')}</Text></Card>}
       {assessments.map(assessment => {
         const latest = assessment.latest_attempt;
         const statusText = latest ? String(latest.status) === 'in_progress' ? t('Attempt in progress') : String(latest.passed) === 'true' ? t('Passed · {score}%', { score: String(latest.score ?? 0) }) : t('Last score · {score}%', { score: String(latest.score ?? 0) }) : t('{count} attempts available', { count: String(assessment.attempts_remaining ?? t('Unlimited')) });

@@ -43,7 +43,6 @@ export default function ProfileScreen({ inTab = false }: { inTab?: boolean }) {
 
   if (!session.account) return <Page><Brand /><Heading title={t('Not signed in')} subtitle={t('Sign in to view your account.')} /><ActionButton label={t('Sign in')} onPress={() => router.replace('/')} /></Page>;
   return <Page fixedHeader={<AppHeader />}>
-    {!!session.demo && <Notice>{t('DEMO ACCOUNT · Fictional data. Changes stay local to this sample workspace.')}</Notice>}
     <Heading eyebrow={t('Account & profile')} title={session.account.name} subtitle={session.account.email} />
     <Card><Text style={{ color: colors.muted, fontSize: 12, fontWeight: '800', letterSpacing: 1 }}>{t('ROLE AND ACCESS')}</Text><Text style={{ color: colors.navy, fontSize: 14, fontWeight: '700', marginTop: 8 }}>{session.account.roles.map(humanize).join(' · ') || t('Account')}</Text><Text style={{ color: colors.muted, fontSize: 12, lineHeight: 18, marginTop: 7 }}>{t('Your workspace and available actions are determined from the current account roles and API permissions.')}</Text></Card>
     {!!error && <Notice tone="error">{error}</Notice>}
@@ -53,7 +52,6 @@ export default function ProfileScreen({ inTab = false }: { inTab?: boolean }) {
       <Card>{Object.entries(record).filter(([key, value]) => !hiddenProfileFields.includes(key) && (value === null || typeof value !== 'object')).map(([key, value]) => <View key={key} style={{ paddingVertical: 6, borderBottomWidth: 1, borderBottomColor: colors.divider }}><Text style={{ color: colors.muted, fontSize: 12, fontWeight: '700' }}>{humanize(key)}</Text><Text style={{ color: colors.text, fontSize: 13, marginTop: 3 }}>{value == null || value === '' ? t('Not provided') : String(value)}</Text></View>)}</Card>
       <ActionButton label={t('Edit profile')} onPress={() => router.push({ pathname: '/action/[type]', params: { type: profileFeature } } as never)} />
     </>}
-    {session.demo && <Card><Text style={{ color: colors.navy, fontWeight: '700', fontSize: 13 }}>{t('Sample workspace reference')}</Text><Text style={{ color: colors.muted, fontSize: 12, marginTop: 6 }}>{session.demo.reference}</Text><Text style={{ color: colors.text, fontSize: 12, marginTop: 6 }}>{session.demo.organization}</Text></Card>}
     <SectionTitle title={t('Language')} />
     <Card>
       <View accessibilityRole="radiogroup" style={{ flexDirection: 'row', gap: 8 }}>
@@ -71,6 +69,6 @@ export default function ProfileScreen({ inTab = false }: { inTab?: boolean }) {
     {!!updateMessage && <Notice>{updateMessage}</Notice>}
     <ActionButton label={updateBusy ? t('Checking for updates…') : t('Check for app updates')} secondary onPress={() => void checkForUpdates()} busy={updateBusy} />
     {!inTab && <ActionButton label={t('Home')} secondary onPress={() => router.replace('/workspace')} />}
-    <ActionButton label={session.demo ? t('Exit demo workspace') : t('Sign out')} secondary onPress={() => confirmAction(session.demo ? t('Exit demo workspace?') : t('Sign out?'), session.demo ? t('Sample changes will be reset.') : t('You will need to sign in again to open your workspace.'), session.demo ? t('Exit') : t('Sign out'), () => { void session.clearSession().then(() => router.replace('/')); }, true)} />
+    <ActionButton label={t('Sign out')} secondary onPress={() => confirmAction(t('Sign out?'), t('You will need to sign in again to open your workspace.'), t('Sign out'), () => { void session.clearSession().then(() => router.replace('/')); }, true)} />
   </Page>;
 }

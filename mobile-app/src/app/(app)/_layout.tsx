@@ -4,7 +4,7 @@ import { useSession } from '../../context/SessionContext';
 
 export default function AuthenticatedLayout() {
   const { account } = useSession();
-  // Every signed-in route needs a live or demo account; this also returns users to sign-in when a session expires.
+  // Every signed-in route needs an authenticated account; this also returns users to sign-in when a session expires.
   if (!account) return <Redirect href="/" />;
   return <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.bg }, animation: 'slide_from_right' }}>
     <Stack.Screen name="(tabs)" options={{ headerShown: false }} />

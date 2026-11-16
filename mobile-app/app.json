@@ -40,8 +40,9 @@
     "android": {
       "package": "com.opeshealthsystems.mobile",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
-        "backgroundColor": "#082D55"
+        "foregroundImage": "./assets/adaptive-foreground.png",
+        "backgroundColor": "#01377D",
+        "monochromeImage": "./assets/adaptive-foreground.png"
       }
     },
     "ios": {

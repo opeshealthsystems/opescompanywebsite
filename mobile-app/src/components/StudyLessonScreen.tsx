@@ -24,14 +24,7 @@ export default function StudyLessonScreen() {
   const load = useCallback(async () => {
     setBusy(true); setError('');
     try {
-      if (session.demo) {
-        const courses = await session.rowsFor('courses');
-        const course = courses.find(row => String(row.slug) === String(slug)) as Course | undefined;
-        if (!course) throw new Error(t('This sample course could not be found.'));
-        setDetail({ course, enrollment: { status: course.status }, completed_lesson_ids: Array.isArray(course.completed_lesson_ids) ? course.completed_lesson_ids as (number | string)[] : [] });
-      } else {
-        setDetail(await session.request<CourseDetail>(`/practitioner/courses/${encodeURIComponent(String(slug))}`));
-      }
+      setDetail(await session.request<CourseDetail>(`/practitioner/courses/${encodeURIComponent(String(slug))}`));
     } catch (e) { setError(e instanceof Error ? e.message : t('This study lesson could not be loaded.')); }
     finally { setBusy(false); }
   }, [session, slug]);
@@ -52,15 +45,9 @@ export default function StudyLessonScreen() {
     if (!lesson || !detail) return;
     setActing(true); setError(''); setMessage('');
     try {
-      if (session.demo) {
-        session.mutateDemo('courses', 'complete-lesson', { lesson_id: lesson.id }, String(slug));
-        setDetail(current => current ? { ...current, completed_lesson_ids: [...new Set([...current.completed_lesson_ids.map(String), String(lesson.id)])] } : current);
-        setMessage(t('Lesson complete. Your sample progress is saved.'));
-      } else {
-        await session.request(`/practitioner/courses/${encodeURIComponent(String(slug))}/lessons/${encodeURIComponent(String(lesson.id))}/done`, 'POST', {});
-        setMessage(t('Lesson complete. Your course progress has been updated.'));
-        await load();
-      }
+      await session.request(`/practitioner/courses/${encodeURIComponent(String(slug))}/lessons/${encodeURIComponent(String(lesson.id))}/done`, 'POST', {});
+      setMessage(t('Lesson complete. Your course progress has been updated.'));
+      await load();
     } catch (e) { setError(e instanceof Error ? e.message : t('Lesson progress could not be saved.')); }
     finally { setActing(false); }
   };
@@ -69,7 +56,6 @@ export default function StudyLessonScreen() {
 
   return <Page fixedHeader={<AppHeader />}>
     <Pressable accessibilityRole="button" onPress={() => router.replace({ pathname: '/course/[slug]', params: { slug: String(slug) } } as never)} style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 4 }}><AppIcon name="chevronLeft" size={18} /><Text style={{ color: colors.blue, fontSize: 14, fontWeight: '700' }}>{t('Back to course')}</Text></Pressable>
-    {session.demo && <Notice>{t('DEMO MODE · Completing this lesson changes only the sample account’s progress.')}</Notice>}
     {busy && <ActivityIndicator color={colors.blue} style={{ marginVertical: 28 }} />}
     {!!error && <Notice tone="error">{error}</Notice>}
     {!!message && <Notice tone="success">{message}</Notice>}

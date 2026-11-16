@@ -32,11 +32,6 @@ export default function LearningCatalogScreen({ inTab = false }: { inTab?: boole
   const load = useCallback(async () => {
     setBusy(true); setError('');
     try {
-      if (session.demo) {
-        const samples = await session.rowsFor('courses');
-        setCourses(samples as CourseCard[]);
-        return;
-      }
       const result = await session.request<Record<string, unknown>>('/practitioner/courses');
       const enrollments = records(result.my_enrollments) as Enrollment[];
       const mapped = records(result.courses).map(course => {
@@ -65,7 +60,6 @@ export default function LearningCatalogScreen({ inTab = false }: { inTab?: boole
 
   return <Page fixedHeader={<AppHeader />} onRefresh={() => void load()} refreshing={busy}>
     {!inTab && <Pressable accessibilityRole="button" onPress={() => router.back()} style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 4 }}><AppIcon name="chevronLeft" size={18} /><Text style={{ color: colors.blue, fontSize: 14, fontWeight: '700' }}>{t('Back to workspace')}</Text></Pressable>}
-    {session.demo && <Notice>{t('DEMO MODE · Study progress and course actions are saved locally in this sample workspace.')}</Notice>}
     <Heading eyebrow={t('Learning')} title={t('Courses & study')} subtitle={t('Study practical lessons at your pace. Mark each lesson complete to keep your progress and earn course certificates.')} />
     <Card>
       <Text style={{ color: colors.navy, fontSize: 15, fontWeight: '800' }}>{t('Your learning')}</Text>

@@ -3,10 +3,9 @@ import * as SecureStore from 'expo-secure-store';
 import * as WebBrowser from 'expo-web-browser';
 import { Redirect, useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { Platform, Pressable, Text, View } from 'react-native';
-import { Account, CLIENT_ID, demoAccounts, discovery, TOKEN_KEY, Token, useSession } from '../context/SessionContext';
-import { ActionButton, Brand, Card, Heading, Notice, Page, colors, radius } from './ui';
-import { AppIcon, getRoleIconName } from './icons';
+import { Platform, Pressable, Text } from 'react-native';
+import { Account, CLIENT_ID, discovery, TOKEN_KEY, Token, useSession } from '../context/SessionContext';
+import { ActionButton, Brand, Heading, Notice, Page, colors } from './ui';
 import { t } from '../i18n';
 
 WebBrowser.maybeCompleteAuthSession();
@@ -16,10 +15,8 @@ export default function LoginScreen() {
   const { registered } = useLocalSearchParams<{ registered?: string }>();
   const session = useSession();
   const [busy, setBusy] = useState(false);
-  // Native launches start by restoring a saved session; keep sign-in and demo entry locked until that finishes.
+  // Native launches start by restoring a saved session; keep sign-in locked until that finishes.
   const [restoring, setRestoring] = useState(Platform.OS !== 'web');
-  // Sample workspaces are secondary: hidden until asked for so real users see one clear sign-in path.
-  const [showDemos, setShowDemos] = useState(false);
   const [message, setMessage] = useState('');
   const autoLoginStarted = useRef(false);
   const handledResponse = useRef(false);
@@ -81,8 +78,6 @@ export default function LoginScreen() {
     try { await promptAsync(); } catch (error) { setMessage(error instanceof Error ? error.message : t('Could not open secure sign-in.')); setBusy(false); }
   };
 
-  const chooseDemo = (id: string) => { session.startDemo(id); router.replace('/workspace'); };
-
   // Already signed in (e.g. after a language switch remounts navigation): go straight to the workspace.
   if (session.account) return <Redirect href="/workspace" />;
 
@@ -101,21 +96,5 @@ export default function LoginScreen() {
       <Text style={{ color: colors.blue, fontSize: 14, fontWeight: '700' }}>Forgot your password?</Text>
     </Pressable>
     {!!message && <Notice tone={[t('Completing secure sign-in…'), t('Secure account sign-in opens in the installed OPES Health app. This web preview stays on this screen.')].includes(message) ? 'info' : 'error'}>{message}</Notice>}
-    <View style={{ borderTopWidth: 1, borderTopColor: colors.border, marginTop: 18, paddingTop: 8 }}>
-      <Pressable accessibilityRole="button" accessibilityState={{ expanded: showDemos }} onPress={() => setShowDemos(!showDemos)} style={{ minHeight: 48, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-        <Text style={{ color: colors.blue, fontSize: 14, fontWeight: '700' }}>{showDemos ? t('Hide sample workspaces') : t('Just looking? Try a sample workspace')}</Text>
-        <AppIcon name="chevronRight" size={16} color={colors.blue} />
-      </Pressable>
-    </View>
-    {showDemos && <>
-    <Text style={{ color: colors.muted, fontSize: 13, lineHeight: 19, textAlign: 'center', marginBottom: 12 }}>{t('Fictional accounts for trying the app. Nothing is sent to OPES, and changes reset when you leave.')}</Text>
-    {demoAccounts.map(demo => <Pressable key={demo.id} disabled={busy || restoring} onPress={() => chooseDemo(demo.id)} accessibilityRole="button">
-      <Card style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
-        <View style={{ width: 44, height: 44, borderRadius: radius.md, backgroundColor: colors.tile, alignItems: 'center', justifyContent: 'center' }}><AppIcon name={getRoleIconName(demo.id)} size={22} color={colors.navy} /></View>
-        <View style={{ flex: 1, minWidth: 0 }}><Text style={{ color: colors.navy, fontSize: 15, fontWeight: '700', flexShrink: 1 }}>{t(demo.label)}</Text><Text style={{ color: colors.muted, fontSize: 13, marginTop: 3, flexShrink: 1 }}>{t('{name} · tap to explore', { name: demo.account.name })}</Text></View>
-        <AppIcon name="chevronRight" size={20} color={colors.muted} />
-      </Card>
-    </Pressable>)}
-    </>}
   </Page>;
 }

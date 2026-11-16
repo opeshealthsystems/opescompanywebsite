@@ -40,7 +40,7 @@ export default function NotificationsScreen() {
   const load = useCallback(async () => {
     setError('');
     try {
-      const result = session.demo ? await session.rowsFor('notifications') : await session.request<unknown>('/notifications');
+      const result = await session.request<unknown>('/notifications');
       setRows(notificationRows(result));
     } catch (e) { setError(e instanceof Error ? e.message : t('Notifications could not be loaded.')); }
     finally { setLoaded(true); }
@@ -51,7 +51,7 @@ export default function NotificationsScreen() {
     let active = true;
     void (async () => {
       try {
-        const result = session.demo ? await session.rowsFor('notifications') : await session.request<unknown>('/notifications');
+        const result = await session.request<unknown>('/notifications');
         if (active) setRows(notificationRows(result));
       } catch (e) { if (active) setError(e instanceof Error ? e.message : t('Notifications could not be loaded.')); }
       finally { if (active) setLoaded(true); }
@@ -65,8 +65,7 @@ export default function NotificationsScreen() {
     setActing(id); setError(''); setMessage('');
     try {
       const readAt = new Date().toISOString();
-      if (session.demo) session.mutateDemo('notifications', 'update-status', { read_at: readAt, status: 'read' }, id);
-      else await session.request(`/notifications/${encodeURIComponent(id)}/read`, 'POST', {});
+      await session.request(`/notifications/${encodeURIComponent(id)}/read`, 'POST', {});
       setRows(current => current.map(item => String(item.id) === id ? { ...item, read_at: readAt, status: 'read' } : item));
       setMessage(t('Notification marked as read.'));
     } catch (e) { setError(e instanceof Error ? e.message : t('This notification could not be updated.')); }
@@ -78,8 +77,7 @@ export default function NotificationsScreen() {
     setActing('all'); setError(''); setMessage('');
     try {
       const readAt = new Date().toISOString();
-      if (session.demo) rows.filter(row => !row.read_at).forEach(row => session.mutateDemo('notifications', 'update-status', { read_at: readAt, status: 'read' }, String(row.id)));
-      else await session.request('/notifications/read-all', 'POST', {});
+      await session.request('/notifications/read-all', 'POST', {});
       setRows(current => current.map(row => ({ ...row, read_at: row.read_at ?? readAt, status: 'read' })));
       setMessage(t('All notifications marked as read.'));
     } catch (e) { setError(e instanceof Error ? e.message : t('Notifications could not be updated.')); }
@@ -88,7 +86,6 @@ export default function NotificationsScreen() {
 
   const visible = unreadOnly ? rows.filter(row => !row.read_at && String(row.status ?? '').toLowerCase() !== 'read') : rows;
   return <Page fixedHeader={<AppHeader />} onRefresh={() => void load()}>
-    {session.demo && <Notice>{t('DEMO MODE · Sample notifications are fictional and remain on this device.')}</Notice>}
     <Heading eyebrow={t('Account updates')} title={t('Notifications')} subtitle={unreadCount === 1 ? t('1 unread notification') : t('{count} unread notifications', { count: unreadCount })} />
     {!!error && <Notice tone="error">{error}</Notice>}
     {!!message && <Notice tone="success">{message}</Notice>}
@@ -96,7 +93,7 @@ export default function NotificationsScreen() {
       <Pressable accessibilityRole="button" accessibilityState={{ selected: unreadOnly }} onPress={() => setUnreadOnly(value => !value)} style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 7, paddingHorizontal: 10 }}><AppIcon name="bell" size={18} /><Text style={{ color: colors.blue, fontWeight: '700' }}>{unreadOnly ? t('Showing unread') : t('Show unread only')}</Text></Pressable>
       {mayWrite && unreadCount > 0 && <Pressable accessibilityRole="button" disabled={!!acting} onPress={() => void markAllRead()} style={{ minHeight: 44, justifyContent: 'center', paddingHorizontal: 6 }}><Text style={{ color: colors.blue, fontSize: 12, fontWeight: '800' }}>{acting === 'all' ? t('Saving…') : t('Mark all read')}</Text></Pressable>}
     </View>
-    {!mayRead && !session.demo && <Notice tone="error">{t('Your account does not have notification read access.')}</Notice>}
+    {!mayRead && <Notice tone="error">{t('Your account does not have notification read access.')}</Notice>}
     {mayRead && !loaded && <ActivityIndicator color={colors.blue} style={{ marginVertical: 24 }} />}
     {mayRead && loaded && visible.length === 0 && !error && <Card><Text style={{ color: colors.navy, fontWeight: '800' }}>{unreadOnly ? t('You’re all caught up') : t('No notifications yet')}</Text><Text style={{ color: colors.muted, fontSize: 13, lineHeight: 19, marginTop: 6 }}>{unreadOnly ? t('New unread updates will appear here.') : t('Account updates and service messages will appear here.')}</Text></Card>}
     {mayRead && loaded && visible.map((row, index) => {

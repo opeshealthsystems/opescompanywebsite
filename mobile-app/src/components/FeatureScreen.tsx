@@ -92,12 +92,7 @@ export function FeatureContent({ featureId, inTab = false }: { featureId?: Featu
     const rowId = String(row.id ?? row.slug ?? '');
     setActing(rowId); setError(''); setMessage('');
     try {
-      if (session.demo) {
-        const change = kind === 'contactStatus' ? String(row.status) === 'new' ? 'contacted' : String(row.status) === 'contacted' ? 'qualified' : 'closed' : kind === 'partnerReview' ? 'reviewing' : kind === 'partnerApprove' ? 'approved' : kind === 'partnerReject' ? 'rejected' : kind === 'complete' ? 'completed' : kind === 'start' ? 'in_progress' : kind === 'sent' ? 'sent' : 'enrolled';
-        if (kind === 'enroll') session.mutateDemo(feature.id, 'enroll', { status: change }, rowId);
-        else session.mutateDemo(feature.id, 'update-status', { status: change }, rowId);
-        setMessage(t('Demo updated: {feature} is now {status}.', { feature: t(feature.title), status: humanize(change) }));
-      } else if (feature.id === 'assignments') {
+      if (feature.id === 'assignments') {
         await session.request(`/testing/assignments/${encodeURIComponent(rowId)}/status`, 'PATCH', { status: kind === 'complete' ? 'completed' : 'in_progress' });
         setMessage(t('Assignment status updated.'));
       } else if (feature.id === 'contacts' && kind === 'contactStatus') {
@@ -152,7 +147,6 @@ export function FeatureContent({ featureId, inTab = false }: { featureId?: Featu
 
   return <Page fixedHeader={<AppHeader />} onRefresh={feature?.id === 'partnerApplication' ? undefined : () => void load()} refreshing={busy && rows.length > 0}>
     {!inTab && <Pressable accessibilityRole="button" onPress={() => router.back()} style={{ minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 4 }}><AppIcon name="chevronLeft" size={18} /><Text style={{ color: colors.blue, fontSize: 14, fontWeight: '700' }}>{t('Back to workspace')}</Text></Pressable>}
-    {!!session.demo && <Notice>{t('DEMO MODE · All records and actions on this screen are fictional and local to this app.')}</Notice>}
     <Heading eyebrow={t('Workspace')} title={title} subtitle={feature ? t(feature.description) : t('Manage account information and work items.')} />
     {feature?.createAction && mayWrite && <ActionButton label={feature.id === 'partnerApplication' ? t('Start an application') : feature.id === 'contacts' ? t('Add a contact') : t('Create: {item}', { item: t(feature.title) })} onPress={startCreate} />}
     {!!error && <Notice tone="error">{error}</Notice>}{!!message && <Notice tone="success">{message}</Notice>}
@@ -181,7 +175,7 @@ export function FeatureContent({ featureId, inTab = false }: { featureId?: Featu
             {Array.isArray(row.replies) && <View style={{ marginTop: 8 }}>{(row.replies as ApiRecord[]).map((reply, i) => <Text key={i} style={{ color: colors.muted, fontSize: 12, marginTop: 4 }}>{String(reply.author ?? t('Reply'))}: {String(reply.body ?? '')}</Text>)}</View>}
           </>}
         </View>}
-        {!session.demo && feature?.id === 'partnerAccounts' && row.membership_role === 'owner' && mayWrite && <View style={{ marginTop: 10, gap: 4 }}>
+        {feature?.id === 'partnerAccounts' && row.membership_role === 'owner' && mayWrite && <View style={{ marginTop: 10, gap: 4 }}>
           <ActionButton label={t('Edit organization profile')} secondary onPress={() => router.push({ pathname: '/action/partnerProfile', params: { applicationId: String(row.application_id ?? '') } } as never)} />
           <ActionButton label={t('Manage organization members')} secondary onPress={() => router.push({ pathname: '/partner/[applicationId]/members', params: { applicationId: String(row.application_id ?? '') } } as never)} />
         </View>}
@@ -197,8 +191,7 @@ export function FeatureContent({ featureId, inTab = false }: { featureId?: Featu
         {!!mayWrite && feature?.id === 'tickets' && <ActionButton label={t('Reply to ticket')} secondary onPress={() => router.push({ pathname: '/action/reply', params: { recordId: key } } as never)} />}
       </Card>;
     })}
-    {!session.demo && feature?.writeScope && !mayWrite && <Notice>{t('This account has read access only. Ask your administrator for the {scope} permission to submit changes.', { scope: feature.writeScope })}</Notice>}
-    {!!feature?.demoOnly && <Notice>{t('Live API actions for this feature have not been published yet.')}</Notice>}
+    {feature?.writeScope && !mayWrite && <Notice>{t('This account has read access only. Ask your administrator for the {scope} permission to submit changes.', { scope: feature.writeScope })}</Notice>}
     {!inTab && <ActionButton label={t('Home')} secondary onPress={() => router.replace('/workspace')} />}
   </Page>;
 }

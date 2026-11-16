@@ -49,7 +49,6 @@ export default function WorkspaceScreen() {
   }, [audience, session]);
   if (!session.account) return <Page><Brand /><Heading title={t('Your session ended')} subtitle={t('Sign in again to open your account.')} /><ActionButton label={t('Return to sign in')} onPress={() => router.replace('/')} /></Page>;
 
-  const demo = session.demo;
   const today = new Date().toLocaleDateString(dateLocale(), { weekday: 'long', day: 'numeric', month: 'long' });
   const quickActions: { key: string; label: string; icon: AppIconName; onPress: () => void }[] = [
     ...(audience === 'staff' && session.isAllowed(featureCatalog.quotes, true) ? [{ key: 'quote', label: t('Create a quote'), icon: 'file' as AppIconName, onPress: () => router.push({ pathname: '/action/[type]', params: { type: 'quote' } }) }] : []),
@@ -61,7 +60,6 @@ export default function WorkspaceScreen() {
     ...(audience === 'partner' && session.isAllowed(featureCatalog.partnerships) ? [{ key: 'directory', label: t('Browse partner directory'), icon: 'handshake' as AppIconName, onPress: () => router.push({ pathname: '/feature/[id]', params: { id: 'partnerships' } }) }] : []),
   ];
   return <Page fixedHeader={<AppHeader />}>
-    {demo && <Notice>{t('Demo mode · {organization} ({reference}). Fictional data; changes stay on this device and reset when you leave.', { organization: demo.organization, reference: demo.reference })}</Notice>}
     <View style={{ marginTop: space.sm, marginBottom: space.lg }}>
       <Text style={{ color: colors.muted, fontSize: 13, fontWeight: '600' }}>{today}</Text>
       <Text style={{ color: colors.navy, fontSize: 28, lineHeight: 34, fontWeight: '800', marginTop: 2 }}>{t('Hello, {name}', { name: session.account.name.split(' ')[0] })}</Text>

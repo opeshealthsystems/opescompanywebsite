@@ -55,7 +55,7 @@ export default function ActionFormScreen() {
   }, [type, params.applicationId, session]);
 
   useEffect(() => {
-    if (type !== 'serviceRequest' || session.demo || !session.isAllowed(featureCatalog.serviceRequests)) return;
+    if (type !== 'serviceRequest' || !session.isAllowed(featureCatalog.serviceRequests)) return;
     session.request<Record<string, unknown>>('/customer/service-requests/options').then(result => {
       const options = result.typeOptions;
       if (options && typeof options === 'object' && !Array.isArray(options)) setServiceTypes(Object.keys(options as Record<string, unknown>));
@@ -116,19 +116,12 @@ export default function ActionFormScreen() {
           target = 'partnerAccounts'; method = 'PATCH'; body = { phone: values.phone || null, country: values.country.trim(), city: values.city || null, organization_type: values.organization_type || null, target_market: values.target_market || null, description: values.description.trim(), website: values.website || null }; path = `/partner/accounts/${encodeURIComponent(String(params.applicationId))}`; break;
         default: throw new Error(t('This action is not supported.'));
       }
-      if (session.demo && type === 'partnerProfile') throw new Error(t('Organization profile editing is available to linked partner owners on a live account.'));
-      if (session.demo) {
-        const demoAction = type === 'customerProfile' || type === 'practitionerProfile' ? 'update-profile' : type === 'reply' ? 'reply' : type === 'bugReport' ? 'bug-report' : 'create';
-        const recordId = type === 'bugReport' ? String(params.assignmentId ?? '') : params.recordId;
-        session.mutateDemo(target, demoAction, body, recordId);
-      } else {
-        const feature = featureCatalog[target];
-        const needsWrite = type !== 'partnerApplication';
-        if (needsWrite && !session.isAllowed(feature, true)) throw new Error(t('This account does not have {scope} access.', { scope: feature.writeScope ?? 'write' }));
-        const fingerprint = `${method}:${path}:${JSON.stringify(body)}`;
-        if (idempotency.current.fingerprint !== fingerprint) idempotency.current = { fingerprint, key: `mobile-${Date.now()}-${Math.random().toString(36).slice(2)}` };
-        await session.request(path, method, body, idempotency.current.key);
-      }
+      const feature = featureCatalog[target];
+      const needsWrite = type !== 'partnerApplication';
+      if (needsWrite && !session.isAllowed(feature, true)) throw new Error(t('This account does not have {scope} access.', { scope: feature.writeScope ?? 'write' }));
+      const fingerprint = `${method}:${path}:${JSON.stringify(body)}`;
+      if (idempotency.current.fingerprint !== fingerprint) idempotency.current = { fingerprint, key: `mobile-${Date.now()}-${Math.random().toString(36).slice(2)}` };
+      await session.request(path, method, body, idempotency.current.key);
       setSaved(true);
     } catch (e) { setError(e instanceof Error ? e.message : t('Could not save your changes.')); }
     finally { setBusy(false); }
@@ -138,8 +131,7 @@ export default function ActionFormScreen() {
 
   return <Page fixedHeader={<AppHeader />}>
     <Pressable accessibilityRole="button" onPress={() => router.back()} style={{ minHeight: 44, alignSelf: 'flex-start', justifyContent: 'center', paddingRight: 12 }}><Text style={{ color: colors.blue, fontWeight: '700' }}>{t('Cancel')}</Text></Pressable>
-    {!!session.demo && <Notice>{t('DEMO MODE · Submitting here changes only fictional sample data on this device.')}</Notice>}
-    <Heading eyebrow={session.demo ? t('Demo action') : t('Account action')} title={t(titles[type] ?? 'Complete action')} subtitle={session.demo ? t('Try this workflow with sample information; nothing is sent to OPES.') : t('This form submits through your account’s authorized OPES API.')} />
+    <Heading eyebrow={t('Account action')} title={t(titles[type] ?? 'Complete action')} subtitle={t('This form submits through your account’s authorized OPES API.')} />
     {type === 'quote' && <>
       <Field label={t('Quote title')} value={values.title} onChangeText={v => set('title',v)} />
       <Field label={t('Product or service')} value={values.product} onChangeText={v => set('product',v)} />
@@ -160,7 +152,7 @@ export default function ActionFormScreen() {
 
     {type === 'partnerProfile' && <><Notice>{t('Organization name, approval and partnership status are managed by OPES. This form edits contact and organization details only.')}</Notice><Field label={t('Country')} value={values.country} onChangeText={v => set('country',v)} /><Field label={t('City')} value={values.city} onChangeText={v => set('city',v)} /><Field label={t('Phone')} value={values.phone} onChangeText={v => set('phone',v)} keyboardType="phone-pad" /><Field label={t('Organization type')} value={values.organization_type} onChangeText={v => set('organization_type',v)} /><Field label={t('Target market')} value={values.target_market} onChangeText={v => set('target_market',v)} multiline /><Field label={t('Organization description')} value={values.description} onChangeText={v => set('description',v)} multiline /><Field label={t('Website')} value={values.website} onChangeText={v => set('website',v)} autoCapitalize="none" /> </>}
     {!!error && <Notice tone="error">{error}</Notice>}
-    {saved ? <><Notice tone="success">{session.demo ? t('Demo action saved locally.') : t('Your changes were submitted successfully.')}</Notice><ActionButton label={t('View updated workspace')} onPress={() => router.replace({ pathname: '/feature/[id]', params: { id: targetFeature } } as never)} /><ActionButton label={t('Back to dashboard')} secondary onPress={() => router.replace('/workspace')} /></> : <ActionButton label={busy ? t('Saving…') : type === 'reply' ? t('Send reply') : type === 'partnerApplication' ? t('Submit application') : t('Save and continue')} onPress={() => void submit()} disabled={busy} busy={busy} />}
+    {saved ? <><Notice tone="success">{t('Your changes were submitted successfully.')}</Notice><ActionButton label={t('View updated workspace')} onPress={() => router.replace({ pathname: '/feature/[id]', params: { id: targetFeature } } as never)} /><ActionButton label={t('Back to dashboard')} secondary onPress={() => router.replace('/workspace')} /></> : <ActionButton label={busy ? t('Saving…') : type === 'reply' ? t('Send reply') : type === 'partnerApplication' ? t('Submit application') : t('Save and continue')} onPress={() => void submit()} disabled={busy} busy={busy} />}
   </Page>;
 }
 
