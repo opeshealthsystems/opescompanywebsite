@@ -19,13 +19,13 @@ export function AppHeader() {
   return <View style={{ minHeight: 48, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
     <Brand compact />
     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
-      {canOpenMessages && messageDestination && <Pressable accessibilityRole="button" accessibilityLabel={t('Open messages')} hitSlop={4} onPress={() => router.push({ pathname: '/feature/[id]', params: { id: messageDestination } } as never)} style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center', borderRadius: radius.md }}>
+      {canOpenMessages && messageDestination && <Pressable accessibilityRole="button" accessibilityLabel={t('Open messages')} hitSlop={4} onPress={() => router.push({ pathname: '/feature/[id]', params: { id: messageDestination } } as never)} android_ripple={{ color: colors.pale, borderless: true, radius: 22 }} style={({ pressed }) => [{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center', borderRadius: radius.md }, pressed && { opacity: 0.5 }]}>
         <AppIcon name="message" size={20} color={colors.navy} />
       </Pressable>}
-      {canOpenNotifications && <Pressable accessibilityRole="button" accessibilityLabel={t('Open notifications')} hitSlop={4} onPress={() => router.push('/notifications' as never)} style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center', borderRadius: radius.md }}>
+      {canOpenNotifications && <Pressable accessibilityRole="button" accessibilityLabel={t('Open notifications')} hitSlop={4} onPress={() => router.push('/notifications' as never)} android_ripple={{ color: colors.pale, borderless: true, radius: 22 }} style={({ pressed }) => [{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center', borderRadius: radius.md }, pressed && { opacity: 0.5 }]}>
         <AppIcon name="bell" size={19} color={colors.navy} />
       </Pressable>}
-      <Pressable accessibilityRole="button" accessibilityLabel={t('Open my account')} hitSlop={4} onPress={() => router.push('/profile' as never)} style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center', borderRadius: radius.md }}>
+      <Pressable accessibilityRole="button" accessibilityLabel={t('Open my account')} hitSlop={4} onPress={() => router.push('/profile' as never)} android_ripple={{ color: colors.pale, borderless: true, radius: 22 }} style={({ pressed }) => [{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center', borderRadius: radius.md }, pressed && { opacity: 0.5 }]}>
         <AppIcon name="profile" size={19} color={colors.navy} />
       </Pressable>
     </View>

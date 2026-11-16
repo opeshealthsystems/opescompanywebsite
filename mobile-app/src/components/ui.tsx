@@ -99,14 +99,18 @@ export function Heading({ eyebrow, title, subtitle }: { eyebrow?: string; title:
 }
 
 export function ActionButton({ label, onPress, secondary = false, disabled = false, busy = false }: { label: string; onPress: () => void; secondary?: boolean; disabled?: boolean; busy?: boolean }) {
-  return <Pressable accessibilityRole="button" onPress={onPress} disabled={disabled || busy} style={[styles.button, secondary ? styles.secondaryButton : styles.primaryButton, (disabled || busy) && styles.buttonDisabled]}>
+  const inactive = disabled || busy;
+  return <Pressable accessibilityRole="button" accessibilityState={{ disabled: inactive, busy }} onPress={onPress} disabled={inactive}
+    android_ripple={inactive ? undefined : { color: secondary ? colors.tile : '#1C4E86' }}
+    style={({ pressed }) => [styles.button, secondary ? styles.secondaryButton : styles.primaryButton, inactive && styles.buttonDisabled, pressed && !inactive && { opacity: 0.9 }]}>
     {busy ? <ActivityIndicator color={secondary ? colors.navy : colors.white} /> : <Text style={[styles.buttonText, secondary && styles.secondaryButtonText]}>{label}</Text>}
   </Pressable>;
 }
 
 export function Card({ children, onPress, style }: { children: ReactNode; onPress?: () => void; style?: object }) {
   const body = <View style={[styles.card, style]}>{children}</View>;
-  return onPress ? <Pressable accessibilityRole="button" onPress={onPress}>{body}</Pressable> : body;
+  if (!onPress) return body;
+  return <Pressable accessibilityRole="button" onPress={onPress} android_ripple={{ color: colors.pale, foreground: true }} style={({ pressed }) => pressed ? { opacity: 0.96 } : null}>{body}</Pressable>;
 }
 
 export function Field({ label, value, onChangeText, placeholder, multiline = false, keyboardType, autoCapitalize = 'sentences', secureTextEntry = false }: {
