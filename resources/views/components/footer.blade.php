@@ -142,6 +142,9 @@ $current = $locale;
             <a href="{{ url($locale.'/book-demo') }}" style="color:var(--brand-accent);font-weight:600">
                 <i data-lucide="calendar" style="width:12px;height:12px"></i>{{ $isFr ? 'Réserver une démo' : 'Book a Demo' }}
             </a>
+            <a href="{{ url($locale.'/emr-onboarding') }}" style="color:var(--brand-accent);font-weight:600">
+                <i data-lucide="clipboard-list" style="width:12px;height:12px"></i>{{ $isFr ? 'Intégration EMR' : 'EMR Onboarding' }}
+            </a>
             <a href="{{ url($locale.'/pricing') }}">
                 <i data-lucide="tag" style="width:12px;height:12px"></i>{{ $isFr ? 'Tarification' : 'Pricing' }}
             </a>
